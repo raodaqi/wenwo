@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 var todos = require('./routes/todos');
 var cloud = require('./cloud');
 var more = require('./routes/more');
-var weixi = require('./routes/weixi');
+var weixin = require('./routes/weixin');
 
 var app = express();
 
