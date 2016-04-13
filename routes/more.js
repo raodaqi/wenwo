@@ -7,7 +7,11 @@ var AV = require('leanengine');
 
 // 查询 Todo 列表
 router.get('/', function(req, res, next) {
-  res.render('index');
+  res.render('more/user');
+});
+
+router.get('/bbb', function(req, res, next) {
+  res.render('more/bbb');
 });
 
 // 新增 Todo 项目
