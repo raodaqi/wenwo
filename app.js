@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var todos = require('./routes/todos');
 var cloud = require('./cloud');
+var more = require('./routes/more');
 
 var app = express();
 
@@ -59,6 +60,7 @@ app.post('/test', function(req, res) {
 
 // 可以将一类的路由单独保存在一个文件中
 app.use('/todos', todos);
+app.use('/more', more);
 
 // 如果任何路由都没匹配到，则认为 404
 // 生成一个异常让后面的 err handler 捕获
