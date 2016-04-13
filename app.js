@@ -7,7 +7,13 @@ var bodyParser = require('body-parser');
 var todos = require('./routes/todos');
 var cloud = require('./cloud');
 var more = require('./routes/more');
-var weixin = require('./routes/weixin');
+var wechat = require('./routes/wechatBot');
+// var wechat = require('wechat');
+// var config = {
+//   token: 'wenwo',
+//   appid: 'wx99f15635dd7d9e3c',
+//   encodingAESKey: 'PwwbrWMutl378fjwD5P1IkGZom5zEmXw0Coo7lVDuP6'
+// };
 
 var app = express();
 
@@ -62,7 +68,7 @@ app.post('/test', function(req, res) {
 // 可以将一类的路由单独保存在一个文件中
 app.use('/todos', todos);
 app.use('/more', more);
-app.use('/weixin', weixin);
+app.use('/wechat', wechat);
 
 // 如果任何路由都没匹配到，则认为 404
 // 生成一个异常让后面的 err handler 捕获
