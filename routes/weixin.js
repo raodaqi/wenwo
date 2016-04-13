@@ -212,6 +212,7 @@ router.get('/', function(req, res, next) {
   var signature = req.query.signature;
   var timestamp = req.query.timestamp;
   var nonce = req.query.nonce;
+  var echoStr = req.query.echoStr;
   var token = "wenwo";
 
   var tmp = new Array(token, timestamp, nonce);
@@ -219,7 +220,7 @@ router.get('/', function(req, res, next) {
   var tmpStr = tmp[0]+tmp[1]+tmp[2];
   var tmpStr = hex_sha1(tmpStr);
   if( tmpStr == signature ){
-    return true;
+    res.send(echoStr);
   }else{
     return false;
   }
