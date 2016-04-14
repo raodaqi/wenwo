@@ -1,0 +1,213 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+  <meta charset='utf-8'>
+    <!-- <meta name='viewport', content='width=device-width, initial-scale=1.0'> -->
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name='description', content='wenwo,问我,当地人,旅游,攻略,信息,分享'>
+    <meta name='author', content='raodqi'>
+    <link rel="icon" type="image/x-icon" href="/img/logo.png" media="screen">
+    <title>问我——像个当地人一样去旅游</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1460642378_2807734.css">
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css"> 
+  </head>
+  <style>
+    body{
+      padding:0;
+      margin:0;
+    }
+    .type-item{
+      display: inline-block;
+      padding: 0 8px;
+      /*color: #FFC222;*/
+      background-color: #FFDC7F;
+      height: 20px;
+      line-height: 22px;
+      font-weight: 400;
+      font-size: 13px;
+      text-align: center;
+      margin-right: .5rem;
+    }
+  }
+  </style>
+  <body>
+    <div class="page page-current" id='router'>
+      <div class="content">
+        <div class="content-block">
+          <!-- <ul>
+            <li><a href="/docs-demos/router2">ajax加载新页面</a></li>
+            <li><a href="#router3">内联的新页面</a></li>
+          </ul> -->
+           <div class="content-block-title">主题</div>
+            <div class="card" data-href="router1">
+              <div class="card-content">
+                <div class="list-block">
+                  <ul>
+                    <li>
+                      <!-- <a href="#router1" class="item-link item-content"> -->
+                      <a class="item-link item-content">
+                        <div class="item-media"><i class="icon icon-f7"></i></div>
+                        <div class="item-inner">
+                          <div class="item-title">吃</div>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+           <div class="card" data-href="router2">
+              <div class="card-header">标签</div>
+              <div class="card-content">
+                <div class="card-content-inner">
+                  <span class="type-item">火锅</span>
+                  <span class="type-item">冒菜</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" data-href="router3">
+              <div class="card-header">推荐理由</div>
+              <div class="card-content">
+                <div class="card-content-inner">
+                  这个真的很不错，我经常去。
+                </div>
+              </div>
+            </div>
+
+            <div class="card" data-href="router4">
+              <div class="card-header">详情</div>
+              <div class="card-content">
+                <div class="card-content-inner">
+                  这个真的很不错，我经常去。
+                </div>
+              </div>
+            </div>
+
+             <div class="content-block-title">地图标注</div>
+              <div class="card demo-card-header-pic" data-href="router5">
+                <div valign="bottom" class="card-header color-white no-border no-padding">
+                  <img class='card-cover' src="/img/map.png" alt="">
+                </div>
+                <div class="card-content">
+                  <div class="card-content-inner">
+                    <p>成都信息工程大学</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card" data-href="router6">
+              <div class="card-header">价格</div>
+              <div class="card-content">
+                <div class="card-content-inner">
+                  ￥0.2
+                </div>
+              </div>
+            </div>
+
+
+        </div>
+      </div>
+    </div>
+    <!-- 主题筛选 -->
+    <div class="page" id='router1'>
+      <header class="bar bar-nav">
+        <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
+          <span class="icon icon-left"></span>
+          返回
+        </a>
+        <h1 class='title'>主题</h1>
+      </header>
+      <div class="content">
+        <div class="content-block">
+          这是内联编写的页面，点击左上角的 <a href="#" class='back'>返回</a> 按钮返回上一页。
+        </div>
+      </div>
+    </div>
+    <!-- 标签填写 -->
+    <div class="page" id='router2'>
+      <header class="bar bar-nav">
+        <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
+          <span class="icon icon-left"></span>
+          返回
+        </a>
+        <h1 class='title'>标签</h1>
+      </header>
+      <div class="content">
+        <div class="content-block">
+          这是内联编写的页面，点击左上角的 <a href="#" class='back'>返回</a> 按钮返回上一页。
+        </div>
+      </div>
+    </div>
+    <!-- 推荐理由填写 -->
+    <div class="page" id='router3'>
+      <header class="bar bar-nav">
+        <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
+          <span class="icon icon-left"></span>
+          返回
+        </a>
+        <h1 class='title'>推荐理由</h1>
+      </header>
+      <div class="content">
+        <div class="content-block">
+          这是内联编写的页面，点击左上角的 <a href="#" class='back'>返回</a> 按钮返回上一页。
+        </div>
+      </div>
+    </div>
+    <!-- 信息详情填写 -->
+    <div class="page" id='router4'>
+      <header class="bar bar-nav">
+        <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
+          <span class="icon icon-left"></span>
+          返回
+        </a>
+        <h1 class='title'>信息详情</h1>
+      </header>
+      <div class="content">
+        <div class="content-block">
+          这是内联编写的页面，点击左上角的 <a href="#" class='back'>返回</a> 按钮返回上一页。
+        </div>
+      </div>
+    </div>
+    <!-- 地点标注 -->
+     <div class="page" id='router5'>
+      <header class="bar bar-nav">
+        <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
+          <span class="icon icon-left"></span>
+          返回
+        </a>
+        <h1 class='title'>地点标注</h1>
+      </header>
+      <div class="content">
+        <div class="content-block">
+          这是内联编写的页面，点击左上角的 <a href="#" class='back'>返回</a> 按钮返回上一页。
+        </div>
+      </div>
+    </div>
+    <!-- 价格填写 -->
+     <div class="page" id='router6'>
+      <header class="bar bar-nav">
+        <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
+          <span class="icon icon-left"></span>
+          返回
+        </a>
+        <h1 class='title'>价格</h1>
+      </header>
+      <div class="content">
+        <div class="content-block">
+          这是内联编写的页面，点击左上角的 <a href="#" class='back'>返回</a> 按钮返回上一页。
+        </div>
+      </div>
+    </div>  
+  </body>
+  <script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+  <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.js' charset='utf-8'></script>
+  <script>
+    $(".card").on("click",function(){
+      var href = $(this).data("href");
+      $.router.load("#"+href);
+    })
+  </script>
+</html>

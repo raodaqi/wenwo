@@ -19,6 +19,10 @@ router.get('/', function(req, res, next) {
   })
 });
 
+router.get('/send', function(req, res, next) {
+  res.render('send');
+});
+
 // 新增 Todo 项目
 router.post('/', function(req, res, next) {
   var content = req.body.content;
