@@ -8,7 +8,7 @@
     <meta name='author', content='raodqi'>
     <link rel="icon" type="image/x-icon" href="/img/logo.png" media="screen">
     <title>问我——像个当地人一样去旅游</title>
-    <link rel="stylesheet" href="/stylesheets/style.css"> 
+    <link rel="stylesheet" href="/css/style.css"> 
   </head>
   <style>
     body{
@@ -31,5 +31,11 @@
             zoom: 10,
             center: [116.39,39.9]
       });
+      AMap.plugin(['AMap.ToolBar','AMap.Scale'],function(){
+        var toolBar = new AMap.ToolBar();
+        var scale = new AMap.Scale();
+        map.addControl(toolBar);
+        map.addControl(scale);
+    })
   </script>
 </html>
