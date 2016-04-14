@@ -14,6 +14,9 @@ router.get('/bbb', function(req, res, next) {
   res.render('more/bbb');
 });
 
+router.get('/personalPage', function(req, res, next) {
+  res.render('more/personalPage');
+});
 // 新增 Todo 项目
 router.post('/', function(req, res, next) {
   var content = req.body.content;
