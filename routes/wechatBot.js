@@ -45,7 +45,7 @@ router.use('/', wechat(config, function (req, res, next) {
 }));
 // var WechatAPI = require('wechat-api');
 // var api = new WechatAPI('wx99f15635dd7d9e3c',
-//   '请把微信的 Secret Key 填写在这里');
+//   '20891e294d2e48007bec24cbb8bbf7fd');
 
 router.use('/test', wechat('pushjokes').text(function(message, req, res, next) {
   // message为文本内容
