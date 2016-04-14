@@ -44,11 +44,10 @@
         str.push('纬度：' + data.position.getLat());
         str.push('精度：' + data.accuracy + ' 米');
         str.push('是否经过偏移：' + (data.isConverted ? '是' : '否'));
-        document.getElementById('tip').innerHTML = str.join('<br>');
     }
     //解析定位错误信息
     function onError(data) {
-        document.getElementById('tip').innerHTML = '定位失败';
+        
     }
 
     AMap.plugin(['AMap.ToolBar','AMap.Scale'],function(){

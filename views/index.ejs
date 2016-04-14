@@ -8,7 +8,9 @@
     <meta name='author', content='raodqi'>
     <link rel="icon" type="image/x-icon" href="/img/logo.png" media="screen">
     <title>问我——像个当地人一样去旅游</title>
-    <link rel="stylesheet" href="/css/style.css"> 
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1460642378_2807734.css">
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css"> 
   </head>
   <style>
     body{
@@ -19,31 +21,115 @@
         height: 100%;
         margin: 0px
       }
-    .left-content{
+    .left-content,.right-content{
       position: absolute;
       z-index: 99999;
-      background: white;
+      background: rgba(255,255,255,0.8);
       width: 50%;
       height: 100%;
+      /*left: -50%;*/
       border-right: 1px solid #FFC222;
+      -webkit-transition: all ease 500ms;
+      transition: all ease 500ms;
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
     }
-    .more{
+    .left-content{
+      left: -50%;
+    }
+    .right-content{
+      right: -50%;
+    }
+    .more,.cancel{
+      position: absolute;
+      top: 20px;
+      right: -51px;
       width: 50px;
       height: 40px;
       border-top:1px solid #FFC222;
       border-bottom:1px solid #FFC222;
       border-right:1px solid #FFC222;
+      border-left:1px solid #FFF;
+      background: rgba(255,255,255,0.8);  
       border-top-right-radius:40px;
       border-bottom-right-radius:40px; 
+    }
+    .suosuo{
+      font-size: 23px !important;
+      position: absolute;
+      top: 20px;
+      left: -51px;
+      width: 50px;
+      height: 40px;
+      border-top:1px solid #FFC222;
+      border-bottom:1px solid #FFC222;
+      border-left:1px solid #FFC222;
+      border-right:1px solid #FFF;
+      background: rgba(255,255,255,0.8);  
+      border-top-left-radius:40px;
+      border-bottom-left-radius:40px; 
+    }
+    .iconfont{
+        font-size: 30px;
+        color: #FFC222;
+        text-align: center;
+        line-height: 35px;
+    }
+    .left-content .icon-x{
+        font-size: 24px;
+    }
+    .amap-touch-toolbar .amap-zoomcontrol{
+      position: fixed;
+      bottom:50%;
+      transform: translateY(50%);
+      right:10px;
+    }
+    .add{
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.8); 
+      border:1px solid #FFC222;
+      right: 20px;
+      bottom:30px;
+    }
+    .icon-tianjia{
+      font-size: 30px;
+      line-height: 55px;
     }
   }
   </style>
   <body>
     <div class="left-content">
-      <div class="more"></div>
+      <div class="more iconfont icon-more"></div>
+      <div class="cancel iconfont icon-x" style="display:none" ></div>
     </div>
-    <div id="container"></div>  
+    <div class="right-content">
+      <div class="suosuo iconfont icon-sousuo"></div>
+      <div class="cancel iconfont icon-x" style="display:none" ></div>
+    </div>
+    <div id="container"></div>
+    <div class="add iconfont icon-tianjia open-about"></div>
+    <!-- About Popup -->
+    <div class="popup popup-about">
+      <div class="content-block">
+        <p>About</p>
+        <p><a href="#" class="close-popup">Close popup</a></p>
+        <p>Lorem ipsum dolor ...</p>
+      </div>
+    </div>
+    <!-- Services Popup -->
+    <div class="popup popup-services">
+      <div class="content-block">
+        <p>Services</p>
+        <p><a href="#" class="close-popup">Close popup</a></p>
+        <p>Lorem ipsum dolor ...</p>
+      </div>
+    </div>  
   </body>
+  <script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+  <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.js' charset='utf-8'></script>
   <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=cb84c659c88a7cc83b935a009b3a9cfd"></script>
   <script type="text/javascript" src="/js/map.js"></script>
   <script>
@@ -58,5 +144,24 @@
     //     map.addControl(toolBar);
     //     map.addControl(scale);
     // })
+    var width = $(".left-content").width();
+    console.log(width);
+    $(".more").on("click",function(){
+      // $(".left-content").css("-webkit-transform", "matrix(1, 0, 0, 1, -"+width+", 0)");
+      $(".left-content").css("-webkit-transform", "matrix(1, 0, 0, 1, "+width+", 0)");
+      $(this).hide();
+      $(".cancel").show();
+
+    })
+    $(".cancel").on("click",function(){
+      // $(".left-content").css("-webkit-transform", "matrix(1, 0, 0, 1, -"+width+", 0)");
+      $(".left-content").css("-webkit-transform", "matrix(1, 0, 0, 1, 0, 0)");
+      $(this).hide();
+      $(".more").show();
+    })
+
+    $(document).on('click','.open-about', function () {
+      $.popup('.popup-about');
+    });
   </script>
 </html>
