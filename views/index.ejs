@@ -14,8 +14,13 @@
   </head>
   <style>
     body{
+      position: absolute;
+      left: 0;
+      right: 0 !important;
       padding:0;
       margin:0;
+      width: 100%;
+      overflow: hidden;
     }
     body,html,#container{
         height: 100%;
@@ -96,10 +101,54 @@
       border:1px solid #FFC222;
       right: 20px;
       bottom:30px;
+      z-index: 10401;
+      -webkit-transition: all ease 200ms;
+      transition: all ease 200ms;
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
     }
     .icon-tianjia{
       font-size: 30px;
       line-height: 55px;
+    }
+    .popup-about{
+      background: rgba(100,100,100,0.8);
+    }
+    .theme-list{
+      text-align: center;
+      color: white;
+      width: 70px;
+    }
+    .theme-list label{
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .img-list{
+      display: block;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background-size: cover;
+    }
+    .search-content{
+      position: absolute;
+      top:20px;
+      height: 40px;
+    }
+    .searchbar .searchbar-cancel{
+      height: 40px;
+      line-height: 45px;
+      color: gray
+    }
+    .searchbar{
+      padding: 0;
+      line-height: 40px;
+    }
+    #search{
+      height: 40px;
+      border:1px solid #FFC222;
+      border-left: 0;
+      border-radius: 0;
     }
   }
   </style>
@@ -111,15 +160,28 @@
     <div class="right-content">
       <div class="suosuo iconfont icon-sousuo"></div>
       <div class="cancel iconfont icon-x" style="display:none" ></div>
+      <div class="search-content">
+        <!-- <input> -->
+        <div class="searchbar">
+          <a class="searchbar-cancel">取消</a>
+          <div class="search-input" id="tip">
+            <input type="search" id='search' name="search" placeholder='输入关键字...'/>      
+          </div>
+        </div>
+      </div>
     </div>
     <div id="container"></div>
     <div class="add iconfont icon-tianjia open-about"></div>
     <!-- About Popup -->
     <div class="popup popup-about">
       <div class="content-block">
-        <p><a href="#router3">内联的新页面</a></p>
+        <!-- <p><a href="#router3">内联的新页面</a></p>
         <p><a href="#" class="close-popup">Close popup</a></p>
-        <p>Lorem ipsum dolor ...</p>
+        <p>Lorem ipsum dolor ...</p> -->
+        <div class="theme-list" data-type="live">
+          <img class="img-list" src="/img/home.jpg">
+          <!-- <label>住</label> -->
+        </div>
       </div>
     </div>
 
@@ -174,18 +236,60 @@
       // $(".left-content").css("-webkit-transform", "matrix(1, 0, 0, 1, -"+width+", 0)");
       $(".left-content").css("-webkit-transform", "matrix(1, 0, 0, 1, "+width+", 0)");
       $(this).hide();
-      $(".cancel").show();
+      $(".left-content .cancel").show();
 
     })
     $(".cancel").on("click",function(){
       // $(".left-content").css("-webkit-transform", "matrix(1, 0, 0, 1, -"+width+", 0)");
-      $(".left-content").css("-webkit-transform", "matrix(1, 0, 0, 1, 0, 0)");
-      $(this).hide();
-      $(".more").show();
+      if($(this).parent().hasClass("left-content")){
+        $(".left-content").css("-webkit-transform", "matrix(1, 0, 0, 1, 0, 0)");
+        $(this).hide();
+        $(".more").show();
+      }else{
+        $(".right-content").css("-webkit-transform", "matrix(1, 0, 0, 1, 0, 0)");
+        $(this).hide();
+        $(".suosuo").show();
+      }
+      // $(".left-content").css("-webkit-transform", "matrix(1, 0, 0, 1, 0, 0)");
+      // $(this).hide();
+      // $(".more").show();
     })
 
-    $(document).on('click','.open-about', function () {
-      $.popup('.popup-about');
+    $(".suosuo").on("click",function(){
+      // $(".left-content").css("-webkit-transform", "matrix(1, 0, 0, 1, -"+width+", 0)");
+      // $(".right-content").css("-webkit-transform", "matrix(1, 0, 0, 1, -"+width+", 0)");
+      // $(this).hide();
+      // $(".right-content .cancel").show();
+      if(!$(this).hasClass("open")){
+        $(".right-content").css("-webkit-transform", "matrix(1, 0, 0, 1, -"+width+", 0)");
+        $(this).addClass("open");
+      }else{
+        $(".right-content").css("-webkit-transform", "matrix(1, 0, 0, 1, 0, 0)");
+        $(this).removeClass("open");
+      }
+    })
+
+    $(".add").on("click",function(){
+      console.log("123");
+      if($(".add").hasClass("actived")){
+        $.closeModal('.popup-about');
+        $(".add").css("-webkit-transform", "rotate(0deg)");
+        $(".add").removeClass("actived");
+      }else{
+        $.popup('.popup-about');
+        $(".add").css("-webkit-transform", "rotate(45deg)");
+        $(".add").addClass("actived");
+      }
+      // $(".add").css("-webkit-transform", "rotate(45deg)");
+    })
+    $(".theme-list").on("click",function(){
+      var type = $(this).data("type");
+      window.location.href="/todos/send?type="+type;
     });
+
+
+    // $(document).on('click','.open-about', function () {
+    //   $.popup('.popup-about');
+    // });
   </script>
 </html>

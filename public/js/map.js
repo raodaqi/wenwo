@@ -56,4 +56,36 @@
         map.addControl(toolBar);
         map.addControl(scale);
     })
+
+     map.on('click', function(e) {
+     	console.log(e);
+        alert('您在[ '+e.lnglat.getLng()+','+e.lnglat.getLat()+' ]的位置点击了地图！');
+    });
+
+
+
+     //地图搜索功能
+    // var windowsArr = [];
+    // var marker = [];
+    // var mapObj = new AMap.Map("mapContainer", {
+    //         resizeEnable: true,
+    //         center: [116.397428, 39.90923],//地图中心点
+    //         zoom: 13,//地图显示的缩放级别
+    //         keyboardEnable: false
+    // });
+
+    AMap.plugin(['AMap.Autocomplete','AMap.PlaceSearch'],function(){
+      var autoOptions = {
+        input: "search"//使用联想输入的input的id
+      };
+      autocomplete= new AMap.Autocomplete(autoOptions);
+      var placeSearch = new AMap.PlaceSearch({
+            map:map
+      })
+      AMap.event.addListener(autocomplete, "select", function(e){
+         //TODO 针对选中的poi实现自己的功能
+         console.log(e.name);
+         placeSearch.search(e.poi.name)
+      });
+    });
 }());
