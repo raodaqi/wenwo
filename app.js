@@ -9,6 +9,8 @@ var cloud = require('./cloud');
 var more = require('./routes/more');
 var wechat = require('./routes/wechatBot');
 var user = require('./routes/user');
+var ask = require('./routes/ask');
+var wallet = require('./routes/wallet');
 // var wechat = require('wechat');
 // var config = {
 //   token: 'wenwo',
@@ -71,6 +73,8 @@ app.use('/todos', todos);
 app.use('/more', more);
 app.use('/wechat', wechat);
 app.use('/user', user);
+app.use('/ask', ask);
+app.use('/wallet', wallet);
 
 // 如果任何路由都没匹配到，则认为 404
 // 生成一个异常让后面的 err handler 捕获

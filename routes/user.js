@@ -6,24 +6,22 @@ var AV = require('leanengine');
 
 // `AV.Object.extend` 方法一定要放在全局变量，否则会造成堆栈溢出。
 // 详见： https://leancloud.cn/docs/js_guide.html#对象
-var userInfo = AV.Object.extend('UserInfo');
+var Post = AV.Object.extend('UserInfo');
 
 // 查询 Todo 列表
 router.get('/', function(req, res, next) {
-    AV.User._logInWith('weixin', {
-        "authData": {
-            "weixin": {
-                "openid": "0395BA18A5CD6255E5BA185E7BEBA242",
-                "access_token": "12345678-SaMpLeTuo3m2avZxh5cjJmIrAfx4ZYyamdofM7IjU",
-                "expires_in": 1382686496
-            }
-        }
-    }).then(function(user) {
-        //返回绑定后的用户
-        console.log(user);
-    }, function(error) {
-        console.log(error);
+    var post = new Post();
+
+    post.save({
+        tagName: '每个 JavaScript 程序员必备的 8 个开发工具',
+        tagUrl: "123"
+    }).then(function(post) {
+        // 实例已经成功保存.
+        console.log('suc');
+    }, function(err) {
+        // 失败了.
     });
+    res.send('user');
 });
 
 // // 新增 Todo 项目
