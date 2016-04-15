@@ -38,6 +38,48 @@ body{
 	border-bottom: 1px solid #EAEAEA;
 	margin-top: 40px;
 }
+.user_photo{
+	width: 100px;
+	height: 100px;
+	border:1px solid #EAEAEA;
+	border-radius:50%;
+	float:left;
+	margin-left: 10px;
+	margin-top: -11px;
+}
+.user_photo img{
+	width: 100px;
+	height: 100px;
+	border-radius:50%;
+	background-size: cover;
+}
+.user_informations{
+	width: 145px;
+	height: 112px;
+	float: left;
+	margin-left: 5px;
+}
+.user_name{
+	height: 40px;
+	width: 145px;
+}
+.other_information{
+	width: 145px;
+	height: 40px;
+}
+.edit_icon{
+	width: 45px;
+	height: 45px;
+	float: left;
+	margin-top: 20px;
+}
+.edit{
+	font-size: 25px;
+}
+.details{
+	width: 100%;
+	height: 38px;
+}
 .order{
 	width: 50%;
 	height: 38px;
@@ -47,6 +89,12 @@ body{
 	line-height: 38px;
 	padding-left: 5%;
 }
+.order_word{
+	font-size: 17px;
+	margin-left: 16px;
+	float: left;
+	margin-top: 3px;
+}
 .share{
 	width: 50%;
 	height: 38px;
@@ -55,37 +103,179 @@ body{
 	line-height: 38px;
 	padding-left: 5%;
 }
+.share_word{
+	font-size: 17px; 
+	margin-left: 16px;
+	float: left;
+	margin-top: 3px
+}
 .order_photo{
 	font-size: 20px;
 	height: 38px;
 	margin-top: 2px;
+	float: left;
+	margin-left: 8px;
 }
 .share_photo{
 	font-size: 24px;
 	height: 38px;
+	float: left;
+}
+.money_box,.invite_friends,.watch_us,.contact_us,.about_us{
+	width: 100%;
+	height: 40px;
+	border-bottom: 1px solid #EAEAEA;
+	line-height: 40px;
+	display: block;
+}
+.right_icon{
+	font-size: 25px;
+	float: left;
+	padding-left: 129px;
+}
+.money_box_icon{
+	font-size: 31px;
+	margin-left: 20px;
+	line-height: 40px;
+	height: 40px;
+	float: left;
+	display: inline-block;
+}
+.money_box_word{
+	margin-left: 27px;
+	font-size: 17px;
+	float: left;
+	line-height: 40px;
+	height: 40px;
+	margin-top: 2px;
+	display: inline-block;
+}
+.money{
+	margin-left: 81px;
+	font-size: 17px;
+	float: left;
+	line-height: 40px;
+	height: 40px;
+	margin-top: 2px;
+}
+.invite_friends_icon{
+	font-size: 25px;
+	margin-left: -68%;
+	line-height: 40px;
+	height: 40px;
+	float: left;
+}
+.invite_friends_word{
+	font-size: 17px;
+	margin-left: -52%;
+	line-height: 40px;
+	height: 40px;
+	float: left;
+}
+.watch_us_icon{
+	font-size: 28px;
+	margin-left: 22px;
+	line-height: 40px;
+	height: 40px;
+	float: left;
+}
+.watch_us_word{
+	font-size: 17px;
+	margin-left: 28px;
+	line-height: 40px;
+	height: 40px;
+	float: left;
+}
+.contact_us_icon{
+	font-size: 28px;
+	margin-left: 20px;
+	line-height: 40px;
+	height: 40px;
+	float: left;
+}
+.contact_us_word{
+	font-size: 17px;
+	margin-left: 30px;
+	line-height: 40px;
+	height: 40px;
+	float: left;
+}
+.about_us_icon{
+	font-size: 29px;
+	margin-left: 18px;
+	line-height: 40px;
+	height: 40px;
+	float: left;
+}
+.about_us_word{
+	font-size: 17px;
+	margin-left: 24px;
+	line-height: 40px;
+	height: 40px;
+	float: left;
 }
 </style>
 <body>
 <% include footer.ejs %>
-	<div class="titles">
-		<div class="return">
-		<div class="iconfont icon-zuo zuo"><a></a></div>
+<div class="titles">
+	<div class="return">
+		<div class="iconfont icon-zuo zuo">
+			<a></a>
 		</div>
-		<div class="title_word">个人界面</div>
 	</div>
-	<div class="user_information"></div>
+	<div class="title_word">个人界面</div>
+</div>
+<div class="user_information">
+	<div class="user_photo">
+		<img src="/img/test.jpg">
+	</div>
+	<div class="user_informations">
+		<div class="user_name">努力的任同学</div>
+		<div class="other_information">大学生&nbsp;&nbsp;&nbsp;90后</div>
+	</div>
+	<div class="edit_icon">
+		<div class="iconfont icon-bianji edit"></div>
+	</div>
+</div>
+<div class="details">
 	<div class="order">
-		<div class="iconfont icon-nanrentouxiang order_photo">
-		<span style="font-size: 17px;margin-left: 5px;">我的订单</span>
-		</div>		
+		<div class="iconfont icon-nanrentouxiang order_photo"></div>
+		<div class="order_word">我的订单</div>
 	</div>
 	<div class="share">
-		<div class="iconfont icon-rentouliangren share_photo">
-		<span style="font-size: 17px; margin-left: 5px">我的分享</span>
-		</div>	
-		</div>
-	<div></div>
-	<div></div>
+		<div class="iconfont icon-rentouliangren share_photo"></div>
+		<div class="share_word">我的分享</div>
+	</div>
+</div>
+<div class="money_box">
+	<div class="iconfont icon-qianbao money_box_icon"></div>
+	<div class="money_box_word">钱包</div>
+	<div class="money">￥0.00</div>
+	<div class="iconfont icon-you right_icon" style="padding-left: 33px;"></div>
+</div>
+<div class="invite_friends">
+	<div class="iconfont icon-followee invite_friends_icon"></div>
+	<div class="invite_friends_word">邀请好友</div>
+	<div class="iconfont icon-you right_icon" style="padding-left: 32px;"></div>
+</div>
+<div class="watch_us">
+	<div class="iconfont icon-guanzhu watch_us_icon"></div>
+	<div class="watch_us_word">关注我们</div>
+	<div class="iconfont icon-you right_icon"></div>
+</div>
+<div class="contact_us">
+	<div class="iconfont icon-callphone-copy contact_us_icon"></div>
+	<div class="contact_us_word">联系我们</div>
+	<div class="iconfont icon-you right_icon"></div>
+</div>
+<div class="about_us">
+	<div class="iconfont icon-guanyu about_us_icon"></div>
+	<div class="about_us_word">关于我们</div>
+	<div class="iconfont icon-you right_icon"></div>
+</div>
 <script type="text/javascript">
-	</script>
+	$(".money_box").click(function(){
+		window.location.href="/more/moneyBox";
+	})
+</script>
 </html>

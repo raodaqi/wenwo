@@ -1,0 +1,123 @@
+<% include header.ejs %>
+<style type="text/css">
+body{
+	width: 100%;
+	height: 100%;
+	background-color: white;
+}
+.titles{
+	height: 40px;
+	width: 100%;
+	/*line-height: 40px;*/
+	font-size: 15px;
+	border-bottom: 1px solid #EAEAEA;
+}
+.title_word{
+	width: 50%;
+	height: 40px;
+	line-height: 40px;
+	float: left;
+	text-align: left;
+	font-size: 20px;
+}
+.return{
+	width: 39%;
+	height: 40px;
+	line-height: 40px;
+	float: left;
+	padding-left: 10px;
+}
+.zuo{
+	width: 60px;
+	height: 40px;
+	font-size: 28px;
+}
+.balance{
+	width: 100%;
+	height: 60px;
+	border-bottom: 1px solid #EAEAEA;
+	line-height: 60px;
+}
+.money{
+	font-size: 25px;
+	margin-left: 20px;
+	float: left;
+	width: 60px;
+}
+.balance_money{
+	float: left;
+	height: 60px;
+	line-height: 60px;
+	font-size: 20px;
+}
+.withdraw_cash{
+	height: 40px;
+	line-height: 40px;
+	width: 100%;
+	border-bottom: 1px solid #EAEAEA;
+}
+.withdraw_cash_title{
+	width: 50%;
+	height: 40px;
+	padding-left: 25px;
+	font-size: 15px;
+	float: left;
+}
+.withdraw_cash_money{
+	width: 50%;
+	height: 40px;
+	font-size: 15px;
+	padding-left: 50px;
+	float: left;
+}
+.btn{
+	width: 100%;
+	height: 70px;
+}
+.btn_withdraw_cash,.btn_recharge{
+	width: 50%;
+	height: 70px;
+	float: left;
+	padding: 20px 30px;
+}
+.btn_recharge button{
+	width: 100px;
+	height: 30px;
+}
+.btn_withdraw_cash button{
+	width: 100px;
+	height: 30px;
+}
+</style>
+<body>
+<% include footer.ejs %>
+<div class="titles">
+	<div class="return">
+		<div class="iconfont icon-zuo zuo">
+			<a></a>
+		</div>
+	</div>
+	<div class="title_word">钱包</div>
+</div>
+	<div class="balance">
+		<div class="iconfont icon-qianBao money"></div>
+		<div class="balance_money">账户余额:30.00</div>
+	</div>
+	<div class="withdraw_cash">
+		<div class="withdraw_cash_title">账户可提现:</div>
+		<div class="withdraw_cash_money">30元</div>
+	</div>
+	<div class="btn">
+		<div class="btn_withdraw_cash">
+		<button>提现</button>
+		</div>
+		<div class="btn_recharge">
+			<button>充值</button>
+		</div>
+	</div>
+<script type="text/javascript">
+$(".zuo").click(function(){
+		history.go(-1);
+	})
+</script>
+</html>
