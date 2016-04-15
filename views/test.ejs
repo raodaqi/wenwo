@@ -2,8 +2,20 @@
 <html>
 <head>
     <title>Test</title>
-    <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body>
+<script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+<script>
+    $.ajax({
+        type: "post",
+        url: 'user/getuserinfo',
+        data: {session_token:'f7tulp41h4bcsbgnppvlkwd19', username: 'hanqi'},
+        dataType: "json",
+        success : function(result) {
+            console.log(result);
+        },
+        error : function(){}
+    });
+</script>
 </body>
 </html>
