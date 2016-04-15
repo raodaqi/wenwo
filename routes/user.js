@@ -12,7 +12,7 @@ var Post = AV.Object.extend('UserInfo');
 router.get('/regist', function(req, res, next) {
     var post = new Post();
 
-    console.log(req);
+    console.log(req.param('id'));
 });
 
 // // 新增 Todo 项目
