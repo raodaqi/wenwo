@@ -7,8 +7,9 @@ var AV = require('leanengine');
 // `AV.Object.extend` 方法一定要放在全局变量，否则会造成堆栈溢出。
 // 详见： https://leancloud.cn/docs/js_guide.html#对象
 var Post = AV.Object.extend('UserInfo');
+var Wallet = AV.Object.extend('Wallet');
 
-// 查询 Todo 列表
+
 router.get('/regist', function(req, res, next) {
     var userName = req.param('username');
     var password = req.param('password');
@@ -31,9 +32,11 @@ router.get('/regist', function(req, res, next) {
     }
     var user = new AV.User();
     var post = new Post();
+    var wallet = new Wallet();
     post.set('userName', userName);
     post.set('userHead', userhead);
     user.set('userInfo', post);
+    user.set('wallet', wallet);
     user.set('username', userName);
     user.set('password', password);
     user.signUp().then(function(user) {
@@ -109,7 +112,23 @@ router.post('/login', function (req, res, next) {
 router.post('/getuserinfo', function(req, res, next) {
     var sessionToken = req.param('session_token');
     var userName = req.param('username');
-    // if (testToken(sessionToken, userName)) {
+    if (!userName) {
+        var result = {
+            code : 300,
+            message : 'miss parameter : username'
+        }
+        res.send(result);
+        return;
+    }
+    if (!sessionToken) {
+        var result = {
+            code : 300,
+            message : 'miss parameter : sessionToken'
+        }
+        res.send(result);
+        return;
+    }
+    // if (!testToken(sessionToken, userName)) {
     //     var result = {
     //         code : 500,
     //         message : 'login information error'
