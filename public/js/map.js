@@ -59,7 +59,17 @@
 
      map.on('click', function(e) {
      	console.log(e);
-        alert('您在[ '+e.lnglat.getLng()+','+e.lnglat.getLat()+' ]的位置点击了地图！');
+        // alert('您在[ '+e.lnglat.getLng()+','+e.lnglat.getLat()+' ]的位置点击了地图！');
+      var icon = new AMap.Icon({
+          image : 'http://vdata.amap.com/icons/b18/1/2.png',//24px*24px
+          //icon可缺省，缺省时为默认的蓝色水滴图标，
+          size : new AMap.Size(24,24)
+      });
+      var marker = new AMap.Marker({
+              icon : icon,//24px*24px
+              offset : new AMap.Pixel(e.lnglat.getLat(),e.lnglat.getLng()),
+              map : map
+      });
     });
 
 
@@ -84,8 +94,20 @@
       })
       AMap.event.addListener(autocomplete, "select", function(e){
          //TODO 针对选中的poi实现自己的功能
-         console.log(e.name);
+         console.log(e.poi.name);
          placeSearch.search(e.poi.name)
       });
     });
+
+    // var icon = new AMap.Icon({
+    //         image : 'http://vdata.amap.com/icons/b18/1/2.png',//24px*24px
+    //         //icon可缺省，缺省时为默认的蓝色水滴图标，
+    //         size : new AMap.Size(24,24)
+    // });
+    // var marker = new AMap.Marker({
+    //         icon : icon,//24px*24px
+    //         position : provinces[i].center.split(','),
+    //         offset : new AMap.Pixel(-12,-12),
+    //         map : mapObj
+    // });
 }());
