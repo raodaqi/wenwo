@@ -6,8 +6,8 @@ var AV = require('leanengine');
 // var Todo = AV.Object.extend('Todo');
 
 // 查询 Todo 列表
-router.get('/', function(req, res, next) {
-  res.render('more/user');
+router.get('/order', function(req, res, next) {
+  res.render('more/order');
 });
 
 router.get('/bbb', function(req, res, next) {

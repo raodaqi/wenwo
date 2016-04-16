@@ -11,6 +11,7 @@ body{
 	/*line-height: 40px;*/
 	font-size: 15px;
 	border-bottom: 1px solid #EAEAEA;
+	background-color: #F9CC51;
 }
 .title_word{
 	width: 50%;
@@ -19,6 +20,7 @@ body{
 	float: left;
 	text-align: left;
 	font-size: 20px;
+	color: white;
 }
 .return{
 	width: 39%;
@@ -31,6 +33,7 @@ body{
 	width: 60px;
 	height: 40px;
 	font-size: 28px;
+	color: white;
 }
 .user_information{
 	width: 100%;
@@ -128,10 +131,15 @@ body{
 	line-height: 40px;
 	display: block;
 }
+.left{
+	height: 40px;
+	width: 76%;
+	float: left;
+}
 .right_icon{
 	font-size: 25px;
-	float: left;
-	padding-left: 129px;
+	float: right;
+	margin-right: 18px;
 }
 .money_box_icon{
 	font-size: 31px;
@@ -145,29 +153,29 @@ body{
 	margin-left: 27px;
 	font-size: 17px;
 	float: left;
-	line-height: 40px;
-	height: 40px;
+	line-height: 37px;
+	height: 37px;
 	margin-top: 2px;
 	display: inline-block;
 }
 .money{
-	margin-left: 81px;
+	margin-left: 80px;
 	font-size: 17px;
 	float: left;
-	line-height: 40px;
-	height: 40px;
+	line-height: 37px;
+	height: 37px;
 	margin-top: 2px;
 }
 .invite_friends_icon{
 	font-size: 25px;
-	margin-left: -68%;
+	margin-left: 23px;
 	line-height: 40px;
 	height: 40px;
 	float: left;
 }
 .invite_friends_word{
 	font-size: 17px;
-	margin-left: -52%;
+	margin-left: 29px;
 	line-height: 40px;
 	height: 40px;
 	float: left;
@@ -248,34 +256,47 @@ body{
 	</div>
 </div>
 <div class="money_box">
+	<div class="left">
 	<div class="iconfont icon-qianbao money_box_icon"></div>
 	<div class="money_box_word">钱包</div>
 	<div class="money">￥0.00</div>
+	</div>
 	<div class="iconfont icon-you right_icon" style="padding-left: 33px;"></div>
 </div>
 <div class="invite_friends">
+	<div class="left">
 	<div class="iconfont icon-followee invite_friends_icon"></div>
 	<div class="invite_friends_word">邀请好友</div>
+	</div>
 	<div class="iconfont icon-you right_icon" style="padding-left: 32px;"></div>
 </div>
 <div class="watch_us">
+	<div class="left">
 	<div class="iconfont icon-guanzhu watch_us_icon"></div>
 	<div class="watch_us_word">关注我们</div>
+	</div>
 	<div class="iconfont icon-you right_icon"></div>
 </div>
 <div class="contact_us">
+	<div class="left">
 	<div class="iconfont icon-callphone-copy contact_us_icon"></div>
 	<div class="contact_us_word">联系我们</div>
+	</div>
 	<div class="iconfont icon-you right_icon"></div>
 </div>
 <div class="about_us">
+	<div class="left">
 	<div class="iconfont icon-guanyu about_us_icon"></div>
 	<div class="about_us_word">关于我们</div>
+	</div>
 	<div class="iconfont icon-you right_icon"></div>
 </div>
 <script type="text/javascript">
 	$(".money_box").click(function(){
 		window.location.href="/more/moneyBox";
+	})
+	$(".order").click(function(){
+		window.location.href="/more/order";
 	})
 </script>
 </html>
