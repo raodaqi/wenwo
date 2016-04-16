@@ -94,7 +94,7 @@
       })
       AMap.event.addListener(autocomplete, "select", function(e){
          //TODO 针对选中的poi实现自己的功能
-         console.log(e.poi.name);
+         console.log(e);
          placeSearch.search(e.poi.name)
       });
     });
