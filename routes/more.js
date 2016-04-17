@@ -10,8 +10,8 @@ router.get('/order', function(req, res, next) {
   res.render('more/order');
 });
 
-router.get('/bbb', function(req, res, next) {
-  res.render('more/bbb');
+router.get('/share', function(req, res, next) {
+  res.render('more/share');
 });
 
 router.get('/personalPage', function(req, res, next) {
