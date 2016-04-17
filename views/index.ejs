@@ -297,6 +297,9 @@
       window.location.href="/todos/send?type="+type;
     });
 
+    $(".amap-sug-result").on("click",".auto-item",function(){
+      $(".right-content,.left-content").css("-webkit-transform", "matrix(1, 0, 0, 1, 0, 0)");
+    })
 
     // $(document).on('click','.open-about', function () {
     //   $.popup('.popup-about');

@@ -27,10 +27,82 @@
       font-weight: 400;
       font-size: 13px;
       text-align: center;
-      margin-right: .5rem;
+      margin: 0 .5rem .2rem 0;
+      border-radius: 3px;
     }
     .next{
       float: right;
+    }
+    .theme-ul{
+      text-align: center;
+    }
+    .theme-li{
+      display: inline-block;
+      text-align: center;
+      margin: 10px;
+      width: 100px;
+      height: 100px;
+      line-height: 100px;
+      border-radius: 50%;
+      border:1px solid #FFC222;
+    }
+    .theme-li.active{
+      background-color: #FFC222;
+      color:white;
+    }
+    .recommend-reason,.tag-content,.result-detail{
+      padding: 10px;
+    }
+    #reason,#detail{
+      width: 100%;
+      box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+      border: 1px solid #ccc;
+      min-height: 100px;
+      resize:none;
+      border-radius:3px;
+      padding:5px 10px;
+    }
+    #detail{
+      min-height: 300px;
+    }
+    .ww-typeHelper {
+        position: relative;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        display: block;
+        color: #555;
+        vertical-align: middle;
+        border-radius: 3px;
+        max-width: 100%;
+        cursor: text;
+        width: 100%;
+        font-size: 14px;
+        line-height: 1.5;
+        padding: 6px 12px;
+    }
+    .ww-typeHelper-input {
+        border: none;
+        box-shadow: none;
+        outline: none;
+        background-color: transparent;
+        padding: 0;
+        margin: 0;
+        text-transform: lowercase;
+        width: 6rem;
+        max-width: 100%;
+    }
+    .techTags {
+        /*display: none;*/
+        width: 100%;
+        padding: 6px 12px;
+        margin-bottom: 21px;
+        /*background-color: #fff;*/
+        /*border: 1px solid transparent;*/
+        border-radius: 3px;
+        /*box-shadow: 0 1px 1px rgba(0,0,0,.05);*/
+        padding-bottom: 21px;
+        margin-top: 1px;
     }
   }
   </style>
@@ -129,7 +201,14 @@
       </header>
       <div class="content">
         <div class="content-block">
-          这是内联编写的页面，点击左上角的 <a href="#" class='back'>返回</a> 按钮返回上一页。
+          <div class="theme-ul">
+            <div class="theme-li">吃</div>
+            <div class="theme-li">住</div>
+            <div class="theme-li">购</div>
+            <div class="theme-li">行</div>
+            <div class="theme-li">防坑</div>
+            <div class="theme-li">游玩</div>
+          </div>
         </div>
       </div>
     </div>
@@ -151,8 +230,20 @@
         <h1 class='title'>标签</h1>
       </header>
       <div class="content">
-        <div class="content-block">
-          这是内联编写的页面，点击左上角的 <a href="#" class='back'>返回</a> 按钮返回上一页。
+        <div class="tag-content">
+          <!-- <textarea name="tag" id="tag"></textarea> -->
+          <div class="ww-typeHelper">
+            <input type="text" data-role="ww_typeHelper-input" class="ww-typeHelper-input" placeholder="标签，如：php 可使用逗号,分号;" style="width: 20em;">          
+          </div>
+          <div role="tabpanel" class="techTags panel-default techTags-panel" data-tech="">
+            <div class="tag-ul">
+              <div class="tag-li eat-ul">
+                <span class="type-item">火锅</span>
+              </div>
+              
+            </div>
+            
+          </div>
         </div>
       </div>
     </div>
@@ -174,8 +265,8 @@
         <h1 class='title'>推荐理由</h1>
       </header>
       <div class="content">
-        <div class="content-block">
-          这是内联编写的页面，点击左上角的 <a href="#" class='back'>返回</a> 按钮返回上一页。
+        <div class="recommend-reason">
+          <textarea name="reason" id="reason" placeholder="用一段简洁的话描述你的推荐的理由"></textarea>
         </div>
       </div>
     </div>
@@ -197,8 +288,8 @@
         <h1 class='title'>信息详情</h1>
       </header>
       <div class="content">
-        <div class="content-block">
-          这是内联编写的页面，点击左上角的 <a href="#" class='back'>返回</a> 按钮返回上一页。
+        <div class="result-detail">
+          <textarea name="detail" id="detail" placeholder=""></textarea>
         </div>
       </div>
     </div>
@@ -251,6 +342,31 @@
     $(".card").on("click",function(){
       var href = $(this).data("href");
       $.router.load("#"+href);
+    })
+    $(".theme-ul .theme-li").on("click",function(){
+      $(".theme-li").removeClass("active");
+      $(this).addClass("active");
+    })
+    $(".ww-typeHelper-input").on("input change",function(){
+      console.log($(this).val());
+      var text = $(this).val();
+      if(text.indexOf(";")!=-1 || text.indexOf("；")!=-1 || text.indexOf(",")!=-1 || text.indexOf("，")!=-1){
+        var text = text.substr(0,text.length-1);
+        console.log(text);
+        var span = '<span class="type-item">'+text+'</span>';
+        $(this).before(span);
+        $(this).val('');
+      }
+    })
+    $(".ww-typeHelper").on("click",".type-item",function(){
+      $(this).remove();
+      var span = '<span class="type-item">'+ $(this).text()+'</span>';
+      $(".tag-li").append(span);
+    })
+    $(".tag-ul").on("click",".type-item",function(){
+      var span = '<span class="type-item">'+ $(this).text()+'</span>';
+      $(this).remove();
+      $(".ww-typeHelper-input").before(span);
     })
   </script>
 </html>
