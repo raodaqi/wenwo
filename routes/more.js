@@ -20,6 +20,12 @@ router.get('/personalPage', function(req, res, next) {
 router.get('/moneyBox', function(req, res, next) {
   res.render('more/moneyBox');
 });
+router.get('/contact-us', function(req, res, next) {
+  res.render('more/contact-us');
+});
+router.get('/purchase-detail', function(req, res, next) {
+  res.render('more/purchase-detail');
+});
 // 新增 Todo 项目
 router.post('/', function(req, res, next) {
   var content = req.body.content;
