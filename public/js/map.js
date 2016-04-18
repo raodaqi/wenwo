@@ -65,11 +65,20 @@
           //icon可缺省，缺省时为默认的蓝色水滴图标，
           size : new AMap.Size(24,24)
       });
+      // var marker = new AMap.Marker({
+      //         icon : icon,//24px*24px
+      //         offset : new AMap.Pixel(e.lnglat.getLat(),e.lnglat.getLng()),
+      //         map : map
+      // });
       var marker = new AMap.Marker({
-              icon : icon,//24px*24px
-              offset : new AMap.Pixel(e.lnglat.getLat(),e.lnglat.getLng()),
-              map : map
+        icon : icon,//24px*24px
+        map : map,
+        position: [e.lnglat.getLng(),e.lnglat.getLat()],
+        draggable: true,
+        cursor: 'move',
+        raiseOnDrag: true
       });
+      marker.setMap(map);
     });
 
 
@@ -110,4 +119,5 @@
     //         offset : new AMap.Pixel(-12,-12),
     //         map : mapObj
     // });
+    window.map = map;
 }());
