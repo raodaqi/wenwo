@@ -58,12 +58,16 @@
     })
 
      map.on('click', function(e) {
-     	console.log(e);
+
+      //clear all markers
+      map.clearMap();
+
+     	console.log('您在[ '+e.lnglat.getLng()+','+e.lnglat.getLat()+' ]的位置点击了地图！');
         // alert('您在[ '+e.lnglat.getLng()+','+e.lnglat.getLat()+' ]的位置点击了地图！');
       var icon = new AMap.Icon({
-          image : 'http://vdata.amap.com/icons/b18/1/2.png',//24px*24px
+          // image : 'http://vdata.amap.com/icons/b18/1/2.png',//24px*24px
           //icon可缺省，缺省时为默认的蓝色水滴图标，
-          size : new AMap.Size(24,24)
+          // size : new AMap.Size(24,24)
       });
       // var marker = new AMap.Marker({
       //         icon : icon,//24px*24px
@@ -76,10 +80,20 @@
         position: [e.lnglat.getLng(),e.lnglat.getLat()],
         draggable: true,
         cursor: 'move',
-        raiseOnDrag: true
+        raiseOnDrag: true,
+        clickable:true
       });
+
+      //拖动标注后回调的坐标
+       marker.on("dragend",function(){
+        console.log(this.getPosition());
+        var lat = this.getPosition().lat;
+        var lng = this.getPosition().lng;
+      })
       marker.setMap(map);
     });
+
+   
 
 
 
@@ -119,5 +133,43 @@
     //         offset : new AMap.Pixel(-12,-12),
     //         map : mapObj
     // });
+
+
+
+    // // 添加点聚合
+    // // var cluster, markers = [];
+    // // addCluster(0);
+    // function addCluster(tag) {
+    //     if (cluster) {
+    //         cluster.setMap(null);
+    //     }
+    //     if (tag == 1) {
+    //         var sts = [{
+    //             url: "http://lbs.amap.com/wp-content/uploads/2014/06/1.png",
+    //             size: new AMap.Size(32, 32),
+    //             offset: new AMap.Pixel(-16, -30)
+    //         }, {
+    //             url: "http://lbs.amap.com/wp-content/uploads/2014/06/2.png",
+    //             size: new AMap.Size(32, 32),
+    //             offset: new AMap.Pixel(-16, -30)
+    //         }, {
+    //             url: "http://lbs.amap.com/wp-content/uploads/2014/06/3.png",
+    //             size: new AMap.Size(48, 48),
+    //             offset: new AMap.Pixel(-24, -45),
+    //             textColor: '#CC0066'
+    //         }];
+    //         map.plugin(["AMap.MarkerClusterer"], function() {
+    //             cluster = new AMap.MarkerClusterer(map, markers, {
+    //                 styles: sts
+    //             });
+    //         });
+    //     } else {
+    //         map.plugin(["AMap.MarkerClusterer"], function() {
+    //             cluster = new AMap.MarkerClusterer(map, markers);
+    //         });
+    //     }
+    // }
+
+
     window.map = map;
 }());

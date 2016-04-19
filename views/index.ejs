@@ -161,6 +161,20 @@
       top: 60px !important;
       border:0 !important;
     }
+    .amap-icon{
+      border-radius: 50%;
+      border-image:url("/img/blue.png");
+      border-image-slice: 10;
+      border-image-width:10px;
+      border-image-repeat:rounded;
+      
+    }
+    .amap-icon img{
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+
+    }
   }
   </style>
   <body>
@@ -302,8 +316,78 @@
       $(".right-content,.left-content").css("-webkit-transform", "matrix(1, 0, 0, 1, 0, 0)");
     })
 
+
+     // 添加点聚合
+    var cluster, markers = [];
+    // addCluster(0);
+    function addCluster(tag) {
+        if (cluster) {
+            cluster.setMap(null);
+        }
+        if (tag == 1) {
+            var sts = [{
+                url: "http://lbs.amap.com/wp-content/uploads/2014/06/1.png",
+                size: new AMap.Size(32, 32),
+                offset: new AMap.Pixel(-16, -30)
+            }, {
+                url: "http://lbs.amap.com/wp-content/uploads/2014/06/2.png",
+                size: new AMap.Size(32, 32),
+                offset: new AMap.Pixel(-16, -30)
+            }, {
+                url: "http://lbs.amap.com/wp-content/uploads/2014/06/3.png",
+                size: new AMap.Size(48, 48),
+                offset: new AMap.Pixel(-24, -45),
+                textColor: '#CC0066'
+            }];
+            map.plugin(["AMap.MarkerClusterer"], function() {
+                cluster = new AMap.MarkerClusterer(map, markers, {
+                    styles: sts
+                });
+            });
+        } else {
+            map.plugin(["AMap.MarkerClusterer"], function() {
+                cluster = new AMap.MarkerClusterer(map, markers);
+            });
+        }
+
+    }
+
     // $(document).on('click','.open-about', function () {
     //   $.popup('.popup-about');
     // });
+    var data = {};
+    $.ajax({
+      type : "POST",
+      data: data,
+      dataType: "json",
+      url : "/todos",
+      success : function(result){
+        console.log(result);
+        // var cluster, markers = [];
+        for(var i = 0; i < result.length;i++){
+          var icon = new AMap.Icon({
+              image : result[i].url,//24px*24px
+              size : new AMap.Size(50,50)
+          });
+          var marker = new AMap.Marker({
+            icon : icon,//24px*24px
+            map : map,
+            position: [result[i].lng,result[i].lat],
+            draggable: false,
+            clickable:true,
+            cursor: 'move',
+            raiseOnDrag: false
+          });
+          markers.push(marker);
+          marker.setMap(map);
+        }
+        addCluster(0);
+      },
+      error: function(error){
+        alert(error);
+      }
+    });
+
+
   </script>
 </html>
