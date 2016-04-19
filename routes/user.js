@@ -33,6 +33,8 @@ router.get('/regist', function(req, res, next) {
     var user = new AV.User();
     var post = new Post();
     var wallet = new Wallet();
+    wallet.set('money', 0);
+    wallet.save();
     post.set('userName', userName);
     post.set('userHead', userhead);
     user.set('userInfo', post);
@@ -75,33 +77,37 @@ router.post('/login', function (req, res, next) {
         return;
     }
 
-    AV.User.logIn(userName, password).then(function(callback) {
+    AV.User.logIn(userName, password).then(function() {
         var session_token = AV.User.current()._sessionToken;
         var query = new AV.Query('UserInfo');
 
-        getUserId(userName, {
-            success:function (result) {
-                console.log(result);
-                var user_id = result;
+        query.equalTo('userName', userName);
+        query.find().then(function(results) {
+            //console.log(results[0]);
+            var user_id = results[0].id;
+            query.get(user_id).then(function(post) {
 
-                //console.log(user_id);
-                var data = {
-                    session_token : session_token,
-                    user_id : user_id,
-                    user_name : userName
-                }
-                var result = {
-                    code : 200,
-                    data : data,
-                    message : 'operation succeeded'
-                }
-                testToken(session_token);
-                res.send(result);
-            },
-            error: function (error) {
-
+                //console.log(post);
+                post.set('token', session_token);
+                post.save();
+            }, function(error) {
+                // 失败了
+            });
+            var data = {
+                session_token : session_token,
+                user_id : user_id,
+                user_name : userName
             }
+            var result = {
+                code : 200,
+                data : data,
+                message : 'operation succeeded'
+            }
+            res.send(result);
+        }, function(error) {
+
         });
+
 
 
     }, function() {
@@ -109,7 +115,7 @@ router.post('/login', function (req, res, next) {
     });
 });
 
-router.post('/getuserinfo', function(req, res, next) {
+router.get('/getuserinfo', function(req, res, next) {
     var sessionToken = req.param('session_token');
     var userName = req.param('username');
     if (!userName) {
@@ -120,72 +126,41 @@ router.post('/getuserinfo', function(req, res, next) {
         res.send(result);
         return;
     }
-    if (!sessionToken) {
-        var result = {
-            code : 300,
-            message : 'miss parameter : sessionToken'
-        }
-        res.send(result);
-        return;
-    }
-    // if (!testToken(sessionToken, userName)) {
+
+    // if (!sessionToken) {
     //     var result = {
-    //         code : 500,
-    //         message : 'login information error'
+    //         code : 300,
+    //         message : 'miss parameter : sessionToken'
     //     }
     //     res.send(result);
     //     return;
     // }
-    var query = new AV.Query('UserInfo');
-
-    query.equalTo('userName', userName);
+    var query = new AV.Query('_User');
+    query.equalTo('username', userName);
     query.find().then(function(results) {
-        console.log(results[0]);
-        var userId = results[0].id;
-        var userName = results[0].attributes.userName;
-        var userHead = results[0].attributes.userHead;
-
-        var data = {
-            user_id :userId,
-            user_name : userName,
-            user_head : userHead
-        }
-        var resulte = {
-            code : 200,
-            data : data,
-            message : 'operation successed'
-        }
-    }, function(error) {
-        console.log('def');
+        //console.log(results[0].get('userInfo').id);
+        var userId =  results[0].get('userInfo').id;
+        var que = new AV.Query('UserInfo');
+        que.get(userId).then(function(post) {
+            console.log(post.get('userHead'));
+            var data = {
+                user_id :userId,
+                user_name : userName,
+                user_head : post.get('userHead')
+            }
+            var resulte = {
+                code : 200,
+                data : data,
+                message : 'operation successed'
+            }
+            res.send(resulte);
+        });
     });
+
+
 
 });
 
-function getUserId(userName,callback) {
-    var query = new AV.Query('UserInfo');
 
-    query.equalTo('userName', userName);
-    query.find().then(function(results) {
-        //console.log(results[0].id);
-        var user_id = results[0].id;
-        callback.success(user_id);
-    }, function(error) {
-
-    });
-}
-
-function testToken(token, userName) {
-    AV.User.become(token).then(function (user) {
-        console.log(user.attributes.username);
-        if (user.attributes.username == userName) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }, function (error) {
-
-    });
-}
 
 module.exports = router;

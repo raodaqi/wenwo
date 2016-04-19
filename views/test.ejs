@@ -6,16 +6,86 @@
 <body>
 <script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
 <script>
-    $.ajax({
-        type: "post",
-        url: 'user/getuserinfo',
-        data: {session_token:'f7tulp41h4bcsbgnppvlkwd19', username: 'hanqi'},
-        dataType: "json",
-        success : function(result) {
-            console.log(result);
-        },
-        error : function(){}
-    });
+    test();
+    function test() {
+
+
+//        $.ajax({
+//            type: "get",
+//            url: 'user/regist',
+//            data: {password:'123', username: 'hanqi123'},
+//            dataType: "json",
+//            success : function(result) {
+//                console.log(result);
+//            },
+//            error : function(){}
+//        });
+//        $.ajax({
+//            type: "post",
+//            url: 'user/login',
+//            data: {password:'123', username: 'hanqi'},
+//            dataType: "json",
+//            success : function(result) {
+//                console.log(result);
+//            },
+//            error : function(){}
+//        });
+//        var tag = new Array();
+//        tag[0] = {
+//            tag_name:'hanqi'
+//        }
+//        tag[1] = {
+//            tag_name:'222'
+//        }
+//
+//        tag = JSON.stringify(tag);
+//        var data = {
+//            username:'hanqi',
+//            type:1,
+//            isfree:0,
+//            geo:123,
+//            position:'asd',
+//            reason:'asd',
+//            content_show:'asd',
+//            content_hide:'asd',
+//            price:0.1,
+//            tag:tag,
+//            remark:'asd'
+//
+//        }
+//        console.log(data);
+//        $.ajax({
+//            type: "post",
+//            url: 'ask/sendask',
+//            data: data,
+//            dataType: "json",
+//            success : function(result) {
+//                console.log(result);
+//            },
+//            error : function(){}
+//        });
+
+        $.ajax({
+            type: "get",
+            url: 'user/regist',
+            data: {username:'hanqi123456', password:'123'},
+            dataType: "json",
+            success : function(result) {
+                console.log(result);
+            },
+            error : function(){}
+        });
+//        $.ajax({
+//            type: "get",
+//            url: 'wallet/mywallet',
+//            data: {username:'hanqi'},
+//            dataType: "json",
+//            success : function(result) {
+//                console.log(result);
+//            },
+//            error : function(){}
+//        });
+    }
 </script>
 </body>
 </html>
