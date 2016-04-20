@@ -77,6 +77,12 @@
       var marker = new AMap.Marker({
         icon : icon,//24px*24px
         map : map,
+        tagName:"火锅;超辣的",
+        askReason:"味道真的不错",
+        askContentShow:"这里的味道真的不错",
+        price:0.2,
+        createBy:"hanqi",
+        createAt:"2016-04-19",
         position: [e.lnglat.getLng(),e.lnglat.getLat()],
         draggable: true,
         cursor: 'move',

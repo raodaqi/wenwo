@@ -20,6 +20,7 @@ router.get('/', function(req, res, next) {
   var marker = [];
   for(var i = 0; i < 10; i++){
     var li = {
+      id:"marker"+i,
       url:"/img/",
       lng:"104.065"+Math.ceil(1000*Math.random()),
       lat:"30.659"+Math.ceil(1000*Math.random())
@@ -50,9 +51,12 @@ router.post('/', function(req, res, next) {
   var marker = [];
   for(var i = 0; i < 10; i++){
     var li = {
+      id:"marker"+i,
       url:"/img/hotPot.jpg",
-      lng:"103.985"+Math.ceil(1000*Math.random()),
-      lat:"30.581"+Math.ceil(1000*Math.random())
+      // lng:"103.985"+Math.ceil(1000*Math.random()),
+      // lat:"30.581"+Math.ceil(1000*Math.random())
+      lng:"104.065"+Math.ceil(1000*Math.random()),
+      lat:"30.659"+Math.ceil(1000*Math.random())
     }
     console.log(li);
     marker[i] = li;

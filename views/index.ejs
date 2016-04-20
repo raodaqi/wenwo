@@ -175,6 +175,31 @@
       background-size: cover;
 
     }
+    .amap-active{
+      margin-left: -100px;
+      background: black;
+      width: 200px;
+      height: 50px;
+      border-radius: 50px;
+    }
+    .amap-marker-content{
+      position: absolute;
+      padding-left: 50px;
+      color: white;
+      font-size: 12px;
+    }
+    .amap-marker-content div{
+      height: 25px;
+      line-height: 25px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .up-price-right{
+      position: absolute;
+      top: 0;
+      right:-150px;
+      color: #FFC222;
+    }
   }
   </style>
   <body>
@@ -378,7 +403,29 @@
             cursor: 'move',
             raiseOnDrag: false
           });
+          marker.setExtData({
+            id:result[i].id,
+            tagName:result[i].tagName,
+            askReason:result[i].askReason,
+            askContentShow:result[i].askContentShow,
+            price:result[i].price,
+            createBy:result[i].createBy,
+            createAt:result[i].createAt,
+            lng:result[i].lng,
+            lat:result[i].lat
+          })
           markers.push(marker);
+
+          //监听marker点击事件
+          marker.on("click",function(){
+            console.log(this);
+            var lng = this.Ee.extData.lng;
+            var lat = this.Ee.extData.lat;
+
+            //设置地图中心位置为点击的marker上
+            map.setZoomAndCenter(20,[lng,lat]);
+          });
+
           marker.setMap(map);
         }
         addCluster(0);
@@ -388,6 +435,17 @@
       }
     });
 
-
+    $("#container").on("click",".amap-marker",function(){
+      // $(this).addClass("amap-active");
+      $(".amap-marker-content").remove();
+      var div = '<div class="amap-marker-content"><div class="up">火锅<div class="up-price-right">0.8元</div></div><div class="down">这个真的很好吃</div></div>';
+      $(this).children(".amap-icon").after(div);
+      if($(this).hasClass("amap-active")){
+        $(this).removeClass("amap-active");
+      }else{
+        $(".amap-marker").removeClass("amap-active");
+        $(this).addClass("amap-active");
+      }
+    })
   </script>
 </html>
