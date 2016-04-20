@@ -46,9 +46,6 @@ router.get('/allask', function(req, res, next) {
 
 });
 
-router.get('/askhode', function(req, res, next) {
-});
-
 router.get('/askhide', function(req, res, next) {
     var askId = req.param('ask_id');
     var userName = req.param('username');

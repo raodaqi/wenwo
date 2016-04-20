@@ -38,7 +38,7 @@ router.get('/regist', function(req, res, next) {
     post.set('userName', userName);
     post.set('userHead', userhead);
     user.set('userInfo', post);
-    user.set('wallet', wallet);
+    post.set('wallet', wallet);
     user.set('username', userName);
     user.set('password', password);
     user.signUp().then(function(user) {

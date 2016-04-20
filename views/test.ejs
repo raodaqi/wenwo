@@ -64,27 +64,27 @@
 //            },
 //            error : function(){}
 //        });
-
-        $.ajax({
-            type: "get",
-            url: 'user/regist',
-            data: {username:'hanqi123456', password:'123'},
-            dataType: "json",
-            success : function(result) {
-                console.log(result);
-            },
-            error : function(){}
-        });
+//
 //        $.ajax({
 //            type: "get",
-//            url: 'wallet/mywallet',
-//            data: {username:'hanqi'},
+//            url: 'user/regist',
+//            data: {username:'test', password:'123'},
 //            dataType: "json",
 //            success : function(result) {
 //                console.log(result);
 //            },
 //            error : function(){}
 //        });
+        $.ajax({
+            type: "get",
+            url: 'wallet/mywallet',
+            data: {username:'test'},
+            dataType: "json",
+            success : function(result) {
+                console.log(result);
+            },
+            error : function(){}
+        });
     }
 </script>
 </body>

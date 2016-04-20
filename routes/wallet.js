@@ -30,9 +30,9 @@ router.get('/mywallet', function(req, res, next) {
     var query = new AV.Query('UserInfo');
     query.equalTo('userName', userName);
     query.find().then(function(results) {
-        console.log(results);
-        //console.log(results.attributes.wallet);
-        // if (!results.attributes.wallet) {
+        //console.log(results);
+        console.log(results[0].attributes.wallet);
+        // if (!results[0].attributes.wallet) {
         //     var wallet = new Wallet();
         //     wallet.set('money', 0);
         //     wallet.save();
@@ -44,8 +44,17 @@ router.get('/mywallet', function(req, res, next) {
         //
         //
         // }
+        if (results[0].attributes.wallet) {
+            var id = results[0].attributes.wallet.id;
+            var query = new AV.Query('Wallet');
+            query.get(id).then(function (post) {
+                //console.log(post);
+                res.send(post);
+            });
 
-        res.send(results);
+        }
+
+
     });
 
 });
