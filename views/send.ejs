@@ -130,6 +130,7 @@
       line-height: 100px;
       border-radius: 50%;
       border: 1px solid #FFC222;
+      display: inline-block;
     }
     .search-input{
       width: 100%;
@@ -150,6 +151,12 @@
       float: right;
     }
     #price-picker{
+    }
+    .theme-hidden{
+      display: none;
+    }
+    .card-cover{
+      height:300px;
     }
   }
   </style>
@@ -177,12 +184,15 @@
                   </ul>
                 </div>
               </div> -->
-              <div class="card theme-content" data-href="router1">
+              <div class="card theme-content theme1" data-type="" data-href="router1">
+                吃
+              </div>
+              <div class="card theme-content theme2 theme-hidden" data-type="" data-href="router1">
                 吃
               </div>
             </div>
 
-           <div class="card" data-href="router2">
+           <div class="card" id="tag-content" data-href="router2">
               <div class="card-header">标签</div>
               <div class="card-content">
                 <div class="card-content-inner">
@@ -192,7 +202,7 @@
               </div>
             </div>
 
-            <div class="card" data-href="router3">
+            <div class="card" id="reason-content" data-href="router3">
               <div class="card-header">推荐理由</div>
               <div class="card-content">
                 <div class="card-content-inner">
@@ -201,7 +211,7 @@
               </div>
             </div>
 
-            <div class="card" data-href="router4">
+            <div class="card" id="detail-content" data-href="router4">
               <div class="card-header">详情</div>
               <div class="card-content">
                 <div class="card-content-inner">
@@ -213,16 +223,17 @@
              <div class="content-block-title">地图标注</div>
               <div class="card demo-card-header-pic" data-href="router5">
                 <div valign="bottom" class="card-header color-white no-border no-padding">
-                  <img class='card-cover' src="/img/map.png" alt="">
+                  <!-- <img class='card-cover' src="/img/map.png" alt=""> -->
+                  <div class='card-cover' id="container-show"></div>
                 </div>
-                <div class="card-content">
+                <!-- <div class="card-content">
                   <div class="card-content-inner">
                     <p>成都信息工程大学</p>
                   </div>
-                </div>
+                </div> -->
               </div>
 
-              <div class="card" data-href="router6">
+              <div class="card" id="price-content" data-href="router6">
               <div class="card-header">价格</div>
               <div class="card-content">
                 <div class="card-content-inner">
@@ -251,12 +262,12 @@
       <div class="content">
         <div class="content-block">
           <div class="theme-ul">
-            <div class="theme-li">吃</div>
-            <div class="theme-li">住</div>
-            <div class="theme-li">购</div>
-            <div class="theme-li">行</div>
-            <div class="theme-li">防坑</div>
-            <div class="theme-li">游玩</div>
+            <div class="theme-li" id="theme1" data-type="1">吃</div>
+            <div class="theme-li" id="theme2" data-type="2">住</div>
+            <div class="theme-li" id="theme3" data-type="3">购</div>
+            <div class="theme-li" id="theme4" data-type="4">行</div>
+            <div class="theme-li" id="theme5" data-type="5">防坑</div>
+            <div class="theme-li" id="theme6" data-type="6">游玩</div>
           </div>
         </div>
       </div>
@@ -417,10 +428,45 @@
       var href = $(this).data("href");
       $.router.load("#"+href);
     })
+
+    //选择主题
     $(".theme-ul .theme-li").on("click",function(){
-      $(".theme-li").removeClass("active");
-      $(this).addClass("active");
+      // $(".theme-li").removeClass("active-first");
+      // // console.log($(".active").length);
+      // $(this).addClass("active-first");
+      if($(this).hasClass("active")){
+        $(this).removeClass("active");
+      }else{
+        // $(this).addClass("active");
+        if($(".active").length < 2){
+          // $(".theme-li.active-first").removeClass("active");
+          $(".theme1").attr("data-type",$(this).attr("data-type"));
+          $(".theme1").text($(this).attr("data-text"));
+          $(this).addClass("active");
+          $(".theme2").addClass("theme-hidden");
+          if($(".active").length == 2){
+            console.log($(".theme-li.active"));
+            // $(".theme1").attr("data-type")
+            // $(".theme1").attr("data-type",$(this).attr("data-type"));
+            // $(".theme1").text($(this).attr("data-text"));
+            $(".theme1").attr("data-type",$(".theme-li.active:first-child").attr("data-type"));
+            $(".theme1").text($(".theme-li.active:first-child").text());
+            $(".theme2").attr("data-type",$("#"+$(".theme-li.active")[1].id).attr("data-type"));
+            $(".theme2").text($("#"+$(".theme-li.active")[1].id).text());
+            $(".theme2").removeClass("theme-hidden");
+          }
+        }else{
+          $.alert("最多只能选择两个主题");
+        }
+      }
+      // console.log($(".active").length);
+      // if($(".active").length == 3){
+      //   // $(".theme-li.active-first").removeClass("active");
+      // }
     })
+
+
+    //在输入框内添加标签
     $(".ww-typeHelper-input").on("input change",function(){
       console.log($(this).val());
       var text = $(this).val();
@@ -430,22 +476,41 @@
         var span = '<span class="type-item">'+text+'</span>';
         $(this).before(span);
         $(this).val('');
+        $("#tag-content .card-content-inner").append(span);
       }
     })
+
+    //点击二级标签删除主页二级标签
     $(".ww-typeHelper").on("click",".type-item",function(){
       $(this).remove();
+      var $_this = $(this);
       var span = '<span class="type-item">'+ $(this).text()+'</span>';
       $(".tag-li").append(span);
+      $.each($("#tag-content .type-item"),function(i,v){
+        console.log($(v).text());
+        if($(v).text() == $_this.text()){
+          $(v).remove();
+        }
+      })
     })
+    //点击默认标签添加标签
     $(".tag-ul").on("click",".type-item",function(){
       var span = '<span class="type-item">'+ $(this).text()+'</span>';
       $(this).remove();
       $(".ww-typeHelper-input").before(span);
+      $("#tag-content .card-content-inner").append(span);
     })
+
+    //推荐理由输入后显示到主页
+    $("#reason").on("input change",function(){
+      $("#reason-content .card-content-inner").text($(this).val());
+    })
+
 
     $(".button-start,.button-end").on("click",function(){
       var text = $("#detail").val();
       $("#detail").val(text+"##");
+      $("#detail-content .card-content-inner").text($("#detail").val());
     })
 
     function getHideText(callback){
@@ -468,8 +533,14 @@
       }
       callback.success(textDetail);
     }
+
+    //详情输入后显示到主页
     $("#detail").on("input change",function(){
       var text = $("#detail").val();
+
+      //显示到主页
+      $("#detail-content .card-content-inner").text(text);
+
       var str = {};
       str = text.split("##");
       var show = '';
@@ -490,6 +561,11 @@
       $(".de-show").append(detail);
     })
 
+    //更换价格的时候调用
+    $("#price-picker").on("input change",function(){
+      console.log($(this).val());
+      $("#price-content .card-content-inner").text("￥ "+$(this).val());
+    })
 
     //sui框架picker引用（价格选择）
     $("#price-picker").picker({
@@ -519,6 +595,38 @@
       ]
     });
 
+    //地点显示
+    mapShow = new AMap.Map('container-show', {
+        resizeEnable: true,
+        zoom:20,
+        zoomEnable:false,
+        dragEnable:false
+
+    });
+    mapShow.plugin('AMap.Geolocation', function() {
+        geolocation = new AMap.Geolocation({
+            enableHighAccuracy: true,//是否使用高精度定位，默认:true
+            timeout: 10000,          //超过10秒后停止定位，默认：无穷大
+            buttonOffset: new AMap.Pixel(60, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+            zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+        });
+        geolocation.getCurrentPosition();
+        AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
+        AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
+    });
+    //解析定位结果
+    function onComplete(data) {
+        var str=['定位成功'];
+        str.push('经度：' + data.position.getLng());
+        str.push('纬度：' + data.position.getLat());
+        str.push('精度：' + data.accuracy + ' 米');
+        str.push('是否经过偏移：' + (data.isConverted ? '是' : '否'));
+    }
+    //解析定位错误信息
+    function onError(data) {
+        
+    }
+
     //地点标注搜索
     AMap.plugin(['AMap.Autocomplete','AMap.PlaceSearch'],function(){
       var autoOptions = {
@@ -533,6 +641,81 @@
          console.log(e);
          placeSearch.search(e.poi.name)
       });
+
+      var placeSearchShow = new AMap.PlaceSearch({
+            map:mapShow
+      })
+      AMap.event.addListener(autocomplete, "select", function(e){
+         //TODO 针对选中的poi实现自己的功能
+         console.log(e);
+         placeSearchShow.search(e.poi.name)
+      });
     });
+
+
+    //点击标注
+    map.on('click', function(e) {
+
+      //clear all markers
+      map.clearMap();
+      mapShow.clearMap();
+
+      console.log('您在[ '+e.lnglat.getLng()+','+e.lnglat.getLat()+' ]的位置点击了地图！');
+        // alert('您在[ '+e.lnglat.getLng()+','+e.lnglat.getLat()+' ]的位置点击了地图！');
+      var icon = new AMap.Icon({
+          // image : 'http://vdata.amap.com/icons/b18/1/2.png',//24px*24px
+          //icon可缺省，缺省时为默认的蓝色水滴图标，
+          // size : new AMap.Size(24,24)
+      });
+      // var marker = new AMap.Marker({
+      //         icon : icon,//24px*24px
+      //         offset : new AMap.Pixel(e.lnglat.getLat(),e.lnglat.getLng()),
+      //         map : map
+      // });
+      var marker = new AMap.Marker({
+        icon : icon,//24px*24px
+        map : map,
+        tagName:"火锅;超辣的",
+        askReason:"味道真的不错",
+        askContentShow:"这里的味道真的不错",
+        price:0.2,
+        createBy:"hanqi",
+        createAt:"2016-04-19",
+        position: [e.lnglat.getLng(),e.lnglat.getLat()],
+        draggable: true,
+        cursor: 'move',
+        raiseOnDrag: true,
+        clickable:true
+      });
+
+      var markerShow = new AMap.Marker({
+        icon : icon,//24px*24px
+        map : mapShow,
+        position: [e.lnglat.getLng(),e.lnglat.getLat()],
+        draggable: true,
+        cursor: 'move',
+        raiseOnDrag: true,
+        clickable:true
+      });
+
+      //拖动标注后回调的坐标
+       marker.on("dragend",function(){
+        console.log(this.getPosition());
+        var lat = this.getPosition().lat;
+        var lng = this.getPosition().lng;
+        // mapShow = new AMap.Map('container-show', {
+        //     resizeEnable: true,
+        //     center:[lat,lng],
+        //     zoom:20,
+        //     zoomEnable:false,
+        //     dragEnable:false
+
+        // });
+      })
+      marker.setMap(map);
+      markerShow.setMap(mapShow);
+    });
+
+
   </script>
 </html>

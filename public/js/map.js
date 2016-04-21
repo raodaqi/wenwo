@@ -57,47 +57,47 @@
         map.addControl(scale);
     })
 
-     map.on('click', function(e) {
+    //  map.on('click', function(e) {
 
-      //clear all markers
-      map.clearMap();
+    //   //clear all markers
+    //   map.clearMap();
 
-     	console.log('您在[ '+e.lnglat.getLng()+','+e.lnglat.getLat()+' ]的位置点击了地图！');
-        // alert('您在[ '+e.lnglat.getLng()+','+e.lnglat.getLat()+' ]的位置点击了地图！');
-      var icon = new AMap.Icon({
-          // image : 'http://vdata.amap.com/icons/b18/1/2.png',//24px*24px
-          //icon可缺省，缺省时为默认的蓝色水滴图标，
-          // size : new AMap.Size(24,24)
-      });
-      // var marker = new AMap.Marker({
-      //         icon : icon,//24px*24px
-      //         offset : new AMap.Pixel(e.lnglat.getLat(),e.lnglat.getLng()),
-      //         map : map
-      // });
-      var marker = new AMap.Marker({
-        icon : icon,//24px*24px
-        map : map,
-        tagName:"火锅;超辣的",
-        askReason:"味道真的不错",
-        askContentShow:"这里的味道真的不错",
-        price:0.2,
-        createBy:"hanqi",
-        createAt:"2016-04-19",
-        position: [e.lnglat.getLng(),e.lnglat.getLat()],
-        draggable: true,
-        cursor: 'move',
-        raiseOnDrag: true,
-        clickable:true
-      });
+    //  	console.log('您在[ '+e.lnglat.getLng()+','+e.lnglat.getLat()+' ]的位置点击了地图！');
+    //     // alert('您在[ '+e.lnglat.getLng()+','+e.lnglat.getLat()+' ]的位置点击了地图！');
+    //   var icon = new AMap.Icon({
+    //       // image : 'http://vdata.amap.com/icons/b18/1/2.png',//24px*24px
+    //       //icon可缺省，缺省时为默认的蓝色水滴图标，
+    //       // size : new AMap.Size(24,24)
+    //   });
+    //   // var marker = new AMap.Marker({
+    //   //         icon : icon,//24px*24px
+    //   //         offset : new AMap.Pixel(e.lnglat.getLat(),e.lnglat.getLng()),
+    //   //         map : map
+    //   // });
+    //   var marker = new AMap.Marker({
+    //     icon : icon,//24px*24px
+    //     map : map,
+    //     tagName:"火锅;超辣的",
+    //     askReason:"味道真的不错",
+    //     askContentShow:"这里的味道真的不错",
+    //     price:0.2,
+    //     createBy:"hanqi",
+    //     createAt:"2016-04-19",
+    //     position: [e.lnglat.getLng(),e.lnglat.getLat()],
+    //     draggable: true,
+    //     cursor: 'move',
+    //     raiseOnDrag: true,
+    //     clickable:true
+    //   });
 
-      //拖动标注后回调的坐标
-       marker.on("dragend",function(){
-        console.log(this.getPosition());
-        var lat = this.getPosition().lat;
-        var lng = this.getPosition().lng;
-      })
-      marker.setMap(map);
-    });
+    //   //拖动标注后回调的坐标
+    //    marker.on("dragend",function(){
+    //     console.log(this.getPosition());
+    //     var lat = this.getPosition().lat;
+    //     var lng = this.getPosition().lng;
+    //   })
+    //   marker.setMap(map);
+    // });
 
    
 
