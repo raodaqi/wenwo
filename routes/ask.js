@@ -296,15 +296,15 @@ router.post('/sendask', function(req, res, next) {
         res.send(result);
         return;
     }
-    var isfree = req.param('isfree');
-    if (!isfree) {
-        var result = {
-            code : 300,
-            message : 'miss parameter : isfree'
-        }
-        res.send(result);
-        return;
-    }
+    // var isfree = req.param('isfree');
+    // if (!isfree) {
+    //     var result = {
+    //         code : 300,
+    //         message : 'miss parameter : isfree'
+    //     }
+    //     res.send(result);
+    //     return;
+    // }
     var geoX = req.param('geo_x');
     //console.log(geoX);
     if (!geoX) {
@@ -369,7 +369,12 @@ router.post('/sendask', function(req, res, next) {
     var ask = new Ask();
     ask.set('createBy', userName);
     ask.set('askType', type);
-    ask.set('askIsFree', isfree);
+    if (price == '0') {
+        ask.set('askIsFree', '1');
+    }
+    else {
+        ask.set('askIsFree', '0');
+    }
     //ask.set('askGeo', geo);
     ask.set('GeoX', geoX);
     ask.set('GeoY', geoY);
