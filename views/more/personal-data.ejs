@@ -1,0 +1,144 @@
+<% include header.ejs %>
+<style type="text/css">
+body{
+	width: 100%;
+	height: 100%;
+	background-color: white;
+}
+.titles{
+	height: 40px;
+	width: 100%;
+	font-size: 15px;
+	border-bottom: 1px solid #EAEAEA;
+	background-color: #F9CC51;
+}
+.title_word{
+	width: 50%;
+	height: 40px;
+	line-height: 40px;
+	float: left;
+	text-align: left;
+	font-size: 20px;
+	color: white;
+}
+.return{
+	width: 39%;
+	height: 40px;
+	line-height: 40px;
+	float: left;
+	padding-left: 10px;
+	color: white;
+}
+.finish{
+	height: 40px;
+	line-height: 40px;
+	color: white;
+	float: right;
+	width: 10%;
+}
+li{
+	border-bottom: 1px solid #EAEAEA;
+}
+</style>
+<body>
+<% include footer.ejs %>
+<div class="titles">
+	<div class="return">
+			取消<a></a>
+	</div>
+	<div class="title_word">个人信息</div>
+	<div class="finish">完成</div>
+</div>
+<div class="content" style="background-color: #F1EFEF; margin-top: 40px;">
+  <div class="list-block" style="margin-top: 15px;border-top: 1px solid #EAEAEA;">
+    <ul>
+      <!-- Text inputs -->
+      <li>
+        <div class="item-content">
+          <div class="item-inner">
+            <div class="item-title label">昵称</div>
+            <div class="item-input">
+              <input type="text" placeholder="你的昵称">
+            </div>
+          </div>
+        </div>
+      </li>
+      <!-- Select -->
+      <li>
+        <div class="item-content">
+          <div class="item-inner">
+            <div class="item-title label">性别</div>
+            <div class="item-input">
+              <select>
+                <option>男</option>
+                <option>女</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="item-content">
+          <div class="item-inner">
+            <div class="item-title label">年龄</div>
+            <div class="item-input">
+              <input type="text" placeholder="你的年龄">
+            </div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="item-content">
+          <div class="item-inner">
+            <div class="item-title label">生日</div>
+            <div class="item-input">
+              <input type="text" placeholder="你的生日">
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="list-block" style="margin-top: 15px;border-top: 1px solid #EAEAEA;">
+    <ul>
+      <!-- Text inputs -->
+      <li>
+        <div class="item-content">
+          <div class="item-inner">
+            <div class="item-title label">邮箱</div>
+            <div class="item-input">
+              <input type="email" placeholder="你的邮箱">
+            </div>
+          </div>
+        </div>
+      </li>
+      <!-- Select -->
+      <li>
+        <div class="item-content">
+          <div class="item-inner">
+            <div class="item-title label">地区</div>
+            <div class="item-input">
+              <input type="text" placeholder="你所在地区">
+            </div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="item-content">
+          <div class="item-inner">
+            <div class="item-title label" style="height: 25px;">个性签名</div>
+            <div class="item-input">
+              <textarea type="text" style="height: auto;min-height: 48px;"></textarea>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+<script type="text/javascript">
+$(".return").click(function(){
+		history.go(-1);
+	})
+	</script>
+</html>

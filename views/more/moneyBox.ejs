@@ -112,7 +112,7 @@ body{
 	</div>
 	<div class="btn">
 		<div class="btn_withdraw_cash">
-		<button>提现</button>
+		<button id="withdraw">提现</button>
 		</div>
 		<div class="btn_recharge">
 			<button>充值</button>
@@ -122,5 +122,8 @@ body{
 $(".zuo").click(function(){
 		history.go(-1);
 	})
+$("#withdraw").click(function(){
+	window.location.href="/more/withdraw";
+})
 </script>
 </html>

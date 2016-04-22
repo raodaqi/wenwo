@@ -48,7 +48,7 @@ body{
 	width: 100%;
 	height: auto;
 	overflow-y:auto;
-	margin-top: 40px;
+/*	margin-top: 40px;*/
 }
 .orders{
 	width: 100%;
@@ -114,6 +114,13 @@ body{
 	font-size: 30px;
 	color: #FFC222;
 }
+.content{
+	top: 40px;
+}
+.content-block{
+	margin: 0;
+	padding: 0;
+}
 </style>
 <body>
 <% include footer.ejs %>
@@ -126,129 +133,49 @@ body{
 	<div class="title_word">我的订单</div>
 	<div class="map_view">地图视角</div>
 </div>
-<div class="order_information">
-	<div class="orders">
-		<div class="orders_head">
-			<img src="/img/test.jpg"></div>
-		<div class="orders_info">
-			<div class="orders_info1">经济型酒店</div>
-			<div class="orders_money">1元</div>
-			<div class="orders_info2">临江特色,舒适宜人</div>
-			<div class="orders_date">2015-01-01</div>
-		</div>
-			<div class="iconfont icon-you orders_right_icon"></div>
+<div class="content">
+	<div class="buttons-tab">
+		<a href="#tab1" class="tab-link active button">收藏</a>
+		<a href="#tab2" class="tab-link button">订单</a>
 	</div>
-	<div class="orders">
-		<div class="orders_head">
-			<img src="/img/test.jpg"></div>
-		<div class="orders_info">
-			<div class="orders_info1">经济型酒店</div>
-			<div class="orders_money">1元</div>
-			<div class="orders_info2">临江特色,舒适宜人</div>
-			<div class="orders_date">2015-01-01</div>
+	<div class="content-block">
+		<div class="tabs">
+			<div id="tab1" class="tab active">
+				<div class="content-block">
+					<div class="order_information">
+						<div class="orders">
+							<div class="orders_head">
+								<img src="/img/test.jpg"></div>
+							<div class="orders_info">
+								<div class="orders_info1">经济型酒店</div>
+								<div class="orders_money"></div>
+								<div class="orders_info2">临江特色,舒适宜人</div>
+								<div class="orders_date">2015-01-01</div>
+							</div>
+							<div class="iconfont icon-you orders_right_icon"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="tab2" class="tab">
+				<div class="content-block">
+					<div class="order_information">
+						<div class="orders">
+							<div class="orders_head">
+								<img src="/img/test.jpg"></div>
+							<div class="orders_info">
+								<div class="orders_info1">经济型酒店</div>
+								<div class="orders_money">2元</div>
+								<div class="orders_info2">临江特色,舒适宜人</div>
+								<div class="orders_date">2015-01-01</div>
+							</div>
+							<div class="iconfont icon-you orders_right_icon"></div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-			<div class="iconfont icon-you orders_right_icon"></div>
 	</div>
-	<div class="orders">
-		<div class="orders_head">
-			<img src="/img/test.jpg"></div>
-		<div class="orders_info">
-			<div class="orders_info1">经济型酒店</div>
-			<div class="orders_money">1元</div>
-			<div class="orders_info2">临江特色,舒适宜人</div>
-			<div class="orders_date">2015-01-01</div>
-		</div>
-			<div class="iconfont icon-you orders_right_icon"></div>
-	</div>
-	<div class="orders">
-		<div class="orders_head">
-			<img src="/img/test.jpg"></div>
-		<div class="orders_info">
-			<div class="orders_info1">经济型酒店</div>
-			<div class="orders_money">1元</div>
-			<div class="orders_info2">临江特色,舒适宜人</div>
-			<div class="orders_date">2015-01-01</div>
-		</div>
-			<div class="iconfont icon-you orders_right_icon"></div>
-	</div>
-	<div class="orders">
-		<div class="orders_head">
-			<img src="/img/test.jpg"></div>
-		<div class="orders_info">
-			<div class="orders_info1">经济型酒店</div>
-			<div class="orders_money">1元</div>
-			<div class="orders_info2">临江特色,舒适宜人</div>
-			<div class="orders_date">2015-01-01</div>
-		</div>
-			<div class="iconfont icon-you orders_right_icon"></div>
-	</div>
-	<div class="orders">
-		<div class="orders_head">
-			<img src="/img/test.jpg"></div>
-		<div class="orders_info">
-			<div class="orders_info1">经济型酒店</div>
-			<div class="orders_money">1元</div>
-			<div class="orders_info2">临江特色,舒适宜人</div>
-			<div class="orders_date">2015-01-01</div>
-		</div>
-			<div class="iconfont icon-you orders_right_icon"></div>
-	</div>
-	<div class="orders">
-		<div class="orders_head">
-			<img src="/img/test.jpg"></div>
-		<div class="orders_info">
-			<div class="orders_info1">经济型酒店</div>
-			<div class="orders_money">1元</div>
-			<div class="orders_info2">临江特色,舒适宜人</div>
-			<div class="orders_date">2015-01-01</div>
-		</div>
-			<div class="iconfont icon-you orders_right_icon"></div>
-	</div>
-	<div class="orders">
-		<div class="orders_head">
-			<img src="/img/test.jpg"></div>
-		<div class="orders_info">
-			<div class="orders_info1">经济型酒店</div>
-			<div class="orders_money">1元</div>
-			<div class="orders_info2">临江特色,舒适宜人</div>
-			<div class="orders_date">2015-01-01</div>
-		</div>
-			<div class="iconfont icon-you orders_right_icon"></div>
-	</div>
-	<div class="orders">
-		<div class="orders_head">
-			<img src="/img/test.jpg"></div>
-		<div class="orders_info">
-			<div class="orders_info1">经济型酒店</div>
-			<div class="orders_money">1元</div>
-			<div class="orders_info2">临江特色,舒适宜人</div>
-			<div class="orders_date">2015-01-01</div>
-		</div>
-			<div class="iconfont icon-you orders_right_icon"></div>
-	</div>
-	<div class="orders">
-		<div class="orders_head">
-			<img src="/img/test.jpg"></div>
-		<div class="orders_info">
-			<div class="orders_info1">经济型酒店</div>
-			<div class="orders_money">1元</div>
-			<div class="orders_info2">临江特色,舒适宜人</div>
-			<div class="orders_date">2015-01-01</div>
-		</div>
-			<div class="iconfont icon-you orders_right_icon"></div>
-	</div>
-	<div class="orders">
-		<div class="orders_head">
-			<img src="/img/test.jpg"></div>
-		<div class="orders_info">
-			<div class="orders_info1">经济型酒店</div>
-			<div class="orders_money">1元</div>
-			<div class="orders_info2">临江特色,舒适宜人</div>
-			<div class="orders_date">2015-01-01</div>
-		</div>
-			<div class="iconfont icon-you orders_right_icon"></div>
-	</div>
-
 </div>
 <script type="text/javascript">
 $(".zuo").click(function(){
@@ -256,6 +183,9 @@ $(".zuo").click(function(){
 	})
 $(".map_view").click(function(){
 	window.location.href="/";
+})
+$(".orders").click(function(){
+	window.location.href="/more/information-presentation";
 })
 </script>
 </html>

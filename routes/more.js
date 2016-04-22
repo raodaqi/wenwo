@@ -26,6 +26,18 @@ router.get('/contact-us', function(req, res, next) {
 router.get('/purchase-detail', function(req, res, next) {
   res.render('more/purchase-detail');
 });
+router.get('/withdraw', function(req, res, next) {
+  res.render('more/withdraw');
+});
+router.get('/watch-us', function(req, res, next) {
+  res.render('more/watch-us');
+});
+router.get('/personal-data', function(req, res, next) {
+  res.render('more/personal-data');
+});
+router.get('/information-presentation', function(req, res, next) {
+  res.render('more/information-presentation');
+});
 // 新增 Todo 项目
 router.post('/', function(req, res, next) {
   var content = req.body.content;

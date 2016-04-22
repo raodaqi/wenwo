@@ -1,0 +1,73 @@
+<% include header.ejs %>
+<style type="text/css">
+body{
+	width: 100%;
+	height: 100%;
+	background-color: white;
+}
+.titles{
+	height: 40px;
+	width: 100%;
+	font-size: 15px;
+	border-bottom: 1px solid #EAEAEA;
+	background-color: #F9CC51;
+}
+.title_word{
+	width: 50%;
+	height: 40px;
+	line-height: 40px;
+	float: left;
+	text-align: left;
+	font-size: 20px;
+	color: white;
+}
+.return{
+	width: 39%;
+	height: 40px;
+	line-height: 40px;
+	float: left;
+	padding-left: 10px;
+}
+.zuo{
+	width: 60px;
+	height: 40px;
+	font-size: 28px;
+	color: white;
+}
+.weibo_watch,.weixin_watch{
+	width: 80%;
+	height: 40px;
+	line-height: 40px;
+	padding-left: 20px;
+	float: left;
+	border-bottom: 1px solid #EAEAEA;
+}
+.right_icon{
+	font-size: 25px;
+	float: right;
+	height: 40px;
+	line-height: 40px;
+	width: 20%;
+	border-bottom: 1px solid #EAEAEA;
+}
+</style>
+<body>
+<% include footer.ejs %>
+<div class="titles">
+	<div class="return">
+		<div class="iconfont icon-zuo zuo">
+			<a></a>
+		</div>
+	</div>
+	<div class="title_word">关注我们</div>
+</div>
+	<div class="weibo_watch">在新浪微博上关注我们</div>
+	<div class="iconfont icon-you right_icon"></div>
+	<div class="weibo_watch">在微信上关注我们</div>
+	<div class="iconfont icon-you right_icon"></div>
+<script type="text/javascript">
+$(".zuo").click(function(){
+		history.go(-1);
+	})
+	</script>
+</html>

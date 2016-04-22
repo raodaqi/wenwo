@@ -1,0 +1,178 @@
+<% include header.ejs %>
+<style type="text/css">
+body{
+	width: 100%;
+	height: 100%;
+	background-color: white;
+}
+.titles{
+	height: 40px;
+	width: 100%;
+	font-size: 15px;
+	border-bottom: 1px solid #EAEAEA;
+	background-color: #F9CC51;
+}
+.title_word{
+	width: 40%;
+	height: 40px;
+	line-height: 40px;
+	float: left;
+	text-align: left;
+	font-size: 20px;
+	color: white;
+}
+.return{
+	width: 39%;
+	height: 40px;
+	line-height: 40px;
+	float: left;
+	padding-left: 10px;
+}
+.zuo{
+	width: 60px;
+	height: 40px;
+	font-size: 28px;
+	color: white;
+}
+.content{
+	margin-top: 40px;
+	background-color: #F3F1F1;
+}
+.label{
+	width: auto;
+	height: 20px;
+	line-height: 20px;
+	color: white;
+	box-sizing: border-box;
+}
+.label span{
+	background-color: #F9CC51;
+	padding: 1px 2px;
+}
+.more{
+	height: 40px;
+	float: right;
+	line-height: 40px;
+	width: 21%;
+	font-size: 16px;
+	text-align: center;
+}
+.more a{
+	color: white;
+}
+</style>
+<body>
+<% include footer.ejs %>
+<div class="titles">
+	<div class="return">
+		<div class="iconfont icon-zuo zuo">
+			<a></a>
+		</div>
+	</div>
+	<div class="title_word">商品名称</div>
+	<div class="more">
+		<a href="#" class="collect" style="display: block;">删除</a>
+		<a class="ordered" style="display: none;">退款</a>
+		<a class="other" style="display: none;">更多</a>
+	</div>
+</div>
+<div class="content">
+	<div class="card">
+		<div class="card-header">标签</div>
+		<div class="card-content">
+			<div class="card-content-inner">
+				<div class="label">
+					<span>火锅</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="card">
+		<div class="card-header">推荐理由</div>
+		<div class="card-content">
+			<div class="card-content-inner">头和尾的卡片。卡头是用来显示一些额外的信息，或自定义操作卡标题和页脚。</div>
+		</div>
+	</div>
+	<div class="card">
+		<div class="card-header">详情</div>
+		<div class="card-content">
+			<div class="card-content-inner">头和尾的卡片。卡头是用来显示一些额外的信息，或自定义操作卡标题和页脚。</div>
+		</div>
+	</div>
+	<div class="content-block-title">地点标注</div>
+	<div class="card">
+		<div class="card-content">
+			<div class="card-content-inner">这是一个用纯文本的简单卡片。但卡片可以包含自己的页头，页脚，列表视图，图像，和里面的任何元素。</div>
+		</div>
+	</div>
+	<div class="card">
+		<div class="card-header">价格</div>
+		<div class="card-content">
+			<div class="card-content-inner">头和尾的卡片。卡头是用来显示一些额外的信息，或自定义操作卡标题和页脚。</div>
+		</div>
+	</div>
+</div>
+<div class="hide" style="display: none;">
+	<div class="modal-overlay modal-overlay-visible"></div>
+	<div class="actions-modal modal-in">
+		<div class="actions-modal-group">
+			<span class="actions-modal-label">请选择</span>
+			<span class="actions-modal-button actions-modal-button-bold color-danger">删除</span>
+			<span class="actions-modal-button">上架</span>
+			<span class="actions-modal-button">下架</span>
+			<span class="actions-modal-button">编辑</span>
+		</div>
+		<div class="actions-modal-group">
+			<span class="actions-modal-button bg-danger">取消</span>
+		</div>
+	</div>
+</div>
+	<div class="dialogs1" style="display: none;">
+		<div class="modal-overlay modal-overlay-visible"></div>
+		<div class="modal modal-in" style="display: block; margin-top: -57px;">
+			<div class="modal-inner">
+				<div class="modal-text">你确定要删除?</div>
+			</div>
+			<div class="modal-buttons ">
+				<span class="modal-button">取消</span>
+				<span class="modal-button modal-button-bold">确定</span>
+			</div>
+		</div>
+	</div>
+	<div class="dialogs2" style="display: none;">
+		<div class="modal-overlay modal-overlay-visible"></div>
+		<div class="modal modal-in" style="display: block; margin-top: -57px;">
+			<div class="modal-inner">
+				<div class="modal-text">你确定要退款?</div>
+			</div>
+			<div class="modal-buttons ">
+				<span class="modal-button">取消</span>
+				<span class="modal-button modal-button-bold">确定</span>
+			</div>
+		</div>
+	</div>
+<script type="text/javascript">
+$(".zuo").click(function(){
+		history.go(-1);
+	})
+	$(".collect").click(function () {
+		$(".dialogs1").show();
+		$(".modal-button").click(function(){
+			$(".dialogs1").hide();
+		});
+  });
+
+$(".ordered").on('click', function () {
+      $(".dialogs2").show();
+		$(".modal-button").click(function(){
+			$(".dialogs2").hide();
+		});
+  });
+	$(".other").on('click',function () {
+		$(".hide").show();
+		$(".bg-danger").click(function(){
+			$(".hide").hide();
+		})
+  });
+</script>
+</html>

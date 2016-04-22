@@ -24,7 +24,7 @@ body{
 	z-index: 999;*/
 }
 .title_word{
-	width: 50%;
+	width: 40%;
 	height: 40px;
 	line-height: 40px;
 	float: left;
@@ -45,14 +45,15 @@ body{
 	font-size: 28px;
 	color: white;
 }
-.issue_information,.get_score{
-	width: 100%;
+.issue_information{
+	width: 21%;
 	height: 40px;
-	border-bottom:1px solid #EAEAEA;
-	/*position: fixed;
-	z-index: 999;*/
+	line-height: 40px;
+	color: white;
+	float: right;
+	font-size: 13px;
 }
-.issue_information_icon,.score_icon{
+.issue_information_icon{
 	width: 40px;
 	height: 40px;
 	line-height: 40px;
@@ -60,7 +61,7 @@ body{
 	margin-left: 20px;
 	float: left;
 }
-.issue_information_word,.score_word{
+.issue_information_word{
 	width: 100px;
 	height: 40px;
 	line-height: 40px;
@@ -75,13 +76,6 @@ body{
 	height: 40px;
 	line-height: 40px;
 }
-.score{
-	height: 40px;
-	line-height: 40px;
-	float: right;
-	width: 60px;
-	font-size: 15px;
-}
 .information{
 	height: 100px;
 	width: 100%;
@@ -91,7 +85,7 @@ body{
 }
 .information_name{
 	height: 60px;
-	width: 50%;
+	width: 60%;
 	float: left;
 	border-bottom:1px solid #EAEAEA;
 	/*border-right:1px solid #EAEAEA;*/
@@ -119,15 +113,17 @@ body{
 	padding-left:10px;
 	font-size: 15px;
 	box-sizing: border-box;
+	font-size: 15px;
 }
 .information_price{
 	height: 60px;
-	width: 50%;
+	width: 30%;
 	float: left;
 	border-bottom:1px solid #EAEAEA;
 	text-align: right;
 	line-height: 60px;
 	box-sizing: border-box;
+	font-size: 15px;
 }
 .information_state{
 	height: 40px;
@@ -136,6 +132,7 @@ body{
 	line-height: 40px;
 	float: left;
 	box-sizing: border-box;
+	font-size: 14px;
 }
 .num{
 	width: 50%;
@@ -149,6 +146,7 @@ body{
 	line-height: 40px;
 	padding-left: 20px;
 	box-sizing: border-box;
+	font-size: 14px;
 }
 .right{
 	float: right;
@@ -163,12 +161,29 @@ body{
 	height: auto;
 	/*min-height: 100px;*/
 	overflow-y:auto;
-	margin-top: 220px;
+}
+.content{
+	top: 40px;
+}
+.content-block{
+	margin: 0;
+	padding: 0;
+}
+.right1{
+	width: 10%;
+	height: 60px;
+	line-height: 60px;
+	border-bottom: 1px solid #EAEAEA;
+	font-size: 20px;
+	float: right;
+}
+.shares_title{
+	width: 100%;
+	height: 60px;
 }
 </style>
 <body>
 <% include footer.ejs %>
-<div class="fix">
 <div class="titles">
 	<div class="return">
 		<div class="iconfont icon-zuo zuo">
@@ -176,42 +191,67 @@ body{
 		</div>
 	</div>
 	<div class="title_word">我的分享</div>
+	<div class="issue_information">发布信息</div>
 </div>
-	<div class="issue_information">
-		<div class="iconfont icon-fabu issue_information_icon"></div>
-		<div class="issue_information_word">发布新的信息</div>
-		<div class="iconfont icon-you right_icon"></div>
+<div class="content">
+	<div class="buttons-tab">
+		<a href="#tab1" class="tab-link active button">已上架</a>
+		<a href="#tab2" class="tab-link button">未上架</a>
 	</div>
-	<div class="get_score">
-		<div class="iconfont icon-3 score_icon"></div>
-		<div class="score_word">我的综合评分</div>
-		<div class="score">4.8分</div>
-	</div>
-	<div class="information">
-		<div class="information_name">
-			<div class="information_name_img"><img src="/img/u28.png"></div>
-			<div class="information_name_word">生产信息的名称</div>
+	<div class="content-block">
+		<div class="tabs">
+			<div id="tab1" class="tab active">
+				<div class="content-block">
+					<div class="informations">
+						<div class="information">
+							<div class="shares_title">
+								<div class="information_name">
+									<div class="information_name_img">
+										<img src="/img/u28.png"></div>
+									<div class="information_name_word">常乐宾馆</div>
+								</div>
+								<div class="information_price">2元&nbsp;&nbsp;&nbsp;</div>
+								<div class="iconfont icon-you right1"></div>
+								<div class="information_state">状态:已发布</div>
+								<div class="num">
+									<div class="information_Purchase_number">购买人数：50人</div>
+									<div class="iconfont icon-you right"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="tab2" class="tab">
+				<div class="content-block">
+					<div class="information">
+						<div class="information_name">
+							<div class="information_name_img">
+								<img src="/img/u28.png"></div>
+							<div class="information_name_word">生产信息的名称</div>
+						</div>
+						<div class="information_price">信息价格&nbsp;&nbsp;&nbsp;</div>
+						<div class="information_state" style="width: 100%;">状态:审核中(或审核失败)</div>
+					</div>
+				</div>
+				<div class="informations">
+					<div class="information">
+						<div class="shares_title">
+							<div class="information_name">
+								<div class="information_name_img">
+									<img src="/img/u28.png"></div>
+								<div class="information_name_word">常乐宾馆</div>
+							</div>
+							<div class="information_price">2元&nbsp;&nbsp;&nbsp;</div>
+							<div class="iconfont icon-you right1"></div>
+						</div>
+						<div class="information_state"  style="width: 100%;">状态:审核中</div>
+					</div>
+				</div>
+			</div>
 		</div>
-		<div class="information_price">信息价格&nbsp;&nbsp;&nbsp;</div>
-		<div class="information_state">状态:已发布(或审核中)</div>
-		<div class="information_Purchase_number" style="width: 40%">购买人数：&nbsp;人</div>
-		<div class="iconfont icon-you right" style="width: 10%"></div>
 	</div>
-	</div>
-	<div class="informations">
-	<div class="information">
-		<div class="information_name">
-			<div class="information_name_img"><img src="/img/u28.png"></div>
-			<div class="information_name_word">常乐宾馆</div>
-		</div>
-		<div class="information_price">2元&nbsp;&nbsp;&nbsp;</div>
-		<div class="information_state">状态:已发布</div>
-		<div class="num">
-		<div class="information_Purchase_number">购买人数：50人</div>
-		<div class="iconfont icon-you right"></div>
-	</div>
-	</div>
-	</div>
+</div>
 <script type="text/javascript">
 $(".zuo").click(function(){
 		history.go(-1);
@@ -221,6 +261,9 @@ $(".issue_information").click(function(){
 })
 $(".num").click(function(){
 	window.location.href="/more/purchase-detail";
+})
+$(".shares_title").click(function(){
+	window.location.href = "/more/information-presentation";
 })
 </script>
 </html>
