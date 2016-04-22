@@ -158,6 +158,18 @@
     .card-cover{
       height:300px;
     }
+    .container-hidden{
+      position: absolute;
+      z-index: 100;
+      height: 100%;
+      width: 100%;
+      top: 0px;
+      left: 0px;
+    }
+    .send-button{
+      margin-top: 50px;
+      background: none;
+    }
   }
   </style>
   <body>
@@ -224,6 +236,7 @@
               <div class="card demo-card-header-pic" data-href="router5">
                 <div valign="bottom" class="card-header color-white no-border no-padding">
                   <!-- <img class='card-cover' src="/img/map.png" alt=""> -->
+                  <div class="container-hidden"></div>
                   <div class='card-cover' id="container-show"></div>
                 </div>
                 <!-- <div class="card-content">
@@ -234,14 +247,18 @@
               </div>
 
               <div class="card" id="price-content" data-href="router6">
-              <div class="card-header">价格</div>
-              <div class="card-content">
-                <div class="card-content-inner">
-                  ￥0.2
+                <div class="card-header">价格</div>
+                <div class="card-content">
+                  <div class="card-content-inner">￥0.2</div>
                 </div>
               </div>
-            </div>
-
+            
+              <div class="card">
+                <div class="send-button">
+                  <a href="#" class="button button-big button-fill button-success">提交</a>
+                </div>
+              </div>
+            
 
         </div>
       </div>
@@ -416,6 +433,10 @@
               </div>
             </div>
           </div>
+
+          <div class="send-button">
+            <a href="#" class="button button-big button-fill button-success">提交</a>
+          </div>
         </div>
       </div>
     </div>  
@@ -426,7 +447,10 @@
   <script>
     $(".card").on("click",function(){
       var href = $(this).data("href");
-      $.router.load("#"+href);
+      if(href){
+        $.router.load("#"+href);
+      }
+      
     })
 
     //选择主题
@@ -567,6 +591,23 @@
       $("#price-content .card-content-inner").text("￥ "+$(this).val());
     })
 
+
+    //提交所有信息
+    $(".button-success").on("click",function(){
+        var $_active = $(".theme-li.active");
+        if(!$_active.length){
+          $.alert("你还没有选择主题");
+          return;
+        }else{
+          if($_active.length == 1){
+            var type = $(".theme-li.active").attr("data-type");
+          }else{
+            var type = $("#"+$(".theme-li.active")[0].id).attr("data-type") + ","+$("#"+$(".theme-li.active")[1].id).attr("data-type");
+          }
+          console.log(type);
+        }
+    })
+
     //sui框架picker引用（价格选择）
     $("#price-picker").picker({
       toolbarTemplate: '<header class="bar bar-nav">\
@@ -597,35 +638,42 @@
 
     //地点显示
     mapShow = new AMap.Map('container-show', {
-        resizeEnable: true,
-        zoom:20,
-        zoomEnable:false,
-        dragEnable:false
-
+        // resizeEnable: true,
+        // zoomEnable:false,
+        // dragEnable:false
+        resizeEnable: true
     });
     mapShow.plugin('AMap.Geolocation', function() {
         geolocation = new AMap.Geolocation({
             enableHighAccuracy: true,//是否使用高精度定位，默认:true
             timeout: 10000,          //超过10秒后停止定位，默认：无穷大
-            buttonOffset: new AMap.Pixel(60, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
             zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
         });
         geolocation.getCurrentPosition();
         AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
         AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
     });
+
     //解析定位结果
     function onComplete(data) {
+        console.log("定位成功");
         var str=['定位成功'];
         str.push('经度：' + data.position.getLng());
         str.push('纬度：' + data.position.getLat());
         str.push('精度：' + data.accuracy + ' 米');
         str.push('是否经过偏移：' + (data.isConverted ? '是' : '否'));
+
+        // mapShow = new AMap.Map('container-show', {
+        //     resizeEnable: true,
+        //     center:[data.position.getLng(),data.position.getLat()],
+        //     zoom:20
+        // });
     }
     //解析定位错误信息
     function onError(data) {
-        
+        console.log("定位失败");
     }
+
 
     //地点标注搜索
     AMap.plugin(['AMap.Autocomplete','AMap.PlaceSearch'],function(){
@@ -715,6 +763,7 @@
       marker.setMap(map);
       markerShow.setMap(mapShow);
     });
+
 
 
   </script>
