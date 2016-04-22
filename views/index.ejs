@@ -161,7 +161,7 @@
       top: 60px !important;
       border:0 !important;
     }
-    .amap-icon{
+    #container .amap-icon{
       border-radius: 50%;
       border-image:url("/img/blue.png");
       border-image-slice: 10;
@@ -169,7 +169,7 @@
       border-image-repeat:rounded;
       
     }
-    .amap-icon img{
+    #container .amap-icon img{
       width: 100%;
       height: 100%;
       background-size: cover;
@@ -183,11 +183,14 @@
       border-radius: 50px;
       z-index: 200 !important;
     }
-    .amap-marker-content{
+    .amap-active .amap-marker-content{
       position: absolute;
       padding-left: 50px;
       color: white;
       font-size: 12px;
+    }
+    .amap-active .amap-marker-content{
+      display: block !important;
     }
     .amap-marker-content div{
       height: 25px;
@@ -200,6 +203,26 @@
       top: 0;
       right:-150px;
       color: #FFC222;
+    }
+    .modal-overlay, .popup-overlay, .preloader-indicator-overlay{
+      height: initial;
+    }
+    .ask-detail{
+      top:50%;
+      height: 50%;
+      z-index: 10402;
+      box-shadow: 0 -.05rem .1rem rgba(0,0,0,.3);
+    }
+    .card-cover{
+      height:300px;
+    }
+    .container-hidden{
+      position: absolute;
+      z-index: 100;
+      height: 100%;
+      width: 100%;
+      top: 0px;
+      left: 0px;
     }
   }
   </style>
@@ -232,6 +255,60 @@
         <div class="theme-list" data-type="live">
           <img class="img-list" src="/img/home.jpg">
           <!-- <label>住</label> -->
+        </div>
+      </div>
+    </div>
+
+    <div class="popup popup-services ask-detail">
+      <div class="content-block">
+        <!-- <p>Services</p>
+        <p><a href="#" class="close-popup">Close popup</a></p>
+        <p>Lorem ipsum dolor ...</p> -->
+        <div class="card" id="tag-content" data-href="router2">
+          <div class="card-header">标签</div>
+          <div class="card-content">
+            <div class="card-content-inner">
+              <span class="type-item">火锅</span>
+              <span class="type-item">冒菜</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" id="reason-content" data-href="router3">
+          <div class="card-header">推荐理由</div>
+          <div class="card-content">
+            <div class="card-content-inner">这个真的很不错，我经常去。</div>
+          </div>
+        </div>
+
+        <div class="card" id="detail-content" data-href="router4">
+          <div class="card-header">详情</div>
+          <div class="card-content">
+            <div class="card-content-inner">这个真的很不错，我经常去。</div>
+          </div>
+        </div>
+
+        <div class="content-block-title">地图标注</div>
+        <div class="card demo-card-header-pic" data-href="router5">
+          <div valign="bottom" class="card-header color-white no-border no-padding">
+            <!-- <img class='card-cover' src="/img/map.png" alt="">        
+            -->
+            <div class="container-hidden"></div>
+            <div class='card-cover' id="container-show"></div>
+          </div>
+          <!-- <div class="card-content">        
+          <div class="card-content-inner">
+            <p>成都信息工程大学</p>
+          </div>
+        </div>
+        -->
+        </div>
+
+        <div class="card" id="price-content" data-href="router6">
+        <div class="card-header">价格</div>
+        <div class="card-content">
+          <div class="card-content-inner">￥0.2</div>
+        </div>
         </div>
       </div>
     </div>
@@ -281,6 +358,7 @@
     //     map.addControl(toolBar);
     //     map.addControl(scale);
     // })
+    $.popup('.ask-detail');
     var width = $(".left-content").width();
     console.log(width);
     $(".more").on("click",function(){
@@ -436,17 +514,62 @@
       }
     });
 
-    $("#container").on("click",".amap-marker",function(){
+    // $("#container").on("click",".amap-marker",function(){
+    //   // $(this).addClass("amap-active");
+    //   $(".amap-marker-content").remove();
+    //   var div = '<div class="amap-marker-content"><div class="up">火锅<div class="up-price-right">0.8元</div></div><div class="down">这个真的很好吃</div></div>';
+    //   $(this).children(".amap-icon").after(div);
+    //   if($(this).hasClass("amap-active")){
+    //     $(this).removeClass("amap-active");
+    //   }else{
+    //     $(".amap-marker").removeClass("amap-active");
+    //     $(this).addClass("amap-active");
+    //   }
+    // })
+    $("#container").on("click",".amap-icon",function(){
       // $(this).addClass("amap-active");
       $(".amap-marker-content").remove();
-      var div = '<div class="amap-marker-content"><div class="up">火锅<div class="up-price-right">0.8元</div></div><div class="down">这个真的很好吃</div></div>';
-      $(this).children(".amap-icon").after(div);
-      if($(this).hasClass("amap-active")){
-        $(this).removeClass("amap-active");
+      var div = '<div class="amap-marker-content" style="display:none"><div class="up">火锅<div class="up-price-right">0.8元</div></div><div class="down">这个真的很好吃</div></div>';
+      $(this).after(div);
+      if($(this).parent().hasClass("amap-active")){
+        $(this).parent().removeClass("amap-active");
       }else{
         $(".amap-marker").removeClass("amap-active");
-        $(this).addClass("amap-active");
+        $(this).parent().addClass("amap-active");
       }
     })
+
+    $("#container").on("click",function(){
+      // $.closeModal(".ask-detail");
+    })
+    $(document).on("click",".amap-marker-content",function(){
+      $.popup('.ask-detail');
+      getMap();
+    })
+
+    var mapShow;
+    getMap();
+    // var markerShow = new AMap.Marker({
+    //   map : mapShow,
+    //   position: [104.065262,30.65938]
+    // });
+    var markerShow = new AMap.Marker({
+        map : mapShow,
+        position: [103.985616,30.581207],
+        draggable: true,
+        cursor: 'move',
+        raiseOnDrag: true,
+        clickable:true
+      });
+    markerShow.setMap(mapShow);
+
+    function getMap(){
+      //详情地点显示
+      mapShow = new AMap.Map('container-show', {
+        resizeEnable: true,
+        zoom:15,
+        center: [103.985616,30.581207]
+      });
+    }
   </script>
 </html>

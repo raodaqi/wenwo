@@ -61,6 +61,18 @@ router.post('/', function(req, res, next) {
     console.log(li);
     marker[i] = li;
   }
+  for(var i = 10; i < 20; i++){
+    var li = {
+      id:"marker"+i,
+      url:"/img/hotPot.jpg",
+      lng:"103.985"+Math.ceil(1000*Math.random()),
+      lat:"30.581"+Math.ceil(1000*Math.random())
+      // lng:"104.065"+Math.ceil(1000*Math.random()),
+      // lat:"30.659"+Math.ceil(1000*Math.random())
+    }
+    console.log(li);
+    marker[i] = li;
+  }
   res.send(marker)
   console.log(marker);
 })

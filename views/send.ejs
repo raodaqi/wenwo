@@ -255,7 +255,7 @@
             
               <div class="card">
                 <div class="send-button">
-                  <a href="#" class="button button-big button-fill button-success">提交</a>
+                  <a href="#" class="button button-big button-fill button-success send-button-a">提交</a>
                 </div>
               </div>
             
@@ -279,7 +279,7 @@
       <div class="content">
         <div class="content-block">
           <div class="theme-ul">
-            <div class="theme-li" id="theme1" data-type="1">吃</div>
+            <div class="theme-li active" id="theme1" data-type="1">吃</div>
             <div class="theme-li" id="theme2" data-type="2">住</div>
             <div class="theme-li" id="theme3" data-type="3">购</div>
             <div class="theme-li" id="theme4" data-type="4">行</div>
@@ -435,7 +435,7 @@
           </div>
 
           <div class="send-button">
-            <a href="#" class="button button-big button-fill button-success">提交</a>
+            <a href="#" class="button button-big button-fill button-success send-button-a">提交</a>
           </div>
         </div>
       </div>
@@ -460,12 +460,15 @@
       // $(this).addClass("active-first");
       if($(this).hasClass("active")){
         $(this).removeClass("active");
+        $(".theme1").attr("data-type",$("#"+$(".theme-li.active")[0].id).attr("data-type"));
+        $(".theme1").text($("#"+$(".theme-li.active")[0].id).text());
+        $(".theme2").addClass("theme-hidden");
       }else{
         // $(this).addClass("active");
         if($(".active").length < 2){
           // $(".theme-li.active-first").removeClass("active");
           $(".theme1").attr("data-type",$(this).attr("data-type"));
-          $(".theme1").text($(this).attr("data-text"));
+          $(".theme1").text($(this).text());
           $(this).addClass("active");
           $(".theme2").addClass("theme-hidden");
           if($(".active").length == 2){
@@ -473,8 +476,8 @@
             // $(".theme1").attr("data-type")
             // $(".theme1").attr("data-type",$(this).attr("data-type"));
             // $(".theme1").text($(this).attr("data-text"));
-            $(".theme1").attr("data-type",$(".theme-li.active:first-child").attr("data-type"));
-            $(".theme1").text($(".theme-li.active:first-child").text());
+            $(".theme1").attr("data-type",$("#"+$(".theme-li.active")[0].id).attr("data-type"));
+            $(".theme1").text($("#"+$(".theme-li.active")[0].id).text());
             $(".theme2").attr("data-type",$("#"+$(".theme-li.active")[1].id).attr("data-type"));
             $(".theme2").text($("#"+$(".theme-li.active")[1].id).text());
             $(".theme2").removeClass("theme-hidden");
@@ -537,7 +540,7 @@
       $("#detail-content .card-content-inner").text($("#detail").val());
     })
 
-    function getHideText(callback){
+    function getHideText(){
       var text = $("#detail").val();
       // console.log(text.indexOf("##"));
       var str = {};
@@ -555,7 +558,7 @@
         show:show,
         hidden:hidden
       }
-      callback.success(textDetail);
+      return(textDetail);
     }
 
     //详情输入后显示到主页
@@ -593,10 +596,22 @@
 
 
     //提交所有信息
-    $(".button-success").on("click",function(){
+    $(".send-button-a").on("click",function(){
+        var type,//主题类型
+            tag = [],//二级标签
+            reason,//推荐理由
+            content_show,//详情显示部分
+            content_hide,//详情隐藏部分
+            lng,//经度
+            lat,//维度
+            isfree = 1,//是否是免费信息
+            price;//信息价格
+
+        //获取主题
         var $_active = $(".theme-li.active");
         if(!$_active.length){
           $.alert("你还没有选择主题");
+          // $.router.load("#router1");
           return;
         }else{
           if($_active.length == 1){
@@ -606,6 +621,81 @@
           }
           console.log(type);
         }
+
+        //获取填写的tag
+        var $_tag = $(".ww-typeHelper .type-item");
+        if(!$_tag.length){
+          $.alert("你还没有填写标签");
+           return;
+        }else{
+          $.each($_tag,function(i,v){
+            tag[i] = $(this).text();
+          })
+        }
+
+        //获取推荐理由
+        var reason = $("#reason").val();
+        if(!reason){
+          $.alert("你还没有填写推荐理由");
+          return;
+        }
+
+        //获取详情
+        var detail = $("#detail").val();
+        if(!detail){
+          $.alert("你还没有填写信息详情");
+          return;
+        }else{
+          var detailContent = getHideText();
+          console.log(detailContent);
+          content_show = detailContent.show;
+          content_hide = detailContent.hidden;
+        }
+
+        //获取标注位置的经纬度
+        lng = $("#container").attr("data-lng");
+        lat = $("#container").attr("data-lat");
+        if(!lng || !lat){
+          $.alert("你还没有添加地图标注");
+          return;
+        }
+
+        //获取信息价格
+        price = $("#price-picker").val();
+        console.log(price);
+        if(price == "0 . 0 0"){
+          isfree = 1;
+        }else{
+          isfree = 0;
+        }
+        var data = {
+          type         : type,
+          tag          : tag,
+          reason       : reason,
+          content_show : content_show,
+          content_hide : content_hide,
+          lng          : lng,
+          lat          : lat,
+          isfree       : isfree,
+          price        : price
+        }
+        console.log(data);
+        return ;
+        //发送请求 url：/ask/sendask
+        $.ajax({
+          type : "POST",
+          data: data,
+          dataType: "json",
+          url : "/ask/sendask",
+          success : function(result){
+            
+          },
+          error: function(error){
+            // alert(error);
+            $.alert(error);
+          }
+        });
+
     })
 
     //sui框架picker引用（价格选择）
@@ -746,19 +836,25 @@
         clickable:true
       });
 
+      $("#container").attr("data-lng",e.lnglat.getLng());
+      $("#container").attr("data-lat",e.lnglat.getLat());
       //拖动标注后回调的坐标
        marker.on("dragend",function(){
         console.log(this.getPosition());
         var lat = this.getPosition().lat;
         var lng = this.getPosition().lng;
-        // mapShow = new AMap.Map('container-show', {
-        //     resizeEnable: true,
-        //     center:[lat,lng],
-        //     zoom:20,
-        //     zoomEnable:false,
-        //     dragEnable:false
-
-        // });
+        $("#container").attr("data-lng",lng);
+        $("#container").attr("data-lat",lat);
+        mapShow.clearMap();
+        var markerShow = new AMap.Marker({
+          icon : icon,//24px*24px
+          map : mapShow,
+          position: [lng,lat],
+          draggable: true,
+          cursor: 'move',
+          raiseOnDrag: true,
+          clickable:true
+        });
       })
       marker.setMap(map);
       markerShow.setMap(mapShow);
