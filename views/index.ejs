@@ -571,5 +571,70 @@
         center: [103.985616,30.581207]
       });
     }
+
+    getAllAsk();
+    //获取所有信息
+    function getAllAsk(){
+      var data = {
+        staus  : 1,
+        size   : 10,
+        page   : 0
+      };
+      $.ajax({
+        type : "GET",
+        data: data,
+        dataType: "json",
+        url : "/ask/allask",
+        success : function(result){
+          console.log(result);
+          return;
+          // var cluster, markers = [];
+          for(var i = 0; i < result.length;i++){
+            var icon = new AMap.Icon({
+                image : result[i].url,//24px*24px
+                size : new AMap.Size(50,50)
+            });
+            var marker = new AMap.Marker({
+              icon : icon,//24px*24px
+              map : map,
+              position: [result[i].lng,result[i].lat],
+              draggable: false,
+              clickable:true,
+              cursor: 'move',
+              raiseOnDrag: false
+            });
+            marker.setExtData({
+              id:result[i].id,
+              tagName:result[i].tagName,
+              askReason:result[i].askReason,
+              askContentShow:result[i].askContentShow,
+              price:result[i].price,
+              createBy:result[i].createBy,
+              createAt:result[i].createAt,
+              lng:result[i].lng,
+              lat:result[i].lat
+            })
+            markers.push(marker);
+
+            //监听marker点击事件
+            marker.on("click",function(){
+              console.log(this);
+              var lng = this.Ee.extData.lng;
+              var lat = this.Ee.extData.lat;
+
+              //设置地图中心位置为点击的marker上
+              map.setZoomAndCenter(20,[lng,lat]);
+            });
+
+            marker.setMap(map);
+          }
+          addCluster(0);
+        },
+        error: function(error){
+          alert(error);
+        }
+      });
+    }
+
   </script>
 </html>

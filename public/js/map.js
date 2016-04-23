@@ -44,6 +44,7 @@
         str.push('纬度：' + data.position.getLat());
         str.push('精度：' + data.accuracy + ' 米');
         str.push('是否经过偏移：' + (data.isConverted ? '是' : '否'));
+        console.log("定位成功");
     }
     //解析定位错误信息
     function onError(data) {

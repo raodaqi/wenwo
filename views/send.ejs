@@ -445,6 +445,205 @@
   <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.js' charset='utf-8'></script>
   <script type="text/javascript" src="/js/map.js"></script>
   <script>
+
+    // //地点显示
+    // mapShow = new AMap.Map('container-show', {
+    //     // resizeEnable: true,
+    //     // zoomEnable:false,
+    //     // dragEnable:false
+    //     resizeEnable: true
+    // });
+    // mapShow.plugin('AMap.Geolocation', function() {
+    //     geolocation = new AMap.Geolocation({
+    //         enableHighAccuracy: true,//是否使用高精度定位，默认:true
+    //         timeout: 10000,          //超过10秒后停止定位，默认：无穷大
+    //         zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+    //     });
+    //     geolocation.getCurrentPosition();
+    //     AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
+    //     AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
+    // });
+
+    // //解析定位结果
+    // function onComplete(data) {
+    //     console.log("定位成功");
+    //     var str=['定位成功'];
+    //     str.push('经度：' + data.position.getLng());
+    //     str.push('纬度：' + data.position.getLat());
+    //     str.push('精度：' + data.accuracy + ' 米');
+    //     str.push('是否经过偏移：' + (data.isConverted ? '是' : '否'));
+
+    //     // mapShow = new AMap.Map('container-show', {
+    //     //     resizeEnable: true,
+    //     //     center:[data.position.getLng(),data.position.getLat()],
+    //     //     zoom:20
+    //     // });
+    // }
+    // //解析定位错误信息
+    // function onError(data) {
+    //     console.log("定位失败");
+    // }
+
+
+
+    //初始化localStorage数据
+    function initLocationData(){
+      //初始化主题类型
+      if(localStorage.type){
+        var type = localStorage.type.split(",");
+        console.log(type);
+        if(type.length == 1){
+          $(".theme-ul .theme-li").removeClass("active");
+          $("#theme"+type[0]).addClass("active");
+          $(".theme1").attr("data-type",$("#theme"+type[0]).attr("data-type"));
+          $(".theme1").text($("#theme"+type[0]).text());
+          $(".theme2").addClass("theme-hidden");
+        }else{
+          $(".theme-ul .theme-li").removeClass("active");
+          $("#theme"+type[0]).addClass("active");
+          $("#theme"+type[1]).addClass("active");
+          $(".theme1").attr("data-type",$("#theme"+type[0]).attr("data-type"));
+          $(".theme1").text($("#theme"+type[0]).text());
+          $(".theme2").attr("data-type",$("#theme"+type[1]).attr("data-type"));
+          $(".theme2").text($("#theme"+type[1]).text());
+          $(".theme2").removeClass("theme-hidden");
+        }
+      }
+
+      //初始化标签
+      console.log(localStorage.tag);
+      if(localStorage.tag){
+        tag = JSON.parse(localStorage.tag);
+        console.log(tag);
+        var spanContent = '';
+        for(var i in tag){
+          console.log(tag[i]);
+          var spanContent = spanContent + '<span class="type-item">'+tag[i]+'</span>';
+        }
+        $(".ww-typeHelper-input").before(spanContent);
+        $("#tag-content .card-content-inner").append(spanContent);
+      }
+
+      //初始化推荐理由
+      console.log(localStorage.reason);
+      if(localStorage.reason){
+        $("#reason").val(localStorage.reason);
+        $("#reason-content .card-content-inner").text(localStorage.reason);
+      }
+
+      //初始化信息详情
+      console.log(localStorage.detail);
+      if(localStorage.detail){
+        $("#detail").val(localStorage.detail);
+        $("#detail-content .card-content-inner").text(localStorage.detail);
+      }
+
+      //初始化坐标信息
+      console.log(localStorage.lng);
+      console.log(localStorage.lat);
+      if(localStorage.lng && localStorage.lat){
+        //详情地点显示
+        map = new AMap.Map('container', {
+          resizeEnable: true,
+          zoom:15,
+          center: [localStorage.lng,localStorage.lat],
+          buttonOffset: new AMap.Pixel(60, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+          zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+          buttonPosition:'LB'
+        });
+        // var marker = new AMap.Marker({
+        //   map : map,
+        //   tagName:"火锅;超辣的",
+        //   askReason:"味道真的不错",
+        //   askContentShow:"这里的味道真的不错",
+        //   price:0.2,
+        //   createBy:"hanqi",
+        //   createAt:"2016-04-19",
+        //   zoom:15,
+        //   center: [localStorage.lng,localStorage.lat],
+        //   position: [localStorage.lng,localStorage.lat],
+        //   draggable: true,
+        //   cursor: 'move',
+        //   raiseOnDrag: true,
+        //   clickable:true
+        // });
+
+        mapShow = new AMap.Map('container-show', {
+          resizeEnable: true,
+          zoom:15,
+          center: [localStorage.lng,localStorage.lat]
+        });
+
+        var marker = new AMap.Marker({
+          map : map,
+          position: [localStorage.lng,localStorage.lat],
+          draggable: true,
+          cursor: 'move',
+          raiseOnDrag: true,
+          clickable:true
+        });
+
+        var markerShow = new AMap.Marker({
+          map : mapShow,
+          position: [localStorage.lng,localStorage.lat],
+          draggable: true,
+          cursor: 'move',
+          raiseOnDrag: true,
+          clickable:true
+        });
+
+         marker.setMap(map);
+         markerShow.setMap(mapShow);
+      }else{
+        //地点显示
+        mapShow = new AMap.Map('container-show', {
+            // resizeEnable: true,
+            // zoomEnable:false,
+            // dragEnable:false
+            resizeEnable: true
+        });
+        mapShow.plugin('AMap.Geolocation', function() {
+            geolocation = new AMap.Geolocation({
+                enableHighAccuracy: true,//是否使用高精度定位，默认:true
+                timeout: 10000,          //超过10秒后停止定位，默认：无穷大
+                zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+            });
+            geolocation.getCurrentPosition();
+            AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
+            AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
+        });
+
+        //解析定位结果
+        function onComplete(data) {
+            console.log("定位成功");
+            var str=['定位成功'];
+            str.push('经度：' + data.position.getLng());
+            str.push('纬度：' + data.position.getLat());
+            str.push('精度：' + data.accuracy + ' 米');
+            str.push('是否经过偏移：' + (data.isConverted ? '是' : '否'));
+
+            // mapShow = new AMap.Map('container-show', {
+            //     resizeEnable: true,
+            //     center:[data.position.getLng(),data.position.getLat()],
+            //     zoom:20
+            // });
+        }
+        //解析定位错误信息
+        function onError(data) {
+            console.log("定位失败");
+        }
+      }
+
+      //初始化价格信息
+      console.log(localStorage.price);
+      if(localStorage.price){
+        $("#price-picker").val(localStorage.price);
+        $("#price-content .card-content-inner").text("￥ "+localStorage.price);
+      }
+    }
+    initLocationData();
+  </script>
+  <script>
     $(".card").on("click",function(){
       var href = $(this).data("href");
       if(href){
@@ -482,6 +681,7 @@
             $(".theme2").text($("#"+$(".theme-li.active")[1].id).text());
             $(".theme2").removeClass("theme-hidden");
           }
+
         }else{
           $.alert("最多只能选择两个主题");
         }
@@ -490,9 +690,35 @@
       // if($(".active").length == 3){
       //   // $(".theme-li.active-first").removeClass("active");
       // }
+
+        //获取主题
+        var $_active = $(".theme-li.active");
+        if(!$_active.length){
+
+        }else{
+          if($_active.length == 1){
+            var type = $(".theme-li.active").attr("data-type");
+          }else{
+            var type = $("#"+$(".theme-li.active")[0].id).attr("data-type") + ","+$("#"+$(".theme-li.active")[1].id).attr("data-type");
+          }
+          localStorage["type"] = type;
+        }
     })
 
-
+    function setlocalStorageTag(){
+      //获取填写的tag
+        var $_tag = $(".ww-typeHelper .type-item");
+        var tag = {};
+        if(!$_tag.length){
+          localStorage["tag"] = '';
+        }else{
+          $.each($_tag,function(i,v){
+            tag[i] = $(this).text();
+          })
+          tag = JSON.stringify(tag);
+          localStorage["tag"] = tag;
+        }
+    }
     //在输入框内添加标签
     $(".ww-typeHelper-input").on("input change",function(){
       console.log($(this).val());
@@ -504,7 +730,9 @@
         $(this).before(span);
         $(this).val('');
         $("#tag-content .card-content-inner").append(span);
+        setlocalStorageTag();
       }
+
     })
 
     //点击二级标签删除主页二级标签
@@ -519,6 +747,8 @@
           $(v).remove();
         }
       })
+      //获取填写的tag
+      setlocalStorageTag();
     })
     //点击默认标签添加标签
     $(".tag-ul").on("click",".type-item",function(){
@@ -526,11 +756,14 @@
       $(this).remove();
       $(".ww-typeHelper-input").before(span);
       $("#tag-content .card-content-inner").append(span);
+      //获取填写的tag
+      setlocalStorageTag();
     })
 
     //推荐理由输入后显示到主页
     $("#reason").on("input change",function(){
       $("#reason-content .card-content-inner").text($(this).val());
+      localStorage["reason"] = $(this).val();
     })
 
 
@@ -538,6 +771,7 @@
       var text = $("#detail").val();
       $("#detail").val(text+"##");
       $("#detail-content .card-content-inner").text($("#detail").val());
+      localStorage["detail"] = $("#detail").val();
     })
 
     function getHideText(){
@@ -586,12 +820,14 @@
       }
       $(".de-show").empty();
       $(".de-show").append(detail);
+      localStorage["detail"] = $("#detail").val();
     })
 
     //更换价格的时候调用
     $("#price-picker").on("input change",function(){
       console.log($(this).val());
       $("#price-content .card-content-inner").text("￥ "+$(this).val());
+      localStorage["price"] = $(this).val();
     })
 
 
@@ -631,6 +867,7 @@
           $.each($_tag,function(i,v){
             tag[i] = $(this).text();
           })
+          tag = JSON.stringify(tag);
         }
 
         //获取推荐理由
@@ -669,18 +906,20 @@
           isfree = 0;
         }
         var data = {
+          username     : "raodaqi",
           type         : type,
           tag          : tag,
           reason       : reason,
           content_show : content_show,
           content_hide : content_hide,
-          lng          : lng,
-          lat          : lat,
+          position     : $("#address").val(),
+          geo_x        : lng,
+          geo_y        : lat,
           isfree       : isfree,
           price        : price
         }
         console.log(data);
-        return ;
+        // return ;
         //发送请求 url：/ask/sendask
         $.ajax({
           type : "POST",
@@ -688,7 +927,7 @@
           dataType: "json",
           url : "/ask/sendask",
           success : function(result){
-            
+            console.log(result);
           },
           error: function(error){
             // alert(error);
@@ -726,43 +965,43 @@
       ]
     });
 
-    //地点显示
-    mapShow = new AMap.Map('container-show', {
-        // resizeEnable: true,
-        // zoomEnable:false,
-        // dragEnable:false
-        resizeEnable: true
-    });
-    mapShow.plugin('AMap.Geolocation', function() {
-        geolocation = new AMap.Geolocation({
-            enableHighAccuracy: true,//是否使用高精度定位，默认:true
-            timeout: 10000,          //超过10秒后停止定位，默认：无穷大
-            zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
-        });
-        geolocation.getCurrentPosition();
-        AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
-        AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
-    });
+    // //地点显示
+    // mapShow = new AMap.Map('container-show', {
+    //     // resizeEnable: true,
+    //     // zoomEnable:false,
+    //     // dragEnable:false
+    //     resizeEnable: true
+    // });
+    // mapShow.plugin('AMap.Geolocation', function() {
+    //     geolocation = new AMap.Geolocation({
+    //         enableHighAccuracy: true,//是否使用高精度定位，默认:true
+    //         timeout: 10000,          //超过10秒后停止定位，默认：无穷大
+    //         zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+    //     });
+    //     geolocation.getCurrentPosition();
+    //     AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
+    //     AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
+    // });
 
-    //解析定位结果
-    function onComplete(data) {
-        console.log("定位成功");
-        var str=['定位成功'];
-        str.push('经度：' + data.position.getLng());
-        str.push('纬度：' + data.position.getLat());
-        str.push('精度：' + data.accuracy + ' 米');
-        str.push('是否经过偏移：' + (data.isConverted ? '是' : '否'));
+    // //解析定位结果
+    // function onComplete(data) {
+    //     console.log("定位成功");
+    //     var str=['定位成功'];
+    //     str.push('经度：' + data.position.getLng());
+    //     str.push('纬度：' + data.position.getLat());
+    //     str.push('精度：' + data.accuracy + ' 米');
+    //     str.push('是否经过偏移：' + (data.isConverted ? '是' : '否'));
 
-        // mapShow = new AMap.Map('container-show', {
-        //     resizeEnable: true,
-        //     center:[data.position.getLng(),data.position.getLat()],
-        //     zoom:20
-        // });
-    }
-    //解析定位错误信息
-    function onError(data) {
-        console.log("定位失败");
-    }
+    //     // mapShow = new AMap.Map('container-show', {
+    //     //     resizeEnable: true,
+    //     //     center:[data.position.getLng(),data.position.getLat()],
+    //     //     zoom:20
+    //     // });
+    // }
+    // //解析定位错误信息
+    // function onError(data) {
+    //     console.log("定位失败");
+    // }
 
 
     //地点标注搜索
@@ -836,6 +1075,9 @@
         clickable:true
       });
 
+      localStorage["lng"] = e.lnglat.getLng();
+      localStorage["lat"] = e.lnglat.getLat();
+
       $("#container").attr("data-lng",e.lnglat.getLng());
       $("#container").attr("data-lat",e.lnglat.getLat());
       //拖动标注后回调的坐标
@@ -845,6 +1087,10 @@
         var lng = this.getPosition().lng;
         $("#container").attr("data-lng",lng);
         $("#container").attr("data-lat",lat);
+
+        localStorage["lng"] = lng;
+        localStorage["lat"] = lat;
+
         mapShow.clearMap();
         var markerShow = new AMap.Marker({
           icon : icon,//24px*24px
@@ -859,8 +1105,9 @@
       marker.setMap(map);
       markerShow.setMap(mapShow);
     });
-
-
+    /*
+    相比来说这家鱼火锅是我吃过味道比较好的一家，在##成都信息工程大学北三街##，人均消费20多的样子，可以吃到很饱，素菜是免费的。
+    */
 
   </script>
 </html>
