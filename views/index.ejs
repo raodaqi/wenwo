@@ -208,8 +208,8 @@
       height: initial;
     }
     .ask-detail{
-      top:50%;
-      height: 50%;
+      top:60%;
+      height: 40%;
       z-index: 10402;
       box-shadow: 0 -.05rem .1rem rgba(0,0,0,.3);
     }
@@ -223,6 +223,9 @@
       width: 100%;
       top: 0px;
       left: 0px;
+    }
+    .hidden-text {
+      color: red;
     }
   }
   </style>
@@ -358,7 +361,7 @@
     //     map.addControl(toolBar);
     //     map.addControl(scale);
     // })
-    $.popup('.ask-detail');
+    // $.popup('.ask-detail');
     var width = $(".left-content").width();
     console.log(width);
     $(".more").on("click",function(){
@@ -459,60 +462,60 @@
     // $(document).on('click','.open-about', function () {
     //   $.popup('.popup-about');
     // });
-    var data = {};
-    $.ajax({
-      type : "POST",
-      data: data,
-      dataType: "json",
-      url : "/todos",
-      success : function(result){
-        console.log(result);
-        // var cluster, markers = [];
-        for(var i = 0; i < result.length;i++){
-          var icon = new AMap.Icon({
-              image : result[i].url,//24px*24px
-              size : new AMap.Size(50,50)
-          });
-          var marker = new AMap.Marker({
-            icon : icon,//24px*24px
-            map : map,
-            position: [result[i].lng,result[i].lat],
-            draggable: false,
-            clickable:true,
-            cursor: 'move',
-            raiseOnDrag: false
-          });
-          marker.setExtData({
-            id:result[i].id,
-            tagName:result[i].tagName,
-            askReason:result[i].askReason,
-            askContentShow:result[i].askContentShow,
-            price:result[i].price,
-            createBy:result[i].createBy,
-            createAt:result[i].createAt,
-            lng:result[i].lng,
-            lat:result[i].lat
-          })
-          markers.push(marker);
+    // var data = {};
+    // $.ajax({
+    //   type : "POST",
+    //   data: data,
+    //   dataType: "json",
+    //   url : "/todos",
+    //   success : function(result){
+    //     console.log(result);
+    //     // var cluster, markers = [];
+    //     for(var i = 0; i < result.length;i++){
+    //       var icon = new AMap.Icon({
+    //           image : result[i].url,//24px*24px
+    //           size : new AMap.Size(50,50)
+    //       });
+    //       var marker = new AMap.Marker({
+    //         icon : icon,//24px*24px
+    //         map : map,
+    //         position: [result[i].lng,result[i].lat],
+    //         draggable: false,
+    //         clickable:true,
+    //         cursor: 'move',
+    //         raiseOnDrag: false
+    //       });
+    //       marker.setExtData({
+    //         id:result[i].id,
+    //         tagName:result[i].tagName,
+    //         askReason:result[i].askReason,
+    //         askContentShow:result[i].askContentShow,
+    //         price:result[i].price,
+    //         createBy:result[i].createBy,
+    //         createAt:result[i].createAt,
+    //         lng:result[i].lng,
+    //         lat:result[i].lat
+    //       })
+    //       markers.push(marker);
 
-          //监听marker点击事件
-          marker.on("click",function(){
-            console.log(this);
-            var lng = this.Ee.extData.lng;
-            var lat = this.Ee.extData.lat;
+    //       //监听marker点击事件
+    //       marker.on("click",function(){
+    //         console.log(this);
+    //         var lng = this.Ee.extData.lng;
+    //         var lat = this.Ee.extData.lat;
 
-            //设置地图中心位置为点击的marker上
-            map.setZoomAndCenter(20,[lng,lat]);
-          });
+    //         //设置地图中心位置为点击的marker上
+    //         map.setZoomAndCenter(20,[lng,lat]);
+    //       });
 
-          marker.setMap(map);
-        }
-        addCluster(0);
-      },
-      error: function(error){
-        alert(error);
-      }
-    });
+    //       marker.setMap(map);
+    //     }
+    //     addCluster(0);
+    //   },
+    //   error: function(error){
+    //     alert(error);
+    //   }
+    // });
 
     // $("#container").on("click",".amap-marker",function(){
     //   // $(this).addClass("amap-active");
@@ -542,43 +545,62 @@
     $("#container").on("click",function(){
       // $.closeModal(".ask-detail");
     })
-    $(document).on("click",".amap-marker-content",function(){
+    // var open = false;
+    $("#container").on("click",function(e){
+      console.log("ok");
+      if($(".ask-detail").hasClass("modal-in")){
+         $.closeModal(".ask-detail");
+      }
+     
+    })
+    $("#container").on("click",".amap-marker-content",function(e){
       $.popup('.ask-detail');
-      getMap();
+      console.log("test");
+      // getMap();
+      // e.stopPropagation();
     })
 
-    var mapShow;
-    getMap();
+    // var mapShow;
+    getMap(103.985616,30.581207);
     // var markerShow = new AMap.Marker({
     //   map : mapShow,
     //   position: [104.065262,30.65938]
     // });
-    var markerShow = new AMap.Marker({
+    // var markerShow = new AMap.Marker({
+    //     map : mapShow,
+    //     position: [103.985616,30.581207],
+    //     draggable: true,
+    //     cursor: 'move',
+    //     raiseOnDrag: true,
+    //     clickable:true
+    //   });
+    // markerShow.setMap(mapShow);
+
+    function getMap(lng,lat){
+      //详情地点显示
+      var mapShow;
+      mapShow = new AMap.Map('container-show', {
+        resizeEnable: true,
+        zoom:15,
+        center: [lng,lat]
+      });
+      var markerShow = new AMap.Marker({
         map : mapShow,
-        position: [103.985616,30.581207],
+        position: [lng,lat],
         draggable: true,
         cursor: 'move',
         raiseOnDrag: true,
         clickable:true
       });
-    markerShow.setMap(mapShow);
-
-    function getMap(){
-      //详情地点显示
-      mapShow = new AMap.Map('container-show', {
-        resizeEnable: true,
-        zoom:15,
-        center: [103.985616,30.581207]
-      });
+      markerShow.setMap(mapShow);
     }
 
     getAllAsk();
     //获取所有信息
     function getAllAsk(){
       var data = {
-        staus  : 1,
+        staus  : 4,
         size   : 10,
-        page   : 0
       };
       $.ajax({
         type : "GET",
@@ -587,53 +609,87 @@
         url : "/ask/allask",
         success : function(result){
           console.log(result);
-          return;
+          // return;
           // var cluster, markers = [];
-          for(var i = 0; i < result.length;i++){
-            var icon = new AMap.Icon({
-                image : result[i].url,//24px*24px
-                size : new AMap.Size(50,50)
-            });
-            var marker = new AMap.Marker({
-              icon : icon,//24px*24px
-              map : map,
-              position: [result[i].lng,result[i].lat],
-              draggable: false,
-              clickable:true,
-              cursor: 'move',
-              raiseOnDrag: false
-            });
-            marker.setExtData({
-              id:result[i].id,
-              tagName:result[i].tagName,
-              askReason:result[i].askReason,
-              askContentShow:result[i].askContentShow,
-              price:result[i].price,
-              createBy:result[i].createBy,
-              createAt:result[i].createAt,
-              lng:result[i].lng,
-              lat:result[i].lat
-            })
-            markers.push(marker);
 
-            //监听marker点击事件
-            marker.on("click",function(){
-              console.log(this);
-              var lng = this.Ee.extData.lng;
-              var lat = this.Ee.extData.lat;
+          if(result.code == 200){
+            for(var i = 0; i < result.data.length;i++){
+              var icon = new AMap.Icon({
+                  image : "/img/hotPot.jpg",//24px*24px
+                  size : new AMap.Size(50,50)
+              });
+              var marker = new AMap.Marker({
+                icon : icon,//24px*24px
+                map : map,
+                position: [result.data[i].GeoX,result.data[i].GeoY],
+                draggable: false,
+                clickable:true,
+                cursor: 'move',
+                raiseOnDrag: false
+              });
+              marker.setExtData({
+                id:result.data[i].objectId,
+                tagName:result.data[i].askTag,
+                askReason:result.data[i].askReason,
+                askContentShow:result.data[i].askContentShow,
+                price:result.data[i].askPrice,
+                createBy:result.data[i].createBy,
+                createAt:result.data[i].createAt,
+                lng:result.data[i].GeoX,
+                lat:result.data[i].GeoY,
+                askIsFree:result.data[i].askIsFree
+              })
+              markers.push(marker);
 
-              //设置地图中心位置为点击的marker上
-              map.setZoomAndCenter(20,[lng,lat]);
-            });
+              //监听marker点击事件
+              marker.on("click",function(){
+                console.log(this);
+                var lng = this.Ee.extData.lng;
+                var lat = this.Ee.extData.lat;
+                setDetail(this.Ee.extData);
+                //设置地图中心位置为点击的marker上
+                map.setZoomAndCenter(20,[lng,lat]);
+              });
 
-            marker.setMap(map);
+              marker.setMap(map);
+            }
+            addCluster(0);
           }
-          addCluster(0);
         },
         error: function(error){
           alert(error);
         }
       });
+    }
+
+    function setDetail(extData){
+      console.log(extData);
+      var type          = extData.type,//主题类型
+          tag           = extData.tagName,//二级标签
+          reason        = extData.askReason,//推荐理由
+          content_show  = extData.askContentShow,//详情显示部分
+          lng           = extData.lng,//经度
+          lat           = extData.lat,//维度
+          isfree        = extData.askIsFree,//是否是免费信息
+          price         = extData.price;//信息价格
+
+      $("#reason-content .card-content-inner").text(reason);
+      $("#price-content  .card-content-inner").text("￥ "+price);
+      var detail = content_show;
+      var hidden = '<span class="hidden-text">***</span>';
+      str = detail.split("##");
+      var detailContent = '';
+      for(var i = 0; i < str.length; i++){
+        if(i%2){
+          detailContent += str[i];
+        }else{
+          detailContent += str[i]+hidden;
+        }
+      }
+      $("#detail-content  .card-content-inner").empty();
+      $("#detail-content  .card-content-inner").append(detailContent);
+      getMap(lng,lat);
+
     }
 
   </script>

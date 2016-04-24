@@ -538,10 +538,17 @@
         $("#detail-content .card-content-inner").text(localStorage.detail);
       }
 
+      //初始化地址信息
+      if(localStorage.address){
+        $("#address").val(localStorage.address);
+      }
       //初始化坐标信息
       console.log(localStorage.lng);
       console.log(localStorage.lat);
       if(localStorage.lng && localStorage.lat){
+        $("#container").attr("data-lng",localStorage.lng);
+        $("#container").attr("data-lat",localStorage.lat);
+
         //详情地点显示
         map = new AMap.Map('container', {
           resizeEnable: true,
@@ -785,7 +792,12 @@
         if(i%2){
           hidden += str[i]+"##";
         }else{
-          show += str[i]+"##";
+          if( i == str.length-1){
+            show += str[i];
+          }else{
+            show += str[i]+"##";
+          }
+          
         }
       }
       var textDetail = {
@@ -906,7 +918,7 @@
           isfree = 0;
         }
         var data = {
-          username     : "raodaqi",
+          username     : "hanqi",
           type         : type,
           tag          : tag,
           reason       : reason,
@@ -921,6 +933,7 @@
         console.log(data);
         // return ;
         //发送请求 url：/ask/sendask
+        $.showPreloader("正在提交");
         $.ajax({
           type : "POST",
           data: data,
@@ -928,6 +941,13 @@
           url : "/ask/sendask",
           success : function(result){
             console.log(result);
+            if(result.code){
+              $.hidePreloader();
+              $.toast("提交成功");
+            }else{
+              $.hidePreloader();
+              $.toast(result.message);
+            }
           },
           error: function(error){
             // alert(error);
@@ -1003,6 +1023,10 @@
     //     console.log("定位失败");
     // }
 
+    //输入框填写的地址内容
+    $("#address").on("input change",function(){
+      localStorage["address"] = $(this).val();
+    })
 
     //地点标注搜索
     AMap.plugin(['AMap.Autocomplete','AMap.PlaceSearch'],function(){
