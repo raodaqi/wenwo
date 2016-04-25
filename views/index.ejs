@@ -448,12 +448,17 @@
             }];
             map.plugin(["AMap.MarkerClusterer"], function() {
                 cluster = new AMap.MarkerClusterer(map, markers, {
-                    styles: sts
+                  maxZoom:10,
+                  styles: sts
                 });
+                // cluster.setMaxZoom(20);
             });
         } else {
             map.plugin(["AMap.MarkerClusterer"], function() {
-                cluster = new AMap.MarkerClusterer(map, markers);
+                cluster = new AMap.MarkerClusterer(map, markers,{
+                  maxZoom:20,
+                  styles: sts
+                });
             });
         }
 
