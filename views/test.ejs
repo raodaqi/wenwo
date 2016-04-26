@@ -30,42 +30,42 @@
 //            },
 //            error : function(){}
 //        });
-        var geo = [-500, 500];
-        var tag = new Array();
-        tag[0] = {
-            tag_name:'123'
-        }
-        tag[1] = {
-            tag_name:'123124125'
-        }
-
-        tag = JSON.stringify(tag);
-        var data = {
-            username:'hanqi',
-            type:1,
-            //isfree:0,
-            geo_x:123,
-            geo_y:456,
-            position:'asd',
-            reason:'asd',
-            content_show:'asd',
-            content_hide:'asd',
-            price:0,
-            tag:tag,
-            remark:'asd'
-
-        }
-        console.log(data);
-        $.ajax({
-            type: "post",
-            url: 'ask/sendask',
-            data: data,
-            dataType: "json",
-            success : function(result) {
-                console.log(result);
-            },
-            error : function(){}
-        });
+//        var geo = [-500, 500];
+//        var tag = new Array();
+//        tag[0] = {
+//            tag_name:'123'
+//        }
+//        tag[1] = {
+//            tag_name:'123124125'
+//        }
+//
+//        tag = JSON.stringify(tag);
+//        var data = {
+//            username:'hanqi',
+//            type:1,
+//            //isfree:0,
+//            geo_x:123,
+//            geo_y:456,
+//            position:'asd',
+//            reason:'asd',
+//            content_show:'asd',
+//            content_hide:'asd',
+//            price:0,
+//            tag:tag,
+//            remark:'asd'
+//
+//        }
+//        console.log(data);
+//        $.ajax({
+//            type: "post",
+//            url: 'ask/sendask',
+//            data: data,
+//            dataType: "json",
+//            success : function(result) {
+//                console.log(result);
+//            },
+//            error : function(){}
+//        });
 
 //        $.ajax({
 //            type: "get",
@@ -117,6 +117,16 @@
 //            },
 //            error : function(){}
 //        });
+        $.ajax({
+            type: "get",
+            url: 'ask/allask',
+            data: {staus:4},
+            dataType: "json",
+            success : function(result) {
+                console.log(result);
+            },
+            error : function(){}
+        });
 
     }
 </script>
