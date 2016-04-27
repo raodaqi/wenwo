@@ -1,0 +1,161 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>WenWo</title>
+</head>
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+    li {
+        list-style-type: none;
+    }
+    .wrap {
+        margin: 0 auto;
+        width: 1200px;
+    }
+    .title-bar {
+        height: 60px;
+        background: #f8bd38;
+        border-radius: 5px;
+    }
+    .logo {
+        color: #fff;
+        font-size: 23px;
+        line-height: 60px;
+        margin-left: 20px;
+    }
+    .list {
+        float: left;
+        margin-top: 30px;
+        margin-left: 30px;
+    }
+    .side-bar {
+        width: 200px;
+        /*background: #000;*/
+
+    }
+    .side-bar ul {
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    .side-bar ul li {
+        /*margin-bottom: 10px;*/
+        text-align: center;
+        height: 30px;
+        font-size: 18px;
+        line-height: 30px;
+        background: #eee;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    ul li:hover {
+        background: #ddd;
+    }
+    .content {
+        background: #eee;
+        width: 880px;
+        border-radius: 10px;
+        overflow: hidden;
+        padding: 20px 20px 20px 20px;
+    }
+    .manage ul li {
+        display: block;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .manage ul li .ask-id {
+        display: inline;
+        width: 90%;
+    }
+    .manage ul li .del {
+        float: right;
+        clear: both;
+    }
+
+
+</style>
+<body>
+    <div class="wrap">
+        <div class="title-bar">
+            <div class="logo">WenWo</div>
+        </div>
+        <div>
+            <div class="list side-bar">
+                <ul>
+                    <li>发布信息</li>
+                    <li>审核信息</li>
+                    <li>管理消息</li>
+                    <li>统计信息</li>
+                    <li>帐号管理</li>
+                </ul>
+            </div>
+            <div class="list content">
+                <div class="send" style="display: none">
+                    <div class="check-box">
+                        <span>主题:</span>
+                        <input type="checkbox" value="1" id="checkbox-1" name="" />
+                        <label for="checkbox-1">吃</label>
+                        <input type="checkbox" value="2" id="checkbox-2" name="" />
+                        <label for="checkbox-2">住</label>
+                        <input type="checkbox" value="3" id="checkbox-3" name="" />
+                        <label for="checkbox-3">行</label>
+                        <input type="checkbox" value="4" id="checkbox-4" name="" />
+                        <label for="checkbox-4">购物</label>
+                        <input type="checkbox" value="5" id="checkbox-5" name="" />
+                        <label for="checkbox-5">游玩</label>
+                        <input type="checkbox" value="6" id="checkbox-6" name="" />
+                        <label for="checkbox-6">防坑</label>
+                    </div>
+                    <div>
+                        <span>标签:</span>
+                        <input type="text">
+                    </div>
+                    <div>
+                        <span>推荐理由:</span>
+                        <textarea>ags</textarea>
+                    </div>
+                    <div>
+                        <span>详情:</span>
+                        <textarea>ags</textarea>
+                    </div>
+                    <div>
+                        <span>地图标注:</span>
+                    </div>
+                    <div>
+                        <span>价格:</span>
+                    </div>
+                </div>
+                <div class="check" style="display: none">
+                    <ul>
+                        <li>234567893456789</li>
+                        <li>234567893456789</li>
+                        <li>234567893456789</li>
+                    </ul>
+                </div>
+                <div class="check-detail" style="display: none">
+
+                </div>
+                <div class="manage" style="display: none">
+                    <ul>
+                        <li><div class="ask-id">456789adf</div><div class="del">X</div></li>
+                        <li><div class="ask-id">456789adf</div><div class="del">X</div></li>
+                        <li><div class="ask-id">456789adf</div><div class="del">X</div></li>
+
+                    </ul>
+                </div>
+                <div class="account" style="display: none">
+                    <div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+</body>
+</html>
