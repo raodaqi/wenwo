@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var todos = require('./routes/todos');
 var cloud = require('./cloud');
 var more = require('./routes/more');
+var manage = require('./routes/manage');
 var wechat = require('./routes/wechatBot');
 var user = require('./routes/user');
 var ask = require('./routes/ask');
@@ -77,6 +78,7 @@ app.use('/user', user);
 app.use('/ask', ask);
 app.use('/wallet', wallet);
 app.use('/hode', hode);
+app.use('/manage', manage);
 
 // 如果任何路由都没匹配到，则认为 404
 // 生成一个异常让后面的 err handler 捕获

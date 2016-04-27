@@ -1,7 +1,6 @@
 /**
  * Created by HanQi on 16/4/15.
 
-
 消息状态
  * staus == 1   上架
  * staus == 2   审批中
@@ -248,12 +247,14 @@ router.get('/askedit', function(req, res, next) {
                 data : results,
                 message : 'Operation succeeded'
             }
+            res.render(result);
         }, function(err) {
             var result = {
                 code : 800,
                 data : results,
                 message : err.message
             }
+            res.render(result);
             //console.log('Failed to create new object, with error message: ' + err.message);
         });
     });
@@ -370,6 +371,62 @@ router.get('/myask', function(req, res, next) {
 
 router.get('/cancel', function(req, res, next) {
     //type  下架  取消审批
+    var askId = req.param('ask_id');
+    var staus = req.param('staus');
+    var userName = req.param('username');
+    var query = new AV.Query('AskMe');
+    query.get(askId).then(function (ask) {
+        if (askId.get('creatBy') != userName) {
+            var result = {
+                code: 800,
+                data: results,
+                message: 'illegal operation'
+            }
+            res.render(result);
+        }
+        else {
+            ask.set('staus', staus);
+            ask.save().then(function () {
+                var result = {
+                    code: 200,
+                    data: results,
+                    message: 'Operation succeeded'
+                }
+                res.render(result);
+            }, function (err) {
+                var result = {
+                    code: 800,
+                    data: results,
+                    message: err.message
+                }
+                res.render(result);
+                //console.log('Failed to create new object, with error message: ' + err.message);
+            });
+        }
+    });
+});
+
+router.get('/approval', function(req, res, next) {
+    var askId = req.param('ask_id');
+    var staus = req.param('staus');
+    var query = new AV.Query('AskMe');
+    query.get(askId).then(function (ask) {
+        ask.set('staus', staus);
+        ask.save().then(function () {
+            var result = {
+                code : 200,
+                data : results,
+                message : 'Operation succeeded'
+            }
+        }, function(err) {
+            var result = {
+                code : 800,
+                data : results,
+                message : err.message
+            }
+            //console.log('Failed to create new object, with error message: ' + err.message);
+        });
+    });
 });
 
 router.post('/sendask', function(req, res, next) {
