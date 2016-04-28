@@ -1,0 +1,134 @@
+.wp{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;            
+}
+.page{
+    font-size: 72px;
+    /*line-height: 320px;*/
+    text-align: center;
+    /*padding: 0 20px;*/
+    /*background-size: auto 100%;*/
+}
+.page .img-button{
+    /*width: 95%;*/
+    /*height: 100%;*/
+    /*margin: 0 auto;*/
+}
+.page1{
+    background: url("/img/wx/01.png") no-repeat center;
+    background-size: auto 100%;
+}
+.page2{
+    background: url("/img/wx/02.png") no-repeat center;
+    background-size: auto 100%;
+}
+.page3{
+    background: url("/img/wx/03.png") no-repeat center;
+    background-size: auto 100%;
+}
+.page4{
+    background: url("/img/wx/04.png") no-repeat center;
+    /*background-size: auto 100%;*/
+    background-size: cover;
+}
+.page5{
+    background: url("/img/wx/05.png") no-repeat center;
+    background-size: auto 100%;
+}
+.page6{
+    background: url("/img/wx/06.png") no-repeat center;
+    background-size: auto 100%;
+}
+.page7{
+    background: url("/img/wx/07.png") no-repeat center;
+    background-size: auto 100%;
+}
+.page8{
+    background: url("/img/wx/08.png") no-repeat center;
+    background-size: auto 100%;
+}
+.page9{
+    background: url("/img/wx/09.png") no-repeat center;
+    /*background-size: auto 100%;*/
+    background-size: cover;
+}
+.page10{
+    background: url("/img/wx/10.png") no-repeat center;
+    /*background-size: auto 100%;*/
+    background-size: cover;
+}
+.page11{
+    background: url("/img/wx/11.png") no-repeat center;
+    background-size: auto 100%;
+    /*background-size: cover;*/
+}
+.page12{
+    background: url("/img/wx/12.png") no-repeat center;
+    /*background-size: auto 100%;*/
+    background-size: cover;
+}
+.page13{
+    background: url("/img/wx/13.png") no-repeat center;
+    background-size: auto 100%;
+}
+.page13 img{
+    /*width: 100%;*/
+    display: block;
+    margin: 0 auto;
+    height:100%; 
+}
+
+/* 箭头 */
+@-webkit-keyframes start {
+    0%,30% {
+        opacity: 0.2;
+        -webkit-transform: translate(0,10px);
+    }
+    60% {
+        opacity: 1;
+        -webkit-transform: translate(0,0);
+    }
+    100% {
+        opacity: 0.2;
+        -webkit-transform: translate(0, -5px);
+    }
+}
+@keyframes start {
+    0%,30% {
+        opacity: 0.2;
+        transform: translate(0,10px);
+    }
+    60% {
+        opacity: 1;
+        transform: translate(0,0);
+    }
+    100% {
+        opacity: 0.2;
+        transform: translate(0, -5px);
+    }
+}
+.start{
+    position: fixed;
+    left: 50%;
+    margin-left: -17px;
+    top: 95%;
+    margin-top: -34px;
+    width: 34px;
+    height: 34px;
+}
+.start b{
+    position: absolute;
+    left: 50%;
+    top: 10px;
+    margin-left: -9px;
+    width: 19px;
+    height: 12px;
+    background: url(/img/wx/arrow.png);
+    background-size: 100% 100%;
+    -webkit-animation: start 1.5s infinite ease-in-out;
+    animation: start 1.5s infinite ease-in-out;
+}

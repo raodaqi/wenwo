@@ -35,6 +35,10 @@ router.get('/send', function(req, res, next) {
   res.render('send');
 });
 
+router.get('/wx', function(req, res, next) {
+  res.render('wx');
+});
+
 // 新增 Todo 项目
 router.post('/', function(req, res, next) {
   // var content = req.body.content;

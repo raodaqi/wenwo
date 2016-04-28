@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">    
+    <title>问我——像个当地人一样去旅游</title>
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/zepto.fullpage.css">
+    <style>
+        .page{
+          font-family: fz;
+        }
+        @font-face { 
+          font-family: fz; /*这里是说明调用来的字体名字*/ 
+          src: url('/font/MFLIHEI_NONCOMMERCIAL-REGULAR.OTF'); /*这里是字体文件路径*/ 
+          } 
+        .music{
+            position: absolute;
+            z-index: 1000;
+            right: 0px;
+            top: 0px;
+            padding: 10px;
+            width: 25px;
+            height: 25px;
+        }
+        .music .music-btn {
+            display: block;
+            padding-left: 1px;
+            width: 25px;
+            height: 25px;
+            background-image: url(/img/wx/music-1.png);
+            background-size: 100% 100%;
+        }
+        .music .music-btn.play {
+            background-image: url(/img/wx/music-0.png);
+        }
+        .indicator{
+            position: fixed;
+            right: 10px;
+            top: 50%;
+            margin-top: -130px;
+        }
+        .indicator li{
+            margin-top: 10px;
+            width: 10px;
+            height: 10px;
+            border-radius: 100px;
+            background: rgba(0,0,0,0.5);
+            text-indent: -9999px;
+            list-style: none;
+        }
+        .indicator li.cur{
+            background: rgba(255,255,255,0.5);
+        }
+        .time{
+          position: absolute;
+          width: 100%;
+          text-align: center;
+          left: 52%;
+          top: 4%;
+          height: 20px;
+          font-size: 20px;
+          width: 63%;
+          margin-top: -35px;
+          transform: translateX(-50%);
+        }
+        .time div{
+          width: 25%;
+          text-align: center;
+          height: 20px;
+          float: left;
+          /*padding:2.5%;*/
+        }
+    </style>
+</head>
+<body>
+    <div id="music" class="music">
+        <a class="music-btn"></a>
+    </div>
+    <div class="wp">
+        <div class="wp-inner">
+            <div class="page page1">
+              <div class="time">
+                <div class="day"></div>
+                <div class="hour"></div>
+                <div class="min"></div>
+                <div class="sec"></div>
+              </div>
+            </div>
+            <div class="page page2">
+              <div class="img-button"></div>
+            </div>
+            <div class="page page3">
+              <div class="img-button"></div>
+            </div>
+            <div class="page page4">
+              <div class="img-button"></div>
+            </div>
+            <div class="page page5">
+              <div class="img-button"></div>
+            </div>
+            <div class="page page6">
+              <div class="img-button"></div>
+            </div>
+            <div class="page page7">
+              <div class="img-button"></div>
+            </div>
+            <div class="page page8">
+              <div class="img-button"></div>
+            </div>
+            <div class="page page9">
+              <div class="img-button"></div>
+            </div>
+            <div class="page page10">
+              <div class="img-button"></div>
+            </div>
+            <div class="page page11">
+              <div class="img-button"></div>
+            </div>
+            <div class="page page12">
+              <div class="img-button"></div>
+            </div>
+            <div class="page page13">
+              <img src="/img/wx/13.png" alt="">
+            </div>
+        </div>
+        <ul class="indicator">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+            <li>6</li>
+            <li>7</li>
+            <li>8</li>
+            <li>9</li>
+            <li>10</li>
+            <li>11</li>
+            <li>12</li>
+            <li>13</li>
+        </ul>
+    </div>
+    <span class="start"><b></b></span>
+    <script src="/js/zepto.min.js"></script>
+    <script src="/js/zepto.fullpage.js"></script>
+    <script>
+        // $('.wp-inner').fullpage();
+        $('.wp-inner').fullpage({
+            drag: true,
+            duration: 100,
+            page: '.page',
+            der: 0.5,
+            change: function (e) {
+                console.log('change', e.next, e.cur);
+                $('.indicator li').removeClass('cur').eq(e.cur).addClass('cur');
+            },
+            beforeChange: function (e) {
+                console.log('beforeChange', e.next, e.cur);
+            },
+            afterChange: function (e) {
+                console.log('afterChange', e.next, e.cur);
+            }
+        });
+    </script>
+    <script>
+        var bgAudio = new Audio();
+        bgAudio.loadStatus = 'unload';
+        bgAudio.loop = true;
+        function loadAudio(audio, url, callback) {
+            audio.src = url;
+            audio.load();
+            audio.addEventListener('canplay', function () {
+                bgAudio.loadStatus = 'loaded';
+                callback();
+            });
+            audio.addEventListener('loadstart', function () {
+                bgAudio.loadStatus = 'loading';
+            });
+        }
+        function playAudio(){
+            if (bgAudio.loadStatus === 'unload') {
+                loadAudio(bgAudio, '/media/bg.mp3', function () {
+                    playAudio();
+                });
+                return 1;
+            }
+
+            bgAudio.play();
+        }
+        function stopAudio() {
+            bgAudio.pause();
+        }
+        bgAudio.addEventListener('playing' ,function (e) {
+            $('#music .music-btn').addClass('play');
+        });
+        bgAudio.addEventListener('pause' ,function (e) {
+            $('#music .music-btn').removeClass('play');
+        });
+
+        $('body').one('touchstart', function () {
+            playAudio();
+            $('#music').on('touchstart', function (e) {
+                if (bgAudio.paused) {
+                    playAudio();
+                    return 0;
+                }
+                stopAudio();
+                return 1;
+            });
+        });
+        window.onload = function() {
+            if (bgAudio.loadStatus !== 'unload') {return;}
+            playAudio();
+        };
+    </script>
+
+    <script type="text/javascript">
+    var time_start = new Date().getTime(); //设定当前时间
+    var time_end =  new Date("2016/6/05 00:00:00").getTime(); //设定目标时间
+    // 计算时间差 
+    var time_distance = time_end - time_start;
+    console.log(time_distance); 
+    var intDiff = parseInt(time_distance/1000-1);//倒计时总秒数量
+    function timer(intDiff){
+      window.setInterval(function(){
+      var day=0,
+        hour=0,
+        minute=0,
+        second=0;//时间默认值    
+      if(intDiff > 0){
+        day = Math.floor(intDiff / (60 * 60 * 24));
+        hour = Math.floor(intDiff / (60 * 60)) - (day * 24);
+        minute = Math.floor(intDiff / 60) - (day * 24 * 60) - (hour * 60);
+        second = Math.floor(intDiff) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
+      }
+      if (minute <= 9) minute = '0' + minute;
+      if (second <= 9) second = '0' + second;
+      $('.day').text(day);
+      $('.hour').text(hour);
+      $('.min').text(minute);
+      $('.sec').text(second);
+      intDiff--;
+      }, 1000);
+    } 
+    $(function(){
+      timer(intDiff);
+    }); 
+    </script>
+</body>
+</html>
