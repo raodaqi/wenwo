@@ -36,15 +36,15 @@ router.get('/send', function(req, res, next) {
 });
 
 router.get('/wx', function(req, res, next) {
-  AV.Cloud.httpRequest({
-    url: 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx99f15635dd7d9e3c&secret=PwwbrWMutl378fjwD5P1IkGZom5zEmXw0Coo7lVDuP6',
-    success: function(httpResponse) {
-      console.log(httpResponse);
-    },
-    error: function(httpResponse) {
-      console.error('Request failed with response code ' + httpResponse.status);
-    }
-  });
+  // AV.Cloud.httpRequest({
+  //   url: 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx99f15635dd7d9e3c&secret=PwwbrWMutl378fjwD5P1IkGZom5zEmXw0Coo7lVDuP6',
+  //   success: function(httpResponse) {
+  //     console.log(httpResponse);
+  //   },
+  //   error: function(httpResponse) {
+  //     console.error('Request failed with response code ' + httpResponse.status);
+  //   }
+  // });
   res.render('wx');
 });
 

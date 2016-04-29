@@ -429,5 +429,27 @@
       }
       setInterval(slideNext, 3000);
     </script>
+    <script>
+    var height = $(".wp").height();
+    var width = $(".wp").width();
+    var imgWidth = height/1136*640;
+    var day = (width - imgWidth)/2 + imgWidth*0.25;
+    var hour = (width - imgWidth)/2 + imgWidth*0.4;
+    var min = (width - imgWidth)/2 + imgWidth*0.57;
+    var sec = (width - imgWidth)/2 + imgWidth*0.72;
+    $(".time .day").css({
+      "left":day+"px"
+    })
+    $(".time .hour").css({
+      "left":hour+"px"
+    })
+    $(".time .min").css({
+      "left":min+"px"
+    })
+    $(".time .sec").css({
+      "left":sec+"px"
+    })
+    // alert(imgWidth);
+    </script>
 </body>
 </html>
