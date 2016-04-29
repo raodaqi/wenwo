@@ -35,9 +35,9 @@ router.get('/send', function(req, res, next) {
   res.render('send');
 });
 
-router.get('/wx', function(req, res, next) {
+function getAccessToken(appid,secret,callback){
   AV.Cloud.httpRequest({
-    url: 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx99f15635dd7d9e3c&secret=9157e84975386b6dee6a499cc639973e',
+    url: 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='+appid+'&secret='+secret,
     success: function(httpResponse) {
       console.log(httpResponse);
     },
@@ -45,6 +45,16 @@ router.get('/wx', function(req, res, next) {
       console.error('Request failed with response code ' + httpResponse.status);
     }
   });
+}
+
+router.get('/wx', function(req, res, next) {
+  var appid = "wx99f15635dd7d9e3c";
+  var secret = "9157e84975386b6dee6a499cc639973e";
+  getAccessToken(appid,secret,{
+    success:function(result){
+      console.log(result);
+    }
+  })
   res.render('wx');
 });
 

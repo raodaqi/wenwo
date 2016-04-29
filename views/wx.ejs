@@ -42,29 +42,29 @@
         .time{
           position: absolute;
           width: 100%;
-          left:0;
-          right:0;
+          /*left:0;*/
+          /*right:0;*/
           text-align: center;
-          /*left: 52%;*/
+          left: 52%;
           top: 4%;
           height: 20px;
           font-size: 15px;
-          /*width: 60%;*/
+          width: 60%;
           margin-top: -8px;
-          /*transform:translateX(-50%);
+          transform:translateX(-50%);
           -ms-transform:translateX(-50%); 
           -moz-transform:translateX(-50%); 
           -webkit-transform:translateX(-50%); 
-          -o-transform:translateX(-50%);  */
+          -o-transform:translateX(-50%);  
         }
         .time div{
-          /*width: 25%;
+          width: 25%;
           text-align: center;
           height: 20px;
-          float: left;*/
+          float: left;
           /*padding:2.5%;*/
         }
-        .time .day{
+        /*.time .day{
           position: absolute;
           left:25%;
         }
@@ -79,7 +79,7 @@
         .time .sec{
           position: absolute;
           right:22%;
-        }
+        }*/
         .share{
 
         }
@@ -378,10 +378,10 @@
       }
       if (minute <= 9) minute = '0' + minute;
       if (second <= 9) second = '0' + second;
-      $('.day').text(day);
-      $('.hour').text(hour);
-      $('.min').text(minute);
-      $('.sec').text(second);
+      $('.day').text(day+"天");
+      $('.hour').text(hour+"时");
+      $('.min').text(minute+"分");
+      $('.sec').text(second+"秒");
       intDiff--;
       }, 1000);
     } 
@@ -430,25 +430,25 @@
       setInterval(slideNext, 3000);
     </script>
     <script>
-    var height = $(".wp").height();
-    var width = $(".wp").width();
-    var imgWidth = height/1136*640;
-    var day = (width - imgWidth)/2 + imgWidth*0.25;
-    var hour = (width - imgWidth)/2 + imgWidth*0.4;
-    var min = (width - imgWidth)/2 + imgWidth*0.57;
-    var sec = (width - imgWidth)/2 + imgWidth*0.72;
-    $(".time .day").css({
-      "left":day+"px"
-    })
-    $(".time .hour").css({
-      "left":hour+"px"
-    })
-    $(".time .min").css({
-      "left":min+"px"
-    })
-    $(".time .sec").css({
-      "left":sec+"px"
-    })
+    // var height = $(".wp").height();
+    // var width = $(".wp").width();
+    // var imgWidth = height/1136*640;
+    // var day = (width - imgWidth)/2 + imgWidth*0.25;
+    // var hour = (width - imgWidth)/2 + imgWidth*0.4;
+    // var min = (width - imgWidth)/2 + imgWidth*0.57;
+    // var sec = (width - imgWidth)/2 + imgWidth*0.72;
+    // $(".time .day").css({
+    //   "left":day+"px"
+    // })
+    // $(".time .hour").css({
+    //   "left":hour+"px"
+    // })
+    // $(".time .min").css({
+    //   "left":min+"px"
+    // })
+    // $(".time .sec").css({
+    //   "left":sec+"px"
+    // })
     // alert(imgWidth);
     </script>
 </body>
