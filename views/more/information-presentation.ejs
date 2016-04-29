@@ -101,8 +101,8 @@ body{
 	</div>
 	<div class="content-block-title">地点标注</div>
 	<div class="card">
-		<div class="card-content">
-			<div class="card-content-inner">这是一个用纯文本的简单卡片。但卡片可以包含自己的页头，页脚，列表视图，图像，和里面的任何元素。</div>
+		<div class="card-content" id="container-show" style="height: 280px;">
+			<!-- <div class="card-content-inner"></div> -->
 		</div>
 	</div>
 	<div class="card">
@@ -174,5 +174,43 @@ $(".ordered").on('click', function () {
 			$(".hide").hide();
 		})
   });
+	// var map;
+	getMap(103.985616,30.581207);
+	function getMap(lng,lat){
+      //详情地点显示
+      var map;
+      map = new AMap.Map('container-show', {
+        resizeEnable: true,
+        zoom:20,
+        center: [lng,lat]
+      });
+      var map = new AMap.Marker({
+        map : map,
+        position: [lng,lat],
+        draggable: true,
+        cursor: 'move',
+        raiseOnDrag: true,
+        clickable:true
+      });
+      map.setMap(map);
+    }
+// sendAsk();
+// function sendAsk(){
+// 	$.ajax({
+//         type : "POST",
+//         dataType: "json",
+//         data:{username:"test"},
+//         url : "/ask/sendask",
+//         success : function(result){
+//           console.log(result);
+//           // var money = result.money;
+//           // console.log(money);
+//           // $(".money").append(money);
+//           },
+//       error: function(error){
+//           alert(error);
+//         }
+//       })
+
 </script>
 </html>

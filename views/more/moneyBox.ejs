@@ -86,10 +86,12 @@ body{
 .btn_recharge button{
 	width: 100px;
 	height: 30px;
+	border:0;
 }
 .btn_withdraw_cash button{
 	width: 100px;
 	height: 30px;
+	border:0;
 }
 </style>
 <body>
@@ -104,11 +106,11 @@ body{
 </div>
 	<div class="balance">
 		<div class="iconfont icon-qianBao money"></div>
-		<div class="balance_money">账户余额:30.00</div>
+		<div class="balance_money">账户余额:</div>
 	</div>
 	<div class="withdraw_cash">
 		<div class="withdraw_cash_title">账户可提现:</div>
-		<div class="withdraw_cash_money">30元</div>
+		<div class="withdraw_cash_money"></div>
 	</div>
 	<div class="btn">
 		<div class="btn_withdraw_cash">
@@ -125,5 +127,25 @@ $(".zuo").click(function(){
 $("#withdraw").click(function(){
 	window.location.href="/more/withdraw";
 })
+getMywallet();
+function getMywallet(){
+	 $.ajax({
+        type : "GET",
+        dataType: "json",
+        data:{username:"test"},
+        url : "/wallet/mywallet",
+        success : function(result){
+          console.log(result);
+          var wallet = result.money;
+          $(".balance_money").append(wallet);         
+          var wallets = parseInt(wallet);
+          var  str = wallets +"元";
+          $(".withdraw_cash_money").append(str);
+          },
+      error: function(error){
+          alert(error);
+        }
+      })
+}
 </script>
 </html>

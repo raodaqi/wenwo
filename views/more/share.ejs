@@ -128,7 +128,7 @@ body{
 .information_state{
 	height: 40px;
 	width: 50%;
-	border-right: 1px solid #EAEAEA;
+/*	border-right: 1px solid #EAEAEA;*/
 	line-height: 40px;
 	float: left;
 	box-sizing: border-box;
@@ -210,14 +210,14 @@ body{
 										<img src="/img/u28.png"></div>
 									<div class="information_name_word">常乐宾馆</div>
 								</div>
-								<div class="information_price">2元&nbsp;&nbsp;&nbsp;</div>
+								<div class="information_price">2元&nbsp;&nbsp;&nbsp;</div>								
 								<div class="iconfont icon-you right1"></div>
+								</div>
 								<div class="information_state">状态:已发布</div>
 								<div class="num">
 									<div class="information_Purchase_number">购买人数：50人</div>
 									<div class="iconfont icon-you right"></div>
-								</div>
-							</div>
+								</div>						
 						</div>
 					</div>
 				</div>
@@ -230,7 +230,7 @@ body{
 								<img src="/img/u28.png"></div>
 							<div class="information_name_word">生产信息的名称</div>
 						</div>
-						<div class="information_price">信息价格&nbsp;&nbsp;&nbsp;</div>
+						<div class="information_price" style="width: 40%">信息价格&nbsp;&nbsp;&nbsp;</div>
 						<div class="information_state" style="width: 100%;">状态:审核中(或审核失败)</div>
 					</div>
 				</div>
@@ -265,5 +265,22 @@ $(".num").click(function(){
 $(".shares_title").click(function(){
 	window.location.href = "/more/information-presentation";
 })
+getMyask();
+function getMyask(){
+	 $.ajax({
+        type : "get",
+        dataType: "json",
+        data:{username:"hanqi",staus:4},
+        url : "/ask/myask",
+        success : function(result){
+          console.log(result);
+          for(var i = 0; i < result.data.length; i++){}
+
+          },
+      error: function(error){
+          alert(error);
+        }
+      })
+}
 </script>
 </html>

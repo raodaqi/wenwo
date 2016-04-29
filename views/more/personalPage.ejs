@@ -240,7 +240,7 @@ body{
 		<img src="/img/test.jpg">
 	</div>
 	<div class="user_informations">
-		<div class="user_name">努力的任同学</div>
+		<div class="user_name"></div>
 		<div class="other_information">大学生&nbsp;&nbsp;&nbsp;90后</div>
 	</div>
 	<div class="edit_icon">
@@ -261,7 +261,7 @@ body{
 	<div class="left">
 	<div class="iconfont icon-qianbao money_box_icon"></div>
 	<div class="money_box_word">钱包</div>
-	<div class="money">￥0.00</div>
+	<div class="money">￥</div>
 	</div>
 	<div class="iconfont icon-you right_icon" style="padding-left: 33px;"></div>
 </div>
@@ -312,5 +312,59 @@ body{
 	$(".edit_icon").click(function(){
 		window.location.href="/more/personal-data";
 	})
+getLogin();
+function getLogin(){
+	 $.ajax({
+        type : "POST",
+        dataType: "json",
+        data:{username:"test"},
+        url : "/user/login",
+        success : function(result){
+          console.log(result);
+          // var name = result.data.user_name;
+          // console.log(name);
+          // $(".user_name").append(name);
+          },
+      error: function(error){
+          alert(error);
+        }
+      })
+}
+getUserinfo();
+function getUserinfo(){
+	 $.ajax({
+        type : "GET",
+        dataType: "json",
+        data:{username:"test"},
+        url : "/user/getuserinfo",
+        success : function(result){
+          console.log(result);
+          var name = result.data.user_name;
+          console.log(name);
+          $(".user_name").append(name);
+          },
+      error: function(error){
+          alert(error);
+        }
+      })
+}
+getMywallet();
+function getMywallet(){
+	$.ajax({
+        type : "GET",
+        dataType: "json",
+        data:{username:"test"},
+        url : "/wallet/mywallet",
+        success : function(result){
+          console.log(result);
+          var money = result.money;
+          console.log(money);
+          $(".money").append(money);
+          },
+      error: function(error){
+          alert(error);
+        }
+      })
+}
 </script>
 </html>

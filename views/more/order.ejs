@@ -92,10 +92,15 @@ body{
 .orders_date{
 	height: 25px;
 	float: right;
-	width: 70px;
+	width: 64px;
 	font-size: 10px;
-	margin-top: 8px;
-	text-align: right;
+	/*margin-top: 8px;*/
+	text-align: left;
+	overflow:hidden; 
+	/*text-overflow: ellipsis;*/
+	line-height: 25px;
+	overflow:hidden;
+	white-space:nowrap;
 }
 .orders_money{
 	width: 35px;
@@ -141,8 +146,8 @@ body{
 	<div class="content-block">
 		<div class="tabs">
 			<div id="tab1" class="tab active">
-				<div class="content-block">
-					<div class="order_information">
+				<div class="content-block" id="type1">
+					<!-- <div class="order_information">
 						<div class="orders">
 							<div class="orders_head">
 								<img src="/img/test.jpg"></div>
@@ -150,28 +155,27 @@ body{
 								<div class="orders_info1">经济型酒店</div>
 								<div class="orders_money"></div>
 								<div class="orders_info2">临江特色,舒适宜人</div>
-								<div class="orders_date">2015-01-01</div>
+								<div class="orders_date" id="collect-time"></div>
 							</div>
 							<div class="iconfont icon-you orders_right_icon"></div>
 						</div>
-					</div>
+					</div>  -->
 				</div>
 			</div>
 			<div id="tab2" class="tab">
-				<div class="content-block">
-					<div class="order_information">
+				<div class="content-block" id="type2">
+					<!-- <div class="order_information">
 						<div class="orders">
 							<div class="orders_head">
 								<img src="/img/test.jpg"></div>
 							<div class="orders_info">
 								<div class="orders_info1">经济型酒店</div>
 								<div class="orders_money">2元</div>
-								<div class="orders_info2">临江特色,舒适宜人</div>
-								<div class="orders_date">2015-01-01</div>
+								<div class="orders_date" id="order-time"></div>
 							</div>
 							<div class="iconfont icon-you orders_right_icon"></div>
 						</div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
@@ -187,5 +191,37 @@ $(".map_view").click(function(){
 $(".orders").click(function(){
 	window.location.href="/more/information-presentation";
 })
+getHode();
+function getHode(){
+	 $.ajax({
+        type : "POST",
+        dataType: "json",
+        data:{username:"hanqi",staus:3},
+        url : "/hode/haved",
+        success : function(result){
+          console.log(result);
+          for(var i = 0; i < result.data.length; i++){
+          	if(result.data[i].type ==1){
+          		var str = "";
+          		var str = '<div class="order_information"><div class="orders"><div class="orders_head"><img src="/img/test.jpg"></div><div class="orders_info"><div class="orders_info1"></div><div class="orders_money"></div><div class="orders_date" id="collect-time"></div></div><div class="iconfont icon-you orders_right_icon"></div></div></div>';
+          		$("#type1").append(str);
+          		var time = result.data[i].createdAt;
+          		$("#collect-time").append(time);
+          	} 
+          	else{
+          		if(result.data[i].type ==2)
+          			var str = "";
+          			var str = '<div class="order_information"><div class="orders"><div class="orders_head"><img src="/img/test.jpg"></div><div class="orders_info"><div class="orders_info1"></div><div class="orders_money"></div><div class="orders_date" id="order-time"></div></div><div class="iconfont icon-you orders_right_icon"></div></div></div>';
+          		$("#type2").append(str);
+          		var time = result.data[i].createdAt;
+          		$("#order-time").append(time);
+          	}         	
+          }
+          },
+      error: function(error){
+          alert(error);
+        }
+      })
+}
 </script>
 </html>
