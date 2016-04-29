@@ -5,9 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">    
     <title>问我——像个当地人一样去旅游</title>
-    <link rel="stylesheet" href="/css/global.css">
-    <link rel="stylesheet" href="/css/zepto.fullpage.css">
+    <link rel="stylesheet" href="/css/global.css?v=1.0">
+    <link rel="stylesheet" href="/css/zepto.fullpage.css?v=1.0">
+    <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_1461920265_8238792.css">
     <style>
+        body{
+          padding:0;
+          margin:0;
+        }
         .page{
           font-family: fz;
         }
@@ -15,26 +20,6 @@
           font-family: fz; /*这里是说明调用来的字体名字*/ 
           src: url('/font/MFLIHEI_NONCOMMERCIAL-REGULAR.OTF'); /*这里是字体文件路径*/ 
           } 
-        .music{
-            position: absolute;
-            z-index: 1000;
-            right: 0px;
-            top: 0px;
-            padding: 10px;
-            width: 25px;
-            height: 25px;
-        }
-        .music .music-btn {
-            display: block;
-            padding-left: 1px;
-            width: 25px;
-            height: 25px;
-            background-image: url(/img/wx/music-1.png);
-            background-size: 100% 100%;
-        }
-        .music .music-btn.play {
-            background-image: url(/img/wx/music-0.png);
-        }
         .indicator{
             position: fixed;
             right: 10px;
@@ -63,7 +48,11 @@
           font-size: 20px;
           width: 63%;
           margin-top: -35px;
-          transform: translateX(-50%);
+          transform:translateX(-50%);
+          -ms-transform:translateX(-50%);   /* IE 9 */
+          -moz-transform:translateX(-50%);  /* Firefox */
+          -webkit-transform:translateX(-50%); /* Safari 和 Chrome */
+          -o-transform:translateX(-50%);  /* Opera */
         }
         .time div{
           width: 25%;
@@ -72,12 +61,78 @@
           float: left;
           /*padding:2.5%;*/
         }
+        .share{
+
+        }
+
+        #share-ui-dialog{
+          padding:0;
+          margin:0;
+          left: 0
+        }
+        .share-content{
+          position:fixed;
+          bottom:0;
+          height: 197px;
+          width: 100%;
+          background-color: #F1F1F1;
+        }
+        #share-ui-dialog .share-content{
+          background: rgba(242,148,138,0.8);
+        }
+        .button-content{
+          padding:0 10px;
+          width: 100%;
+          height: 100%;
+          box-sizing: border-box;
+        }
+        .share-title{
+          border-bottom: 1px solid #FFCCCC;
+          width: 100%;
+          text-align: center;
+          font-weight: bold;
+          color: white;
+        }
+        .button-content div{
+          height: 65px;
+          line-height: 65px;
+        }
+        .cancel-button{
+          color: white;
+          border-top: 1px solid #FFCCCC;
+          width: 100%;
+          text-align: center;
+        }
+        .share-button-ul{
+        }
+        .share-button-ul a{
+          color: #737373;
+          display: block;
+          float: left;
+          width: 25%;
+          text-align: center;
+        }
+        .share-button-li{
+          display: inline-block;
+          color: white;
+          width: 50px;
+          font-size: 27px;
+          text-align: center;
+        }
+        body,#share-ui-dialog .share-content{
+            /*background: -moz-linear-gradient(top, #E16961 0%, #EEA97D 100%);
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#E16961), color-stop(100%,#EEA97D));
+            background: -webkit-linear-gradient(top, #E16961 0%,#EEA97D 100%);
+            background: -o-linear-gradient(top, #E16961 0%,#EEA97D 100%);
+            background: -ms-linear-gradient(top, #E16961 0%,#EEA97D 100%);
+            background: linear-gradient(to bottom, #E16961 0%,#EEA97D 100%);*/
+            background:rgba(245, 188, 43, 0.9);
+        }
+
     </style>
 </head>
 <body>
-    <div id="music" class="music">
-        <a class="music-btn"></a>
-    </div>
+    <div class="share"></div>
     <div class="wp">
         <div class="wp-inner">
             <div class="page page1">
@@ -88,9 +143,9 @@
                 <div class="sec"></div>
               </div>
             </div>
-            <div class="page page2">
+            <!-- <div class="page page2">
               <div class="img-button"></div>
-            </div>
+            </div> -->
             <div class="page page3">
               <div class="img-button"></div>
             </div>
@@ -127,7 +182,6 @@
         </div>
         <ul class="indicator">
             <li>1</li>
-            <li>2</li>
             <li>3</li>
             <li>4</li>
             <li>5</li>
@@ -141,16 +195,81 @@
             <li>13</li>
         </ul>
     </div>
+
+    <div class="ui-dialog" id="share-ui-dialog">
+      <div class="share-content">
+        <div class="button-content">
+          <div class="share-title">
+            分享
+          </div>
+          <div class="share-button-ul">
+            <a href="javascript:share.qq();">
+              <div class="share-button-li iconfont icon-qq">
+              </div>
+            </a>
+            <a href="javascript:share.qzone();">
+              <div class="share-button-li iconfont icon-qzone">
+              </div>
+            </a>
+            <a class="share-weixin">
+              <div class="share-button-li iconfont icon-weixin">
+              </div>
+            </a>
+            <a href="javascript:share.weibo();">
+              <div class="share-button-li iconfont icon-weibo">
+              </div>
+            </a>
+            <!-- <a href="javascript:share.qzone();">
+              <div class="share-button-li">
+                <div class="share-img"></div>
+              <label>分享到QQ空间</label>
+              </div>
+            </a>
+            <a class="share-weixin">
+              <div class="share-button-li">
+                <div class="share-img"></div>
+              <label>分享到朋友圈</label>
+              </div>
+            </a>
+            <a href="javascript:share.weibo();">
+              <div class="share-button-li">
+                <div class="share-img"></div>
+              <label>分享到新浪微博</label>
+              </div>
+            </a>
+            <a href="javascript:share.douban();">
+              <div class="share-button-li">
+                <div class="share-img"></div>
+              <label>分享到豆瓣网</label>
+              </div>
+            </a> -->
+
+          </div>
+          <div class="cancel-button">
+            取消
+          </div>
+        </div>
+
+        <div class="ui-dialog" id="share-tip-dialog">
+          <div class="share-tip-content">
+            <p class="big">请使用自带的分享功能分享</p>
+            <p class="small">通常分享按钮会在右上方或正下方</p>
+          </div>
+      </div>
+
+      </div>
+  </div>
     <span class="start"><b></b></span>
     <script src="/js/zepto.min.js"></script>
     <script src="/js/zepto.fullpage.js"></script>
+    <script src="/js/simple-share.min.js"></script>
     <script>
         // $('.wp-inner').fullpage();
         $('.wp-inner').fullpage({
             drag: true,
             duration: 100,
             page: '.page',
-            der: 0.5,
+            der: 0.1,
             change: function (e) {
                 console.log('change', e.next, e.cur);
                 $('.indicator li').removeClass('cur').eq(e.cur).addClass('cur');
@@ -162,57 +281,6 @@
                 console.log('afterChange', e.next, e.cur);
             }
         });
-    </script>
-    <script>
-        var bgAudio = new Audio();
-        bgAudio.loadStatus = 'unload';
-        bgAudio.loop = true;
-        function loadAudio(audio, url, callback) {
-            audio.src = url;
-            audio.load();
-            audio.addEventListener('canplay', function () {
-                bgAudio.loadStatus = 'loaded';
-                callback();
-            });
-            audio.addEventListener('loadstart', function () {
-                bgAudio.loadStatus = 'loading';
-            });
-        }
-        function playAudio(){
-            if (bgAudio.loadStatus === 'unload') {
-                loadAudio(bgAudio, '/media/bg.mp3', function () {
-                    playAudio();
-                });
-                return 1;
-            }
-
-            bgAudio.play();
-        }
-        function stopAudio() {
-            bgAudio.pause();
-        }
-        bgAudio.addEventListener('playing' ,function (e) {
-            $('#music .music-btn').addClass('play');
-        });
-        bgAudio.addEventListener('pause' ,function (e) {
-            $('#music .music-btn').removeClass('play');
-        });
-
-        $('body').one('touchstart', function () {
-            playAudio();
-            $('#music').on('touchstart', function (e) {
-                if (bgAudio.paused) {
-                    playAudio();
-                    return 0;
-                }
-                stopAudio();
-                return 1;
-            });
-        });
-        window.onload = function() {
-            if (bgAudio.loadStatus !== 'unload') {return;}
-            playAudio();
-        };
     </script>
 
     <script type="text/javascript">
@@ -246,6 +314,33 @@
     $(function(){
       timer(intDiff);
     }); 
+    </script>
+    <script>
+    var url = '';
+
+    var share = new SimpleShare({
+        url: '',
+        title: '问我，真的能让自由行更轻松吗？',
+        content: '2016年6月5日问我微信正式上线啦！',
+        pic: 'http://ac-83a4olkt.clouddn.com/bc2fc28bcd7f3c17.jpg'
+      });
+    $(".share").on("click",function(){
+      $(".share-content").addClass("modal-in");
+      $("#share-ui-dialog").show();
+    })
+
+    $(".cancel-button").on("click",function(){
+      $("#share-ui-dialog").hide();
+    })
+
+    $("#share-tip-dialog").on("click",function(){
+      ("#share-ui-dialog").hide();
+      $("#share-tip-dialog").hide();
+    })
+
+    $(".share-weixin").on("click",function(){
+      $("#share-tip-dialog").show();
+    })
     </script>
 </body>
 </html>
