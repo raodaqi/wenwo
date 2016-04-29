@@ -1,110 +1,132 @@
-.wp{
+.wp {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    overflow: hidden;            
+    overflow: hidden;
 }
-.page{
+
+.page {
     font-size: 72px;
     /*line-height: 320px;*/
     text-align: center;
     /*padding: 0 20px;*/
     /*background-size: auto 100%;*/
 }
-.page .img-button{
+
+.page .img-button {
     /*width: 95%;*/
     /*height: 100%;*/
     /*margin: 0 auto;*/
 }
-.page1{
+
+.page1 {
     background: url("/img/wx/01.png") no-repeat center;
     background-size: auto 100%;
 }
+
+
 /*.page2{
     background: url("/img/wx/02.png") no-repeat center;
     background-size: auto 100%;
 }*/
-.page3{
+
+.page3 {
     background: url("/img/wx/03.png") no-repeat center;
     background-size: auto 100%;
 }
-.page4{
+
+.page4 {
     background: url("/img/wx/04.png") no-repeat center;
     background-size: auto 100%;
     /*background-size: cover;*/
 }
-.page5{
+
+.page5 {
     background: url("/img/wx/05.png") no-repeat center;
     background-size: auto 100%;
 }
-.page6{
+
+.page6 {
     background: url("/img/wx/06.png") no-repeat center;
     background-size: auto 100%;
 }
-.page7{
+
+.page7 {
     background: url("/img/wx/07.png") no-repeat center;
     background-size: auto 100%;
 }
-.page8{
+
+.page8 {
     background: url("/img/wx/08.png") no-repeat center;
     background-size: auto 100%;
 }
-.page9{
+
+.page9 {
     background: url("/img/wx/09.png") no-repeat center;
     background-size: auto 100%;
     /*background-size: cover;*/
 }
-.page10{
+
+.page10 {
     background: url("/img/wx/10.png") no-repeat center;
     background-size: auto 100%;
     /*background-size: cover;*/
 }
-.page11{
+
+.page11 {
     background: url("/img/wx/11.png") no-repeat center;
-    /*background-size: auto 100%;*/
-    background-size: cover;
+    background-size: auto 100%;
+    /*background-size: cover;*/
 }
-.page12{
+
+.page12 {
     background: url("/img/wx/12.png") no-repeat center;
     background-size: auto 100%;
     /*background-size: cover;*/
 }
-.page13{
+
+.page13 {
     background: url("/img/wx/13.png") no-repeat center;
     background-size: auto 100%;
 }
-.page13 img{
+
+.page13 img {
     /*width: 100%;*/
     display: block;
     margin: 0 auto;
-    height:100%; 
+    height: 100%;
 }
 
+
 /* 箭头 */
+
 @-webkit-keyframes start {
-    0%,30% {
+    0%,
+    30% {
         opacity: 0.2;
-        -webkit-transform: translate(0,10px);
+        -webkit-transform: translate(0, 10px);
     }
     60% {
         opacity: 1;
-        -webkit-transform: translate(0,0);
+        -webkit-transform: translate(0, 0);
     }
     100% {
         opacity: 0.2;
         -webkit-transform: translate(0, -5px);
     }
 }
+
 @keyframes start {
-    0%,30% {
+    0%,
+    30% {
         opacity: 0.2;
-        transform: translate(0,10px);
+        transform: translate(0, 10px);
     }
     60% {
         opacity: 1;
-        transform: translate(0,0);
+        transform: translate(0, 0);
     }
     100% {
         opacity: 0.2;
@@ -112,7 +134,9 @@
     }
 }
 
+
 /* 加油 */
+
 @-webkit-keyframes share {
     /*0%,30% {
         opacity: 0.2;
@@ -123,7 +147,7 @@
     100% {
         opacity: 0.2;
     }*/
-    0%{
+    0% {
         opacity: 0.2;
     }
     50% {
@@ -133,8 +157,9 @@
         opacity: 0.2;
     }
 }
+
 @keyframes share {
-   /* 0%,30% {
+    /* 0%,30% {
         opacity: 0.2;
     }
     60% {
@@ -143,7 +168,7 @@
     100% {
         opacity: 0.2;
     }*/
-    0%{
+    0% {
         opacity: 0.2;
     }
     50% {
@@ -153,7 +178,8 @@
         opacity: 0.2;
     }
 }
-.start{
+
+.start {
     position: fixed;
     left: 50%;
     margin-left: -17px;
@@ -162,7 +188,8 @@
     width: 34px;
     height: 34px;
 }
-.start b{
+
+.start b {
     position: absolute;
     left: 50%;
     top: 10px;
@@ -174,7 +201,8 @@
     -webkit-animation: start 1.5s infinite ease-in-out;
     animation: start 1.5s infinite ease-in-out;
 }
-.share{
+
+.share {
     position: absolute;
     z-index: 10000;
     bottom: 10px;
@@ -186,6 +214,7 @@
     -webkit-animation: share 3.5s infinite ease-in-out;
     animation: share 3.5s infinite ease-in-out;
 }
+
 .ui-dialog {
     position: fixed;
     top: 0px;
@@ -200,6 +229,7 @@
     background: rgba(0, 0, 0, 0.4);
     display: none;
 }
+
 #share-tip-dialog {
     background: rgba(0, 0, 0, 0.8);
 }
@@ -218,8 +248,10 @@
 
 .small {
     font-size: 10px;
-    color: #30B7F7;
+    /*color: #30B7F7;*/
+    color: #F5BF35;
 }
+
 .modal-in {
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0)
@@ -230,10 +262,97 @@
     transform: translate3d(0, 100%, 0)
 }
 
-.share-content{
+.share-content {
     -webkit-transition: all ease 200ms;
     transition: all ease 200ms;
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
 }
 
+.container {
+    position: relative;
+    width: 900px;
+    height: 800px;
+    margin: 60px auto 0;
+    text-align: center;
+}
+
+#phone-wrap {
+    position: absolute;
+    width: 318px;
+    height: 666px;
+    background: url("/img/wx/phone.png");
+    background-size: cover;
+}
+
+.placeholder {
+    position: absolute;
+    left: 23px;
+    top: 93px;
+    width: 273px;
+    height: 480px;
+    z-index: 1;
+    background: white;
+}
+
+.pic,.placeholder{
+    position: absolute;
+    left: 45px;
+    top: 107px;
+    width: 254px;
+    height: 446px;
+    z-index: 2;
+}
+.pic{
+    position: absolute;
+    opacity: 0;
+    -webkit-transition: opacity 0.8s;
+    -moz-transition: opacity 0.8s;
+    -ms-transition: opacity 0.8s;
+    -o-transition: opacity 0.8s;
+}
+.slide-on {
+    opacity: 1;
+    -webkit-transition: opacity 0.8s;
+    -moz-transition: opacity 0.8s;
+    -ms-transition: opacity 0.8s;
+    -o-transition: opacity 0.8s
+}
+#company-block {
+    position: absolute;
+    bottom: 0;
+    height: 100px;
+    width: 100%;
+    border-top: 1px solid #ddd;
+    text-align: center;
+}
+#company-link {
+    line-height: 100px;
+    color: white;
+    text-decoration: none;
+}
+.detail-content{
+    position: absolute;
+    top: 120px;
+    right: 100px;
+    color: white;
+    text-align: left;
+}
+.intro-title{
+    padding-left: 40px;
+    font-size: 30px;
+}
+.intro{
+    text-align: left;
+    text-decoration: none;
+    list-style: none;
+    font-size: 25px;
+}
+.qr{
+    position: absolute;
+    margin-left: 40px;
+    width: 200px;
+    height: 200px;
+    background:url("/img/wx/sharein_web_qr.png");
+    background-size: cover; 
+}

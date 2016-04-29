@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">    
-    <title>问我——像个当地人一样去旅游</title>
-    <link rel="stylesheet" href="/css/global.css?v=1.0">
-    <link rel="stylesheet" href="/css/zepto.fullpage.css">
-    <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_1461920265_8238792.css">
-    <style>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>问我,真的能让自由行更轻松吗？</title>
+  <link rel="stylesheet" href="/css/global.css?v=1.0">
+  <link rel="stylesheet" href="/css/zepto.fullpage.css">
+  <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_1461920265_8238792.css">
+  <style>
         body{
           padding:0;
           margin:0;
+          background: #F5BF35;
         }
         .page{
           font-family: fz;
@@ -45,9 +46,9 @@
           left: 52%;
           top: 4%;
           height: 20px;
-          font-size: 20px;
+          font-size: 1rem;
           width: 63%;
-          margin-top: -35px;
+          margin-top: -8px;
           transform:translateX(-50%);
           -ms-transform:translateX(-50%);   /* IE 9 */
           -moz-transform:translateX(-50%);  /* Firefox */
@@ -78,7 +79,8 @@
           background-color: #F1F1F1;
         }
         #share-ui-dialog .share-content{
-          background: rgba(242,148,138,0.8);
+          /*background: rgba(242,148,138,0.8);*/
+          background: rgba(255,255,255,1);
         }
         .button-content{
           padding:0 10px;
@@ -87,19 +89,23 @@
           box-sizing: border-box;
         }
         .share-title{
-          border-bottom: 1px solid #FFCCCC;
+          /*border-bottom: 1px solid #FFCCCC;*/
+          border-bottom: 1px solid #F5BF35;
           width: 100%;
           text-align: center;
           font-weight: bold;
-          color: white;
+          /*color: white;*/
+          color:#F5BF35;
         }
         .button-content div{
           height: 65px;
           line-height: 65px;
         }
         .cancel-button{
-          color: white;
-          border-top: 1px solid #FFCCCC;
+          /*color: white;*/
+          /*border-top: 1px solid #FFCCCC;*/
+          color:#F5BF35;
+          border-top: 1px solid #F5BF35;
           width: 100%;
           text-align: center;
         }
@@ -114,12 +120,13 @@
         }
         .share-button-li{
           display: inline-block;
-          color: white;
+          /*color: white;*/
+          color: #F5BF35;
           width: 50px;
           font-size: 27px;
           text-align: center;
         }
-        body,#share-ui-dialog .share-content{
+        body{
             /*background: -moz-linear-gradient(top, #E16961 0%, #EEA97D 100%);
             background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#E16961), color-stop(100%,#EEA97D));
             background: -webkit-linear-gradient(top, #E16961 0%,#EEA97D 100%);
@@ -127,143 +134,184 @@
             background: -ms-linear-gradient(top, #E16961 0%,#EEA97D 100%);
             background: linear-gradient(to bottom, #E16961 0%,#EEA97D 100%);*/
             background:rgba(245, 188, 43, 0.9);
+            /*background: rgba(255,255,255,1);*/
         }
-
+        
+        @media (min-width: 520px){
+          .share,.wp,.ui-dialog,.start{
+            display: none;
+          }
+          .container{
+            display: block;
+          }
+      }
+      @media (max-width: 519px){
+          .container{
+            display: none;
+          }
+      }
     </style>
 </head>
 <body>
-    <div class="share"></div>
-    <div class="wp">
-        <div class="wp-inner">
-            <div class="page page1">
-              <div class="time">
-                <div class="day"></div>
-                <div class="hour"></div>
-                <div class="min"></div>
-                <div class="sec"></div>
-              </div>
-            </div>
-            <!-- <div class="page page2">
-              <div class="img-button"></div>
-            </div> -->
-            <div class="page page3">
-              <div class="img-button"></div>
-            </div>
-            <div class="page page4">
-              <div class="img-button"></div>
-            </div>
-            <div class="page page5">
-              <div class="img-button"></div>
-            </div>
-            <div class="page page6">
-              <div class="img-button"></div>
-            </div>
-            <div class="page page7">
-              <div class="img-button"></div>
-            </div>
-            <div class="page page8">
-              <div class="img-button"></div>
-            </div>
-            <div class="page page9">
-              <div class="img-button"></div>
-            </div>
-            <div class="page page10">
-              <div class="img-button"></div>
-            </div>
-            <div class="page page11">
-              <div class="img-button"></div>
-            </div>
-            <div class="page page12">
-              <div class="img-button"></div>
-            </div>
-            <div class="page page13">
-              <img src="/img/wx/13.png" alt="">
-            </div>
+  <div class="share"></div>
+  <div class="wp">
+    <div class="wp-inner">
+      <div class="page page1">
+        <div class="time">
+          <div class="day"></div>
+          <div class="hour"></div>
+          <div class="min"></div>
+          <div class="sec"></div>
         </div>
-        <ul class="indicator">
-            <li>1</li>
-            <li>3</li>
-            <li>4</li>
-            <li>5</li>
-            <li>6</li>
-            <li>7</li>
-            <li>8</li>
-            <li>9</li>
-            <li>10</li>
-            <li>11</li>
-            <li>12</li>
-            <li>13</li>
-        </ul>
+      </div>
+      <!-- <div class="page page2">
+      <div class="img-button"></div>
     </div>
-
-    <div class="ui-dialog" id="share-ui-dialog">
-      <div class="share-content">
-        <div class="button-content">
-          <div class="share-title">
-            分享
-          </div>
-          <div class="share-button-ul">
-            <a href="javascript:share.qq();">
-              <div class="share-button-li iconfont icon-qq">
-              </div>
-            </a>
-            <a href="javascript:share.qzone();">
-              <div class="share-button-li iconfont icon-qzone">
-              </div>
-            </a>
-            <a class="share-weixin">
-              <div class="share-button-li iconfont icon-weixin">
-              </div>
-            </a>
-            <a href="javascript:share.weibo();">
-              <div class="share-button-li iconfont icon-weibo">
-              </div>
-            </a>
-            <!-- <a href="javascript:share.qzone();">
-              <div class="share-button-li">
-                <div class="share-img"></div>
-              <label>分享到QQ空间</label>
-              </div>
-            </a>
-            <a class="share-weixin">
-              <div class="share-button-li">
-                <div class="share-img"></div>
-              <label>分享到朋友圈</label>
-              </div>
-            </a>
-            <a href="javascript:share.weibo();">
-              <div class="share-button-li">
-                <div class="share-img"></div>
-              <label>分享到新浪微博</label>
-              </div>
-            </a>
-            <a href="javascript:share.douban();">
-              <div class="share-button-li">
-                <div class="share-img"></div>
-              <label>分享到豆瓣网</label>
-              </div>
-            </a> -->
-
-          </div>
-          <div class="cancel-button">
-            取消
-          </div>
-        </div>
-
-        <div class="ui-dialog" id="share-tip-dialog">
-          <div class="share-tip-content">
-            <p class="big">请使用自带的分享功能分享</p>
-            <p class="small">通常分享按钮会在右上方或正下方</p>
-          </div>
-      </div>
-
-      </div>
+    -->
+    <div class="page page3">
+      <div class="img-button"></div>
+    </div>
+    <div class="page page4">
+      <div class="img-button"></div>
+    </div>
+    <div class="page page5">
+      <div class="img-button"></div>
+    </div>
+    <div class="page page6">
+      <div class="img-button"></div>
+    </div>
+    <div class="page page7">
+      <div class="img-button"></div>
+    </div>
+    <div class="page page8">
+      <div class="img-button"></div>
+    </div>
+    <div class="page page9">
+      <div class="img-button"></div>
+    </div>
+    <div class="page page10">
+      <div class="img-button"></div>
+    </div>
+    <div class="page page11">
+      <div class="img-button"></div>
+    </div>
+    <div class="page page12">
+      <div class="img-button"></div>
+    </div>
+    <div class="page page13">
+      <img src="/img/wx/13.png" alt=""></div>
   </div>
-    <span class="start"><b></b></span>
-    <script src="/js/zepto.min.js"></script>
-    <script src="/js/zepto.fullpage.js"></script>
-    <script src="/js/simple-share.min.js"></script>
-    <script>
+  <ul class="indicator">
+    <li>1</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+    <li>6</li>
+    <li>7</li>
+    <li>8</li>
+    <li>9</li>
+    <li>10</li>
+    <li>11</li>
+    <li>12</li>
+    <li>13</li>
+  </ul>
+</div>
+
+<div class="ui-dialog" id="share-ui-dialog">
+  <div class="share-content">
+    <div class="button-content">
+      <div class="share-title">分享</div>
+      <div class="share-button-ul">
+        <a href="javascript:share.qq();">
+          <div class="share-button-li iconfont icon-qq"></div>
+        </a>
+        <a href="javascript:share.qzone();">
+          <div class="share-button-li iconfont icon-qzone"></div>
+        </a>
+        <a class="share-weixin">
+          <div class="share-button-li iconfont icon-weixin"></div>
+        </a>
+        <a href="javascript:share.weibo();">
+          <div class="share-button-li iconfont icon-weibo"></div>
+        </a>
+        <!-- <a href="javascript:share.qzone();">
+        <div class="share-button-li">
+          <div class="share-img"></div>
+          <label>分享到QQ空间</label>
+        </div>
+      </a>
+      <a class="share-weixin">
+        <div class="share-button-li">
+          <div class="share-img"></div>
+          <label>分享到朋友圈</label>
+        </div>
+      </a>
+      <a href="javascript:share.weibo();">
+        <div class="share-button-li">
+          <div class="share-img"></div>
+          <label>分享到新浪微博</label>
+        </div>
+      </a>
+      <a href="javascript:share.douban();">
+        <div class="share-button-li">
+          <div class="share-img"></div>
+          <label>分享到豆瓣网</label>
+        </div>
+      </a>
+      -->
+    </div>
+    <div class="cancel-button">取消</div>
+  </div>
+  </div>
+  </div>
+  <div class="ui-dialog" id="share-tip-dialog">
+    <div class="share-tip-content">
+      <p class="big">请使用自带的分享功能分享</p>
+      <p class="small">通常分享按钮会在右上方或正下方</p>
+    </div>
+  </div>
+  
+  <div class="container">
+    <div id="phone-wrap">
+      <div class="placeholder"></div>
+      <img id="pic1" class="pic active slide-on" src="/img/wx/01.png">
+      <img id="pic2" class="pic active" src="/img/wx/03.png">
+      <img id="pic3" class="pic active" src="/img/wx/04.png">
+      <img id="pic4" class="pic active" src="/img/wx/05.png">
+      <img id="pic5" class="pic active" src="/img/wx/06.png">
+      <img id="pic6" class="pic active" src="/img/wx/07.png">
+      <img id="pic7" class="pic active" src="/img/wx/08.png">
+      <img id="pic8" class="pic active" src="/img/wx/09.png">
+      <img id="pic9" class="pic active" src="/img/wx/10.png">
+      <img id="pic10" class="pic active" src="/img/wx/11.png">
+      <img id="pic11" class="pic active" src="/img/wx/12.png">
+      <img id="pic12" class="pic active" src="/img/wx/13.png">
+    </div>
+   <!--  <img id="title" src="/Public/Mobile/img/title.png">
+    <img id="desc" src="/Public/Mobile/img/desc.png">
+    <img id="QR-code" src="/Public/Mobile/img/QR-code.png">
+    <img id="QR-code-desc" src="/Public/Mobile/img/QR-code-desc.png"> -->
+    <div class="detail-content">
+      <div class="intro-title">问我</div>
+      <ul class="intro">
+        <li>为改变而生的自由行神器</li>
+        <li>用户赞踩筛选最优质信息</li>
+        <li>随时随地查看周边攻略</li>
+        <li>防坑宝典在手，天下从此畅游。</li>
+      </ul>
+      <div class="qr"></div>
+    </div>
+    <div id="company-block">
+      <a id="company-link" href="http://www.intlime.com/" target="_blank">©2016 迈沃德科技 LLC</a>
+    </div>
+  </div>
+
+<span class="start"> <b></b>
+</span>
+<script src="/js/zepto.min.js"></script>
+<script src="/js/zepto.fullpage.js"></script>
+<script src="/js/simple-share.min.js"></script>
+<script>
         // $('.wp-inner').fullpage();
         $('.wp-inner').fullpage({
             drag: true,
@@ -283,7 +331,7 @@
         });
     </script>
 
-    <script type="text/javascript">
+<script type="text/javascript">
     var time_start = new Date().getTime(); //设定当前时间
     var time_end =  new Date("2016/6/05 00:00:00").getTime(); //设定目标时间
     // 计算时间差 
@@ -315,7 +363,7 @@
       timer(intDiff);
     }); 
     </script>
-    <script>
+<script>
     var url = '';
 
     var share = new SimpleShare({
@@ -334,13 +382,26 @@
     })
 
     $("#share-tip-dialog").on("click",function(){
-      ("#share-ui-dialog").hide();
       $("#share-tip-dialog").hide();
     })
 
     $(".share-weixin").on("click",function(){
+      $("#share-ui-dialog").hide();
       $("#share-tip-dialog").show();
     })
+    </script>
+    <script>   
+      var slideIndex = 1;
+      function slideNext() {
+        console.log("123");
+        $('.pic').removeClass('slide-on');
+        $('#pic'+slideIndex).addClass('slide-on');
+        slideIndex += 1;
+        if (slideIndex > 12) {
+          slideIndex = 1;
+        }
+      }
+      setInterval(slideNext, 5000);
     </script>
 </body>
 </html>
