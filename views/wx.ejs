@@ -14,7 +14,7 @@
           margin:0;
           background: #F5BF35;
         }
-        .page{
+        .page,.detail-content{
           font-family: fz;
         }
         @font-face { 
@@ -42,25 +42,43 @@
         .time{
           position: absolute;
           width: 100%;
+          left:0;
+          right:0;
           text-align: center;
-          left: 52%;
+          /*left: 52%;*/
           top: 4%;
           height: 20px;
           font-size: 1rem;
-          width: 63%;
+          /*width: 60%;*/
           margin-top: -8px;
-          transform:translateX(-50%);
-          -ms-transform:translateX(-50%);   /* IE 9 */
-          -moz-transform:translateX(-50%);  /* Firefox */
-          -webkit-transform:translateX(-50%); /* Safari 和 Chrome */
-          -o-transform:translateX(-50%);  /* Opera */
+          /*transform:translateX(-50%);
+          -ms-transform:translateX(-50%); 
+          -moz-transform:translateX(-50%); 
+          -webkit-transform:translateX(-50%); 
+          -o-transform:translateX(-50%);  */
         }
         .time div{
-          width: 25%;
+          /*width: 25%;
           text-align: center;
           height: 20px;
-          float: left;
+          float: left;*/
           /*padding:2.5%;*/
+        }
+        .time .day{
+          position: absolute;
+          left:25%;
+        }
+        .time .hour{
+          position: absolute;
+          left:42%;
+        }
+        .time .min{
+          position: absolute;
+          right:37%;
+        }
+        .time .sec{
+          position: absolute;
+          right:22%;
         }
         .share{
 
@@ -150,10 +168,15 @@
             display: none;
           }
       }
+      .hidden-img{
+        width: 0;
+        height: 0;
+      }
     </style>
 </head>
 <body>
   <div class="share"></div>
+  <img class="hidden-img" src="/img/wx/share.jpg">
   <div class="wp">
     <div class="wp-inner">
       <div class="page page1">
@@ -300,17 +323,20 @@
         <li>防坑宝典在手，天下从此畅游。</li>
       </ul>
       <div class="qr"></div>
+      <div class="qr-tip">像个当地人一样去旅游</div>
     </div>
     <div id="company-block">
-      <a id="company-link" href="http://www.intlime.com/" target="_blank">©2016 迈沃德科技 LLC</a>
+      <a id="company-link" href="#" target="_blank">©2016 迈沃德科技 LLC</a>
     </div>
   </div>
 
 <span class="start"> <b></b>
+<img class="hidden-img" src="/img/wx/share.jpg">
 </span>
 <script src="/js/zepto.min.js"></script>
 <script src="/js/zepto.fullpage.js"></script>
 <script src="/js/simple-share.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script>
         // $('.wp-inner').fullpage();
         $('.wp-inner').fullpage({
@@ -370,7 +396,7 @@
         url: '',
         title: '问我，真的能让自由行更轻松吗？',
         content: '2016年6月5日问我微信正式上线啦！',
-        pic: '/img/wx/share.jpg'
+        pic: 'http://wenwo.leanapp.cn/img/wx/share.jpg'
       });
     $(".share").on("click",function(){
       $(".share-content").addClass("modal-in");
@@ -401,7 +427,7 @@
           slideIndex = 1;
         }
       }
-      setInterval(slideNext, 5000);
+      setInterval(slideNext, 3000);
     </script>
 </body>
 </html>

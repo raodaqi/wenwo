@@ -334,7 +334,7 @@
 .detail-content{
     position: absolute;
     top: 120px;
-    right: 100px;
+    right: 50px;
     color: white;
     text-align: left;
 }
@@ -353,6 +353,16 @@
     margin-left: 40px;
     width: 200px;
     height: 200px;
-    background:url("/img/wx/sharein_web_qr.png");
+    background:url("/img/wx/weixin_qr.jpg");
     background-size: cover; 
+}
+.intro li{
+    padding: 2px;
+    /*word-spacing:8px; */
+    letter-spacing: 4px
+}
+.qr-tip{
+    position: absolute;
+    top: 420px;
+    margin-left: 60px;
 }
