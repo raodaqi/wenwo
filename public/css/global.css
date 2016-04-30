@@ -367,3 +367,24 @@
     top: 420px;
     margin-left: 60px;
 }
+.share-show-content{
+    position: absolute;
+    height: 200px;
+    width: 200px;
+    border-radius: 20px;
+    top:50%;
+    left:50%;
+    margin-top: -120px;
+    margin-left: -120px;
+    background-color: white;
+    padding:20px;
+}
+.share-text{
+    color:#F5BF35;
+    letter-spacing: 1px;
+    font-size: 12px;
+}
+.share-text:first-child{
+    margin-top: 70px;
+    margin-bottom: 20px;
+}

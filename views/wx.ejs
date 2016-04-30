@@ -14,7 +14,7 @@
           margin:0;
           background: #F5BF35;
         }
-        .page,.detail-content{
+        .page,.detail-content,.share-text{
           font-family: fz;
         }
         @font-face { 
@@ -293,6 +293,13 @@
       <p class="small">通常分享按钮会在右上方或正下方</p>
     </div>
   </div>
+
+  <div class="ui-dialog" id="share-show-dialog">
+    <div class="share-show-content">
+      <p class="share-text">问我，只想让旅游更轻松一点。</p>
+      <p class="share-text">点击右上角分享，为小问加油吧！</p>
+    </div>
+  </div>
   
   <div class="container">
     <div id="phone-wrap">
@@ -399,8 +406,9 @@
         pic: 'http://wenwo.leanapp.cn/img/wx/share.jpg'
       });
     $(".share").on("click",function(){
-      $(".share-content").addClass("modal-in");
-      $("#share-ui-dialog").show();
+      // $(".share-content").addClass("modal-in");
+      // $("#share-ui-dialog").show();
+      $("#share-show-dialog").show();
     })
 
     $(".cancel-button").on("click",function(){
@@ -409,6 +417,9 @@
 
     $("#share-tip-dialog").on("click",function(){
       $("#share-tip-dialog").hide();
+    })
+    $("#share-show-dialog").on("click",function(){
+      $("#share-show-dialog").hide();
     })
 
     $(".share-weixin").on("click",function(){

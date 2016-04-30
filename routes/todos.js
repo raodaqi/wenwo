@@ -1,5 +1,6 @@
 var router = require('express').Router();
 var AV = require('leanengine');
+var jsSHA = require('jssha')
 
 // `AV.Object.extend` 方法一定要放在全局变量，否则会造成堆栈溢出。
 // 详见： https://leancloud.cn/docs/js_guide.html#对象
@@ -39,7 +40,8 @@ function getAccessToken(appid,secret,callback){
   AV.Cloud.httpRequest({
     url: 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='+appid+'&secret='+secret,
     success: function(httpResponse) {
-      console.log(httpResponse);
+      // console.log(httpResponse);
+      callback.success(httpResponse);
     },
     error: function(httpResponse) {
       console.error('Request failed with response code ' + httpResponse.status);
@@ -48,13 +50,44 @@ function getAccessToken(appid,secret,callback){
 }
 
 router.get('/wx', function(req, res, next) {
-  var appid = "wx99f15635dd7d9e3c";
-  var secret = "9157e84975386b6dee6a499cc639973e";
-  getAccessToken(appid,secret,{
-    success:function(result){
-      console.log(result);
-    }
-  })
+  // var appid = "wx99f15635dd7d9e3c";
+  // var secret = "9157e84975386b6dee6a499cc639973e";
+  // var url = req.body.url;
+  // getAccessToken(appid,secret,{
+  //   success:function(result){
+  //     var access_token = result.data.access_token;
+  //     AV.Cloud.httpRequest({
+  //       url: 'https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token='+access_token+'&type=jsapi',
+  //       success: function(httpResponse) {
+  //         // console.log(httpResponse);
+  //         var ticket = httpResponse.data.ticket;
+  //         // callback.success(httpResponse);
+  //         // noncestr
+  //          var createNonceStr = function() {
+  //               return Math.random().toString(36).substr(2, 15);
+  //          };
+
+  //           // timestamp
+  //          var createTimeStamp = function () {
+  //               return parseInt(new Date().getTime() / 1000) + '';
+  //          };
+  //          var noncestr = createNonceStr();
+  //          var timestamp = createTimeStamp();
+  //          var calcSignature = function (ticket, noncestr, ts, url) {
+  //            var str = 'jsapi_ticket=' + ticket + '&noncestr=' + noncestr + '&timestamp='+ ts +'&url=' + url;
+  //            shaObj = new jsSHA(str, 'TEXT');
+  //            return shaObj.getHash('SHA-1', 'HEX');
+  //           }
+  //           var signature = calcSignature(ticket, noncestr, timestamp, url);
+  //           console.log(signature);
+  //       },
+  //       error: function(httpResponse) {
+  //         console.error('Request failed with response code ' + httpResponse.status);
+  //       }
+  //     });
+  //     console.log(result.data);
+  //   }
+  // })
   res.render('wx');
 });
 
