@@ -14,7 +14,7 @@
           margin:0;
           background: #F5BF35;
         }
-        .page,.detail-content,.share-text{
+        .page,.detail-content,.share-text,.pic-time{
           font-family: fz;
         }
         @font-face { 
@@ -311,6 +311,7 @@
   <div class="container">
     <div id="phone-wrap">
       <div class="placeholder"></div>
+      <div class="pic-time"></div>
       <img id="pic1" class="pic active slide-on" src="/img/wx/01.png">
       <img id="pic2" class="pic active" src="/img/wx/03.png">
       <img id="pic3" class="pic active" src="/img/wx/04.png">
@@ -401,10 +402,31 @@
       $('.hour').text(hour+"时");
       $('.min').text(minute+"分");
       $('.sec').text(second+"秒");
+      $(".pic-time").text( $('.day').text()+" "+$('.hour').text()+" "+$('.min').text()+" "+$('.sec').text());
       intDiff--;
       }, 1000);
+    }
+    function initTime(intDiff){
+      var day=0,
+        hour=0,
+        minute=0,
+        second=0;//时间默认值    
+      if(intDiff > 0){
+        day = Math.floor(intDiff / (60 * 60 * 24));
+        hour = Math.floor(intDiff / (60 * 60)) - (day * 24);
+        minute = Math.floor(intDiff / 60) - (day * 24 * 60) - (hour * 60);
+        second = Math.floor(intDiff) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
+      }
+      if (minute <= 9) minute = '0' + minute;
+      if (second <= 9) second = '0' + second;
+      $('.day').text(day+"天");
+      $('.hour').text(hour+"时");
+      $('.min').text(minute+"分");
+      $('.sec').text(second+"秒");
+      $(".pic-time").text( $('.day').text()+" "+$('.hour').text()+" "+$('.min').text()+" "+$('.sec').text());
     } 
     $(function(){
+      initTime(intDiff);
       timer(intDiff);
     }); 
     </script>
@@ -448,6 +470,11 @@
         slideIndex += 1;
         if (slideIndex > 12) {
           slideIndex = 1;
+        }
+        if(slideIndex == 2){
+          $(".pic-time").show();
+        }else{
+          $(".pic-time").hide();
         }
       }
       setInterval(slideNext, 3000);
