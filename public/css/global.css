@@ -335,7 +335,8 @@
     position: absolute;
     top: 120px;
     right: 50px;
-    color: white;
+    /*color: white;*/
+    color:#000;
     text-align: left;
 }
 .intro-title{
@@ -364,7 +365,7 @@
 }
 .qr-tip{
     position: absolute;
-    top: 430px;
+    top: 440px;
     margin-left: 60px;
 }
 .share-show-content{
