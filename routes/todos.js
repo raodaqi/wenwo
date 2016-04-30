@@ -1,6 +1,7 @@
 var router = require('express').Router();
 var AV = require('leanengine');
-var jsSHA = require('jssha')
+// var jsSHA = require('jssha');
+// var sha1 = require('sha1');
 
 // `AV.Object.extend` 方法一定要放在全局变量，否则会造成堆栈溢出。
 // 详见： https://leancloud.cn/docs/js_guide.html#对象
@@ -52,7 +53,8 @@ function getAccessToken(appid,secret,callback){
 router.get('/wx', function(req, res, next) {
   // var appid = "wx99f15635dd7d9e3c";
   // var secret = "9157e84975386b6dee6a499cc639973e";
-  // var url = req.body.url;
+  // // var url = req.body.url;
+  // var url = "http://wenwo.leanapp.cn/todos/wx";
   // getAccessToken(appid,secret,{
   //   success:function(result){
   //     var access_token = result.data.access_token;

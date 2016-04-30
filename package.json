@@ -24,7 +24,9 @@
     "request": "^2.69.0",
     "strformat": "0.0.7",
     "wechat": "^2.0.3",
-    "wechat-api": "^1.24.0"
+    "wechat-api": "^1.24.0",
+    "jssha": "~1.5.0",
+    "sha1": "~1.1.0"
   },
   "engines": {
     "node": "4.x"
