@@ -9,72 +9,7 @@
   <link rel="stylesheet" href="/css/zepto.fullpage.css">
   <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_1461920265_8238792.css">
   <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-  <script>
-    wx.config({
-          debug: true,
-          appId: 'wx99f15635dd7d9e3c',
-          timestamp: '<%=data.timestamp%>',
-          nonceStr: '<%=data.noncestr%>',
-          signature: '<%=data.signature%>',
-          jsApiList: [
-              'onMenuShareTimeline',
-              'onMenuShareAppMessage',
-              'onMenuShareQQ',
-              'onMenuShareWeibo',
-              'hideMenuItems',
-              'showMenuItems',
-          ]
-      });
-      wx.ready(function(){
-        var shareData = {
-          title: '那年|时光遗忘了，文字却清晰地复刻着',
-          desc: '那年|时光遗忘了，文字却清晰地复刻着',
-          link: 'http://game.4gshu.com/xuangedan/other-project/2015-01-06/',
-          imgUrl: 'http://game.4gshu.com/xuangedan/other-project/2015-01-06/img/share-wx-logo.jpg'
-      };
-      wx.onMenuShareAppMessage(shareData);
-      wx.onMenuShareTimeline({
-          title: shareData.title, // 分享标题
-          link: shareData.link, // 分享链接
-          imgUrl: shareData.imgUrl, // 分享图标
-          success: function () { 
-              alert('success');
-          },
-          cancel: function () { 
-              alert('cancel');
-          }
-      });
-      })
-  </script>
-  <script type="text/javascript">
-    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
-          window.shareData = {
-                "imgUrl": "http://game.4gshu.com/xuangedan/other-project/hysxm2015-01-08/img/share-wx-logo.jpg",
-                "timeLineLink": "http://game.4gshu.com/xuangedan/other-project/hysxm2015-01-08/",
-                "tTitle": "有一种深情叫不愿将就，有一种等待叫何以琛",
-                "tContent": "有一种深情叫不愿将就，有一种等待叫何以琛"
-          };
-          WeixinJSBridge.on('menu:share:appmessage', function(argv) {
-              WeixinJSBridge.invoke('sendAppMessage', {
-                  "img_url": window.shareData.imgUrl,
-                  "link": window.shareData.timeLineLink,
-                  "desc": window.shareData.tContent,
-                  "title": window.shareData.tTitle
-              }, function(res) {});
-          });
-          WeixinJSBridge.on('menu:share:timeline', function(argv) {
-              WeixinJSBridge.invoke('shareTimeline', {
-                  "img_url": window.shareData.imgUrl,
-                  "img_width": "640",
-                  "img_height": "640",
-                  "link": window.shareData.timeLineLink,
-                  "desc": window.shareData.tContent,
-                  "title": window.shareData.tTitle
-              }, function(res) {});
-          });
-      }, false);
-  </script>
-
+  
 
   <style>
         body{
@@ -576,5 +511,123 @@
     });
     
     </script>
+
+
+    <script>
+    // wx.config({
+    //       debug: true,
+    //       appId: 'wx99f15635dd7d9e3c',
+    //       timestamp: 'data.timestamp',
+    //       nonceStr: 'data.noncestr%',
+    //       signature: 'data.signature%',
+    //       jsApiList: [
+    //           'onMenuShareTimeline',
+    //           'onMenuShareAppMessage',
+    //           'onMenuShareQQ',
+    //           'onMenuShareWeibo',
+    //           'hideMenuItems',
+    //           'showMenuItems',
+    //       ]
+    //   });
+    //   wx.ready(function(){
+    //     var shareData = {
+    //       title: '那年|时光遗忘了，文字却清晰地复刻着',
+    //       desc: '那年|时光遗忘了，文字却清晰地复刻着',
+    //       link: 'http://game.4gshu.com/xuangedan/other-project/2015-01-06/',
+    //       imgUrl: 'http://game.4gshu.com/xuangedan/other-project/2015-01-06/img/share-wx-logo.jpg'
+    //   };
+    //   wx.onMenuShareAppMessage(shareData);
+    //   wx.onMenuShareTimeline({
+    //       title: shareData.title, // 分享标题
+    //       link: shareData.link, // 分享链接
+    //       imgUrl: shareData.imgUrl, // 分享图标
+    //       success: function () { 
+    //           alert('success');
+    //       },
+    //       cancel: function () { 
+    //           alert('cancel');
+    //       }
+    //   });
+    //   })
+    var data = {
+      url   : encodeURIComponent(location.href.split('#')[0])
+    }
+    $.ajax({
+      type : "POST",
+      data: data,
+      dataType: "json",
+      url : "/todos/test/wx",
+      success : function(result){
+        console.log(result);
+        wx.config({
+          debug: true,
+          appId: 'wx99f15635dd7d9e3c',
+          timestamp: result.timestamp,
+          nonceStr: result.nonceStr,
+          signature: result.signature,
+          jsApiList: [
+              'onMenuShareTimeline',
+              'onMenuShareAppMessage',
+              'onMenuShareQQ',
+              'onMenuShareWeibo',
+              'hideMenuItems',
+              'showMenuItems',
+          ]
+      });
+      wx.ready(function(){
+        var shareData = {
+          title: '那年|时光遗忘了，文字却清晰地复刻着',
+          desc: '那年|时光遗忘了，文字却清晰地复刻着',
+          link: 'http://game.4gshu.com/xuangedan/other-project/2015-01-06/',
+          imgUrl: 'http://game.4gshu.com/xuangedan/other-project/2015-01-06/img/share-wx-logo.jpg'
+      };
+      wx.onMenuShareAppMessage(shareData);
+      wx.onMenuShareTimeline({
+          title: shareData.title, // 分享标题
+          link: shareData.link, // 分享链接
+          imgUrl: shareData.imgUrl, // 分享图标
+          success: function () { 
+              alert('success');
+          },
+          cancel: function () { 
+              alert('cancel');
+          }
+      });
+      })
+      },
+      error:function(error){
+        console.log(error);
+      }
+    });
+  </script>
+  <script type="text/javascript">
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+          window.shareData = {
+                "imgUrl": "http://game.4gshu.com/xuangedan/other-project/hysxm2015-01-08/img/share-wx-logo.jpg",
+                "timeLineLink": "http://game.4gshu.com/xuangedan/other-project/hysxm2015-01-08/",
+                "tTitle": "有一种深情叫不愿将就，有一种等待叫何以琛",
+                "tContent": "有一种深情叫不愿将就，有一种等待叫何以琛"
+          };
+          WeixinJSBridge.on('menu:share:appmessage', function(argv) {
+              WeixinJSBridge.invoke('sendAppMessage', {
+                  "img_url": window.shareData.imgUrl,
+                  "link": window.shareData.timeLineLink,
+                  "desc": window.shareData.tContent,
+                  "title": window.shareData.tTitle
+              }, function(res) {});
+          });
+          WeixinJSBridge.on('menu:share:timeline', function(argv) {
+              WeixinJSBridge.invoke('shareTimeline', {
+                  "img_url": window.shareData.imgUrl,
+                  "img_width": "640",
+                  "img_height": "640",
+                  "link": window.shareData.timeLineLink,
+                  "desc": window.shareData.tContent,
+                  "title": window.shareData.tTitle
+              }, function(res) {});
+          });
+      }, false);
+  </script>
+
 </body>
 </html>

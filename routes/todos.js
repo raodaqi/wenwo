@@ -69,12 +69,12 @@ var createTimeStamp = function () {
 // 输出数字签名对象
 var responseWithJson = function (res, data) {
     // 允许跨域异步获取
-    // res.set({
-    //   "Access-Control-Allow-Origin": "*"
-    //   ,"Access-Control-Allow-Methods": "POST,GET"
-    //   ,"Access-Control-Allow-Credentials": "true"
-    // });
-    // res.json(data);
+    res.set({
+      "Access-Control-Allow-Origin": "*"
+      ,"Access-Control-Allow-Methods": "POST,GET"
+      ,"Access-Control-Allow-Credentials": "true"
+    });
+    res.json(data);
      // res.render('wxtest',{data:data});
   };
 
@@ -172,12 +172,15 @@ router.get('/wx', function(req, res, next) {
   // })
   res.render('wx');
 });
-
 router.get('/test/wx', function(req, res, next) {
+  res.render('wxtest');
+})
+
+router.post('/test/wx', function(req, res, next) {
   var appid = "wx99f15635dd7d9e3c";
   var secret = "9157e84975386b6dee6a499cc639973e";
-  var url = req.originalUrl;
-  url = "http://wenwo.leanapp.cn/todos/test/wx";
+  var url = req.body.url;
+  // url = "http://wenwo.leanapp.cn/todos/test/wx";
   // console.log(req);
   var signatureObj = cachedSignatures[url];
   // var url = "http://wenwo.leanapp.cn/todos/wx";
@@ -202,23 +205,23 @@ router.get('/test/wx', function(req, res, next) {
         //     signature : results
         // }
         // res.send(result);
-        // return responseWithJson(res, {
-        //   nonceStr: signatureObj.nonceStr
-        //   ,timestamp: signatureObj.timestamp
-        //   ,appid: signatureObj.appid
-        //   ,signature: signatureObj.signature
-        //   ,url: signatureObj.url
-        // });
-        var data = {
-          noncestr: signatureObj.noncestr
+        return responseWithJson(res, {
+          nonceStr: signatureObj.noncestr
           ,timestamp: signatureObj.timestamp
           ,appid: signatureObj.appid
           ,signature: signatureObj.signature
           ,url: signatureObj.url
-        };
-        console.log(data);
-        res.render('wxtest',{data:data});
-        return;
+        });
+        // var data = {
+        //   noncestr: signatureObj.noncestr
+        //   ,timestamp: signatureObj.timestamp
+        //   ,appid: signatureObj.appid
+        //   ,signature: signatureObj.signature
+        //   ,url: signatureObj.url
+        // };
+        // console.log(data);
+        // res.render('wxtest',{data:data});
+        // return;
       }
       // 此处可能需要清理缓存当中已过期的数据
     }
@@ -250,7 +253,7 @@ router.get('/test/wx', function(req, res, next) {
               signature: signature,
               url: url
             };
-            responseWithJson(res, {
+            return responseWithJson(res, {
               noncestr: noncestr,
               appid: appid,
               timestamp: timestamp,
