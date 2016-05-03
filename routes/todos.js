@@ -247,14 +247,14 @@ router.post('/test/wx', function(req, res, next) {
             var signature = calcSignature(ticket, noncestr, timestamp, url);
 
             cachedSignatures[url] = {
-              noncestr: noncestr,
+              nonceStr: noncestr,
               appid: appid,
               timestamp: timestamp,
               signature: signature,
               url: url
             };
             return responseWithJson(res, {
-              noncestr: noncestr,
+              nonceStr: noncestr,
               appid: appid,
               timestamp: timestamp,
               signature: signature,
