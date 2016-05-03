@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>问我,真的能让自由行更轻松吗？</title>
+  <link rel="stylesheet" href="/css/global.css?v=1.0">
+  <link rel="stylesheet" href="/css/zepto.fullpage.css">
+  <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_1461920265_8238792.css">
+  <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+  <script>
+    wx.config({
+          debug: true,
+          appId: 'wx99f15635dd7d9e3c',
+          timestamp: '<%=data.timestamp%>',
+          nonceStr: '<%=data.noncestr%>',
+          signature: '<%=data.signature%>',
+          jsApiList: [
+              'onMenuShareTimeline',
+              'onMenuShareAppMessage',
+              'onMenuShareQQ',
+              'onMenuShareWeibo',
+              'hideMenuItems',
+              'showMenuItems',
+          ]
+      });
+      wx.ready(function(){
+        var shareData = {
+          title: '那年|时光遗忘了，文字却清晰地复刻着',
+          desc: '那年|时光遗忘了，文字却清晰地复刻着',
+          link: 'http://game.4gshu.com/xuangedan/other-project/2015-01-06/',
+          imgUrl: 'http://game.4gshu.com/xuangedan/other-project/2015-01-06/img/share-wx-logo.jpg'
+      };
+      wx.onMenuShareAppMessage(shareData);
+      wx.onMenuShareTimeline({
+          title: shareData.title, // 分享标题
+          link: shareData.link, // 分享链接
+          imgUrl: shareData.imgUrl, // 分享图标
+          success: function () { 
+              alert('success');
+          },
+          cancel: function () { 
+              alert('cancel');
+          }
+      });
+      })
+  </script>
+  <script type="text/javascript">
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+          window.shareData = {
+                "imgUrl": "http://game.4gshu.com/xuangedan/other-project/hysxm2015-01-08/img/share-wx-logo.jpg",
+                "timeLineLink": "http://game.4gshu.com/xuangedan/other-project/hysxm2015-01-08/",
+                "tTitle": "有一种深情叫不愿将就，有一种等待叫何以琛",
+                "tContent": "有一种深情叫不愿将就，有一种等待叫何以琛"
+          };
+          WeixinJSBridge.on('menu:share:appmessage', function(argv) {
+              WeixinJSBridge.invoke('sendAppMessage', {
+                  "img_url": window.shareData.imgUrl,
+                  "link": window.shareData.timeLineLink,
+                  "desc": window.shareData.tContent,
+                  "title": window.shareData.tTitle
+              }, function(res) {});
+          });
+          WeixinJSBridge.on('menu:share:timeline', function(argv) {
+              WeixinJSBridge.invoke('shareTimeline', {
+                  "img_url": window.shareData.imgUrl,
+                  "img_width": "640",
+                  "img_height": "640",
+                  "link": window.shareData.timeLineLink,
+                  "desc": window.shareData.tContent,
+                  "title": window.shareData.tTitle
+              }, function(res) {});
+          });
+      }, false);
+  </script>
+
+
+  <style>
+        body{
+          padding:0;
+          margin:0;
+          background: #F5BF35;
+        }
+        /*.page,.detail-content,.share-text,.pic-time{
+          font-family: fz;
+        }*/
+        .page,.share-text,.pic-time{
+          font-family: fz;
+        }
+        @font-face { 
+          font-family: fz; /*这里是说明调用来的字体名字*/ 
+          src: url('/font/MFLIHEI_NONCOMMERCIAL-REGULAR.OTF'); /*这里是字体文件路径*/ 
+          } 
+        .indicator{
+            position: fixed;
+            right: 10px;
+            top: 50%;
+            margin-top: -130px;
+        }
+        .indicator li{
+            margin-top: 10px;
+            width: 10px;
+            height: 10px;
+            border-radius: 100px;
+            background: rgba(0,0,0,0.5);
+            text-indent: -9999px;
+            list-style: none;
+        }
+        .indicator li.cur{
+            background: rgba(255,255,255,0.5);
+        }
+        .time{
+          position: absolute;
+          width: 100%;
+          /*left:0;*/
+          /*right:0;*/
+          text-align: center;
+          left: 52%;
+          top: 4%;
+          height: 20px;
+          font-size: 15px;
+          width: 60%;
+          margin-top: -8px;
+          transform:translateX(-50%);
+          -ms-transform:translateX(-50%); 
+          -moz-transform:translateX(-50%); 
+          -webkit-transform:translateX(-50%); 
+          -o-transform:translateX(-50%);  
+        }
+        .time div{
+          width: 25%;
+          text-align: center;
+          height: 20px;
+          float: left;
+          /*padding:2.5%;*/
+        }
+        /*.time .day{
+          position: absolute;
+          left:25%;
+        }
+        .time .hour{
+          position: absolute;
+          left:42%;
+        }
+        .time .min{
+          position: absolute;
+          right:37%;
+        }
+        .time .sec{
+          position: absolute;
+          right:22%;
+        }*/
+        .share{
+
+        }
+
+        #share-ui-dialog{
+          padding:0;
+          margin:0;
+          left: 0
+        }
+        .share-content{
+          position:fixed;
+          bottom:0;
+          height: 197px;
+          width: 100%;
+          background-color: #F1F1F1;
+        }
+        #share-ui-dialog .share-content{
+          /*background: rgba(242,148,138,0.8);*/
+          background: rgba(255,255,255,1);
+        }
+        .button-content{
+          padding:0 10px;
+          width: 100%;
+          height: 100%;
+          box-sizing: border-box;
+        }
+        .share-title{
+          /*border-bottom: 1px solid #FFCCCC;*/
+          border-bottom: 1px solid #F5BF35;
+          width: 100%;
+          text-align: center;
+          font-weight: bold;
+          /*color: white;*/
+          color:#F5BF35;
+        }
+        .button-content div{
+          height: 65px;
+          line-height: 65px;
+        }
+        .cancel-button{
+          /*color: white;*/
+          /*border-top: 1px solid #FFCCCC;*/
+          color:#F5BF35;
+          border-top: 1px solid #F5BF35;
+          width: 100%;
+          text-align: center;
+        }
+        .share-button-ul{
+        }
+        .share-button-ul a{
+          color: #737373;
+          display: block;
+          float: left;
+          width: 25%;
+          text-align: center;
+        }
+        .share-button-li{
+          display: inline-block;
+          /*color: white;*/
+          color: #F5BF35;
+          width: 50px;
+          font-size: 27px;
+          text-align: center;
+        }
+        body{
+            /*background: -moz-linear-gradient(top, #E16961 0%, #EEA97D 100%);
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#E16961), color-stop(100%,#EEA97D));
+            background: -webkit-linear-gradient(top, #E16961 0%,#EEA97D 100%);
+            background: -o-linear-gradient(top, #E16961 0%,#EEA97D 100%);
+            background: -ms-linear-gradient(top, #E16961 0%,#EEA97D 100%);
+            background: linear-gradient(to bottom, #E16961 0%,#EEA97D 100%);*/
+            background:rgba(245, 188, 43, 0.9);
+            /*background: rgba(255,255,255,1);*/
+        }
+        
+        @media (min-width: 520px){
+          .share,.wp,.ui-dialog,.start{
+            display: none;
+          }
+          .container{
+            display: block;
+          }
+      }
+      @media (max-width: 519px){
+          .container{
+            display: none;
+          }
+      }
+      .hidden-img{
+        width: 0;
+        height: 0;
+      }
+    </style>
+</head>
+<body>
+  <div class="ui-loading-block show">
+      <div class="ui-loading-cnt">
+          <i class="ui-loading-bright"></i>
+          <p>正在加载中...</p>
+      </div>
+  </div>
+  <div class="share"></div>
+  <img class="hidden-img" src="/img/wx/share.jpg">
+  <div class="wp">
+    <div class="wp-inner">
+      <div class="page page1">
+        <div class="time">
+          <div class="day"></div>
+          <div class="hour"></div>
+          <div class="min"></div>
+          <div class="sec"></div>
+        </div>
+      </div>
+      <!-- <div class="page page2">
+      <div class="img-button"></div>
+    </div>
+    -->
+    <div class="page page3">
+      <div class="img-button"></div>
+    </div>
+    <div class="page page4">
+      <div class="img-button"></div>
+    </div>
+    <div class="page page5">
+      <div class="img-button"></div>
+    </div>
+    <div class="page page6">
+      <div class="img-button"></div>
+    </div>
+    <div class="page page7">
+      <div class="img-button"></div>
+    </div>
+    <div class="page page8">
+      <div class="img-button"></div>
+    </div>
+    <div class="page page9">
+      <div class="img-button"></div>
+    </div>
+    <div class="page page10">
+      <div class="img-button"></div>
+    </div>
+    <div class="page page11">
+      <div class="img-button"></div>
+    </div>
+    <div class="page page12">
+      <div class="img-button"></div>
+    </div>
+    <div class="page page13">
+      <img src="/img/wx/13.png" alt=""></div>
+  </div>
+  <ul class="indicator">
+    <li>1</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+    <li>6</li>
+    <li>7</li>
+    <li>8</li>
+    <li>9</li>
+    <li>10</li>
+    <li>11</li>
+    <li>12</li>
+    <li>13</li>
+  </ul>
+</div>
+
+<div class="ui-dialog" id="share-ui-dialog">
+  <div class="share-content">
+    <div class="button-content">
+      <div class="share-title">分享</div>
+      <div class="share-button-ul">
+        <a href="javascript:share.qq();">
+          <div class="share-button-li iconfont icon-qq"></div>
+        </a>
+        <a href="javascript:share.qzone();">
+          <div class="share-button-li iconfont icon-qzone"></div>
+        </a>
+        <a class="share-weixin">
+          <div class="share-button-li iconfont icon-weixin"></div>
+        </a>
+        <a href="javascript:share.weibo();">
+          <div class="share-button-li iconfont icon-weibo"></div>
+        </a>
+        <!-- <a href="javascript:share.qzone();">
+        <div class="share-button-li">
+          <div class="share-img"></div>
+          <label>分享到QQ空间</label>
+        </div>
+      </a>
+      <a class="share-weixin">
+        <div class="share-button-li">
+          <div class="share-img"></div>
+          <label>分享到朋友圈</label>
+        </div>
+      </a>
+      <a href="javascript:share.weibo();">
+        <div class="share-button-li">
+          <div class="share-img"></div>
+          <label>分享到新浪微博</label>
+        </div>
+      </a>
+      <a href="javascript:share.douban();">
+        <div class="share-button-li">
+          <div class="share-img"></div>
+          <label>分享到豆瓣网</label>
+        </div>
+      </a>
+      -->
+    </div>
+    <div class="cancel-button">取消</div>
+  </div>
+  </div>
+  </div>
+  <div class="ui-dialog" id="share-tip-dialog">
+    <div class="share-tip-content">
+      <p class="big">请使用自带的分享功能分享</p>
+      <p class="small">通常分享按钮会在右上方或正下方</p>
+    </div>
+  </div>
+
+  <div class="ui-dialog" id="share-show-dialog">
+    <div class="share-show-content">
+      <img class="share-logo" src="/img/wx/logo.jpg" alt="">
+      <p class="share-text">问我，只想让旅游更轻松一点。</p>
+      <p class="share-text">点击右上角分享，为小问加油吧！</p>
+    </div>
+  </div>
+  
+  <div class="container">
+    <div id="phone-wrap">
+      <div class="placeholder"></div>
+      <div class="pic-time"></div>
+      <img id="pic1" class="pic active slide-on" src="/img/wx/01.png">
+      <img id="pic2" class="pic active" src="/img/wx/03.png">
+      <img id="pic3" class="pic active" src="/img/wx/04.png">
+      <img id="pic4" class="pic active" src="/img/wx/05.png">
+      <img id="pic5" class="pic active" src="/img/wx/06.png">
+      <img id="pic6" class="pic active" src="/img/wx/07.png">
+      <img id="pic7" class="pic active" src="/img/wx/08.png">
+      <img id="pic8" class="pic active" src="/img/wx/09.png">
+      <img id="pic9" class="pic active" src="/img/wx/10.png">
+      <img id="pic10" class="pic active" src="/img/wx/11.png">
+      <img id="pic11" class="pic active" src="/img/wx/12.png">
+      <img id="pic12" class="pic active" src="/img/wx/13.png">
+    </div>
+   <!--  <img id="title" src="/Public/Mobile/img/title.png">
+    <img id="desc" src="/Public/Mobile/img/desc.png">
+    <img id="QR-code" src="/Public/Mobile/img/QR-code.png">
+    <img id="QR-code-desc" src="/Public/Mobile/img/QR-code-desc.png"> -->
+    <div class="detail-content">
+      <div class="intro-title">问我</div>
+      <ul class="intro">
+        <li>为改变而生的自由行神器</li>
+        <li>用户赞踩筛选最优质信息</li>
+        <li>随时随地查看周边攻略</li>
+        <li>防坑宝典在手，天下从此畅游。</li>
+      </ul>
+      <div class="qr"></div>
+      <div class="qr-tip">像个当地人一样去旅游</div>
+    </div>
+    <div id="company-block">
+      <a id="company-link" href="#" target="_blank">©2016 迈沃德科技 LLC</a>
+    </div>
+  </div>
+
+<span class="start"> <b></b>
+<img class="hidden-img" src="/img/wx/share.jpg">
+</span>
+<script src="/js/zepto.min.js"></script>
+<script src="/js/zepto.fullpage.js"></script>
+<script src="/js/simple-share.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<!-- <script src="/js/frozen.js"></script> -->
+<script>
+        // $('.wp-inner').fullpage();
+        // var el = $.loading({content:'加载中...'});
+        // el.on("loading:hide",function(){
+        //     console.log("loading hide");
+        // });
+        $('.wp-inner').fullpage({
+            drag: true,
+            duration: 100,
+            page: '.page',
+            der: 0.1,
+            change: function (e) {
+                console.log('change', e.next, e.cur);
+                $('.indicator li').removeClass('cur').eq(e.cur).addClass('cur');
+            },
+            beforeChange: function (e) {
+                console.log('beforeChange', e.next, e.cur);
+            },
+            afterChange: function (e) {
+                console.log('afterChange', e.next, e.cur);
+            }
+        });
+    </script>
+
+<script type="text/javascript">
+    var time_start = new Date().getTime(); //设定当前时间
+    var time_end =  new Date("2016/6/05 00:00:00").getTime(); //设定目标时间
+    // 计算时间差 
+    var time_distance = time_end - time_start;
+    console.log(time_distance); 
+    var intDiff = parseInt(time_distance/1000-1);//倒计时总秒数量
+    function timer(intDiff){
+      window.setInterval(function(){
+      var day=0,
+        hour=0,
+        minute=0,
+        second=0;//时间默认值    
+      if(intDiff > 0){
+        day = Math.floor(intDiff / (60 * 60 * 24));
+        hour = Math.floor(intDiff / (60 * 60)) - (day * 24);
+        minute = Math.floor(intDiff / 60) - (day * 24 * 60) - (hour * 60);
+        second = Math.floor(intDiff) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
+      }
+      if (minute <= 9) minute = '0' + minute;
+      if (second <= 9) second = '0' + second;
+      $('.day').text(day+"天");
+      $('.hour').text(hour+"时");
+      $('.min').text(minute+"分");
+      $('.sec').text(second+"秒");
+      $(".pic-time").text( $('.day').text()+" "+$('.hour').text()+" "+$('.min').text()+" "+$('.sec').text());
+      intDiff--;
+      }, 1000);
+    }
+    function initTime(intDiff){
+      var day=0,
+        hour=0,
+        minute=0,
+        second=0;//时间默认值    
+      if(intDiff > 0){
+        day = Math.floor(intDiff / (60 * 60 * 24));
+        hour = Math.floor(intDiff / (60 * 60)) - (day * 24);
+        minute = Math.floor(intDiff / 60) - (day * 24 * 60) - (hour * 60);
+        second = Math.floor(intDiff) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
+      }
+      if (minute <= 9) minute = '0' + minute;
+      if (second <= 9) second = '0' + second;
+      $('.day').text(day+"天");
+      $('.hour').text(hour+"时");
+      $('.min').text(minute+"分");
+      $('.sec').text(second+"秒");
+      $(".pic-time").text( $('.day').text()+" "+$('.hour').text()+" "+$('.min').text()+" "+$('.sec').text());
+    } 
+    $(function(){
+      initTime(intDiff);
+      timer(intDiff);
+    }); 
+    </script>
+<script>
+    var url = '';
+
+    var share = new SimpleShare({
+        url: '',
+        title: '问我，真的能让自由行更轻松吗？',
+        content: '2016年6月5日问我微信正式上线啦！',
+        pic: 'http://wenwo.leanapp.cn/img/wx/share.jpg'
+      });
+    $(".share").on("click",function(){
+      // $(".share-content").addClass("modal-in");
+      // $("#share-ui-dialog").show();
+      $("#share-show-dialog").show();
+    })
+
+    $(".cancel-button").on("click",function(){
+      $("#share-ui-dialog").hide();
+    })
+
+    $("#share-tip-dialog").on("click",function(){
+      $("#share-tip-dialog").hide();
+    })
+    $("#share-show-dialog").on("click",function(){
+      $("#share-show-dialog").hide();
+    })
+
+    $(".share-weixin").on("click",function(){
+      $("#share-ui-dialog").hide();
+      $("#share-tip-dialog").show();
+    })
+    </script>
+    <script>   
+      var slideIndex = 1;
+      function slideNext() {
+        console.log("123");
+        $('.pic').removeClass('slide-on');
+        $('#pic'+slideIndex).addClass('slide-on');
+        slideIndex += 1;
+        if (slideIndex > 12) {
+          slideIndex = 1;
+        }
+        if(slideIndex == 2){
+          $(".pic-time").show();
+        }else{
+          $(".pic-time").hide();
+        }
+      }
+      setInterval(slideNext, 3000);
+    </script>
+    <script>
+    // var height = $(".wp").height();
+    // var width = $(".wp").width();
+    // var imgWidth = height/1136*640;
+    // var day = (width - imgWidth)/2 + imgWidth*0.25;
+    // var hour = (width - imgWidth)/2 + imgWidth*0.4;
+    // var min = (width - imgWidth)/2 + imgWidth*0.57;
+    // var sec = (width - imgWidth)/2 + imgWidth*0.72;
+    // $(".time .day").css({
+    //   "left":day+"px"
+    // })
+    // $(".time .hour").css({
+    //   "left":hour+"px"
+    // })
+    // $(".time .min").css({
+    //   "left":min+"px"
+    // })
+    // $(".time .sec").css({
+    //   "left":sec+"px"
+    // })
+    // alert(imgWidth);
+    $(function(){
+      $(".ui-loading-block").hide();
+    });
+    
+    </script>
+</body>
+</html>
