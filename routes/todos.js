@@ -206,11 +206,11 @@ router.post('/test/wx', function(req, res, next) {
         // }
         // res.send(result);
         return responseWithJson(res, {
-          nonceStr: signatureObj.noncestr
-          ,timestamp: signatureObj.timestamp
-          ,appid: signatureObj.appid
-          ,signature: signatureObj.signature
-          ,url: signatureObj.url
+          nonceStr: signatureObj.nonceStr,
+          timestamp: signatureObj.timestamp,
+          appid: signatureObj.appid,
+          signature: signatureObj.signature,
+          url: signatureObj.url
         });
         // var data = {
         //   noncestr: signatureObj.noncestr

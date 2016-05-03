@@ -550,6 +550,7 @@
     //   });
     //   })
     var data = {
+      // url   : encodeURIComponent(location.href.split('#')[0])
       url   : location.href.split('#')[0]
     }
     $.ajax({
@@ -576,10 +577,10 @@
       });
       wx.ready(function(){
         var shareData = {
-          title: '那年|时光遗忘了，文字却清晰地复刻着',
-          desc: '那年|时光遗忘了，文字却清晰地复刻着',
-          link: 'http://game.4gshu.com/xuangedan/other-project/2015-01-06/',
-          imgUrl: 'http://game.4gshu.com/xuangedan/other-project/2015-01-06/img/share-wx-logo.jpg'
+          title: '问我，真的能让自由行更轻松吗？',
+          desc: '2016年6月5日问我微信正式上线啦！',
+          link: result.url,
+          imgUrl: 'http://wenwo.leanapp.cn/img/wx/share.jpg'
       };
       wx.onMenuShareAppMessage(shareData);
       wx.onMenuShareTimeline({
@@ -603,10 +604,10 @@
   <script type="text/javascript">
     document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
           window.shareData = {
-                "imgUrl": "http://game.4gshu.com/xuangedan/other-project/hysxm2015-01-08/img/share-wx-logo.jpg",
-                "timeLineLink": "http://game.4gshu.com/xuangedan/other-project/hysxm2015-01-08/",
-                "tTitle": "有一种深情叫不愿将就，有一种等待叫何以琛",
-                "tContent": "有一种深情叫不愿将就，有一种等待叫何以琛"
+                "imgUrl": "http://wenwo.leanapp.cn/img/wx/share.jpg",
+                "timeLineLink": "http://wenwo.leanapp.cn/todos/test/wx",
+                "tTitle": "问我，真的能让自由行更轻松吗？",
+                "tContent": "2016年6月5日问我微信正式上线啦！"
           };
           WeixinJSBridge.on('menu:share:appmessage', function(argv) {
               WeixinJSBridge.invoke('sendAppMessage', {
