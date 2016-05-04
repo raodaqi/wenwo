@@ -571,29 +571,35 @@
               'onMenuShareAppMessage',
               'onMenuShareQQ',
               'onMenuShareWeibo',
+              'onMenuShareQZone',
               'hideMenuItems',
               'showMenuItems',
           ]
-      });
-      wx.ready(function(){
-        var shareData = {
-          title: '问我，真的能让自由行更轻松吗？',
-          desc: '2016年6月5日问我微信正式上线啦！',
-          link: result.url,
-          imgUrl: 'http://wenwo.leanapp.cn/img/wx/share.jpg'
-      };
-      wx.onMenuShareAppMessage(shareData);
-      wx.onMenuShareTimeline({
-          title: shareData.title, // 分享标题
-          link: shareData.link, // 分享链接
-          imgUrl: shareData.imgUrl, // 分享图标
-          success: function () { 
-              alert('success');
-          },
-          cancel: function () { 
-              alert('cancel');
-          }
-      });
+        });
+        wx.ready(function(){
+          var shareData = {
+            title: '问我，真的能让自由行更轻松吗？',
+            desc: '2016年6月5日问我微信正式上线啦！',
+            link: result.url,
+            imgUrl: 'http://wenwo.leanapp.cn/img/wx/share.jpg'
+        };
+        wx.onMenuShareAppMessage(shareData);
+        // wx.onMenuShareTimeline({
+        //     title: shareData.title, // 分享标题
+        //     link: shareData.link, // 分享链接
+        //     imgUrl: shareData.imgUrl, // 分享图标
+        //     success: function () { 
+        //         alert('success');
+        //     },
+        //     cancel: function () { 
+        //         alert('cancel');
+        //     }
+        // });
+        wx.onMenuShareTimeline(shareData);
+        wx.onMenuShareQQ(shareData);
+        wx.onMenuShareWeibo(shareData);
+        wx.onMenuShareQZone(shareData);
+
       })
       },
       error:function(error){
