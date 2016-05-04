@@ -176,7 +176,7 @@ router.get('/wx', function(req, res, next) {
   res.render('wxtest');
 })
 
-router.post('/wx', function(req, res, next) {
+router.post('/test/wx', function(req, res, next) {
   var appid = "wx99f15635dd7d9e3c";
   var secret = "9157e84975386b6dee6a499cc639973e";
   var url = req.body.url;
