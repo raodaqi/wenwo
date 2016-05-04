@@ -92,9 +92,39 @@
     }
     .amap-touch-toolbar .amap-zoomcontrol{
       position: fixed;
-      bottom:50%;
-      transform: translateY(50%);
+      bottom:20px;
+      /*transform: translateY(50%);*/
       right:10px;
+    }
+    .footer-label{
+      position: absolute;
+      z-index: 10000;
+      height: 5px;
+      bottom:0px;
+      width: 100%;
+      background-color: #efc553;
+    }
+    .header-label{
+      position: absolute;
+      z-index: 10000;
+      height: 30px;
+      width: 100%;
+      background-color: #efc553;
+      top: 0;
+    }
+    .header-more{
+      font-size: 15px;
+      color: #393e49;
+      float:left;
+      line-height: 30px;
+      margin-left: 10px;
+    }
+    .header-sousuo{
+      font-size: 15px;
+      color: #393e49;
+      float:right;
+      line-height: 30px;
+      margin-right: 10px;
     }
     .add{
       position: absolute;
@@ -103,8 +133,11 @@
       border-radius: 50%;
       background: rgba(255,255,255,0.9); 
       border:1px solid #FFC222;
-      right: 20px;
-      bottom:30px;
+      /*right: 20px;*/
+      /*bottom:30px;*/
+      bottom:5px;
+      left: 50%;
+      margin-left: -30px;
       z-index: 10401;
       -webkit-transition: all ease 200ms;
       transition: all ease 200ms;
@@ -231,23 +264,29 @@
   </style>
   <body>
     <div class="left-content">
-      <div class="more iconfont icon-more"></div>
-      <div class="cancel iconfont icon-x" style="display:none" ></div>
+      <!-- <div class="more iconfont icon-more"></div>
+      <div class="cancel iconfont icon-x" style="display:none" ></div> -->
     </div>
     <div class="right-content">
-      <div class="suosuo iconfont icon-sousuo"></div>
+      <!-- <div class="suosuo iconfont icon-sousuo"></div>
       <div class="cancel iconfont icon-x" style="display:none" ></div>
       <div class="search-content">
-        <!-- <input> -->
         <div class="searchbar"  id="tip">
           <a class="searchbar-cancel">取消</a>
           <div class="search-input">
             <input type="search" id='search' name="search" placeholder='输入关键字...'  value="" onfocus='this.value=""'/>      
           </div>
         </div>
-      </div>
+      </div> -->
+    </div>
+
+    <div class="header-label">
+      <div class="header-more iconfont icon-more"></div>
+      <div class=""></div>
+      <div class="header-sousuo iconfont icon-sousuo"></div>
     </div>
     <div id="container"></div>
+    <div class="footer-label"></div>
     <div class="add iconfont icon-tianjia open-about"></div>
     <!-- About Popup -->
     <div class="popup popup-about">
