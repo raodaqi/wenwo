@@ -30,27 +30,25 @@
 //            },
 //            error : function(){}
 //        });
-//        var geo = [-500, 500];
 //        var tag = new Array();
 //        tag[0] = {
-//            tag_name:'123'
+//            tag_name:'hanqi'
 //        }
 //        tag[1] = {
-//            tag_name:'123124125'
+//            tag_name:'222'
 //        }
 //
 //        tag = JSON.stringify(tag);
 //        var data = {
 //            username:'hanqi',
 //            type:1,
-//            //isfree:0,
-//            geo_x:123,
-//            geo_y:456,
+//            isfree:0,
+//            geo:123,
 //            position:'asd',
 //            reason:'asd',
 //            content_show:'asd',
 //            content_hide:'asd',
-//            price:0,
+//            price:0.1,
 //            tag:tag,
 //            remark:'asd'
 //
@@ -66,7 +64,7 @@
 //            },
 //            error : function(){}
 //        });
-
+//
 //        $.ajax({
 //            type: "get",
 //            url: 'user/regist',
@@ -77,57 +75,16 @@
 //            },
 //            error : function(){}
 //        });
-//        $.ajax({
-//            type: "post",
-//            url: 'hode/haved',
-//            data: {username:'test', staus:1},
-//            dataType: "json",
-//            success : function(result) {
-//                console.log(result);
-//            },
-//            error : function(){}
-//        });
-//        $.ajax({
-//            type: "post",
-//            url: 'hode/get',
-//            data: {username:'test', ask_id:"571625c98ac2470062617a92", staus:1},
-//            dataType: "json",
-//            success : function(result) {
-//                console.log(result);
-//            },
-//            error : function(){}
-//        });
-//        $.ajax({
-//            type: "post",
-//            url: 'hode/refund',
-//            data: {username:'test', ask_id:'571625c98ac2470062617a92'},
-//            dataType: "json",
-//            success : function(result) {
-//                console.log(result);
-//            },
-//            error : function(){}
-//        });
-//        $.ajax({
-//            type: "get",
-//            url: 'ask/like',
-//            data: {username:'test', ask_id:'5718d32bebcb7d005cc07a2b', type:1},
-//            dataType: "json",
-//            success : function(result) {
-//                console.log(result);
-//            },
-//            error : function(){}
-//        });
         $.ajax({
             type: "get",
-            url: 'ask/allask',
-            data: {staus:4},
+            url: 'wallet/mywallet',
+            data: {username:'test'},
             dataType: "json",
             success : function(result) {
                 console.log(result);
             },
             error : function(){}
         });
-
     }
 </script>
 </body>
