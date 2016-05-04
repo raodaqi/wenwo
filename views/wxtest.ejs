@@ -572,8 +572,6 @@
               'onMenuShareQQ',
               'onMenuShareWeibo',
               'onMenuShareQZone',
-              'onMenuProfile',
-              'onMenuAddContact',
               'hideMenuItems',
               'showMenuItems'
           ]
@@ -601,7 +599,17 @@
         wx.onMenuShareQQ(shareData);
         wx.onMenuShareWeibo(shareData);
         wx.onMenuShareQZone(shareData);
-
+        wx.showMenuItems({
+          menuList: [
+          'menuItem:profile',
+          'menuItem:addContact',
+          "menuItem:share:appMessage",
+          "menuItem:share:timeline",
+          "menuItem:share:qq",
+          "menuItem:share:weiboApp",
+          'menuItem:share:QZone',
+          "menuItem:favorite"]
+          });
       })
       },
       error:function(error){
