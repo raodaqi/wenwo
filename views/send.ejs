@@ -10,6 +10,7 @@
     <title>问我——像个当地人一样去旅游</title>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="http://at.alicdn.com/t/font_1460642378_2807734.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1462279764_1285422.css">
     <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
     <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=cb84c659c88a7cc83b935a009b3a9cfd"></script>
     <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script> 
@@ -23,29 +24,35 @@
       display: inline-block;
       padding: 0 8px;
       /*color: #FFC222;*/
-      background-color: #FFDC7F;
+      /*background-color: #FFDC7F;*/
       height: 20px;
-      line-height: 22px;
+      line-height: 20px;
       font-weight: 400;
       font-size: 13px;
       text-align: center;
       margin: 0 .5rem .2rem 0;
       border-radius: 3px;
+      border:1px solid #393e49;
     }
     .next{
       float: right;
     }
     .theme-ul{
       text-align: center;
+      width: 240px;
+      height: 300px;
+      box-sizing: border-box;
+      margin:0 auto; 
     }
     .theme-li{
-      display: inline-block;
+      /*display: inline-block;*/
+      float: left;
       text-align: center;
-      margin: 10px;
-      width: 100px;
+      /*margin: 10px;*/
+      width: 120px;
       height: 100px;
       line-height: 100px;
-      border-radius: 50%;
+      /*border-radius: 50%;*/
       border:1px solid #FFC222;
     }
     .theme-li.active{
@@ -64,6 +71,24 @@
       border-radius:3px;
       padding:5px 10px;
     }
+    #reason,#detail{
+      background-color: #efc553;
+      height: 15rem;
+      border-radius: 0.5rem;
+      padding:0.8rem 1rem;
+      font-size: 0.5rem;
+      color:#FFF;
+    }
+    input:-ms-input-placeholder,
+    textarea:-ms-input-placeholder {
+        color: gray;
+    }
+
+    input::-webkit-input-placeholder,
+    textarea::-webkit-input-placeholder {
+        color: gray;
+    }
+
     #detail{
       min-height: 300px;
     }
@@ -83,6 +108,15 @@
         line-height: 1.5;
         padding: 6px 12px;
     }
+    .add-search{
+      background-color: #efc553;
+      padding:2px 3px;
+    }
+    .ww-typeHelper{
+      background-color: #efc553;
+      height: 7.5rem;
+      border-radius: 0.25rem;
+    }
     .ww-typeHelper-input,.search-input{
         border: none;
         box-shadow: none;
@@ -94,17 +128,59 @@
         width: 6rem;
         max-width: 100%;
     }
+    .search-input{
+      background-color: #fff;
+      border-radius: 0.25rem;
+      height: 30px;
+      padding-left: 10px;
+    }
+    .ww-typeHelper-input{
+      background-color: #FFF;
+      border-radius: 2px;
+      height: 1rem;
+      /*position: absolute;
+      bottom:5px;
+      left:5px;
+      box-sizing: border-box;
+      margin-right: 50px;
+      border-radius: 2px;
+      height: 1rem;*/
+      /*float: right;*/
+    }
+    .ww-typeHelper-left{
+      width: 100%;
+      position: absolute;
+      bottom:5px;
+      left:5px;
+      box-sizing: border-box;
+      padding-right: 3rem;
+      height: 1rem;
+    }
+    .ww_typeHelper-button{
+      background-color: #e5a41b;
+      position: absolute;
+      bottom:5px;
+      right:5px;
+      width: 30px;
+      text-align: center;
+      height: 1rem;
+      line-height: 1rem;
+      color: #FFF;
+      border-radius: 0.15rem;
+      width: 2.3rem;
+      font-size: 0.5rem;
+    }
     .techTags {
         /*display: none;*/
         width: 100%;
-        padding: 6px 12px;
+        padding: 6px 0.1rem;
         margin-bottom: 21px;
         /*background-color: #fff;*/
         /*border: 1px solid transparent;*/
         border-radius: 3px;
         /*box-shadow: 0 1px 1px rgba(0,0,0,.05);*/
         padding-bottom: 21px;
-        margin-top: 1px;
+        margin-top: 0.5rem;
     }
     .hidden-content{
       margin-top: 10px;
@@ -145,7 +221,12 @@
       z-index: 9999;
     }
     .list-block{
-      background: white;
+      /*background: white;*/
+      background-color: #efc553;
+      border-radius: 5px;
+    }
+    .list-block .item-inner{
+      border-radius: 5px;
     }
     .right-icon{
       float: right;
@@ -170,10 +251,89 @@
       margin-top: 50px;
       background: none;
     }
+    .header-title{
+      color:#393e49;
+      font-weight: bolder;
+      position: absolute;
+      background-color: #efc553;
+      left: 50%;
+      top:5px;
+      width: 50px;
+      margin-left: -25px;
+      text-align: center;
+    }
+    .page-current{
+      /*margin-top: 30px;*/
+    }
+    .bar{
+      background-color: #efc553;
+    }
+    .card{
+      background-color: #F3D27B;
+    }
+    .card-header{
+      min-height:2rem;
+      font-weight: bold;
+      border-bottom: 1px solid #BBA05F;
+      padding:0rem .75rem;
+    }
+    .bar .button-link{
+      color:#393e49;
+    }
+    .bar-footer-nav{
+      bottom:0;
+    }
+    #theme1,#theme3,#theme5{
+      border-right: 0;
+    }
+    #theme1,#theme2,#theme3,#theme4{
+      border-bottom: 0;
+    }
+    .theme-li{
+      border:0;
+    }
+    #theme1{
+      background-color: #FDB8AF;
+    }
+    #theme2{
+      background-color: #DFECA1;
+    }
+    #theme3{
+      background-color: #ADF5EC;
+    }
+    #theme4{
+      background-color: #E0C1F3;
+    }
+    #theme5{
+      background-color: #FFD99C;
+    }
+    #theme6{
+      background-color: #B6C6FE;
+    }
+    .theme-li img{
+      width: 50px;
+      height: 50px;
+      margin-top:25px;
+    }
+    /*.bar{
+      height: 1.5rem;
+    }*/
   }
   </style>
   <body>
+     <!-- <div class="header-label">
+      <div class="header-cancel iconfont icon-zuo"></div>
+      <div class="header-title">
+        发表
+      </div>
+    </div> -->
     <div class="page page-current" id='router'>
+      <header class="bar bar-nav">
+        <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
+          <span class="icon icon-left"></span>
+        </a>
+        <h1 class='title'>主题</h1>
+      </header>
       <div class="content">
         <div class="theme-content-block">
           <!-- <ul>
@@ -268,26 +428,44 @@
       <header class="bar bar-nav">
         <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
           <span class="icon icon-left"></span>
-          返回
-        </a>
-        <a class="button button-link button-nav pull-right next" href="#router2">
-          下一项
-          <span class="icon icon-right"></span>
         </a>
         <h1 class='title'>主题</h1>
       </header>
       <div class="content">
         <div class="content-block">
           <div class="theme-ul">
-            <div class="theme-li active" id="theme1" data-type="1">吃</div>
-            <div class="theme-li" id="theme2" data-type="2">住</div>
-            <div class="theme-li" id="theme3" data-type="3">购</div>
-            <div class="theme-li" id="theme4" data-type="4">行</div>
-            <div class="theme-li" id="theme5" data-type="5">防坑</div>
-            <div class="theme-li" id="theme6" data-type="6">游玩</div>
+            <div class="theme-li active" id="theme1" data-type="1">
+              <img src="/img/themes-02.png">
+            </div>
+            <div class="theme-li" id="theme2" data-type="2">
+              <img src="/img/themes-03.png">
+            </div>
+            <div class="theme-li" id="theme3" data-type="3">
+              <img src="/img/themes-04.png">
+            </div>
+            <div class="theme-li" id="theme4" data-type="4">
+              <img src="/img/themes-05.png">
+            </div>
+            <div class="theme-li" id="theme5" data-type="5">
+              <img src="/img/themes-06.png">
+            </div>
+            <div class="theme-li" id="theme6" data-type="6">
+              <img src="/img/themes-07.png">
+            </div>
           </div>
         </div>
       </div>
+
+      <footer class="bar bar-footer-nav">
+        <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
+          <span class="icon icon-left"></span>
+          预览
+        </a>
+        <a class="button button-link button-nav pull-right next" href="#router2">
+          下一步
+          <span class="icon icon-right"></span>
+        </a>
+      </footer>
     </div>
     <!-- 标签填写 -->
     <div class="page" id='router2'>
@@ -298,19 +476,18 @@
         </a> -->
         <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
           <span class="icon icon-left"></span>
-          返回
         </a>
-        <a class="button button-link button-nav pull-right next" href="#router3">
-          下一项
-          <span class="icon icon-right"></span>
-        </a>
+
         <h1 class='title'>标签</h1>
       </header>
       <div class="content">
         <div class="tag-content">
           <!-- <textarea name="tag" id="tag"></textarea> -->
           <div class="ww-typeHelper">
-            <input type="text" data-role="ww_typeHelper-input" class="ww-typeHelper-input" placeholder="标签，如：php 可使用逗号,分号;" style="width: 20em;">          
+            <div class="ww-typeHelper-left">
+              <input type="text" data-role="ww_typeHelper-input" class="ww-typeHelper-input" placeholder="标签，如：php 可使用逗号,分号;" style="width: 20em;">
+            </div>
+            <div class="ww_typeHelper-button">确定</div>          
           </div>
           <div role="tabpanel" class="techTags panel-default techTags-panel" data-tech="">
             <div class="tag-ul">
@@ -323,6 +500,17 @@
           </div>
         </div>
       </div>
+
+      <footer class="bar bar-footer-nav">
+        <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
+          <span class="icon icon-left"></span>
+          预览
+        </a>
+        <a class="button button-link button-nav pull-right next" href="#router3">
+          下一步
+          <span class="icon icon-right"></span>
+        </a>
+      </footer>
     </div>
     <!-- 推荐理由填写 -->
     <div class="page" id='router3'>
@@ -333,11 +521,6 @@
         </a> -->
         <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
           <span class="icon icon-left"></span>
-          返回
-        </a>
-        <a class="button button-link button-nav pull-right next" href="#router4">
-          下一项
-          <span class="icon icon-right"></span>
         </a>
         <h1 class='title'>推荐理由</h1>
       </header>
@@ -346,6 +529,17 @@
           <textarea name="reason" id="reason" placeholder="用一段简洁的话描述你的推荐的理由"></textarea>
         </div>
       </div>
+
+      <footer class="bar bar-footer-nav">
+        <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
+          <span class="icon icon-left"></span>
+          预览
+        </a>
+        <a class="button button-link button-nav pull-right next" href="#router4">
+          下一步
+          <span class="icon icon-right"></span>
+        </a>
+      </footer>
     </div>
     <!-- 信息详情填写 -->
     <div class="page" id='router4'>
@@ -356,18 +550,17 @@
         </a> -->
         <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
           <span class="icon icon-left"></span>
-          返回
-        </a>
-        <a class="button button-link button-nav pull-right next" href="#router5">
-          下一项
-          <span class="icon icon-right"></span>
         </a>
         <h1 class='title'>信息详情</h1>
       </header>
       <div class="content">
         <div class="hidden-content row">
-        <div class="col-50"><a href="#" class="button  button-fill button-success button-start">隐藏开始</a></div>
-          <div class="col-50"><a href="#" class="button  button-fill button-success button-end">隐藏结束</a></div>
+          <div class="col-50">
+            <a href="#" class="button  button-fill button-success button-start">隐藏开始</a>
+          </div>
+          <div class="col-50">
+            <a href="#" class="button  button-fill button-success button-end">隐藏结束</a>
+          </div>
         </div>
         <div class="result-detail">
           <textarea name="detail" id="detail" placeholder="1.描述你分享的信息的详细情况
@@ -380,6 +573,17 @@
         </div>
         
       </div>
+
+      <footer class="bar bar-footer-nav">
+        <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
+          <span class="icon icon-left"></span>
+          预览
+        </a>
+        <a class="button button-link button-nav pull-right next" href="#router5">
+          下一步
+          <span class="icon icon-right"></span>
+        </a>
+      </footer>
     </div>
     <!-- 地点标注 -->
      <div class="page" id='router5'>
@@ -390,11 +594,6 @@
         </a> -->
         <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
           <span class="icon icon-left"></span>
-          返回
-        </a>
-        <a class="button button-link button-nav pull-right next" href="#router6">
-          下一项
-          <span class="icon icon-right"></span>
         </a>
         <h1 class='title'>地点标注</h1>
       </header>
@@ -406,17 +605,22 @@
           <div id="container"></div>
         </div>
       </div>
+      <footer class="bar bar-footer-nav">
+        <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
+          <span class="icon icon-left"></span>
+          预览
+        </a>
+        <a class="button button-link button-nav pull-right next" href="#router6">
+          下一步
+          <span class="icon icon-right"></span>
+        </a>
+      </footer>
     </div>
     <!-- 价格填写 -->
      <div class="page" id='router6'>
       <header class="bar bar-nav">
         <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
           <span class="icon icon-left"></span>
-          返回
-        </a>
-        <a class="button button-link button-nav pull-right next" href="#router">
-          返回主页
-          <span class="icon icon-right"></span>
         </a>
         <h1 class='title'>价格</h1>
       </header>
@@ -426,7 +630,8 @@
           <div class="list-block">
             <div class="item-content">
               <div class="item-inner">
-              <div class="item-title label">价格<div class="right-icon">￥</div></div>
+              <!-- <div class="item-title label">价格<div class="right-icon">￥</div></div> -->
+                ￥
                 <div class="item-input">
                   <input type="text" id='price-picker' value="0 . 0 0" />          
                 </div>
@@ -434,11 +639,22 @@
             </div>
           </div>
 
-          <div class="send-button">
+          <!-- <div class="send-button">
             <a href="#" class="button button-big button-fill button-success send-button-a">提交</a>
-          </div>
+          </div> -->
         </div>
       </div>
+      <footer class="bar bar-footer-nav">
+        <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
+          <span class="icon icon-left"></span>
+          预览
+        </a>
+        <a class="button button-link button-nav pull-right next" href="#router">
+          完成
+          <span class="icon icon-right"></span>
+        </a>
+      </footer>
+
     </div>  
   </body>
   <script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
@@ -734,7 +950,8 @@
         var text = text.substr(0,text.length-1);
         console.log(text);
         var span = '<span class="type-item">'+text+'</span>';
-        $(this).before(span);
+        // $("this").before(span);
+        $(".ww-typeHelper-left").before(span);
         $(this).val('');
         $("#tag-content .card-content-inner").append(span);
         setlocalStorageTag();
@@ -761,7 +978,8 @@
     $(".tag-ul").on("click",".type-item",function(){
       var span = '<span class="type-item">'+ $(this).text()+'</span>';
       $(this).remove();
-      $(".ww-typeHelper-input").before(span);
+      // $(".ww-typeHelper-input").before(span);
+      $(".ww-typeHelper-left").before(span);
       $("#tag-content .card-content-inner").append(span);
       //获取填写的tag
       setlocalStorageTag();

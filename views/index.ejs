@@ -34,7 +34,7 @@
       position: absolute;
       z-index: 10500;
       /*background: rgba(239, 197, 83,0.9);*/
-      background: #efc553 url("/img/sideBG-01.png") no-repeat fixed top;;
+      background: #efc553 url("/img/sideBG-01.png") no-repeat;
       background-size: 100%;
       width: 80%;
       height: 100%;
@@ -54,6 +54,13 @@
       width: 100%;
       height: 100%;
       background: rgba(0, 0, 0,0.2);
+    }
+    .slide-content.active .right-content{
+      position: absolute;
+      height: 100%;
+      z-index: 10500;
+      width: 20%;
+      right:0;
     }
     .slide-content .user-info{
       margin:20px auto;
@@ -98,9 +105,9 @@
       color: white;
     }
     .right-content{
-      right: -50%;
+      /*right: -50%;
       border:0;
-      border-left: 1px solid #FFC222;
+      border-left: 1px solid #FFC222;*/
     }
     .more,.cancel{
       position: absolute;
@@ -157,21 +164,21 @@
       width: 100%;
       background-color: #efc553;
     }
-    .header-label{
+    /*.header-label{
       position: absolute;
       z-index: 10000;
       height: 30px;
       width: 100%;
       background-color: #efc553;
       top: 0;
-    }
-    .header-more{
+    }*/
+    /*.header-more{
       font-size: 15px;
       color: #393e49;
       float:left;
       line-height: 30px;
       margin-left: 10px;
-    }
+    }*/
     .header-theme{
       position: absolute;
       width: 50px;
@@ -180,6 +187,7 @@
       background-color: #efc553;
       left: 50%;
       margin-left: -25px;
+      text-align: center;
     }
     .header-sousuo{
       font-size: 15px;
@@ -322,6 +330,46 @@
     .hidden-text {
       color: red;
     }
+    .theme-li{
+      width: 30px;
+      height: 30px;
+      text-align: center;
+      border-radius: 50%;
+      background: #efc553;
+      top:15px;
+      left:10px;
+      /*background-size: cover;*/
+      position: absolute;
+      -webkit-transition: all ease 500ms;
+      transition: all ease 500ms;
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+    }
+    .theme-li img{
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      margin-top: 5px;
+      /*padding:10px;*/
+    }
+    /*.themes0{
+      transform:translate(-70px,20px);
+    }
+    .themes1{
+      transform:translate(-50px,50px);
+    }
+    .themes2{
+      transform:translate(-20px,70px);
+    }
+    .themes3{
+      transform:translate(20px,70px);
+    }
+    .themes4{
+      transform:translate(50px,50px);
+    }
+    .themes5{
+      transform:translate(70px,20px);
+    }*/
   }
   </style>
   <body>
@@ -378,7 +426,29 @@
 
     <div class="header-label">
       <div class="header-more iconfont icon-more"></div>
-      <div class="header-theme"></div>
+      <div class="header-theme">
+        <div class="themes0 theme-li">
+          <img src="/img/themes-02.png">
+        </div>
+        <div class="themes1 theme-li">
+          <img src="/img/themes-03.png">
+        </div>
+        <div class="themes2 theme-li">
+          <img src="/img/themes-04.png">
+        </div>
+        <div class="themes3 theme-li">
+          <img src="/img/themes-05.png">
+        </div>
+        <div class="themes4 theme-li">
+          <img src="/img/themes-06.png">
+        </div>
+        <div class="themes5 theme-li">
+          <img src="/img/themes-07.png">
+        </div>
+        <div class="themes6 theme-li">
+          <img src="/img/themes-02.png">
+        </div>
+      </div>
       <div class="header-sousuo iconfont icon-sousuo"></div>
     </div>
     <div id="container"></div>
@@ -507,10 +577,36 @@
       $(".slide-content").addClass("active");
 
     })
-    $(".slide-content").on("click",function(){
+    $(".right-content").on("click",function(){
       $(".slide-content").removeClass("active");
       $(".left-content").css("-webkit-transform", "matrix(1, 0, 0, 1, 0, 0)");
     })
+
+    $(".header-theme").on("click",function(){
+      if(!$(this).hasClass("clicked")){
+        $(".themes0").css("-webkit-transform", "translate(-70px,20px)");
+        $(".themes1").css("-webkit-transform", "translate(-50px,50px)");
+        $(".themes2").css("-webkit-transform", "translate(-20px,70px)");
+        $(".themes3").css("-webkit-transform", "translate(20px,70px)");
+        $(".themes4").css("-webkit-transform", "translate(50px,50px)");
+        $(".themes5").css("-webkit-transform", "translate(70px,20px)");
+        $(this).addClass("clicked");
+      }else{
+        $(".themes0,.themes1,.themes2,.themes3,.themes4,.themes5").css("-webkit-transform", "translate(0px,0px)");
+        $(this).removeClass("clicked");
+      }
+    })
+    $(".theme-li").on("click",function(){
+      console.log($(this).children("img"));
+      var src1 = $(this).children("img").attr("src");
+      var src2 = $(".themes6 img").attr("src");
+      $(".themes6 img").attr("src",src1);
+      $(this).children("img").attr("src",src2);
+    })
+
+    //  $(".header-theme").on("click",function(){
+    //   $(".themes0,.themes1,.themes2,.themes3,.themes4,.themes5").css("-webkit-transform", "translate(0px,0px)");
+    // })
 
     $(".list-li").on("click",function(){
       var href = $(this).data("href");
