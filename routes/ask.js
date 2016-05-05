@@ -25,6 +25,7 @@ router.get('/allask', function(req, res, next) {
     var page = req.param('page') != null ? req.param('page') : 0;
     var size = req.param('size') != null ? req.param('size') : 10;
     var staus = req.param('staus') != null ? req.param('staus') : '1';
+    var type = req.param('type') != null ? req.param('type') : null;
     //console.log(staus);
     var query = new AV.Query('AskMe');
     // query.include('askTag');
@@ -35,6 +36,9 @@ router.get('/allask', function(req, res, next) {
         query.equalTo('staus', staus);
     }
 
+    if (type != null) {
+        query.contains("type", type);
+    }
     query.limit(size);
     query.skip(page);
 
