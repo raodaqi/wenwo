@@ -4,7 +4,7 @@
 消息状态
  * staus == 1   上架
  * staus == 2   审批中
- * staus == 5   审批失败
+ * staus == 5   审批未通过
  * staus == 3   未上架
  * staus == 4   所有
  *
@@ -179,6 +179,20 @@ router.get('/getask', function(req, res, next) {
     var query = new AV.Query('AskMe');
     query.get(askId).then(function (ask) {
         ask.attributes.askContentHide = '****';
+        var result = {
+            code : 200,
+            data : ask,
+            message : 'Operation succeeded'
+        }
+        res.send(result);
+    });
+});
+
+router.get('/askadmin', function(req, res, next) {
+    var askId = req.param('ask_id');
+    var query = new AV.Query('AskMe');
+    query.get(askId).then(function (ask) {
+        //ask.attributes.askContentHide = '****';
         var result = {
             code : 200,
             data : ask,
@@ -382,7 +396,7 @@ router.get('/cancel', function(req, res, next) {
                 data: results,
                 message: 'illegal operation'
             }
-            res.render(result);
+            res.send(result);
         }
         else {
             ask.set('staus', staus);
@@ -392,14 +406,14 @@ router.get('/cancel', function(req, res, next) {
                     data: results,
                     message: 'Operation succeeded'
                 }
-                res.render(result);
+                res.send(result);
             }, function (err) {
                 var result = {
                     code: 800,
                     data: results,
                     message: err.message
                 }
-                res.render(result);
+                res.send(result);
                 //console.log('Failed to create new object, with error message: ' + err.message);
             });
         }
@@ -415,16 +429,9 @@ router.get('/approval', function(req, res, next) {
         ask.save().then(function () {
             var result = {
                 code : 200,
-                data : results,
                 message : 'Operation succeeded'
             }
-        }, function(err) {
-            var result = {
-                code : 800,
-                data : results,
-                message : err.message
-            }
-            //console.log('Failed to create new object, with error message: ' + err.message);
+            res.send(result);
         });
     });
 });

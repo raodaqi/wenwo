@@ -10,6 +10,7 @@
     }
     li {
         list-style-type: none;
+        cursor: pointer;
     }
     .wrap {
         margin: 0 auto;
@@ -51,7 +52,7 @@
         padding-bottom: 10px;
     }
     ul li:hover {
-        background: #ddd;
+        background: #ddd !important;
     }
     .content {
         background: #eee;
@@ -67,14 +68,56 @@
     }
     .manage ul li .ask-id {
         display: inline;
-        width: 90%;
+        margin-left: 30px;
+        line-height: 20px;
+        /*width: 90%;*/
     }
-    .manage ul li .del {
+    .manage ul li .staus, .manage ul li .del {
         float: right;
-        clear: both;
+        line-height: 20px;
+        /*clear: both;*/
+        margin-right: 30px;
     }
+    .manage ul li .del:hover {
+        color: red;
+    }
+    .check li {
+        padding: 5px 0 5px 0;
+        font-size: 16px;
+        text-align: center;
 
-
+    }
+    .side-bar-back{
+        background: #eee !important;
+    }
+    .side-bar-backcheck {
+        background: #ddd !important;
+    }
+    .btn_pass, .btn_not, .btn_send {
+        margin: 0;
+        margin-top: 20px;
+        font-size: 16px;
+        color: white;
+        border-radius: 5px;
+        padding: 0;
+        width: 100px;
+        height: 40px;
+        background: #f8bd38;
+        border: none;
+    }
+    textarea {
+        display: block;
+        height: 100px;
+        width: 300px;
+    }
+    .input-edit {
+        height: 20px;
+        width: 240px;
+        padding: 0 10px 0 10px;
+    }
+    .input-price {
+        text-align: right;
+    }
 </style>
 <body>
     <div class="wrap">
@@ -84,68 +127,91 @@
         <div>
             <div class="list side-bar">
                 <ul>
-                    <li>发布信息</li>
-                    <li>审核信息</li>
-                    <li>管理消息</li>
-                    <li>统计信息</li>
-                    <li>帐号管理</li>
+                    <li class="send-bar">发布信息</li>
+                    <li class="check-bar">审核信息</li>
+                    <li class="manage-bar">管理消息</li>
+                    <li class="total-bar">统计信息</li>
+                    <li class="account-bar">帐号管理</li>
                 </ul>
             </div>
             <div class="list content">
-                <div class="send" style="display: none">
+                <div class="content-title send" style="display: none">
                     <div class="check-box">
                         <span>主题:</span>
-                        <input type="checkbox" value="1" id="checkbox-1" name="" />
+                        <input type="checkbox" value="1" id="checkbox-1" name="" defaultChecked="false"/>
                         <label for="checkbox-1">吃</label>
-                        <input type="checkbox" value="2" id="checkbox-2" name="" />
+                        <input type="checkbox" value="2" id="checkbox-2" name="" defaultChecked="false"/>
                         <label for="checkbox-2">住</label>
-                        <input type="checkbox" value="3" id="checkbox-3" name="" />
+                        <input type="checkbox" value="3" id="checkbox-3" name="" defaultChecked="false"/>
                         <label for="checkbox-3">行</label>
-                        <input type="checkbox" value="4" id="checkbox-4" name="" />
+                        <input type="checkbox" value="4" id="checkbox-4" name="" defaultChecked="false"/>
                         <label for="checkbox-4">购物</label>
-                        <input type="checkbox" value="5" id="checkbox-5" name="" />
+                        <input type="checkbox" value="5" id="checkbox-5" name="" defaultChecked="false"/>
                         <label for="checkbox-5">游玩</label>
-                        <input type="checkbox" value="6" id="checkbox-6" name="" />
+                        <input type="checkbox" value="6" id="checkbox-6" name="" defaultChecked="false"/>
                         <label for="checkbox-6">防坑</label>
                     </div>
                     <div>
                         <span>标签:</span>
-                        <input type="text">
+                        <input class="input-edit input-tag" type="text">
                     </div>
                     <div>
                         <span>推荐理由:</span>
-                        <textarea>ags</textarea>
+                        <textarea class="edit-reason"></textarea>
                     </div>
                     <div>
                         <span>详情:</span>
-                        <textarea>ags</textarea>
+                        <textarea class="edit-detail"></textarea>
                     </div>
                     <div>
                         <span>地图标注:</span>
                     </div>
                     <div>
                         <span>价格:</span>
+                        <input class="input-edit input-price" type="text" value="0.00">
                     </div>
+                    <button class='btn_send'>发布</button>
                 </div>
-                <div class="check" style="display: none">
+                <div class="content-title check" style="display: block">
                     <ul>
-                        <li>234567893456789</li>
-                        <li>234567893456789</li>
-                        <li>234567893456789</li>
+                        <!--<li>234567893456789</li>-->
+                        <!--<li>234567893456789</li>-->
+                        <!--<li>234567893456789</li>-->
                     </ul>
                 </div>
-                <div class="check-detail" style="display: none">
+                <div class="content-title check-detail" style="display: none">
+                    <!--<div>-->
+                        <!--<span>主题:</span><span>asdf</span>-->
+                    <!--</div>-->
+                    <!--<div>-->
+                        <!--<span>标签:</span><span>sadfsadfsadfs</span>-->
+                    <!--</div>-->
+                    <!--<div>-->
+                        <!--<span>推荐理由:</span><span>hahahah</span>-->
+                    <!--</div>-->
+                    <!--<div>-->
+                        <!--<span>详情:</span><span>这个还可以</span>-->
+                    <!--</div>-->
+                    <!--<div>-->
+                        <!--<span>地图标注:</span><span></span>-->
+                    <!--</div>-->
+                    <!--<div>-->
+                        <!--<span>价格:</span><span>0.123</span>-->
+                    <!--</div>-->
+                </div>
+                <div class="content-title total" style="display: none">
 
                 </div>
-                <div class="manage" style="display: none">
+                <div class="content-title manage" style="display: none">
                     <ul>
-                        <li><div class="ask-id">456789adf</div><div class="del">X</div></li>
-                        <li><div class="ask-id">456789adf</div><div class="del">X</div></li>
-                        <li><div class="ask-id">456789adf</div><div class="del">X</div></li>
+                        <!--<li><span class="ask-id">456789adf</span><span class="del">X</span><span class="staus">已上架</span></li>-->
+                        <!--<li><span class="ask-id">456789adf</span><span class="del">X</span><span class="staus">已上架</span></li>-->
+                        <!--<li><span class="ask-id">456789adf</span><span class="del">X</span><span class="staus">已上架</span></li>-->
+                        <!--<li><span class="ask-id">456789adf</span><span class="del">X</span><span class="staus">已上架</span></li>-->
 
                     </ul>
                 </div>
-                <div class="account" style="display: none">
+                <div class="content-title account" style="display: none">
                     <div>
 
                     </div>
@@ -154,8 +220,292 @@
 
         </div>
     </div>
+    <script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
 
+    <script>
+        $('.btn_send').on('click', function () {
+            //console.log($('.check-box').find('input')[0].checked);
+            var type = "";
+            for (var i = 0; i < $('.check-box').find('input').length; i++) {
+                if ($('.check-box').find('input')[i].checked == true) {
+                    type += i+1;
+                }
+            }
+            if (type.length > 2) {
+                return;
+            }
+            if (type.length == 2) {
+                type = insert_flg(type, ',', 1);
+                type=type.substring(0,type.length-1);
+            }
+            console.log(type);
 
+            var temp = $('.input-tag').val();
+            temp = temp.replace('；', ';');
+            temp = temp.split(";");
+            var tag = new Array();
+            for (var i = 0; i < temp.length; i++) {
+                tag[i] = {
+                    tag_name:temp[i]
+                }
+            }
+            if (tag[0].tag_name == "") {
+                return;
+            }
+            tag = JSON.stringify(tag);
+            console.log(tag);
+            var reason = $('.edit-reason').val();
+            var detail = $('.edit-detail').val();
+            var price = $('.input-price').val();
+            console.log(reason);
+            console.log(detail);
+            console.log(price);
+            var data = {
+                username:'admin',
+                type:type,
+                //isfree:0,
+                geo_x:123,
+                geo_y:456,
+                position:'123',
+                reason:reason,
+                content_show:detail,
+                content_hide:'',
+                price:price,
+                tag:tag,
+                remark:''
+
+            }
+            $.ajax({
+                type: "post",
+                url: '../../ask/sendask',
+                data: data,
+                dataType: "json",
+                success : function(result) {
+                    console.log(result);
+                    if (result.code == 200) {
+                        for (var i = 0; i < $('.check-box').find('input').length; i++) {
+                            $('.check-box').find('input')[i].checked = false;
+                        }
+                        $('.input-tag').val("");
+                        $('.edit-reason').val("");
+                        $('.edit-detail').val("");
+                        $('.input-price').val("0.00");
+                    }
+                },
+                error : function(){
+                    console.log('err');
+                }
+            });
+
+        });
+        $('.check-detail').on('click', ".btn_pass", function () {
+            //console.log('pass click');
+            var askId = $('.detail-id').text();
+            console.log(askId);
+            $.ajax({
+                type: "get",
+                url: '../../ask/approval',
+                data: {ask_id:askId,staus:1},
+                dataType: "json",
+                success : function(result) {
+                    console.log(result);
+                    if (result.code == 200) {
+                        $('.check-detail').hide();
+                        checkAsk();
+                        $('.check').show();
+                    }
+                },
+                error : function(){
+                    console.log('err');
+                }
+            });
+        });
+        $('.check-detail').on('click', ".btn_not", function () {
+            //console.log('pass click');
+            var askId = $('.detail-id').text();
+            console.log(askId);
+            $.ajax({
+                type: "get",
+                url: '../../ask/approval',
+                data: {ask_id:askId,staus:5},
+                dataType: "json",
+                success : function(result) {
+                    console.log(result);
+                    if (result.code == 200) {
+                        $('.check-detail').hide();
+                        checkAsk();
+                        $('.check').show();
+                    }
+                },
+                error : function(){
+                    console.log('err');
+                }
+            });
+        });
+        $('.side-bar').on('click', 'ul li', function () {
+            $('.side-bar li').removeClass('side-bar-back');
+            $('.side-bar li').removeClass('side-bar-backcheck');
+            $('.side-bar li').addClass('side-bar-back');
+            $(this).addClass('side-bar-backcheck');
+            $('.content-title').hide();
+            if ($(this).hasClass('send-bar')) {
+                $('.send').show();
+            }
+            else if ($(this).hasClass('check-bar')) {
+                checkAsk();
+                $('.check').show();
+            }
+            else if ($(this).hasClass('manage-bar')) {
+                manageAsk();
+                $('.manage').show();
+            }
+            else if ($(this).hasClass('total-bar')) {
+                $('.total').show();
+            }
+            else if ($(this).hasClass('account-bar')) {
+                $('.account').show();
+            }
+        });
+        $('.check ul').on('click', "li", function () {
+            $('.content-title').hide();
+            var askId = $(this).text();
+            console.log($(this).text());
+            $('.check-detail').show();
+            var askId = $(this).text();
+            $.ajax({
+                type: "get",
+                url: '../../ask/askadmin',
+                data: {ask_id:askId},
+                dataType: "json",
+                success : function(result) {
+                    if (result.code == 200 && result.data != null) {
+                        console.log(result);
+                        var type = result.data.askType;
+                        //console.log(type);
+                        var strs = type.split(",")
+                        console.log(strs);
+                        if (result.data.askTagStr != null) {
+                            var tag = result.data.askTagStr;
+                            var temp = JSON.parse(tag);
+                            console.log(temp);
+                        }
+
+                        var list = "\
+                            <div>\
+                                <span>ID:</span>\
+                                <span class='detail-id'>"+result.data.objectId+"</span>\
+                            </div>\
+                            <div>\
+                                <span>状态:</span>\
+                                <span>"+getStaus(result.data.staus)+"</span>\
+                            </div>\
+                            <div>\
+                                <span>主题:</span><span>"+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+"</span>\
+                            </div>\
+                            <div>\
+                                <span>标签:</span><span>";
+                        if (result.data.askTagStr != null) {
+                            for (var i = 0; i < temp.length; i++) {
+                                list += temp[i].tag_name + "&nbsp&nbsp";
+                            }
+                        }
+                        list +="</span>\
+                            </div>\
+                            <div>\
+                                <span>推荐理由:</span><span>"+result.data.askReason+"</span>\
+                            </div>\
+                            <div>\
+                                <div>详情:</div>\
+                                    <div>"+result.data.askContentShow+"</div>\
+                                    <div>"+result.data.askContentHide+"</div>\
+                            </div>\
+                            <div>\
+                                <span>地图标注:</span><span></span>\
+                            </div>\
+                            <div>\
+                                <span>价格:</span><span>"+result.data.askPrice+"</span>\
+                            </div>\
+                            <button class='btn_pass'>通过</button>\
+                            <button class='btn_not'>不通过</button>";
+                        $('.check-detail').empty();
+                        $('.check-detail').append(list);
+                    }
+                },
+                error : function(){}
+            });
+        });
+        function checkAsk() {
+            $.ajax({
+                type: "get",
+                url: '../../ask/allask',
+                data: {staus:2},
+                dataType: "json",
+                success : function(result) {
+                    console.log(result);
+                    if (result.code == 200) {
+                        var list = "";
+                        for (var i = 0; i < result.data.length; i++) {
+                            list += '<li>'+result.data[i].objectId+'</li>';
+                        }
+                    }
+                    $('.check ul').empty();
+                    $('.check ul').append(list);
+                },
+                error : function(){}
+            });
+        }
+        function manageAsk() {
+            $.ajax({
+                type: "get",
+                url: '../../ask/allask',
+                data: {staus:4},
+                dataType: "json",
+                success : function(result) {
+                    console.log(result);
+                    if (result.code == 200) {
+                        var list = "";
+                        for (var i = 0; i < result.data.length; i++) {
+                            list += '<li><span class="ask-id">'+result.data[i].objectId+'</span><span class="del">X</span><span class="staus">'+getStaus(result.data[i].staus)+'</span></li>';
+                        }
+                        $('.manage ul').empty();
+                        $('.manage ul').append(list);
+                    }
+                },
+                error : function(){}
+            });
+        }
+        function getStaus(staus) {
+            var temp = "";
+            switch (staus) {
+                case "1": temp = "已上架";break;
+                case "2": temp = "审批中";break;
+                case "3": temp = "未上架";break;
+//                case "4": temp = "";break;
+                case "5": temp = "审批未通过";break;
+            }
+            return temp;
+        }
+        function getTitle(type) {
+            var temp = "";
+            switch (type) {
+                case "1": temp = "吃";break;
+                case "2": temp = "住";break;
+                case "3": temp = "行";break;
+                case "4": temp = "购物";break;
+                case "5": temp = "游玩";break;
+                case "6": temp = "防坑";break;
+            }
+            return temp;
+        }
+        function insert_flg(str,flg,sn){
+            var newstr="";
+            for(var i=0;i<str.length;i+=sn){
+                var tmp=str.substring(i, i+sn);
+                newstr+=tmp+flg;
+            }
+            return newstr;
+        }
+    </script>
 
 </body>
 </html>
