@@ -124,9 +124,12 @@
       })
       AMap.event.addListener(autocomplete, "select", function(e){
          //TODO 针对选中的poi实现自己的功能
-         console.log(e);
-         placeSearch.search(e.poi.name)
+         console.log(e.poi);
+         placeSearch.setCity(e.poi.adcode);
+         placeSearch.search(e.poi.name);
+         $.router.load("#router");
       });
+
     });
 
     // var icon = new AMap.Icon({
