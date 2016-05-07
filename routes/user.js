@@ -8,6 +8,7 @@ var AV = require('leanengine');
 // 详见： https://leancloud.cn/docs/js_guide.html#对象
 var Post = AV.Object.extend('UserInfo');
 var Wallet = AV.Object.extend('Wallet');
+var Suggestion = AV.Object.extend('Suggestion');
 
 
 router.get('/regist', function(req, res, next) {
@@ -161,6 +162,21 @@ router.get('/getuserinfo', function(req, res, next) {
 
 });
 
+router.post('/suggestion', function (req, res, next) {
+    var view = req.param('view');
+    var contact = req.param('contact');
 
+    var suggestion = new Suggestion();
+    suggestion.set('view', view);
+    suggestion.set('contact', contact);
+    suggestion.save().then(function (post) {
+        console.log(post);
+        var result = {
+            code : 200,
+            message : 'operation succeeded'
+        }
+        res.send(result);
+    });
+});
 
 module.exports = router;

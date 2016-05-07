@@ -75,10 +75,20 @@
 //            },
 //            error : function(){}
 //        });
+//        $.ajax({
+//            type: "get",
+//            url: 'wallet/mywallet',
+//            data: {username:'test'},
+//            dataType: "json",
+//            success : function(result) {
+//                console.log(result);
+//            },
+//            error : function(){}
+//        });
         $.ajax({
-            type: "get",
-            url: 'wallet/mywallet',
-            data: {username:'test'},
+            type: "post",
+            url: 'user/suggestion',
+            data: {view:"haha", contact:"hehe"},
             dataType: "json",
             success : function(result) {
                 console.log(result);
