@@ -15,10 +15,16 @@ a {
     background-color: #efc553;
     top: 0;
 }
-.header-more,.header-cancel{
-      font-size: 15px;
-      color: #393e49;
-      float:left;
-      line-height: 30px;
-      margin-left: 10px;
-    }
+
+.header-more,
+.header-cancel {
+    font-size: 15px;
+    color: #393e49;
+    float: left;
+    line-height: 30px;
+    margin-left: 10px;
+}
+
+.page{
+	background-color: white;
+}

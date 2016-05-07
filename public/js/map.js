@@ -28,7 +28,8 @@
         geolocation = new AMap.Geolocation({
             enableHighAccuracy: true,//是否使用高精度定位，默认:true
             timeout: 10000,          //超过10秒后停止定位，默认：无穷大
-            buttonOffset: new AMap.Pixel(60, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+            buttonDom:'<div class="geolocation-position"><img src="/img/position.png"></div>',
+            buttonOffset: new AMap.Pixel(20, 25),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
             zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
             buttonPosition:'LB'
         });
@@ -52,8 +53,12 @@
     }
 
     AMap.plugin(['AMap.ToolBar','AMap.Scale'],function(){
-        var toolBar = new AMap.ToolBar();
-        var scale = new AMap.Scale();
+        var toolBar = new AMap.ToolBar({
+            offset: new AMap.Pixel(60, 10)
+          });
+        var scale = new AMap.Scale({
+          offset: new AMap.Pixel(-5, 7)
+        });
         map.addControl(toolBar);
         map.addControl(scale);
     })

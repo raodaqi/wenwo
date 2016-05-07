@@ -9,11 +9,11 @@
     <link rel="icon" type="image/x-icon" href="/img/logo.png" media="screen">
     <title>问我——像个当地人一样去旅游</title>
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1462557510_5642855.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1462625195_2335773.css">
     <!-- <link rel="stylesheet" href="http://at.alicdn.com/t/font_1462279764_1285422.css"> -->
     <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css"> 
     <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=cb84c659c88a7cc83b935a009b3a9cfd"></script>
-    <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+    <!--<script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script> -->
   </head>
   <style>
     body{
@@ -83,12 +83,15 @@
     .slide-content .list-content{
       position: absolute;
       width: 100%;
-      top:40%;
+      top:34%;
       color: white !important;
+    }
+    .slide-content .list-content .list-ul{
+      padding-left: 10%;
     }
     .slide-content .list-content .list-li{
       height: 35px;
-      margin:5px 0 0 20px;
+      margin:5px 0 0 0px;
     }
     .slide-content .list-content .list-li span{
        display: block;
@@ -152,7 +155,7 @@
     }
     .amap-touch-toolbar .amap-zoomcontrol{
       position: fixed;
-      bottom:20px;
+      bottom:25px;
       /*transform: translateY(50%);*/
       right:10px;
     }
@@ -198,21 +201,24 @@
     }
     .add{
       position: absolute;
-      width: 60px;
+      width: 40px;
       height: 60px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.9); 
-      border:1px solid #FFC222;
       /*right: 20px;*/
       /*bottom:30px;*/
       bottom:5px;
       left: 50%;
-      margin-left: -30px;
+      margin-left: -20px;
       z-index: 10401;
       -webkit-transition: all ease 200ms;
       transition: all ease 200ms;
       -webkit-transform: translate3d(0, 0, 0);
       transform: translate3d(0, 0, 0);
+    }
+    .add-img{
+      position: absolute;
+      width: 40px;
+      bottom: 0;
+
     }
     .icon-tianjia{
       font-size: 30px;
@@ -295,7 +301,7 @@
     .amap-active .amap-marker-content{
       display: block !important;
     }
-    .amap-marker-content div{
+    .amap-marker-content .up,.amap-marker-content .down{
       height: 25px;
       line-height: 25px;
       width: 100%;
@@ -403,6 +409,44 @@
     #search{
       background-color: #efefef;
     }
+    .address-content{
+      position: absolute;
+      top:40px;
+      right:0;
+      width: auto;
+      z-index: 10000;
+    }
+    .address-info{
+      height: 30px;
+    }
+    .address-icon{
+      position: absolute;
+      left: 3px;
+    }
+    .address-text{
+      position: absolute;
+      font-size: 12px;
+      line-height: 30px;
+      left:19px;
+      width:40px;
+      overflow-x:hidden !important;
+      white-space: nowrap;
+      text-overflow: ellipsis; 
+    }
+    .geolocation-position img{
+      width: 30px;
+    }
+
+    /*重置缩放样式*/
+    .amap-zoom-touch-minus, .amap-zoom-touch-plus{
+      height: 35px;
+    }
+    .amap-zoom-touch-minus>div, .amap-zoom-touch-plus>div{
+      line-height: 35px;
+    }
+    .amap-touch-toolbar .amap-zoomcontrol:after{
+      top:40px;
+    }
     /*.themes0{
       transform:translate(-70px,20px);
     }
@@ -440,23 +484,23 @@
               <label>我的钱包</label>
             </div>
             <div class="list-li" data-href="/more/personalPage">
-              <span class="iconfont icon-qianbao"></span>
+              <span class="iconfont icon-gouwuche"></span>
               <label>我的订单</label>
             </div>
             <div class="list-li" data-href="/more/personalPage">
-              <span class="iconfont icon-qianbao"></span>
+              <span class="iconfont icon-paper-airplane"></span>
               <label>我的分享</label>
             </div>
             <div class="list-li" data-href="/more/personalPage">
-              <span class="iconfont icon-qianbao"></span>
+              <span class="iconfont icon-jiahaoyou"></span>
               <label>邀请好友</label>
             </div>
             <div class="list-li" data-href="/more/personalPage">
-              <span class="iconfont icon-qianbao"></span>
+              <span class="iconfont icon-guanzhu"></span>
               <label>关注我们</label>
             </div>
             <div class="list-li" data-href="/more/personalPage">
-              <span class="iconfont icon-qianbao"></span>
+              <span class="iconfont icon-dianhua"></span>
               <label>联系我们</label>
             </div>
           </div>
@@ -503,9 +547,20 @@
       </div>
       <div class="header-sousuo iconfont icon-sousuo"></div>
     </div>
+    
+    <div class="address-content">
+      <span class="address-icon iconfont icon-dingwei"></span>
+      <label class="address-text"></label>
+      <img class="address-info" src="/img/location1.png">
+    </div>
+
     <div id="container"></div>
     <div class="footer-label"></div>
-    <div class="add iconfont icon-tianjia open-about"></div>
+
+    <div class="add">
+      <img src="/img/add.png" class="add-img">
+    </div>
+    <!-- <div class="add iconfont icon-tianjia open-about"></div> -->
     <!-- About Popup -->
     <div class="popup popup-about">
       <div class="content-block">
@@ -679,13 +734,8 @@
     //     map.addControl(scale);
     // })
     // $.popup('.ask-detail');
-    $(".page").on("click",function(){
-      var id = this.id;
-
-      console.log(id);
-      if(id == "router"){
-        $.router.load("#router1");
-      }
+    $(".header-sousuo").on("click",function(){
+      $.router.load("#router1");
     })
     $(".hot-li").on("click",function(){
       var li = $(this).children(".hot-detail").children(".big").text();
@@ -705,6 +755,7 @@
 
     var width = $(".left-content").width();
     console.log(width);
+
     $(".header-more").on("click",function(){
       // $(".left-content").css("-webkit-transform", "matrix(1, 0, 0, 1, -"+width+", 0)");
       $(".left-content").css("-webkit-transform", "matrix(1, 0, 0, 1, "+width+", 0)");
@@ -778,19 +829,23 @@
       }
     })
 
+    // $(".add").on("click",function(){
+    //   console.log("123");
+    //   if($(".add").hasClass("actived")){
+    //     $.closeModal('.popup-about');
+    //     $(".add").css("-webkit-transform", "rotate(0deg)");
+    //     $(".add").removeClass("actived");
+    //   }else{
+    //     $.popup('.popup-about');
+    //     $(".add").css("-webkit-transform", "rotate(45deg)");
+    //     $(".add").addClass("actived");
+    //   }
+    // })
     $(".add").on("click",function(){
       console.log("123");
-      if($(".add").hasClass("actived")){
-        $.closeModal('.popup-about');
-        $(".add").css("-webkit-transform", "rotate(0deg)");
-        $(".add").removeClass("actived");
-      }else{
-        $.popup('.popup-about');
-        $(".add").css("-webkit-transform", "rotate(45deg)");
-        $(".add").addClass("actived");
-      }
-      // $(".add").css("-webkit-transform", "rotate(45deg)");
+      window.location.href="/todos/send#router1";
     })
+
     $(".theme-list").on("click",function(){
       var type = $(this).data("type");
       window.location.href="/todos/send?type="+type;
@@ -1071,8 +1126,29 @@
       $("#detail-content  .card-content-inner").empty();
       $("#detail-content  .card-content-inner").append(detailContent);
       getMap(lng,lat);
-
     }
 
+    //监听移动获取城市信息
+    map.getCity(function(data) {
+          console.log(data);
+            if (data['province'] && typeof data['province'] === 'string') {
+                $(".address-text").text(data['city']);
+            }
+        });
+    map.on('moveend', getCity);
+    function getCity() {
+        map.getCity(function(data) {
+          console.log(data);
+            if (data['province'] && typeof data['province'] === 'string') {
+                $(".address-text").text(data['city']);
+            }
+        });
+    }
+
+    // window.onload = function() {
+    //   map.plugin(["AMap.ToolBar"], function() {
+    //     map.addControl(new AMap.ToolBar());
+    //   });
+    // }
   </script>
 </html>
