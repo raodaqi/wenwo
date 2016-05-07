@@ -95,10 +95,30 @@
 //            },
 //            error : function(){}
 //        });
+//        $.ajax({
+//            type: "post",
+//            url: 'hode/haved',
+//            data: {username:'test'},
+//            dataType: "json",
+//            success : function(result) {
+//                console.log(result);
+//            },
+//            error : function(){}
+//        });
+//        $.ajax({
+//            type: "get",
+//            url: 'manage/getviews',
+//            data: {},
+//            dataType: "json",
+//            success : function(result) {
+//                console.log(result);
+//            },
+//            error : function(){}
+//        });
         $.ajax({
-            type: "post",
-            url: 'hode/get',
-            data: {username:'test', ask_id:"572adaf2df0eea0063f2c120"},
+            type: "get",
+            url: 'ask/gettag',
+            data: {type:1,size:5},
             dataType: "json",
             success : function(result) {
                 console.log(result);

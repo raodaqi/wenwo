@@ -25,14 +25,17 @@ router.post('/haved', function(req, res, next) {
     query.equalTo('userName', userName);
     query.find().then(function (resultes) {
         var relation = resultes[0].relation('haved');
+        //relation.include('ask');
         relation.query().find().then(function (list) {
             console.log(list);
+
             // for (var i = 0; i < list.length; i++) {
             //     var query = new AV.Query('AskMe');
             //     query.get(list[i].attributes.ask.objectId).then(function (ask) {
             //         list[i].attributes.ask.data = ask;
             //     });
             // }
+
             var result = {
                 code : 200,
                 data:list,

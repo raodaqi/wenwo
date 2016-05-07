@@ -608,6 +608,28 @@ router.post('/sendask', function(req, res, next) {
 
 });
 
+router.get('/gettag', function (req, res, next) {
+    var type = req.param('type') != null ? req.param('type') : null;
+    var size = req.param('size') != null ? req.param('size') : null;
+
+    var query = new AV.Query('Tag');
+    if (type != null) {
+        query.contains("tagOrderby", type);
+    }
+    if (size != null) {
+        query.limit(size);
+    }
+    query.addDescending('times');
+    query.find().then(function (list) {
+        var result = {
+            code : 200,
+            data : list,
+            message : 'Operation succeeded'
+        }
+        res.send(result);
+    });
+});
+
 router.post('/tag', function (req, res, next) {
     var tag = req.param('tag');
     var type = req.param('type');
@@ -770,96 +792,115 @@ function setTag(tag, type, callback) {
 
             }
             else {
-                //console.log(tag);
-                if(tag.length == 1){
-                    callback.success('success');
-                }
-                else {
-                    tagName[1] = tag[1].tag_name;
-                    //console.log(tagName);
-                    var query = new AV.Query('Tag');
-                    query.equalTo('tagOrderby', type);
-                    query.equalTo('tagName', tagName[1]);
-                    query.find().then(function(results) {
-                        //console.log(results);
-                        if (results == '') {
-                            //console.log('没有');
-                            var tags = new Tag();
-                            tags.set('tagOrderby', type);
-                            tags.set('tagName', tagName[1]);
-                            tags.save().then(function(post) {
-                                if (tag.length == 2) {
-                                    callback.success('success');
-                                }
-                                else {
-                                    tagName[2] = tag[2].tag_name;
-                                    //console.log(tagName);
-                                    var query = new AV.Query('Tag');
-                                    query.equalTo('tagOrderby', type);
-                                    query.equalTo('tagName', tagName[2]);
-                                    query.find().then(function(results) {
-                                        //console.log(results);
-                                        if (results == '') {
-                                            //console.log('没有');
-                                            var tags = new Tag();
-                                            tags.set('tagOrderby', type);
-                                            tags.set('tagName', tagName[2]);
-                                            tags.save().then(function(post) {
+
+                var times = results[0].get("times");
+                times++;
+                results[0].set('times', times);
+                results[0].save().then(function () {
+                    //console.log(tag);
+                    if(tag.length == 1){
+                        callback.success('success');
+                    }
+                    else {
+                        tagName[1] = tag[1].tag_name;
+                        //console.log(tagName);
+                        var query = new AV.Query('Tag');
+                        query.equalTo('tagOrderby', type);
+                        query.equalTo('tagName', tagName[1]);
+                        query.find().then(function(results) {
+                            //console.log(results);
+                            if (results == '') {
+                                //console.log('没有');
+                                var tags = new Tag();
+                                tags.set('tagOrderby', type);
+                                tags.set('tagName', tagName[1]);
+                                tags.save().then(function(post) {
+                                    if (tag.length == 2) {
+                                        callback.success('success');
+                                    }
+                                    else {
+                                        tagName[2] = tag[2].tag_name;
+                                        //console.log(tagName);
+                                        var query = new AV.Query('Tag');
+                                        query.equalTo('tagOrderby', type);
+                                        query.equalTo('tagName', tagName[2]);
+                                        query.find().then(function(results) {
+                                            //console.log(results);
+                                            if (results == '') {
+                                                //console.log('没有');
+                                                var tags = new Tag();
+                                                tags.set('tagOrderby', type);
+                                                tags.set('tagName', tagName[2]);
+                                                tags.save().then(function(post) {
+                                                    if (tag.length == 3) {
+                                                        callback.success('success');
+                                                    }
+
+                                                });
+
+                                            }
+                                            else  {
                                                 if (tag.length == 3) {
                                                     callback.success('success');
                                                 }
-
-                                            });
-
-                                        }
-                                        else  {
-                                            if (tag.length == 3) {
-                                                callback.success('success');
-                                            }
-                                        }
-
-                                    });
-                                }
-                            });
-
-                        }
-                        else {
-                            if (tag.length == 2) {
-                                //console.log("123");
-                                callback.success('success');
-                            }
-                            else {
-                                tagName[2] = tag[2].tag_name;
-                                //console.log(tagName);
-                                var query = new AV.Query('Tag');
-                                query.equalTo('tagOrderby', type);
-                                query.equalTo('tagName', tagName[2]);
-                                query.find().then(function(results) {
-                                    //console.log(results);
-                                    if (results == '') {
-                                        //console.log('没有');
-                                        var tags = new Tag();
-                                        tags.set('tagOrderby', type);
-                                        tags.set('tagName', tagName[2]);
-                                        tags.save().then(function(post) {
-                                            if (tag.length == 3) {
-                                                callback.success('success');
                                             }
 
                                         });
-
                                     }
-                                    else  {
-                                        if (tag.length == 3) {
-                                            callback.success('success');
-                                        }
-                                    }
-
                                 });
+
                             }
-                        }
-                    });
-                }
+                            else {
+                                var times = results[0].get("times");
+                                times++;
+                                results[0].set('times', times);
+                                results[0].save().then(function () {
+                                    if (tag.length == 2) {
+                                        //console.log("123");
+                                        callback.success('success');
+                                    }
+                                    else {
+                                        tagName[2] = tag[2].tag_name;
+                                        //console.log(tagName);
+                                        var query = new AV.Query('Tag');
+                                        query.equalTo('tagOrderby', type);
+                                        query.equalTo('tagName', tagName[2]);
+                                        query.find().then(function(results) {
+                                            //console.log(results);
+                                            if (results == '') {
+                                                //console.log('没有');
+                                                var tags = new Tag();
+                                                tags.set('tagOrderby', type);
+                                                tags.set('tagName', tagName[2]);
+                                                tags.save().then(function(post) {
+                                                    if (tag.length == 3) {
+                                                        callback.success('success');
+                                                    }
+
+                                                });
+
+                                            }
+                                            else  {
+                                                var times = results[0].get("times");
+                                                times++;
+                                                results[0].set('times', times);
+                                                results[0].save().then(function () {
+                                                    if (tag.length == 3) {
+                                                        callback.success('success');
+                                                    }
+                                                });
+
+                                            }
+
+                                        });
+                                    }
+                                });
+
+                            }
+                        });
+                    }
+                });
+
             }
 
         });
