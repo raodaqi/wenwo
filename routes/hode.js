@@ -50,83 +50,92 @@ router.post('/get', function(req, res, next) {
     var askId = req.param('ask_id');
     var query = new AV.Query('AskMe');
     query.get(askId).then(function (post) {
-        //console.log(post);
-        if (post.get('askIsFree') == '1') {//收藏
-            var query = new AV.Query('UserInfo');
-            query.equalTo('userName', userName);
-            query.find().then(function (resultes) {
-                //console.log(resultes[0].attributes.haved);
-                var relation = resultes[0].relation('haved');
-                var have = new Haved();
-                have.set('ask', post);
-                have.set('type', '1');
-                have.save().then(function (result) {
-                    console.log(result);
-                    relation.add(result);
-                    resultes[0].save();
-                    var result = {
-                        code : 200,
-                        message : 'operation successed'
-                    }
-                    res.send(result);
-                    return;
-                });
-
-            });
-        }
-        else {//购买
-            var query = new AV.Query('UserInfo');
-            query.equalTo('userName', userName);
-            query.find().then(function (resultes) {
-                console.log(resultes[0]);
-                // var relation = resultes[0].relation('haved');
-                // relation.query().find().then(function (list) {
-                //     console.log(list);
-                // });
-                console.log(post.get('askPrice'));
-                var price = parseFloat(post.get('askPrice'));
-                var query = new AV.Query('Wallet');
-                query.get(resultes[0].attributes.wallet.id).then(function (wallet) {
-                    console.log(wallet.get('money'));
-                    var money = parseFloat(wallet.get('money'));
-                    //console.log(money-price);
-                    if ((money-price) < 0) {
+        console.log(post);
+        var num = post.get("buyNum");
+        num = (parseInt(num) + 1).toString();
+        post.set('buyNum', num);
+        post.save().then(function (post) {
+            if (post.get('askIsFree') == '1') {//收藏
+                var query = new AV.Query('UserInfo');
+                query.equalTo('userName', userName);
+                query.find().then(function (resultes) {
+                    //console.log(resultes[0].attributes.haved);
+                    var relation = resultes[0].relation('haved');
+                    var have = new Haved();
+                    have.set('ask', post);
+                    have.set('type', '1');
+                    have.save().then(function (result) {
+                        console.log(result);
+                        relation.add(result);
+                        resultes[0].save();
                         var result = {
-                            code : 600,
-                            message : 'not sufficient funds'
+                            code : 200,
+                            message : 'operation successed'
                         }
                         res.send(result);
                         return;
-                    }
-                    else {
-                        console.log((money-price).toString());
-                        wallet.set('money', (money-price));
-                        wallet.save().then(function () {
+                    });
 
-                        },function (error) {
-                            console.log('Error: ' + error.code + ' ' + error.message);
-                        });
-                        var relation = resultes[0].relation('haved');
-                        var have = new Haved();
-                        have.set('ask', post);
-                        have.set('type', '2');
-                        have.save().then(function (result) {
-                            console.log(result);
-                            relation.add(result);
-                            resultes[0].save();
-
+                });
+            }
+            else {//购买
+                var query = new AV.Query('UserInfo');
+                query.equalTo('userName', userName);
+                query.find().then(function (resultes) {
+                    console.log(resultes[0]);
+                    // var relation = resultes[0].relation('haved');
+                    // relation.query().find().then(function (list) {
+                    //     console.log(list);
+                    // });
+                    console.log(post.get('askPrice'));
+                    var price = parseFloat(post.get('askPrice'));
+                    var query = new AV.Query('Wallet');
+                    query.get(resultes[0].attributes.wallet.id).then(function (wallet) {
+                        console.log(wallet.get('money'));
+                        var money = parseFloat(wallet.get('money'));
+                        //console.log(money-price);
+                        if ((money-price) < 0) {
                             var result = {
-                                code : 200,
-                                message : 'operation successed'
+                                code : 600,
+                                message : 'not sufficient funds'
                             }
                             res.send(result);
                             return;
-                        });
-                    }
-                });
+                        }
+                        else {
+                            console.log((money-price).toString());
+                            wallet.set('money', (money-price));
+                            wallet.save().then(function () {
 
-            });
-        }
+                            },function (error) {
+                                console.log('Error: ' + error.code + ' ' + error.message);
+                            });
+                            var relation = resultes[0].relation('haved');
+                            var have = new Haved();
+                            have.set('ask', post);
+                            have.set('type', '2');
+                            have.save().then(function (result) {
+                                console.log(result);
+                                relation.add(result);
+                                resultes[0].save();
+
+                                var result = {
+                                    code : 200,
+                                    message : 'operation successed'
+                                }
+                                res.send(result);
+                                return;
+                            });
+                        }
+                    });
+
+                });
+            }
+        }, function(error) {
+            // 失败
+            console.log('Error: ' + error.code + ' ' + error.message);
+        });
+
     });
 });
 
@@ -150,7 +159,15 @@ router.post('/del', function(req, res, next) {
                     console.log(list[i]);
                     relation.remove(list[i]);
                     list[i].destroy();
-                    resultes[0].save();
+                    resultes[0].save().then(function () {
+                        var query = new AV.Query('AskMe');
+                        query.get(askId).then(function (post) {
+                            var num = post.get("buyNum");
+                            num = (parseInt(num) - 1).toString();
+                            post.set('buyNum', num);
+                            post.save();
+                        });
+                    });
                     flag++;
                 }
             }
@@ -197,20 +214,26 @@ router.post('/refund', function(req, res, next) {
                     resultes[0].save().then(function () {
                         var query = new AV.Query('AskMe');
                         query.get(askId).then(function (post) {
-                            var price = parseFloat(post.get('askPrice'));
-                            var query = new AV.Query('Wallet');
-                            query.get(resultes[0].attributes.wallet.id).then(function (wallet) {
-                                console.log(wallet.get('money'));
-                                var money = parseFloat(wallet.get('money'));
-                                console.log((money+price).toString());
-                                wallet.set('money', (money+price));
-                                wallet.save().then(function () {
+                            var num = post.get("buyNum");
+                            num = (parseInt(num) - 1).toString();
+                            post.set('buyNum', num);
+                            post.save().then(function (post) {
+                                var price = parseFloat(post.get('askPrice'));
+                                var query = new AV.Query('Wallet');
+                                query.get(resultes[0].attributes.wallet.id).then(function (wallet) {
+                                    console.log(wallet.get('money'));
+                                    var money = parseFloat(wallet.get('money'));
+                                    console.log((money+price).toString());
+                                    wallet.set('money', (money+price));
+                                    wallet.save().then(function () {
 
-                                },function (error) {
-                                    console.log('Error: ' + error.code + ' ' + error.message);
+                                    },function (error) {
+                                        console.log('Error: ' + error.code + ' ' + error.message);
+                                    });
+
                                 });
-
                             });
+
                         });
                     });
                     flag++;

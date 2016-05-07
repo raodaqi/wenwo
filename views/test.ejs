@@ -85,10 +85,20 @@
 //            },
 //            error : function(){}
 //        });
+//        $.ajax({
+//            type: "post",
+//            url: 'user/suggestion',
+//            data: {view:"haha", contact:"hehe"},
+//            dataType: "json",
+//            success : function(result) {
+//                console.log(result);
+//            },
+//            error : function(){}
+//        });
         $.ajax({
             type: "post",
-            url: 'user/suggestion',
-            data: {view:"haha", contact:"hehe"},
+            url: 'hode/get',
+            data: {username:'test', ask_id:"572adaf2df0eea0063f2c120"},
             dataType: "json",
             success : function(result) {
                 console.log(result);
