@@ -282,20 +282,28 @@
       width: 100%;
       height: 100%;
       background-size: cover;
-
     }
     .amap-active{
       margin-left: -100px;
-      background: black;
+      background: #efc553;
       width: 200px;
       height: 50px;
       border-radius: 50px;
       z-index: 200 !important;
+      transform-origin:22px 22px;
+      /*-webkit-transform:rotate(90deg);*/
+       -webkit-transition: all ease 200ms;
+      transition: all ease 200ms;
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+    }
+    .amap-active-content{
+
     }
     .amap-active .amap-marker-content{
       position: absolute;
       padding-left: 50px;
-      color: white;
+      color: #393e49;
       font-size: 12px;
     }
     .amap-active .amap-marker-content{
@@ -306,12 +314,19 @@
       line-height: 25px;
       width: 100%;
       box-sizing: border-box;
+      width: 130px;
+      overflow-x:hidden !important;
+      white-space: nowrap;
+      text-overflow: ellipsis; 
+      font-size: 10px;
     }
     .up-price-right{
       position: absolute;
       top: 0;
-      right:-150px;
-      color: #FFC222;
+      font-size: 10px;
+      right: 0;
+      /*right:-150px;*/
+      /*color: white;*/
     }
     .modal-overlay, .popup-overlay, .preloader-indicator-overlay{
       height: initial;
@@ -320,7 +335,12 @@
       top:60%;
       height: 40%;
       z-index: 10402;
-      box-shadow: 0 -.05rem .1rem rgba(0,0,0,.3);
+      /*box-shadow: 0 -.05rem .1rem rgba(0,0,0,.3);*/
+      top: 50%;
+      height: 50%;
+      box-sizing: border-box;
+      margin-top: 19px;
+      background-color: #efc553;
     }
     .card-cover{
       height:300px;
@@ -436,6 +456,15 @@
     .geolocation-position img{
       width: 30px;
     }
+    .card-header{
+      min-height:2rem;
+      font-weight: bold;
+      border-bottom: 1px solid #BBA05F;
+      padding:0rem .75rem;
+    }
+    .content-block{
+
+    }
 
     /*重置缩放样式*/
     .amap-zoom-touch-minus, .amap-zoom-touch-plus{
@@ -446,6 +475,66 @@
     }
     .amap-touch-toolbar .amap-zoomcontrol:after{
       top:40px;
+    }
+    .up{
+      margin-top: 3px;
+    }
+    .up .type-item{
+      padding:0px 4px;
+      font-size: 10px;
+    }
+
+
+    .card{
+      background-color: #f5d78c;
+    }
+    .card-header{
+      min-height:2rem;
+      font-weight: bold;
+      border-bottom: 1px solid #BBA05F;
+      padding:0rem .75rem;
+    }
+    .bar .button-link{
+      color:#393e49;
+    }
+    .bar-footer-nav{
+      bottom:0;
+    }
+    #theme1,#theme3,#theme5{
+      border-right: 0;
+    }
+    #theme1,#theme2,#theme3,#theme4{
+      border-bottom: 0;
+    }
+    .theme-li{
+      border:0;
+    }
+    .list-block .item-link .item-inner{
+      background-image: none;
+      display: block;
+      margin-left: 1.25rem;
+      overflow-x:hidden !important;
+      white-space: nowrap;
+      line-height: 29px;
+      text-overflow: ellipsis;
+    }
+    .item-left{
+      position: absolute;
+      margin-top: -2px;
+    }
+    .item-left .iconfont{
+      font-size: 20px;
+    }
+    .item-right{
+      position: absolute;
+      right:10px;
+    }
+    .list-block{
+      background-color: #F3D27B;
+    }
+    .send-button-a{
+      position: absolute;
+      right: 5px;
     }
     /*.themes0{
       transform:translate(-70px,20px);
@@ -575,10 +664,7 @@
     </div>
 
     <div class="popup popup-services ask-detail">
-      <div class="content-block">
-        <!-- <p>Services</p>
-        <p><a href="#" class="close-popup">Close popup</a></p>
-        <p>Lorem ipsum dolor ...</p> -->
+      <!-- <div class="content-block">
         <div class="card" id="tag-content" data-href="router2">
           <div class="card-header">标签</div>
           <div class="card-content">
@@ -606,17 +692,9 @@
         <div class="content-block-title">地图标注</div>
         <div class="card demo-card-header-pic" data-href="router5">
           <div valign="bottom" class="card-header color-white no-border no-padding">
-            <!-- <img class='card-cover' src="/img/map.png" alt="">        
-            -->
             <div class="container-hidden"></div>
             <div class='card-cover' id="container-show"></div>
           </div>
-          <!-- <div class="card-content">        
-          <div class="card-content-inner">
-            <p>成都信息工程大学</p>
-          </div>
-        </div>
-        -->
         </div>
 
         <div class="card" id="price-content" data-href="router6">
@@ -624,6 +702,73 @@
         <div class="card-content">
           <div class="card-content-inner">￥0.2</div>
         </div>
+        </div>
+      </div>
+    </div> -->
+    <div class="theme-content-block">
+      <div class="card theme-content theme1" data-type="" data-href="router1">吃</div>
+      <div class="card theme-content theme2 theme-hidden" data-type="" data-href="router1">吃</div>
+    </div>
+
+    <div class="card" id="tag-content" data-href="router2">
+      <div class="card-header">标签</div>
+      <div class="card-content">
+        <div class="card-content-inner"></div>
+      </div>
+    </div>
+
+    <div class="card" id="reason-content" data-href="router3">
+      <div class="card-header">推荐理由</div>
+      <div class="card-content">
+        <div class="card-content-inner">请填写推荐理由</div>
+      </div>
+    </div>
+
+    <div class="card" id="detail-content" data-href="router4">
+      <div class="card-header">详情</div>
+      <div class="card-content">
+        <div class="card-content-inner">请描述详情</div>
+      </div>
+    </div>
+
+    <div class="card" id="address-content" data-href="router5">
+      <div class="card-content">
+        <div class="list-block">
+          <ul>
+            <li>
+              <a class="item-link item-content">
+                <div class="item-media item-left"> <i class="iconfont icon-dingwei"></i>
+                </div>
+                <div class="item-media item-right"> <i class="iconfont icon-youjiantou"></i>
+                </div>
+                <div class="item-inner">
+                  <div class="item-title ">成都信息工程大学</div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="price-content" data-href="router6">
+      <div class="card-content">
+        <div class="list-block">
+          <ul>
+            <li>
+              <a class="item-link item-content">
+                <div class="item-media item-left">
+                  <i class="iconfont icon-qian"></i>
+                </div>
+                <div class="item-media item-right">
+                  <i class="iconfont icon-youjiantou"></i>
+                </div>
+                <div class="item-inner">
+                  <div class="item-title">价格</div>
+                </div>
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -734,6 +879,7 @@
     //     map.addControl(scale);
     // })
     // $.popup('.ask-detail');
+    var extData = {};
     $(".header-sousuo").on("click",function(){
       $.router.load("#router1");
     })
@@ -968,8 +1114,18 @@
     // })
     $("#container").on("click",".amap-icon",function(){
       // $(this).addClass("amap-active");
+      console.log(extData);
+
+      $(".amap-active").css("-webkit-transform", "rotate(0deg) !important;");
       $(".amap-marker-content").remove();
-      var div = '<div class="amap-marker-content" style="display:none"><div class="up">火锅<div class="up-price-right">0.8元</div></div><div class="down">这个真的很好吃</div></div>';
+      // var div = '<div class="amap-marker-content" style="display:none"><div class="up">火锅<div class="up-price-right">0.8元</div></div><div class="down">这个真的很好吃</div></div>';
+      var askTagStr = JSON.parse(extData.askTagStr);
+      console.log(askTagStr[0]);
+      var tagList = '';
+      for(var i = 0; i < askTagStr.length;i++){
+        tagList += '<div class="type-item">'+askTagStr[i]+'</div>' 
+      }
+      var div = '<div class="amap-marker-content" style="display:none"><div class="up">'+tagList+'<div class="up-price-right">￥'+extData.price+'</div></div><div class="down">'+extData.askReason+'</div></div>';
       $(this).after(div);
       if($(this).parent().hasClass("amap-active")){
         $(this).parent().removeClass("amap-active");
@@ -988,17 +1144,17 @@
       if($(".ask-detail").hasClass("modal-in")){
          $.closeModal(".ask-detail");
       }
-     
+      $(".amap-active").css("-webkit-transform", "rotate(0deg) !important;");
     })
+
     $("#container").on("click",".amap-marker-content",function(e){
       $.popup('.ask-detail');
       console.log("test");
-      // getMap();
-      // e.stopPropagation();
+      $(".amap-active").css("-webkit-transform", "rotate(90deg) !important;");
     })
 
     // var mapShow;
-    getMap(103.985616,30.581207);
+    // getMap(103.985616,30.581207);
     // var markerShow = new AMap.Marker({
     //   map : mapShow,
     //   position: [104.065262,30.65938]
@@ -1036,8 +1192,7 @@
     //获取所有信息
     function getAllAsk(){
       var data = {
-        staus  : 4,
-        size   : 10,
+        staus  : 4
       };
       $.ajax({
         type : "GET",
@@ -1074,17 +1229,24 @@
                 createAt:result.data[i].createAt,
                 lng:result.data[i].GeoX,
                 lat:result.data[i].GeoY,
-                askIsFree:result.data[i].askIsFree
+                askIsFree:result.data[i].askIsFree,
+                askTagStr:result.data[i].askTagStr
               })
               markers.push(marker);
 
               //监听marker点击事件
               marker.on("click",function(){
                 console.log(this);
-                var lng = this.Ee.extData.lng;
-                var lat = this.Ee.extData.lat;
-                setDetail(this.Ee.extData);
-                //设置地图中心位置为点击的marker上
+                extData =  this.getExtData();
+                var lng = extData.lng;
+                var lat = extData.lat;
+                console.log(extData.askTagStr);
+                // $("")
+                $(".up").text();
+                $(".down").text(extData.askReason+"test");
+                console.log(extData);
+                setDetail(extData);
+                // //设置地图中心位置为点击的marker上
                 map.setZoomAndCenter(20,[lng,lat]);
               });
 
@@ -1125,7 +1287,7 @@
       }
       $("#detail-content  .card-content-inner").empty();
       $("#detail-content  .card-content-inner").append(detailContent);
-      getMap(lng,lat);
+      // getMap(lng,lat);
     }
 
     //监听移动获取城市信息
