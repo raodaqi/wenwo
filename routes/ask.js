@@ -23,7 +23,7 @@ var Like = AV.Object.extend('Like');
 router.get('/allask', function(req, res, next) {
     //page      size
     var page = req.param('page') != null ? req.param('page') : 0;
-    var size = req.param('size') != null ? req.param('size') : 10;
+    var size = req.param('size') != null ? req.param('size') : null;
     var staus = req.param('staus') != null ? req.param('staus') : '1';
     var type = req.param('type') != null ? req.param('type') : null;
     //console.log(staus);
@@ -39,7 +39,10 @@ router.get('/allask', function(req, res, next) {
     if (type != null) {
         query.contains("type", type);
     }
-    query.limit(size);
+    if (size != null) {
+        query.limit(size);
+    }
+    
     query.skip(page);
 
     query.find().then(function(results) {
@@ -630,26 +633,8 @@ router.get('/gettag', function (req, res, next) {
     });
 });
 
-router.post('/tag', function (req, res, next) {
-    var tag = req.param('tag');
-    var type = req.param('type');
-    if (!type) {
-        var result = {
-            code : 300,
-            message : 'miss parameter : type'
-        }
-        res.send(result);
-        return;
-    }
-    if (!tag) {
-        var result = {
-            code : 300,
-            message : 'miss parameter : tag'
-        }
-        res.send(result);
-        return;
-    }
-    setTag(tag, type);
+router.post('/addtag', function (req, res, next) {
+
 });
 
 function setTag(tag, type, callback) {
