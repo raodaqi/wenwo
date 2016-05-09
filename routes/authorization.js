@@ -49,11 +49,11 @@ router.get('/', function(req, res, next) {
             var accessToken = result.data.access_token;
             var openid = result.data.openid;
             getUserInfo(accessToken,openid,{
-                success:function (result) {
-                    console.log(result.data);
-                    var username = result.data.nickname;
-                    var userhead = result.data.headimgurl;
-                    var openid = result.data.openid;
+                success:function (res) {
+                    console.log(res.data);
+                    var username = res.data.nickname;
+                    var userhead = res.data.headimgurl;
+                    var openid = res.data.openid;
 
                     var data = {
                         username:username,
