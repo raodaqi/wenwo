@@ -40,7 +40,8 @@ router.get('/', function(req, res, next) {
     var appid = 'wx99f15635dd7d9e3c';
     var secret = '9157e84975386b6dee6a499cc639973e';
 
-    var code = req.param('code');
+    var code = req.params('code');
+    console.log(code);
     
     getAccessToken(appid, secret, code ,{
         success:function (result) {
@@ -49,7 +50,7 @@ router.get('/', function(req, res, next) {
             var openid = result.data.openid;
             getUserInfo(accessToken,openid,{
                 success:function (result) {
-                    //console.log(result);
+                    console.log(result.data);
                     var username = result.data.nickname;
                     var userhead = result.data.headimgurl;
                     var openid = result.data.openid;
