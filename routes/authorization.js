@@ -1,6 +1,7 @@
 /**
  * Created by HanQi on 16/5/9.
  */
+var http = require('http');
 var router = require('express').Router();
 var AV = require('leanengine');
 
@@ -17,7 +18,7 @@ router.get('/wx', function(req, res, next) {
     getCode(appid, url, {
         success: function (result) {
             console.log(result);
-            res.render(result);
+
             // var code = result.data.code;
             // getAccessToken(appid,secret,code,{
             //     success:function (result) {
@@ -30,19 +31,34 @@ router.get('/wx', function(req, res, next) {
 })
 
 function getCode(appid, url, callback) {
+
+
     var urlApi = "http://wenwo.leanapp.cn/";
     urlApi = encodeURIComponent(urlApi);
-    console.log(urlApi);
-    AV.Cloud.httpRequest({
-        url: 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+urlApi+'&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect',
-        success: function(httpResponse) {
-            // console.log(httpResponse);
-            callback.success(httpResponse);
-        },
-        error: function(httpResponse) {
-            console.error('Request failed with response code ' + httpResponse.status);
-        }
+
+    var options = {
+        hostname: '127.0.0.1',
+        port: 3000,
+        path: 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+urlApi+'&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect',
+        method: 'GET'
+    };
+
+    var req = http.request(options, function (res) {
+        console.log(res);
     });
+
+
+    // console.log(urlApi);
+    // AV.Cloud.httpRequest({
+    //     url: 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+urlApi+'&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect',
+    //     success: function(httpResponse) {
+    //         // console.log(httpResponse);
+    //         callback.success(httpResponse);
+    //     },
+    //     error: function(httpResponse) {
+    //         console.error('Request failed with response code ' + httpResponse.status);
+    //     }
+    // });
 }
 
 function getAccessToken(appid, secret, code, callback) {
