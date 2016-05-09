@@ -50,7 +50,7 @@
       /*margin: 10px;*/
       width: 120px;
       height: 100px;
-      line-height: 100px;
+      /*line-height: 100px;*/
       /*border-radius: 50%;*/
       border:1px solid #FFC222;
     }
@@ -291,28 +291,28 @@
     .theme-li{
       border:0;
     }
-    #theme1{
+    #theme1,.theme1{
       background-color: #FDB8AF;
     }
-    #theme2{
+    #theme2,.theme2{
       background-color: #DFECA1;
     }
-    #theme3{
+    #theme3,.theme3{
       background-color: #ADF5EC;
     }
-    #theme4{
+    #theme4,.theme4{
       background-color: #E0C1F3;
     }
-    #theme5{
+    #theme5,.theme5{
       background-color: #FFD99C;
     }
-    #theme6{
+    #theme6,.theme6{
       background-color: #B6C6FE;
     }
     .theme-li img{
-      width: 50px;
-      height: 50px;
-      margin-top:25px;
+      width: 40px;
+      height: 40px;
+      margin-top:30px;
     }
     .list-block .item-link .item-inner{
       background-image: none;
@@ -343,6 +343,59 @@
     }
     .page{
       background-color: white;
+    }
+    .theme-list-content{
+      padding: 0 2%;
+      text-align: center;
+      height: 50px;
+      /*width: 96%;*/
+      /*width: 300px;*/
+      margin:30px auto;
+      /*width: 100%;*/
+      /*box-sizing: border-box; */
+    }
+    .theme-list{
+      width: 16.666%;
+      display: block;
+      float: left;
+      text-align: center;
+    }
+    .theme-list img{
+      width: 70%;
+    }
+    .theme-list-active img{
+      width: 85%;
+      margin-top: -7px;
+    }
+    .theme-list-content .theme-down-text{
+      font-size: 13px;
+      font-weight: bold;
+      display: none;
+    }
+    .theme-list-active .theme-down {
+      display: none;
+    }
+    .theme-down{
+      height: 3px;
+      width: 70%;
+      margin:5px auto; 
+    }
+    .theme-list-active .theme-down-text{
+      display: block;
+    }
+    .theme-li-active img{
+      width: 50px;
+      height: 50px;
+      margin-top: 15px;
+    }
+    .theme-li-text{
+      display: none;
+    }
+    .theme-li-active .theme-li-text{
+      font-size: 15px;
+      font-weight: bold;
+      display: block;
+      color: #000;
     }
     /*.bar{
       height: 1.5rem;
@@ -388,12 +441,46 @@
                   </ul>
                 </div>
               </div> -->
-              <div class="card theme-content theme1" data-type="" data-href="router1">
+
+              <!-- <div class="card theme-content theme1" data-type="" data-href="router1">
                 吃
               </div>
               <div class="card theme-content theme2 theme-hidden" data-type="" data-href="router1">
                 吃
+              </div> -->
+              <div class="theme-list-content" data-href="router1">
+                <div class="theme-list theme-list1" data-type="1">
+                  <img src="/img/themes-02.png" alt="">
+                  <div class="theme-down theme1"></div>
+                  <div class="theme-down-text">美食</div>
+                </div>
+                <div class="theme-list theme-list2" data-type="2">
+                  <img src="/img/themes-03.png" alt="">
+                  <div class="theme-down theme2"></div>
+                  <div class="theme-down-text">住宿</div>
+                </div>
+                <div class="theme-list theme-list3" data-type="3">
+                  <img src="/img/themes-04.png" alt="">
+                  <div class="theme-down theme3"></div>
+                  <div class="theme-down-text">出行</div>
+                </div>
+                <div class="theme-list theme-list4" data-type="4">
+                  <img src="/img/themes-05.png" alt="">
+                  <div class="theme-down theme4"></div>
+                  <div class="theme-down-text">购物</div>
+                </div>
+                <div class="theme-list theme-list5" data-type="5">
+                  <img src="/img/themes-06.png" alt="">
+                  <div class="theme-down theme5"></div>
+                  <div class="theme-down-text">游玩</div>
+                </div>
+                <div class="theme-list theme-list6" data-type="6">
+                  <img src="/img/themes-07.png" alt="">
+                  <div class="theme-down theme6"></div>
+                  <div class="theme-down-text">防坑</div>
+                </div>
               </div>
+
             </div>
 
            <div class="card" id="tag-content" data-href="router2">
@@ -496,30 +583,36 @@
       <div class="content">
         <div class="content-block">
           <div class="theme-ul">
-            <div class="theme-li active" id="theme1" data-type="1">
+            <div class="theme-li" id="theme1" data-type="1">
               <img src="/img/themes-02.png">
+              <div class="theme-li-text">美食</div>
             </div>
             <div class="theme-li" id="theme2" data-type="2">
               <img src="/img/themes-03.png">
+              <div class="theme-li-text">住宿</div>
             </div>
             <div class="theme-li" id="theme3" data-type="3">
               <img src="/img/themes-04.png">
+              <div class="theme-li-text">出行</div>
             </div>
             <div class="theme-li" id="theme4" data-type="4">
               <img src="/img/themes-05.png">
+              <div class="theme-li-text">购物</div>
             </div>
             <div class="theme-li" id="theme5" data-type="5">
               <img src="/img/themes-06.png">
+              <div class="theme-li-text">游玩</div>
             </div>
             <div class="theme-li" id="theme6" data-type="6">
               <img src="/img/themes-07.png">
+              <div class="theme-li-text">防坑</div>
             </div>
           </div>
         </div>
       </div>
 
       <footer class="bar bar-footer-nav">
-        <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
+        <a class="button button-link button-nav pull-left" href="#router">
           <span class="icon icon-left"></span>
           预览
         </a>
@@ -564,7 +657,7 @@
       </div>
 
       <footer class="bar bar-footer-nav">
-        <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
+        <a class="button button-link button-nav pull-left" href="#router">
           <span class="icon icon-left"></span>
           预览
         </a>
@@ -593,7 +686,7 @@
       </div>
 
       <footer class="bar bar-footer-nav">
-        <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
+        <a class="button button-link button-nav pull-left" href="#router">
           <span class="icon icon-left"></span>
           预览
         </a>
@@ -637,7 +730,7 @@
       </div>
 
       <footer class="bar bar-footer-nav">
-        <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
+        <a class="button button-link button-nav pull-left" href="#router">
           <span class="icon icon-left"></span>
           预览
         </a>
@@ -668,7 +761,7 @@
         </div>
       </div>
       <footer class="bar bar-footer-nav">
-        <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
+        <a class="button button-link button-nav pull-left" href="#router">
           <span class="icon icon-left"></span>
           预览
         </a>
@@ -707,7 +800,7 @@
         </div>
       </div>
       <footer class="bar bar-footer-nav">
-        <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
+        <a class="button button-link button-nav pull-left" href="#router">
           <span class="icon icon-left"></span>
           预览
         </a>
@@ -772,6 +865,7 @@
         geocoder.getAddress(lnglatXY, function(status, result) {
             if (status === 'complete' && result.info === 'OK') {
               var address = result.regeocode; //返回地址描述
+              console.log(address);
               callback.success(address);
               // console.log(address);
 
@@ -796,21 +890,25 @@
       if(localStorage.type){
         var type = localStorage.type.split(",");
         console.log(type);
-        if(type.length == 1){
-          $(".theme-ul .theme-li").removeClass("active");
-          $("#theme"+type[0]).addClass("active");
-          $(".theme1").attr("data-type",$("#theme"+type[0]).attr("data-type"));
-          $(".theme1").text($("#theme"+type[0]).text());
-          $(".theme2").addClass("theme-hidden");
-        }else{
-          $(".theme-ul .theme-li").removeClass("active");
-          $("#theme"+type[0]).addClass("active");
-          $("#theme"+type[1]).addClass("active");
-          $(".theme1").attr("data-type",$("#theme"+type[0]).attr("data-type"));
-          $(".theme1").text($("#theme"+type[0]).text());
-          $(".theme2").attr("data-type",$("#theme"+type[1]).attr("data-type"));
-          $(".theme2").text($("#theme"+type[1]).text());
-          $(".theme2").removeClass("theme-hidden");
+        // if(type.length == 1){
+        //   $(".theme-ul .theme-li").removeClass("active");
+        //   $("#theme"+type[0]).addClass("active");
+        //   $(".theme1").attr("data-type",$("#theme"+type[0]).attr("data-type"));
+        //   $(".theme1").text($("#theme"+type[0]).text());
+        //   $(".theme2").addClass("theme-hidden");
+        // }else{
+        //   $(".theme-ul .theme-li").removeClass("active");
+        //   $("#theme"+type[0]).addClass("active");
+        //   $("#theme"+type[1]).addClass("active");
+        //   $(".theme1").attr("data-type",$("#theme"+type[0]).attr("data-type"));
+        //   $(".theme1").text($("#theme"+type[0]).text());
+        //   $(".theme2").attr("data-type",$("#theme"+type[1]).attr("data-type"));
+        //   $(".theme2").text($("#theme"+type[1]).text());
+        //   $(".theme2").removeClass("theme-hidden");
+        // }
+        for(var i = 0; i < type.length; i++){
+          $(".theme-list"+type[i]).addClass("theme-list-active");
+          $("#theme"+type[i]).addClass("theme-li-active");
         }
       }
 
@@ -863,9 +961,15 @@
             var address = {
               province : address.addressComponent.province,
               city     : address.addressComponent.city,
-              district : address.addressComponent.district
+              district : address.addressComponent.district,
+              township : address.addressComponent.township
             }
-            var address = JSON.stringify(address);
+            // var address = JSON.stringify(address);
+
+            // detail = detail.replace(address[0]+address[1]+address[2]+address[3],"");
+            var replace = ""+address.province+address.city+address.district+address.township+"";
+            detail = detail.replace(replace,"");
+            address = JSON.stringify(address);
             console.log(address);
             $("#address-content .item-inner").attr("data-address",address);
             $("#address-content .item-inner").text(detail);
@@ -979,7 +1083,7 @@
     initLocationData();
   </script>
   <script>
-    $(".card").on("click",function(){
+    $(".card,.theme-list-content").on("click",function(){
       var href = $(this).data("href");
       if(href){
         $.router.load("#"+href);
@@ -992,52 +1096,82 @@
       // $(".theme-li").removeClass("active-first");
       // // console.log($(".active").length);
       // $(this).addClass("active-first");
-      if($(this).hasClass("active")){
-        $(this).removeClass("active");
-        $(".theme1").attr("data-type",$("#"+$(".theme-li.active")[0].id).attr("data-type"));
-        $(".theme1").text($("#"+$(".theme-li.active")[0].id).text());
-        $(".theme2").addClass("theme-hidden");
-      }else{
-        // $(this).addClass("active");
-        if($(".active").length < 2){
-          // $(".theme-li.active-first").removeClass("active");
-          $(".theme1").attr("data-type",$(this).attr("data-type"));
-          $(".theme1").text($(this).text());
-          $(this).addClass("active");
-          $(".theme2").addClass("theme-hidden");
-          if($(".active").length == 2){
-            console.log($(".theme-li.active"));
-            // $(".theme1").attr("data-type")
-            // $(".theme1").attr("data-type",$(this).attr("data-type"));
-            // $(".theme1").text($(this).attr("data-text"));
-            $(".theme1").attr("data-type",$("#"+$(".theme-li.active")[0].id).attr("data-type"));
-            $(".theme1").text($("#"+$(".theme-li.active")[0].id).text());
-            $(".theme2").attr("data-type",$("#"+$(".theme-li.active")[1].id).attr("data-type"));
-            $(".theme2").text($("#"+$(".theme-li.active")[1].id).text());
-            $(".theme2").removeClass("theme-hidden");
-          }
+      // if($(this).hasClass("active")){
+      //   $(this).removeClass("active");
+      //   $(".theme1").attr("data-type",$("#"+$(".theme-li.active")[0].id).attr("data-type"));
+      //   $(".theme1").text($("#"+$(".theme-li.active")[0].id).text());
+      //   $(".theme2").addClass("theme-hidden");
+      // }else{
+      //   // $(this).addClass("active");
+      //   if($(".active").length < 2){
+      //     // $(".theme-li.active-first").removeClass("active");
+      //     $(".theme1").attr("data-type",$(this).attr("data-type"));
+      //     $(".theme1").text($(this).text());
+      //     $(this).addClass("active");
+      //     $(".theme2").addClass("theme-hidden");
+      //     if($(".active").length == 2){
+      //       console.log($(".theme-li.active"));
+      //       // $(".theme1").attr("data-type")
+      //       // $(".theme1").attr("data-type",$(this).attr("data-type"));
+      //       // $(".theme1").text($(this).attr("data-text"));
+      //       $(".theme1").attr("data-type",$("#"+$(".theme-li.active")[0].id).attr("data-type"));
+      //       $(".theme1").text($("#"+$(".theme-li.active")[0].id).text());
+      //       $(".theme2").attr("data-type",$("#"+$(".theme-li.active")[1].id).attr("data-type"));
+      //       $(".theme2").text($("#"+$(".theme-li.active")[1].id).text());
+      //       $(".theme2").removeClass("theme-hidden");
+      //     }
 
+      //   }else{
+      //     $.alert("最多只能选择两个主题");
+      //   }
+      var type = $(this).data("type");
+      console.log(type);
+      if($(this).hasClass("theme-li-active")){
+        console.log("remove");
+        $(this).removeClass("theme-li-active");
+        $(".theme-list"+type).removeClass("theme-list-active");
+      }else{
+        var len = $(".theme-li-active").length;
+        if(len < 2){
+          $(this).addClass("theme-li-active");
+          $(".theme-list"+type).addClass("theme-list-active");
+          // if("")
         }else{
           $.alert("最多只能选择两个主题");
         }
       }
+
+      //获取主题
+        var $_active = $(".theme-li-active");
+        if(!$_active.length){
+
+        }else{
+          if($_active.length == 1){
+            var type = $(".theme-li-active").attr("data-type");
+          }else{
+            var type = $("#"+$(".theme-li-active")[0].id).attr("data-type") + ","+$("#"+$(".theme-li-active")[1].id).attr("data-type");
+          }
+          localStorage["type"] = type;
+        }
+      
+      // }
       // console.log($(".active").length);
       // if($(".active").length == 3){
       //   // $(".theme-li.active-first").removeClass("active");
       // }
 
         //获取主题
-        var $_active = $(".theme-li.active");
-        if(!$_active.length){
+        // var $_active = $(".theme-li.active");
+        // if(!$_active.length){
 
-        }else{
-          if($_active.length == 1){
-            var type = $(".theme-li.active").attr("data-type");
-          }else{
-            var type = $("#"+$(".theme-li.active")[0].id).attr("data-type") + ","+$("#"+$(".theme-li.active")[1].id).attr("data-type");
-          }
-          localStorage["type"] = type;
-        }
+        // }else{
+        //   if($_active.length == 1){
+        //     var type = $(".theme-li.active").attr("data-type");
+        //   }else{
+        //     var type = $("#"+$(".theme-li.active")[0].id).attr("data-type") + ","+$("#"+$(".theme-li.active")[1].id).attr("data-type");
+        //   }
+        //   localStorage["type"] = type;
+        // }
     })
 
     function setlocalStorageTag(){
@@ -1168,7 +1302,8 @@
     //更换价格的时候调用
     $("#price-picker").on("input change",function(){
       console.log($(this).val());
-      $("#price-content .card-content-inner").text("￥ "+$(this).val());
+      // $("#price-content .card-content-inner").text("￥ "+$(this).val());
+      $("#price-content .item-inner").text($(this).val());
       localStorage["price"] = $(this).val();
     })
 
@@ -1186,16 +1321,16 @@
             price;//信息价格
 
         //获取主题
-        var $_active = $(".theme-li.active");
+        var $_active = $(".theme-li-active");
         if(!$_active.length){
           $.alert("你还没有选择主题");
           // $.router.load("#router1");
           return;
         }else{
           if($_active.length == 1){
-            var type = $(".theme-li.active").attr("data-type");
+            var type = $(".theme-li-active").attr("data-type");
           }else{
-            var type = $("#"+$(".theme-li.active")[0].id).attr("data-type") + ","+$("#"+$(".theme-li.active")[1].id).attr("data-type");
+            var type = $("#"+$(".theme-li-active")[0].id).attr("data-type") + ","+$("#"+$(".theme-li-active")[1].id).attr("data-type");
           }
           console.log(type);
         }
@@ -1258,7 +1393,8 @@
           geo_x        : lng,
           geo_y        : lat,
           isfree       : isfree,
-          price        : price
+          price        : price,
+          addContent   : $("#address-content .item-inner").text()
         }
         console.log(data);
         // return ;
@@ -1394,11 +1530,23 @@
       getAddress(lnglatXY,{
         success:function(address){
           var detail = address.formattedAddress;
+          // var address = {
+          //   province : address.addressComponent.province,
+          //   city     : address.addressComponent.city,
+          //   district : address.addressComponent.district
+          // }
           var address = {
-            province : address.addressComponent.province,
-            city     : address.addressComponent.city,
-            district : address.addressComponent.district
-          }
+              province : address.addressComponent.province,
+              city     : address.addressComponent.city,
+              district : address.addressComponent.district,
+              township : address.addressComponent.township
+            }
+          // var address = JSON.stringify(address);
+
+          // detail = detail.replace(address[0]+address[1]+address[2]+address[3],"");
+          var replace = ""+address.province+address.city+address.district+address.township+"";
+          detail = detail.replace(replace,"");
+
           var address = JSON.stringify(address);
           console.log(address);
           $("#address-content .item-inner").attr("data-address",address);
@@ -1502,11 +1650,22 @@
         getAddress(lnglatXY,{
           success:function(address){
             var detail = address.formattedAddress;
+            // var address = {
+            //   province : address.addressComponent.province,
+            //   city     : address.addressComponent.city,
+            //   district : address.addressComponent.district
+            // }
             var address = {
               province : address.addressComponent.province,
               city     : address.addressComponent.city,
-              district : address.addressComponent.district
+              district : address.addressComponent.district,
+              township : address.addressComponent.township
             }
+            // var address = JSON.stringify(address);
+
+            var replace = ""+address.province+address.city+address.district+address.township+"";
+            detail = detail.replace(replace,"");
+            console.log(detail);
             var address = JSON.stringify(address);
             console.log(address);
             $("#address-content .item-inner").attr("data-address",address);
