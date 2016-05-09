@@ -13,21 +13,26 @@ router.get('/wx', function(req, res, next) {
     var appid = 'wx99f15635dd7d9e3c';
     var secret = '9157e84975386b6dee6a499cc639973e';
     //var url = req.body.url;
-    var url = req.rawHeaders[1];
-    console.log(url);
-    getCode(appid, url, {
-        success: function (result) {
-            console.log(result);
+    // var url = req.rawHeaders[1];
+    // console.log(url);
+    // getCode(appid, url, {
+    //     success: function (result) {
+    //         console.log(result);
+    //
+    //         // var code = result.data.code;
+    //         // getAccessToken(appid,secret,code,{
+    //         //     success:function (result) {
+    //         //         console.log(result);
+    //         //     }
+    //         // });
+    //
+    //     }
+    // });
+    var urlApi = "http://wenwo.leanapp.cn/";
+    urlApi = encodeURIComponent(urlApi);
+    url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+urlApi+'&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect';
 
-            // var code = result.data.code;
-            // getAccessToken(appid,secret,code,{
-            //     success:function (result) {
-            //         console.log(result);
-            //     }
-            // });
-
-        }
-    });
+    res.redirect(url)
 })
 
 function getCode(appid, url, callback) {
@@ -36,16 +41,18 @@ function getCode(appid, url, callback) {
     var urlApi = "http://wenwo.leanapp.cn/";
     urlApi = encodeURIComponent(urlApi);
 
-    var options = {
-        hostname: '127.0.0.1',
-        port: 3000,
-        path: 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+urlApi+'&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect',
-        method: 'GET'
-    };
+    url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+urlApi+'&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect';
 
-    var req = http.request(options, function (res) {
-        console.log(res);
-    });
+    // var options = {
+    //     hostname: '127.0.0.1',
+    //     port: 3000,
+    //     path: 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+urlApi+'&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect',
+    //     method: 'GET'
+    // };
+    //
+    // var req = http.request(options, function (res) {
+    //     console.log(res);
+    // });
 
 
     // console.log(urlApi);
