@@ -46,16 +46,20 @@ router.get('/', function(req, res, next) {
     getAccessToken(appid, secret, code ,{
         success:function (result) {
             //console.log(result);
-            var accessToken = result.data.access_token;
-            var openid = result.data.openid;
+            var redata = result.data;
+            redata = JSON.parse(redata);
+            var accessToken = redata.access_token;
+            var openid = redata.openid;
             console.log(accessToken);
             console.log(openid);
             getUserInfo(accessToken,openid,{
                 success:function (res) {
                     console.log(res.data);
-                    var username = res.data.nickname;
-                    var userhead = res.data.headimgurl;
-                    var openid = res.data.openid;
+                    var rdata = res.data;
+                    rdata = JSON.parse(rdata);
+                    var username = rdata.nickname;
+                    var userhead = rdata.headimgurl;
+                    var openid = rdata.openid;
 
                     var data = {
                         username:username,
