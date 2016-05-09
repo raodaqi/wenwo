@@ -11,7 +11,7 @@ body{
 	/*line-height: 40px;*/
 	font-size: 15px;
 	border-bottom: 1px solid #EAEAEA;
-	background-color: #F9CC51;
+	background-color: #efc553;
 }
 .title_word{
 	width: 50%;
@@ -37,27 +37,32 @@ body{
 }
 .balance{
 	width: 100%;
-	height: 60px;
-	border-bottom: 1px solid #EAEAEA;
-	line-height: 60px;
+	height: 130px;
+	/*border-bottom: 1px solid #EAEAEA;*/
+	line-height: 130px;
 }
 .money{
-	font-size: 25px;
-	margin-left: 20px;
+	font-size: 55px;
+	/*margin-left: 20px;*/
 	float: left;
-	width: 60px;
+	width: 100%;
+	text-align: center;
 }
 .balance_money{
 	float: left;
-	height: 60px;
-	line-height: 60px;
-	font-size: 20px;
+	height: 40px;
+	line-height: 40px;
+	font-size: 17px;
+	text-align: center;
+	width: 100%;
+	font-weight: 700;
+	margin-top: -20px;
 }
 .withdraw_cash{
 	height: 40px;
 	line-height: 40px;
 	width: 100%;
-	border-bottom: 1px solid #EAEAEA;
+	/*border-bottom: 1px solid #EAEAEA;*/
 }
 .withdraw_cash_title{
 	width: 50%;
@@ -78,20 +83,26 @@ body{
 	height: 70px;
 }
 .btn_withdraw_cash,.btn_recharge{
-	width: 50%;
-	height: 70px;
-	float: left;
-	padding: 20px 30px;
+	width: 100%;
+	height: 50px;
+/*	float: left;*/
+	padding: 20px 20px;
 }
 .btn_recharge button{
-	width: 100px;
-	height: 30px;
+	width: 100%;
+	height: 35px;
 	border:0;
+	border-radius: 5px;
+	background-color: #efc553;
+	font-weight: 700;
 }
 .btn_withdraw_cash button{
-	width: 100px;
-	height: 30px;
+	width: 100%;
+	height: 35px;
 	border:0;
+	border-radius: 5px;
+	background-color: #efc553;
+	font-weight: 700;
 }
 </style>
 <body>
@@ -106,14 +117,14 @@ body{
 </div>
 	<div class="balance">
 		<div class="iconfont icon-qianBao money"></div>
-		<div class="balance_money">账户余额:</div>
 	</div>
 	<div class="withdraw_cash">
-		<div class="withdraw_cash_title">账户可提现:</div>
-		<div class="withdraw_cash_money"></div>
+	<div class="balance_money">账户余额:&nbsp;￥</div>
+		<!-- <div class="withdraw_cash_title">账户可提现:</div>
+		<div class="withdraw_cash_money"></div> -->
 	</div>
 	<div class="btn">
-		<div class="btn_withdraw_cash">
+		<div class="btn_withdraw_cash" style="margin-top: 80px;">
 		<button id="withdraw">提现</button>
 		</div>
 		<div class="btn_recharge">

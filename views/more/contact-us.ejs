@@ -10,7 +10,7 @@ body{
 	width: 100%;
 	font-size: 15px;
 	border-bottom: 1px solid #EAEAEA;
-	background-color: #F9CC51;
+	background-color: #efc553;
 }
 .title_word{
 	width: 50%;
@@ -39,7 +39,7 @@ body{
 	width: 100%;
 	padding-top: 25px;
 	font-size: 17px;
-	padding-left: 10px;
+	padding-left: 20px;
 }
 .suggest{
 	width: 100%;
@@ -49,7 +49,7 @@ body{
 .cards{
 	width: 94%;
 	height: 150px;
-	border-radius:10px;
+	border-radius:5px;
 	margin-left: 10px;
 	margin-right: 10px;
 	margin-top: 14px;
@@ -58,7 +58,7 @@ body{
 	height: 40px;
 	line-height: 40px;
 	width: 100%;
-	padding-left: 10px;
+	padding-left: 20px;
 }
 .contact_value{
 	height: 30px;
@@ -69,13 +69,15 @@ body{
 	margin-left: 2%;
 }
 .btn_submit{
-	height: 46px;
+	height: 36px;
 	width: 90%;
 	margin-left: 5%;
 	margin-top: 100px;
-	line-height: 46px;
+	line-height: 36px;
 	border-radius: 8px;
 	border:0;
+	background-color: #efc553;
+	font-weight: 700;
 }
 </style>
 <body>
@@ -89,15 +91,31 @@ body{
 	<div class="title_word">联系我们</div>
 </div>
 <div class="suggest">
-	<div class="content-block-titles">建议描述</div>
+	<div class="content-block-titles">建议描述:</div>
 	<textarea class="cards" placeholder="请你描述遇到的问题或者想提供的建议，我们将尽快回复"></textarea>
 	<div class="contact_title">联系方式:</div>
 	<textarea class="contact_value" placeholder="手机/邮箱(选填)"></textarea>
-	<button class="btn_submit">提交</button>
+	<button class="btn_submit">确认提交</button>
 </div>
 <script type="text/javascript">
 $(".zuo").click(function(){
 		history.go(-1);
 	})
+$(".btn_submit").click(function(){
+	var views = $(".cards").val();
+    console.log(views);
+    var contacts =$(".contact_value").val(); 
+    console.log(contacts);
+$.ajax({
+            type: "post",
+            url: 'user/suggestion',
+            data: {view:views, contact:contacts},
+            dataType: "json",
+            success : function(result) {
+                console.log(result);
+            },
+            error : function(){}
+        });
+})
 </script>
 </html>

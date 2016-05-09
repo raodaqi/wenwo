@@ -10,7 +10,7 @@ body{
 	width: 100%;
 	font-size: 15px;
 	border-bottom: 1px solid #EAEAEA;
-	background-color: #F9CC51;
+	background-color: #efc553;
 }
 .title_word{
 	width: 40%;
@@ -155,25 +155,25 @@ body{
 $(".zuo").click(function(){
 		history.go(-1);
 	})
-	$(".collect").click(function () {
-		$(".dialogs1").show();
-		$(".modal-button").click(function(){
-			$(".dialogs1").hide();
-		});
-  });
+// $(".collect").click(function () {
+// 		$(".dialogs1").show();
+// 		$(".modal-button").click(function(){
+// 			$(".dialogs1").hide();
+// 		});
+//   });
 
-$(".ordered").on('click', function () {
-      $(".dialogs2").show();
-		$(".modal-button").click(function(){
-			$(".dialogs2").hide();
-		});
-  });
-	$(".other").on('click',function () {
-		$(".hide").show();
-		$(".bg-danger").click(function(){
-			$(".hide").hide();
-		})
-  });
+// $(".ordered").on('click', function () {
+//       $(".dialogs2").show();
+// 		$(".modal-button").click(function(){
+// 			$(".dialogs2").hide();
+// 		});
+//   });
+// $(".other").on('click',function () {
+// 		$(".hide").show();
+// 		$(".bg-danger").click(function(){
+// 			$(".hide").hide();
+// 		})
+//   });
 	// var map;
 	getMap(103.985616,30.581207);
 	function getMap(lng,lat){
@@ -194,23 +194,52 @@ $(".ordered").on('click', function () {
       });
       map.setMap(map);
     }
-// sendAsk();
-// function sendAsk(){
-// 	$.ajax({
-//         type : "POST",
-//         dataType: "json",
-//         data:{username:"test"},
-//         url : "/ask/sendask",
-//         success : function(result){
-//           console.log(result);
-//           // var money = result.money;
-//           // console.log(money);
-//           // $(".money").append(money);
-//           },
-//       error: function(error){
-//           alert(error);
-//         }
-//       })
+function getMyasks(){
+	 $.ajax({
+        type : "get",
+        dataType: "json",
+        data:{username:"admin",staus:4},
+        url : "/ask/myask",
+        success : function(result){
+          console.log(result);
+          // for(var i = 0; i < result.data.length; i++){
+          // 	if(result.data[i].staus == 1){
+          // 		var tag = result.data[i].askTagStr;
+          //       var temp = JSON.parse(tag);
+          //       var tab = "";
+          //       console.log(temp);
+          //       for (var j = 0; j < temp.length; j++) {
+          //       	tab = tab +'<span>'+ temp[j].tag_name+'</span>';
+          //          }
+          //          var type = result.data[i].askType;
+          //          var strs = type.split(",")
+          //          console.log(strs);
+          //          var price = result.data[i].askPrice;
+          //       var str = '<div class="information"><div class="information_img"><img src="/img/u28.png"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state">已审核</div><div class="information_Purchase_number">购买人数：3人</div></div>';
+          // 		$("#content1").append(str);
+            // }
+            // else {
+            // 	var tag = result.data[i].askTagStr;
+            //     var temp = JSON.parse(tag);
+            //     var tab = "";
+            //     console.log(temp);
+            //     for (var j = 0; j < temp.length; j++) {
+            //     	tab = tab +'<span>'+ temp[j].tag_name+'</span>';
+            //        }
+            //        var type = result.data[i].askType;
+            //        var strs = type.split(",")
+            //        console.log(strs);
+            //        var price = result.data[i].askPrice;
+            //     var str = '<div class="information"><div class="information_img"><img src="/img/u28.png"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state">'+getStaus(result.data[i].staus)+'</div><div class="information_Purchase_number">购买人数：3人</div></div>';
+          		// $("#content2").append(str);
+            // }
+          // }
+          },
+      error: function(error){
+          alert(error);
+        }
+      })
+}
 
 </script>
 </html>

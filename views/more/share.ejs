@@ -19,7 +19,7 @@ body{
 	/*line-height: 40px;*/
 	font-size: 15px;
 	border-bottom: 1px solid #EAEAEA;
-	background-color: #F9CC51;
+	background-color: #efc553;
 	/*position: fixed;
 	z-index: 999;*/
 }
@@ -51,7 +51,8 @@ body{
 	line-height: 40px;
 	color: white;
 	float: right;
-	font-size: 13px;
+/*	font-size: 20px;*/
+	text-align: center;
 }
 .issue_information_icon{
 	width: 40px;
@@ -77,62 +78,65 @@ body{
 	line-height: 40px;
 }
 .information{
-	height: 100px;
+	height: 80px;
 	width: 100%;
 	border-bottom:1px solid #EAEAEA;
 	/*position: fixed;*/
 	/*z-index: 999;*/
 }
 .information_name{
-	height: 60px;
-	width: 60%;
+	height: 80px;
+	width: 42%;
 	float: left;
 	border-bottom:1px solid #EAEAEA;
 	/*border-right:1px solid #EAEAEA;*/
 }
-.information_name_img{
-	width: 50px;
-	height: 50px;
+.information_img{
+	width: 80px;
+	height: 80px;
 	float: left;
 	box-sizing: border-box;
+	/*padding: 2px;*/
 }
-.information_name_img img{
-	width: 50px;
-	height: 50px;
-	border-radius: 50%;
+.information_img img{
+	width: 70px;
+	height: 70px;
+	/*border-radius: 50%;*/
 	background-size: cover;
 	margin-top: 5px;
 	margin-left: 5px;
-	margin-bottom: 5px;
+/*	margin-bottom: 5px;*/
 }
 .information_name_word{
 	float: left;
-	width: 125px;
-	height: 60px;
-	line-height: 60px;
-	padding-left:10px;
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	/*padding-left:10px;*/
 	font-size: 15px;
 	box-sizing: border-box;
 	font-size: 15px;
 }
 .information_price{
-	height: 60px;
-	width: 30%;
+	height: 40px;
+	width: 100%;
 	float: left;
 	border-bottom:1px solid #EAEAEA;
-	text-align: right;
-	line-height: 60px;
+	/*padding-left:10px;*/
+	line-height: 40px;
 	box-sizing: border-box;
 	font-size: 15px;
 }
 .information_state{
 	height: 40px;
-	width: 50%;
-/*	border-right: 1px solid #EAEAEA;*/
+	width: 31%;
+	/*border-right: 1px solid #EAEAEA;*/
 	line-height: 40px;
-	float: left;
+	float: right;
 	box-sizing: border-box;
 	font-size: 14px;
+	text-align: right;
+	padding-right: 6px;
 }
 .num{
 	width: 50%;
@@ -141,12 +145,14 @@ body{
 }
 .information_Purchase_number{
 	height: 40px;
-	float: left;
-	width: 81%;
+	float: right;
+	width: 31%;
 	line-height: 40px;
-	padding-left: 20px;
+	/*padding-left: 20px;*/
 	box-sizing: border-box;
 	font-size: 14px;
+	text-align: right;
+	padding-right: 6px;
 }
 .right{
 	float: right;
@@ -177,9 +183,22 @@ body{
 	font-size: 20px;
 	float: right;
 }
-.shares_title{
+.information_name_word span{
+	margin-left: 4px;
+	background-color: #efc553;
+}
+/*.shares_title{
 	width: 100%;
 	height: 60px;
+}*/
+.icon-jia1{
+	font-size: 24px;
+	height: 40px;
+	margin-bottom: 2px;
+}
+.buttons-tab .button.active{
+	color: #efc553;
+	border-color: #efc553;
 }
 </style>
 <body>
@@ -191,7 +210,9 @@ body{
 		</div>
 	</div>
 	<div class="title_word">我的分享</div>
-	<div class="issue_information">发布信息</div>
+	<div class="issue_information"><div class="iconfont icon-jia1">
+			<a></a>
+		</div></div>
 </div>
 <div class="content">
 	<div class="buttons-tab">
@@ -202,50 +223,31 @@ body{
 		<div class="tabs">
 			<div id="tab1" class="tab active">
 				<div class="content-block">
-					<div class="informations">
-						<div class="information">
-							<div class="shares_title">
-								<div class="information_name">
-									<div class="information_name_img">
-										<img src="/img/u28.png"></div>
-									<div class="information_name_word">常乐宾馆</div>
-								</div>
-								<div class="information_price">2元&nbsp;&nbsp;&nbsp;</div>								
-								<div class="iconfont icon-you right1"></div>
-								</div>
-								<div class="information_state">状态:已发布</div>
-								<div class="num">
-									<div class="information_Purchase_number">购买人数：50人</div>
-									<div class="iconfont icon-you right"></div>
-								</div>						
-						</div>
+					<div class="informations" id="content1">
+						<!-- <div class="information">
+							<div class="information_img"><img src="/img/u28.png"></div>
+							<div class="information_name">
+								<div class="information_name_word">住：<span>标签</span><span>标签</span><span>标签</span></div>
+								<div class="information_price">￥2.0</div>
+							</div>
+							<div class="information_state">已审核</div>
+							<div class="information_Purchase_number">购买人数：3人</div>				
+						</div> -->
 					</div>
 				</div>
 			</div>
 			<div id="tab2" class="tab">
 				<div class="content-block">
-					<div class="information">
-						<div class="information_name">
-							<div class="information_name_img">
-								<img src="/img/u28.png"></div>
-							<div class="information_name_word">生产信息的名称</div>
-						</div>
-						<div class="information_price" style="width: 40%">信息价格&nbsp;&nbsp;&nbsp;</div>
-						<div class="information_state" style="width: 100%;">状态:审核中(或审核失败)</div>
-					</div>
-				</div>
-				<div class="informations">
-					<div class="information">
-						<div class="shares_title">
+					<div class="informations"id="content2">
+						<!-- <div class="information">
+							<div class="information_img"><img src="/img/u28.png"></div>
 							<div class="information_name">
-								<div class="information_name_img">
-									<img src="/img/u28.png"></div>
-								<div class="information_name_word">常乐宾馆</div>
+								<div class="information_name_word">住：<span>标签</span><span>标签</span><span>标签</span></div>
+								<div class="information_price">￥2.0</div>
 							</div>
-							<div class="information_price">2元&nbsp;&nbsp;&nbsp;</div>
-							<div class="iconfont icon-you right1"></div>
-						</div>
-						<div class="information_state"  style="width: 100%;">状态:审核中</div>
+							<div class="information_state">审核中</div>
+							<div class="information_Purchase_number"></div>				
+						</div> -->
 					</div>
 				</div>
 			</div>
@@ -262,20 +264,74 @@ $(".issue_information").click(function(){
 $(".num").click(function(){
 	window.location.href="/more/purchase-detail";
 })
-$(".shares_title").click(function(){
+$(".information").click(function(){
 	window.location.href = "/more/information-presentation";
 })
+function getStaus(staus) {
+            var temp = "";
+            switch (staus) {
+                case "1": temp = "已上架";break;
+                case "2": temp = "审批中";break;
+                case "3": temp = "未上架";break;
+//                case "4": temp = "";break;
+                case "5": temp = "审批未通过";break;
+            }
+            return temp;
+        }
+        function getTitle(type) {
+            var temp = "";
+            switch (type) {
+                case "1": temp = "吃";break;
+                case "2": temp = "住";break;
+                case "3": temp = "行";break;
+                case "4": temp = "购物";break;
+                case "5": temp = "游玩";break;
+                case "6": temp = "防坑";break;
+            }
+            return temp;
+        }
 getMyask();
 function getMyask(){
 	 $.ajax({
         type : "get",
         dataType: "json",
-        data:{username:"hanqi",staus:4},
+        data:{username:"admin",staus:4},
         url : "/ask/myask",
         success : function(result){
           console.log(result);
-          for(var i = 0; i < result.data.length; i++){}
-
+          for(var i = 0; i < result.data.length; i++){
+          	if(result.data[i].staus == 1){
+          		var tag = result.data[i].askTagStr;
+                var temp = JSON.parse(tag);
+                var tab = "";
+                console.log(temp);
+                for (var j = 0; j < temp.length; j++) {
+                	tab = tab +'<span>'+ temp[j].tag_name+'</span>';
+                   }
+                   var type = result.data[i].askType;
+                   var strs = type.split(",")
+                   console.log(strs);
+                   var price = result.data[i].askPrice;
+                   var buyNum = result.data[i].buyNum;
+                var str = '<div class="information"><div class="information_img"><img src="/img/u28.png"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state">已审核</div><div class="information_Purchase_number">购买人数：'+buyNum+'人</div></div>';
+          		$("#content1").append(str);
+            }
+            else {
+            	var tag = result.data[i].askTagStr;
+                var temp = JSON.parse(tag);
+                var tab = "";
+                console.log(temp);
+                for (var j = 0; j < temp.length; j++) {
+                	tab = tab +'<span>'+ temp[j].tag_name+'</span>';
+                   }
+                   var type = result.data[i].askType;
+                   var strs = type.split(",")
+                   console.log(strs);
+                   var price = result.data[i].askPrice;
+                var str = '<div class="information"><div class="information_img"><img src="/img/u28.png"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state">'+getStaus(result.data[i].staus)+'</div></div>';
+          		$("#content2").append(str);
+            }
+          }
           },
       error: function(error){
           alert(error);
