@@ -29,11 +29,11 @@ router.get('/wx', function(req, res, next) {
 })
 
 function getCode(appid, url, callback) {
-    var urlApi = url + "/";
+    var urlApi = url;
     urlApi = encodeURIComponent(urlApi);
     console.log(urlApi);
     AV.Cloud.httpRequest({
-        url: "https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appid+"&redirect_uri="+urlApi+"&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect",
+        url: 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+urlApi+'&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect',
         success: function(httpResponse) {
             // console.log(httpResponse);
             callback.success(httpResponse);
