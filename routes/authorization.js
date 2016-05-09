@@ -50,8 +50,8 @@ router.get('/', function(req, res, next) {
             redata = JSON.parse(redata);
             var accessToken = redata.access_token;
             var openid = redata.openid;
-            console.log(accessToken);
-            console.log(openid);
+            //console.log(accessToken);
+            //console.log(openid);
             getUserInfo(accessToken,openid,{
                 success:function (res) {
                     console.log(res.data);
@@ -61,14 +61,10 @@ router.get('/', function(req, res, next) {
                     var userhead = rdata.headimgurl;
                     var openid = rdata.openid;
 
-                    var data = {
-                        username:username,
-                        password:openid,
-                        userhead:userhead
-                    }
-                    request.post('../user/regist', {form:data}, function (error, response, body) {
-                        console.log(response);
-                    });
+                    console.log(username);
+                    console.log(userhead);
+                    console.log(openid);
+
 
                 }
             });
