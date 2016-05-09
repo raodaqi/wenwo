@@ -39,7 +39,13 @@ router.get('/', function(req, res, next) {
     var appid = 'wx99f15635dd7d9e3c';
     var secret = '9157e84975386b6dee6a499cc639973e';
 
-    res.render(req);
+    var code = req.param('code');
+    
+    getAccessToken(appid, secret, code ,{
+        success:function (result) {
+            console.log(result);
+        }
+    });
 
 });
 
