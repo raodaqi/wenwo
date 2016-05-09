@@ -17,8 +17,13 @@ router.get('/wx', function(req, res, next) {
     getCode(appid, url, {
         success: function (result) {
             console.log(result);
-            //var code = result.data.code;
-            
+            var code = result.data.code;
+            getAccessToken(appid,secret,code,{
+                success:function (result) {
+                    console.log(result);
+                }
+            });
+
         }
     });
 })
@@ -39,8 +44,17 @@ function getCode(appid, url, callback) {
     });
 }
 
-function getAccessToken(code, callback) {
-    
+function getAccessToken(appid, secret, code, callback) {
+    AV.Cloud.httpRequest({
+        url: 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='+appid+'&secret='+secret+'&code='+code+'&grant_type=authorization_code ',
+        success: function(httpResponse) {
+            // console.log(httpResponse);
+            callback.success(httpResponse);
+        },
+        error: function(httpResponse) {
+            console.error('Request failed with response code ' + httpResponse.status);
+        }
+    });
 }
 
 function getUserInfo() {
