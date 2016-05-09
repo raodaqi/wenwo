@@ -17,19 +17,20 @@ router.get('/wx', function(req, res, next) {
     getCode(appid, url, {
         success: function (result) {
             console.log(result);
-            var code = result.data.code;
-            getAccessToken(appid,secret,code,{
-                success:function (result) {
-                    console.log(result);
-                }
-            });
+            res.render(result);
+            // var code = result.data.code;
+            // getAccessToken(appid,secret,code,{
+            //     success:function (result) {
+            //         console.log(result);
+            //     }
+            // });
 
         }
     });
 })
 
 function getCode(appid, url, callback) {
-    var urlApi = url;
+    var urlApi = "http://wenwo.leanapp.cn/";
     urlApi = encodeURIComponent(urlApi);
     console.log(urlApi);
     AV.Cloud.httpRequest({
