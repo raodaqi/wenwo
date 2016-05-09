@@ -45,6 +45,7 @@ router.get('/regist', function(req, res, next) {
     user.signUp().then(function(user) {
         var result = {
             code : 200,
+            user : user,
             message : 'operation succeeded'
         }
         res.send(result);

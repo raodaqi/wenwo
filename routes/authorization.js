@@ -4,6 +4,7 @@
 var http = require('http');
 var router = require('express').Router();
 var AV = require('leanengine');
+var request = require('request');
 
 // `AV.Object.extend` 方法一定要放在全局变量，否则会造成堆栈溢出。
 // 详见： https://leancloud.cn/docs/js_guide.html#对象
@@ -30,7 +31,7 @@ router.get('/wx', function(req, res, next) {
     // });
     var urlApi = "http://wenwo.leanapp.cn/authorization/";
     urlApi = encodeURIComponent(urlApi);
-    url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+urlApi+'&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect';
+    var url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+urlApi+'&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect';
 
     res.redirect(url)
 });
@@ -43,7 +44,27 @@ router.get('/', function(req, res, next) {
     
     getAccessToken(appid, secret, code ,{
         success:function (result) {
-            console.log(result);
+            //console.log(result);
+            var accessToken = result.data.access_token;
+            var openid = result.data.openid;
+            getUserInfo(accessToken,openid,{
+                success:function (result) {
+                    //console.log(result);
+                    var username = result.data.nickname;
+                    var userhead = result.data.headimgurl;
+                    var openid = result.data.openid;
+
+                    var data = {
+                        username:username,
+                        password:openid,
+                        userhead:userhead
+                    }
+                    request.post('../user/regist', {form:data}, function (error, response, body) {
+                        console.log(response);
+                    });
+
+                }
+            });
         }
     });
 
@@ -95,7 +116,16 @@ function getAccessToken(appid, secret, code, callback) {
     });
 }
 
-function getUserInfo() {
-
+function getUserInfo(access_token, openid, callback) {
+    AV.Cloud.httpRequest({
+        url: 'https://api.weixin.qq.com/sns/userinfo?access_token='+access_token+'&openid='+openid+'&lang=zh_CN',
+        success: function(httpResponse) {
+            // console.log(httpResponse);
+            callback.success(httpResponse);
+        },
+        error: function(httpResponse) {
+            console.error('Request failed with response code ' + httpResponse.status);
+        }
+    });
 }
 module.exports = router;
