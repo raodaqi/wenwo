@@ -28,20 +28,28 @@ router.get('/wx', function(req, res, next) {
     //
     //     }
     // });
-    var urlApi = "http://wenwo.leanapp.cn/";
+    var urlApi = "http://wenwo.leanapp.cn/authorization/";
     urlApi = encodeURIComponent(urlApi);
     url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+urlApi+'&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect';
 
     res.redirect(url)
-})
+});
 
-function getCode(appid, url, callback) {
+router.get('/', function(req, res, next) {
+    var appid = 'wx99f15635dd7d9e3c';
+    var secret = '9157e84975386b6dee6a499cc639973e';
 
+    res.render(req);
 
-    var urlApi = "http://wenwo.leanapp.cn/";
-    urlApi = encodeURIComponent(urlApi);
+});
 
-    url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+urlApi+'&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect';
+// function getCode(appid, url, callback) {
+//
+//
+//     var urlApi = "http://wenwo.leanapp.cn/authorization/";
+//     urlApi = encodeURIComponent(urlApi);
+//
+//     url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+urlApi+'&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect';
 
     // var options = {
     //     hostname: '127.0.0.1',
@@ -66,7 +74,7 @@ function getCode(appid, url, callback) {
     //         console.error('Request failed with response code ' + httpResponse.status);
     //     }
     // });
-}
+//}
 
 function getAccessToken(appid, secret, code, callback) {
     AV.Cloud.httpRequest({
