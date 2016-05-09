@@ -48,6 +48,8 @@ router.get('/', function(req, res, next) {
             //console.log(result);
             var accessToken = result.data.access_token;
             var openid = result.data.openid;
+            console.log(accessToken);
+            console.log(openid);
             getUserInfo(accessToken,openid,{
                 success:function (res) {
                     console.log(res.data);
