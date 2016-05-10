@@ -75,27 +75,28 @@ router.get('/', function(req, res, next) {
                         }
                     }).then(function(user) {
                         //返回绑定后的用户
-                        console.log(user);
+                        //console.log(user);
                         res.render(user);
-                        // if (user.get('user') != "") {
-                        //
-                        // }
-                        // else {
-                        //     var post = new Post();
-                        //     var wallet = new Wallet();
-                        //     wallet.set('money', 0);
-                        //     wallet.save();
-                        //     post.set('userName', username);
-                        //     post.set('userHead', userhead);
-                        //     user.set('userInfo', post);
-                        //     user.set('user', username);
-                        //     post.set('wallet', wallet);
-                        //     post.save().then(function () {
-                        //         user.save().then(function (user) {
-                        //
-                        //         });
-                        //     });
-                        // }
+                        if (user.get('user') != "") {
+                            console.log('haved');
+                        }
+                        else {
+                            console.log('no');
+                            var post = new Post();
+                            var wallet = new Wallet();
+                            wallet.set('money', 0);
+                            wallet.save();
+                            post.set('userName', username);
+                            post.set('userHead', userhead);
+                            user.set('userInfo', post);
+                            user.set('user', username);
+                            post.set('wallet', wallet);
+                            post.save().then(function () {
+                                user.save().then(function (user) {
+
+                                });
+                            });
+                        }
 
 
                     }, function(error) {
@@ -115,8 +116,8 @@ router.get('/', function(req, res, next) {
             });
         }
     });
-    // var user = AV.User.current();
-    // console.log(user.get('user'));
+    var user = AV.User.current();
+    console.log(user);
 
 });
 
