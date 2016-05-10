@@ -82,7 +82,9 @@ router.get('/', function(req, res, next) {
                             var user = AV.User.current();
                             console.log(user);
 
-                            res.render('../');
+                            var url = 'http://wenwo.leanapp.cn/';
+
+                            res.redirect(url);
                         }
                         else {
                             console.log('no');
@@ -101,7 +103,9 @@ router.get('/', function(req, res, next) {
                                         var user = AV.User.current();
                                         console.log(user);
 
-                                        res.render('../');
+                                        var url = 'http://wenwo.leanapp.cn/';
+
+                                        res.redirect(url);
                                     });
                                 });
                             });
