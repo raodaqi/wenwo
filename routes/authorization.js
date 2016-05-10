@@ -50,6 +50,7 @@ router.get('/', function(req, res, next) {
             redata = JSON.parse(redata);
             var accessToken = redata.access_token;
             var openid = redata.openid;
+            var expiresIn = redata.expires_in;
             //console.log(accessToken);
             //console.log(openid);
             getUserInfo(accessToken,openid,{
@@ -65,6 +66,18 @@ router.get('/', function(req, res, next) {
                     console.log(username);
                     console.log(userhead);
                     console.log(openid);
+                    AV.User._logInWith('weixin', {
+                        'authData': {
+                            "openid": openid,
+                            "access_token": accessToken,
+                            "expires_in": expiresIn
+                        }
+                    }).then(function(user) {
+                        //返回绑定后的用户
+                        console.log(user);
+                    }, function(error) {
+                        console.log(error);
+                    });
 
                     // var data = {
                     //     username:username,
