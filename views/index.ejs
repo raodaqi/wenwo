@@ -301,16 +301,16 @@
     .amap-active-content{
 
     }
-    .amap-active .amap-marker-content{
+    .amap-active .amap-marker-list-content{
       position: absolute;
       padding-left: 50px;
       color: #393e49;
       font-size: 12px;
     }
-    .amap-active .amap-marker-content{
+    .amap-active .amap-marker-list-content{
       display: block !important;
     }
-    .amap-marker-content .up,.amap-marker-content .down{
+    .amap-marker-list-content .up,.amap-marker-list-content .down{
       height: 25px;
       line-height: 25px;
       width: 100%;
@@ -1100,35 +1100,49 @@
     function addCluster(tag) {
         if (cluster) {
             cluster.setMap(null);
+            console.log(cluster.getMarkers());
         }
         if (tag == 1) {
-            var sts = [{
-                url: "http://lbs.amap.com/wp-content/uploads/2014/06/1.png",
-                size: new AMap.Size(32, 32),
-                offset: new AMap.Pixel(-16, -30)
-            }, {
-                url: "http://lbs.amap.com/wp-content/uploads/2014/06/2.png",
-                size: new AMap.Size(32, 32),
-                offset: new AMap.Pixel(-16, -30)
-            }, {
-                url: "http://lbs.amap.com/wp-content/uploads/2014/06/3.png",
-                size: new AMap.Size(48, 48),
-                offset: new AMap.Pixel(-24, -45),
-                textColor: '#CC0066'
-            }];
-            map.plugin(["AMap.MarkerClusterer"], function() {
-                cluster = new AMap.MarkerClusterer(map, markers, {
-                  maxZoom:10,
-                  styles: sts
+            // var sts = [{
+            //     url: "http://lbs.amap.com/wp-content/uploads/2014/06/1.png",
+            //     size: new AMap.Size(32, 32),
+            //     offset: new AMap.Pixel(-16, -30)
+            // }, {
+            //     url: "http://lbs.amap.com/wp-content/uploads/2014/06/2.png",
+            //     size: new AMap.Size(32, 32),
+            //     offset: new AMap.Pixel(-16, -30)
+            // }, {
+            //     url: "http://lbs.amap.com/wp-content/uploads/2014/06/3.png",
+            //     size: new AMap.Size(48, 48),
+            //     offset: new AMap.Pixel(-24, -45),
+            //     textColor: '#CC0066'
+            // }];
+            // map.plugin(["AMap.MarkerClusterer"], function() {
+            //     cluster = new AMap.MarkerClusterer(map, markers, {
+            //       maxZoom:10,
+            //       styles: sts
+            //     });
+            //     // cluster.setMaxZoom(20);
+            // });
+             map.plugin(["AMap.MarkerClusterer"], function() {
+                cluster = new AMap.MarkerClusterer(map, markers,{
+                  maxZoom:20
                 });
-                // cluster.setMaxZoom(20);
+                console.log(cluster.getMarkers());
             });
+
         } else {
+            // map.plugin(["AMap.MarkerClusterer"], function() {
+            //     cluster = new AMap.MarkerClusterer(map, markers,{
+            //       maxZoom:20,
+            //       styles: sts
+            //     });
+            // });
             map.plugin(["AMap.MarkerClusterer"], function() {
                 cluster = new AMap.MarkerClusterer(map, markers,{
-                  maxZoom:20,
-                  styles: sts
+                  maxZoom:20
                 });
+                console.log(cluster.getMarkers());
             });
         }
 
@@ -1194,8 +1208,8 @@
 
     // $("#container").on("click",".amap-marker",function(){
     //   // $(this).addClass("amap-active");
-    //   $(".amap-marker-content").remove();
-    //   var div = '<div class="amap-marker-content"><div class="up">火锅<div class="up-price-right">0.8元</div></div><div class="down">这个真的很好吃</div></div>';
+    //   $(".amap-marker-list-content").remove();
+    //   var div = '<div class="amap-marker-list-content"><div class="up">火锅<div class="up-price-right">0.8元</div></div><div class="down">这个真的很好吃</div></div>';
     //   $(this).children(".amap-icon").after(div);
     //   if($(this).hasClass("amap-active")){
     //     $(this).removeClass("amap-active");
@@ -1206,18 +1220,20 @@
     // })
     $("#container").on("click",".amap-icon",function(){
       // $(this).addClass("amap-active");
-      console.log(extData);
+      console.log($(this));
+
+      // return ;
 
       $(".amap-active").css("-webkit-transform", "rotate(0deg) !important;");
-      $(".amap-marker-content").remove();
-      // var div = '<div class="amap-marker-content" style="display:none"><div class="up">火锅<div class="up-price-right">0.8元</div></div><div class="down">这个真的很好吃</div></div>';
+      $(".amap-marker-list-content").remove();
+      // var div = '<div class="amap-marker-list-content" style="display:none"><div class="up">火锅<div class="up-price-right">0.8元</div></div><div class="down">这个真的很好吃</div></div>';
       var askTagStr = JSON.parse(extData.askTagStr);
       console.log(askTagStr[0]);
       var tagList = '';
       for(var i = 0; i < askTagStr.length;i++){
         tagList += '<div class="type-item">'+askTagStr[i]+'</div>' 
       }
-      var div = '<div class="amap-marker-content" style="display:none"><div class="up">'+tagList+'<div class="up-price-right">￥'+extData.price+'</div></div><div class="down">'+extData.askReason+'</div></div>';
+      var div = '<div class="amap-marker-list-content" style="display:none"><div class="up">'+tagList+'<div class="up-price-right">￥'+extData.price+'</div></div><div class="down">'+extData.askReason+'</div></div>';
       $(this).after(div);
       if($(this).parent().hasClass("amap-active")){
         $(this).parent().removeClass("amap-active");
@@ -1239,7 +1255,8 @@
       $(".amap-active").css("-webkit-transform", "rotate(0deg) !important;");
     })
 
-    $("#container").on("click",".amap-marker-content",function(e){
+    $("#container").on("click",".amap-marker-list-content",function(e){
+      // console.log($(this));
       $.popup('.ask-detail');
       console.log("test");
       $(".amap-active").css("-webkit-transform", "rotate(90deg) !important;");
@@ -1415,10 +1432,10 @@
       $("#detail-content  .card-content-inner").empty();
       $("#detail-content  .card-content-inner").append(detailContent);
 
+      $(".wenwo-get").attr("data-askId",askId);
       if(isfree == "1"){
         $(".wenwo-get").text("我要收藏");
       }
-      
 
       var data = {
         ask_id   : askId,
@@ -1432,14 +1449,16 @@
         url : "/ask/askdetail",
         success : function(result){
           console.log(result);
-          if(result.nobuy){
-
+          if(result.nobuy == "1"){
+            $(".ask-get, #address-content").hide();
+            $(".wenwo-get").show();
           }else{
-
+            $(".ask-get, #address-content").show();
+            $(".wenwo-get").hide();
           }
         },
         error : function(error){
-
+          $.alert('网络异常');
         }
       });
 
@@ -1481,6 +1500,49 @@
       // $("#detail-content  .card-content-inner").append(detailContent);
       // getMap(lng,lat);
     }
+
+    //购买
+    $(".wenwo-get").on("click",function(){
+      console.log($(".wenwo-get").attr("data-askId"));
+      var data = {
+        username : "test",
+        ask_id   : $(".wenwo-get").attr("data-askId")
+      }
+      $.confirm('你确定要购买吗?', '小问提醒',
+        function () {
+          $.ajax({
+            type : "POST",
+            data: data,
+            dataType: "json",
+            url : "/hode/get",
+            success : function(result){
+              console.log(result);
+              $.alert('购买成功');
+              $(".ask-get, #address-content").show();
+              $(".wenwo-get").hide();
+            },
+            error : function(error){
+              $.alert('网络异常');
+            }
+          });
+        },
+        function () {
+          // $.alert('You clicked Cancel button');
+        }
+      ); 
+      // $.ajax({
+      //   type : "POST",
+      //   data: data,
+      //   dataType: "json",
+      //   url : "/hode/get",
+      //   success : function(result){
+      //     console.log(result);
+      //   },
+      //   error : function(error){
+      //   }
+      // });
+    })
+
 
     //监听移动获取城市信息
     map.getCity(function(data) {

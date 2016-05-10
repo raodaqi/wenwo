@@ -9,7 +9,7 @@
     <link rel="icon" type="image/x-icon" href="/img/logo.png" media="screen">
     <title>问我——像个当地人一样去旅游</title>
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1462625853_3470094.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1462906314_8605804.css">
     <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
     <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=cb84c659c88a7cc83b935a009b3a9cfd&plugin=AMap.Geocoder"></script>
     <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script> 
@@ -61,7 +61,7 @@
     .recommend-reason,.tag-content,.result-detail,.add-content,.price-content{
       padding: 10px;
     }
-    #reason,#detail{
+    #reason,#detail,.de-show{
       width: 100%;
       box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
       border: 1px solid #ccc;
@@ -70,7 +70,7 @@
       border-radius:3px;
       padding:5px 10px;
     }
-    #reason,#detail{
+    #reason,#detail,.de-show{
       background-color: #efc553;
       height: 15rem;
       border-radius: 0.5rem;
@@ -88,8 +88,10 @@
         color: gray;
     }
 
-    #detail{
-      min-height: 300px;
+    #detail,.de-show{
+      height: 150px;
+      word-break:break-all;
+      overflow: scroll;
     }
     .ww-typeHelper,.add-search {
         position: relative;
@@ -126,6 +128,7 @@
         text-transform: lowercase;
         width: 6rem;
         max-width: 100%;
+        padding-left: 25px;
     }
     .search-input{
       background-color: #fff;
@@ -397,6 +400,34 @@
       display: block;
       color: #000;
     }
+    .ww_typeHelper-input-left{
+      position: absolute;
+      color: #efc553;
+      font-size: 20px;
+      top:-6px;
+      left:3px;
+    }
+    .help{
+      display: block;
+      float: left;
+      font-size: 25px;
+      color: #efc553;
+      line-height: 30px;
+      margin-left: 20px;
+    }
+    .button-start{
+      color: #3d4145 !important;
+      background-color: #efc553 !important;
+    }
+    .help-content{
+      padding: 10px;
+      font-size: 13px;
+      color: #efc553;
+      display: none;
+    }
+    #detail-content .card-content-inner,#reason-content .card-content-inner{
+      word-break:break-all;
+    }
     /*.bar{
       height: 1.5rem;
     }*/
@@ -640,7 +671,8 @@
           <!-- <textarea name="tag" id="tag"></textarea> -->
           <div class="ww-typeHelper">
             <div class="ww-typeHelper-left">
-              <input type="text" data-role="ww_typeHelper-input" class="ww-typeHelper-input" placeholder="标签，如：php 可使用逗号,分号;" style="width: 20em;">
+              <div class="ww_typeHelper-input-left iconfont icon-bianji"></div>
+              <input type="text" data-role="ww_typeHelper-input" class="ww-typeHelper-input" placeholder="" style="width: 20em;">
             </div>
             <div class="ww_typeHelper-button">确定</div>          
           </div>
@@ -709,14 +741,14 @@
         <h1 class='title'>信息详情</h1>
       </header>
       <div class="content">
-        <div class="hidden-content row">
+        <!-- <div class="hidden-content row">
           <div class="col-50">
             <a href="#" class="button  button-fill button-success button-start">隐藏开始</a>
           </div>
           <div class="col-50">
             <a href="#" class="button  button-fill button-success button-end">隐藏结束</a>
           </div>
-        </div>
+        </div> -->
         <div class="result-detail">
           <textarea name="detail" id="detail" placeholder="1.描述你分享的信息的详细情况
 
@@ -726,6 +758,13 @@
         <div class="de-show"></div>
 
         </div>
+        <div class="other-content">
+          <div class="help iconfont icon-bangzhu"></div>
+          <div class="hidden-content">
+            <a href="#" class="button  button-fill button-success button-start">隐藏</a>
+          </div>
+        </div>
+        <div class="help-content">描述你分享的信息的详细情况,分享的内容默认是显示的,隐藏的内容通过“##隐藏内容##”方式隐藏.</div>
         
       </div>
 
@@ -884,6 +923,8 @@
         }); 
     }
 
+    //
+
     //初始化localStorage数据
     function initLocationData(){
       //初始化主题类型
@@ -922,7 +963,8 @@
           console.log(tag[i]);
           var spanContent = spanContent + '<span class="type-item">'+tag[i]+'</span>';
         }
-        $(".ww-typeHelper-input").before(spanContent);
+        // $(".ww-typeHelper-input").before(spanContent);
+        $(".ww-typeHelper-left").before(spanContent);
         $("#tag-content .card-content-inner").append(spanContent);
       }
 
@@ -937,6 +979,26 @@
       console.log(localStorage.detail);
       if(localStorage.detail){
         $("#detail").val(localStorage.detail);
+
+        var str = {};
+        str = localStorage.detail.split("##");
+        var show = '';
+        var hidden = '';
+        var detail = ''
+        for(var i = 0; i < str.length; i++){
+          if(i%2){
+            var starLen = ''
+            for(var j = 0; j < str[i].length; j++){
+              starLen += '*';
+            }
+            detail += '<span class="hidden-text">'+starLen+'</span>';
+          }else{
+            detail += str[i];
+          }
+        }
+        $(".de-show").empty();
+        $(".de-show").append(detail);
+
         $("#detail-content .card-content-inner").text(localStorage.detail);
       }
 
@@ -1089,7 +1151,17 @@
       if(href){
         $.router.load("#"+href);
       }
-      
+    })
+
+    //帮助
+    $(".help").on("click",function(){
+      if($(".help-content").hasClass("help-content-active")){
+        $(".help-content").hide();
+        $(".help-content").removeClass("help-content-active");
+      }else{
+        $(".help-content").show();
+        $(".help-content").addClass("help-content-active");
+      }
     })
 
     //选择主题
@@ -1203,7 +1275,26 @@
         $("#tag-content .card-content-inner").append(span);
         setlocalStorageTag();
       }
+    })
 
+    $(".ww_typeHelper-button").on("click",function(){
+      console.log($(".ww-typeHelper-input").val());
+      var text = $(".ww-typeHelper-input").val();
+      var span = '<span class="type-item">'+text+'</span>';
+      $(".ww-typeHelper-left").before(span);
+      $(".ww-typeHelper-input").val('');
+      $("#tag-content .card-content-inner").append(span);
+
+      // if(text.indexOf(";")!=-1 || text.indexOf("；")!=-1 || text.indexOf(",")!=-1 || text.indexOf("，")!=-1){
+      //   var text = text.substr(0,text.length-1);
+      //   console.log(text);
+      //   var span = '<span class="type-item">'+text+'</span>';
+      //   // $("this").before(span);
+      //   $(".ww-typeHelper-left").before(span);
+      //   $(this).val('');
+      //   $("#tag-content .card-content-inner").append(span);
+      //   setlocalStorageTag();
+      // }
     })
 
     //点击二级标签删除主页二级标签
@@ -1299,6 +1390,14 @@
       $(".de-show").append(detail);
       localStorage["detail"] = $("#detail").val();
     })
+
+    $("#detail").focus(function(){
+      $("#detail,.de-show").css("height","100px !important");
+    });
+
+    $("#detail").blur(function(){
+      $("#detail,.de-show").css("height","150px !important");
+    });
 
     //更换价格的时候调用
     $("#price-picker").on("input change",function(){
