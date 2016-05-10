@@ -75,26 +75,26 @@ router.get('/', function(req, res, next) {
                         }
                     }).then(function(user) {
                         //返回绑定后的用户
-                        //console.log(user);
-                        if (user.get('user') != "") {
-
-                        }
-                        else {
-                            var post = new Post();
-                            var wallet = new Wallet();
-                            wallet.set('money', 0);
-                            wallet.save();
-                            post.set('userName', username);
-                            post.set('userHead', userhead);
-                            user.set('userInfo', post);
-                            user.set('user', username);
-                            post.set('wallet', wallet);
-                            post.save().then(function () {
-                                user.save().then(function (user) {
-
-                                });
-                            });
-                        }
+                        console.log(user);
+                        // if (user.get('user') != "") {
+                        //
+                        // }
+                        // else {
+                        //     var post = new Post();
+                        //     var wallet = new Wallet();
+                        //     wallet.set('money', 0);
+                        //     wallet.save();
+                        //     post.set('userName', username);
+                        //     post.set('userHead', userhead);
+                        //     user.set('userInfo', post);
+                        //     user.set('user', username);
+                        //     post.set('wallet', wallet);
+                        //     post.save().then(function () {
+                        //         user.save().then(function (user) {
+                        //
+                        //         });
+                        //     });
+                        // }
 
 
                     }, function(error) {
