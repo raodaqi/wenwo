@@ -44,7 +44,7 @@ router.get('/', function(req, res, next) {
     var code = req.param('code');
     console.log(code);
     
-    getAccessToken(appid, secret, code ,{
+    getAccessToken(appid, secret, res,code ,{
         success:function (result) {
             //console.log(result);
             var redata = result.data;
@@ -162,7 +162,7 @@ router.get('/', function(req, res, next) {
     // });
 //}
 
-function getAccessToken(appid, secret, code, callback) {
+function getAccessToken(appid, secret, code, res, callback) {
     AV.Cloud.httpRequest({
         url: 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='+appid+'&secret='+secret+'&code='+code+'&grant_type=authorization_code ',
         success: function(httpResponse) {
