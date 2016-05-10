@@ -5,7 +5,8 @@ var http = require('http');
 var router = require('express').Router();
 var AV = require('leanengine');
 var request = require('request');
-
+var Post = AV.Object.extend('UserInfo');
+var Wallet = AV.Object.extend('Wallet');
 // `AV.Object.extend` 方法一定要放在全局变量，否则会造成堆栈溢出。
 // 详见： https://leancloud.cn/docs/js_guide.html#对象
 
@@ -33,7 +34,7 @@ router.get('/wx', function(req, res, next) {
     urlApi = encodeURIComponent(urlApi);
     var url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+urlApi+'&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect';
 
-    res.redirect(url)
+    res.redirect(url);
 });
 
 router.get('/', function(req, res, next) {
@@ -74,7 +75,28 @@ router.get('/', function(req, res, next) {
                         }
                     }).then(function(user) {
                         //返回绑定后的用户
-                        console.log(user);
+                        //console.log(user);
+                        if (user.get('user') != "") {
+
+                        }
+                        else {
+                            var post = new Post();
+                            var wallet = new Wallet();
+                            wallet.set('money', 0);
+                            wallet.save();
+                            post.set('userName', username);
+                            post.set('userHead', userhead);
+                            user.set('userInfo', post);
+                            user.set('user', username);
+                            post.set('wallet', wallet);
+                            post.save().then(function () {
+                                user.save().then(function (user) {
+
+                                });
+                            });
+                        }
+
+
                     }, function(error) {
                         console.log(error);
                     });
@@ -92,6 +114,8 @@ router.get('/', function(req, res, next) {
             });
         }
     });
+    var user = AV.User.current();
+    console.log(user.get('user'));
 
 });
 
