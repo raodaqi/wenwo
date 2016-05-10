@@ -86,7 +86,7 @@ body{
 }
 .information_name{
 	height: 80px;
-	width: 42%;
+	width: 41%;
 	float: left;
 	border-bottom:1px solid #EAEAEA;
 	/*border-right:1px solid #EAEAEA;*/
@@ -127,7 +127,7 @@ body{
 	box-sizing: border-box;
 	font-size: 15px;
 }
-.information_state{
+.information_state,.information_time{
 	height: 40px;
 	width: 31%;
 	/*border-right: 1px solid #EAEAEA;*/
@@ -138,6 +138,14 @@ body{
 	text-align: right;
 	padding-right: 6px;
 }
+.left{
+	text-align: right;
+	overflow:hidden;
+	white-space: nowrap;
+	padding-left:6px; 
+	width: 80px;
+	margin-left: 8px;
+}
 .num{
 	width: 50%;
 	height: 40px;
@@ -146,13 +154,18 @@ body{
 .information_Purchase_number{
 	height: 40px;
 	float: right;
-	width: 31%;
+	width: 34%;
 	line-height: 40px;
 	/*padding-left: 20px;*/
 	box-sizing: border-box;
 	font-size: 14px;
-	text-align: right;
+	text-align: left;
 	padding-right: 6px;
+}
+.information_Purchase_number span{
+	border-radius: 40%;
+	background-color: #efc553;
+	color: white;
 }
 .right{
 	float: right;
@@ -199,6 +212,12 @@ body{
 .buttons-tab .button.active{
 	color: #efc553;
 	border-color: #efc553;
+}
+.blue{
+	color: blue;
+}
+.red{
+	color: red;
 }
 </style>
 <body>
@@ -281,9 +300,9 @@ function getStaus(staus) {
         function getTitle(type) {
             var temp = "";
             switch (type) {
-                case "1": temp = "吃";break;
-                case "2": temp = "住";break;
-                case "3": temp = "行";break;
+                case "1": temp = "美食";break;
+                case "2": temp = "住宿";break;
+                case "3": temp = "出行";break;
                 case "4": temp = "购物";break;
                 case "5": temp = "游玩";break;
                 case "6": temp = "防坑";break;
@@ -295,7 +314,7 @@ function getMyask(){
 	 $.ajax({
         type : "get",
         dataType: "json",
-        data:{username:"admin",staus:4},
+        data:{username:"hanqi",staus:4},
         url : "/ask/myask",
         success : function(result){
           console.log(result);
@@ -306,30 +325,55 @@ function getMyask(){
                 var tab = "";
                 console.log(temp);
                 for (var j = 0; j < temp.length; j++) {
-                	tab = tab +'<span>'+ temp[j].tag_name+'</span>';
+                	tab = tab +'<span>'+ temp[j]+'</span>';
                    }
                    var type = result.data[i].askType;
                    var strs = type.split(",")
                    console.log(strs);
-                   var price = result.data[i].askPrice;
                    var buyNum = result.data[i].buyNum;
-                var str = '<div class="information"><div class="information_img"><img src="/img/u28.png"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state">已审核</div><div class="information_Purchase_number">购买人数：'+buyNum+'人</div></div>';
+                   var time = result.data[i].createdAt;
+                   var price = result.data[i].askPrice;
+                   if(price == 0)
+                   {
+                   	var str = '<div class="information"><div class="information_img"><img src="/img/u28.png"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+'&nbsp;&nbsp;'+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_time"><div class="left">'+time+'</div></div><div class="information_Purchase_number">收藏人数：<span>'+buyNum+'</span>人</div></div>';
+                   }
+                   else{
+                   var str = '<div class="information"><div class="information_img"><img src="/img/u28.png"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+'&nbsp;&nbsp;'+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_time"><div class="left">'+time+'</div></div><div class="information_Purchase_number">购买人数：<span>'+buyNum+'</span>人</div></div>';
+                   }
           		$("#content1").append(str);
             }
             else {
-            	var tag = result.data[i].askTagStr;
-                var temp = JSON.parse(tag);
-                var tab = "";
-                console.log(temp);
-                for (var j = 0; j < temp.length; j++) {
-                	tab = tab +'<span>'+ temp[j].tag_name+'</span>';
-                   }
-                   var type = result.data[i].askType;
-                   var strs = type.split(",")
-                   console.log(strs);
-                   var price = result.data[i].askPrice;
-                var str = '<div class="information"><div class="information_img"><img src="/img/u28.png"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state">'+getStaus(result.data[i].staus)+'</div></div>';
-          		$("#content2").append(str);
+            	if(result.data[i].staus == 2){
+            		var tag = result.data[i].askTagStr;
+	                var temp = JSON.parse(tag);
+	                var tab = "";
+	                console.log(temp);
+	                for (var j = 0; j < temp.length; j++) {
+	                	tab = tab +'<span>'+ temp[j]+'</span>';
+	                   }
+	                   var type = result.data[i].askType;
+	                   var strs = type.split(",")
+	                   console.log(strs);
+	                   var price = result.data[i].askPrice;
+	                var str = '<div class="information"><div class="information_img"><img src="/img/u28.png"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state blue">'+getStaus(result.data[i].staus)+'</div></div>';
+	          		$("#content2").append(str);
+            	}
+            	if(result.data[i].staus == 5)
+            	{            		
+	            	var tag = result.data[i].askTagStr;
+	                var temp = JSON.parse(tag);
+	                var tab = "";
+	                console.log(temp);
+	                for (var j = 0; j < temp.length; j++) {
+	                	tab = tab +'<span>'+ temp[j]+'</span>';
+	                   }
+	                   var type = result.data[i].askType;
+	                   var strs = type.split(",")
+	                   console.log(strs);
+	                   var price = result.data[i].askPrice;
+	                var str = '<div class="information"><div class="information_img"><img src="/img/u28.png"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state red">'+getStaus(result.data[i].staus)+'</div></div>';
+	          		$("#content2").append(str);
+          		}
             }
           }
           },

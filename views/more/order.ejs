@@ -89,6 +89,7 @@ body{
 	font-size: 15px;
 	box-sizing: border-box;
 	font-size: 15px;
+	font-weight: 600;
 }
 .information_price{
 	height: 40px;
@@ -99,6 +100,7 @@ body{
 	line-height: 40px;
 	box-sizing: border-box;
 	font-size: 15px;
+	font-weight: 600;
 }
 .information_state{
 	height: 40px;
@@ -114,6 +116,7 @@ body{
 .information_name_word span{
 	margin-left: 4px;
 	background-color: #efc553;
+	font-weight: 600;
 }
 .information_Purchase_number{
 	height: 40px;
@@ -214,9 +217,9 @@ function getStaus(staus) {
         function getTitle(type) {
             var temp = "";
             switch (type) {
-                case "1": temp = "吃";break;
-                case "2": temp = "住";break;
-                case "3": temp = "行";break;
+                case "1": temp = "美食";break;
+                case "2": temp = "住宿";break;
+                case "3": temp = "出行";break;
                 case "4": temp = "购物";break;
                 case "5": temp = "游玩";break;
                 case "6": temp = "防坑";break;
@@ -298,7 +301,7 @@ function getHode(){
                    var price = result.data.askPrice;
                    var buyNum = result.data.buyNum;
           			var str = "";
-          			var str = '<div class="informations"><div class="information"><div class="information_img"><img src="/img/u28.png"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</span></div><div class="information_price">￥'+price+'</div></div><div class="information_state"></div><div class="information_Purchase_number"></div></div></div>';
+          			var str = '<div class="informations"><div class="information"><div class="information_img"><img src="/img/u28.png"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp;&nbsp;"+getTitle(strs[1])+':'+tab+'</span></div><div class="information_price">￥ &nbsp;'+price+'</div></div><div class="information_state"></div><div class="information_Purchase_number"></div></div></div>';
           		$("#type2").append(str);
           		// var time = result.data.createdAt;
           		// $("#order-time").append(time); 

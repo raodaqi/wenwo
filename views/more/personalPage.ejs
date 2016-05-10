@@ -3,7 +3,6 @@
 body{
 	width: 100%;
 	height: 100%;
-	background-color: white;
 }
 .titles{
 	height: 40px;
@@ -11,6 +10,8 @@ body{
 	font-size: 15px;
 	border-bottom: 1px solid #EAEAEA;
 	background-color: #efc553;
+	z-index: 9999;
+	position: fixed;
 }
 .title_word{
 	width: 50%;
@@ -36,24 +37,29 @@ body{
 }
 .user_information{
 	width: 100%;
-	height: 20%;
-	border-bottom: 1px solid #EAEAEA;
-	margin-top: 40px;
+	height: 88px;
+	/*border-bottom: 1px solid #EAEAEA;*/
+	margin-top: 10px;
+	line-height: 88px;
+	/*margin-top: 40px;*/
 }
 .user_photo{
-	width: 100px;
-	height: 100px;
-	border:1px solid #EAEAEA;
-	border-radius:50%;
+	width: 100%;
+	height: 88px;
+	/*border:1px solid #EAEAEA;
+	border-radius:50%;*/
 	float:left;
-	margin-left: 10px;
-	margin-top: -11px;
+	/*margin-left: 10px;*/
+	margin-top: 38px;
+	text-align: center;
+	line-height: 88px;
 }
 .user_photo img{
-	width: 100px;
-	height: 100px;
+	width: 88px;
+	height: 88px;
 	border-radius:50%;
 	background-size: cover;
+	line-height: 88px;
 }
 .user_informations{
 	width: 145px;
@@ -63,13 +69,16 @@ body{
 }
 .user_name{
 	height: 40px;
-	width: 145px;
+	line-height: 40px;
+	text-align: center;
+	width: 100%;
+	/*border-bottom: 1px solid #EAEAEA;*/
 }
-.other_information{
+/*.other_information{
 	width: 145px;
 	height: 40px;
-}
-.edit_icon{
+}*/
+/*.edit_icon{
 	width: 60px;
 	height: 45px;
 	float: right;
@@ -81,8 +90,8 @@ body{
 .details{
 	width: 100%;
 	height: 38px;
-}
-.order{
+}*/
+/*.order{
 	width: 50%;
 	height: 38px;
 	border-bottom: 1px solid #EAEAEA;
@@ -90,44 +99,46 @@ body{
 	float: left;
 	line-height: 38px;
 	padding-left: 5%;
-}
+}*/
 .order_word{
 	font-size: 17px;
-	margin-left: 16px;
+	margin-left: 30px;
 	float: left;
 	margin-top: 3px;
 }
-.share{
+/*.share{
 	width: 50%;
 	height: 38px;
 	border-bottom: 1px solid #EAEAEA;
 	float: left;
 	line-height: 38px;
 	padding-left: 5%;
-}
+}*/
 .share_word{
 	font-size: 17px; 
-	margin-left: 16px;
+	margin-left: 27px;
 	float: left;
 	margin-top: 3px
 }
 .order_photo{
-	font-size: 20px;
+	font-size: 23px;
 	height: 38px;
 	margin-top: 2px;
 	float: left;
-	margin-left: 8px;
+	margin-left: 23px;
 }
 .share_photo{
-	font-size: 24px;
+	font-size: 26px;
 	height: 38px;
 	float: left;
+	margin-left: 23px;
 }
-.money_box,.invite_friends,.watch_us,.contact_us,.about_us{
+.money_box,.invite_friends,.watch_us,.contact_us,.about_us,.order,.share{
 	width: 100%;
 	height: 40px;
-	border-bottom: 1px solid #EAEAEA;
+	/*border-bottom: 1px solid #EAEAEA;*/
 	line-height: 40px;
+	color: white;
 }
 .left{
 	height: 40px;
@@ -161,7 +172,7 @@ body{
 /*	display: inline-block;*/
 }
 .money{
-	margin-left: 80px;
+	margin-left: 40px;
 	font-size: 17px;
 	float: left;
 	line-height: 40px;
@@ -177,7 +188,7 @@ body{
 }
 .invite_friends_word{
 	font-size: 17px;
-	margin-left: 29px;
+	margin-left: 30px;
 	line-height: 40px;
 	height: 40px;
 	float: left;
@@ -224,6 +235,13 @@ body{
 	height: 40px;
 	float: left;
 }*/
+.contences{
+	background: #E7BF55 url("/img/sideBG-01.png") no-repeat;
+    background-size: 100%;
+    width: 100%;
+    height: 100%;
+    /*margin-top: -10px;*/
+}
 </style>
 <body>
 <% include footer.ejs %>
@@ -235,36 +253,39 @@ body{
 	</div>
 	<div class="title_word">个人界面</div>
 </div>
+<div class="contences">
 <div class="user_information">
 	<div class="user_photo">
 		<img src="/img/test.jpg">
 	</div>
-	<div class="user_informations">
+	</div>
 		<div class="user_name"></div>
-		<div class="other_information">大学生&nbsp;&nbsp;&nbsp;90后</div>
-	</div>
-	<div class="edit_icon">
+		<!-- <div class="other_information">大学生&nbsp;&nbsp;&nbsp;90后</div> -->
+	<!-- <div class="edit_icon">
 		<div class="iconfont icon-bianji edit"></div>
-	</div>
-</div>
-<div class="details">
-	<div class="order">
-		<div class="iconfont icon-nanrentouxiang order_photo"></div>
-		<div class="order_word">我的订单</div>
-	</div>
-	<div class="share">
-		<div class="iconfont icon-rentouliangren share_photo"></div>
-		<div class="share_word">我的分享</div>
-	</div>
-</div>
-<div class="money_box">
+	</div> -->
+<div class="money_box" style="margin-top: 100px;">
 	<div class="left">
 	<div class="iconfont icon-qianbao money_box_icon"></div>
-	<div class="money_box_word">钱包</div>
+	<div class="money_box_word">我的钱包</div>
 	<div class="money">￥</div>
 	</div>
 	<div class="iconfont icon-you right_icon" style="padding-left: 33px;"></div>
 </div>
+<div class="order">
+		<div class="left">
+		<div class="iconfont icon-nanrentouxiang order_photo"></div>
+		<div class="order_word">我的订单</div>
+		</div>
+	<div class="iconfont icon-you right_icon" style="padding-left: 32px;"></div>
+	</div>
+<div class="share">
+		<div class="left">
+		<div class="iconfont icon-rentouliangren share_photo"></div>
+		<div class="share_word">我的分享</div>
+		</div>
+	<div class="iconfont icon-you right_icon" style="padding-left: 32px;"></div>
+	</div>
 <div class="invite_friends">
 	<div class="left">
 	<div class="iconfont icon-followee invite_friends_icon"></div>
@@ -286,6 +307,7 @@ body{
 	</div>
 	<div class="iconfont icon-you right_icon"></div>
 </div>
+	</div>
 <!-- <div class="about_us">
 	<div class="left">
 	<div class="iconfont icon-guanyu about_us_icon"></div>

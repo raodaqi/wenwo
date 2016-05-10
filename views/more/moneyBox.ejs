@@ -128,7 +128,7 @@ body{
 		<button id="withdraw">提现</button>
 		</div>
 		<div class="btn_recharge">
-			<button>充值</button>
+			<button id="recharge">充值</button>
 		</div>
 	</div>
 <script type="text/javascript">
@@ -137,6 +137,9 @@ $(".zuo").click(function(){
 	})
 $("#withdraw").click(function(){
 	window.location.href="/more/withdraw";
+})
+$("#recharge").click(function(){
+	window.location.href="/more/recharge";
 })
 getMywallet();
 function getMywallet(){

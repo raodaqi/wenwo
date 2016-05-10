@@ -38,6 +38,12 @@ router.get('/personal-data', function(req, res, next) {
 router.get('/information-presentation', function(req, res, next) {
   res.render('more/information-presentation');
 });
+router.get('/recharge', function(req, res, next) {
+  res.render('more/recharge');
+});
+router.get('/present-rules', function(req, res, next) {
+  res.render('more/present-rules');
+});
 // 新增 Todo 项目
 router.post('/', function(req, res, next) {
   var content = req.body.content;
