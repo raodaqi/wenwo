@@ -152,6 +152,7 @@ router.get('/askdetail', function(req, res, next) {
                         var result = {
                             code : 200,
                             data : post,
+                            nobuy : '0',
                             message : 'operation successed'
                         }
                         res.send(result);
@@ -167,7 +168,7 @@ router.get('/askdetail', function(req, res, next) {
                     post.attributes.askContentHide = '****';
                     var result = {
                         code : 200,
-                        nobuy : '1', 
+                        nobuy : '1',
                         data : post,
                         message : 'operation successed'
                     }
