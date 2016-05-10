@@ -76,9 +76,11 @@ router.get('/', function(req, res, next) {
                     }).then(function(user) {
                         //返回绑定后的用户
                         //console.log(user);
-                        res.render(user);
+
                         if (user.get('user') != "") {
                             console.log('haved');
+                            var user = AV.User.current();
+                            console.log(user);
                         }
                         else {
                             console.log('no');
@@ -93,7 +95,8 @@ router.get('/', function(req, res, next) {
                             post.set('wallet', wallet);
                             post.save().then(function () {
                                 user.save().then(function (user) {
-
+                                    var user = AV.User.current();
+                                    console.log(user);
                                 });
                             });
                         }
@@ -116,8 +119,7 @@ router.get('/', function(req, res, next) {
             });
         }
     });
-    var user = AV.User.current();
-    console.log(user);
+
 
 });
 
