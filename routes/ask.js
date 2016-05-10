@@ -167,6 +167,7 @@ router.get('/askdetail', function(req, res, next) {
                     post.attributes.askContentHide = '****';
                     var result = {
                         code : 200,
+                        nobuy : '1', 
                         data : post,
                         message : 'operation successed'
                     }
