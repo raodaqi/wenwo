@@ -44,7 +44,7 @@ router.get('/', function(req, res, next) {
     var code = req.param('code');
     console.log(code);
     
-    getAccessToken(appid, secret, res,code ,{
+    getAccessToken(appid, secret,code, res,{
         success:function (result) {
             //console.log(result);
             var redata = result.data;
@@ -94,6 +94,7 @@ router.get('/', function(req, res, next) {
                                 post.set('userHead', userhead);
                                 user.set('userInfo', post);
                                 user.set('user', username);
+                                user.set('wallet', wallet);
                                 post.set('wallet', wallet);
                                 post.save().then(function () {
                                     user.save().then(function (user) {
