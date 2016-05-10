@@ -89,20 +89,22 @@ router.get('/', function(req, res, next) {
                             var post = new Post();
                             var wallet = new Wallet();
                             wallet.set('money', 0);
-                            wallet.save();
-                            post.set('userName', username);
-                            post.set('userHead', userhead);
-                            user.set('userInfo', post);
-                            user.set('user', username);
-                            post.set('wallet', wallet);
-                            post.save().then(function () {
-                                user.save().then(function (user) {
-                                    var user = AV.User.current();
-                                    console.log(user);
+                            wallet.save().then(function (wallet) {
+                                post.set('userName', username);
+                                post.set('userHead', userhead);
+                                user.set('userInfo', post);
+                                user.set('user', username);
+                                post.set('wallet', wallet);
+                                post.save().then(function () {
+                                    user.save().then(function (user) {
+                                        var user = AV.User.current();
+                                        console.log(user);
 
-                                    res.render('../');
+                                        res.render('../');
+                                    });
                                 });
                             });
+
                         }
 
 
