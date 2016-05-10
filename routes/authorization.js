@@ -12,6 +12,10 @@ var Wallet = AV.Object.extend('Wallet');
 
 
 router.get('/wx', function(req, res, next) {
+    authorize(res);
+});
+
+function authorize(res) {
     var appid = 'wx99f15635dd7d9e3c';
     var secret = '9157e84975386b6dee6a499cc639973e';
     //var url = req.body.url;
@@ -35,7 +39,7 @@ router.get('/wx', function(req, res, next) {
     var url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+urlApi+'&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect';
 
     res.redirect(url);
-});
+}
 
 router.get('/', function(req, res, next) {
     var appid = 'wx99f15635dd7d9e3c';
