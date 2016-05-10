@@ -601,6 +601,10 @@
       font-size: 35px;
       color: red;
     }
+    .ask-get,#address-content{
+      display: none;
+    }
+
     /*.themes0{
       transform:translate(-70px,20px);
     }
@@ -1308,18 +1312,18 @@
                 raiseOnDrag: false
               });
               marker.setExtData({
-                askType:result.data[i].askType,
-                id:result.data[i].objectId,
-                tagName:result.data[i].askTag,
-                askReason:result.data[i].askReason,
-                askContentShow:result.data[i].askContentShow,
-                price:result.data[i].askPrice,
-                createBy:result.data[i].createBy,
-                updatedAt:result.data[i].updatedAt,
-                lng:result.data[i].GeoX,
-                lat:result.data[i].GeoY,
-                askIsFree:result.data[i].askIsFree,
-                askTagStr:result.data[i].askTagStr
+                askType         : result.data[i].askType,
+                askId           : result.data[i].objectId,
+                tagName         : result.data[i].askTag,
+                askReason       : result.data[i].askReason,
+                askContentShow  : result.data[i].askContentShow,
+                price           : result.data[i].askPrice,
+                createBy        : result.data[i].createBy,
+                updatedAt       : result.data[i].updatedAt,
+                lng             : result.data[i].GeoX,
+                lat             : result.data[i].GeoY,
+                askIsFree       : result.data[i].askIsFree,
+                askTagStr       : result.data[i].askTagStr
               })
               markers.push(marker);
 
@@ -1353,7 +1357,8 @@
 
     function setDetail(extData){
       console.log(extData);
-      var askType       = extData.askType,//主题类型
+      var askId         = extData.askId
+          askType       = extData.askType,//主题类型
           tag           = extData.tagName,//二级标签
           askTagStr     = extData.askTagStr,//二级标签
           reason        = extData.askReason,//推荐理由
@@ -1409,6 +1414,34 @@
       }
       $("#detail-content  .card-content-inner").empty();
       $("#detail-content  .card-content-inner").append(detailContent);
+
+      if(isfree == "1"){
+        $(".wenwo-get").text("我要收藏");
+      }
+      
+
+      var data = {
+        ask_id   : askId,
+        username : "test"
+      }
+      //判断是否购买
+      $.ajax({
+        type : "GET",
+        data: data,
+        dataType: "json",
+        url : "/ask/askdetail",
+        success : function(result){
+          console.log(result);
+          if(result.nobuy){
+
+          }else{
+
+          }
+        },
+        error : function(error){
+
+        }
+      });
 
 
       //设置地点

@@ -969,6 +969,7 @@
             // detail = detail.replace(address[0]+address[1]+address[2]+address[3],"");
             var replace = ""+address.province+address.city+address.district+address.township+"";
             detail = detail.replace(replace,"");
+            address.detail = detail;
             address = JSON.stringify(address);
             console.log(address);
             $("#address-content .item-inner").attr("data-address",address);
@@ -1546,7 +1547,7 @@
           // detail = detail.replace(address[0]+address[1]+address[2]+address[3],"");
           var replace = ""+address.province+address.city+address.district+address.township+"";
           detail = detail.replace(replace,"");
-
+          address.detail = detail;
           var address = JSON.stringify(address);
           console.log(address);
           $("#address-content .item-inner").attr("data-address",address);
@@ -1665,6 +1666,7 @@
 
             var replace = ""+address.province+address.city+address.district+address.township+"";
             detail = detail.replace(replace,"");
+            address.detail = detail;
             console.log(detail);
             var address = JSON.stringify(address);
             console.log(address);
