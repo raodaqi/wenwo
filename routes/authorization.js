@@ -76,6 +76,7 @@ router.get('/', function(req, res, next) {
                     }).then(function(user) {
                         //返回绑定后的用户
                         console.log(user);
+                        res.render(user);
                         // if (user.get('user') != "") {
                         //
                         // }
@@ -114,8 +115,8 @@ router.get('/', function(req, res, next) {
             });
         }
     });
-    var user = AV.User.current();
-    console.log(user.get('user'));
+    // var user = AV.User.current();
+    // console.log(user.get('user'));
 
 });
 
