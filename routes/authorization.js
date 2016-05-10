@@ -54,7 +54,7 @@ router.get('/', function(req, res, next) {
             var expiresIn = redata.expires_in;
             //console.log(accessToken);
             //console.log(openid);
-            getUserInfo(accessToken,openid,{
+            getUserInfo(accessToken,openid, res,{
                 success:function (res) {
                     console.log(res.data);
                     var rdata = res.data;
@@ -176,7 +176,7 @@ function getAccessToken(appid, secret, code, res, callback) {
     });
 }
 
-function getUserInfo(access_token, openid, callback) {
+function getUserInfo(access_token, openid, res,callback) {
     AV.Cloud.httpRequest({
         url: 'https://api.weixin.qq.com/sns/userinfo?access_token='+access_token+'&openid='+openid+'&lang=zh_CN',
         success: function(httpResponse) {
