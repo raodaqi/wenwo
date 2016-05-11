@@ -604,7 +604,23 @@
     .ask-get,#address-content{
       display: none;
     }
-
+    /*.amap-marker-content{
+      width: 50px;
+      height: 50px;
+      text-align: center;
+      line-height: 50px;
+      background-color: #efc553;
+      border-radius: 50%;
+    }
+    .amap-marker-content div{
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      background-color: white;
+      text-align: center;
+      background: url(/img/themes-01.png) no-repeat center center scroll;
+      background-size: cover;
+    }*/
     /*.themes0{
       transform:translate(-70px,20px);
     }
@@ -637,15 +653,15 @@
         </div>
         <div class="list-content">
           <div class="list-ul">
-            <div class="list-li" data-href="/more/personalPage">
+            <div class="list-li" data-href="/more/moneyBox">
               <span class="iconfont icon-qianbao"></span>
               <label>我的钱包</label>
             </div>
-            <div class="list-li" data-href="/more/personalPage">
+            <div class="list-li" data-href="/more/order">
               <span class="iconfont icon-gouwuche"></span>
               <label>我的订单</label>
             </div>
-            <div class="list-li" data-href="/more/personalPage">
+            <div class="list-li" data-href="/more/share">
               <span class="iconfont icon-paper-airplane"></span>
               <label>我的分享</label>
             </div>
@@ -653,11 +669,11 @@
               <span class="iconfont icon-jiahaoyou"></span>
               <label>邀请好友</label>
             </div>
-            <div class="list-li" data-href="/more/personalPage">
+            <div class="list-li" data-href="/more/watch-us">
               <span class="iconfont icon-guanzhu"></span>
               <label>关注我们</label>
             </div>
-            <div class="list-li" data-href="/more/personalPage">
+            <div class="list-li" data-href="/more/contact-us">
               <span class="iconfont icon-dianhua"></span>
               <label>联系我们</label>
             </div>
@@ -681,25 +697,25 @@
     <div class="header-label">
       <div class="header-more iconfont icon-more"></div>
       <div class="header-theme">
-        <div class="themes0 theme-li">
+        <div class="themes0 theme-li" data-type="1">
           <img src="/img/themes-02.png">
         </div>
-        <div class="themes1 theme-li">
+        <div class="themes1 theme-li" data-type="2">
           <img src="/img/themes-03.png">
         </div>
-        <div class="themes2 theme-li">
+        <div class="themes2 theme-li" data-type="3">
           <img src="/img/themes-04.png">
         </div>
-        <div class="themes3 theme-li">
+        <div class="themes3 theme-li" data-type="4">
           <img src="/img/themes-05.png">
         </div>
-        <div class="themes4 theme-li">
+        <div class="themes4 theme-li" data-type="5">
           <img src="/img/themes-06.png">
         </div>
-        <div class="themes5 theme-li">
+        <div class="themes5 theme-li" data-type="6">
           <img src="/img/themes-07.png">
         </div>
-        <div class="themes6 theme-li">
+        <div class="themes6 theme-li" data-type="0">
           <img src="/img/themes-01.png">
         </div>
       </div>
@@ -1021,12 +1037,44 @@
         $(this).removeClass("clicked");
       }
     })
+
+    // AMap.event.addListener(cluster,'click',function(e){
+    //   alert('aaa');
+    // });
+
     $(".theme-li").on("click",function(){
-      console.log($(this).children("img"));
+
+      $(".amap-marker-content").click();
+      console.log(cluster);
+
+      // $.each(cluster,function(){
+      //   console.log(this);
+      // })
+
+      var type1 = $(this).attr("data-type");
+      var type2 = $(".themes6").attr("data-type");
       var src1 = $(this).children("img").attr("src");
       var src2 = $(".themes6 img").attr("src");
       $(".themes6 img").attr("src",src1);
       $(this).children("img").attr("src",src2);
+      $(".themes6").attr("data-type",type1);
+      $(this).attr("data-type",type2);
+      console.log(type1);
+      var clicked = $(".header-theme").hasClass("clicked");
+
+      //主题筛选
+      $.each(markers,function(i,v){
+        var ifExit = this.getExtData().askType.indexOf(type1);
+        // console.log(ifExit);
+        if(clicked){
+          if(ifExit == "-1" && type1 != "0"){
+            // console.log($(this));
+            this.hide();
+          }else{
+            this.show();
+          }
+        }
+      })
     })
 
     //  $(".header-theme").on("click",function(){
@@ -1100,7 +1148,6 @@
     function addCluster(tag) {
         if (cluster) {
             cluster.setMap(null);
-            console.log(cluster.getMarkers());
         }
         if (tag == 1) {
             // var sts = [{
@@ -1126,9 +1173,16 @@
             // });
              map.plugin(["AMap.MarkerClusterer"], function() {
                 cluster = new AMap.MarkerClusterer(map, markers,{
-                  maxZoom:20
+                  maxZoom:20,
+                  zoomOnClick:false,
+                  style:sts
                 });
                 console.log(cluster.getMarkers());
+
+                //聚合点击事件
+                cluster.on("click",function(clusterContent){
+                  console.log(clusterContent);
+                })
             });
 
         } else {
@@ -1138,11 +1192,34 @@
             //       styles: sts
             //     });
             // });
+            var sts = [{
+                url: "/img/themes-01.png",
+                size: new AMap.Size(40, 40),
+                offset: new AMap.Pixel(-16, -30)
+            }, {
+                url: "/img/themes-01.png",
+                size: new AMap.Size(40, 40),
+                offset: new AMap.Pixel(-16, -30)
+            }, {
+                url: "/img/themes-01.png",
+                size: new AMap.Size(40, 40),
+                offset: new AMap.Pixel(-16, -30)
+            }];
+                // cluster.setMaxZoom(20);
+            // });
             map.plugin(["AMap.MarkerClusterer"], function() {
                 cluster = new AMap.MarkerClusterer(map, markers,{
-                  maxZoom:20
+                  maxZoom:20,
+                  zoomOnClick:false,
+                  styles:sts
                 });
                 console.log(cluster.getMarkers());
+
+                //聚合点击事件
+                cluster.on("click",function(clusterContent){
+                  console.log(clusterContent);
+
+                })
             });
         }
 
@@ -1391,7 +1468,7 @@
       console.log(askType);
       for(var i = 0; i < askType.length; i++){
         typeText = formatType(askType[i]);
-        if(i == 2){
+        if(i == 1){
           typeText = formatType(askType[i-1]) +","+ formatType(askType[i]);
         }
       }
