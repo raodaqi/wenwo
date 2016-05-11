@@ -611,16 +611,26 @@
       line-height: 50px;
       background-color: #efc553;
       border-radius: 50%;
-    }
-    .amap-marker-content div{
-      position: absolute;
-      top: 5px;
-      left: 5px;
-      background-color: white;
-      text-align: center;
-      background: url(/img/themes-01.png) no-repeat center center scroll;
-      background-size: cover;
     }*/
+    .amap-marker-content div{
+      border-radius: 50%;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      color: white !important;
+      font-size: 20px !important;
+      font-weight: bold; 
+    }
+    .marker-num{
+      position: absolute;
+      bottom:0;
+      right: 0;
+      width: 10px;
+      height: 10px;
+      color: white;
+      background-color: #efc553;
+      border-radius: 50%;
+    }
     /*.themes0{
       transform:translate(-70px,20px);
     }
@@ -1182,6 +1192,8 @@
                 //聚合点击事件
                 cluster.on("click",function(clusterContent){
                   console.log(clusterContent);
+                  console.log(map.getZoom());
+
                 })
             });
 
@@ -1193,15 +1205,15 @@
             //     });
             // });
             var sts = [{
-                url: "/img/themes-01.png",
+                url: "/img/hotPot.jpg",
                 size: new AMap.Size(40, 40),
                 offset: new AMap.Pixel(-16, -30)
             }, {
-                url: "/img/themes-01.png",
+                url: "/img/hotPot.jpg",
                 size: new AMap.Size(40, 40),
                 offset: new AMap.Pixel(-16, -30)
             }, {
-                url: "/img/themes-01.png",
+                url: "/img/hotPot.jpg",
                 size: new AMap.Size(40, 40),
                 offset: new AMap.Pixel(-16, -30)
             }];
@@ -1218,7 +1230,12 @@
                 //聚合点击事件
                 cluster.on("click",function(clusterContent){
                   console.log(clusterContent);
-
+                  console.log(map.getZoom());
+                  if(map.getZoom() < 19){
+                    map.zoomIn();
+                  }else{
+                    console.log(clusterContent);
+                  }
                 })
             });
         }
@@ -1295,6 +1312,25 @@
     //     $(this).addClass("amap-active");
     //   }
     // })
+
+    map.on("zoomstart",function(){
+      console.log("123");
+      
+      $.each($(".amap-marker-content"),function(i,v){
+        console.log($(this).children("div").text());
+        if($(this).children("div").text()){
+          // var numDiv = '<div class="marker-num">'+$(this).children("div").text()+'</div>';
+          // $(this).append(numDiv);
+          // console.log("success");
+          $(this).css("background","red");
+          // setTimeout(function(){
+          //   var numDiv = '<div class="marker-num">2</div>';
+          //   $(this).append(numDiv);
+          //   console.log("success");
+          // }, 1000);
+        }
+      })
+    })
     $("#container").on("click",".amap-icon",function(){
       // $(this).addClass("amap-active");
       console.log($(this));
@@ -1643,5 +1679,7 @@
     //     map.addControl(new AMap.ToolBar());
     //   });
     // }
+
+
   </script>
 </html>
