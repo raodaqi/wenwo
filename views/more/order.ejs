@@ -4,6 +4,7 @@ body{
 	width: 100%;
 	height: 100%;
 	background-color: white;
+	overflow: auto;
 }
 .titles{
 	height: 40px;
@@ -129,7 +130,6 @@ body{
 	text-align: right;
 	padding-right: 6px;
 }
-
 .content{
 	top: 40px;
 }
@@ -140,6 +140,11 @@ body{
 .buttons-tab .button.active{
 	color: #efc553;
 	border-color: #efc553;
+}
+.collect-concent{
+	height: 80px;
+	line-height: 80px;
+	margin-left: 10px;
 }
 </style>
 <body>
@@ -264,7 +269,7 @@ function getHode(){
                    // var price = result.data.askPrice;
                    // var buyNum = result.data.buyNum;
           		var str = "";
-          		var str = '<div class="informations"><div class="information"><div class="information_img"><img src="/img/u28.png"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price"></div></div><div class="information_state"></div><div class="information_Purchase_number"></div></div></div>';
+          		var str = '<div class="informations"><div class="information"><div class="information_img"><img src="/img/u28.png"></div><div class="information_name"><div class="information_name_word collect-concent">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price"></div></div><div class="information_state"></div><div class="information_Purchase_number"></div></div></div>';
           		$("#type1").append(str);
           		console.log(str);
           		// var time = result.data.createdAt;
