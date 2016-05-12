@@ -169,9 +169,10 @@ function unified(appid, mchid, body, notifyUrl, ip, total, secret, callback) {
 }
 
 function getSign(appid, mchid, nonce, body, notifyUrl, ip, total, secret) {
-    var stringA = 'appid='+appid+'&mch_id='+mchid+'&nonce_str='+nonce+'&body='+body+'&trade_type=JSAPI&notify_url='+notifyUrl+'&spbill_create_ip='+ip+'&total_fee='+total;
+    var stringA = 'appid='+appid+'&body='+body+'&mch_id='+mchid+'&nonce_str='+nonce+'&notify_url='+notifyUrl+'&spbill_create_ip='+ip+'&total_fee='+total+'&trade_type=JSAPI';
     var stringSignTemp = stringA+'&key='+secret;
     var sign = MD5(stringSignTemp).toUpperCase();
+    console.log("sign:"+sign);
     return sign;
 }
 
