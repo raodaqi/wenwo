@@ -61,7 +61,15 @@ app.use(function(req, res, next) {
 });
 
 app.get('/', function(req, res) {
-  res.render('index', { currentTime: new Date() });
+  var user = AV.User.current();
+  console.log(user);
+  if (user == null) {
+    authorize(res);
+  }
+  else  {
+    res.render('index', { user: user });
+  }
+
 });
 
 app.get('/test', function(req, res) {
@@ -115,5 +123,16 @@ app.use(function(err, req, res, next) { // jshint ignore:line
     error: {}
   });
 });
+
+function authorize(res) {
+  var appid = 'wx99f15635dd7d9e3c';
+  var secret = '9157e84975386b6dee6a499cc639973e';
+
+  var urlApi = "http://wenwo.leanapp.cn/authorization/";
+  urlApi = encodeURIComponent(urlApi);
+  var url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+urlApi+'&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect';
+
+  res.redirect(url);
+}
 
 module.exports = app;

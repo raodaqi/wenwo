@@ -2,6 +2,9 @@
  * Created by HanQi on 16/5/9.
  */
 var http = require('http');
+//var MD5 = require('MD5');
+var crypto = require('crypto');
+//var wechat = require('wechat');
 var router = require('express').Router();
 var AV = require('leanengine');
 var request = require('request');
@@ -15,31 +18,32 @@ router.get('/wx', function(req, res, next) {
     authorize(res);
 });
 
-function authorize(res) {
+router.get('/pay_t', function(req, res, next) {
     var appid = 'wx99f15635dd7d9e3c';
     var secret = '9157e84975386b6dee6a499cc639973e';
-    //var url = req.body.url;
-    // var url = req.rawHeaders[1];
-    // console.log(url);
-    // getCode(appid, url, {
-    //     success: function (result) {
-    //         console.log(result);
-    //
-    //         // var code = result.data.code;
-    //         // getAccessToken(appid,secret,code,{
-    //         //     success:function (result) {
-    //         //         console.log(result);
-    //         //     }
-    //         // });
-    //
-    //     }
-    // });
-    var urlApi = "http://wenwo.leanapp.cn/authorization/";
-    urlApi = encodeURIComponent(urlApi);
-    var url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+urlApi+'&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect';
+    var mchid = '1298230401';
+    var body = 'test';
+    var notifyUrl = 'http://wenwo.leanapp.cn/auauthorization/notify';
+    var ip = req.ip;
+    var total = 0.01;
+    var ip = req.ip;
+    //console.log(ip.length);
+    ip = ip.substr(ip.lastIndexOf(':')+1, ip.length);
+    console.log(ip);
+    unified(appid, mchid, body, notifyUrl, ip, total, secret, {
+        success:function (result) {
+            console.log(result);
+        }
+    });
+});
 
-    res.redirect(url);
-}
+router.all('/notify', function(req, res, next) {
+    console.log('notify');
+});
+
+router.get('/pay', function(req, res, next) {
+
+});
 
 router.get('/', function(req, res, next) {
     var appid = 'wx99f15635dd7d9e3c';
@@ -138,38 +142,49 @@ router.get('/', function(req, res, next) {
 
 });
 
-// function getCode(appid, url, callback) {
-//
-//
-//     var urlApi = "http://wenwo.leanapp.cn/authorization/";
-//     urlApi = encodeURIComponent(urlApi);
-//
-//     url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+urlApi+'&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect';
+function unified(appid, mchid, body, notifyUrl, ip, total, secret, callback) {
+    var nonce = Math.ceil(Math.random()*100000000000000).toString();
+    var sign = getSign(appid, mchid, nonce, body, notifyUrl, ip, total, secret);
+    AV.Cloud.httpRequest({
+        method: 'POST',
+        url: 'https://api.mch.weixin.qq.com/pay/unifiedorder',
+        body: {
+            appid: appid,
+            mch_id: mchid,
+            nonce_str: nonce,
+            body: body,
+            trade_type : 'JSAPI',
+            notify_url : notifyUrl,
+            spbill_create_ip : ip,
+            total_fee: total,
+            sign: sign
+        },
+        success: function(httpResponse) {
+            callback.success(httpResponse);
+        },
+        error: function(httpResponse) {
+            console.error('Request failed with response code ' + httpResponse.status);
+        }
+    });
+}
 
-    // var options = {
-    //     hostname: '127.0.0.1',
-    //     port: 3000,
-    //     path: 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+urlApi+'&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect',
-    //     method: 'GET'
-    // };
-    //
-    // var req = http.request(options, function (res) {
-    //     console.log(res);
-    // });
+function getSign(appid, mchid, nonce, body, notifyUrl, ip, total, secret) {
+    var stringA = 'appid='+appid+'&mch_id='+mchid+'&nonce_str='+nonce+'&body='+body+'&trade_type=JSAPI&notify_url='+notifyUrl+'&spbill_create_ip='+ip+'&total_fee='+total;
+    var stringSignTemp = stringA+'&key='+secret;
+    var sign = MD5(stringSignTemp).toUpperCase();
+    return sign;
+}
 
+function authorize(res) {
+    var appid = 'wx99f15635dd7d9e3c';
+    var secret = '9157e84975386b6dee6a499cc639973e';
 
-    // console.log(urlApi);
-    // AV.Cloud.httpRequest({
-    //     url: 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+urlApi+'&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect',
-    //     success: function(httpResponse) {
-    //         // console.log(httpResponse);
-    //         callback.success(httpResponse);
-    //     },
-    //     error: function(httpResponse) {
-    //         console.error('Request failed with response code ' + httpResponse.status);
-    //     }
-    // });
-//}
+    var urlApi = "http://wenwo.leanapp.cn/authorization/";
+    urlApi = encodeURIComponent(urlApi);
+    var url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+urlApi+'&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect';
+
+    res.redirect(url);
+}
 
 function getAccessToken(appid, secret, code, res, callback) {
     AV.Cloud.httpRequest({
@@ -196,4 +211,9 @@ function getUserInfo(access_token, openid, res,callback) {
         }
     });
 }
+
+function MD5(text) {
+    return crypto.createHash('md5').update(text).digest('hex');
+};
+
 module.exports = router;
