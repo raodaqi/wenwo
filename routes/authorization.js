@@ -47,9 +47,9 @@ router.get('/pay', function(req, res, next) {
 
 router.get('/', function(req, res, next) {
     var appid = 'wx99f15635dd7d9e3c';
-    var secret = '9157e84975386b6dee6a499cc639973e';
+    var secret = 'myworldwenwo20151016myworldwenwo';
 
-    var code = req.body('code');
+    var code = req.body.code;
     console.log(code);
     
     getAccessToken(appid, secret,code, res,{
