@@ -90,9 +90,8 @@ router.get('/', function(req, res, next) {
                             var user = AV.User.current();
                             console.log(user);
 
-                            // var url = 'http://wenwo.leanapp.cn/';
-                            //
-                            // res.redirect(url);
+                            var url = 'http://wenwo.leanapp.cn/';
+                            res.redirect(url);
                         }
                         else {
                             console.log('no');
@@ -110,7 +109,8 @@ router.get('/', function(req, res, next) {
                                     user.save().then(function (user) {
                                         var user = AV.User.current();
                                         console.log(user);
-
+                                        var url = 'http://wenwo.leanapp.cn/';
+                                        res.redirect(url);
 
                                     });
                                 });
@@ -136,9 +136,8 @@ router.get('/', function(req, res, next) {
             });
         }
     });
-    var url = 'http://wenwo.leanapp.cn/';
-
-    res.redirect(url);
+    // var url = 'http://wenwo.leanapp.cn/';
+    // res.redirect(url);
 
 });
 
