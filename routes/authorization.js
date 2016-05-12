@@ -49,8 +49,8 @@ router.get('/', function(req, res, next) {
     var appid = 'wx99f15635dd7d9e3c';
     var secret = 'myworldwenwo20151016myworldwenwo';
 
-    var code = req.body.code;
-    console.log(code);
+    var code = req.param('code');
+    console.log("code:" +code);
     
     getAccessToken(appid, secret,code, res,{
         success:function (result) {
