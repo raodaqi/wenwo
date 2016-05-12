@@ -63,7 +63,7 @@ app.use(function(req, res, next) {
 
 app.get('/', function(req, res) {
   var user = AV.User.current();
-  console.log(user);
+  console.log("app.js   user:" + user);
   if (user == null) {
     authorize(res);
   }
