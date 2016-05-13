@@ -19,14 +19,7 @@ payargs = JSON.stringify(payargs);
 console.log(payargs.appid);
 console.log(payargs);
 function onBridgeReady(payargs){
-    WeixinJSBridge.invoke('getBrandWCPayRequest',{
-        "appId":payargs.appid,
-        "timeStamp":payargs.timeStamp,
-        "nonceStr":payargs.nonceStr,
-        "package":payargs.package,
-        "signType":payargs.signType,
-        "paySign":payargs.paySign
-    },
+    WeixinJSBridge.invoke('getBrandWCPayRequest',"<%-JSON.stringify(payargs)%>",
     function(res){
         if(res.err_msg == "get_brand_wcpay_request：ok" ) {
 
