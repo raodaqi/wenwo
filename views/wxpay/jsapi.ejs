@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>pay</title>
+</head>
+<body>
+<script>
+    WeixinJSBridge.invoke(
+            "getBrandWCPayRequest",JSON.stringify(payargs), function(res){
+                if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+                    // success
+                }
+            });
+</script>
+</body>
+</html>

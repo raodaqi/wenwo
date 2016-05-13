@@ -44,39 +44,58 @@ router.get('/pay_t', function(req, res, next) {
         authorize(res, urlApi);
     }
     getAccessToken(appid, secret, code, res, {
-        success:function (result) {
+         success:function (result) {
             var codeData = result.data;
             codeData = JSON.parse(codeData);
             var accessToken = codeData.access_token;
             var openid = codeData.openid;
             var expiresIn = codeData.expires_in;
-            var wxpay = WXPay({
-                appid: appid,
-                mch_id: mchid,
-                partner_key: key, //微信商户平台API密钥
-                pfx: fs.readFileSync('./routes/certificate/apiclient_cert.p12'), //微信商户平台证书
-            });
+        //     var wxpay = WXPay({
+        //         appid: appid,
+        //         mch_id: mchid,
+        //         partner_key: key, //微信商户平台API密钥
+        //         pfx: fs.readFileSync('./routes/certificate/apiclient_cert.p12'), //微信商户平台证书
+        //     });
+        //
+        //     wxpay.createUnifiedOrder({
+        //         body: 'test',
+        //         out_trade_no: '20151016'+Math.random().toString().substr(2, 10),
+        //         total_fee: 1,
+        //         spbill_create_ip: ip,
+        //         notify_url: 'http://wenwo.leanapp.cn/auauthorization/notify',
+        //         trade_type: 'JSAPI',
+        //         openid:  openid
+        //         //product_id: '1234567890'
+        //     }, function(err, result){
+        //         console.log(result);
+        //         var nonceStr = result.nonce_str;
+        //         var sign = result.sign;
+        //         var prepayId = result.prepay_id;
+        //
+        //     });
+             wxpay.getBrandWCPayRequestParams({
+                 openid: openid,
+                 body: '公众号支付测试',
+                 detail: '公众号支付测试',
+                 out_trade_no: '20150331'+Math.random().toString().substr(2, 10),
+                 total_fee: 1,
+                 spbill_create_ip: ip,
+                 notify_url: 'http://wenwo.leanapp.cn/auauthorization/notify'
+             }, function(err, result){
+                 // in express
+                 res.render('wxpay/jsapi', { payargs:result })
+             });
+         }
 
-            wxpay.createUnifiedOrder({
-                body: 'test',
-                out_trade_no: '20151016'+Math.random().toString().substr(2, 10),
-                total_fee: 1,
-                spbill_create_ip: ip,
-                notify_url: 'http://wenwo.leanapp.cn/auauthorization/notify',
-                trade_type: 'JSAPI',
-                openid:  openid
-                //product_id: '1234567890'
-            }, function(err, result){
-                console.log(result);
-            });
 
-        }
+
     });
 
 });
 
 router.all('/notify', function(req, res, next) {
     console.log('notify');
+
 });
 
 router.get('/pay', function(req, res, next) {
