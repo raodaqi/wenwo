@@ -13,9 +13,17 @@
 //                }
 //            });
 var payargs = "<%= payargs %>";
+payargs = JSON.stringify(payargs);
 console.log(payargs);
 function onBridgeReady(payargs){
-    WeixinJSBridge.invoke('getBrandWCPayRequest',JSON.stringify(payargs),
+    WeixinJSBridge.invoke('getBrandWCPayRequest',{
+        "appId":payargs.appid,
+        "timeStamp":payargs.timeStamp,
+        "nonceStr":payargs.nonceStr,
+        "package":payargs.package,
+        "signType":payargs.signType,
+        "paySign":payargs.paySign
+    },
     function(res){
         if(res.err_msg == "get_brand_wcpay_request：ok" ) {
 
