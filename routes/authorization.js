@@ -20,7 +20,7 @@ router.get('/wx', function(req, res, next) {
 
 router.get('/pay_t', function(req, res, next) {
     var appid = 'wx99f15635dd7d9e3c';
-    var secret = '9157e84975386b6dee6a499cc639973e';
+    var secret = 'myworldwenwo20151016myworldwenwo';
     var mchid = '1298230401';
     var body = 'test';
     var notifyUrl = 'http://wenwo.leanapp.cn/auauthorization/notify';
@@ -47,7 +47,7 @@ router.get('/pay', function(req, res, next) {
 
 router.get('/', function(req, res, next) {
     var appid = 'wx99f15635dd7d9e3c';
-    var secret = 'myworldwenwo20151016myworldwenwo';
+    var secret = '9157e84975386b6dee6a499cc639973e';
 
     var code = req.query.code;
     console.log("code:" +code);
@@ -64,7 +64,7 @@ router.get('/', function(req, res, next) {
             console.log("openid" + openid);
             getUserInfo(accessToken,openid, res,{
                 success:function (res) {
-                    console.log(res.data);
+                    //console.log(res.data);
                     var rdata = res.data;
                     rdata = JSON.parse(rdata);
                     var username = rdata.nickname;
@@ -89,6 +89,8 @@ router.get('/', function(req, res, next) {
                             console.log('haved');
                             var user = AV.User.current();
                             console.log(user);
+                            var url = 'http://wenwo.leanapp.cn/';
+                            res.redirect(url);
 
 
                         }
@@ -108,6 +110,8 @@ router.get('/', function(req, res, next) {
                                     user.save().then(function (user) {
                                         var user = AV.User.current();
                                         console.log(user);
+                                        var url = 'http://wenwo.leanapp.cn/';
+                                        res.redirect(url);
 
 
                                     });
@@ -115,8 +119,6 @@ router.get('/', function(req, res, next) {
                             });
 
                         }
-                        var url = 'http://wenwo.leanapp.cn/';
-                        res.redirect(url);
 
 
                     }, function(error) {
