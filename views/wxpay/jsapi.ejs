@@ -13,12 +13,12 @@
 //                }
 //            });
 var payargs = "<%= payargs %>";
-//console.log(payargs.appid);
+console.log(payargs.appId);
 //console.log(payargs);
 payargs = JSON.stringify(payargs);
-//console.log(payargs.appid);
+console.log(payargs.appId);
 //console.log(payargs);
-var appId = "<%= appId %>";
+
 function onBridgeReady(payargs){
     WeixinJSBridge.invoke('getBrandWCPayRequest',{
         "appId":payargs.appId,
