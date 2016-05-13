@@ -90,7 +90,7 @@ router.get('/', function(req, res, next) {
                             console.log('haved');
                             // var user = AV.User.current();
                             // console.log(user);
-                            var url = 'http://wenwo.leanapp.cn/';
+                            var url = 'http://wenwo.leanapp.cn/?username='+user.get('user');
                             resG.redirect(url);
 
 
@@ -111,7 +111,7 @@ router.get('/', function(req, res, next) {
                                     user.save().then(function (user) {
                                         // var user = AV.User.current();
                                         // console.log(user);
-                                        var url = 'http://wenwo.leanapp.cn/';
+                                        var url = 'http://wenwo.leanapp.cn/?username='+user.get('user');
                                         resG.redirect(url);
 
 

@@ -62,13 +62,12 @@ app.use(function(req, res, next) {
 });
 
 app.get('/', function(req, res) {
-  var user = AV.User.current();
-  console.log("app.js   user:" + user);
-  if (user == null) {
+  var username = req.query.username;
+  if (username == null) {
     authorize(res);
   }
   else  {
-    res.render('index', { user: user });
+    res.render('index', { user: username });
   }
 
 });
