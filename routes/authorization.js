@@ -84,7 +84,7 @@ router.get('/pay_t', function(req, res, next) {
              }, function(err, result){
                  // in express
                  console.log(result);
-                 //res.render('wxpay/jsapi', { payargs:result })
+                 res.render('wxpay/jsapi', { payargs:result })
              });
          }
 
