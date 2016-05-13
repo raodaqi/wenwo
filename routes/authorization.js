@@ -54,12 +54,12 @@ router.get('/', function(req, res, next) {
     
     getAccessToken(appid, secret,code, res,{
         success:function (result) {
-            //console.log(result);
-            var redata = result.data;
-            redata = JSON.parse(redata);
-            var accessToken = redata.access_token;
-            var openid = redata.openid;
-            var expiresIn = redata.expires_in;
+            console.log("result" + result);
+            var codeData = result.data;
+            codeData = JSON.parse(codeData);
+            var accessToken = codeData.access_token;
+            var openid = codeData.openid;
+            var expiresIn = codeData.expires_in;
             console.log("accessToken"+accessToken);
             console.log("openid" + openid);
             getUserInfo(accessToken,openid, res,{
