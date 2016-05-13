@@ -12,7 +12,7 @@
 //                    // success
 //                }
 //            });
-var payargs = location.href;
+var payargs = "<%= payargs %>";
 console.log(payargs);
 function onBridgeReady(payargs){
     WeixinJSBridge.invoke('getBrandWCPayRequest',JSON.stringify(payargs),
@@ -31,7 +31,7 @@ if (typeof WeixinJSBridge == "undefined"){
         document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
     }
 }else{
-    onBridgeReady();
+    onBridgeReady(payargs);
 }
 </script>
 </body>
