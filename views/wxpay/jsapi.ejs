@@ -14,7 +14,8 @@
 //            });
 var payargs = "<%= payargs %>";
 console.log(payargs.appid);
-payargs = JSON.parse(payargs);
+console.log(payargs);
+payargs = JSON.stringify(payargs);
 console.log(payargs.appid);
 console.log(payargs);
 function onBridgeReady(payargs){
