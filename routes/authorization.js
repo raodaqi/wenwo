@@ -12,7 +12,7 @@ var Post = AV.Object.extend('UserInfo');
 var Wallet = AV.Object.extend('Wallet');
 // `AV.Object.extend` 方法一定要放在全局变量，否则会造成堆栈溢出。
 // 详见： https://leancloud.cn/docs/js_guide.html#对象
-
+var resG;
 
 router.get('/wx', function(req, res, next) {
     authorize(res);
@@ -50,6 +50,7 @@ router.get('/', function(req, res, next) {
     var secret = '9157e84975386b6dee6a499cc639973e';
 
     var code = req.query.code;
+    resG = res;
     console.log("code:" +code);
     
     getAccessToken(appid, secret,code, res,{
@@ -89,8 +90,8 @@ router.get('/', function(req, res, next) {
                             console.log('haved');
                             // var user = AV.User.current();
                             // console.log(user);
-                            // var url = 'http://wenwo.leanapp.cn/';
-                            // res.redirect(url);
+                            var url = 'http://wenwo.leanapp.cn/';
+                            resG.redirect(url);
 
 
                         }
@@ -110,8 +111,8 @@ router.get('/', function(req, res, next) {
                                     user.save().then(function (user) {
                                         // var user = AV.User.current();
                                         // console.log(user);
-                                        // var url = 'http://wenwo.leanapp.cn/';
-                                        // res.redirect(url);
+                                        var url = 'http://wenwo.leanapp.cn/';
+                                        resG.redirect(url);
 
 
                                     });
@@ -138,10 +139,10 @@ router.get('/', function(req, res, next) {
             });
         }
     });
-    var user = AV.User.current();
-    console.log("user:" + user);
-    var url = 'http://wenwo.leanapp.cn/';
-    res.redirect(url);
+    // var user = AV.User.current();
+    // console.log("user:" + user);
+    // var url = 'http://wenwo.leanapp.cn/';
+    // res.redirect(url);
 
 });
 
