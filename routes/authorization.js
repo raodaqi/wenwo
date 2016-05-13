@@ -54,14 +54,14 @@ router.get('/', function(req, res, next) {
     
     getAccessToken(appid, secret,code, res,{
         success:function (result) {
-            console.log("result" + result.data);
+            //console.log("result" + result.data);
             var codeData = result.data;
             codeData = JSON.parse(codeData);
             var accessToken = codeData.access_token;
             var openid = codeData.openid;
             var expiresIn = codeData.expires_in;
-            console.log("accessToken"+accessToken);
-            console.log("openid" + openid);
+            //console.log("accessToken"+accessToken);
+            //console.log("openid" + openid);
             getUserInfo(accessToken,openid, res,{
                 success:function (res) {
                     //console.log(res.data);
@@ -72,9 +72,9 @@ router.get('/', function(req, res, next) {
                     var openid = rdata.openid;
                     userhead = userhead.substr(0, userhead.lastIndexOf('/'));
                     userhead += '/';
-                    console.log(username);
-                    console.log(userhead);
-                    console.log(openid);
+                    //console.log(username);
+                    //console.log(userhead);
+                    //console.log(openid);
                     AV.User._logInWith('weixin', {
                         'authData': {
                             "openid": openid,
@@ -84,13 +84,13 @@ router.get('/', function(req, res, next) {
                     }).then(function(user) {
                         //返回绑定后的用户
                         //console.log(user);
-                        console.log(user.get('user'));
+                        //console.log(user.get('user'));
                         if (user.get('user') != null) {
                             console.log('haved');
-                            var user = AV.User.current();
-                            console.log(user);
-                            var url = 'http://wenwo.leanapp.cn/';
-                            res.redirect(url);
+                            // var user = AV.User.current();
+                            // console.log(user);
+                            // var url = 'http://wenwo.leanapp.cn/';
+                            // res.redirect(url);
 
 
                         }
@@ -108,10 +108,10 @@ router.get('/', function(req, res, next) {
                                 post.set('wallet', wallet);
                                 post.save().then(function () {
                                     user.save().then(function (user) {
-                                        var user = AV.User.current();
-                                        console.log(user);
-                                        var url = 'http://wenwo.leanapp.cn/';
-                                        res.redirect(url);
+                                        // var user = AV.User.current();
+                                        // console.log(user);
+                                        // var url = 'http://wenwo.leanapp.cn/';
+                                        // res.redirect(url);
 
 
                                     });
@@ -138,8 +138,10 @@ router.get('/', function(req, res, next) {
             });
         }
     });
-    // var url = 'http://wenwo.leanapp.cn/';
-    // res.redirect(url);
+    var user = AV.User.current();
+    console.log("user:" + user);
+    var url = 'http://wenwo.leanapp.cn/';
+    res.redirect(url);
 
 });
 
