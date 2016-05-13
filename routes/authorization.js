@@ -73,7 +73,7 @@ router.get('/pay_t', function(req, res, next) {
         //         var prepayId = result.prepay_id;
         //
         //     });
-             wxpay.getBrandWCPayRequestParams({
+             WXPay.getBrandWCPayRequestParams({
                  openid: openid,
                  body: '公众号支付测试',
                  detail: '公众号支付测试',
