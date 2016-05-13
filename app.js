@@ -15,7 +15,7 @@ var ask = require('./routes/ask');
 var wallet = require('./routes/wallet');
 var hode = require('./routes/hode');
 var authorization = require('./routes/authorization');
-app.use(AV.Cloud.CookieSession({ secret: 'my secret', maxAge: 3600000, fetchUser: true }));
+
 // var wechat = require('wechat');
 // var config = {
 //   token: 'wenwo',
@@ -24,7 +24,7 @@ app.use(AV.Cloud.CookieSession({ secret: 'my secret', maxAge: 3600000, fetchUser
 // };
 
 var app = express();
-
+app.use(AV.Cloud.CookieSession({ secret: 'my secret', maxAge: 3600000, fetchUser: true }));
 // 设置 view 引擎
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
