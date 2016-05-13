@@ -42,6 +42,7 @@ router.get('/pay_t', function(req, res, next) {
     if (code == null) {
         var urlApi = "http://wenwo.leanapp.cn/authorization/pay_t";
         authorize(res, urlApi);
+        return;
     }
     getAccessToken(appid, secret, code, res, {
          success:function (result) {
