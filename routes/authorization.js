@@ -83,7 +83,7 @@ router.get('/pay_t', function(req, res, next) {
                  notify_url: 'http://wenwo.leanapp.cn/auauthorization/notify'
              }, function(err, result){
                  // in express
-                 console.log(result);
+                 console.log(JSON.stringify(result));
                  res.render('wxpay/jsapi', { payargs:result })
              });
          }
