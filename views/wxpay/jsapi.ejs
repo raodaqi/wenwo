@@ -12,21 +12,27 @@
 //                    // success
 //                }
 //            });
-var payargs = "<%= payargs %>";
-console.log(payargs.appId);
+//var payargs = "<%= payargs %>";
+//console.log(payargs.appId);
 //console.log(payargs);
-payargs = JSON.stringify(payargs);
-console.log(payargs.appId);
+//payargs = JSON.stringify(payargs);
+//console.log(payargs.appId);
 //console.log(payargs);
-
-function onBridgeReady(payargs){
+var appId = "<%= appId %>";
+var timeStamp = "<%= timeStamp %>";
+var packag = "<%= package %>";
+var signType = "<%= signType %>";
+var paySign = "<%= paySign %>";
+var nonceStr = "<%= nonceStr %>";
+console.log(appId);
+function onBridgeReady(appId,timeStamp,nonceStr,packag,signType,paySign){
     WeixinJSBridge.invoke('getBrandWCPayRequest',{
-        "appId":payargs.appId,
-        "timeStamp":payargs.timeStamp,
-        "nonceStr":payargs.nonceStr,
-        "package":payargs.package,
-        "signType":payargs.signType,
-        "paySign":payargs.paySign
+        "appId":appId,
+        "timeStamp":timeStamp,
+        "nonceStr":nonceStr,
+        "package":packag,
+        "signType":signType,
+        "paySign":paySign
     },
     function(res){
         if(res.err_msg == "get_brand_wcpay_request：ok" ) {
@@ -43,7 +49,7 @@ if (typeof WeixinJSBridge == "undefined"){
         document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
     }
 }else{
-    onBridgeReady(payargs);
+    onBridgeReady(appId,timeStamp, nonceStr, packag, signType,paySign);
 }
 </script>
 </body>
