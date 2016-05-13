@@ -13,7 +13,9 @@
 //                }
 //            });
 var payargs = "<%= payargs %>";
+console.log(payargs.appid);
 payargs = JSON.stringify(payargs);
+console.log(payargs.appid);
 console.log(payargs);
 function onBridgeReady(payargs){
     WeixinJSBridge.invoke('getBrandWCPayRequest',{
