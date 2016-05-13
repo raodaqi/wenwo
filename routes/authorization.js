@@ -60,8 +60,8 @@ router.get('/', function(req, res, next) {
             var accessToken = redata.access_token;
             var openid = redata.openid;
             var expiresIn = redata.expires_in;
-            console.log(accessToken);
-            console.log(openid);
+            console.log("accessToken"+accessToken);
+            console.log("openid" + openid);
             getUserInfo(accessToken,openid, res,{
                 success:function (res) {
                     console.log(res.data);
