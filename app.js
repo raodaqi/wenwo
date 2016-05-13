@@ -15,6 +15,7 @@ var ask = require('./routes/ask');
 var wallet = require('./routes/wallet');
 var hode = require('./routes/hode');
 var authorization = require('./routes/authorization');
+app.use(AV.Cloud.CookieSession({ secret: 'my secret', maxAge: 3600000, fetchUser: true }));
 // var wechat = require('wechat');
 // var config = {
 //   token: 'wenwo',
