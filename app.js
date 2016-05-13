@@ -67,7 +67,7 @@ app.get('/', function(req, res) {
     authorize(res);
   }
   else  {
-    res.render('index', { user: username });
+    res.render('index', { username: username });
   }
 
 });
