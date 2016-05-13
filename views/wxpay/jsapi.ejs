@@ -13,13 +13,21 @@
 //                }
 //            });
 var payargs = "<%= payargs %>";
-console.log(payargs.appid);
-console.log(payargs);
+//console.log(payargs.appid);
+//console.log(payargs);
 payargs = JSON.stringify(payargs);
-console.log(payargs.appid);
-console.log(payargs);
+//console.log(payargs.appid);
+//console.log(payargs);
+var appId = "<%= appId %>";
 function onBridgeReady(payargs){
-    WeixinJSBridge.invoke('getBrandWCPayRequest',"<%-JSON.stringify(payargs)%>",
+    WeixinJSBridge.invoke('getBrandWCPayRequest',{
+        "appId":payargs.appId,
+        "timeStamp":payargs.timeStamp,
+        "nonceStr":payargs.nonceStr,
+        "package":payargs.package,
+        "signType":payargs.signType,
+        "paySign":payargs.paySign
+    },
     function(res){
         if(res.err_msg == "get_brand_wcpay_request：ok" ) {
 
