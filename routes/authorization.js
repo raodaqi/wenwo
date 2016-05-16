@@ -148,7 +148,7 @@ router.get('/', function(req, res, next) {
                         if (user.get('user') != null) {
                             console.log('haved');
                             // var user = AV.User.current();
-                            // console.log(user);
+                            console.log(user);
                             var url = 'http://wenwo.leanapp.cn/?username='+user.get('user');
                             resG.redirect(url);
 
@@ -160,14 +160,14 @@ router.get('/', function(req, res, next) {
                             var wallet = new Wallet();
                             wallet.set('money', 0);
                             wallet.save().then(function (wallet) {
-                                post.set('userName', post.get('id'));
+                                post.set('userName', post.get('objectId'));
                                 post.set('uName', username);
                                 post.set('userHead', userhead);
-                                user.set('userInfo', post);
-                                user.set('user', post.get('id'));
-                                user.set('wallet', wallet);
                                 post.set('wallet', wallet);
-                                post.save().then(function () {
+                                post.save().then(function (post) {
+                                    user.set('userInfo', post);
+                                    user.set('user', post.get('objectId'));
+                                    user.set('wallet', wallet);
                                     user.save().then(function (user) {
                                         // var user = AV.User.current();
                                         // console.log(user);
