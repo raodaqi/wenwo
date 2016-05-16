@@ -160,6 +160,7 @@ router.get('/', function(req, res, next) {
                             var wallet = new Wallet();
                             wallet.set('money', 0);
                             wallet.save().then(function (wallet) {
+                                console.log(wallet);
                                 post.set('userName', post.objectId);
                                 post.set('uName', username);
                                 post.set('userHead', userhead);
