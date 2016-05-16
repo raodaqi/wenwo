@@ -644,6 +644,7 @@ router.get('/gettag', function (req, res, next) {
     }
     query.addDescending('times');
     query.find().then(function (list) {
+        console.log(list);
         var result = {
             code : 200,
             data : list,

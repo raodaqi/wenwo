@@ -161,13 +161,13 @@ router.get('/', function(req, res, next) {
                             wallet.set('money', 0);
                             wallet.save().then(function (wallet) {
                                 console.log(wallet);
-                                post.set('userName', post.objectId);
+                                post.set('userName', post.id);
                                 post.set('uName', username);
                                 post.set('userHead', userhead);
                                 post.set('wallet', wallet);
                                 post.save().then(function (post) {
                                     user.set('userInfo', post);
-                                    user.set('user', post.objectId);
+                                    user.set('user', post.id);
                                     user.set('wallet', wallet);
                                     user.save().then(function (user) {
                                         // var user = AV.User.current();
