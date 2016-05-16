@@ -65,7 +65,7 @@ app.use(function(req, res, next) {
 app.get('/', function(req, res) {
   var username = req.query.username;
   var user = AV.User.current();
-
+console.log(user);
   //username = decodeURI(username);
   if (user.id != username) {
     authorize(res);
