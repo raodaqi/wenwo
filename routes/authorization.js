@@ -112,7 +112,7 @@ router.get('/', function(req, res, next) {
     resG = res;
     console.log("code:" +code);
     
-    getAccessToken(appid, secret,code, res,{
+    getAccessToken(appid, secret, code, res,{
         success:function (result) {
             //console.log("result" + result.data);
             var codeData = result.data;

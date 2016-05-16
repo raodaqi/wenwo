@@ -73,6 +73,11 @@ app.get('/', function(req, res) {
 
 });
 
+app.get('/wenwo', function(req, res) {
+  var username =  req.query.username;
+  res.render('index', { username: username });
+});
+
 app.get('/test', function(req, res) {
   res.render("test");
 });
