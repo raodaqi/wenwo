@@ -64,7 +64,7 @@ app.use(function(req, res, next) {
 
 app.get('/', function(req, res) {
   var username = req.query.username;
-  username = decodeURI(username);
+  //username = decodeURI(username);
   if (username == null) {
     authorize(res);
   }
@@ -77,7 +77,7 @@ app.get('/', function(req, res) {
 
 app.get('/wenwo', function(req, res) {
   var username =  req.query.username;
-  username = decodeURI(username);
+  //username = decodeURI(username);
   res.render('index', { username: username });
 });
 
