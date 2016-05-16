@@ -138,48 +138,66 @@ router.get('/askdetail', function(req, res, next) {
     query.equalTo('userName', userName);
     query.find().then(function (resultes) {
         //console.log(resultes[0]);
-        var relation = resultes[0].relation('haved');
-        relation.query().find().then(function (list) {
-            console.log(list);
-            var flag = 0;
-            for (var i = 0; i < list.length; i++) {
-                //console.log(list[i].attributes.ask.id);
-                //console.log(askId);
-                if (list[i].attributes.ask.id == askId) {
+        if (resultes != null) {
+            var relation = resultes[0].relation('haved');
+            relation.query().find().then(function (list) {
+                console.log(list);
+                var flag = 0;
+                for (var i = 0; i < list.length; i++) {
+                    //console.log(list[i].attributes.ask.id);
+                    //console.log(askId);
+                    if (list[i].attributes.ask.id == askId) {
+                        var query = new AV.Query('AskMe');
+                        query.get(askId).then(function (post) {
+
+                            var result = {
+                                code : 200,
+                                data : post,
+                                nobuy : '0',
+                                message : 'operation successed'
+                            }
+                            res.send(result);
+                            return;
+
+                        });
+                        flag++;
+                    }
+                }
+                if (flag == 0) {
                     var query = new AV.Query('AskMe');
                     query.get(askId).then(function (post) {
-
+                        post.attributes.askContentHide = '****';
                         var result = {
                             code : 200,
+                            nobuy : '1',
                             data : post,
-                            nobuy : '0',
                             message : 'operation successed'
                         }
                         res.send(result);
                         return;
 
                     });
-                    flag++;
+
                 }
-            }
-            if (flag == 0) {
-                var query = new AV.Query('AskMe');
-                query.get(askId).then(function (post) {
-                    post.attributes.askContentHide = '****';
-                    var result = {
-                        code : 200,
-                        nobuy : '1',
-                        data : post,
-                        message : 'operation successed'
-                    }
-                    res.send(result);
-                    return;
 
-                });
+            });
+        }
+        else {
+            var query = new AV.Query('AskMe');
+            query.get(askId).then(function (post) {
+                post.attributes.askContentHide = '****';
+                var result = {
+                    code : 200,
+                    nobuy : '1',
+                    data : post,
+                    message : 'operation successed'
+                }
+                res.send(result);
+                return;
 
-            }
+            });
+        }
 
-        });
     });
 });
 
