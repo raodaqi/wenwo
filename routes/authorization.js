@@ -160,13 +160,13 @@ router.get('/', function(req, res, next) {
                             var wallet = new Wallet();
                             wallet.set('money', 0);
                             wallet.save().then(function (wallet) {
-                                post.set('userName', post.get('objectId'));
+                                post.set('userName', post.objectId);
                                 post.set('uName', username);
                                 post.set('userHead', userhead);
                                 post.set('wallet', wallet);
                                 post.save().then(function (post) {
                                     user.set('userInfo', post);
-                                    user.set('user', post.get('objectId'));
+                                    user.set('user', post.objectId);
                                     user.set('wallet', wallet);
                                     user.save().then(function (user) {
                                         // var user = AV.User.current();
