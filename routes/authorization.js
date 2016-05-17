@@ -166,17 +166,21 @@ router.get('/', function(req, res, next) {
                                 post.set('userHead', userhead);
                                 post.set('wallet', wallet);
                                 post.save().then(function (post) {
-                                    user.set('userInfo', post);
-                                    user.set('user', post.id);
-                                    user.set('wallet', wallet);
-                                    user.save().then(function (user) {
-                                        // var user = AV.User.current();
-                                        // console.log(user);
-                                        var url = 'http://wenwo.leanapp.cn/?username='+user.get('user');
-                                        resG.redirect(url);
+                                    post.set('userName', post.id);
+                                    post.save().then(function (post) {
+                                        user.set('userInfo', post);
+                                        user.set('user', post.id);
+                                        user.set('wallet', wallet);
+                                        user.save().then(function (user) {
+                                            // var user = AV.User.current();
+                                            // console.log(user);
+                                            var url = 'http://wenwo.leanapp.cn/?username='+user.get('user');
+                                            resG.redirect(url);
 
 
+                                        });
                                     });
+
                                 });
                             });
 
