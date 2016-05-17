@@ -140,6 +140,21 @@ router.get('/askdetail', function(req, res, next) {
         //console.log(resultes[0]);
         if (resultes != null) {
             var relation = resultes[0].relation('haved');
+            if (relation == null) {
+                var query = new AV.Query('AskMe');
+                query.get(askId).then(function (post) {
+                    post.attributes.askContentHide = '****';
+                    var result = {
+                        code : 200,
+                        nobuy : '1',
+                        data : post,
+                        message : 'operation successed'
+                    }
+                    res.send(result);
+                    return;
+
+                });
+            }
             relation.query().find().then(function (list) {
                 console.log(list);
                 var flag = 0;
