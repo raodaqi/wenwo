@@ -1,0 +1,54 @@
+<% include header.ejs %>
+<style type="text/css">
+body{
+	width: 100%;
+	height: 100%;
+}
+.titles{
+	height: 40px;
+	width: 100%;
+	font-size: 15px;
+	border-bottom: 1px solid #EAEAEA;
+	background-color: #efc553;
+	z-index: 9999;
+	position: fixed;
+}
+.title_word{
+	width: 50%;
+	height: 40px;
+	line-height: 40px;
+	float: left;
+	text-align: left;
+	font-size: 20px;
+	color: white;
+}
+.return{
+	width: 39%;
+	height: 40px;
+	line-height: 40px;
+	float: left;
+	padding-left: 10px;
+}
+.zuo{
+	width: 60px;
+	height: 40px;
+	font-size: 28px;
+	color: white;
+}
+</style>
+<body>
+<% include footer.ejs %>
+<div class="titles">
+	<div class="return">
+		<div class="iconfont icon-zuo zuo">
+			<a></a>
+		</div>
+	</div>
+	<div class="title_word">邀请好友</div>
+</div>
+<script type="text/javascript">
+$(".zuo").click(function(){
+		history.go(-1);
+	})
+	</script>
+</html>

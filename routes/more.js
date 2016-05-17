@@ -44,6 +44,12 @@ router.get('/recharge', function(req, res, next) {
 router.get('/present-rules', function(req, res, next) {
   res.render('more/present-rules');
 });
+router.get('/refund', function(req, res, next) {
+  res.render('more/refund');
+});
+router.get('/invite', function(req, res, next) {
+  res.render('more/invite');
+});
 // 新增 Todo 项目
 router.post('/', function(req, res, next) {
   var content = req.body.content;
