@@ -30,7 +30,7 @@ console.log(nonceStr);
 console.log(packag);
 console.log(signType);
 console.log(paySign);
-console.log("<%-JSON.stringify(payargs)%>");
+
 function onBridgeReady(appId,timeStamp,nonceStr,packag,signType,paySign){
     WeixinJSBridge.invoke('getBrandWCPayRequest',<%-JSON.stringify(payargs)%>,
     function(res){
