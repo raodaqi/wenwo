@@ -26,19 +26,12 @@ var paySign = "<%= paySign %>";
 var nonceStr = "<%= nonceStr %>";
 console.log(appId);
 console.log(timeStamp);
-console.log(packag);
-console.log(paySign);
 console.log(nonceStr);
+console.log(packag);
 console.log(signType);
+console.log(paySign);
 function onBridgeReady(appId,timeStamp,nonceStr,packag,signType,paySign){
-    WeixinJSBridge.invoke('getBrandWCPayRequest',{
-        "appId":appId,
-        "timeStamp":timeStamp,
-        "nonceStr":nonceStr,
-        "package":packag,
-        "signType":signType,
-        "paySign":paySign
-    },
+    WeixinJSBridge.invoke('getBrandWCPayRequest',"<%-JSON.stringify(payargs)%>",
     function(res){
         if(res.err_msg == "get_brand_wcpay_request：ok" ) {
 
