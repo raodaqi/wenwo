@@ -118,6 +118,14 @@
     .input-price {
         text-align: right;
     }
+    .container-show{
+        height: 280px;
+        width: 50%;
+        background-color: white;
+    }
+    .left{
+        float: left;
+    }
 </style>
 <body>
     <div class="wrap">
@@ -165,6 +173,7 @@
                     </div>
                     <div>
                         <span>地图标注:</span>
+                         <div class="container-show"id="show1"></div>
                     </div>
                     <div>
                         <span>价格:</span>
@@ -180,24 +189,40 @@
                     </ul>
                 </div>
                 <div class="content-title check-detail" style="display: none">
-                    <!--<div>-->
-                        <!--<span>主题:</span><span>asdf</span>-->
-                    <!--</div>-->
-                    <!--<div>-->
-                        <!--<span>标签:</span><span>sadfsadfsadfs</span>-->
-                    <!--</div>-->
-                    <!--<div>-->
-                        <!--<span>推荐理由:</span><span>hahahah</span>-->
-                    <!--</div>-->
-                    <!--<div>-->
-                        <!--<span>详情:</span><span>这个还可以</span>-->
-                    <!--</div>-->
-                    <!--<div>-->
-                        <!--<span>地图标注:</span><span></span>-->
-                    <!--</div>-->
-                    <!--<div>-->
-                        <!--<span>价格:</span><span>0.123</span>-->
-                    <!--</div>-->
+                    <div>
+                        <div class="left">ID:</div>
+                        <div class="detail-id"></div>
+                    </div>
+                    <div>
+                        <div class="left">状态:</div>
+                        <div class="detail-status"></div>
+                    </div>
+                    <div>
+                        <div class="left">主题:</div>
+                        <div class="detail-subject"></div>
+                    </div>
+                    <div>
+                        <div class="left">标签:</div>
+                        <div class="detail-label"></div>
+                    </div>
+                    <div>
+                        <div class="left">推荐理由:</div>
+                        <div class="detail-reason"></div>
+                    </div>
+                    <div>
+                        <div class="left">详情:</div>
+                        <div class="detail-information"></div>
+                    </div>
+                    <div>
+                        <div>地图标注:</div>
+                        <div class="container-show" id="show2"></div>
+                    </div>
+                    <div>
+                        <div class="left">价格:</div>
+                        <div class="detail-price"></div>
+                    </div>
+                    <button class='btn_pass'>通过</button>
+                    <button class='btn_not'>不通过</button>
                 </div>
                 <div class="content-title total" style="display: none">
 
@@ -221,7 +246,7 @@
         </div>
     </div>
     <script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
-
+     <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=cb84c659c88a7cc83b935a009b3a9cfd"></script>
     <script>
         $('.btn_send').on('click', function () {
             //console.log($('.check-box').find('input')[0].checked);
@@ -350,10 +375,26 @@
             $('.content-title').hide();
             if ($(this).hasClass('send-bar')) {
                 $('.send').show();
+                  map = new AMap.Map('show1', {
+                  resizeEnable: true,
+                  zoom:15,
+                  center: [localStorage.lng,localStorage.lat],
+                  buttonOffset: new AMap.Pixel(60, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+                  zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+                  buttonPosition:'LB'
+                });
             }
             else if ($(this).hasClass('check-bar')) {
                 checkAsk();
                 $('.check').show();
+                  map = new AMap.Map('show2', {
+                  resizeEnable: true,
+                  zoom:15,
+                  center: [localStorage.lng,localStorage.lat],
+                  buttonOffset: new AMap.Pixel(60, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+                  zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+                  buttonPosition:'LB'
+        });
             }
             else if ($(this).hasClass('manage-bar')) {
                 manageAsk();
@@ -389,46 +430,29 @@
                             var temp = JSON.parse(tag);
                             console.log(temp);
                         }
-
-                        var list = "\
-                            <div>\
-                                <span>ID:</span>\
-                                <span class='detail-id'>"+result.data.objectId+"</span>\
-                            </div>\
-                            <div>\
-                                <span>状态:</span>\
-                                <span>"+getStaus(result.data.staus)+"</span>\
-                            </div>\
-                            <div>\
-                                <span>主题:</span><span>"+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+"</span>\
-                            </div>\
-                            <div>\
-                                <span>标签:</span><span>";
+                        $('.detail-id').empty();
+                        $('.detail-status').empty();
+                        $('.detail-subject').empty();
+                        $('.detail-reason').empty();
+                        $('.detail-information').empty();
+                        $('.detail-price').empty();
+                        $('.detail-label').empty();
+                        $(".detail-id").append(result.data.objectId);
+                        $(".detail-status").append(getStaus(result.data.staus));
+                        var subject = getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1]);
+                        $(".detail-subject").append(subject);
+                        var label = '';
                         if (result.data.askTagStr != null) {
                             for (var i = 0; i < temp.length; i++) {
-                                list += temp[i].tag_name + "&nbsp&nbsp";
+                                label += temp[i] + "&nbsp&nbsp";
                             }
                         }
-                        list +="</span>\
-                            </div>\
-                            <div>\
-                                <span>推荐理由:</span><span>"+result.data.askReason+"</span>\
-                            </div>\
-                            <div>\
-                                <div>详情:</div>\
-                                    <div>"+result.data.askContentShow+"</div>\
-                                    <div>"+result.data.askContentHide+"</div>\
-                            </div>\
-                            <div>\
-                                <span>地图标注:</span><span></span>\
-                            </div>\
-                            <div>\
-                                <span>价格:</span><span>"+result.data.askPrice+"</span>\
-                            </div>\
-                            <button class='btn_pass'>通过</button>\
-                            <button class='btn_not'>不通过</button>";
-                        $('.check-detail').empty();
-                        $('.check-detail').append(list);
+                        console.log(label);
+                        $(".detail-label").append(label);
+                        $(".detail-reason").append(result.data.askReason);
+                        var detail = result.data.askContentShow + result.data.askContentHide;
+                        $(".detail-information").append(detail);
+                        $(".detail-price").append(result.data.askPrice);
                     }
                 },
                 error : function(){}
@@ -505,6 +529,52 @@
             }
             return newstr;
         }
+    // getMap(103.985616,30.581207);
+    // function getMap(lng,lat){
+    //   //详情地点显示
+    //   var map;
+    //   map = new AMap.Map('show2', {
+    //     resizeEnable: true,
+    //     zoom:20,
+    //     center: [lng,lat]
+    //   });
+    //   var map = new AMap.Marker({
+    //     map : map,
+    //     position: [lng,lat],
+    //     draggable: true,
+    //     cursor: 'move',
+    //     raiseOnDrag: true,
+    //     clickable:true
+    //   });
+    //   map.setMap(map);
+    // }
+    // map1 = new AMap.Map('show2', {
+    //       resizeEnable: true,
+    //       zoom:15,
+    //       center: [localStorage.lng,localStorage.lat],
+    //       buttonOffset: new AMap.Pixel(60, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+    //       zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+    //       buttonPosition:'LB'
+    //     });
+    // getMap(103.985616,30.581207);
+    // function getMap(lng,lat){
+    //   //详情地点显示
+    //   var map;
+    //   map = new AMap.Map('show1', {
+    //     resizeEnable: true,
+    //     zoom:20,
+    //     center: [lng,lat]
+    //   });
+    //   var map = new AMap.Marker({
+    //     map : map,
+    //     position: [lng,lat],
+    //     draggable: true,
+    //     cursor: 'move',
+    //     raiseOnDrag: true,
+    //     clickable:true
+    //   });
+    //   map.setMap(map);
+    // }
     </script>
 
 </body>

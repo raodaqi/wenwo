@@ -1,0 +1,83 @@
+<% include header.ejs %>
+<style type="text/css">
+body{
+	width: 100%;
+	height: 100%;
+	background-color: white;
+}
+.titles{
+	height: 40px;
+	width: 100%;
+	font-size: 15px;
+	border-bottom: 1px solid #EAEAEA;
+	background-color: #efc553;
+}
+.title_word{
+	width: 38%;
+	height: 40px;
+	line-height: 40px;
+	float: left;
+	text-align: left;
+	font-size: 20px;
+	color: white;
+}
+.return{
+	width: 49%;
+	height: 40px;
+	line-height: 40px;
+	float: left;
+	padding-left: 10px;
+}
+.zuo{
+	width: 60px;
+	height: 40px;
+	font-size: 28px;
+	color: white;
+}
+.submite{
+	width: 12%;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	color: white;
+	float: left;
+}
+.prompt{
+	height: 50px;
+	width: 100%;
+	text-align: center;
+	line-height: 50px;
+}
+.reason{
+	height: 100px;
+	width: 100%;
+	padding: 0px 10px;
+}
+#reason{
+	border-radius: 5px;
+	padding: 5px;
+	width: 100%;
+	height: 160px;
+}
+</style>
+<body>
+<% include footer.ejs %>
+<div class="titles">
+	<div class="return">
+		<div class="iconfont icon-zuo zuo">
+			<a></a>
+		</div>
+	</div>
+	<div class="title_word">退款</div>
+	<div class="submite">提交</div>
+</div>
+	<div class="prompt">我要退款</div>
+	<div class="reason">
+		<textarea id="reason" placeholder="请填写你的退款理由"></textarea>
+	</div>
+<script type="text/javascript">
+$(".zuo").click(function(){
+		history.go(-1);
+	})
+</script>
+</html>

@@ -41,7 +41,6 @@ body{
 	/*border-bottom: 1px solid #EAEAEA;*/
 	margin-top: 10px;
 	line-height: 88px;
-	/*margin-top: 40px;*/
 }
 .user_photo{
 	width: 100%;
@@ -102,7 +101,7 @@ body{
 }*/
 .order_word{
 	font-size: 17px;
-	margin-left: 30px;
+	margin-left: 26px;
 	float: left;
 	margin-top: 3px;
 }
@@ -121,7 +120,7 @@ body{
 	margin-top: 3px
 }
 .order_photo{
-	font-size: 23px;
+	font-size: 27px;
 	height: 38px;
 	margin-top: 2px;
 	float: left;
@@ -154,8 +153,8 @@ body{
 	line-height: 40px;
 }
 .money_box_icon{
-	font-size: 28px;
-	margin-left: 20px;
+	font-size: 22px;
+	margin-left: 26px;
 	line-height: 40px;
 	height: 40px;
 	float: left;
@@ -163,7 +162,7 @@ body{
 /*	display: inline-block;*/
 }
 .money_box_word{
-	margin-left: 27px;
+	margin-left: 19px;
 	font-size: 17px;
 	float: left;
 	line-height: 40px;
@@ -188,14 +187,14 @@ body{
 }
 .invite_friends_word{
 	font-size: 17px;
-	margin-left: 30px;
+	margin-left: 29px;
 	line-height: 40px;
 	height: 40px;
 	float: left;
 }
 .watch_us_icon{
 	font-size: 26px;
-	margin-left: 22px;
+	margin-left: 21px;
 	line-height: 40px;
 	height: 40px;
 	float: left;
@@ -208,8 +207,8 @@ body{
 	float: left;
 }
 .contact_us_icon{
-	font-size: 26px;
-	margin-left: 20px;
+	font-size: 22px;
+	margin-left: 22px;
 	line-height: 40px;
 	height: 40px;
 	float: left;
@@ -274,35 +273,35 @@ body{
 </div>
 <div class="order">
 		<div class="left">
-		<div class="iconfont icon-nanrentouxiang order_photo"></div>
+		<div class="iconfont icon-gouwuche order_photo"></div>
 		<div class="order_word">我的订单</div>
 		</div>
 	<div class="iconfont icon-you right_icon" style="padding-left: 32px;"></div>
 	</div>
 <div class="share">
 		<div class="left">
-		<div class="iconfont icon-rentouliangren share_photo"></div>
+		<div class="iconfont icon-feiji share_photo"></div>
 		<div class="share_word">我的分享</div>
 		</div>
 	<div class="iconfont icon-you right_icon" style="padding-left: 32px;"></div>
 	</div>
 <div class="invite_friends">
 	<div class="left">
-	<div class="iconfont icon-followee invite_friends_icon"></div>
+	<div class="iconfont icon-jiahaoyou invite_friends_icon"></div>
 	<div class="invite_friends_word">邀请好友</div>
 	</div>
 	<div class="iconfont icon-you right_icon" style="padding-left: 32px;"></div>
 </div>
 <div class="watch_us">
 	<div class="left">
-	<div class="iconfont icon-guanzhu watch_us_icon"></div>
+	<div class="iconfont icon-xin watch_us_icon"></div>
 	<div class="watch_us_word">关注我们</div>
 	</div>
 	<div class="iconfont icon-you right_icon"></div>
 </div>
 <div class="contact_us">
 	<div class="left">
-	<div class="iconfont icon-callphone-copy contact_us_icon"></div>
+	<div class="iconfont icon-dianhua contact_us_icon"></div>
 	<div class="contact_us_word">联系我们</div>
 	</div>
 	<div class="iconfont icon-you right_icon"></div>
@@ -334,6 +333,12 @@ body{
 	$(".edit_icon").click(function(){
 		window.location.href="/more/personal-data";
 	})
+	$(".invite_friends").click(function(){
+		window.location.href="/more/invite";
+	})
+	$(".zuo").click(function(){
+		history.go(-1);
+	})
 getLogin();
 function getLogin(){
 	 $.ajax({
@@ -357,7 +362,7 @@ function getUserinfo(){
 	 $.ajax({
         type : "GET",
         dataType: "json",
-        data:{username:"test"},
+        data:{username:"hanqi"},
         url : "/user/getuserinfo",
         success : function(result){
           console.log(result);
@@ -375,7 +380,7 @@ function getMywallet(){
 	$.ajax({
         type : "GET",
         dataType: "json",
-        data:{username:"test"},
+        data:{username:"hanqi"},
         url : "/wallet/mywallet",
         success : function(result){
           console.log(result);
