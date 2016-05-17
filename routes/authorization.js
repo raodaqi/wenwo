@@ -17,8 +17,8 @@ var Wallet = AV.Object.extend('Wallet');
 var resG;
 
 router.get('/wx', function(req, res, next) {
-    //var urlApi = "http://wenwo.leanapp.cn/authorization/";
-    var urlApi = "/authorization/";
+    var urlApi = "http://wenwo.leanapp.cn/authorization/";
+    //var urlApi = "/authorization/";
     authorize(res, urlApi);
 });
 
@@ -41,8 +41,8 @@ router.get('/pay_t', function(req, res, next) {
     // });
     var code = req.query.code;
     if (code == null) {
-        //var urlApi = "http://wenwo.leanapp.cn/authorization/pay_t";
-        var urlApi = "/authorization/pay_t";
+        var urlApi = "http://wenwo.leanapp.cn/authorization/pay_t";
+        //var urlApi = "/authorization/pay_t";
         authorize(res, urlApi);
         return;
     }
