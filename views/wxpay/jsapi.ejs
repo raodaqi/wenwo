@@ -54,7 +54,7 @@ if (typeof WeixinJSBridge == "undefined"){
         document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
     }
 }else{
-    onBridgeReady(appId,timeStamp, nonceStr, packag, signType,paySign);
+    onBridgeReady("<%= appId %>","<%= timeStamp %>", "<%= nonceStr %>", "<%= package %>", "<%= signType %>","<%= paySign %>");
 }
 </script>
 </body>

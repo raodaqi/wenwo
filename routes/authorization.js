@@ -17,7 +17,8 @@ var Wallet = AV.Object.extend('Wallet');
 var resG;
 
 router.get('/wx', function(req, res, next) {
-    var urlApi = "http://wenwo.leanapp.cn/authorization/";
+    //var urlApi = "http://wenwo.leanapp.cn/authorization/";
+    var urlApi = "/authorization/";
     authorize(res, urlApi);
 });
 
@@ -40,7 +41,8 @@ router.get('/pay_t', function(req, res, next) {
     // });
     var code = req.query.code;
     if (code == null) {
-        var urlApi = "http://wenwo.leanapp.cn/authorization/pay_t";
+        //var urlApi = "http://wenwo.leanapp.cn/authorization/pay_t";
+        var urlApi = "/authorization/pay_t";
         authorize(res, urlApi);
         return;
     }
@@ -84,7 +86,7 @@ router.get('/pay_t', function(req, res, next) {
                  notify_url: 'http://wenwo.leanapp.cn/auauthorization/notify'
              }, function(err, result){
                  // in express
-                 console.log(result.appId);
+                 console.log(result);
                  res.render('wxpay/jsapi', {payargs:result, appId:result.appId, timeStamp:result.timeStamp, package:result.package, signType:result.signType, paySign:result.paySign, nonceStr:result.nonceStr})
              });
          }
@@ -149,7 +151,8 @@ router.get('/', function(req, res, next) {
                             console.log('haved');
                             // var user = AV.User.current();
                             console.log(user);
-                            var url = 'http://wenwo.leanapp.cn/?username='+user.get('user');
+                            //var url = 'http://wenwo.leanapp.cn/?username='+user.get('user');
+                            var url = '/?username='+user.get('user');
                             resG.redirect(url);
 
 
@@ -174,7 +177,8 @@ router.get('/', function(req, res, next) {
                                         user.save().then(function (user) {
                                             // var user = AV.User.current();
                                             // console.log(user);
-                                            var url = 'http://wenwo.leanapp.cn/?username='+user.get('user');
+                                            //var url = 'http://wenwo.leanapp.cn/?username='+user.get('user');
+                                            var url = '/?username='+user.get('user');
                                             resG.redirect(url);
 
 
