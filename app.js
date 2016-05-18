@@ -128,7 +128,7 @@ app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
   query.equalTo('transactionId', transactionId);
   query.find().then(function (resuletes) {
     console.log(resuletes);
-    if (resuletes != null) {
+    if (resuletes != '') {
       console.log('已处理');
       return;
     }
