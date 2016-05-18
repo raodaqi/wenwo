@@ -124,61 +124,71 @@ app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
   var timeEnd = msg.time_end;
   var openid = msg.openid;
 
+  var query = new AV.Query('Order');
+  query.equalTo('nonceStr', nonceStr);
+  query.find().then(function (resuletes) {
+    if (resuletes != null) {
+      return;
+    }
+    else {
+      var order = new Order();
+      order.set('openid', openid);
+      order.set('feeType', feeType);
+      order.set('totalFee', totalFee);
+      order.set('transactionId', transactionId);
+      order.set('tradeType', tradeType);
+      order.set('nonceStr', nonceStr);
+      order.set('sign', sign);
+      order.set('bankType', bankType);
+      order.set('outTradeNo', outTradeNo);
+      order.set('timeEnd', timeEnd);
+      //order.set('userName', user.get('user'));
+      order.save().then(function (order) {
+        totalFee = parseFloat(totalFee);
+        totalFee = totalFee / 100;
+        //totalFee = totalFee.toString();
 
+        var query = new AV.Query('_User');
 
-  var order = new Order();
-  order.set('openid', openid);
-  order.set('feeType', feeType);
-  order.set('totalFee', totalFee);
-  order.set('transactionId', transactionId);
-  order.set('tradeType', tradeType);
-  order.set('nonceStr', nonceStr);
-  order.set('sign', sign);
-  order.set('bankType', bankType);
-  order.set('outTradeNo', outTradeNo);
-  order.set('timeEnd', timeEnd);
-  //order.set('userName', user.get('user'));
-  order.save().then(function (order) {
-    totalFee = parseFloat(totalFee);
-    totalFee = totalFee / 100;
-    //totalFee = totalFee.toString();
+        //query.contains('authData', openid);
+        query.find().then(function (user) {
+          //console.log(user.get('authData'));
+          for (var i = 0; i < user.length; i++) {
+            console.log(user[i].get('authData').weixin.openid);
+            if (user[i].get('authData').weixin.openid == openid) {
+              var userMa = user[i];
+              console.log(userMa.get('wallet').id);
+              order.set('userName', userMa.get('user'));
+              order.save().then(function () {
+                var walletId = userMa.get('wallet').id;
+                var query = new AV.Query('Wallet');
+                query.get(walletId).then(function (wallet) {
+                  //console.log(wallet);
+                  //console.log(wallet.get('money'));
+                  var money = parseFloat(wallet.get('money'));
+                  money += totalFee;
+                  wallet.set('money', money.toString());
+                  wallet.save().then(function () {
+                    res.success();
+                  });
 
-    var query = new AV.Query('_User');
-
-    //query.contains('authData', openid);
-    query.find().then(function (user) {
-      //console.log(user.get('authData'));
-      for (var i = 0; i < user.length; i++) {
-        console.log(user[i].get('authData').weixin.openid);
-        if (user[i].get('authData').weixin.openid == openid) {
-          var userMa = user[i];
-          console.log(userMa.get('wallet').id);
-          order.set('userName', userMa.get('user'));
-          order.save().then(function () {
-            var walletId = userMa.get('wallet').id;
-            var query = new AV.Query('Wallet');
-            query.get(walletId).then(function (wallet) {
-              //console.log(wallet);
-              //console.log(wallet.get('money'));
-              var money = parseFloat(wallet.get('money'));
-              money += totalFee;
-              wallet.set('money', money.toString());
-              wallet.save().then(function () {
-                res.success();
+                });
               });
 
-            });
-          });
+
+            }
+
+          }
+        });
+      }, function(error) {
+        // 失败
+        console.log('Error: ' + error.code + ' ' + error.message);
+      });
 
 
-        }
-
-      }
-    });
-  }, function(error) {
-    // 失败
-    console.log('Error: ' + error.code + ' ' + error.message);
+    }
   });
+
 
 
   // res.success() 向微信返回处理成功信息，res.fail()返回失败信息。
