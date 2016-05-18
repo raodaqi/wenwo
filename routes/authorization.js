@@ -97,10 +97,13 @@ router.get('/pay_t', function(req, res, next) {
 
 });
 
-router.all('/notify', function(req, res, next) {
-    console.log('notify');
+router.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
+    // 处理商户业务逻辑
 
-});
+    // res.success() 向微信返回处理成功信息，res.fail()返回失败信息。
+    console.log(meg);
+    res.success();
+}));
 
 router.get('/pay', function(req, res, next) {
 
