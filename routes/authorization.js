@@ -81,7 +81,7 @@ router.get('/pay_t', function(req, res, next) {
         //         var prepayId = result.prepay_id;
         //
         //     });
-             var notifyUrl = 'http://wenwo.leanapp.cn/auauthorization/notify';
+             var notifyUrl = 'http://wenwo.leanapp.cn/notify';
              notifyUrl = encodeURIComponent(notifyUrl);
              wxpay.getBrandWCPayRequestParams({
                  openid: openid,
@@ -104,13 +104,7 @@ router.get('/pay_t', function(req, res, next) {
 
 });
 
-router.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
-    // 处理商户业务逻辑
 
-    // res.success() 向微信返回处理成功信息，res.fail()返回失败信息。
-    console.log(meg);
-    res.success();
-}));
 
 router.get('/pay', function(req, res, next) {
 

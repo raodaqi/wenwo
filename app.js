@@ -91,6 +91,14 @@ app.post('/test', function(req, res) {
   res.send("hello");
 });
 
+router.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
+  // 处理商户业务逻辑
+
+  // res.success() 向微信返回处理成功信息，res.fail()返回失败信息。
+  console.log(meg);
+  res.success();
+}));
+
 // 可以将一类的路由单独保存在一个文件中
 app.use('/todos', todos);
 app.use('/more', more);
