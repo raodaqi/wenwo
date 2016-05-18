@@ -108,7 +108,7 @@ $(".btn_submit").click(function(){
     console.log(contacts);
 $.ajax({
             type: "post",
-            url: 'user/suggestion',
+            url: "/user/suggestion",
             data: {view:views, contact:contacts},
             dataType: "json",
             success : function(result) {

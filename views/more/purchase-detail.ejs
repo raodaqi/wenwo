@@ -44,7 +44,7 @@ body{
 	position: fixed;
 	z-index: 9999;
 	bottom: 0;
-	background-color: #efc553;
+	/*background-color: #efc553;*/
 }
 .details{
 	width: 100%;
@@ -135,6 +135,15 @@ body{
 .right{
 	float: right;
 }
+.money{
+	color: #efc553;
+	float: left;
+	width: 100%;
+	text-align: center;
+}
+.money span{
+	color: black;
+}
 </style>
 <body>
 <% include footer.ejs %>
@@ -172,7 +181,7 @@ body{
 		<div class="information_refund">fsdfsdzvfvsdfsDfsvdfsdfsdfsf</div>
 	</div>
 </div>
-	<div class="income">总的收益:￥ 2.25</div>
+	<div class="income"><div class="iconfont icon-qian money"><span>&nbsp;总的收益:￥ 2.25</span></div></div>
 <script type="text/javascript">
 $(".zuo").click(function(){
 		history.go(-1);

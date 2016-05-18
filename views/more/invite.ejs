@@ -3,6 +3,7 @@
 body{
 	width: 100%;
 	height: 100%;
+	background-color: white;
 }
 .titles{
 	height: 40px;
@@ -10,8 +11,8 @@ body{
 	font-size: 15px;
 	border-bottom: 1px solid #EAEAEA;
 	background-color: #efc553;
-	z-index: 9999;
-	position: fixed;
+	/*z-index: 9999;
+	/*position: fixed;*/
 }
 .title_word{
 	width: 50%;
@@ -35,6 +36,39 @@ body{
 	font-size: 28px;
 	color: white;
 }
+.introduce,.introduces{
+	width: 100%;
+	height: auto;
+	min-height: 200px;
+}
+.introduce button{
+	margin-left: 5%;
+	width: 90%;
+	border: 0;
+	border-radius: 5px;
+	background-color: #efc553;
+	margin-top: 50px;
+	height: 35px;
+}
+.introduce_icon{
+	height: 140px;
+	width: 100%;
+	line-height: 140px;
+	text-align: center;
+	padding: 20px 0;
+}
+.introduce_icon img{
+	height: 100px;
+	width: 100px;
+	line-height: 100px;
+}
+.introduce_word{
+	width: 100%;
+	height: auto;
+	min-height: 100px;
+	padding: 0 5%;
+	word-wrap:break-word;
+}
 </style>
 <body>
 <% include footer.ejs %>
@@ -46,9 +80,24 @@ body{
 	</div>
 	<div class="title_word">邀请好友</div>
 </div>
+	<div class="introduce">
+		<div class="introduce_icon">
+			<img src="/img/wenwo.png">
+		</div>
+		<div class="introduce_word">问我，是一个解决旅游行中，游客到达陌生地方后出现不知道怎么玩，去哪儿找美食，哪里住宿好，怎么躲避景区坑蒙拐骗等问题的产品。通过寻求“当地人”分享准确的信息，系统算法优化，排除垃圾信息，让用户方便，快捷，高效的获取旅游信息。
+		</div>
+		<button id="invite">邀请好友</button>
+	</div>
+	<div class="introduces" style="display:none;">
+		<img src="/img/add.png">
+	</div>
 <script type="text/javascript">
 $(".zuo").click(function(){
 		history.go(-1);
 	})
+$("#invite").on('click',function(){
+	$(".introduce").hide();
+	$(".introduces").show();
+})
 	</script>
 </html>

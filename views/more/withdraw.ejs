@@ -127,11 +127,21 @@ body{
 $(".zuo").click(function(){
 		history.go(-1);
 	})
-$(".submit_btn").click(function(){
-	alert("提现成功!!");
-})
 $(".wen").click(function(){
 	window.location.href="/more/present-rules";
 })
+function pay(){
+	 $.ajax({
+        type : "GET",
+        dataType: "json",
+        url : "/authorization/pay_t",
+        success : function(result){
+          alert("提现成功!!");
+          },
+      error: function(error){
+          alert(error);
+        }
+      })
+}
 </script>
 </html>
