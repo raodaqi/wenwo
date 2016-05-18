@@ -189,9 +189,9 @@
 
     map.on("zoomchange",function(){
         console.log(map.getZoom());
-        if(map.getZoom() > 16){
+        if(map.getZoom() > 14){
             map.zoomOut();
-            map.setZoom(16);
+            map.setZoom(14);
         }
     })
 }());

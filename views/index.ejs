@@ -1129,7 +1129,7 @@
     //     map.addControl(scale);
     // })
     // $.popup('.ask-detail');
-    var extData = {};
+    var extData;
     $(".header-sousuo").on("click",function(){
       $.router.load("#router1");
     });
@@ -1289,16 +1289,18 @@
     })
 
     //绑定marker点击事件
-    $("#container").on("click",".amap-icon",function(){
+    $("#container").on("touchstart",".amap-icon",function(){
       // $(this).addClass("amap-active");
+      // alert("123");
       console.log("icon");
-      console.log("icon:"+$(this));
+      console.log($(this));
 
       // return ;
 
       $(".amap-active").css("-webkit-transform", "rotate(0deg) !important;");
       $(".amap-marker-list-content").remove();
       // var div = '<div class="amap-marker-list-content" style="display:none"><div class="up">火锅<div class="up-price-right">0.8元</div></div><div class="down">这个真的很好吃</div></div>';
+
       var askTagStr = JSON.parse(extData.askTagStr);
       console.log(askTagStr[0]);
       var tagList = '';
@@ -1584,7 +1586,7 @@
       // $.closeModal(".ask-detail");
     })
     // var open = false;
-    $("#container").on("click",function(e){
+    $("#container").on("touchstart",function(e){
       console.log("ok");
       if($(".ask-detail").hasClass("modal-in")){
          $.closeModal(".ask-detail");
@@ -1592,7 +1594,7 @@
       $(".amap-active").css("-webkit-transform", "rotate(0deg) !important;");
     })
 
-    $("#container").on("click",".amap-marker-list-content",function(e){
+    $("#container").on("touchstart",".amap-marker-list-content",function(e){
       // console.log($(this));
       $.popup('.ask-detail');
       console.log("test");
@@ -1683,8 +1685,10 @@
 
               //监听marker点击事件
               marker.on("click",function(){
-                console.log(this);
+                console.log("点击marker");
                 extData =  this.getExtData();
+                console.log("点击前");
+                console.log(extData);
                 var lng = extData.lng;
                 var lat = extData.lat;
                 console.log(extData.askTagStr);
@@ -1799,6 +1803,35 @@
         }
       });
 
+      // //绑定marker点击事件
+      // $("#container").on("touchstart",".amap-icon",function(){
+      //   // $(this).addClass("amap-active");
+      //   // alert("123");
+      //   console.log("点击后");
+      //   console.log(extData);
+
+      //   // return ;
+
+      //   $(".amap-active").css("-webkit-transform", "rotate(0deg) !important;");
+      //   $(".amap-marker-list-content").remove();
+      //   // var div = '<div class="amap-marker-list-content" style="display:none"><div class="up">火锅<div class="up-price-right">0.8元</div></div><div class="down">这个真的很好吃</div></div>';
+        
+      //   var askTagStr = JSON.parse(extData.askTagStr);
+      //   console.log(askTagStr[0]);
+      //   var tagList = '';
+      //   for(var i = 0; i < askTagStr.length;i++){
+      //     tagList += '<div class="type-item">'+askTagStr[i]+'</div>' 
+      //   }
+      //   var div = '<div class="amap-marker-list-content" style="display:none"><div class="up">'+tagList+'<div class="up-price-right">￥'+extData.price+'</div></div><div class="down">'+extData.askReason+'</div></div>';
+      //   $(this).after(div);
+      //   if($(this).parent().hasClass("amap-active")){
+      //     $(this).parent().removeClass("amap-active");
+      //   }else{
+      //     $(".amap-marker").removeClass("amap-active");
+      //     $(this).parent().addClass("amap-active");
+      //   }
+      // })
+
 
       //设置地点
       var lnglatXY = [lng,lat];
@@ -1839,7 +1872,7 @@
     }
 
     //购买
-    $(".wenwo-get").on("click",function(){
+    $(".wenwo-get").on("touchstart",function(){
       console.log($(".wenwo-get").attr("data-askId"));
       var data = {
         username : "<%= username %>",
