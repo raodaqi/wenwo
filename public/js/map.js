@@ -52,16 +52,16 @@
         
     }
 
-    AMap.plugin(['AMap.ToolBar','AMap.Scale'],function(){
-        var toolBar = new AMap.ToolBar({
-            offset: new AMap.Pixel(60, 10)
-          });
-        var scale = new AMap.Scale({
-          offset: new AMap.Pixel(-5, 7)
-        });
-        map.addControl(toolBar);
-        map.addControl(scale);
-    })
+    // AMap.plugin(['AMap.ToolBar','AMap.Scale'],function(){
+    //     var toolBar = new AMap.ToolBar({
+    //         offset: new AMap.Pixel(60, 10)
+    //       });
+    //     var scale = new AMap.Scale({
+    //       offset: new AMap.Pixel(-5, 7)
+    //     });
+    //     map.addControl(toolBar);
+    //     map.addControl(scale);
+    // })
 
     //  map.on('click', function(e) {
 
@@ -129,12 +129,12 @@
       })
       AMap.event.addListener(autocomplete, "select", function(e){
          //TODO 针对选中的poi实现自己的功能
+         console.log("123");
          console.log(e.poi);
          placeSearch.setCity(e.poi.adcode);
          placeSearch.search(e.poi.name);
          $.router.load("#router");
       });
-
     });
 
     // var icon = new AMap.Icon({

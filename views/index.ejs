@@ -146,10 +146,10 @@
       border-bottom-left-radius:40px; 
     }
     .iconfont{
-        font-size: 15px;
+        font-size: 20px;
         color: #393e49;
         text-align: center;
-        line-height: 30px;
+        line-height: 40px;
     }
     .left-content .icon-x{
         font-size: 24px;
@@ -171,7 +171,7 @@
     .bar{
       position: absolute;
       z-index: 10000;
-      height: 30px;
+      height: 40px;
       width: 100%;
       background-color: #efc553;
       top: 0;
@@ -185,8 +185,8 @@
     }*/
     .header-theme{
       position: absolute;
-      width: 50px;
-      height: 50px;
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
       background-color: #efc553;
       left: 50%;
@@ -194,10 +194,10 @@
       text-align: center;
     }
     .header-sousuo{
-      font-size: 15px;
+      font-size: 20px;
       color: #393e49;
       float:right;
-      line-height: 30px;
+      line-height: 40px;
       margin-right: 10px;
     }
     .add{
@@ -217,7 +217,7 @@
     }
     .add-img{
       position: absolute;
-      width: 40px;
+      width: 50px;
       bottom: 0;
 
     }
@@ -272,11 +272,15 @@
       border:0 !important;
     }
     #container .amap-icon{
+      width: 40px !important;
+      height: 40px !important;
       border-radius: 50%;
-      border-image:url("/img/blue.png");
+      top: 5px;
+      left: 5px;
+      /*border-image:url("/img/blue.png");
       border-image-slice: 10;
       border-image-width:10px;
-      border-image-repeat:rounded;
+      border-image-repeat:rounded;*/
       
     }
     #container .amap-icon img{
@@ -343,6 +347,7 @@
       margin-top: 19px;
       background-color: #efc553;
       padding-bottom: 30px;
+      padding-top: 10px;
     }
     .card-cover{
       height:300px;
@@ -359,8 +364,9 @@
       color: red;
     }
     .theme-li{
-      width: 30px;
-      height: 30px;
+      width: 40px;
+      height: 40px;
+      font-size: 30px;
       text-align: center;
       border-radius: 50%;
       background: #efc553;
@@ -374,8 +380,8 @@
       transform: translate3d(0, 0, 0);
     }
     .theme-li img{
-      width: 20px;
-      height: 20px;
+      width: 25px;
+      height: 25px;
       border-radius: 50%;
       margin-top: 5px;
       /*padding:10px;*/
@@ -384,11 +390,11 @@
       font-size: 15px;
       color: #393e49;
       text-align: center;
-      line-height: 30px;
+      line-height: 40px;
     }
 
     .bar-nav~.content{
-      top:1.5rem;
+      top:2rem;
     }
     .searchbar{
       padding: 5px;
@@ -433,17 +439,22 @@
     }
     .address-content{
       position: absolute;
-      top:40px;
+      top:50px;
       right:0;
-      width: auto;
+      width: 58px;
       z-index: 10000;
     }
     .address-info{
+      position: absolute;
+      top: 0;
       height: 30px;
+      color: 
     }
     .address-icon{
       position: absolute;
-      left: 3px;
+      font-size: 15px;
+      left: 4px;
+      top: -4px;
     }
     .address-text{
       position: absolute;
@@ -456,7 +467,7 @@
       text-overflow: ellipsis; 
     }
     .geolocation-position img{
-      width: 30px;
+      width: 40px;
     }
     .card-header{
       min-height:2rem;
@@ -485,7 +496,6 @@
       padding:0px 4px;
       font-size: 10px;
     }
-
 
     .card{
       background-color: #f5d78c;
@@ -650,6 +660,15 @@
       transform:translate(70px,20px);
     }*/
   }
+  .bar .icon{
+    line-height: 2rem;
+  }
+  .theme-text{
+    position: absolute;
+    z-index: 1000;
+    width: 60px;
+    text-align: center;
+  }
   </style>
   <body>
   <div class="page page-current" id='router'>
@@ -707,6 +726,8 @@
     <div class="header-label">
       <div class="header-more iconfont icon-more"></div>
       <div class="header-theme">
+        <!-- <div class="theme-text">游玩</div> -->
+
         <div class="themes0 theme-li" data-type="1">
           <img src="/img/themes-02.png">
         </div>
@@ -733,9 +754,11 @@
     </div>
     
     <div class="address-content">
+      
+      <img class="address-info" src="/img/location1.png">
       <span class="address-icon iconfont icon-dingwei"></span>
       <label class="address-text"></label>
-      <img class="address-info" src="/img/location1.png">
+      
     </div>
 
     <div id="container"></div>
@@ -984,6 +1007,19 @@
   <script type="text/javascript" src="/js/common.js"></script>
   <script type="text/javascript" src="/js/map.js"></script>
   <script>
+  window.onload = function(){
+    AMap.plugin(['AMap.ToolBar','AMap.Scale'],function(){
+        var toolBar = new AMap.ToolBar({
+            offset: new AMap.Pixel(60, 10)
+          });
+        var scale = new AMap.Scale({
+          offset: new AMap.Pixel(-5, 7)
+        });
+        map.addControl(toolBar);
+        map.addControl(scale);
+    })
+  }
+
       // var map = new AMap.Map('container',{
       //       resizeEnable: true,
       //       zoom: 10,
@@ -999,6 +1035,10 @@
     var extData = {};
     $(".header-sousuo").on("click",function(){
       $.router.load("#router1");
+    });
+
+    $(".user-info .user-photo").on("click",function(){
+      window.location.href="/more/personalPage";
     })
 
     $(".hot-li").on("click",function(){
@@ -1035,12 +1075,12 @@
 
     $(".header-theme").on("click",function(){
       if(!$(this).hasClass("clicked")){
-        $(".themes0").css("-webkit-transform", "translate(-70px,20px)");
-        $(".themes1").css("-webkit-transform", "translate(-50px,50px)");
-        $(".themes2").css("-webkit-transform", "translate(-20px,70px)");
-        $(".themes3").css("-webkit-transform", "translate(20px,70px)");
-        $(".themes4").css("-webkit-transform", "translate(50px,50px)");
-        $(".themes5").css("-webkit-transform", "translate(70px,20px)");
+        $(".themes0").css("-webkit-transform", "translate(-81px,30px)");
+        $(".themes1").css("-webkit-transform", "translate(-55px,65px)");
+        $(".themes2").css("-webkit-transform", "translate(-22px,95px)");
+        $(".themes3").css("-webkit-transform", "translate(22px,95px)");
+        $(".themes4").css("-webkit-transform", "translate(55px,65px)");
+        $(".themes5").css("-webkit-transform", "translate(81px,30px)");
         $(this).addClass("clicked");
       }else{
         $(".themes0,.themes1,.themes2,.themes3,.themes4,.themes5").css("-webkit-transform", "translate(0px,0px)");
@@ -1149,6 +1189,33 @@
 
     $(".amap-sug-result").on("click",".auto-item",function(){
       $(".right-content,.left-content").css("-webkit-transform", "matrix(1, 0, 0, 1, 0, 0)");
+    })
+
+    //绑定marker点击事件
+    $("#container").on("click",".amap-icon",function(){
+      // $(this).addClass("amap-active");
+      console.log("icon");
+      console.log("icon:"+$(this));
+
+      // return ;
+
+      $(".amap-active").css("-webkit-transform", "rotate(0deg) !important;");
+      $(".amap-marker-list-content").remove();
+      // var div = '<div class="amap-marker-list-content" style="display:none"><div class="up">火锅<div class="up-price-right">0.8元</div></div><div class="down">这个真的很好吃</div></div>';
+      var askTagStr = JSON.parse(extData.askTagStr);
+      console.log(askTagStr[0]);
+      var tagList = '';
+      for(var i = 0; i < askTagStr.length;i++){
+        tagList += '<div class="type-item">'+askTagStr[i]+'</div>' 
+      }
+      var div = '<div class="amap-marker-list-content" style="display:none"><div class="up">'+tagList+'<div class="up-price-right">￥'+extData.price+'</div></div><div class="down">'+extData.askReason+'</div></div>';
+      $(this).after(div);
+      if($(this).parent().hasClass("amap-active")){
+        $(this).parent().removeClass("amap-active");
+      }else{
+        $(".amap-marker").removeClass("amap-active");
+        $(this).parent().addClass("amap-active");
+      }
     })
 
 
@@ -1312,49 +1379,75 @@
     //     $(this).addClass("amap-active");
     //   }
     // })
-
+    var timeIv;
+    var timeNum = 0;
+    var firstLen = $(".amap-marker-content").length;
     map.on("zoomstart",function(){
+      firstLen = $(".amap-marker-content").length;
+      console.log(firstLen);
+    })
+    map.on("zoomend",function(){
       console.log("123");
-      
-      $.each($(".amap-marker-content"),function(i,v){
-        console.log($(this).children("div").text());
-        if($(this).children("div").text()){
-          // var numDiv = '<div class="marker-num">'+$(this).children("div").text()+'</div>';
-          // $(this).append(numDiv);
-          // console.log("success");
-          $(this).css("background","red");
-          // setTimeout(function(){
-          //   var numDiv = '<div class="marker-num">2</div>';
-          //   $(this).append(numDiv);
-          //   console.log("success");
-          // }, 1000);
+      console.log($(".amap-marker-content"));
+      // firstLen = $(".amap-marker-content").length;
+      //这里是设置一个延时来判断是否标注加载完成
+      timeIv = setInterval(function(){
+      console.log($(".amap-marker").length);
+      timeNum++;
+      console.log(firstLen);
+      if(($(".amap-marker-content").length != firstLen) || timeNum == 100){
+          console.log($(".amap-marker-content"));
+          timeNum = 0;
+          clearInterval(timeIv);
+          $.each($(".amap-marker-content"),function(i,v){
+            var num = $(this).children("div").text();
+            console.log(num);
+          })
         }
-      })
-    })
-    $("#container").on("click",".amap-icon",function(){
-      // $(this).addClass("amap-active");
-      console.log($(this));
+      }, 10);
 
-      // return ;
-
-      $(".amap-active").css("-webkit-transform", "rotate(0deg) !important;");
-      $(".amap-marker-list-content").remove();
-      // var div = '<div class="amap-marker-list-content" style="display:none"><div class="up">火锅<div class="up-price-right">0.8元</div></div><div class="down">这个真的很好吃</div></div>';
-      var askTagStr = JSON.parse(extData.askTagStr);
-      console.log(askTagStr[0]);
-      var tagList = '';
-      for(var i = 0; i < askTagStr.length;i++){
-        tagList += '<div class="type-item">'+askTagStr[i]+'</div>' 
-      }
-      var div = '<div class="amap-marker-list-content" style="display:none"><div class="up">'+tagList+'<div class="up-price-right">￥'+extData.price+'</div></div><div class="down">'+extData.askReason+'</div></div>';
-      $(this).after(div);
-      if($(this).parent().hasClass("amap-active")){
-        $(this).parent().removeClass("amap-active");
-      }else{
-        $(".amap-marker").removeClass("amap-active");
-        $(this).parent().addClass("amap-active");
-      }
+      // if($(".amap-marker-content").length > 1){}
+      // $.each($(".amap-marker-content"),function(i,v){
+      //   console.log($(this).children("div").text());
+      //   if($(this).children("div").text()){
+      //     // var numDiv = '<div class="marker-num">'+$(this).children("div").text()+'</div>';
+      //     // $(this).append(numDiv);
+      //     // console.log("success");
+      //     $(this).css("background","red");
+      //     // setTimeout(function(){
+      //     //   var numDiv = '<div class="marker-num">2</div>';
+      //     //   $(this).append(numDiv);
+      //     //   console.log("success");
+      //     // }, 1000);
+      //   }
+      // })
     })
+
+    // $("#container,#router").on("click",".amap-icon",function(){
+    //   // $(this).addClass("amap-active");
+    //   console.log("icon");
+    //   console.log("icon:"+$(this));
+
+    //   // return ;
+
+    //   $(".amap-active").css("-webkit-transform", "rotate(0deg) !important;");
+    //   $(".amap-marker-list-content").remove();
+    //   // var div = '<div class="amap-marker-list-content" style="display:none"><div class="up">火锅<div class="up-price-right">0.8元</div></div><div class="down">这个真的很好吃</div></div>';
+    //   var askTagStr = JSON.parse(extData.askTagStr);
+    //   console.log(askTagStr[0]);
+    //   var tagList = '';
+    //   for(var i = 0; i < askTagStr.length;i++){
+    //     tagList += '<div class="type-item">'+askTagStr[i]+'</div>' 
+    //   }
+    //   var div = '<div class="amap-marker-list-content" style="display:none"><div class="up">'+tagList+'<div class="up-price-right">￥'+extData.price+'</div></div><div class="down">'+extData.askReason+'</div></div>';
+    //   $(this).after(div);
+    //   if($(this).parent().hasClass("amap-active")){
+    //     $(this).parent().removeClass("amap-active");
+    //   }else{
+    //     $(".amap-marker").removeClass("amap-active");
+    //     $(this).parent().addClass("amap-active");
+    //   }
+    // })
 
     $("#container").on("click",function(){
       // $.closeModal(".ask-detail");
@@ -1552,7 +1645,7 @@
 
       var data = {
         ask_id   : askId,
-        username : "test"
+        username : "<%= username %>"
       }
       //判断是否购买
       $.ajax({
@@ -1618,7 +1711,7 @@
     $(".wenwo-get").on("click",function(){
       console.log($(".wenwo-get").attr("data-askId"));
       var data = {
-        username : "test",
+        username : "<%= username %>",
         ask_id   : $(".wenwo-get").attr("data-askId")
       }
       $.confirm('你确定要购买吗?', '小问提醒',
