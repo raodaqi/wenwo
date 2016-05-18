@@ -5,6 +5,5 @@ start.sh
 *~
 *.swp
 .avoscloud/
-.avoscloud/
-.avoscloud/
-.avoscloud/
+npm-debug.log
+.gitignore
