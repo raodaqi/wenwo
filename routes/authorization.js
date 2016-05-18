@@ -81,21 +81,34 @@ router.get('/pay_t', function(req, res, next) {
         //         var prepayId = result.prepay_id;
         //
         //     });
-             var notifyUrl = 'http://wenwo.leanapp.cn/notify';
-             //notifyUrl = encodeURIComponent(notifyUrl);
-             wxpay.getBrandWCPayRequestParams({
-                 openid: openid,
-                 body: '公众号支付测试',
-                 detail: '公众号支付测试',
-                 out_trade_no: '20150331'+Math.random().toString().substr(2, 10),
-                 total_fee: 1,
-                 spbill_create_ip: ip,
-                 notify_url:notifyUrl
-             }, function(err, result){
-                 // in express
-                 //console.log(result);
-                 res.render('wxpay/jsapi', {payargs:result, appId:result.appId, timeStamp:result.timeStamp, package:result.package, signType:result.signType, paySign:result.paySign, nonceStr:result.nonceStr})
+             AV.User._logInWith('weixin', {
+                 'authData': {
+                     "openid": openid,
+                     "access_token": accessToken,
+                     "expires_in": expiresIn
+                 }
+             }).then(function(user) {
+                 var notifyUrl = 'http://wenwo.leanapp.cn/notify';
+                 //notifyUrl = encodeURIComponent(notifyUrl);
+                 wxpay.getBrandWCPayRequestParams({
+                     openid: openid,
+                     body: '公众号支付测试',
+                     detail: '公众号支付测试',
+                     out_trade_no: '20150331'+Math.random().toString().substr(2, 10),
+                     total_fee: 1,
+                     spbill_create_ip: ip,
+                     notify_url:notifyUrl
+                 }, function(err, result){
+                     // in express
+                     //console.log(result);
+                     res.render('wxpay/jsapi', {payargs:result, appId:result.appId, timeStamp:result.timeStamp, package:result.package, signType:result.signType, paySign:result.paySign, nonceStr:result.nonceStr})
+                 });
+
+
              });
+
+
+
          }
 
 
@@ -151,7 +164,7 @@ router.get('/', function(req, res, next) {
                         //返回绑定后的用户
                         //console.log(user);
                         //console.log(user.get('user'));
-                        
+
                         if (user.get('user') != null) {
                             console.log('haved');
                             // var user = AV.User.current();
