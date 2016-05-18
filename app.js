@@ -136,6 +136,9 @@ app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
     var user = AV.User.current();
 
     console.log(user);
+  }, function(error) {
+    // 失败
+    console.log('Error: ' + error.code + ' ' + error.message);
   });
 
   console.log(returnMsg);
