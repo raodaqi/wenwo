@@ -125,8 +125,9 @@ app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
   var openid = msg.openid;
 
   var query = new AV.Query('Order');
-  query.equalTo('nonceStr', nonceStr);
+  query.equalTo('transactionId', transactionId);
   query.find().then(function (resuletes) {
+    console.log(resuletes);
     if (resuletes != null) {
       console.log('已处理');
       return;
