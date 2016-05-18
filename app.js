@@ -1,5 +1,6 @@
 'use strict';
 var AV = require('leanengine');
+var Order = AV.Object.extend('Order');
 var domain = require('domain');
 var express = require('express');
 var path = require('path');
@@ -101,17 +102,43 @@ app.post('/test', function(req, res) {
 
 app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
   // 处理商户业务逻辑
-  console.log('notify');
-  // res.success() 向微信返回处理成功信息，res.fail()返回失败信息。
-  if (msg != null) {
+  var returnCode = req.query.return_code;
+  var returnMsg = req.query.return_msg;
+
+  if (msg != null || returnMsg != null) {
     console.log(msg);
     return;
   }
-  var returnCode = req.query.return_code;
-  var returnMsg = req.query.return_msg;
-  console.log(returnCode);
-  console.log(returnMsg);
 
+  var feeType = returnCode.fee_type;
+  var totalFee = returnCode.total_fee;
+  var transactionId = returnCode.transaction_id;
+  var tradeType = returnCode.trade_type;
+  var nonceStr = returnCode.nonce_str;
+  var sign = returnCode.nonce_str;
+  var bankType = returnCode.bank_type;
+  var outTradeNo = returnCode.out_trade_no;
+  var timeEnd = returnCode.time_end;
+  var openid = returnCode.openid;
+  if(returnCode.result_code == 'SUCCESS') {
+    var order = new Order();
+    order.set('openid', openid)
+    order.set('feeType', feeType);
+    order.set('totalFee', totalFee);
+    order.set('transactionId', transactionId);
+    order.set('tradeType', tradeType);
+    order.set('nonceStr', nonceStr);
+    order.set('sign', sign);
+    order.set('bankType', bankType);
+    order.set('outTradeNo', outTradeNo);
+    order.set('timeEnd', timeEnd);
+    order.save().then(function (order) {
+      var user = AV.User.current();
+      console.log(user);
+    });
+  }
+  console.log(returnMsg);
+  // res.success() 向微信返回处理成功信息，res.fail()返回失败信息。
   res.success();
 }));
 
