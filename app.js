@@ -125,9 +125,7 @@ app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
   var openid = msg.openid;
 
 
-  if (user == null) {
-    return;
-  }
+
   var order = new Order();
   order.set('openid', openid);
   order.set('feeType', feeType);
@@ -139,7 +137,7 @@ app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
   order.set('bankType', bankType);
   order.set('outTradeNo', outTradeNo);
   order.set('timeEnd', timeEnd);
-  order.set('userName', user.get('user'));
+  //order.set('userName', user.get('user'));
   order.save().then(function (order) {
     totalFee = parseFloat(totalFee);
     totalFee = totalFee / 100;
@@ -154,19 +152,23 @@ app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
         console.log(user[i].get('authData').weixin.openid);
         if (user[i].get('authData').weixin.openid == openid) {
           console.log(user[i].get('wallet').id);
-          var walletId = user[i].get('wallet').id;
-          var query = new AV.Query('Wallet');
-          query.get(walletId).then(function (wallet) {
-            //console.log(wallet);
-            //console.log(wallet.get('money'));
-            var money = parseFloat(wallet.get('money'));
-            money += totalFee;
-            wallet.set('money', money.toString());
-            wallet.save().then(function () {
-              res.success();
-            });
+          order.set('userName', user[i].get('user'));
+          order.save().then(function () {
+            var walletId = user[i].get('wallet').id;
+            var query = new AV.Query('Wallet');
+            query.get(walletId).then(function (wallet) {
+              //console.log(wallet);
+              //console.log(wallet.get('money'));
+              var money = parseFloat(wallet.get('money'));
+              money += totalFee;
+              wallet.set('money', money.toString());
+              wallet.save().then(function () {
+                res.success();
+              });
 
+            });
           });
+
 
         }
 
