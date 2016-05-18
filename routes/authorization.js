@@ -12,6 +12,7 @@ var AV = require('leanengine');
 var request = require('request');
 var Post = AV.Object.extend('UserInfo');
 var Wallet = AV.Object.extend('Wallet');
+var User = AV.Object.extend('_User');
 // `AV.Object.extend` 方法一定要放在全局变量，否则会造成堆栈溢出。
 // 详见： https://leancloud.cn/docs/js_guide.html#对象
 var resG;
@@ -117,6 +118,30 @@ router.get('/pay_t', function(req, res, next) {
 
 });
 
+router.get('/test', function(req, res, next) {
+    var openid = 'oQkk3s51lKWR0GiaOu82s1AQBfFg';
+    var query = new AV.Query('_User');
+
+    //query.contains('authData', openid);
+    query.find().then(function (user) {
+        //console.log(user.get('authData'));
+        for (var i = 0; i < user.length; i++) {
+            console.log(user[i].get('authData').weixin.openid);
+            if (user[i].get('authData').weixin.openid == openid) {
+                console.log(user[i].get('wallet').id);
+                var walletId = user[i].get('wallet').id;
+                var query = new AV.Query('Wallet');
+                query.get(walletId).then(function (wallet) {
+                    console.log(wallet);
+                    console.log(wallet.get('money'));
+
+                });
+
+            }
+
+        }
+    });
+});
 
 
 router.get('/pay', function(req, res, next) {
