@@ -101,7 +101,7 @@ app.post('/test', function(req, res) {
 
 app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
   // 处理商户业务逻辑
-
+  console.log('notify');
   // res.success() 向微信返回处理成功信息，res.fail()返回失败信息。
   console.log(meg);
   res.success();
