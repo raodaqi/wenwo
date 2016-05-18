@@ -153,6 +153,7 @@ app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
       wallet.set('money', money.toString());
       wallet.save().then(function () {
         console.log('ok');
+
         res.success();
       });
     });
