@@ -134,6 +134,7 @@ app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
     order.set('timeEnd', timeEnd);
     order.save().then(function (order) {
       var user = AV.User.current();
+
       console.log(user);
     });
   }
