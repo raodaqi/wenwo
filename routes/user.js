@@ -138,9 +138,17 @@ router.get('/getuserinfo', function(req, res, next) {
     //     return;
     // }
     var query = new AV.Query('_User');
-    query.equalTo('username', userName);
+    query.equalTo('user', userName);
     query.find().then(function(results) {
-        //console.log(results[0].get('userInfo').id);
+        console.log(results);
+        if(results == '') {
+            var resulte = {
+                code : 890,
+                message : '没有该用户'
+            }
+            res.send(resulte);
+            return;
+        }
         var userId =  results[0].get('userInfo').id;
         var que = new AV.Query('UserInfo');
         que.get(userId).then(function(post) {
