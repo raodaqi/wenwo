@@ -6,37 +6,17 @@
 <body>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script>
-//    WeixinJSBridge.invoke(
-//            "getBrandWCPayRequest",JSON.stringify(payargs), function(res){
-//                if(res.err_msg == "get_brand_wcpay_request:ok" ) {
-//                    // success
-//                }
-//            });
-//var payargs = "<%= payargs %>";
-//console.log(payargs.appId);
-//console.log(payargs);
-//payargs = JSON.stringify(payargs);
-//console.log(payargs.appId);
-//console.log(payargs);
-var appId = "<%= appId %>";
-var timeStamp = "<%= timeStamp %>";
-var packag = "<%= package %>";
-var signType = "<%= signType %>";
-var paySign = "<%= paySign %>";
-var nonceStr = "<%= nonceStr %>";
-console.log(appId);
-console.log(timeStamp);
-console.log(nonceStr);
-console.log(packag);
-console.log(signType);
-console.log(paySign);
-function onBridgeReady(appId,timeStamp,nonceStr,packag,signType,paySign){
+
+function onBridgeReady(){
     WeixinJSBridge.invoke('getBrandWCPayRequest',<%-JSON.stringify(payargs)%>,
     function(res){
-        console.log(res);
+        //console.log(res);
         if(res.err_msg == "get_brand_wcpay_request：ok" ) {
+            // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
+        }
+        else {
 
-        }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
+        }
     });
 }
 if (typeof WeixinJSBridge == "undefined"){
@@ -47,7 +27,7 @@ if (typeof WeixinJSBridge == "undefined"){
         document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
     }
 }else{
-    onBridgeReady("<%= appId %>","<%= timeStamp %>", "<%= nonceStr %>", "<%= package %>", "<%= signType %>","<%= paySign %>");
+    onBridgeReady();
 }
 </script>
 </body>

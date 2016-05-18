@@ -81,6 +81,8 @@ router.get('/pay_t', function(req, res, next) {
         //         var prepayId = result.prepay_id;
         //
         //     });
+             var notifyUrl = 'http://wenwo.leanapp.cn/auauthorization/notify';
+             notifyUrl = encodeURIComponent(notifyUrl);
              wxpay.getBrandWCPayRequestParams({
                  openid: openid,
                  body: '公众号支付测试',
@@ -88,10 +90,10 @@ router.get('/pay_t', function(req, res, next) {
                  out_trade_no: '20150331'+Math.random().toString().substr(2, 10),
                  total_fee: 1,
                  spbill_create_ip: ip,
-                 notify_url: 'http://wenwo.leanapp.cn/auauthorization/notify'
+                 notify_url:notifyUrl
              }, function(err, result){
                  // in express
-                 console.log(result);
+                 //console.log(result);
                  res.render('wxpay/jsapi', {payargs:result, appId:result.appId, timeStamp:result.timeStamp, package:result.package, signType:result.signType, paySign:result.paySign, nonceStr:result.nonceStr})
              });
          }
