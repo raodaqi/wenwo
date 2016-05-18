@@ -372,7 +372,7 @@
       text-align: center;
       border-radius: 50%;
       background: #efc553;
-      top:15px;
+      top:20px;
       left:10px;
       /*background-size: cover;*/
       position: absolute;
@@ -630,7 +630,7 @@
       height: 100%;
       background-size: cover;
       color: white !important;
-      font-size: 20px !important;
+      font-size: 0px;
       font-weight: bold; 
     }
     .marker-num{
@@ -673,10 +673,14 @@
   }
   .show-num{
     position: absolute;
-    bottom:5px;
-    right: 5px;
+    bottom: -3px;
+    right: 0px;
+    height: 20px !important;
+    width: 20px !important;
+    line-height: 20px;
+    font-size: 14px !important;
     background-color: #efc553;
-    color: white;
+    color: white !important;
   }
   </style>
   <body>
@@ -1076,6 +1080,27 @@
     // });
 
   </script>
+  <script>
+    var data = {
+      username :"<%=username%>"
+    }
+    $.ajax({
+      type : "GET",
+      data: data,
+      dataType: "json",
+      url : "/user/getuserinfo",
+      success : function(result){
+        console.log(result);
+        var photo = result.data.userHead;
+        var username = result.data.uName;
+        $(".user-photo").attr("src",photo);
+        $(".user-name").text(username);
+      },
+      error:function(error){
+        console.log(error);
+      }
+    });
+  </script>
   <script type="text/javascript" src="/js/map.js"></script>
   <script type="text/javascript" src="/js/wxlocation.js"></script>
   <script>
@@ -1471,28 +1496,46 @@
     //   firstLen = $(".amap-marker-content").length;
     //   console.log(firstLen);
     // })
-    // map.on("zoomend",function(){
-    //   console.log("123");
-    //   console.log($(".amap-marker-content"));
-    //   // firstLen = $(".amap-marker-content").length;
-    //   //这里是设置一个延时来判断是否标注加载完成
-    //   timeIv = setInterval(function(){
-    //   console.log($(".amap-marker-content").length);
-    //   timeNum++;
-    //   console.log(firstLen);
-    //   if(($(".amap-marker-content").length != firstLen) || timeNum == 100){
-    //       console.log($(".amap-marker-content"));
-    //       timeNum = 0;
-    //       clearInterval(timeIv);
-    //       $.each($(".amap-marker-content"),function(i,v){
-    //         var num = $(this).children("div").text();
-    //         console.log(num);
-    //         $(this).children("div").text(" ");
-    //         var showNum = "<div class='show-num'>"+num+"</div>";
-    //         $(this).append(showNum);
-    //       })
-    //     }
-    //   }, 10);
+    map.on("zoomend",function(){
+      console.log("123");
+      // console.log($(this).children("div").text());
+      setTimeout(function(){
+         $.each($(".amap-marker-content"),function(i,v){
+            var num = $(this).children("div").text();
+            console.log(num);
+            $(this).children("div").text(" ");
+            if(num > 1){
+              var showNum = "<div class='show-num'>"+num+"</div>";
+              $(this).children("div").empty();
+              $(this).children("div").append(showNum);
+            }
+            
+          })
+       }, 50);
+       // $.each($(".amap-marker-content"),function(i,v){
+       //      var num = $(this).children("div").text();
+       //      console.log(num);
+       //    })
+      // firstLen = $(".amap-marker-content").length;
+      //这里是设置一个延时来判断是否标注加载完成
+      // timeIv = setInterval(function(){
+      // console.log($(".amap-marker-content").length);
+      // timeNum++;
+      // console.log(firstLen);
+      // if(($(".amap-marker-content").length != firstLen) || timeNum == 100){
+      //     console.log($(".amap-marker-content"));
+      //     timeNum = 0;
+      //     clearInterval(timeIv);
+      //     $.each($(".amap-marker-content"),function(i,v){
+      //       var num = $(this).children("div").text();
+      //       console.log(num);
+      //       $(this).children("div").text(" ");
+      //       var showNum = "<div class='show-num'>"+num+"</div>";
+      //       $(this).append(showNum);
+      //     })
+      //   }
+      // }, 10);
+    });
 
       // if($(".amap-marker-content").length > 1){}
       // $.each($(".amap-marker-content"),function(i,v){
