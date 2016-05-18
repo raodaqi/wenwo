@@ -130,6 +130,7 @@ app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
     console.log(resuletes);
     if (resuletes != '') {
       console.log('已处理');
+      
       return;
     }
     else {
