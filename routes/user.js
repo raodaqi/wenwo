@@ -153,14 +153,14 @@ router.get('/getuserinfo', function(req, res, next) {
         var que = new AV.Query('UserInfo');
         que.get(userId).then(function(post) {
             console.log(post.get('userHead'));
-            var data = {
-                user_id :userId,
-                user_name : userName,
-                user_head : post.get('userHead')
-            }
+            // var data = {
+            //     user_id :userId,
+            //     user_name : userName,
+            //     user_head : post.get('userHead')
+            // }
             var resulte = {
                 code : 200,
-                data : data,
+                data : post,
                 message : 'operation successed'
             }
             res.send(resulte);
