@@ -117,7 +117,7 @@
     //         zoom: 13,//地图显示的缩放级别
     //         keyboardEnable: false
     // });
-
+    var timeIv;
     AMap.plugin(['AMap.Autocomplete','AMap.PlaceSearch'],function(){
       var autoOptions = {
         input: "search"//使用联想输入的input的id
@@ -133,6 +133,14 @@
          placeSearch.setCity(e.poi.adcode);
          placeSearch.search(e.poi.name);
          $.router.load("#router");
+         //这里是设置一个延时来判断是否标注加载完成
+         timeIv = setInterval(function(){
+          console.log($(".amap-marker").length);
+          if($(".amap-marker").length > 5){
+            clearInterval(timeIv);
+            map.clearMap();
+          }
+         }, 10);
       });
     });
 

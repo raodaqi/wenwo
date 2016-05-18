@@ -629,8 +629,8 @@
       width: 100%;
       height: 100%;
       background-size: cover;
-      color: white !important;
-      font-size: 0px;
+      color: black !important;
+      font-size: 20px !important;
       font-weight: bold; 
     }
     .marker-num{
@@ -1498,22 +1498,27 @@
     //   firstLen = $(".amap-marker-content").length;
     //   console.log(firstLen);
     // })
-    map.on("zoomend",function(){
-      console.log("123");
-      // console.log($(this).children("div").text());
-      setTimeout(function(){
-         $.each($(".amap-marker-content"),function(i,v){
-            var num = $(this).children("div").text();
-            console.log(num);
-            $(this).children("div").text(" ");
-            if(num > 1){
-              var showNum = "<div class='show-num'>"+num+"</div>";
-              $(this).children("div").empty();
-              $(this).children("div").append(showNum);
-            }
+
+
+    // map.on("zoomend",function(){
+    //   console.log("123");
+    //   // console.log($(this).children("div").text());
+    //   setTimeout(function(){
+    //      $.each($(".amap-marker-content"),function(i,v){
+    //         var num = $(this).children("div").text();
+    //         console.log(num);
+    //         $(this).children("div").text(" ");
+    //         if(num > 1){
+    //           var showNum = "<div class='show-num'>"+num+"</div>";
+    //           $(this).children("div").empty();
+    //           $(this).children("div").append(showNum);
+    //         }
             
-          })
-       }, 50);
+    //       })
+    //    }, 50);
+    // });
+
+
        // $.each($(".amap-marker-content"),function(i,v){
        //      var num = $(this).children("div").text();
        //      console.log(num);
@@ -1537,7 +1542,7 @@
       //     })
       //   }
       // }, 10);
-    });
+    // });
 
       // if($(".amap-marker-content").length > 1){}
       // $.each($(".amap-marker-content"),function(i,v){
