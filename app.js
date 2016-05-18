@@ -103,7 +103,15 @@ app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
   // 处理商户业务逻辑
   console.log('notify');
   // res.success() 向微信返回处理成功信息，res.fail()返回失败信息。
-  console.log(meg);
+  if (msg != null) {
+    console.log(msg);
+    return;
+  }
+  var returnCode = req.query.return_code;
+  var returnMsg = req.query.return_msg;
+  console.log(returnCode);
+  console.log(returnMsg);
+
   res.success();
 }));
 
