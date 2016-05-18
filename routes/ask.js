@@ -320,7 +320,7 @@ router.get('/askedit', function(req, res, next) {
 router.get('/like', function(req, res, next) {
     var askId = req.param('ask_id');
     var userName = req.param('username');
-    var type = req.param('type');
+    var type = req.param('type');   //type == 1  赞    ==2踩
 
     var query = new AV.Query('AskMe');
     query.get(askId).then(function (ask) {
@@ -340,13 +340,35 @@ router.get('/like', function(req, res, next) {
                 like.set('type', type);
                 like.save().then(function () {
                     relation.add(like);
-                    ask.save();
-                    var result = {
-                        code : 200,
-                        data : results,
-                        message : 'Operation succeeded'
+                    if(type == 1) {
+                        ask.set('likeNum', (parseInt(ask.get('likeNum'))+1).toString());
                     }
-                    res.send(result);
+                    else {
+                        ask.set('likeNum', (parseInt(ask.get('likeNum'))-1).toString());
+                    }
+                    ask.save().then(function (ask) {
+                        var num = parseInt(ask.get('likeNum'));
+                        var query = new AV.Query('Level');
+                        query.addDescending('score');
+                        query.find().then(function (levels) {
+                            for(var i = 0; i < levels.length; i++) {
+                                if(parseInt(ask.get('askLevel')) < levels[i].get('score')) {
+                                    ask.set('askLevel', (levels.length - i - 1).toString());
+                                }
+                            }
+                            ask.save().then(function () {
+                                var result = {
+                                    code : 200,
+                                    data : results,
+                                    message : 'Operation succeeded'
+                                }
+                                res.send(result);
+                            });
+
+                        });
+
+                    });
+
                 });
             }
             else  {

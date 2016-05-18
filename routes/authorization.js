@@ -34,7 +34,9 @@ router.get('/wx', function(req, res, next) {
 });
 
 router.get('/pay_t', function(req, res, next) {
-
+    var totalFee = req.query.totalFee;
+    totalFee = parseFloat(totalFee);
+    totalFee = totalFee * 100;
     var secret = '9157e84975386b6dee6a499cc639973e';
 
 
@@ -96,7 +98,7 @@ router.get('/pay_t', function(req, res, next) {
                      body: '公众号支付测试',
                      detail: '公众号支付测试',
                      out_trade_no: '20150331'+Math.random().toString().substr(2, 10),
-                     total_fee: 1,
+                     total_fee: totalFee,
                      spbill_create_ip: ip,
                      notify_url:notifyUrl
                  }, function(err, result){
