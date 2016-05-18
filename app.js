@@ -120,24 +120,24 @@ app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
   var outTradeNo = returnCode.out_trade_no;
   var timeEnd = returnCode.time_end;
   var openid = returnCode.openid;
-  if(returnCode.result_code == 'SUCCESS') {
-    var order = new Order();
-    order.set('openid', openid)
-    order.set('feeType', feeType);
-    order.set('totalFee', totalFee);
-    order.set('transactionId', transactionId);
-    order.set('tradeType', tradeType);
-    order.set('nonceStr', nonceStr);
-    order.set('sign', sign);
-    order.set('bankType', bankType);
-    order.set('outTradeNo', outTradeNo);
-    order.set('timeEnd', timeEnd);
-    order.save().then(function (order) {
-      var user = AV.User.current();
 
-      console.log(user);
-    });
-  }
+  var order = new Order();
+  order.set('openid', openid)
+  order.set('feeType', feeType);
+  order.set('totalFee', totalFee);
+  order.set('transactionId', transactionId);
+  order.set('tradeType', tradeType);
+  order.set('nonceStr', nonceStr);
+  order.set('sign', sign);
+  order.set('bankType', bankType);
+  order.set('outTradeNo', outTradeNo);
+  order.set('timeEnd', timeEnd);
+  order.save().then(function (order) {
+    var user = AV.User.current();
+
+    console.log(user);
+  });
+
   console.log(returnMsg);
   // res.success() 向微信返回处理成功信息，res.fail()返回失败信息。
   res.success();
