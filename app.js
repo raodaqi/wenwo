@@ -5,6 +5,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var fs = require('fs');
+var WXPay = require('weixin-pay');
 var todos = require('./routes/todos');
 var cloud = require('./cloud');
 var more = require('./routes/more');
@@ -15,6 +17,12 @@ var ask = require('./routes/ask');
 var wallet = require('./routes/wallet');
 var hode = require('./routes/hode');
 var authorization = require('./routes/authorization');
+var wxpay = WXPay({
+  appid: 'wx99f15635dd7d9e3c',
+  mch_id: '1298230401',
+  partner_key: 'myworldwenwo20151016myworldwenwo', //微信商户平台API密钥
+  pfx: fs.readFileSync('./routes/certificate/apiclient_cert.p12'), //微信商户平台证书
+});
 
 // var wechat = require('wechat');
 // var config = {
@@ -91,7 +99,7 @@ app.post('/test', function(req, res) {
   res.send("hello");
 });
 
-router.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
+app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
   // 处理商户业务逻辑
 
   // res.success() 向微信返回处理成功信息，res.fail()返回失败信息。
