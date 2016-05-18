@@ -691,6 +691,27 @@ router.get('/gettag', function (req, res, next) {
     });
 });
 
+router.get('/getrefund', function (req, res, next) {
+    var askId = req.param('ask_id');
+    var userName = req.param('username');
+
+    var query = new AV.Query('AskMe');
+    query.get(askId).then(function (ask) {
+        //console.log(ask);
+        var relation = ask.relation('refundInfo');
+        relation.query().find().then(function (list) {
+            console.log(list);
+            var result = {
+                code : 200,
+                data : list,
+                message : 'operation succeeded'
+            }
+            res.send(result);
+            return;
+        });
+    });
+});
+
 router.post('/addtag', function (req, res, next) {
 
 });
