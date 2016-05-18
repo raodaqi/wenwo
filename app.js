@@ -151,10 +151,11 @@ app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
       for (var i = 0; i < user.length; i++) {
         console.log(user[i].get('authData').weixin.openid);
         if (user[i].get('authData').weixin.openid == openid) {
-          console.log(user[i].get('wallet').id);
-          order.set('userName', user[i].get('user'));
+          var userMa = user[i];
+          console.log(userMa.get('wallet').id);
+          order.set('userName', userMa.get('user'));
           order.save().then(function () {
-            var walletId = user[i].get('wallet').id;
+            var walletId = userMa.get('wallet').id;
             var query = new AV.Query('Wallet');
             query.get(walletId).then(function (wallet) {
               //console.log(wallet);
