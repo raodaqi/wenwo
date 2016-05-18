@@ -167,10 +167,15 @@ app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
                   //console.log(wallet.get('money'));
                   var money = parseFloat(wallet.get('money'));
                   money += totalFee;
+                  console.log('money:'+money);
                   wallet.set('money', money.toString());
                   wallet.save().then(function () {
                     res.success();
+                  }, function(error) {
+                    // 失败
+                    console.log('Error: ' + error.code + ' ' + error.message);
                   });
+
 
                 });
               });
