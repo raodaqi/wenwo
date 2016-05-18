@@ -15,6 +15,16 @@ var Wallet = AV.Object.extend('Wallet');
 // `AV.Object.extend` 方法一定要放在全局变量，否则会造成堆栈溢出。
 // 详见： https://leancloud.cn/docs/js_guide.html#对象
 var resG;
+var appid = 'wx99f15635dd7d9e3c';
+var key = 'myworldwenwo20151016myworldwenwo';
+var mchid = '1298230401';
+var wxpay = WXPay({
+    appid: appid,
+    mch_id: mchid,
+    partner_key: key, //微信商户平台API密钥
+    pfx: fs.readFileSync('./routes/certificate/apiclient_cert.p12'), //微信商户平台证书
+});
+
 
 router.get('/wx', function(req, res, next) {
     var urlApi = "http://wenwo.leanapp.cn/authorization/";
@@ -23,10 +33,10 @@ router.get('/wx', function(req, res, next) {
 });
 
 router.get('/pay_t', function(req, res, next) {
-    var appid = 'wx99f15635dd7d9e3c';
+
     var secret = '9157e84975386b6dee6a499cc639973e';
-    var key = 'myworldwenwo20151016myworldwenwo';
-    var mchid = '1298230401';
+
+
     // var body = 'test';
     // var notifyUrl = 'http://wenwo.leanapp.cn/auauthorization/notify';
     // var ip = req.ip;
@@ -53,12 +63,7 @@ router.get('/pay_t', function(req, res, next) {
             var accessToken = codeData.access_token;
             var openid = codeData.openid;
             var expiresIn = codeData.expires_in;
-            var wxpay = WXPay({
-                appid: appid,
-                mch_id: mchid,
-                partner_key: key, //微信商户平台API密钥
-                pfx: fs.readFileSync('./routes/certificate/apiclient_cert.p12'), //微信商户平台证书
-            });
+
 
         //     wxpay.createUnifiedOrder({
         //         body: 'test',
