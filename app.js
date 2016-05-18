@@ -105,9 +105,9 @@ app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
   console.log('notify');
   var returnCode = req.query.return_code;
   var returnMsg = req.query.return_msg;
-  console.log("msg" + msg);
-  console.log("code:" + returnCode);
-  console.log("returnMsg:" + returnMsg);
+  //console.log("msg" + msg);
+  //console.log("code:" + returnCode);
+  //console.log("returnMsg:" + returnMsg);
   if (returnMsg != null) {
     console.log(returnMsg);
     return;
@@ -128,9 +128,11 @@ app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
   query.equalTo('nonceStr', nonceStr);
   query.find().then(function (resuletes) {
     if (resuletes != null) {
+      console.log('已处理');
       return;
     }
     else {
+      console.log('未处理');
       var order = new Order();
       order.set('openid', openid);
       order.set('feeType', feeType);
@@ -146,11 +148,9 @@ app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
       order.save().then(function (order) {
         totalFee = parseFloat(totalFee);
         totalFee = totalFee / 100;
-        //totalFee = totalFee.toString();
+        console.log('totalFee:'+totalFee);
 
         var query = new AV.Query('_User');
-
-        //query.contains('authData', openid);
         query.find().then(function (user) {
           //console.log(user.get('authData'));
           for (var i = 0; i < user.length; i++) {
