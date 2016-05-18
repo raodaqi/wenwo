@@ -10,7 +10,7 @@ a {
 .header-label {
     position: absolute;
     z-index: 10000;
-    height: 30px;
+    height: 40px;
     width: 100%;
     background-color: #efc553;
     top: 0;
@@ -36,4 +36,17 @@ a {
     margin: 0 .5rem .2rem 0;
     border-radius: 3px;
     border: 1px solid #393e49;
+}
+.amap-logo,.amap-copyright{
+    display: none !important;
+}
+-webkit-tap-highlight-color:rgba(0,0,0,0);
+.item-link:link,
+.item-link:visited,
+.item-link:hover,
+.item-link:active{
+    background-color: #F3D27B !important;
+}
+.list-block .item-link:active {
+     background-color: #F3D27B !important; 
 }

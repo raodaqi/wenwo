@@ -30,7 +30,7 @@ function formatType(type) {
             return "住宿";
             break;
         case '3':
-            return "出行";
+            return "交通";
             break;
         case '4':
             return "购物";

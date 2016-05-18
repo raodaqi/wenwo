@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="http://at.alicdn.com/t/font_1462906314_8605804.css">
     <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
     <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=cb84c659c88a7cc83b935a009b3a9cfd&plugin=AMap.Geocoder"></script>
-    <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script> 
   </head>
   <style>
     body{
@@ -21,13 +20,13 @@
     }
     .type-item{
       display: inline-block;
-      padding: 0 8px;
+      padding: 0px 20px;
       /*color: #FFC222;*/
       /*background-color: #FFDC7F;*/
-      height: 20px;
-      line-height: 20px;
+      height: 30px;
+      line-height: 30px;
       font-weight: 400;
-      font-size: 13px;
+      font-size: 15px;
       text-align: center;
       margin: 0 .5rem .2rem 0;
       border-radius: 3px;
@@ -78,6 +77,10 @@
       font-size: 0.5rem;
       color:#FFF;
     }
+    #reason{
+      height: 10rem;
+      font-size: 0.75rem;
+    }
     input:-ms-input-placeholder,
     textarea:-ms-input-placeholder {
         color: gray;
@@ -115,7 +118,7 @@
     }
     .ww-typeHelper{
       background-color: #efc553;
-      height: 7.5rem;
+      height: 5rem;
       border-radius: 0.25rem;
     }
     .ww-typeHelper-input,.search-input{
@@ -128,7 +131,7 @@
         text-transform: lowercase;
         width: 6rem;
         max-width: 100%;
-        padding-left: 25px;
+        padding-left: 30px;
     }
     .search-input{
       background-color: #fff;
@@ -139,7 +142,7 @@
     .ww-typeHelper-input{
       background-color: #FFF;
       border-radius: 2px;
-      height: 1rem;
+      height: 1.5rem;
       /*position: absolute;
       bottom:5px;
       left:5px;
@@ -156,7 +159,7 @@
       left:5px;
       box-sizing: border-box;
       padding-right: 3rem;
-      height: 1rem;
+      height: 1.5rem;
     }
     .ww_typeHelper-button{
       background-color: #e5a41b;
@@ -165,8 +168,8 @@
       right:5px;
       width: 30px;
       text-align: center;
-      height: 1rem;
-      line-height: 1rem;
+      height: 1.5rem;
+      line-height: 1.5rem;
       color: #FFF;
       border-radius: 0.15rem;
       width: 2.3rem;
@@ -215,7 +218,9 @@
     }
     #container{
       width: 100%;
-      height: 400px;
+      /*height: 300px;*/
+      min-height: 350px;
+      height: 60%;
       border: 1px solid #ccc;
       box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
     }
@@ -403,9 +408,9 @@
     .ww_typeHelper-input-left{
       position: absolute;
       color: #efc553;
-      font-size: 20px;
+      font-size: 25px;
       top:-6px;
-      left:3px;
+      left:5px;
     }
     .help{
       display: block;
@@ -428,9 +433,29 @@
     #detail-content .card-content-inner,#reason-content .card-content-inner{
       word-break:break-all;
     }
+    .right-hidden{
+      margin-right: 5px !important;
+    }
+    /*.geolocation-position{
+      width: 40px;
+      height: 40px;
+    }*/
+    .geolocation-position img{
+      width: 40px;
+      height: 40px;
+    }
     /*.bar{
       height: 1.5rem;
     }*/
+    .bar-footer-nav:before{
+      content: '';
+      /*width: 2px;*/
+      border-left: 1px solid #969696;
+      height: 44px;
+      position: absolute;
+      left:50%;
+      z-index: 2;
+    }
   }
   </style>
   <body>
@@ -713,7 +738,7 @@
       </header>
       <div class="content">
         <div class="recommend-reason">
-          <textarea name="reason" id="reason" placeholder="用一段简洁的话描述你的推荐的理由"></textarea>
+          <textarea name="reason" id="reason" placeholder="说说为什么？"></textarea>
         </div>
       </div>
 
@@ -739,6 +764,9 @@
           <span class="icon icon-left"></span>
         </a>
         <h1 class='title'>信息详情</h1>
+        <a class="button button-link button-nav pull-right button-start right-hidden">
+          隐藏
+        </a>
       </header>
       <div class="content">
         <!-- <div class="hidden-content row">
@@ -856,6 +884,12 @@
   <script type="text/javascript" src="/js/map.js"></script>
   <script>
 
+  window.onload = function() {
+    map.plugin(["AMap.ToolBar"], function() {
+      map.addControl(new AMap.ToolBar());
+    });
+  }
+
     // //地点显示
     // mapShow = new AMap.Map('container-show', {
     //     // resizeEnable: true,
@@ -894,7 +928,7 @@
     //     console.log("定位失败");
     // }
 
-    var maker;
+    var marker;
     //获取地址
     function getAddress(lnglatXY,callback){
       var geocoder = new AMap.Geocoder({
@@ -1594,6 +1628,7 @@
       localStorage["address"] = $(this).val();
     })
 
+    var timeIv;
     //地点标注搜索
     AMap.plugin(['AMap.Autocomplete','AMap.PlaceSearch'],function(){
       var autoOptions = {
@@ -1605,8 +1640,21 @@
       })
       AMap.event.addListener(autocomplete, "select", function(e){
          //TODO 针对选中的poi实现自己的功能
-         console.log(e);
-         placeSearch.search(e.poi.name)
+         // console.log("123");
+         // console.log(e);
+         // $(".amap-marker").css("display","none !important");
+         placeSearch.search(e.poi.name);
+         console.log($(".amap-marker"));
+
+         //这里是设置一个延时来判断是否标注加载完成
+         timeIv = setInterval(function(){
+          console.log($(".amap-marker").length);
+          if($(".amap-marker").length > 5){
+            clearInterval(timeIv);
+            map.clearMap();
+          }
+         }, 10);
+         
       });
 
       // var placeSearchShow = new AMap.PlaceSearch({
@@ -1725,7 +1773,8 @@
     /*
     相比来说这家鱼火锅是我吃过味道比较好的一家，在##成都信息工程大学北三街##，人均消费20多的样子，可以吃到很饱，素菜是免费的。
     */
-    //拖动标注后回调的坐标
+    if(marker){
+      //拖动标注后回调的坐标
        marker.on("dragend",function(){
         console.log(this.getPosition());
         var lat = this.getPosition().lat;
@@ -1774,5 +1823,7 @@
           }
         });
       })
+    }
+    
   </script>
 </html>
