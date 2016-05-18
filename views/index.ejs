@@ -1055,6 +1055,9 @@
                 var accuracy = res.accuracy; // 位置精度
                 console.log(res);
             }
+            error:function(error){
+              console.log(error);
+            }
         });
       },
       error:function(error){
@@ -1286,20 +1289,19 @@
             cluster.setMap(null);
         }
         if (tag == 1) {
-            // var sts = [{
-            //     url: "http://lbs.amap.com/wp-content/uploads/2014/06/1.png",
-            //     size: new AMap.Size(32, 32),
-            //     offset: new AMap.Pixel(-16, -30)
-            // }, {
-            //     url: "http://lbs.amap.com/wp-content/uploads/2014/06/2.png",
-            //     size: new AMap.Size(32, 32),
-            //     offset: new AMap.Pixel(-16, -30)
-            // }, {
-            //     url: "http://lbs.amap.com/wp-content/uploads/2014/06/3.png",
-            //     size: new AMap.Size(48, 48),
-            //     offset: new AMap.Pixel(-24, -45),
-            //     textColor: '#CC0066'
-            // }];
+            var sts = [{
+                url: "/img/BG-01.png",
+                size: new AMap.Size(40, 40),
+                offset: new AMap.Pixel(-16, -30)
+            }, {
+                url: "/img/BG-01.png",
+                size: new AMap.Size(40, 40),
+                offset: new AMap.Pixel(-16, -30)
+            }, {
+                url: "/img/BG-01.png",
+                size: new AMap.Size(40, 40),
+                offset: new AMap.Pixel(-16, -30)
+            }];
             // map.plugin(["AMap.MarkerClusterer"], function() {
             //     cluster = new AMap.MarkerClusterer(map, markers, {
             //       maxZoom:10,
@@ -1330,19 +1332,33 @@
             //       styles: sts
             //     });
             // });
-            var sts = [{
-                url: "/img/hotPot.jpg",
+            // var sts = [{
+            //     url: "/img/hotPot.jpg",
+            //     size: new AMap.Size(40, 40),
+            //     offset: new AMap.Pixel(-16, -30)
+            // }, {
+            //     url: "/img/hotPot.jpg",
+            //     size: new AMap.Size(40, 40),
+            //     offset: new AMap.Pixel(-16, -30)
+            // }, {
+            //     url: "/img/hotPot.jpg",
+            //     size: new AMap.Size(40, 40),
+            //     offset: new AMap.Pixel(-16, -30)
+            // }];
+             var sts = [{
+                url: "/img/BG-01.png",
                 size: new AMap.Size(40, 40),
                 offset: new AMap.Pixel(-16, -30)
             }, {
-                url: "/img/hotPot.jpg",
+                url: "/img/BG-01.png",
                 size: new AMap.Size(40, 40),
                 offset: new AMap.Pixel(-16, -30)
             }, {
-                url: "/img/hotPot.jpg",
+                url: "/img/BG-01.png",
                 size: new AMap.Size(40, 40),
                 offset: new AMap.Pixel(-16, -30)
             }];
+
                 // cluster.setMaxZoom(20);
             // });
             map.plugin(["AMap.MarkerClusterer"], function() {
@@ -1438,35 +1454,35 @@
     //     $(this).addClass("amap-active");
     //   }
     // })
-    var timeIv;
-    var timeNum = 0;
-    var firstLen = $(".amap-marker-content").length;
-    map.on("zoomstart",function(){
-      firstLen = $(".amap-marker-content").length;
-      console.log(firstLen);
-    })
-    map.on("zoomend",function(){
-      console.log("123");
-      console.log($(".amap-marker-content"));
-      // firstLen = $(".amap-marker-content").length;
-      //这里是设置一个延时来判断是否标注加载完成
-      timeIv = setInterval(function(){
-      console.log($(".amap-marker-content").length);
-      timeNum++;
-      console.log(firstLen);
-      if(($(".amap-marker-content").length != firstLen) || timeNum == 100){
-          console.log($(".amap-marker-content"));
-          timeNum = 0;
-          clearInterval(timeIv);
-          $.each($(".amap-marker-content"),function(i,v){
-            var num = $(this).children("div").text();
-            console.log(num);
-            $(this).children("div").text(" ");
-            var showNum = "<div class='show-num'>"+num+"</div>";
-            $(this).append(showNum);
-          })
-        }
-      }, 10);
+    // var timeIv;
+    // var timeNum = 0;
+    // var firstLen = $(".amap-marker-content").length;
+    // map.on("zoomstart",function(){
+    //   firstLen = $(".amap-marker-content").length;
+    //   console.log(firstLen);
+    // })
+    // map.on("zoomend",function(){
+    //   console.log("123");
+    //   console.log($(".amap-marker-content"));
+    //   // firstLen = $(".amap-marker-content").length;
+    //   //这里是设置一个延时来判断是否标注加载完成
+    //   timeIv = setInterval(function(){
+    //   console.log($(".amap-marker-content").length);
+    //   timeNum++;
+    //   console.log(firstLen);
+    //   if(($(".amap-marker-content").length != firstLen) || timeNum == 100){
+    //       console.log($(".amap-marker-content"));
+    //       timeNum = 0;
+    //       clearInterval(timeIv);
+    //       $.each($(".amap-marker-content"),function(i,v){
+    //         var num = $(this).children("div").text();
+    //         console.log(num);
+    //         $(this).children("div").text(" ");
+    //         var showNum = "<div class='show-num'>"+num+"</div>";
+    //         $(this).append(showNum);
+    //       })
+    //     }
+    //   }, 10);
 
       // if($(".amap-marker-content").length > 1){}
       // $.each($(".amap-marker-content"),function(i,v){
@@ -1483,7 +1499,7 @@
       //     // }, 1000);
       //   }
       // })
-    })
+    // })
 
     // $("#container,#router").on("click",".amap-icon",function(){
     //   // $(this).addClass("amap-active");
