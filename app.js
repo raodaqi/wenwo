@@ -102,24 +102,27 @@ app.post('/test', function(req, res) {
 
 app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
   // 处理商户业务逻辑
+  console.log('notify');
   var returnCode = req.query.return_code;
   var returnMsg = req.query.return_msg;
-
-  if (msg != null || returnMsg != null) {
-    console.log(msg);
+  console.log("msg" + msg);
+  console.log("code:" + returnCode);
+  console.log("returnMsg:" + returnMsg);
+  if (returnMsg != null) {
+    console.log(returnMsg);
     return;
   }
 
-  var feeType = returnCode.fee_type;
-  var totalFee = returnCode.total_fee;
-  var transactionId = returnCode.transaction_id;
-  var tradeType = returnCode.trade_type;
-  var nonceStr = returnCode.nonce_str;
-  var sign = returnCode.nonce_str;
-  var bankType = returnCode.bank_type;
-  var outTradeNo = returnCode.out_trade_no;
-  var timeEnd = returnCode.time_end;
-  var openid = returnCode.openid;
+  var feeType = msg.fee_type;
+  var totalFee = msg.total_fee;
+  var transactionId = msg.transaction_id;
+  var tradeType = msg.trade_type;
+  var nonceStr = msg.nonce_str;
+  var sign = msg.nonce_str;
+  var bankType = msg.bank_type;
+  var outTradeNo = msg.out_trade_no;
+  var timeEnd = msg.time_end;
+  var openid = msg.openid;
 
   var order = new Order();
   order.set('openid', openid)
@@ -134,14 +137,17 @@ app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
   order.set('timeEnd', timeEnd);
   order.save().then(function (order) {
     var user = AV.User.current();
-
     console.log(user);
+    totalFee = parseFloat(totalFee);
+    totalFee = totalFee / 100;
+    totalFee = totalFee.toString();
+    
   }, function(error) {
     // 失败
     console.log('Error: ' + error.code + ' ' + error.message);
   });
 
-  console.log(returnMsg);
+  console.log('ok');
   // res.success() 向微信返回处理成功信息，res.fail()返回失败信息。
   res.success();
 }));

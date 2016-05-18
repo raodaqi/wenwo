@@ -73,7 +73,7 @@ router.post('/get', function(req, res, next) {
                         resultes[0].save();
                         var result = {
                             code : 200,
-                            message : 'operation successed'
+                            message : '操作成功'
                         }
                         res.send(result);
                         return;
@@ -100,7 +100,7 @@ router.post('/get', function(req, res, next) {
                         if ((money-price) < 0) {
                             var result = {
                                 code : 600,
-                                message : 'not sufficient funds'
+                                message : '余额不足'
                             }
                             res.send(result);
                             return;
@@ -124,7 +124,7 @@ router.post('/get', function(req, res, next) {
 
                                 var result = {
                                     code : 200,
-                                    message : 'operation successed'
+                                    message : '操作成功'
                                 }
                                 res.send(result);
                                 return;

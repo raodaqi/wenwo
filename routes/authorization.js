@@ -151,6 +151,7 @@ router.get('/', function(req, res, next) {
                         //返回绑定后的用户
                         //console.log(user);
                         //console.log(user.get('user'));
+                        
                         if (user.get('user') != null) {
                             console.log('haved');
                             // var user = AV.User.current();
