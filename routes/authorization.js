@@ -82,7 +82,7 @@ router.get('/pay_t', function(req, res, next) {
         //
         //     });
              var notifyUrl = 'http://wenwo.leanapp.cn/notify';
-             notifyUrl = encodeURIComponent(notifyUrl);
+             //notifyUrl = encodeURIComponent(notifyUrl);
              wxpay.getBrandWCPayRequestParams({
                  openid: openid,
                  body: '公众号支付测试',
