@@ -42,7 +42,10 @@ var data = {
                 //   zoom:18,
                 //   center: [longitude, latitude] 
                 // });
-                map.setZoomAndCenter(14,[longitude,latitude]);
+                if(!(localStorage.lng && localStorage.lat)){
+                    map.setZoomAndCenter(14,[longitude,latitude]);
+                }
+                
             },
             error: function(error){
               console.log(error);
