@@ -170,7 +170,7 @@ app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
                   var money = parseFloat(wallet.get('money'));
                   money += totalFee;
                   console.log('money:'+money);
-                  wallet.set('money', money.toString());
+                  wallet.set('money', money);
                   wallet.save().then(function () {
                     res.success();
                   }, function(error) {
