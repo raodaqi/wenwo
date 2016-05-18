@@ -124,8 +124,13 @@ app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
   var timeEnd = msg.time_end;
   var openid = msg.openid;
 
+  var user = AV.User.current();
+  console.log(user);
+  if (user == null) {
+    return;
+  }
   var order = new Order();
-  order.set('openid', openid)
+  order.set('openid', openid);
   order.set('feeType', feeType);
   order.set('totalFee', totalFee);
   order.set('transactionId', transactionId);
@@ -135,21 +140,30 @@ app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
   order.set('bankType', bankType);
   order.set('outTradeNo', outTradeNo);
   order.set('timeEnd', timeEnd);
+  order.set('userName', user.get('user'));
   order.save().then(function (order) {
-    var user = AV.User.current();
-    console.log(user);
     totalFee = parseFloat(totalFee);
     totalFee = totalFee / 100;
     totalFee = totalFee.toString();
-    
+    var id = user.attributes.wallet.id;
+    var query = new AV.Query('Wallet');
+    query.get(id).then(function (wallet) {
+      var money = parseFloat(wallet.get('money'));
+      money += totalFee;
+      wallet.set('money', money.toString());
+      wallet.save().then(function () {
+        console.log('ok');
+        res.success();
+      });
+    });
   }, function(error) {
     // 失败
     console.log('Error: ' + error.code + ' ' + error.message);
   });
 
-  console.log('ok');
+
   // res.success() 向微信返回处理成功信息，res.fail()返回失败信息。
-  res.success();
+
 }));
 
 // 可以将一类的路由单独保存在一个文件中
