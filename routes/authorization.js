@@ -29,9 +29,9 @@ var wxpay = WXPay({
 
 router.get('/wx', function(req, res, next) {
     var url = req.rawHeaders[15];
-    //console.log(url);
+    console.log(url);
     url = encodeURIComponent(url);
-    //console.log(url);
+    console.log(url);
 
     //console.log(url);
     var urlApi = "http://wenwo.leanapp.cn/authorization/?url="+url;
@@ -158,8 +158,9 @@ router.get('/pay', function(req, res, next) {
 
 router.get('/', function(req, res, next) {
     //url = decodeURIComponent(url);
+    console.log(req.query.url);
     var urlReq = decodeURIComponent(req.query.url);
-    //console.log(urlReq);
+    console.log(urlReq);
     var appid = 'wx99f15635dd7d9e3c';
     var secret = '9157e84975386b6dee6a499cc639973e';
 
