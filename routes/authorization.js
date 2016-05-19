@@ -28,7 +28,10 @@ var wxpay = WXPay({
 
 
 router.get('/wx', function(req, res, next) {
-    var url = req.rawHeaders[15];
+    // var url = req.originalUrl;
+    // url = 'http://wenwo.leanapp.cn' + url;
+    //var url = req.rawHeaders[15];
+    var url = 'http://wenwo.leanapp.cn/';
     console.log(url);
     url = encodeURIComponent(url);
     console.log(url);
