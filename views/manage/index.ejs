@@ -147,11 +147,11 @@
                     <div class="check-box">
                         <span>主题:</span>
                         <input type="checkbox" value="1" id="checkbox-1" name="" defaultChecked="false"/>
-                        <label for="checkbox-1">吃</label>
+                        <label for="checkbox-1">美食</label>
                         <input type="checkbox" value="2" id="checkbox-2" name="" defaultChecked="false"/>
-                        <label for="checkbox-2">住</label>
+                        <label for="checkbox-2">住宿</label>
                         <input type="checkbox" value="3" id="checkbox-3" name="" defaultChecked="false"/>
-                        <label for="checkbox-3">行</label>
+                        <label for="checkbox-3">交通</label>
                         <input type="checkbox" value="4" id="checkbox-4" name="" defaultChecked="false"/>
                         <label for="checkbox-4">购物</label>
                         <input type="checkbox" value="5" id="checkbox-5" name="" defaultChecked="false"/>
@@ -161,7 +161,7 @@
                     </div>
                     <div>
                         <span>标签:</span>
-                        <input class="input-edit input-tag" type="text">
+                        <input class="input-edit input-tag" type="text" placeholder="每个标签以;结束">
                     </div>
                     <div>
                         <span>推荐理由:</span>
@@ -383,6 +383,24 @@
                   zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
                   buttonPosition:'LB'
                 });
+                   // function getMap(lng,lat){
+                   //    //详情地点显示
+                   //    var mapShow;
+                   //    mapShow = new AMap.Map('container-show', {
+                   //      resizeEnable: true,
+                   //      zoom:15,
+                   //      center: [lng,lat]
+                   //    });
+                   //    var markerShow = new AMap.Marker({
+                   //      map : mapShow,
+                   //      position: [lng,lat],
+                   //      draggable: true,
+                   //      cursor: 'move',
+                   //      raiseOnDrag: true,
+                   //      clickable:true
+                   //    });
+                   //    markerShow.setMap(mapShow);
+                   //  }
             }
             else if ($(this).hasClass('check-bar')) {
                 checkAsk();
@@ -394,7 +412,25 @@
                   buttonOffset: new AMap.Pixel(60, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
                   zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
                   buttonPosition:'LB'
-        });
+                });
+                  // function getMap(lng,lat){
+                  //     //详情地点显示
+                  //     var mapShow;
+                  //     mapShow = new AMap.Map('container-show', {
+                  //       resizeEnable: true,
+                  //       zoom:15,
+                  //       center: [lng,lat]
+                  //     });
+                  //     var markerShow = new AMap.Marker({
+                  //       map : mapShow,
+                  //       position: [lng,lat],
+                  //       draggable: true,
+                  //       cursor: 'move',
+                  //       raiseOnDrag: true,
+                  //       clickable:true
+                  //     });
+                  //     markerShow.setMap(mapShow);
+                  //   }
             }
             else if ($(this).hasClass('manage-bar')) {
                 manageAsk();
@@ -512,9 +548,9 @@
         function getTitle(type) {
             var temp = "";
             switch (type) {
-                case "1": temp = "吃";break;
-                case "2": temp = "住";break;
-                case "3": temp = "行";break;
+                case "1": temp = "美食";break;
+                case "2": temp = "住宿";break;
+                case "3": temp = "交通";break;
                 case "4": temp = "购物";break;
                 case "5": temp = "游玩";break;
                 case "6": temp = "防坑";break;
@@ -529,6 +565,21 @@
             }
             return newstr;
         }
+    //     map.getCity(function(data) {
+    //       console.log(data);
+    //         if (data['province'] && typeof data['province'] === 'string') {
+    //             $(".address-text").text(data['city']);
+    //         }
+    //     });
+    // map.on('moveend', getCity);
+    // function getCity() {
+    //     map.getCity(function(data) {
+    //       console.log(data);
+    //         if (data['province'] && typeof data['province'] === 'string') {
+    //             $(".address-text").text(data['city']);
+    //         }
+    //     });
+    // }
     // getMap(103.985616,30.581207);
     // function getMap(lng,lat){
     //   //详情地点显示

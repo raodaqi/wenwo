@@ -23,8 +23,9 @@ router.get('/moneyBox', function(req, res, next) {
 router.get('/contact-us', function(req, res, next) {
   res.render('more/contact-us');
 });
-router.get('/purchase-detail', function(req, res, next) {
-  res.render('more/purchase-detail');
+router.get('/purchase-detail/:id', function(req, res, next) {
+  var id = req.params.id;
+  res.render('more/purchase-detail',{id:id});
 });
 router.get('/withdraw', function(req, res, next) {
   res.render('more/withdraw');

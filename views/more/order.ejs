@@ -149,6 +149,13 @@ body{
 .ditu{
 	font-size: 20px;
 }
+.menu_icon{
+	height: 80px;
+	float: right;
+	width: 40px;
+	line-height: 80px;
+	text-align: center;
+}
 </style>
 <body>
 <% include footer.ejs %>
@@ -161,7 +168,8 @@ body{
 	<div class="title_word">我的订单</div>
 	<div class="map_view"><div class="iconfont icon-ditu ditu">
 			<a></a>
-		</div></div>
+		</div>
+		</div>
 </div>
 <div class="content">
 	<div class="buttons-tab">
@@ -172,22 +180,22 @@ body{
 		<div class="tabs">
 			<div id="tab1" class="tab active">
 				<div class="content-block" id="type1">
-					<!-- <div class="informations">
+					<div class="informations">
 						<div class="information">
 							<div class="information_img"><img src="/img/u28.png"></div>
 							<div class="information_name">
 								<div class="information_name_word">住：<span>标签</span><span>标签</span><span>标签</span></div>
-								<div class="information_price"></div>
+								<div class="information_price">￥2.0</div>
 							</div>
-							<div class="information_state"></div>
-							<div class="information_Purchase_number">收藏人数：3人</div>				
+							<div class="menu_icon">
+								<div class="iconfont icon-you" style="font-size:32px;"></div>
+							</div>			
 						</div>
-					</div> -->
-				</div>
+					</div>
 			</div>
 			<div id="tab2" class="tab">
 				<div class="content-block" id="type2">
-					<!-- <div class="informations">
+					<div class="informations">
 						<div class="information">
 							<div class="information_img"><img src="/img/u28.png"></div>
 							<div class="information_name">
@@ -197,13 +205,13 @@ body{
 							<div class="information_state"></div>
 							<div class="information_Purchase_number"></div>				
 						</div>
-					</div> -->
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<script type="text/javascript">
+</div><script type="text/javascript">
 $(".zuo").click(function(){
 		history.go(-1);
 	})
@@ -274,7 +282,7 @@ function getHode(){
                    // var price = result.data.askPrice;
                    // var buyNum = result.data.buyNum;
           		var str = "";
-          		var str = '<div class="informations"><div class="information"><div class="information_img"><img src="/img/u28.png"></div><div class="information_name"><div class="information_name_word collect-concent">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price"></div></div><div class="information_state"></div><div class="information_Purchase_number"></div></div></div>';
+          		var str = '<div class="informations"><div class="information"><div class="information_img"><img src="/img/u28.png"></div><div class="information_name"><div class="information_name_word collect-concent">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price"></div></div><div class="menu_icon"><div class="iconfont icon-you" style="font-size:32px;"></div></div>	</div></div></div>';
           		$("#type1").append(str);
           		console.log(str);
           		// var time = result.data.createdAt;

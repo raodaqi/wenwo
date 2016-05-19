@@ -36,7 +36,7 @@ body{
 	font-size: 28px;
 	color: white;
 }
-.introduce,.introduces{
+.introduce{
 	width: 100%;
 	height: auto;
 	min-height: 200px;
@@ -88,16 +88,19 @@ body{
 		</div>
 		<button id="invite">邀请好友</button>
 	</div>
-	<div class="introduces" style="display:none;">
-		<img src="/img/add.png">
-	</div>
+	<div class="modal-overlay modal-overlay-visible" style="display:none;"></div>
+	<div class="modal modal-in" style="display: none; margin-top: -72px;"><div class="modal-inner"></div></div>
 <script type="text/javascript">
 $(".zuo").click(function(){
 		history.go(-1);
 	})
 $("#invite").on('click',function(){
-	$(".introduce").hide();
-	$(".introduces").show();
+	$(".modal-overlay-visible").show();
+	$(".modal-in").show();
+})
+$(".modal-overlay-visible").on('click',function(){
+	$(".modal-overlay-visible").hide();
+	$(".modal-in").hide();
 })
 	</script>
 </html>
