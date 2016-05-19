@@ -38,7 +38,7 @@
       position: absolute;
       z-index: 10500;
       /*background: rgba(239, 197, 83,0.9);*/
-      background: #E7BF55 url("/img/sideBG-03.png") no-repeat;
+      background: #E7BF55 url("/img/sideBG-01.png") no-repeat;
       background-size: 100%;
       width: 80%;
       height: 100%;
@@ -447,6 +447,20 @@
       width: 58px;
       z-index: 10000;
     }
+    .theme-show{
+      position: absolute;
+      top:50px;
+      left:15px;
+      width: 55px;
+      height: 25px;
+      font-size: 13px;
+      /*font-weight: bold;*/
+      background-color: #efc553;
+      text-align: center;
+      z-index: 10000;
+      line-height: 30px;
+      border-radius: 20px;
+    }
     .address-info{
       position: absolute;
       top: 0;
@@ -688,6 +702,45 @@
     text-align: center;
     color: #A7A7A7;
   }
+
+  .marker-content .item-media img {
+    width: 45px;
+    height: 45px;
+    background-size: cover;
+    border-radius: 50%;
+  }
+  .marker-content .list-block{
+    margin: 0;
+  }
+  .marker-content .item-subtitle{
+    overflow-x: hidden !important;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .marker-content .item-right{
+    position: absolute;
+    top:15px;
+    right: 5px;
+    font-size: 12px;
+    color: black;
+  }
+  .marker-content .up-price-right{
+    color: #efc553;
+    top:10px;
+    right: 20px;
+  }
+  .marker-content{
+    z-index: 10402;
+  }
+  .bar-tab{
+    position: absolute;
+    z-index: 10000;
+    height: 40px;
+    width: 100%;
+  }
+  .card-content-inner{
+    word-break: break-all;
+  } 
   </style>
   <body>
   <div class="page page-current" id='router'>
@@ -772,11 +825,17 @@
       <div class="header-sousuo iconfont icon-sousuo"></div>
     </div>
     
-    <div class="address-content">
-      
+    <div class="address-content">  
       <img class="address-info" src="/img/location1.png">
       <span class="address-icon iconfont icon-dingwei"></span>
-      <label class="address-text"></label>
+      <label class="address-text"></label> 
+    </div>
+
+    <div class="theme-show">
+      问我
+    </div>
+
+    <div>
       
     </div>
 
@@ -798,6 +857,56 @@
           <!-- <label>住</label> -->
         </div>
       </div>
+    </div>
+
+    <div class="popup marker-content">
+      <header class="bar bar-nav">
+        <h1 class="title">问我</h1>
+      </header>
+      <div class="content">
+        <div class="list-block media-list">
+          <ul>
+            <!-- <li>
+              <div class="item-content">
+                <div class="item-media"><img src="/img/hotPot.jpg"></div>
+                <div class="item-inner">
+                  <div class="">
+                    <div class="type-item">火锅</div>
+                    <div class="type-item">火锅</div>
+                    <div class="type-item">火锅</div>
+                  </div>
+                  <div class="item-subtitle">这家火锅真的很好吃。</div>
+
+                  <div class="up-price-right">￥0 . 3 2</div>
+                  <div class="iconfont icon-youjiantou item-right"></div>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <div class="item-content">
+                <div class="item-media"><img src="/img/hotPot.jpg"></div>
+                <div class="item-inner">
+                  <div class="">
+                    <div class="type-item">火锅</div>
+                    <div class="type-item">火锅</div>
+                    <div class="type-item">火锅</div>
+                  </div>
+                  <div class="item-subtitle">这家火锅真的很好吃。</div>
+
+                  <div class="up-price-right">￥0 . 3 2</div>
+                  <div class="iconfont icon-youjiantou item-right"></div>
+                </div>
+              </div>
+            </li> -->
+          </ul>
+        </div>
+      </div>
+      
+      <nav class="bar-tab">
+        <div class="iconfont icon-x marker-content-cancel"></div>
+      </nav>
+
     </div>
 
     <div class="popup popup-services ask-detail">
@@ -1157,6 +1266,12 @@
     $.hidePreloader();
   }
 
+
+  //关闭信息列表
+  $(".marker-content-cancel").on("click",function(){
+    $.closeModal('.marker-content');
+  })
+
       // var map = new AMap.Map('container',{
       //       resizeEnable: true,
       //       zoom: 10,
@@ -1169,6 +1284,7 @@
     //     map.addControl(scale);
     // })
     // $.popup('.ask-detail');
+    // $.popup('.marker-content');
     var extData;
     $(".header-sousuo").on("click",function(){
       $.router.load("#router1");
@@ -1219,18 +1335,18 @@
       $(".left-content").css("-webkit-transform", "matrix(1, 0, 0, 1, 0, 0)");
     })
 
-    $(".header-theme").on("click",function(){
-      if(!$(this).hasClass("clicked")){
+    $(".header-theme,.theme-show").on("click",function(){
+      if(!$(".header-theme").hasClass("clicked")){
         $(".themes0").css("-webkit-transform", "translate(-81px,30px)");
         $(".themes1").css("-webkit-transform", "translate(-55px,65px)");
         $(".themes2").css("-webkit-transform", "translate(-22px,95px)");
         $(".themes3").css("-webkit-transform", "translate(22px,95px)");
         $(".themes4").css("-webkit-transform", "translate(55px,65px)");
         $(".themes5").css("-webkit-transform", "translate(81px,30px)");
-        $(this).addClass("clicked");
+        $(".header-theme").addClass("clicked");
       }else{
         $(".themes0,.themes1,.themes2,.themes3,.themes4,.themes5").css("-webkit-transform", "translate(0px,0px)");
-        $(this).removeClass("clicked");
+        $(".header-theme").removeClass("clicked");
       }
     })
 
@@ -1256,6 +1372,8 @@
       $(".themes6").attr("data-type",type1);
       $(this).attr("data-type",type2);
       console.log(type1);
+      $(".theme-show").text(formatType(type1));
+
       var clicked = $(".header-theme").hasClass("clicked");
 
       //主题筛选
@@ -1457,12 +1575,42 @@
 
                 //聚合点击事件
                 cluster.on("click",function(clusterContent){
-                  console.log(clusterContent);
-                  console.log(map.getZoom());
-                  if(map.getZoom() < 19){
+                  if(map.getZoom() < 14){
                     map.zoomIn();
                   }else{
                     console.log(clusterContent);
+                    // var li = '<li><div class="item-content"><div class="item-media"><img src="/img/hotPot.jpg"></div><div class="item-inner"><div class=""><div class="type-item">火锅</div><div class="type-item">火锅</div><div class="type-item">火锅</div></div><div class="item-subtitle">这家火锅真的很好吃。</div><div class="up-price-right">￥0 . 3 2</div><div class="iconfont icon-youjiantou item-right"></div></div></div></li>';
+                    var li = '';
+                    $.each(clusterContent.markers,function(i,v){
+                      var extData =  this.getExtData();
+                      // var object = JSON.stringify(extData);
+                      // var object = {
+                      //   askId         : extData.askId,
+                      //   askType       : extData.askType,//主题类型
+                      //   askTagStr     : extData.askTagStr,//二级标签
+                      //   reason        : extData.askReason,//推荐理由
+                      //   content_show  : extData.askContentShow,//详情显示部分
+                      //   lng           : extData.lng,//经度
+                      //   lat           : extData.lat,//维度
+                      //   isfree        : extData.askIsFree,//是否是免费信息
+                      //   price         : extData.price,//信息价格
+                      //   createBy      : extData.createBy,//发布者
+                      //   updatedAt     : extData.updatedAt//发布时间
+                      // }
+                      // object = JSON.stringify(object);
+
+                      var askTagStr = JSON.parse(extData.askTagStr);
+                      console.log(askTagStr[0]);
+                      var tagList = '';
+                      for(var i = 0; i < askTagStr.length;i++){
+                        tagList += '<div class="type-item">'+askTagStr[i]+'</div>' 
+                      }
+
+                      li += '<li data-askId='+extData.askId+'><div class="item-content"><div class="item-media"><img src="/img/hotPot.jpg"></div><div class="item-inner"><div class="">'+tagList+'</div><div class="item-subtitle">'+extData.askReason+'</div><div class="up-price-right">￥'+extData.price+'</div><div class="iconfont icon-youjiantou item-right"></div></div></div></li>';
+                    })
+                    $(".marker-content ul").empty();
+                    $(".marker-content ul").append(li);
+                    $.popup('.marker-content');
                   }
                 })
             });
@@ -1648,6 +1796,13 @@
       $(".amap-active").css("-webkit-transform", "rotate(0deg) !important;");
     })
 
+    $(".marker-content").on("touchstart",".bar",function(e){
+      console.log("ok");
+      if($(".ask-detail").hasClass("modal-in")){
+         $.closeModal(".ask-detail");
+      }
+    })
+
     $("#container").on("touchstart",".amap-marker-list-content",function(e){
       // console.log($(this));
       $.popup('.ask-detail');
@@ -1808,6 +1963,7 @@
       for(var i = 0; i < askTagStr.length;i++){
         tagList += '<div class="type-item">'+askTagStr[i]+'</div>' 
       }
+      $("#tag-content .card-content-inner").empty();
       $("#tag-content .card-content-inner").append(tagList);
 
       //设置推荐理由
@@ -1832,31 +1988,56 @@
       if(isfree == "1"){
         $(".wenwo-get").text("我要收藏");
       }
-
-      var data = {
-        ask_id   : askId,
-        username : "<%= username %>"
-      }
-      //判断是否购买
-      $.ajax({
-        type : "GET",
-        data: data,
-        dataType: "json",
-        url : "/ask/askdetail",
-        success : function(result){
-          console.log(result);
-          if(result.nobuy == "1"){
-            $(".ask-get, #address-content").hide();
-            $(".wenwo-get").show();
-          }else{
-            $(".ask-get, #address-content").show();
-            $(".wenwo-get").hide();
-          }
-        },
-        error : function(error){
-          $.alert('网络异常');
+      if(!extData.geted){
+        var data = {
+          ask_id   : askId,
+          username : "<%= username %>"
         }
-      });
+        //判断是否购买
+        $.ajax({
+          type : "GET",
+          data: data,
+          dataType: "json",
+          url : "/ask/askdetail",
+          success : function(result){
+            console.log(result);
+            if(result.nobuy == "1"){
+              $(".ask-get, #address-content").hide();
+              $(".wenwo-get").show();
+            }else{
+              $(".ask-get, #address-content").show();
+              $(".wenwo-get").hide();
+            }
+          },
+          error : function(error){
+            $.alert('网络异常');
+          }
+        });
+      }
+      // var data = {
+      //   ask_id   : askId,
+      //   username : "<%= username %>"
+      // }
+      // //判断是否购买
+      // $.ajax({
+      //   type : "GET",
+      //   data: data,
+      //   dataType: "json",
+      //   url : "/ask/askdetail",
+      //   success : function(result){
+      //     console.log(result);
+      //     if(result.nobuy == "1"){
+      //       $(".ask-get, #address-content").hide();
+      //       $(".wenwo-get").show();
+      //     }else{
+      //       $(".ask-get, #address-content").show();
+      //       $(".wenwo-get").hide();
+      //     }
+      //   },
+      //   error : function(error){
+      //     $.alert('网络异常');
+      //   }
+      // });
 
       // //绑定marker点击事件
       // $("#container").on("touchstart",".amap-icon",function(){
@@ -1998,6 +2179,111 @@
     //     map.addControl(new AMap.ToolBar());
     //   });
     // }
+
+    //点击列表弹出详情
+    $(".marker-content").on("click","li",function(){
+      var askId = $(this).data("askid");
+
+      var data = {
+        ask_id   : askId,
+        username : "<%= username %>"
+      }
+      //判断是否购买
+      $.ajax({
+        type : "GET",
+        data: data,
+        dataType: "json",
+        url : "/ask/askdetail",
+        success : function(result){
+          console.log(result);
+          if(result.code == 200){
+
+            if(result.nobuy == "1"){
+              $(".ask-get, #address-content").hide();
+              $(".wenwo-get").show();
+            }else{
+              $(".ask-get, #address-content").show();
+              $(".wenwo-get").hide();
+            }
+            var extData = {
+                askType         : result.data.askType,
+                askId           : result.data.objectId,
+                tagName         : result.data.askTag,
+                askReason       : result.data.askReason,
+                askContentShow  : result.data.askContentShow,
+                price           : result.data.askPrice,
+                createBy        : result.data.createBy,
+                updatedAt       : result.data.updatedAt,
+                lng             : result.data.GeoX,
+                lat             : result.data.GeoY,
+                askIsFree       : result.data.askIsFree,
+                askTagStr       : result.data.askTagStr,
+                geted           : 1
+              }
+
+              setDetail(extData);
+              $.popup('.ask-detail');
+            // askType =  askType.split(",");
+            // var typeText = '';
+            // console.log(askType);
+            // for(var i = 0; i < askType.length; i++){
+            //   typeText = formatType(askType[i]);
+            //   if(i == 1){
+            //     typeText = formatType(askType[i-1]) +","+ formatType(askType[i]);
+            //   }
+            // }
+            // //设置上传者名字
+            // $(".autor-name").text(createBy);
+            // //设置信息主题
+            // $(".autor-theme").text(typeText);
+            // //设置信息上传时间
+            // console.log(updatedAt);
+            // $(".autor-time").text(formatDate("y.m.d",updatedAt));
+
+            // // if()
+
+            // //设置标签
+            // var askTagStr = JSON.parse(askTagStr);
+            // console.log(askTagStr[0]);
+            // var tagList = '';
+            // for(var i = 0; i < askTagStr.length;i++){
+            //   tagList += '<div class="type-item">'+askTagStr[i]+'</div>' 
+            // }
+            // $("#tag-content .card-content-inner").append(tagList);
+
+            // //设置推荐理由
+            // $("#reason-content .card-content-inner").text(reason);
+
+            // //设置描述
+            // var detail = content_show;
+            // var hidden = '<span class="hidden-text">***</span>';
+            // str = detail.split("##");
+            // var detailContent = '';
+            // for(var i = 0; i < str.length; i++){
+            //   if(i%2){
+            //     detailContent += str[i];
+            //   }else{
+            //     detailContent += str[i]+hidden;
+            //   }
+            // }
+            // $("#detail-content  .card-content-inner").empty();
+            // $("#detail-content  .card-content-inner").append(detailContent);
+
+            // $(".wenwo-get").attr("data-askId",askId);
+            // if(isfree == "1"){
+            //   $(".wenwo-get").text("我要收藏");
+            // }
+          }else{
+            $.alert('信息获取失败');
+          }
+  
+        },
+        error : function(error){
+          $.alert('网络异常');
+        }
+      });
+      // $.popup('.ask-detail');
+    })
 
 
   </script>

@@ -25,6 +25,9 @@ function formatDate(format, timestamp, full) {
 
 function formatType(type) {
     switch (type) {
+        case '0':
+            return "问我";
+            break;
         case '1':
             return "美食";
             break;

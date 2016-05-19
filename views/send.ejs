@@ -880,8 +880,9 @@
 
     </div>  
   </body>
-  <script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
-  <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.js' charset='utf-8'></script>
+  <script type='text/javascript' src='/js/zepto.min.js' charset='utf-8'></script>
+  <script type='text/javascript' src='/js/sm.min.js' charset='utf-8'></script>
+  <script type="text/javascript" src="/js/common.js"></script>
   <script type="text/javascript" src="/js/map.js"></script>
   <script type="text/javascript" src="/js/wxlocation.js"></script>
   <script>
@@ -890,6 +891,7 @@
     map.plugin(["AMap.ToolBar"], function() {
       map.addControl(new AMap.ToolBar());
     });
+    $.hidePreloader();
   }
 
     // //地点显示
