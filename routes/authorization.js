@@ -152,7 +152,7 @@ router.get('/pay', function(req, res, next) {
 });
 
 router.get('/', function(req, res, next) {
-    console.log(req.query);
+    console.log('req' + req.query);
     var appid = 'wx99f15635dd7d9e3c';
     var secret = '9157e84975386b6dee6a499cc639973e';
 
