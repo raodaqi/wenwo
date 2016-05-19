@@ -90,6 +90,7 @@ router.post('/get', function(req, res, next) {
                                 have.set('ask', post);
                                 have.set('type', '1');
                                 have.set('by', userName);
+                                have.set('askDate', post.get('updateAt'));
                                 have.set('price', post.get('askPrice'));
                                 have.set('byName', user.get('uName'));
                                 have.save().then(function (result) {
@@ -149,6 +150,7 @@ router.post('/get', function(req, res, next) {
                                         have.set('ask', post);
                                         have.set('type', '2');
                                         have.set('by', userName);
+                                        have.set('askDate', post.get('updateAt'));
                                         have.set('price', post.get('askPrice'));
                                         have.set('byName', user.get('uName'));
                                         have.save().then(function (result) {
