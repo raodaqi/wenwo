@@ -50,3 +50,6 @@ a {
 .list-block .item-link:active {
      background-color: #F3D27B !important; 
 }
+.modal-overlay, .popup-overlay, .preloader-indicator-overlay{
+    height: 100% !important;
+}

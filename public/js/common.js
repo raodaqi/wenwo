@@ -1,3 +1,5 @@
+$.showPreloader();
+
 function formatDate(format, timestamp, full) {
     format = format.toLowerCase();
     if (!format) format = "y-m-d h:i:s";

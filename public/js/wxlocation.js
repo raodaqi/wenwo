@@ -42,6 +42,7 @@ var data = {
                 //   zoom:18,
                 //   center: [longitude, latitude] 
                 // });
+                $.hidePreloader();
                 if(!(localStorage.lng && localStorage.lat)){
                     map.setZoomAndCenter(14,[longitude,latitude]);
                 }
