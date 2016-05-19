@@ -28,8 +28,9 @@ var wxpay = WXPay({
 
 
 router.get('/wx', function(req, res, next) {
-    var urlApi = "http://wenwo.leanapp.cn/authorization/";
-    //var urlApi = "/authorization/";
+    var url = req.rawHeaders[15];
+    console.log(url);
+    var urlApi = "http://wenwo.leanapp.cn/authorization/?url="+url;
     authorize(res, urlApi);
 });
 
@@ -152,7 +153,8 @@ router.get('/pay', function(req, res, next) {
 });
 
 router.get('/', function(req, res, next) {
-    console.log('req' + req.query);
+    var urlReq = req.query.url;
+    console.log(urlReq);
     var appid = 'wx99f15635dd7d9e3c';
     var secret = '9157e84975386b6dee6a499cc639973e';
 
@@ -199,7 +201,7 @@ router.get('/', function(req, res, next) {
                             // var user = AV.User.current();
                             console.log(user);
                             //var url = 'http://wenwo.leanapp.cn/?username='+user.get('user');
-                            var url = '/?username='+user.get('user');
+                            var url = urlReq + '?username='+user.get('user');
                             resG.redirect(url);
 
 
@@ -225,7 +227,7 @@ router.get('/', function(req, res, next) {
                                             // var user = AV.User.current();
                                             // console.log(user);
                                             //var url = 'http://wenwo.leanapp.cn/?username='+user.get('user');
-                                            var url = '/?username='+user.get('user');
+                                            var url = urlReq + '?username='+user.get('user');
                                             resG.redirect(url);
 
 
