@@ -14,13 +14,17 @@ body{
 	background-color: #efc553;
 }
 .title_word{
-	width: 40%;
+	/*width: 40%;*/
+  position: absolute;
+  width: 100px;
+  left: 50%;
+  text-align: center;
+  margin-left: -50px;
 	height: 40px;
 	line-height: 40px;
-	float: left;
-	text-align: left;
 	font-size: 20px;
 	color: white;
+
 }
 .return{
 	width: 39%;
@@ -548,6 +552,50 @@ body{
 	    background-color: #efc553;
 	    color: white;
     }
+    .ask-get {
+      position: absolute;
+      top: 5px;
+      right: 20px;
+      font-size: 40px;
+      color: red;
+  }
+  .more-content{
+    position: absolute;
+    padding-top: 20px;
+    right: 10px;
+    width: 50px;
+    height: 100px;
+    display: none;
+    z-index: 10000;
+  }
+  .more-list{
+    position: absolute;
+    width: 50px;
+    height: 80px;
+    background-color: white;
+    box-shadow: 0 0 0px 1px rgba(0,0,0,0.3),0 0 6px 2px rgba(0,0,0,0.15);
+  }
+  .arrow-box {
+    position: absolute;
+    overflow: hidden;
+    display: block;
+    left: 20px;
+    z-index: 2;
+    top: 0;
+  }
+  .arrow-box i, .arrow-box em {
+    border-color: transparent transparent red transparent;
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-width: 7px;
+    border-style: solid;
+    overflow: hidden;
+    font-size: 0;
+    line-height: 0;
+    vertical-align: top;
+    margin-top: -20px;
+  }
 </style>
 <body>
 <% include footer.ejs %>
@@ -557,12 +605,17 @@ body{
 			<a></a>
 		</div>
 	</div>
-	<div class="title_word">商品名称</div>
+	<div class="title_word">详情</div>
 	<div class="more">
-		<a href="#" class="collect" style="display: block;">删除</a>
-		<a class="ordered" style="display: none;">退款</a>
-		<a class="other" style="display: none;">更多</a>
+		<a class="other">更多</a>
 	</div>
+</div>
+<div class="more-content">
+    <div class="arrow-box"> <em class="img-arrow"></em> <i class="img-arrow"></i>
+    </div>
+    <div class="more-list">
+    <div class="more-li"></div>
+    </div>
 </div>
 <div class="content">
 	<!-- <div class="card">
@@ -660,22 +713,23 @@ body{
               </div>
 
             </div> -->
-            <div class="autor-content-block">
+        <div class="autor-content-block">
+          <div class="ask-get iconfont icon-buy" style="display: block;"></div>
 		      <div class="autor-content">
 		        <!-- <img class="autor-img" src="/img/test.jpg"> -->
 		        <div class="autor-text">
 		          <div class="autor-list-content">
-		          来自：<span class="autor-name">jessica</span>
+		          来自用户：<span class="autor-name">jessica</span>
 		          的<span class="autor-theme">防坑</span>指南
 		          </div>
 		          <label class="autor-time">2016.04.20</label>
 		        </div>
 
-		        <div class="buy-num-content">
+		        <!-- <div class="buy-num-content">
 		        	<span>购买人数： </span>
 		        	<span class="buy-num">20</span>
 		        	<span>人</span>
-		        </div>
+		        </div> -->
 		      </div>
 		    </div>
 
@@ -823,7 +877,6 @@ body{
 			askContentShow  = data.askContentShow,//隐藏详情
 			lnglatXY        = [data.GeoX,data.GeoY],//坐标
 			price           = data.askPrice,//价格
-			buyNum          = data.buyNum,//购买人数
 			updatedAt       = data.updatedAt,//发布时间
 			createBy        = data.createBy;//发布者
 
@@ -838,11 +891,7 @@ body{
 	        }
 	      }
 	      //设置上传者名字
-	      $(".autor-name").text("我");
-
-	      //购买数量
-	      $(".buy-num").text(buyNum);
-
+	      $(".autor-name").text(createBy);
 	      //设置信息主题
 	      $(".autor-theme").text(typeText);
 	      //设置信息上传时间
@@ -904,21 +953,20 @@ body{
 
 	}
 	function getDetail(){
-		$.showPreloader();
+    $.showPreloader();
 
 		var data = {
 			ask_id   : "<%= id %>",
 			username : "<%= username %>"
 		}
-		$.showPreloader();
 		$.ajax({
           type : "GET",
           data: data,
           dataType: "json",
           url : "/ask/askdetail",
           success : function(result){
-            console.log(result);
             $.hidePreloader();
+            console.log(result);
             if(result.code == 200){
               $.hidePreloader();
               formatDetail(result.data);

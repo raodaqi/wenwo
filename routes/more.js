@@ -36,9 +36,26 @@ router.get('/watch-us', function(req, res, next) {
 router.get('/personal-data', function(req, res, next) {
   res.render('more/personal-data');
 });
-router.get('/information-presentation', function(req, res, next) {
-  res.render('more/information-presentation');
+router.get('/information-presentation/:id', function(req, res, next) {
+  var id = req.params.id;
+  res.render('more/information-presentation',{id:id});
 });
+router.get('/information-presentation/test/:id', function(req, res) {
+  var username =  req.query.username;
+  var id = req.params.id;
+  res.render('more/information-presentation',{id:id,username:username});
+});
+
+router.get('/askdetail/:id', function(req, res, next) {
+  var id = req.params.id;
+  res.render('more/askDetail',{id:id});
+});
+router.get('/askdetail/test/:id', function(req, res) {
+  var username =  req.query.username;
+  var id = req.params.id;
+  res.render('more/askDetail',{id:id,username:username});
+});
+
 router.get('/recharge', function(req, res, next) {
   res.render('more/recharge');
 });
