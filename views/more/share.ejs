@@ -286,15 +286,17 @@ $(".issue_information").click(function(){
 	window.location.href="/todos/send?";
 })
 $(".content-block").on("click",".information_collect_number",function(){
-		window.location.href="/more/purchase-detail";
+		var mid = $(this).attr("data-mid");
+		console.log(mid);
+		window.location.href="/more/purchase-detail/"+mid;
 })
 $(".content-block").on("click",".information_Purchase_number",function(){
-	var mid = $(this).attr("data-id");
+	var mid = $(this).attr("data-mid");
+	console.log(mid);
 	window.location.href="/more/purchase-detail/"+mid;	
 })
 $(".informations").on("click",".information",function(){
 	// console.log(1);
-	console.log(mid);
 	window.location.href = "/more/information-presentation";
 })
 
@@ -348,14 +350,15 @@ function getMyask(){
                    var buyNum = result.data[i].buyNum;
                    var time = formatDate("y.m.d",result.data[i].updatedAt)
                    var price = result.data[i].askPrice;
-                   var s_id = result.data[i].objectId;
-                   console.log(s_id);
+                   var mid = result.data[i].objectId;
+                   console.log(mid);
+                   console.log(1234);
                    if(price == 0)
                    {
-                   	var str = '<div class="information"><div class="information_img"><img src="/img/u28.png"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+'&nbsp;&nbsp;'+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_time"><div class="left">'+time+'</div></div><div class="information_Purchase_number information_collect_number" data-id="s_id">收藏人数：<span>'+buyNum+'</span>人</div></div>';
+                   	var str = '<div class="information"><div class="information_img"><img src="/img/u28.png"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+'&nbsp;&nbsp;'+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_time"><div class="left">'+time+'</div></div><div class="information_Purchase_number information_collect_number" data-mid='+mid+'>收藏人数：<span>'+buyNum+'</span>人</div></div>';
                    }
                    else{
-                   var str = '<div class="information"><div class="information_img"><img src="/img/u28.png"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+'&nbsp;&nbsp;'+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_time"><div class="left">'+time+'</div></div><div class="information_Purchase_number" data-id="s_id">购买人数：<span>'+buyNum+'</span>人</div></div>';
+                   var str = '<div class="information"><div class="information_img"><img src="/img/u28.png"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+'&nbsp;&nbsp;'+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_time"><div class="left">'+time+'</div></div><div class="information_Purchase_number" data-mid='+mid+'>购买人数：<span>'+buyNum+'</span>人</div></div>';
                    }
           		$("#content1").append(str);
             }

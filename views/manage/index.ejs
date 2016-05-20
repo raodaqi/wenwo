@@ -172,7 +172,7 @@
                         <textarea class="edit-detail"></textarea>
                     </div>
                     <div>
-                        <span>地图标注:</span>
+                        <span>地图标注:</span><input type="text" class="search" placeholder="搜索地点"><button id="search">搜索</button>
                          <div class="container-show"id="show1"></div>
                     </div>
                     <div>
@@ -247,6 +247,8 @@
     </div>
     <script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
      <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=cb84c659c88a7cc83b935a009b3a9cfd"></script>
+     <script type="text/javascript" src="/js/common.js"></script>
+     <script type="text/javascript" src="/js/map.js"></script>
     <script>
         $('.btn_send').on('click', function () {
             //console.log($('.check-box').find('input')[0].checked);
@@ -383,6 +385,7 @@
                   zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
                   buttonPosition:'LB'
                 });
+                  getMap(103.98767,30.580837);
                    // function getMap(lng,lat){
                    //    //详情地点显示
                    //    var mapShow;
@@ -413,6 +416,7 @@
                   zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
                   buttonPosition:'LB'
                 });
+                  getMap(103.98767,30.580837);
                   // function getMap(lng,lat){
                   //     //详情地点显示
                   //     var mapShow;
@@ -489,6 +493,7 @@
                         var detail = result.data.askContentShow + result.data.askContentHide;
                         $(".detail-information").append(detail);
                         $(".detail-price").append(result.data.askPrice);
+                        getMap(result.data.GeoX,result.data.GeoY);
                     }
                 },
                 error : function(){}
@@ -565,6 +570,93 @@
             }
             return newstr;
         }
+        window.onload = function(){
+    AMap.plugin(['AMap.ToolBar','AMap.Scale'],function(){
+        var toolBar = new AMap.ToolBar({
+            offset: new AMap.Pixel(60, 10)
+          });
+        var scale = new AMap.Scale({
+          offset: new AMap.Pixel(-5, 7)
+        });
+        map.addControl(toolBar);
+        map.addControl(scale);
+    });
+
+    $.hidePreloader();
+  }
+    $("#search").on("click",function(){
+        var li = $(".search").val();
+        console.log(li);
+      // var li = $(this).children(".hot-detail").children(".big").text();
+      // var city = $(this).children(".hot-detail").children(".small").text().substring(3,6);
+      var placeSearch = new AMap.PlaceSearch({
+            map:map
+      })
+      // if(li == "牛背山"){
+      //   placeSearch.setCity(511824);
+      //   placeSearch.search(li);
+      // }
+      placeSearch.search(li);
+      //这里是设置一个延时来判断是否标注加载完成
+      //    timeIv = setInterval(function(){
+      //     // console.log($(".amap-marker").length);
+      //     if($(".amap_lib_placeSearch_poi").length > 0){
+      //       // clearInterval(timeIv);
+      //       // map.clearMap();
+      //       $(".amap_lib_placeSearch_poi").remove();
+      //     }
+      //    }, 10);
+      // $.router.load("#router");
+    })
+    map.getCity(function(data) {
+          console.log(data);
+            if (data['province'] && typeof data['province'] === 'string') {
+                $(".address-text").text(data['city']);
+            }
+        });
+    map.on('moveend', getCity);
+    function getCity() {
+        map.getCity(function(data) {
+          console.log(data);
+            if (data['province'] && typeof data['province'] === 'string') {
+                $(".address-text").text(data['city']);
+            }
+        });
+    }
+    var lnglatXY = [lng,lat];
+      getAddress(lnglatXY,{
+          success:function(address){
+            var detail = address.formattedAddress;
+            var address = {
+              province : address.addressComponent.province,
+              city     : address.addressComponent.city,
+              district : address.addressComponent.district,
+              township : address.addressComponent.township
+            }
+            var replace = ""+address.province+address.city+address.district+address.township+"";
+            detail = detail.replace(replace,"");
+            $("#address-content .item-title").text(detail);
+          }
+        });
+      getMap(103.98767,30.580837);
+      function getMap(lng,lat){
+      //详情地点显示
+      var mapShow;
+      mapShow = new AMap.Map('container-show', {
+        resizeEnable: true,
+        zoom:15,
+        center: [lng,lat]
+      });
+      var markerShow = new AMap.Marker({
+        map : mapShow,
+        position: [lng,lat],
+        draggable: true,
+        cursor: 'move',
+        raiseOnDrag: true,
+        clickable:true
+      });
+      markerShow.setMap(mapShow);
+    }
     //     map.getCity(function(data) {
     //       console.log(data);
     //         if (data['province'] && typeof data['province'] === 'string') {

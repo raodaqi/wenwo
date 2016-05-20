@@ -59,15 +59,16 @@ body{
 }
 .informations{
 	width: 100%;
-	border-bottom: 1px solid #EAEAEA;
+	/*border-bottom: 1px solid #EAEAEA;*/
 	height: auto;
 }
 .information{
 	height: 60px;
 	width: 100%;
+	border-bottom: 1px solid #EAEAEA;
 }
 .information_refund{
-	border-top: 1px solid #EAEAEA;
+	border-bottom: 1px solid #EAEAEA;
 	width: 100%;
 	height: 60px;
 	display: none;
@@ -153,10 +154,10 @@ body{
 			<a></a>
 		</div>
 	</div>
-	<div class="title_word" id="<%= id %>">购买明细</div>
+	<div class="title_word" data-id="<%= id %>">购买明细</div>
 </div>
 <div class="details">
-	<div class="information">
+	<!-- <div class="information">
 		<div class="information_img">
 			<img src="/img/test.jpg"></div>
 		<div class="information_name">范某某</div>
@@ -164,8 +165,8 @@ body{
 			<div class="information_time">2015.08.12</div>
 			<div class="information_money">实得酬金：￥1.0</div>
 		</div>
-	</div>
-	<div class="informations">
+	</div> -->
+	<!-- <div class="informations">
 		<div class="information">
 			<div class="information_img">
 				<img src="/img/test.jpg"></div>
@@ -179,10 +180,12 @@ body{
 			</div>
 		</div>
 		<div class="information_refund">fsdfsdzvfvsdfsDfsvdfsdfsdfsf</div>
-	</div>
+	</div> -->
 </div>
-	<div class="income"><div class="iconfont icon-qian money"><span>&nbsp;总的收益:￥ 2.25</span></div></div>
+	<div class="income"><div class="iconfont icon-qian money"><span id="mon">&nbsp;总的收益:￥ </span></div></div>
+	<script type="text/javascript" src="/js/common.js"></script>
 <script type="text/javascript">
+
 
 $.showPreloader();
 setTimeout(function () {
@@ -191,34 +194,59 @@ setTimeout(function () {
 $(".zuo").click(function(){
 		history.go(-1);
 	})
-$(".informations").on("click",".refund1",function(){
+$(".details").on("click",".refund1",function(){
+	console.log(1);
 	$(this).hide();
 	$(this).next().show();
-	$(this).parent().parent().parent().next().addClass('show');
-	$(".information_refund").show();
+	$(this).parent().parent().parent().next().show();
+	// $(".information_refund").show();
 })
-$(".informations").on("click",".refund2",function(){
+$(".details").on("click",".refund2",function(){
+	console.log(2);
 	$(this).hide();
 	$(this).prev().show();
-	$(this).parent().parent().parent().prev().addClass('hide');
-	$(".information_refund").hide();
+	$(this).parent().parent().parent().next().hide();
+	// $(".information_refund").hide();
 })
-// function getLogin(){
-// 	 $.ajax({
-//         type : "POST",
-//         dataType: "json",
-//         data:{username:"test",ask_id:},
-//         url : "/ask/getbuy",
-//         success : function(result){
-//           console.log(result);
-//           // var name = result.data.user_name;
-//           // console.log(name);
-//           // $(".user_name").append(name);
-//           },
-//       error: function(error){
-//           alert(error);
-//         }
-//       })
-// }
+var mid = $(".title_word").attr("data-id");
+console.log(mid);
+$.ajax({
+            type: "get",
+            url: '/ask/getbuy',
+            data: {ask_id:'572e305d2e958a0066904f7d'},
+            dataType: "json",
+            success : function(result) {
+                console.log(result);
+                for(var i = 0;i < result.data.length; i++){
+                	var time = formatDate("y.m.d",result.data[i].updatedAt);
+                	var price = result.data[i].price;
+                	var name = result.data[i].byName;
+                	var str = '<div class="information"><div class="information_img"><img src="/img/test.jpg"></div><div class="information_name">'+name+'</div><div class="information_content"><div class="information_time">'+time+'</div><div class="information_money">实得酬金：￥'+price+'</div></div></div>';
+                	$(".details").append(str);
+                }
+                var money = price*result.data.length;
+                money = parseFloat(money.toFixed(2));
+                $("#mon").append(money);
+            },
+            error : function(){}
+        });
+
+$.ajax({
+            type: "get",
+            url: '/ask/getrefund',
+            data: {ask_id:'572e305d2e958a0066904f7d'},
+            dataType: "json",
+            success : function(result) {
+                console.log(result);
+                for(var i = 0;i < result.data.length; i++){
+                	var time = formatDate("y.m.d",result.data[i].updatedAt);
+                	var name = result.data[i].userName;
+                	var info = result.data[i].info;
+                	var str = '<div class="informations"><div class="information"><div class="information_img"><img src="/img/test.jpg"></div><div class="information_name">'+name+'</div><div class="information_content"><div class="information_time">'+time+'</div><div class="information_money"><div class="refund refund1"><span style="margin-left: 35px;">退款</span><div class="iconfont icon-xia right"></div></div><div class="refund refund2"><span>退款理由</span><div class="iconfont icon-shang right"></div></div></div></div></div><div class="information_refund">'+info+'</div></div>';
+                	$(".details").append(str);
+                }
+            },
+            error : function(){}
+        });
 </script>
 </html>

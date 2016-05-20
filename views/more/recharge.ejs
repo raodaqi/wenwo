@@ -127,8 +127,25 @@ body{
 $(".zuo").click(function(){
 		history.go(-1);
 	})
+
 $(".submit_btn").click(function(){
-	alert("充值成功!!");
+	var mon = $(".withdraw_title_num").val();
+console.log(mon);
+function pay(){
+	$.ajax({
+        type : "GET",
+        dataType: "json",
+        data:{totalFee: mon },
+        url : "/authorization/pay_t",
+        success : function(result){
+          console.log(result);
+        alert("充值成功!!");
+          },
+      error: function(error){
+          alert(error);
+        }
+      })
+}
 })
 </script>
 </html>
