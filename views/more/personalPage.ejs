@@ -366,6 +366,7 @@ body{
 //         }
 //       })
 // }
+getUserinfo();
 var data = {
       username :"<%=username%>"
     }
@@ -380,7 +381,7 @@ function getUserinfo(){
           var photo = result.data.userHead;
           var username = result.data.uName;
           $(".user_photo").attr("src",photo);
-          $(".user_name").text(username);
+          $(".user_name").append('username');
           // var name = result.data.user_name;
           // console.log(name);
           // $(".user_name").append(name);
