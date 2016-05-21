@@ -331,7 +331,7 @@ function getMyask(){
 	 $.ajax({
         type : "get",
         dataType: "json",
-        data:{username:"hanqi",staus:4},
+        data:{username:"<%=username%>",staus:4},
         url : "/ask/myask",
         success : function(result){
           console.log(result);
@@ -348,7 +348,7 @@ function getMyask(){
                    var strs = type.split(",")
                    console.log(strs);
                    var buyNum = result.data[i].buyNum;
-                   var time = formatDate("y.m.d",result.data[i].updatedAt)
+                   var time = formatDate("y.m.d",result.data[i].updatedAt);
                    var price = result.data[i].askPrice;
                    var mid = result.data[i].objectId;
                    console.log(mid);

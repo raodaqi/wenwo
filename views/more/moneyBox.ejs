@@ -146,7 +146,7 @@ function getMywallet(){
 	 $.ajax({
         type : "GET",
         dataType: "json",
-        data:{username:"test"},
+        data:{username:"<%=username%>"},
         url : "/wallet/mywallet",
         success : function(result){
           console.log(result);

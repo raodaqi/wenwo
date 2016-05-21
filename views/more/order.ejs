@@ -244,12 +244,11 @@ function getStaus(staus) {
             }
             return temp;
         }
-getHode();
 function getHode(){
 	 $.ajax({
         type : "POST",
         dataType: "json",
-        data:{username:"test",staus:3},
+        data:{username:"<%=username%>",staus:3},
         url : "/hode/haved",
         success : function(result){
           console.log(result);
@@ -261,7 +260,7 @@ function getHode(){
           		$.ajax({
 			        type : "GET",
 			        dataType: "json",
-			        data:{username:"test",ask_id:id},
+			        data:{username:"<%=username%>",ask_id:id},
 			        url : "/ask/askdetail",
 			        success : function(result){
 			          console.log(result);
@@ -298,7 +297,7 @@ function getHode(){
           		$.ajax({
 			        type : "GET",
 			        dataType: "json",
-			        data:{username:"test",ask_id:id},
+			        data:{username:"<%=username%>",ask_id:id},
 			        url : "/ask/askdetail",
 			        success : function(result){
 			          console.log(result);
