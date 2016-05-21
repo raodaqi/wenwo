@@ -259,7 +259,7 @@ body{
 <div class="contences">
 <div class="user_information">
 	<div class="user_photo">
-		<img src="/img/test.jpg">
+		<img class="userphoto" src="/img/test.jpg">
 	</div>
 	</div>
 		<div class="user_name"></div>
@@ -381,7 +381,7 @@ function getUserinfo(){
           console.log(result);
           var photo = result.data.userHead;
           var username = result.data.uName;
-          $(".user_photo").attr("src",photo);
+          $(".userphoto").attr("src",photo);
           $(".user_name").append(username);
           // var name = result.data.user_name;
           // console.log(name);
