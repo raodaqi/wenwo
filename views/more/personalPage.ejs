@@ -336,6 +336,18 @@ body{
 	$(".zuo").click(function(){
 		history.go(-1);
 	})
+// function authorize(req, res) {
+//   var appid = 'wx99f15635dd7d9e3c';
+//   var secret = '9157e84975386b6dee6a499cc639973e';
+
+//   var url = req.originalUrl;
+//   url = 'http://wenwo.leanapp.cn' + url;
+//   var urlApi = "http://wenwo.leanapp.cn/authorization/?url="+url;
+//   urlApi = encodeURIComponent(urlApi);
+//   var url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+urlApi+'&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect';
+
+//   res.redirect(url);
+// }
 // getLogin();
 // function getLogin(){
 // 	 $.ajax({
@@ -365,9 +377,13 @@ function getUserinfo(){
         url : "/user/getuserinfo",
         success : function(result){
           console.log(result);
-          var name = result.data.user_name;
-          console.log(name);
-          $(".user_name").append(name);
+          var photo = result.data.userHead;
+          var username = result.data.uName;
+          $(".user_photo").attr("src",photo);
+          $(".user_name").text(username);
+          // var name = result.data.user_name;
+          // console.log(name);
+          // $(".user_name").append(name);
           },
       error: function(error){
           alert(error);
