@@ -5,9 +5,29 @@ var AV = require('leanengine');
 // 详见： https://leancloud.cn/docs/js_guide.html#对象
 // var Todo = AV.Object.extend('Todo');
 
+function authorize(req, res) {
+  var appid = 'wx99f15635dd7d9e3c';
+  var secret = '9157e84975386b6dee6a499cc639973e';
+
+  var url = req.originalUrl;
+  url = 'http://wenwo.leanapp.cn' + url;
+  var urlApi = "http://wenwo.leanapp.cn/authorization/?url="+url;
+  urlApi = encodeURIComponent(urlApi);
+  var url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+urlApi+'&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect';
+  res.redirect(url);
+}
+
+
 // 查询 Todo 列表
 router.get('/order', function(req, res, next) {
-  res.render('more/order');
+  var user = AV.User.current();
+  if(!user){
+    authorize(req, res);
+  }else{
+    var username = user.get('user');
+    res.render('more/order',{username:username});
+  }
+  // res.render('more/order');
 });
 
 router.get('/share', function(req, res, next) {
@@ -47,10 +67,20 @@ router.get('/information-presentation/test/:id', function(req, res) {
 });
 
 router.get('/askdetail/:id', function(req, res, next) {
-  var id = req.params.id;
-  res.render('more/askDetail',{id:id});
+  // authorize(req,res);
+  // var id = req.params.id;
+  // res.render('more/askDetail',{id:id});
+  var user = AV.User.current();
+  if(!user){
+    authorize(req, res);
+  }else{
+    var username = user.get('user');
+    var id = req.params.id;
+    res.render('more/askDetail',{id:id,username:username});
+  }
 });
 router.get('/askdetail/test/:id', function(req, res) {
+  authorize(req,res);
   var username =  req.query.username;
   var id = req.params.id;
   res.render('more/askDetail',{id:id,username:username});
