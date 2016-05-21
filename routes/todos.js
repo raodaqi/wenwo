@@ -34,7 +34,14 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/send', function(req, res, next) {
-  res.render('send');
+  // res.render('send');
+  var user = AV.User.current();
+  if(!user){
+    authorize(req, res);
+  }else{
+    var username = user.get('user');
+    res.render('send',{username:username});
+  }
 });
 
 function getAccessToken(appid,secret,callback){

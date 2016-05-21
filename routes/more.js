@@ -31,34 +31,100 @@ router.get('/order', function(req, res, next) {
 });
 
 router.get('/share', function(req, res, next) {
-  res.render('more/share');
+  var user = AV.User.current();
+  if(!user){
+    authorize(req, res);
+  }else{
+    var username = user.get('user');
+    res.render('more/share',{username:username});
+  }
+  // res.render('more/share');
 });
 
 router.get('/personalPage', function(req, res, next) {
-  res.render('more/personalPage');
+  var user = AV.User.current();
+  if(!user){
+    authorize(req, res);
+  }else{
+    var username = user.get('user');
+    res.render('more/personalPage',{username:username});
+  }
+
+  // res.render('more/personalPage');
 });
 router.get('/moneyBox', function(req, res, next) {
-  res.render('more/moneyBox');
+  var user = AV.User.current();
+  if(!user){
+    authorize(req, res);
+  }else{
+    var username = user.get('user');
+    res.render('more/moneyBox',{username:username});
+  }
+  // res.render('more/moneyBox');
 });
 router.get('/contact-us', function(req, res, next) {
-  res.render('more/contact-us');
+  var user = AV.User.current();
+  if(!user){
+    authorize(req, res);
+  }else{
+    var username = user.get('user');
+    res.render('more/contact-us',{username:username});
+  }
+  // res.render('more/contact-us');
 });
 router.get('/purchase-detail/:id', function(req, res, next) {
-  var id = req.params.id;
-  res.render('more/purchase-detail',{id:id});
+  var user = AV.User.current();
+  if(!user){
+    authorize(req, res);
+  }else{
+    var username = user.get('user');
+    var id = req.params.id;
+    res.render('more/purchase-detail',{id:id,username:username});
+  }
+  // var id = req.params.id;
+  // res.render('more/purchase-detail',{id:id});
 });
 router.get('/withdraw', function(req, res, next) {
-  res.render('more/withdraw');
+  var user = AV.User.current();
+  if(!user){
+    authorize(req, res);
+  }else{
+    var username = user.get('user');
+    res.render('more/withdraw',{username:username});
+  }
+  // res.render('more/withdraw');
 });
 router.get('/watch-us', function(req, res, next) {
-  res.render('more/watch-us');
+  var user = AV.User.current();
+  if(!user){
+    authorize(req, res);
+  }else{
+    var username = user.get('user');
+    res.render('more/watch-us',{username:username});
+  }
+  // res.render('more/watch-us');
 });
 router.get('/personal-data', function(req, res, next) {
-  res.render('more/personal-data');
+  var user = AV.User.current();
+  if(!user){
+    authorize(req, res);
+  }else{
+    var username = user.get('user');
+    res.render('more/personal-data',{username:username});
+  }
+  // res.render('more/personal-data');
 });
 router.get('/information-presentation/:id', function(req, res, next) {
-  var id = req.params.id;
-  res.render('more/information-presentation',{id:id});
+  var user = AV.User.current();
+  if(!user){
+    authorize(req, res);
+  }else{
+    var username = user.get('user');
+    var id = req.params.id;
+    res.render('more/information-presentation',{id:id,username:username});
+  }
+  // var id = req.params.id;
+  // res.render('more/information-presentation',{id:id});
 });
 router.get('/information-presentation/test/:id', function(req, res) {
   var username =  req.query.username;
@@ -87,16 +153,44 @@ router.get('/askdetail/test/:id', function(req, res) {
 });
 
 router.get('/recharge', function(req, res, next) {
-  res.render('more/recharge');
+  var user = AV.User.current();
+  if(!user){
+    authorize(req, res);
+  }else{
+    var username = user.get('user');
+    res.render('more/recharge',{username:username});
+  }
+  // res.render('more/recharge');
 });
 router.get('/present-rules', function(req, res, next) {
-  res.render('more/present-rules');
+  var user = AV.User.current();
+  if(!user){
+    authorize(req, res);
+  }else{
+    var username = user.get('user');
+    res.render('more/present-rules',{username:username});
+  }
+  // res.render('more/present-rules');
 });
 router.get('/refund', function(req, res, next) {
-  res.render('more/refund');
+  var user = AV.User.current();
+  if(!user){
+    authorize(req, res);
+  }else{
+    var username = user.get('user');
+    res.render('more/refund',{username:username});
+  }
+  // res.render('more/refund');
 });
 router.get('/invite', function(req, res, next) {
-  res.render('more/invite');
+  var user = AV.User.current();
+  if(!user){
+    authorize(req, res);
+  }else{
+    var username = user.get('user');
+    res.render('more/invite',{username:username});
+  }
+  // res.render('more/invite');
 });
 // 新增 Todo 项目
 router.post('/', function(req, res, next) {
