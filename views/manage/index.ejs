@@ -126,6 +126,14 @@
     .left{
         float: left;
     }
+    .hidden-text{
+        color: red;
+    }
+    .de-show{
+        height: auto;
+        min-height: 40px;
+        width: 50%;
+    }
 </style>
 <body>
     <div class="wrap">
@@ -169,10 +177,11 @@
                     </div>
                     <div>
                         <span>详情:</span>
-                        <textarea class="edit-detail"></textarea>
+                        <textarea class="edit-detail" id="detail" placeholder="隐藏内容以“##隐藏内容##”方式隐藏"></textarea>
+                        <div class="de-show"></div>
                     </div>
                     <div>
-                        <span>地图标注:</span><input type="text" id="search" placeholder="搜索地点"><button id="sear">搜索</button>
+                        <span>地图标注:</span><input type="text" id="search" placeholder="搜索地点">
                          <div class="container-show" id="container"></div>
                     </div>
                     <div>
@@ -253,6 +262,107 @@
 
      <!-- <script type="text/javascript" src="/js/map.js"></script> -->
     <script>
+    // reason();
+    // function reason(){
+    //   var  detail = $("#hidden-content").val();
+    //     console.log(detail);
+
+    //   //设置描述
+    //   var hidden = '<span class="hidden-text">***</span>';
+    //   str = detail.split("##");
+    //   var detailContent = '';
+    //   for(var i = 0; i < str.length; i++){
+    //     if(i%2){
+    //       detailContent += str[i];
+    //     }else{
+    //       detailContent += str[i]+hidden;
+    //     }
+    //   }
+    //   $("#hidden-content").empty();
+    //   $("#show-content").append(detailContent);
+
+      // console.log(localStorage.detail);
+      // if(localStorage.detail){
+      //   $("#detail").val(localStorage.detail);
+
+      //   var str = {};
+      //   str = localStorage.detail.split("##");
+      //   var show = '';
+      //   var hidden = '';
+      //   var detail = ''
+      //   for(var i = 0; i < str.length; i++){
+      //     if(i%2){
+      //       var starLen = ''
+      //       for(var j = 0; j < str[i].length; j++){
+      //         starLen += '*';
+      //       }
+      //       detail += '<span class="hidden-text">'+starLen+'</span>';
+      //     }else{
+      //       detail += str[i];
+      //     }
+      //   }
+      //   $(".de-show").empty();
+      //   $(".de-show").append(detail);
+
+      //   $("#detail-content .card-content-inner").text(localStorage.detail);
+      // }
+
+
+
+    //    function getHideText(){
+    //   var text = $("#detail").val();
+    //   // console.log(text.indexOf("##"));
+    //   var str = {};
+    //   str = text.split("##");
+    //   var show = '';
+    //   var hidden = '';
+    //   for(var i = 0; i < str.length; i++){
+    //     if(i%2){
+    //       hidden += str[i]+"##";
+    //     }else{
+    //       if( i == str.length-1){
+    //         show += str[i];
+    //       }else{
+    //         show += str[i]+"##";
+    //       }
+          
+    //     }
+    //   }
+    //   var textDetail = {
+    //     show:show,
+    //     hidden:hidden
+    //   }
+    //   return(textDetail);
+    // }
+
+    //详情输入后显示到主页
+    $("#detail").on("input change",function(){
+      var strs = $("#detail").val();
+      var str =  strs.split("##");
+      var show = '';
+        var hidden = '';
+        var detail = ''
+        for(var i = 0; i < str.length; i++){
+          if(i%2){
+            var starLen = ''
+            for(var j = 0; j < str[i].length; j++){
+              starLen += '*';
+            }
+            detail += '<span class="hidden-text">'+starLen+'</span>';
+          }else{
+            detail += str[i];
+          }
+        }
+        $(".de-show").empty();
+        $(".de-show").append(detail);
+      // console.log("aax1");
+      // var str = getHideText().show;
+      // console.log(str);
+      // $(".de-show").append(str);
+})
+
+
+
     var marker;
     var map, geolocation;
     //加载地图，调用浏览器定位服务
