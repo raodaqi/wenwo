@@ -180,7 +180,7 @@ body{
 		<div class="tabs">
 			<div id="tab1" class="tab active">
 				<div class="content-block" id="type1">
-					<div class="informations">
+					<!-- <div class="informations">
 						<div class="information">
 							<div class="information_img"><img src="/img/u28.png"></div>
 							<div class="information_name">
@@ -191,11 +191,11 @@ body{
 								<div class="iconfont icon-you" style="font-size:32px;"></div>
 							</div>			
 						</div>
-					</div>
+					</div> -->
 			</div>
 			<div id="tab2" class="tab">
 				<div class="content-block" id="type2">
-					<div class="informations">
+					<!-- <div class="informations">
 						<div class="information">
 							<div class="information_img"><img src="/img/u28.png"></div>
 							<div class="information_name">
@@ -205,13 +205,15 @@ body{
 							<div class="information_state"></div>
 							<div class="information_Purchase_number"></div>				
 						</div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-</div><script type="text/javascript">
+</div>
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript">
 $(".zuo").click(function(){
 		history.go(-1);
 	})
@@ -265,7 +267,7 @@ function getHode(){
 			        url : "/ask/askdetail",
 			        success : function(result){
 			          console.log(result);
-			          var tab = "";
+			          var tabs = "";
           		if (result.data.askTagStr != null)
 			      {       		
           		var tag = result.data.askTagStr;
@@ -273,16 +275,16 @@ function getHode(){
                 console.log(temp);
             	}
                 for (var j = 0; j < temp.length; j++) {
-                	tab = tab +'<span>'+ temp[j]+'</span>';
+                	tabs = tabs +'<span>'+ temp[j]+'</span>';
                    }
-                   console.log(tab);
+                   console.log(tabs);
                    var type = result.data.askType;
                    var strs = type.split(",")
                    console.log(strs);
                    // var price = result.data.askPrice;
                    // var buyNum = result.data.buyNum;
           		var str = "";
-          		var str = '<div class="informations"><div class="information"><div class="information_img"><img src="/img/u28.png"></div><div class="information_name"><div class="information_name_word collect-concent">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price"></div></div><div class="menu_icon"><div class="iconfont icon-you" style="font-size:32px;"></div></div>	</div></div></div>';
+          		var str = '<div class="informations"><div class="information"><div class="information_img"><img src="/img/u28.png"></div><div class="information_name"><div class="information_name_word collect-concent">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tabs+'</div><div class="information_price"></div></div><div class="menu_icon"><div class="iconfont icon-you" style="font-size:32px;"></div></div>	</div></div></div>';
           		$("#type1").append(str);
           		console.log(str);
           		// var time = result.data.createdAt;
@@ -302,7 +304,7 @@ function getHode(){
 			        url : "/ask/askdetail",
 			        success : function(result){
 			          console.log(result);
-			          var tab = "";
+			          var tabs= "";
 			     if (result.data.askTagStr != null)
 			     {       		
           		var tag = result.data.askTagStr;
@@ -310,16 +312,16 @@ function getHode(){
                 console.log(temp);
             	}
                 for (var j = 0; j < temp.length; j++) {
-                	tab = tab +'<span>'+ temp[j]+'</span>';
+                	tabs = tabs +'<span>'+ temp[j]+'</span>';
                    }
-                   console.log(tab);
+                   console.log(tabs);
                    var type = result.data.askType;
                    var strs = type.split(",")
                    console.log(strs);
                    var price = result.data.askPrice;
                    var buyNum = result.data.buyNum;
           			var str = "";
-          			var str = '<div class="informations"><div class="information"><div class="information_img"><img src="/img/u28.png"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp;&nbsp;"+getTitle(strs[1])+':'+tab+'</span></div><div class="information_price">￥ &nbsp;'+price+'</div></div><div class="information_state"></div><div class="information_Purchase_number"></div></div></div>';
+          			var str = '<div class="informations"><div class="information"><div class="information_img"><img src="/img/u28.png"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp;&nbsp;"+getTitle(strs[1])+':'+tabs+'</span></div><div class="information_price">￥ &nbsp;'+price+'</div></div><div class="information_state"></div><div class="information_Purchase_number"></div></div></div>';
           		$("#type2").append(str);
           		// var time = result.data.createdAt;
           		// $("#order-time").append(time); 
