@@ -214,6 +214,10 @@ body{
 </div>
 <script type="text/javascript" src="/js/common.js"></script>
 <script type="text/javascript">
+$.showPreloader();
+setTimeout(function () {
+        $.hidePreloader();
+    }, 2000);
 $(".zuo").click(function(){
 		history.go(-1);
 	})
