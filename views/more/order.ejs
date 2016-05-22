@@ -180,7 +180,7 @@ body{
 		<div class="tabs">
 			<div id="tab1" class="tab active">
 				<div class="content-block" id="type1">
-					<!-- <div class="informations">
+					<div class="informations">
 						<div class="information">
 							<div class="information_img"><img src="/img/u28.png"></div>
 							<div class="information_name">
@@ -191,11 +191,11 @@ body{
 								<div class="iconfont icon-you" style="font-size:32px;"></div>
 							</div>			
 						</div>
-					</div> -->
+					</div>
 			</div>
 			<div id="tab2" class="tab">
 				<div class="content-block" id="type2">
-					<!-- <div class="informations">
+					<div class="informations">
 						<div class="information">
 							<div class="information_img"><img src="/img/u28.png"></div>
 							<div class="information_name">
@@ -205,7 +205,7 @@ body{
 							<div class="information_state"></div>
 							<div class="information_Purchase_number"></div>				
 						</div>
-					</div> -->
+					</div>
 				</div>
 			</div>
 		</div>
@@ -244,6 +244,7 @@ function getStaus(staus) {
             }
             return temp;
         }
+        getHode();
 function getHode(){
 	 $.ajax({
         type : "POST",
