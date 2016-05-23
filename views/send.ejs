@@ -119,7 +119,7 @@
     }
     .ww-typeHelper{
       background-color: #efc553;
-      height: 5rem;
+      height: 6rem;
       border-radius: 0.25rem;
     }
     .ww-typeHelper-input,.search-input{
@@ -894,6 +894,45 @@
     $.hidePreloader();
   }
 
+  //初始化,异步获取标签
+  function getTag(themeType){
+    var data = {
+      type   :  themeType
+    }
+    $.ajax({
+      type : "GET",
+      data: data,
+      dataType: "json",
+      url : "/ask/gettag",
+      success: function(result){
+        console.log(result);
+        if(result.code == 200){
+          var li = ''
+          for(var i in result.data){
+            var exit = 0;
+            $.each($(".ww-typeHelper .type-item"),function(i,v){
+              console.log($(v).text());
+              if(result.data[i].tagName == $(v).text()){
+                exit = 1;
+              }
+            })
+            console.log(exit);
+            if(!exit){
+              li += '<span class="type-item">'+result.data[i].tagName+'</span>';
+            }
+            
+          }
+          $(".tag-li").empty();
+          $(".tag-li").append(li);
+        }
+        
+      },
+      error:function(error){
+        console.log(error);
+      }
+    })
+  }
+
     // //地点显示
     // mapShow = new AMap.Map('container-show', {
     //     // resizeEnable: true,
@@ -988,7 +1027,14 @@
         for(var i = 0; i < type.length; i++){
           $(".theme-list"+type[i]).addClass("theme-list-active");
           $("#theme"+type[i]).addClass("theme-li-active");
+          if(type.length == 1){
+            var themeType = type[i];
+          }else{
+            var themeType = type[0] + ","+type[i];
+          }
         }
+        getTag(themeType);
+        console.log(themeType);
       }
 
       //初始化标签
@@ -1337,6 +1383,8 @@
 
     //点击二级标签删除主页二级标签
     $(".ww-typeHelper").on("click",".type-item",function(){
+      console.log($(".tag-content .ww-typeHelper .type-item").length);
+
       $(this).remove();
       var $_this = $(this);
       var span = '<span class="type-item">'+ $(this).text()+'</span>';
@@ -1352,6 +1400,13 @@
     })
     //点击默认标签添加标签
     $(".tag-ul").on("click",".type-item",function(){
+      console.log($(".tag-content .ww-typeHelper .type-item").length);
+      var tagNum = $(".tag-content .ww-typeHelper .type-item").length;
+      if(tagNum >= 3){
+        $.alert("最多只能选择三个二级标签");
+        return;
+      }
+
       var span = '<span class="type-item">'+ $(this).text()+'</span>';
       $(this).remove();
       // $(".ww-typeHelper-input").before(span);
