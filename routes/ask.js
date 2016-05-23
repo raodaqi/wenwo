@@ -383,6 +383,41 @@ router.get('/like', function(req, res, next) {
 
 });
 
+router.get('/isliked', function (req, res, next) {
+    var askId = req.query.ask_id;
+    var username = req.query.username;
+    var query = new AV.Query('AskMe');
+    query.get(askId).then(function (ask) {
+        var relation = ask.relation('like');
+        relation.query().find().then(function (list) {
+            var flag = 0;
+            for (var i = 0; i < list.length; i++) {
+                if (list[i].get('createBy') == username) {
+                    flag++;
+                }
+            }
+            if (flag == 0) {
+                var result = {
+                    code : 200,
+                    isliked : 0,
+                    message : 'operation succeeded'
+                }
+                res.send(result);
+                return;
+            }
+            else {
+                var result = {
+                    code : 200,
+                    isliked : 1,
+                    message : 'operation succeeded'
+                }
+                res.send(result);
+                return;
+            }
+        });
+    });
+});
+
 router.get('/getlike', function(req, res, next) {
     var askId = req.param('ask_id');
     var userName = req.param('username');
