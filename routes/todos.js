@@ -44,6 +44,12 @@ router.get('/send', function(req, res, next) {
   }
 });
 
+router.get('/send/test', function(req, res, next) {
+  var username =  req.query.username;
+  //username = decodeURI(username);
+  res.render('send', { username: username });
+});
+
 function getAccessToken(appid,secret,callback){
   AV.Cloud.httpRequest({
     url: 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='+appid+'&secret='+secret,

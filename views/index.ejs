@@ -49,6 +49,10 @@
       -webkit-transform: translate3d(0, 0, 0);
       transform: translate3d(0, 0, 0);
     }
+    .panel-wenwo{
+      background: #E7BF55 url("/img/sideBG-01.png") no-repeat;
+      background-size: 100%;
+    }
     .left-content{
       left: -80%;
     }
@@ -66,11 +70,11 @@
       width: 20%;
       right:0;
     }
-    .slide-content .user-info{
+    .slide-content .user-info,#slide .user-info{
       margin:20px auto;
       text-align: center;
     }
-    .slide-content .user-info .user-photo{
+    .slide-content .user-info .user-photo,#slide .user-info .user-photo{
       display: block;
       margin: 0 auto;
       width: 70px;
@@ -79,36 +83,36 @@
       border:1px solid gray;
       background-size: cover;
     }
-    .slide-content .user-info .user-name{
+    .slide-content .user-info .user-name,#slide .user-info .user-name{
       display: block;
       margin: 5px auto;
       font-weight: bold;
     }
-    .slide-content .list-content{
+    .slide-content .list-content,#slide .list-content{
       position: absolute;
       width: 100%;
       top:34%;
       color: white !important;
     }
-    .slide-content .list-content .list-ul{
+    .slide-content .list-content .list-ul,#slide .list-content .list-ul{
       padding-left: 10%;
     }
-    .slide-content .list-content .list-li{
+    .slide-content .list-content .list-li,#slide .list-content .list-li{
       height: 35px;
       margin:5px 0 0 0px;
     }
-    .slide-content .list-content .list-li span{
+    .slide-content .list-content .list-li span,#slide .list-content .list-li span{
        display: block;
       float: left;
     }
-    .slide-content .list-content .list-li label{
+    .slide-content .list-content .list-li label,#slide .list-content .list-li label{
       display: block;
       float: left;
       height: 35px;
       margin-left: 15px;
       line-height: 35px;
     }
-    .slide-content .list-content .list-li .iconfont{
+    .slide-content .list-content .list-li .iconfont,#slide .list-content .list-li .iconfont{
       color: white;
     }
     .right-content{
@@ -608,6 +612,7 @@
       position: absolute;
       right: 20px;
       text-align: center;
+      display: none;
       /*top: 10px;*/
     }
     .votebar-like,.votebar-hate{
@@ -740,14 +745,16 @@
   }
   .card-content-inner{
     word-break: break-all;
+  }
+  #slide .content-block{
+    margin:0;
+    padding:0;
   } 
   </style>
   <body>
   <div class="page page-current" id='router'>
     <div class="slide-content">
       <div class="left-content">
-        <!-- <div class="more iconfont icon-more"></div>
-        <div class="cancel iconfont icon-x" style="display:none" ></div> -->
         <div class="user-info">
           <img class="user-photo" src="/img/test.jpg" alt="">
           <label class="user-name">范范</label>
@@ -782,16 +789,6 @@
         </div>
       </div>
       <div class="right-content">
-        <!-- <div class="suosuo iconfont icon-sousuo"></div>
-        <div class="cancel iconfont icon-x" style="display:none" ></div>
-        <div class="search-content">
-          <div class="searchbar"  id="tip">
-            <a class="searchbar-cancel">取消</a>
-            <div class="search-input">
-              <input type="search" id='search' name="search" placeholder='输入关键字...'  value="" onfocus='this.value=""'/>      
-            </div>
-          </div>
-        </div> -->
       </div>
     </div>
 
@@ -1128,12 +1125,62 @@
           </div>
         </div>
       </div>
-    </div> 
+    </div>
+
+  <div class="panel-overlay"></div>
+  <div class="panel panel-left panel-cover panel-wenwo" id='slide'>
+    <div class="content-block">
+      <!-- <p>我是从右边出现的</p>
+      <p>并且我是覆盖在页面上而不是推开页面</p>
+      <p></p> 
+      <p>
+        <a href="#" class="close-panel">关闭</a>
+      </p> -->
+      <!-- <div class="left-content"> -->
+        <div class="user-info">
+          <img class="user-photo" src="/img/test.jpg" alt="">
+          <label class="user-name">范范</label>
+        </div>
+        <div class="list-content">
+          <div class="list-ul">
+            <div class="list-li" data-href="/more/moneyBox">
+              <span class="iconfont icon-qianbao"></span>
+              <label>我的钱包</label>
+            </div>
+            <div class="list-li" data-href="/more/order">
+              <span class="iconfont icon-gouwuche"></span>
+              <label>我的订单</label>
+            </div>
+            <div class="list-li" data-href="/more/share">
+              <span class="iconfont icon-paper-airplane"></span>
+              <label>我的分享</label>
+            </div>
+            <div class="list-li" data-href="/more/personalPage">
+              <span class="iconfont icon-jiahaoyou"></span>
+              <label>邀请好友</label>
+            </div>
+            <div class="list-li" data-href="/more/watch-us">
+              <span class="iconfont icon-guanzhu"></span>
+              <label>关注我们</label>
+            </div>
+            <div class="list-li" data-href="/more/contact-us">
+              <span class="iconfont icon-dianhua"></span>
+              <label>联系我们</label>
+            </div>
+          </div>
+        <!-- </div> -->
+    </div>
+  </div>
+
   </body>
   <script type='text/javascript' src='/js/zepto.min.js' charset='utf-8'></script>
   <script type='text/javascript' src='/js/sm.min.js' charset='utf-8'></script>
   <script type="text/javascript" src="/js/common.js"></script>
-
+  <script>
+  // $(document).on("click", function() {
+  //     $.openPanel("#slide");
+  //   });
+  </script>
   
   <script>
     // var data = {
@@ -1324,11 +1371,12 @@
 
     $(".header-more").on("click",function(){
       // $(".left-content").css("-webkit-transform", "matrix(1, 0, 0, 1, -"+width+", 0)");
-      $(".left-content").css("-webkit-transform", "matrix(1, 0, 0, 1, "+width+", 0)");
+      // $(".left-content").css("-webkit-transform", "matrix(1, 0, 0, 1, "+width+", 0)");
       // $(this).hide();
       // $(".left-content .cancel").show();
-      $(".slide-content").addClass("active");
+      // $(".slide-content").addClass("active");
 
+      $.openPanel("#slide");
     })
     $(".right-content").on("click",function(){
       $(".slide-content").removeClass("active");
@@ -1864,6 +1912,8 @@
           $.hidePreloader();
           if(result.code == 200){
             for(var i = 0; i < result.data.length;i++){
+
+              //这里来判断内容
               var icon = new AMap.Icon({
                   image : "/img/hotPot.jpg",//24px*24px
                   size : new AMap.Size(50,50)
@@ -1889,7 +1939,8 @@
                 lng             : result.data[i].GeoX,
                 lat             : result.data[i].GeoY,
                 askIsFree       : result.data[i].askIsFree,
-                askTagStr       : result.data[i].askTagStr
+                askTagStr       : result.data[i].askTagStr,
+                likeNum         : result.data[i].likeNum
               })
               markers.push(marker);
 
@@ -1936,6 +1987,7 @@
           isfree        = extData.askIsFree,//是否是免费信息
           price         = extData.price,//信息价格
           createBy      = extData.createBy,//发布者
+          likeNum       = extData.likeNum,//赞踩数量
           updatedAt     = extData.updatedAt;//发布时间
       askType =  askType.split(",");
       var typeText = '';
@@ -1953,6 +2005,43 @@
       //设置信息上传时间
       console.log(updatedAt);
       $(".autor-time").text(formatDate("y.m.d",updatedAt));
+
+      //设置赞踩
+      $(".votebar .voteNum").text(likeNum);
+
+
+      //赞
+      $(".votebar-like,.votebar-hate").on("click",function(){
+        var type = 0;
+        if($(this).hasClass("votebar-like")){
+          //赞
+          type = 1;
+        }else{
+          //踩
+          type = 2;
+        }
+
+        var data = {
+          ask_id   : askId,
+          username : "<%= username %>",
+          type     : type
+        }
+        $.ajax({
+          type : "GET",
+          data: data,
+          dataType: "json",
+          url : "/ask/like",
+          success : function(result){
+            console.log(result);
+            
+          },
+          error : function(error){
+            $.alert('网络异常');
+          }
+        });
+
+      })
+
 
       // if()
 
@@ -1987,7 +2076,9 @@
       $(".wenwo-get").attr("data-askId",askId);
       if(isfree == "1"){
         $(".wenwo-get").text("我要收藏");
+        $(".votebar").show();
       }
+
       if(!extData.geted){
         var data = {
           ask_id   : askId,
@@ -2004,9 +2095,24 @@
             if(result.nobuy == "1"){
               $(".ask-get, #address-content").hide();
               $(".wenwo-get").show();
+              $(".votebar").show();
+
             }else{
               $(".ask-get, #address-content").show();
               $(".wenwo-get").hide();
+              $(".votebar").show();
+
+              var show = result.data.askContentShow.split("##");
+              var hidden = result.data.askContentHide.split("##");
+              var reasonDetail = '';
+              for(var i = 0; i < hidden.length;i++){
+                reasonDetail += show[i] + hidden[i];
+              }
+              if(!hidden.length){
+                reasonDetail = show;
+              }
+              $("#detail-content  .card-content-inner").empty();
+              $("#detail-content  .card-content-inner").append(reasonDetail);
             }
           },
           error : function(error){

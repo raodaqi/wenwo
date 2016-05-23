@@ -22,7 +22,8 @@
 	var map, geolocation;
     //加载地图，调用浏览器定位服务
     map = new AMap.Map('container', {
-        resizeEnable: true
+        resizeEnable: true,
+        zoom:17
     });
     map.plugin('AMap.Geolocation', function() {
         geolocation = new AMap.Geolocation({
@@ -198,8 +199,8 @@
     map.on("zoomchange",function(){
         console.log(map.getZoom());
         if(map.getZoom() > 14){
-            map.zoomOut();
-            map.setZoom(14);
+            // map.zoomOut();
+            // map.setZoom(14);
         }
     })
 }());
