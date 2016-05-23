@@ -726,7 +726,7 @@ router.get('/tagshow', function (req, res, next) {
         var query = new AV.Query('Tag');
         query.equalTo('tagName', tag[0]);
         query.find().then(function (tags) {
-            if (tags == null) {
+            if (tags == '') {
                 var result = {
                     code : 404,
                     url : 0,
@@ -767,7 +767,8 @@ router.get('/tagshow', function (req, res, next) {
         queryL2.equalTo('tagName', tag[1]);
         var mainQuery = AV.Query.or(queryL1, queryL2);
         mainQuery.find().then(function (tags) {
-            if (tags == null) {
+            console.log(tags);
+            if (tags == '') {
                 var result = {
                     code : 404,
                     url : 0,
@@ -778,7 +779,7 @@ router.get('/tagshow', function (req, res, next) {
             }
             else {
                 if (tags[0].get('tagUrl') == null) {
-                    if (tags[1].get('tagUrl') == null) {
+                    if (tags[1] == null) {
                         var result = {
                             code : 400,
                             url : 0,
@@ -822,7 +823,7 @@ router.get('/tagshow', function (req, res, next) {
         var mainQuery = AV.Query.or(queryL1, queryL2, queryL3);
         mainQuery.find().then(function (tags) {
             console.log(tags);
-            if (tags == null) {
+            if (tags == '') {
                 var result = {
                     code : 404,
                     url : 0,
@@ -833,8 +834,8 @@ router.get('/tagshow', function (req, res, next) {
             }
             else {
                 if (tags[0].get('tagUrl') == null) {
-                    if (tags[1].get('tagUrl') == null) {
-                        if (tags[2].get('tagUrl') == null) {
+                    if (tags[1] == null) {
+                        if (tags[2] == null) {
                             var result = {
                                 code : 400,
                                 url : 0,
