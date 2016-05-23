@@ -725,6 +725,7 @@ router.get('/tagshow', function (req, res, next) {
     if (tag.length == 1) {
         var query = new AV.Query('Tag');
         query.equalTo('tagName', tag[0]);
+        query.contains('type', type);
         query.find().then(function (tags) {
             if (tags == '') {
                 var result = {
@@ -766,6 +767,7 @@ router.get('/tagshow', function (req, res, next) {
         queryL1.equalTo('tagName', tag[0]);
         queryL2.equalTo('tagName', tag[1]);
         var mainQuery = AV.Query.or(queryL1, queryL2);
+        mainQuery.contains('type', type);
         mainQuery.find().then(function (tags) {
             console.log(tags);
             if (tags == '') {
@@ -821,6 +823,7 @@ router.get('/tagshow', function (req, res, next) {
         queryL2.equalTo('tagName', tag[1]);
         queryL3.equalTo('tagName', tag[2]);
         var mainQuery = AV.Query.or(queryL1, queryL2, queryL3);
+        mainQuery.contains('type', type);
         mainQuery.find().then(function (tags) {
             console.log(tags);
             if (tags == '') {
