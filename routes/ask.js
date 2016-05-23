@@ -398,7 +398,7 @@ router.get('/isliked', function (req, res, next) {
             var flag = 0;
             for (var i = 0; i < list.length; i++) {
                 if (list[i].get('createBy') == username) {
-                    flag++;
+                    flag = list[i].get('type');
                 }
             }
             if (flag == 0) {
@@ -410,10 +410,19 @@ router.get('/isliked', function (req, res, next) {
                 res.send(result);
                 return;
             }
-            else {
+            else if (flag == 1) {
                 var result = {
                     code : 200,
                     isliked : 1,
+                    message : 'operation succeeded'
+                }
+                res.send(result);
+                return;
+            }
+            else {
+                var result = {
+                    code : 200,
+                    isliked : 2,
                     message : 'operation succeeded'
                 }
                 res.send(result);
@@ -705,6 +714,18 @@ router.post('/sendask', function(req, res, next) {
 
 
 
+
+});
+
+router.get('/tagshow', function (req, res, next) {
+    var type = req.query.type;
+    var tag = req.query.tag;
+
+    tag = tag.split(',');
+    console.log(tag);
+    if (tag.length == 1) {
+
+    }
 
 });
 
