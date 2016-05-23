@@ -143,6 +143,7 @@ router.get('/askdetail', function(req, res, next) {
             if (relation == null) {
                 var query = new AV.Query('AskMe');
                 query.get(askId).then(function (post) {
+
                     post.attributes.askContentHide = '****';
                     var result = {
                         code : 200,
@@ -322,64 +323,68 @@ router.get('/like', function(req, res, next) {
     var userName = req.param('username');
     var type = req.param('type');   //type == 1  赞    ==2踩
 
-    var query = new AV.Query('AskMe');
-    query.get(askId).then(function (ask) {
-        //console.log(ask);
-        var relation = ask.relation('like');
-        relation.query().find().then(function (list) {
-            //console.log(list);
-            var flag = 0;
-            for (var i = 0; i < list.length; i++) {
-                if (list[i].get('createBy') == userName) {
-                    flag++;
+    var userQuery = new AV.Query('UserInfo');
+    userQuery.get(userName).then(function (user) {
+        var query = new AV.Query('AskMe');
+        query.get(askId).then(function (ask) {
+            //console.log(ask);
+            var relation = ask.relation('like');
+            relation.query().find().then(function (list) {
+                //console.log(list);
+                var flag = 0;
+                for (var i = 0; i < list.length; i++) {
+                    if (list[i].get('createBy') == userName) {
+                        flag++;
+                    }
                 }
-            }
-            if (flag == 0) {
-                var like = new Like();
-                like.set('createBy', userName);
-                like.set('type', type);
-                like.save().then(function () {
-                    relation.add(like);
-                    if(type == 1) {
-                        ask.set('likeNum', (parseInt(ask.get('likeNum'))+1).toString());
-                    }
-                    else {
-                        ask.set('likeNum', (parseInt(ask.get('likeNum'))-1).toString());
-                    }
-                    ask.save().then(function (ask) {
-                        var num = parseInt(ask.get('likeNum'));
-                        var query = new AV.Query('Level');
-                        query.addDescending('score');
-                        query.find().then(function (levels) {
-                            for(var i = 0; i < levels.length; i++) {
-                                if(parseInt(ask.get('askLevel')) < levels[i].get('score')) {
-                                    ask.set('askLevel', (levels.length - i - 1).toString());
+                if (flag == 0) {
+                    var like = new Like();
+                    like.set('createBy', userName);
+                    like.set('type', type);
+                    like.save().then(function () {
+                        relation.add(like);
+                        if(type == 1) {
+                            ask.set('likeNum', (parseInt(ask.get('likeNum'))+1).toString());
+                        }
+                        else {
+                            ask.set('likeNum', (parseInt(ask.get('likeNum'))-1).toString());
+                        }
+                        ask.save().then(function (ask) {
+                            var num = parseInt(ask.get('likeNum'));
+                            var query = new AV.Query('Level');
+                            query.addDescending('score');
+                            query.find().then(function (levels) {
+                                for(var i = 0; i < levels.length; i++) {
+                                    if(parseInt(ask.get('askLevel')) < levels[i].get('score')) {
+                                        ask.set('askLevel', (levels.length - i - 1).toString());
+                                    }
                                 }
-                            }
-                            ask.save().then(function () {
-                                var result = {
-                                    code : 200,
-                                    data : results,
-                                    message : 'Operation succeeded'
-                                }
-                                res.send(result);
+                                ask.save().then(function () {
+                                    var result = {
+                                        code : 200,
+                                        data : results,
+                                        message : 'Operation succeeded'
+                                    }
+                                    res.send(result);
+                                });
+
                             });
 
                         });
 
                     });
-
-                });
-            }
-            else  {
-                var result = {
-                    code : 700,
-                    message : 'repetitive operation'
                 }
-                res.send(result);
-            }
+                else  {
+                    var result = {
+                        code : 700,
+                        message : 'repetitive operation'
+                    }
+                    res.send(result);
+                }
+            });
         });
     });
+
 
 });
 
@@ -708,14 +713,27 @@ router.get('/gettag', function (req, res, next) {
     var size = req.param('size') != null ? req.param('size') : null;
 
     var query = new AV.Query('Tag');
+    var que = new AV.Query('Tag');
     if (type != null) {
-        query.contains("tagOrderby", type);
+        if (type.length > 1) {
+            var temp = type.split(',');
+            query.contains("tagOrderby", temp[0]);
+            que.contains("tagOrderby", temp[1]);
+        }
+    }
+    var mainquery = AV.Query.or(query, que);
+    if (type != null) {
+        if (type.length == 1) {
+            mainquery.contains("tagOrderby", type);
+        }
     }
     if (size != null) {
-        query.limit(size);
+        mainquery.limit(size);
     }
-    query.addDescending('times');
-    query.find().then(function (list) {
+    mainquery.addDescending('times');
+
+
+    mainquery.find().then(function (list) {
         console.log(list);
         var result = {
             code : 200,
