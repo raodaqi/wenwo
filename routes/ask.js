@@ -362,7 +362,6 @@ router.get('/like', function(req, res, next) {
                                 ask.save().then(function () {
                                     var result = {
                                         code : 200,
-                                        data : results,
                                         message : 'Operation succeeded'
                                     }
                                     res.send(result);
@@ -724,6 +723,160 @@ router.get('/tagshow', function (req, res, next) {
     tag = tag.split(',');
     console.log(tag);
     if (tag.length == 1) {
+        var query = new AV.Query('Tag');
+        query.equalTo('tagName', tag[0]);
+        query.find().then(function (tags) {
+            if (tags == null) {
+                var result = {
+                    code : 404,
+                    url : 0,
+                    message : '没有该标签'
+                }
+                res.send(result);
+                return;
+            }
+            else {
+                if (tags[0].get('tagUrl') == null) {
+                    var result = {
+                        code : 400,
+                        url : 0,
+                        message : '无效url'
+                    }
+                    res.send(result);
+                    return;
+                }
+                else {
+                    var result = {
+                        code : 200,
+                        url : tags[0].get('tagUrl'),
+                        message : '操作成功'
+                    }
+                    res.send(result);
+                    return;
+                }
+
+                res.send(result);
+                return;
+            }
+        });
+    }
+    else if (tag.length == 2) {
+        var queryL1 = new AV.Query('Tag');
+        var queryL2 = new AV.Query('Tag');
+        queryL1.equalTo('tagName', tag[0]);
+        queryL2.equalTo('tagName', tag[1]);
+        var mainQuery = AV.Query.or(queryL1, queryL2);
+        mainQuery.find().then(function (tags) {
+            if (tags == null) {
+                var result = {
+                    code : 404,
+                    url : 0,
+                    message : '没有该标签'
+                }
+                res.send(result);
+                return;
+            }
+            else {
+                if (tags[0].get('tagUrl') == null) {
+                    if (tags[1].get('tagUrl') == null) {
+                        var result = {
+                            code : 400,
+                            url : 0,
+                            message : '无效url'
+                        }
+                        res.send(result);
+                        return;
+                    }
+                    else {
+                        var result = {
+                            code : 200,
+                            url : tags[1].get('tagUrl'),
+                            message : '操作成功'
+                        }
+                        res.send(result);
+                        return;
+                    }
+
+                }
+                else {
+                    var result = {
+                        code : 200,
+                        url : tags[0].get('tagUrl'),
+                        message : '操作成功'
+                    }
+                }
+
+                res.send(result);
+                return;
+            }
+        });
+
+    }
+    else if (tag.length == 3) {
+        var queryL1 = new AV.Query('Tag');
+        var queryL2 = new AV.Query('Tag');
+        var queryL3 = new AV.Query('Tag');
+        queryL1.equalTo('tagName', tag[0]);
+        queryL2.equalTo('tagName', tag[1]);
+        queryL3.equalTo('tagName', tag[2]);
+        var mainQuery = AV.Query.or(queryL1, queryL2, queryL3);
+        mainQuery.find().then(function (tags) {
+            console.log(tags);
+            if (tags == null) {
+                var result = {
+                    code : 404,
+                    url : 0,
+                    message : '没有该标签'
+                }
+                res.send(result);
+                return;
+            }
+            else {
+                if (tags[0].get('tagUrl') == null) {
+                    if (tags[1].get('tagUrl') == null) {
+                        if (tags[2].get('tagUrl') == null) {
+                            var result = {
+                                code : 400,
+                                url : 0,
+                                message : '无效url'
+                            }
+                            res.send(result);
+                            return;
+                        }
+                        else {
+                            var result = {
+                                code : 200,
+                                url : tags[2].get('tagUrl'),
+                                message : '操作成功'
+                            }
+                            res.send(result);
+                            return;
+                        }
+
+                    }
+                    else {
+                        var result = {
+                            code : 200,
+                            url : tags[1].get('tagUrl'),
+                            message : '操作成功'
+                        }
+                        res.send(result);
+                        return;
+                    }
+
+                }
+                else {
+                    var result = {
+                        code : 200,
+                        url : tags[0].get('tagUrl'),
+                        message : '操作成功'
+                    }
+                }
+
+                res.send(result);
+                return;
+            }
+        });
 
     }
 
