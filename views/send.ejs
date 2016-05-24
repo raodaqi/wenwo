@@ -919,7 +919,7 @@
               }
             })
             console.log(exit);
-            if(!exit){
+            if(!exit && result.data[i].tagName){
               li += '<span class="type-item">'+result.data[i].tagName+'</span>';
             }
             
@@ -1086,6 +1086,7 @@
         $(".de-show").append(detail);
 
         $("#detail-content .card-content-inner").text(localStorage.detail);
+        deShow(localStorage.detail);
       }
 
       //初始化地址信息
@@ -1231,35 +1232,34 @@
     }
 
     function formatDetail(data){
-    
-    var staus           = data.staus,     //状态
-        askType         = data.askType,   //类型
-        askTagStr       = data.askTagStr, //标签
-        reason          = data.askReason, //理由
-        askContentHide  = data.askContentHide,//隐藏详情
-        askContentShow  = data.askContentShow,//隐藏详情
-        lnglatXY        = [data.GeoX,data.GeoY],//坐标
-        price           = data.askPrice,//价格
-        updatedAt       = data.updatedAt,//发布时间
-        createBy        = data.createBy;//发布者
+      console.log(data);
+      var staus           = data.staus,     //状态
+          askType         = data.askType,   //类型
+          askTagStr       = data.askTagStr, //标签
+          reason          = data.askReason, //理由
+          askContentHide  = data.askContentHide,//隐藏详情
+          askContentShow  = data.askContentShow,//隐藏详情
+          lnglatXY        = [data.GeoX,data.GeoY],//坐标
+          lng             = data.GeoX,
+          lat             = data.GeoY,
+          price           = data.askPrice,//价格
+          updatedAt       = data.updatedAt,//发布时间
+          createBy        = data.createBy;//发布者
 
-    //设置标签头部
-      askType =  askType.split(",");
-        var typeText = '';
-        console.log(askType);
-        for(var i = 0; i < askType.length; i++){
-          typeText = formatType(askType[i]);
-          if(i == 1){
-            typeText = formatType(askType[i-1]) +","+ formatType(askType[i]);
+      //设置标签头部
+        var type = askType.split(",");
+        console.log(type);
+        for(var i = 0; i < type.length; i++){
+          $(".theme-list"+type[i]).addClass("theme-list-active");
+          $("#theme"+type[i]).addClass("theme-li-active");
+          if(type.length == 1){
+            var themeType = type[i];
+          }else{
+            var themeType = type[0] + ","+type[i];
           }
         }
-        //设置上传者名字
-        $(".autor-name").text(createBy);
-        //设置信息主题
-        $(".autor-theme").text(typeText);
-        //设置信息上传时间
-        console.log(updatedAt);
-        $(".autor-time").text(formatDate("y.m.d",updatedAt));
+        getTag(themeType);
+        console.log(themeType);
 
       //标签
       var tag = JSON.parse(askTagStr);
@@ -1269,23 +1269,52 @@
           console.log(tag[i]);
           var spanContent = spanContent + '<span class="type-item">'+tag[i]+'</span>';
         }
+        // $("#tag-content .card-content-inner").append(spanContent);
+        $(".ww-typeHelper-left").before(spanContent);
         $("#tag-content .card-content-inner").append(spanContent);
 
         //推荐理由
+        $("#reason").val(reason);
         $("#reason-content .card-content-inner").text(reason);
 
         //解析详情
         var show = askContentShow.split("##");
         var hidden = askContentHide.split("##");
         var reasonDetail = '';
+        console.log("len:"+hidden.length);
         for(var i = 0; i < hidden.length;i++){
-          reasonDetail += show[i] + hidden[i];
+          if(hidden[i]){
+            reasonDetail += show[i] + "##"+ hidden[i] + "##";
+          }
         }
         if(!hidden.length){
           reasonDetail = show;
         }
 
         $("#detail-content .card-content-inner").text(reasonDetail);
+        $("#detail").val(reasonDetail);
+        deShow(reasonDetail);
+
+        // var str = {};
+        // str = localStorage.detail.split("##");
+        // var show = '';
+        // var hidden = '';
+        // var detail = ''
+        // for(var i = 0; i < str.length; i++){
+        //   if(i%2){
+        //     var starLen = ''
+        //     for(var j = 0; j < str[i].length; j++){
+        //       starLen += '*';
+        //     }
+        //     detail += '<span class="hidden-text">'+starLen+'</span>';
+        //   }else{
+        //     detail += str[i];
+        //   }
+        // }
+        // $(".de-show").empty();
+        // $(".de-show").append(detail);
+
+        // $("#detail-content .card-content-inner").text(localStorage.detail);
 
         //解析地址
         getAddress(lnglatXY,{
@@ -1310,10 +1339,69 @@
           }
         });
 
+        $("#container").attr("data-lng",lng);
+        $("#container").attr("data-lat",lat);
+
+        //详情地点显示
+        map = new AMap.Map('container', {
+          resizeEnable: true,
+          zoom:15,
+          center: [lng,lat],
+          buttonOffset: new AMap.Pixel(60, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+          zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+          buttonPosition:'LB'
+        });
+        // var marker = new AMap.Marker({
+        //   map : map,
+        //   tagName:"火锅;超辣的",
+        //   askReason:"味道真的不错",
+        //   askContentShow:"这里的味道真的不错",
+        //   price:0.2,
+        //   createBy:"hanqi",
+        //   createAt:"2016-04-19",
+        //   zoom:15,
+        //   center: [localStorage.lng,localStorage.lat],
+        //   position: [localStorage.lng,localStorage.lat],
+        //   draggable: true,
+        //   cursor: 'move',
+        //   raiseOnDrag: true,
+        //   clickable:true
+        // });
+
+        // mapShow = new AMap.Map('container-show', {
+        //   resizeEnable: true,
+        //   zoom:15,
+        //   center: [localStorage.lng,localStorage.lat]
+        // });
+
+        marker = new AMap.Marker({
+          map : map,
+          position: [lng,lat],
+          draggable: true,
+          cursor: 'move',
+          raiseOnDrag: true,
+          clickable:true
+        });
+
+        // var markerShow = new AMap.Marker({
+        //   map : mapShow,
+        //   position: [localStorage.lng,localStorage.lat],
+        //   draggable: true,
+        //   cursor: 'move',
+        //   raiseOnDrag: true,
+        //   clickable:true
+        // });
+
+         marker.setMap(map);
+
         //价格
-        $("#price-content .item-inner").text(price);
-
-
+        console.log(price);
+        if(price){
+          $("#price-picker").val(price);
+          // $("#price-content .card-content-inner").text("￥ "+localStorage.price);
+          $("#price-content .item-inner").text(price);
+        }
+       
   }
 
     function initEditData(sendAskId){
@@ -1324,9 +1412,13 @@
         dataType: "json",
         success : function(result) {
           console.log(result);
-
+          if(result.code == 200){
+            formatDetail(result.data);
+          }
         },
-        error : function(){}
+        error : function(error){
+          $.alert("网络异常");
+        }
       })
     }
 
@@ -1334,8 +1426,10 @@
     var sendAskId = "<%= askid %>";
     if(sendType == "edit"){
       console.log("edit");
+      $("#router .title").text("编辑");
       initEditData(sendAskId);
     }else{
+      $("#router .title").text("发布");
       initLocationData();
     }
 
@@ -1595,31 +1689,32 @@
       return(textDetail);
     }
 
+
     //详情输入后显示到主页
     $("#detail").on("input change",function(){
       var text = $("#detail").val();
 
       //显示到主页
       $("#detail-content .card-content-inner").text(text);
-
-      var str = {};
-      str = text.split("##");
-      var show = '';
-      var hidden = '';
-      var detail = ''
-      for(var i = 0; i < str.length; i++){
-        if(i%2){
-          var starLen = ''
-          for(var j = 0; j < str[i].length; j++){
-            starLen += '*';
-          }
-          detail += '<span class="hidden-text">'+starLen+'</span>';
-        }else{
-          detail += str[i];
-        }
-      }
-      $(".de-show").empty();
-      $(".de-show").append(detail);
+      deShow(text);
+      // var str = {};
+      // str = text.split("##");
+      // var show = '';
+      // var hidden = '';
+      // var detail = ''
+      // for(var i = 0; i < str.length; i++){
+      //   if(i%2){
+      //     var starLen = ''
+      //     for(var j = 0; j < str[i].length; j++){
+      //       starLen += '*';
+      //     }
+      //     detail += '<span class="hidden-text">'+starLen+'</span>';
+      //   }else{
+      //     detail += str[i];
+      //   }
+      // }
+      // $(".de-show").empty();
+      // $(".de-show").append(detail);
       localStorage["detail"] = $("#detail").val();
     })
 
@@ -1735,27 +1830,74 @@
         // return ;
         //发送请求 url：/ask/sendask
         $.showPreloader("正在提交");
-        $.ajax({
-          type : "POST",
-          data: data,
-          dataType: "json",
-          url : "/ask/sendask",
-          success : function(result){
-            console.log(result);
-            if(result.code){
-              $.hidePreloader();
-              $.toast("提交成功");
-              localStorage.clear();
-            }else{
-              $.hidePreloader();
-              $.toast(result.message);
+
+        if(sendType == "edit"){
+          data["ask_id"] = sendAskId;
+           $.ajax({
+            type : "POST",
+            data: data,
+            dataType: "json",
+            url : "/ask/askedit",
+            success : function(result){
+              console.log(result);
+              if(result.code){
+                $.hidePreloader();
+                $.toast("提交成功");
+                localStorage.clear();
+              }else{
+                $.hidePreloader();
+                $.toast(result.message);
+              }
+            },
+            error: function(error){
+              // alert(error);
+              $.alert(error);
             }
-          },
-          error: function(error){
-            // alert(error);
-            $.alert(error);
-          }
-        });
+          });
+        }else{
+          $.ajax({
+            type : "POST",
+            data: data,
+            dataType: "json",
+            url : "/ask/sendask",
+            success : function(result){
+              console.log(result);
+              if(result.code){
+                $.hidePreloader();
+                $.toast("提交成功");
+                localStorage.clear();
+              }else{
+                $.hidePreloader();
+                $.toast(result.message);
+              }
+            },
+            error: function(error){
+              // alert(error);
+              $.alert(error);
+            }
+          });
+        }
+        // $.ajax({
+        //   type : "POST",
+        //   data: data,
+        //   dataType: "json",
+        //   url : "/ask/sendask",
+        //   success : function(result){
+        //     console.log(result);
+        //     if(result.code){
+        //       $.hidePreloader();
+        //       $.toast("提交成功");
+        //       localStorage.clear();
+        //     }else{
+        //       $.hidePreloader();
+        //       $.toast(result.message);
+        //     }
+        //   },
+        //   error: function(error){
+        //     // alert(error);
+        //     $.alert(error);
+        //   }
+        // });
 
     })
 

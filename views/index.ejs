@@ -1632,7 +1632,7 @@
 
                 //聚合点击事件
                 cluster.on("click",function(clusterContent){
-                  if(map.getZoom() < 14){
+                  if(map.getZoom() < 19){
                     map.zoomIn();
                   }else{
                     console.log(clusterContent);
@@ -1968,7 +1968,7 @@
                 console.log(extData);
                 setDetail(extData);
                 // //设置地图中心位置为点击的marker上
-                map.setZoomAndCenter(20,[lng,lat]);
+                map.setZoomAndCenter([lng,lat]);
               });
 
               marker.setMap(map);
