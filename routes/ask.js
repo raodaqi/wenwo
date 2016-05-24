@@ -286,7 +286,8 @@ router.post('/askedit', function(req, res, next) {
                 code : 600,
                 message : '未拥有该信息'
             }
-            res.render(result);
+            res.send(result);
+            return;
         }
         if (type != null) {
             ask.set('askType', type);
@@ -332,14 +333,15 @@ router.post('/askedit', function(req, res, next) {
                 data : results,
                 message : 'Operation succeeded'
             }
-            res.render(result);
+            res.send(result);
+            return;
         }, function(err) {
             var result = {
                 code : 800,
                 data : results,
                 message : err.message
             }
-            res.render(result);
+            res.send(result);
             //console.log('Failed to create new object, with error message: ' + err.message);
         });
     });
