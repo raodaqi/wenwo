@@ -281,7 +281,7 @@ router.post('/askedit', function(req, res, next) {
     var query = new AV.Query('AskMe');
     query.get(askId).then(function (ask) {
         var askOwner = ask.get('createBy');
-        if (askOwner != username) {
+        if (askOwner == username) {
             var result = {
                 code : 600,
                 message : '未拥有该信息'
