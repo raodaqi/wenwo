@@ -30,7 +30,7 @@ var data = {
         });
         wx.ready(function(){
           var shareData = {
-              title: '问我|像个当地人一样去旅游',
+              title: '问我——像个当地人一样去旅游',
               desc: '说走就走，我带着你，你带着钱。',
               link: result.url,
               imgUrl: 'http://wenwo.leanapp.cn/img/wx/share.jpg'

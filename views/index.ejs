@@ -332,11 +332,14 @@
       text-overflow: ellipsis; 
       font-size: 10px;
     }
+    .amap-marker-list-content .up{
+      width: 90px;
+    }
     .up-price-right{
       position: absolute;
       top: 0;
       font-size: 10px;
-      right: 0;
+      right: -10px;
       /*right:-150px;*/
       /*color: white;*/
     }
@@ -1529,7 +1532,7 @@
       console.log(askTagStr[0]);
       var tagList = '';
       for(var i = 0; i < askTagStr.length;i++){
-        tagList += '<div class="type-item">'+askTagStr[i]+'</div>' 
+        tagList += '<div class="type-item">'+askTagStr[i].tag_name+'</div>' 
       }
       var div = '<div class="amap-marker-list-content" style="display:none"><div class="up">'+tagList+'<div class="up-price-right">￥'+extData.price+'</div></div><div class="down">'+extData.askReason+'</div></div>';
       $(this).after(div);
@@ -1660,7 +1663,7 @@
                       console.log(askTagStr[0]);
                       var tagList = '';
                       for(var i = 0; i < askTagStr.length;i++){
-                        tagList += '<div class="type-item">'+askTagStr[i]+'</div>' 
+                        tagList += '<div class="type-item">'+askTagStr[i].tag_name+'</div>' 
                       }
 
                       li += '<li data-askId='+extData.askId+'><div class="item-content"><div class="item-media"><img src="/img/hotPot.jpg"></div><div class="item-inner"><div class="">'+tagList+'</div><div class="item-subtitle">'+extData.askReason+'</div><div class="up-price-right">￥'+extData.price+'</div><div class="iconfont icon-youjiantou item-right"></div></div></div></li>';
@@ -1968,7 +1971,7 @@
                 console.log(extData);
                 setDetail(extData);
                 // //设置地图中心位置为点击的marker上
-                map.setZoomAndCenter([lng,lat]);
+                map.setZoomAndCenter(map.getZoom(),[lng,lat]);
               });
 
               marker.setMap(map);
@@ -2027,7 +2030,7 @@
       console.log(askTagStr[0]);
       var tagList = '';
       for(var i = 0; i < askTagStr.length;i++){
-        tagList += '<div class="type-item">'+askTagStr[i]+'</div>' 
+        tagList += '<div class="type-item">'+askTagStr[i].tag_name+'</div>' 
       }
       $("#tag-content .card-content-inner").empty();
       $("#tag-content .card-content-inner").append(tagList);

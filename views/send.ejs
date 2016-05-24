@@ -896,8 +896,12 @@
 
   //初始化,异步获取标签
   function getTag(themeType){
+
+    $.showPreloader("正在加载");
+
     var data = {
-      type   :  themeType
+      type   :  themeType,
+      size   :  10
     }
     $.ajax({
       type : "GET",
@@ -905,6 +909,7 @@
       dataType: "json",
       url : "/ask/gettag",
       success: function(result){
+        $.hidePreloader();
         console.log(result);
         if(result.code == 200){
           var li = ''
@@ -930,10 +935,20 @@
         
       },
       error:function(error){
+        $.hidePreloader();
         console.log(error);
       }
     })
   }
+
+  //获取二级标签
+  $("#tag-content,#router1 .next").on("click",function(){
+    console.log(localStorage.type);
+    var LStype = localStorage.type;
+    if(LStype){
+      getTag(LS);
+    }
+  })
 
     // //地点显示
     // mapShow = new AMap.Map('container-show', {
@@ -1865,13 +1880,15 @@
             url : "/ask/sendask",
             success : function(result){
               console.log(result);
-              if(result.code){
+              if(result.code == 200){
                 $.hidePreloader();
                 $.toast("提交成功");
                 localStorage.clear();
-                
-                // window.location.href="/more/information-presentation/test/"+sendAskId+"?username="+"<%=username%>";
-                // // window.location.href="/more/information-presentation/5731cfa81532bc0065181ff1";
+                var askId = result.data.objectId;
+
+                $.showPreloader("正在跳转");
+                window.location.href="/more/information-presentation/test/"+askId+"?username="+"<%=username%>";
+                // window.location.href="/more/information-presentation/"+askId;
               }else{
                 $.hidePreloader();
                 $.toast(result.message);
