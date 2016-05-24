@@ -46,8 +46,8 @@ router.get('/wx', function(req, res, next) {
 });
 
 router.get('/pay_t', function(req, res, next) {
-    //var totalFee = req.query.totalFee;
-    var totalFee = 3;
+    var totalFee = req.query.totalFee;
+    //var totalFee = 3;
     totalFee = parseFloat(totalFee);
     totalFee = totalFee * 100;
     var secret = '9157e84975386b6dee6a499cc639973e';
@@ -146,8 +146,8 @@ router.get('/pay', function(req, res, next) {
 
 
 router.get('/withdraw', function(req, res, next) {
-    //var amount = req.query.amount;
-    var amount = 1;
+    var amount = req.query.amount;
+    //var amount = 1;
     amount = parseFloat(amount);
     amount = amount * 100;
     var code = req.query.code;
@@ -217,7 +217,7 @@ router.get('/withdraw', function(req, res, next) {
                         withdraw.set('nonceStr', result.nonce_str);
                         withdraw.set('partnerTradeNo', result.partner_trade_no);
                         withdraw.set('paymentNo', result.payment_no);
-                        withdraw.set('payment_time', result.payment_time);
+                        withdraw.set('paymentTime', result.payment_time);
                         withdraw.save().then(function (post) {
                             var result = {
                                 code : 200,
