@@ -258,7 +258,7 @@ body{
 			</div>
 			<div id="tab2" class="tab">
 				<div class="content-block">
-					<div class="informations"id="content2">
+					<div class="informations" id="content2">
 						<!-- <div class="information">
 							<div class="information_img"><img src="/img/u28.png"></div>
 							<div class="information_name">
@@ -278,10 +278,6 @@ body{
 <script type="text/javascript">
 
 $.showPreloader();
-setTimeout(function () {
-        $.hidePreloader();
-    }, 2000);
-
 $(".issue_information").click(function(){
 	window.location.href="/todos/send?";
 })
@@ -396,6 +392,7 @@ function getMyask(){
           		}
             }
           }
+                  $.hidePreloader();
           },
       error: function(error){
           alert(error);

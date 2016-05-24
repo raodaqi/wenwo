@@ -146,7 +146,7 @@ router.get('/askdetail/:id', function(req, res, next) {
   }
 });
 router.get('/askdetail/test/:id', function(req, res) {
-  authorize(req,res);
+  // authorize(req,res);
   var username =  req.query.username;
   var id = req.params.id;
   res.render('more/askDetail',{id:id,username:username});

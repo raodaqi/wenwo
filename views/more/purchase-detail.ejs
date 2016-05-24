@@ -188,9 +188,7 @@ body{
 
 
 $.showPreloader();
-setTimeout(function () {
-        $.hidePreloader();
-    }, 2000);
+       
 $(".zuo").click(function(){
 		history.go(-1);
 	})
@@ -227,6 +225,7 @@ $.ajax({
                 var money = price*result.data.length;
                 money = parseFloat(money.toFixed(2));
                 $("#mon").append(money);
+                 $.hidePreloader();
             },
             error : function(){}
         });

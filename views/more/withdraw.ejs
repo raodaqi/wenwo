@@ -130,7 +130,11 @@ $(".zuo").click(function(){
 $(".wen").click(function(){
 	window.location.href="/more/present-rules";
 })
-function pay(){
+$(".submit_btn").click(function(){
+	var mon = $(".withdraw_title_num").val();
+	console.log(mon);
+	pay();
+	function pay(){
 	 $.ajax({
         type : "GET",
         dataType: "json",
@@ -143,5 +147,6 @@ function pay(){
         }
       })
 }
+})
 </script>
 </html>

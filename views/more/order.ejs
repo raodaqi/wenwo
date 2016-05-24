@@ -216,9 +216,6 @@ body{
 <script type="text/javascript" src="/js/common.js"></script>
 <script type="text/javascript">
 $.showPreloader();
-setTimeout(function () {
-        $.hidePreloader();
-    }, 2000);
 $(".zuo").click(function(){
 		history.go(-1);
 	})
@@ -226,7 +223,7 @@ $(".map_view").click(function(){
 	window.location.href="/";
 })
 $(".information").click(function(){
-	window.location.href="/more/information-presentation";
+	window.location.href="/more/askdetail";
 })
 function getStaus(staus) {
             var temp = "";
@@ -336,7 +333,8 @@ function getHode(){
 			        }
 			      })           		         	
 			}    
-			}   	
+			} 
+			        $.hidePreloader();  	
           },
       error: function(error){
           alert(error);

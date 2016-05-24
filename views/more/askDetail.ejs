@@ -596,6 +596,16 @@ body{
     vertical-align: top;
     margin-top: -20px;
   }
+  .del{
+    width: 20%;
+    margin-left: 40%;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+  }
+  .modal-overlay{
+    height: 100% !important;
+}
 </style>
 <body>
 <% include footer.ejs %>
@@ -776,7 +786,7 @@ body{
                       <li>
                         <a class="item-link item-content">
                           <div class="item-media item-left"><i class="iconfont icon-dingwei"></i></div>
-                          <div class="item-media item-right"><i class="iconfont icon-youjiantou"></i></div>
+                          <!-- <div class="item-media item-right"><i class="iconfont icon-youjiantou"></i></div> -->
                           <div class="item-inner">
                             <div class="item-title ">成都信息工程大学</div>
                           </div>
@@ -794,7 +804,7 @@ body{
                       <li>
                         <a class="item-link item-content">
                           <div class="item-media item-left"><i class="iconfont icon-qian"></i></div>
-                          <div class="item-media item-right"><i class="iconfont icon-youjiantou"></i></div>
+                          <!-- <div class="item-media item-right"><i class="iconfont icon-youjiantou"></i></div> -->
                           <div class="item-inner">
                             <div class="item-title">价格</div>
                           </div>
@@ -805,6 +815,7 @@ body{
                 </div>
               </div>
 
+              <div class="del">退款</div>
               <!-- <div class="card" id="price-content" data-href="router6">
                 <div class="card-header">价格</div>
                 <div class="card-content">
@@ -822,6 +833,17 @@ body{
         </div>
       </div>
 </div>
+<!-- <div class="modal-overlay modal-overlay-visible" style="display:none"></div>
+<div class="modal modal-in" style="display: none; margin-top: -83px;">
+  <div class="modal-inner">
+    <div class="modal-text">请填写退款理由</div>
+    <input type="text" class="modal-text-input"></div>
+  <div class="modal-buttons ">
+    <span class="modal-button">取消</span>
+    <span class="modal-button modal-button-bold">确定</span>
+  </div>
+</div> -->
+
 <!-- <div class="hide" style="display: none;">
 	<div class="modal-overlay modal-overlay-visible"></div>
 	<div class="actions-modal modal-in">
@@ -866,7 +888,20 @@ body{
 	$(".zuo").click(function(){
 		history.go(-1);
 	})
+  // $(".del").click(function(){
+    // $(".modal-overlay-visible").show();
+    // $(".modal-in").show();
 
+  // })
+  $(document).on('click','.del', function () {
+      $.prompt('What is your name?', function (value) {
+          $.alert('Your name is "' + value + '". You clicked Ok button');
+      });
+  });
+  $(".modal-button").click(function(){
+    $(".modal-overlay-visible").hide();
+    $(".modal-in").hide();
+  })
 	function formatDetail(data){
 		
 		var staus           = data.staus,     //状态

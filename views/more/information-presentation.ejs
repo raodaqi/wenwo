@@ -548,6 +548,27 @@ body{
 	    background-color: #efc553;
 	    color: white;
     }
+    .btns{
+      width: 100%;
+      height: 30px;
+      padding: 0 5%;
+    }
+    .btn1,.btn2{
+      width: 40%;
+      text-align: center;
+      height: 30px;
+      line-height: 30px;
+      background-color: #efc553;
+      float: left;
+      border:0;
+      margin-left: 5%;
+    }
+    .btn2{
+      margin-left: 10%;
+    }
+    .more{
+      color: white;
+    }
 </style>
 <body>
 <% include footer.ejs %>
@@ -558,11 +579,7 @@ body{
 		</div>
 	</div>
 	<div class="title_word">商品名称</div>
-	<div class="more">
-		<a href="#" class="collect" style="display: block;">删除</a>
-		<a class="ordered" style="display: none;">退款</a>
-		<a class="other" style="display: none;">更多</a>
-	</div>
+	<div class="more">编辑</div>
 </div>
 <div class="content">
 	<!-- <div class="card">
@@ -706,15 +723,6 @@ body{
                 </div>
               </div>
             </div>
-
-             <!-- <div class="content-block-title">地图标注</div>
-              <div class="card demo-card-header-pic" data-href="router5">
-                <div valign="bottom" class="card-header color-white no-border no-padding">
-                  <div class="container-hidden"></div>
-                  <div class='card-cover' id="container-show"></div>
-                </div>
-              </div> -->
-
               <div class="card" id="address-content" data-href="router5">
                 <div class="card-content">
                   <div class="list-block">
@@ -751,20 +759,11 @@ body{
                 </div>
               </div>
 
-              <!-- <div class="card" id="price-content" data-href="router6">
-                <div class="card-header">价格</div>
-                <div class="card-content">
-                  <div class="card-content-inner">￥0.2</div>
-                </div>
+              <div class="btns">
+                <button class="btn1" id="grounding">上架</button>
+                <button class="btn1" id="undercarriage">下架</button>
+                <button class="btn2" id="del">删除</button>
               </div>
-            
-              <div class="card">
-                <div class="send-button">
-                  <a href="#" class="button button-big button-fill button-success send-button-a">提交</a>
-                </div>
-              </div> -->
-            
-
         </div>
       </div>
 </div>
@@ -812,7 +811,9 @@ body{
 	$(".zuo").click(function(){
 		history.go(-1);
 	})
-
+$(".more").click(function(){
+    window.location.href="/todos/send?type=edit&askid="+"<%=id%>";
+  })
 	function formatDetail(data){
 		
 		var staus           = data.staus,     //状态
@@ -827,6 +828,14 @@ body{
 			updatedAt       = data.updatedAt,//发布时间
 			createBy        = data.createBy;//发布者
 
+      if(staus == 1){
+        $("#grounding").hide();
+        $("#undercarriage").show();
+      }
+      else if(staus ==2 ||staus == 5){
+         $("#grounding").show();
+        $("#undercarriage").hide();
+      }
 		//设置标签头部
 		  askType =  askType.split(",");
 	      var typeText = '';
