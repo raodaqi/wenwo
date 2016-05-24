@@ -14,7 +14,9 @@ var request = require('request');
 var Post = AV.Object.extend('UserInfo');
 var Wallet = AV.Object.extend('Wallet');
 var md5 = require('MD5');
+var moment = require("moment");
 var User = AV.Object.extend('_User');
+var Withdraw = AV.Object.extend('Withdraw');
 // `AV.Object.extend` 方法一定要放在全局变量，否则会造成堆栈溢出。
 // 详见： https://leancloud.cn/docs/js_guide.html#对象
 var resG;
@@ -132,29 +134,10 @@ router.get('/pay_t', function(req, res, next) {
 });
 
 router.get('/test', function(req, res, next) {
-    var openid = 'oQkk3s51lKWR0GiaOu82s1AQBfFg';
-    var query = new AV.Query('_User');
-
-    //query.contains('authData', openid);
-    query.find().then(function (user) {
-        //console.log(user.get('authData'));
-        for (var i = 0; i < user.length; i++) {
-            console.log(user[i].get('authData').weixin.openid);
-            if (user[i].get('authData').weixin.openid == openid) {
-                console.log(user[i].get('wallet'));
-                console.log(user[i].get('wallet').id);
-                var walletId = user[i].get('wallet').id;
-                var query = new AV.Query('Wallet');
-                query.get(walletId).then(function (wallet) {
-                    //console.log(wallet);
-                    console.log(wallet.get('money'));
-
-                });
-
-            }
-
-        }
-    });
+    var date = new Date();
+    date = moment(date).format("YYYYMMDDHHmmss");
+    var str = date + getNonceStr(10);
+    console.log(str);
 });
 
 router.get('/pay', function(req, res, next) {
@@ -175,12 +158,15 @@ router.get('/withdraw', function(req, res, next) {
         authorize(res, urlApi);
         return;
     }
+    var date = new Date();
+    date = moment(date).format("YYYYMMDDHHmmss");
+    var str = date + getNonceStr(10);
 
     var appid = 'wx99f15635dd7d9e3c';
     var mchid = '1298230401';
     var nonceStr = getNonceStr();
     //var sign = getSign();
-    var partnerTradeNo = '1234567890';
+    var partnerTradeNo = str;
     //var openid = '';
     var checkName = 'NO_CHECK';
 
@@ -226,6 +212,21 @@ router.get('/withdraw', function(req, res, next) {
                 console.log(body);
                 parseXML(body, function (err, result) {
                     console.log(result);
+                    if (result.return_code == 'SUCCESS' && result.return_msg == '') {
+                        var withdraw = new Withdraw();
+                        withdraw.set('nonceStr', result.nonce_str);
+                        withdraw.set('partnerTradeNo', result.partner_trade_no);
+                        withdraw.set('paymentNo', result.payment_no);
+                        withdraw.set('payment_time', result.payment_time);
+                        withdraw.save().then(function (post) {
+                            var result = {
+                                code : 200,
+                                data : post,
+                                message : 'Operation succeeded'
+                            }
+                            res.send(result);
+                        });
+                    }
                 });
             });
         }
