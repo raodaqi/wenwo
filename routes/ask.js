@@ -264,7 +264,7 @@ router.get('/askadmin', function(req, res, next) {
     });
 });
 
-router.get('/askedit', function(req, res, next) {
+router.post('/askedit', function(req, res, next) {
     var askId = req.param('ask_id');
     var username = req.query.username;
     var type = req.param('type') != null ? req.param('type') : null ;

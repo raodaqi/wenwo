@@ -221,10 +221,12 @@ router.get('/withdraw', function(req, res, next) {
                     passphrase: mchid
                 }
             }, function(err, response, body){
-                console.log(err)
-                console.log(response);
+                //console.log(err)
+                //console.log(response);
                 console.log(body);
-                parseXML(body);
+                parseXML(body, function (err, result) {
+                    console.log(result);
+                });
             });
         }
     });
