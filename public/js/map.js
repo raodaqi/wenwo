@@ -34,7 +34,7 @@
             zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
             buttonPosition:'LB',
             // showCircle:false
-            circleOptions: new AMap.Circle({radius:1})
+            useNative:true
         });
         map.addControl(geolocation);
         geolocation.getCurrentPosition();

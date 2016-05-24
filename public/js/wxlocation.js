@@ -29,6 +29,18 @@ var data = {
           ]
         });
         wx.ready(function(){
+          var shareData = {
+              title: '问我|像个当地人一样去旅游',
+              desc: '说走就走，我带着你，你带着钱。',
+              link: result.url,
+              imgUrl: 'http://wenwo.leanapp.cn/img/wx/share.jpg'
+          };
+          wx.onMenuShareAppMessage(shareData);
+          wx.onMenuShareTimeline(shareData);
+          wx.onMenuShareQQ(shareData);
+          wx.onMenuShareWeibo(shareData);
+          wx.onMenuShareQZone(shareData);
+
           wx.getLocation({
             type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
             success: function (res) {
