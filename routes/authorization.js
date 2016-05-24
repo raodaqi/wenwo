@@ -162,9 +162,9 @@ router.get('/pay', function(req, res, next) {
 
 
 router.get('/withdraw', function(req, res, next) {
-    var amount = req.query.amount;
-    amount = parseFloat(amount);
-    amount = amount * 100;
+    // var amount = req.query.amount;
+    // amount = parseFloat(amount);
+    // amount = amount * 100;
     var code = req.query.code;
     var secret = '9157e84975386b6dee6a499cc639973e';
     if (code == null) {
