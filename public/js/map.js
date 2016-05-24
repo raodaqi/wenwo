@@ -33,7 +33,8 @@
             buttonOffset: new AMap.Pixel(20, 25),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
             zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
             buttonPosition:'LB',
-            showCircle:false
+            // showCircle:false
+            circleOptions: new AMap.Circle({radius:1})
         });
         map.addControl(geolocation);
         geolocation.getCurrentPosition();
