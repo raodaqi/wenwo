@@ -613,6 +613,7 @@
       right: 20px;
       text-align: center;
       display: none;
+      z-index: 200;
       /*top: 10px;*/
     }
     .votebar-like,.votebar-hate{
@@ -621,6 +622,10 @@
       font-size: 20px;
       margin:5px;
       color: white;
+    }
+    .votebar .iconfont.liked{
+      color: #529AF9;
+      font-size: 23px;
     }
     .voteNum{
       font-size: 10px;
@@ -1515,7 +1520,11 @@
       $(".amap-active").css("-webkit-transform", "rotate(0deg) !important;");
       $(".amap-marker-list-content").remove();
       // var div = '<div class="amap-marker-list-content" style="display:none"><div class="up">火锅<div class="up-price-right">0.8元</div></div><div class="down">这个真的很好吃</div></div>';
-
+      // if(extData.askTagStr){
+      //   var askTagStr = JSON.parse(extData.askTagStr);
+      // }else{
+      //   var askTagStr = '';
+      // }
       var askTagStr = JSON.parse(extData.askTagStr);
       console.log(askTagStr[0]);
       var tagList = '';
@@ -2009,41 +2018,9 @@
       //设置赞踩
       $(".votebar .voteNum").text(likeNum);
 
-
-      //赞
-      $(".votebar-like,.votebar-hate").on("click",function(){
-        var type = 0;
-        if($(this).hasClass("votebar-like")){
-          //赞
-          type = 1;
-        }else{
-          //踩
-          type = 2;
-        }
-
-        var data = {
-          ask_id   : askId,
-          username : "<%= username %>",
-          type     : type
-        }
-        $.ajax({
-          type : "GET",
-          data: data,
-          dataType: "json",
-          url : "/ask/like",
-          success : function(result){
-            console.log(result);
-            
-          },
-          error : function(error){
-            $.alert('网络异常');
-          }
-        });
-
-      })
-
-
       // if()
+      $(".votebar").data("askid",askId);
+
 
       //设置标签
       var askTagStr = JSON.parse(askTagStr);
@@ -2078,6 +2055,41 @@
         $(".wenwo-get").text("我要收藏");
         $(".votebar").show();
       }
+
+      //判断是否点赞过
+        var data = {
+          ask_id   : askId,
+          username : "<%= username %>"
+        }
+        $.ajax({
+          type : "GET",
+          data: data,
+          dataType: "json",
+          url : "/ask/isliked",
+          success : function(result){
+            console.log(result);
+            if(result.code == 200){
+              var isliked = result.isliked;
+              //如果isliked=1点赞，2踩
+              if(isliked){
+
+                $(".votebar .iconfont").removeClass("liked");
+                if(isliked == 1){
+                  //赞过
+                  $(".votebar-like").addClass("liked");
+                }else{
+                  //踩过
+                  $(".votebar-hate").addClass("liked");
+                }
+              }
+            }
+          },
+          error : function(error){
+            $.alert('网络异常');
+          }
+        });
+
+
 
       if(!extData.geted){
         var data = {
@@ -2390,6 +2402,53 @@
       });
       // $.popup('.ask-detail');
     })
+
+    function askLike(askId,type){
+      var data = {
+          ask_id   : askId,
+          username : "<%= username %>",
+          type     : type
+        }
+        $.ajax({
+          type : "GET",
+          data: data,
+          dataType: "json",
+          url : "/ask/like",
+          success : function(result){
+            console.log(result);
+            if(result == 200){
+              $(".votebar .iconfont").removeClass("liked");
+              if(type == 1){
+                $(".votebar-like").addClass("liked");
+              }else{
+                $(".votebar-hate").addClass("liked");
+              }
+            }
+          },
+          error : function(error){
+            $.alert('网络异常');
+          }
+        });
+    }
+    //赞
+      $(".votebar-like,.votebar-hate").on("click",function(){
+        var askId = $(this).parent(".votebar").data("askid");
+        var type = 0;
+        console.log(askId);
+        if($(this).hasClass("liked")){
+
+        }else{
+          if($(this).hasClass("votebar-like")){
+            //赞
+            type = 1;
+          }else{
+            //踩
+            type = 2;
+          }
+
+          askLike(askId,type);
+        }
+      })
 
 
   </script>

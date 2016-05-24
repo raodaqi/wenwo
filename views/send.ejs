@@ -75,7 +75,7 @@
       height: 15rem;
       border-radius: 0.5rem;
       padding:0.8rem 1rem;
-      font-size: 0.5rem;
+      font-size: 0.75rem;
       color:#FFF;
     }
     #reason{
@@ -910,8 +910,10 @@
           var li = ''
           for(var i in result.data){
             var exit = 0;
-            $.each($(".ww-typeHelper .type-item"),function(i,v){
-              console.log($(v).text());
+
+            $.each($(".ww-typeHelper .type-item"),function(j,v){
+              // console.log(result.data[i].tagName);
+              // console.log($(v).text());
               if(result.data[i].tagName == $(v).text()){
                 exit = 1;
               }
@@ -1351,6 +1353,20 @@
       var text = $(this).val();
       if(text.indexOf(";")!=-1 || text.indexOf("；")!=-1 || text.indexOf(",")!=-1 || text.indexOf("，")!=-1){
         var text = text.substr(0,text.length-1);
+        $(".ww-typeHelper-input").val(text);
+        
+        var len = GetLength(text);
+        console.log(len);
+        if(len > 10){
+          $.toast("标签字数过多");
+          return;
+        }
+        var tagNum = $(".tag-content .ww-typeHelper .type-item").length;
+        if(tagNum >= 3){
+          $.toast("最多只能选择三个二级标签");
+          return;
+        }
+
         console.log(text);
         var span = '<span class="type-item">'+text+'</span>';
         // $("this").before(span);
@@ -1362,8 +1378,21 @@
     })
 
     $(".ww_typeHelper-button").on("click",function(){
+
       console.log($(".ww-typeHelper-input").val());
       var text = $(".ww-typeHelper-input").val();
+      var len = GetLength(text);
+      console.log(len);
+      if(len > 10){
+        $.toast("标签字数过多");
+        return;
+      }
+      var tagNum = $(".tag-content .ww-typeHelper .type-item").length;
+      if(tagNum >= 3){
+        $.toast("最多只能选择三个二级标签");
+        return;
+      }
+      
       var span = '<span class="type-item">'+text+'</span>';
       $(".ww-typeHelper-left").before(span);
       $(".ww-typeHelper-input").val('');
@@ -1403,7 +1432,7 @@
       console.log($(".tag-content .ww-typeHelper .type-item").length);
       var tagNum = $(".tag-content .ww-typeHelper .type-item").length;
       if(tagNum >= 3){
-        $.alert("最多只能选择三个二级标签");
+        $.toast("最多只能选择三个二级标签");
         return;
       }
 
@@ -1484,13 +1513,13 @@
       localStorage["detail"] = $("#detail").val();
     })
 
-    $("#detail").focus(function(){
-      $("#detail,.de-show").css("height","100px !important");
-    });
+    // $("#detail").focus(function(){
+    //   $("#detail,.de-show").css("height","100px !important");
+    // });
 
-    $("#detail").blur(function(){
-      $("#detail,.de-show").css("height","150px !important");
-    });
+    // $("#detail").blur(function(){
+    //   $("#detail,.de-show").css("height","150px !important");
+    // });
 
     //更换价格的时候调用
     $("#price-picker").on("input change",function(){
