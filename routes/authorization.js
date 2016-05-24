@@ -8,10 +8,12 @@ var fs = require('fs');
 var WXPay = require('weixin-pay');
 //var wechat = require('wechat');
 var router = require('express').Router();
+var xml2js = require('xml2js');
 var AV = require('leanengine');
 var request = require('request');
 var Post = AV.Object.extend('UserInfo');
 var Wallet = AV.Object.extend('Wallet');
+var md5 = require('MD5');
 var User = AV.Object.extend('_User');
 // `AV.Object.extend` 方法一定要放在全局变量，否则会造成堆栈溢出。
 // 详见： https://leancloud.cn/docs/js_guide.html#对象
@@ -154,8 +156,79 @@ router.get('/test', function(req, res, next) {
     });
 });
 
-
 router.get('/pay', function(req, res, next) {
+
+});
+
+
+router.get('/withdraw', function(req, res, next) {
+    var amount = req.query.amount;
+    amount = parseFloat(amount);
+    amount = amount * 100;
+    var code = req.query.code;
+    var secret = '9157e84975386b6dee6a499cc639973e';
+    if (code == null) {
+        var urlApi = "http://wenwo.leanapp.cn/authorization/withdraw";
+        //var urlApi = "/authorization/pay_t";
+        authorize(res, urlApi);
+        return;
+    }
+
+    var appid = 'wx99f15635dd7d9e3c';
+    var mchid = '1298230401';
+    var nonceStr = getNonceStr();
+    //var sign = getSign();
+    var partnerTradeNo = '1234567890';
+    //var openid = '';
+    var checkName = 'NO_CHECK';
+    var amount = 1;
+    var desc = '提现';
+    var ip = req.ip;
+    ip = ip.substr(ip.lastIndexOf(':')+1, ip.length);
+
+    getAccessToken(appid, secret, code, res, {
+        success:function (result) {
+            var codeData = result.data;
+            codeData = JSON.parse(codeData);
+            var accessToken = codeData.access_token;
+            var openid = codeData.openid;
+            var expiresIn = codeData.expires_in;
+
+            var data = {
+                mch_appid : appid,
+                mchid : mchid,
+                nonce_str : nonceStr,
+                partner_trade_no : partnerTradeNo,
+                openid : '123',
+                check_name : checkName,
+                amount : amount,
+                desc : desc,
+                spbill_create_ip : ip
+            };
+            var sign = getSign(data);
+            data.sign = sign;
+            console.log(data);
+            console.log(buildXML(data));
+            //return;
+            request({
+                url: "https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers",
+                method: 'POST',
+                body: buildXML(data),
+                agentOptions: {
+                    pfx: fs.readFileSync('./routes/certificate/apiclient_cert.p12'),
+                    passphrase: mchid
+                }
+            }, function(err, response, body){
+                console.log(err)
+                console.log(response);
+                console.log(body);
+                parseXML(body);
+            });
+        }
+    });
+
+
+
 
 });
 
@@ -299,13 +372,13 @@ function unified(appid, mchid, body, notifyUrl, ip, total, secret, callback) {
     });
 }
 
-function getSign(appid, mchid, nonce, body, notifyUrl, ip, total, secret) {
-    var stringA = 'appid='+appid+'&body='+body+'&mch_id='+mchid+'&nonce_str='+nonce+'&notify_url='+notifyUrl+'&spbill_create_ip='+ip+'&total_fee='+total+'&trade_type=JSAPI';
-    var stringSignTemp = stringA+'&key='+secret;
-    var sign = MD5(stringSignTemp).toUpperCase();
-    console.log("sign:"+sign);
-    return sign;
-}
+// function getSign(appid, mchid, nonce, body, notifyUrl, ip, total, secret) {
+//     var stringA = 'appid='+appid+'&body='+body+'&mch_id='+mchid+'&nonce_str='+nonce+'&notify_url='+notifyUrl+'&spbill_create_ip='+ip+'&total_fee='+total+'&trade_type=JSAPI';
+//     var stringSignTemp = stringA+'&key='+secret;
+//     var sign = MD5(stringSignTemp).toUpperCase();
+//     console.log("sign:"+sign);
+//     return sign;
+// }
 
 function authorize(res,urlApi) {
     var appid = 'wx99f15635dd7d9e3c';
@@ -347,5 +420,37 @@ function getUserInfo(access_token, openid, res,callback) {
 // function MD5(text) {
 //     return crypto.createHash('md5').update(text).digest('hex');
 // };
+
+function getNonceStr(length) {
+    var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var maxPos = chars.length;
+    var noceStr = "";
+    for (var i = 0; i < (length || 32); i++) {
+        noceStr += chars.charAt(Math.floor(Math.random() * maxPos));
+    }
+    return noceStr;
+}
+
+
+function buildXML(json){
+    var builder = new xml2js.Builder();
+    return builder.buildObject(json);
+}
+
+function parseXML(xml, fn){
+    var parser = new xml2js.Parser({ trim:true, explicitArray:false, explicitRoot:false });
+    parser.parseString(xml, fn||function(err, result){});
+}
+
+function getSign(param){
+
+    var querystring = Object.keys(param).filter(function(key){
+            return param[key] !== undefined && param[key] !== '' && ['pfx', 'partner_key', 'sign', 'key'].indexOf(key)<0;
+        }).sort().map(function(key){
+            return key + '=' + param[key];
+        }).join("&") + "&key=" + key;
+
+    return md5(querystring).toUpperCase();
+}
 
 module.exports = router;
