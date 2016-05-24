@@ -247,6 +247,7 @@ router.get('/askadmin', function(req, res, next) {
 
 router.get('/askedit', function(req, res, next) {
     var askId = req.param('ask_id');
+    var username = req.query.username;
     var type = req.param('type') != null ? req.param('type') : null ;
     var price = req.param('price') != null ? req.param('price') : null;
     var geoX = req.param('geo_x') != null ? req.param('geo_x') : null;
@@ -260,6 +261,14 @@ router.get('/askedit', function(req, res, next) {
 
     var query = new AV.Query('AskMe');
     query.get(askId).then(function (ask) {
+        var askOwner = ask.get('createBy');
+        if (askOwner != username) {
+            var result = {
+                code : 600,
+                message : '未拥有该信息'
+            }
+            res.render(result);
+        }
         if (type != null) {
             ask.set('askType', type);
         }
@@ -335,6 +344,35 @@ router.get('/like', function(req, res, next) {
                 for (var i = 0; i < list.length; i++) {
                     if (list[i].get('createBy') == userName) {
                         flag++;
+                        var listType = list[i].get('type');
+                        if (type == listType) {
+                            var result = {
+                                code : 700,
+                                message : 'repetitive operation'
+                            }
+                            res.send(result);
+                            return;
+                        }
+                        else {
+                            list[i].set('type', type);
+                            list[i].save().then(function (lk) {
+                                if (type == 1 || type == '1') {
+                                    ask.set('likeNum', (parseInt(ask.get('likeNum'))+2).toString());
+                                }
+                                else {
+                                    ask.set('likeNum', (parseInt(ask.get('likeNum'))-2).toString());
+                                }
+                                ask.save().then(function (ask) {
+                                    var result = {
+                                        code : 200,
+                                        message : '操作成功'
+                                    }
+                                    res.send(result);
+                                    return;
+                                });
+                            });
+                        }
+
                     }
                 }
                 if (flag == 0) {
@@ -365,6 +403,7 @@ router.get('/like', function(req, res, next) {
                                         message : 'Operation succeeded'
                                     }
                                     res.send(result);
+                                    return;
                                 });
 
                             });
@@ -373,13 +412,13 @@ router.get('/like', function(req, res, next) {
 
                     });
                 }
-                else  {
-                    var result = {
-                        code : 700,
-                        message : 'repetitive operation'
-                    }
-                    res.send(result);
-                }
+                // else  {
+                //     var result = {
+                //         code : 700,
+                //         message : 'repetitive operation'
+                //     }
+                //     res.send(result);
+                // }
             });
         });
     });
@@ -965,7 +1004,8 @@ router.get('/getrefund', function (req, res, next) {
 });
 
 router.post('/addtag', function (req, res, next) {
-
+    var type = req.query.type;
+    
 });
 
 function setTag(tag, type, callback) {
