@@ -1267,7 +1267,7 @@
         var spanContent = '';
         for(var i in tag){
           console.log(tag[i]);
-          var spanContent = spanContent + '<span class="type-item">'+tag[i]+'</span>';
+          var spanContent = spanContent + '<span class="type-item">'+tag[i].tag_name+'</span>';
         }
         // $("#tag-content .card-content-inner").append(spanContent);
         $(".ww-typeHelper-left").before(spanContent);
@@ -1844,6 +1844,9 @@
                 $.hidePreloader();
                 $.toast("提交成功");
                 localStorage.clear();
+                $.showPreloader("正在跳转");
+                window.location.href="/more/information-presentation/test/"+sendAskId+"?username="+"<%=username%>";
+                // window.location.href="/more/information-presentation/5731cfa81532bc0065181ff1";
               }else{
                 $.hidePreloader();
                 $.toast(result.message);
@@ -1866,6 +1869,9 @@
                 $.hidePreloader();
                 $.toast("提交成功");
                 localStorage.clear();
+                
+                // window.location.href="/more/information-presentation/test/"+sendAskId+"?username="+"<%=username%>";
+                // // window.location.href="/more/information-presentation/5731cfa81532bc0065181ff1";
               }else{
                 $.hidePreloader();
                 $.toast(result.message);
