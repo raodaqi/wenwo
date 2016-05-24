@@ -36,18 +36,22 @@ router.get('/', function(req, res, next) {
 router.get('/send', function(req, res, next) {
   // res.render('send');
   var user = AV.User.current();
+  var type = req.query.type;
+  var askid = req.query.askid;
   if(!user){
     authorize(req, res);
   }else{
     var username = user.get('user');
-    res.render('send',{username:username});
+    res.render('send',{username:username,type:type,askid:askid});
   }
 });
 
 router.get('/send/test', function(req, res, next) {
   var username =  req.query.username;
+  var type = req.query.type;
+  var askid = req.query.askid;
   //username = decodeURI(username);
-  res.render('send', { username: username });
+  res.render('send', {username:username,type:type,askid:askid});
 });
 
 function getAccessToken(appid,secret,callback){

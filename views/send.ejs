@@ -471,7 +471,7 @@
         <a class="button button-link button-nav pull-left" href="/">
           <span class="icon icon-left"></span>
         </a>
-        <h1 class='title'>主题</h1>
+        <h1 class='title'>发布</h1>
         <a class="button button-link button-nav pull-right send-button-a">
           确定
         </a>
@@ -1229,7 +1229,117 @@
         $("#price-content .item-inner").text(localStorage.price);
       }
     }
-    initLocationData();
+
+    function formatDetail(data){
+    
+    var staus           = data.staus,     //状态
+        askType         = data.askType,   //类型
+        askTagStr       = data.askTagStr, //标签
+        reason          = data.askReason, //理由
+        askContentHide  = data.askContentHide,//隐藏详情
+        askContentShow  = data.askContentShow,//隐藏详情
+        lnglatXY        = [data.GeoX,data.GeoY],//坐标
+        price           = data.askPrice,//价格
+        updatedAt       = data.updatedAt,//发布时间
+        createBy        = data.createBy;//发布者
+
+    //设置标签头部
+      askType =  askType.split(",");
+        var typeText = '';
+        console.log(askType);
+        for(var i = 0; i < askType.length; i++){
+          typeText = formatType(askType[i]);
+          if(i == 1){
+            typeText = formatType(askType[i-1]) +","+ formatType(askType[i]);
+          }
+        }
+        //设置上传者名字
+        $(".autor-name").text(createBy);
+        //设置信息主题
+        $(".autor-theme").text(typeText);
+        //设置信息上传时间
+        console.log(updatedAt);
+        $(".autor-time").text(formatDate("y.m.d",updatedAt));
+
+      //标签
+      var tag = JSON.parse(askTagStr);
+        console.log(tag);
+        var spanContent = '';
+        for(var i in tag){
+          console.log(tag[i]);
+          var spanContent = spanContent + '<span class="type-item">'+tag[i]+'</span>';
+        }
+        $("#tag-content .card-content-inner").append(spanContent);
+
+        //推荐理由
+        $("#reason-content .card-content-inner").text(reason);
+
+        //解析详情
+        var show = askContentShow.split("##");
+        var hidden = askContentHide.split("##");
+        var reasonDetail = '';
+        for(var i = 0; i < hidden.length;i++){
+          reasonDetail += show[i] + hidden[i];
+        }
+        if(!hidden.length){
+          reasonDetail = show;
+        }
+
+        $("#detail-content .card-content-inner").text(reasonDetail);
+
+        //解析地址
+        getAddress(lnglatXY,{
+          success:function(address){
+            var detail = address.formattedAddress;
+            var address = {
+              province : address.addressComponent.province,
+              city     : address.addressComponent.city,
+              district : address.addressComponent.district,
+              township : address.addressComponent.township
+            }
+            // var address = JSON.stringify(address);
+
+            // detail = detail.replace(address[0]+address[1]+address[2]+address[3],"");
+            var replace = ""+address.province+address.city+address.district+address.township+"";
+            detail = detail.replace(replace,"");
+            address.detail = detail;
+            address = JSON.stringify(address);
+            console.log(address);
+            $("#address-content .item-inner").attr("data-address",address);
+            $("#address-content .item-inner").text(detail);
+          }
+        });
+
+        //价格
+        $("#price-content .item-inner").text(price);
+
+
+  }
+
+    function initEditData(sendAskId){
+      $.ajax({
+        type: "get",
+        url: '/ask/askdetail',
+        data: {ask_id:sendAskId,username:"<%= username %>"},
+        dataType: "json",
+        success : function(result) {
+          console.log(result);
+
+        },
+        error : function(){}
+      })
+    }
+
+    var sendType = "<%= type %>";
+    var sendAskId = "<%= askid %>";
+    if(sendType == "edit"){
+      console.log("edit");
+      initEditData(sendAskId);
+    }else{
+      initLocationData();
+    }
+
+    
   </script>
   <script>
     $(".card,.theme-list-content").on("click",function(){
@@ -1296,7 +1406,7 @@
           $(".theme-list"+type).addClass("theme-list-active");
           // if("")
         }else{
-          $.alert("最多只能选择两个主题");
+          $.toast("最多只能选择两个主题");
         }
       }
 
@@ -1533,7 +1643,7 @@
     //提交所有信息
     $(".send-button-a").on("click",function(){
         var type,//主题类型
-            tag = [],//二级标签
+            tag = new Array(),//二级标签
             reason,//推荐理由
             content_show,//详情显示部分
             content_hide,//详情隐藏部分
@@ -1545,7 +1655,7 @@
         //获取主题
         var $_active = $(".theme-li-active");
         if(!$_active.length){
-          $.alert("你还没有选择主题");
+          $.toast("你还没有选择主题");
           // $.router.load("#router1");
           return;
         }else{
@@ -1560,11 +1670,14 @@
         //获取填写的tag
         var $_tag = $(".ww-typeHelper .type-item");
         if(!$_tag.length){
-          $.alert("你还没有填写标签");
+          $.toast("你还没有填写标签");
            return;
         }else{
           $.each($_tag,function(i,v){
-            tag[i] = $(this).text();
+            tag[i] = {
+              tag_name: $(this).text()
+            }
+            // $(this).text();
           })
           tag = JSON.stringify(tag);
         }
@@ -1572,14 +1685,14 @@
         //获取推荐理由
         var reason = $("#reason").val();
         if(!reason){
-          $.alert("你还没有填写推荐理由");
+          $.toast("你还没有填写推荐理由");
           return;
         }
 
         //获取详情
         var detail = $("#detail").val();
         if(!detail){
-          $.alert("你还没有填写信息详情");
+          $.toast("你还没有填写信息详情");
           return;
         }else{
           var detailContent = getHideText();
@@ -1592,7 +1705,7 @@
         lng = $("#container").attr("data-lng");
         lat = $("#container").attr("data-lat");
         if(!lng || !lat){
-          $.alert("你还没有添加地图标注");
+          $.toast("你还没有添加地图标注");
           return;
         }
 

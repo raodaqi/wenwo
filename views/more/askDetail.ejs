@@ -871,14 +871,14 @@ body{
 		
 		var staus           = data.staus,     //状态
 		    askType         = data.askType,   //类型
-			askTagStr       = data.askTagStr, //标签
-			reason          = data.askReason, //理由
-			askContentHide  = data.askContentHide,//隐藏详情
-			askContentShow  = data.askContentShow,//隐藏详情
-			lnglatXY        = [data.GeoX,data.GeoY],//坐标
-			price           = data.askPrice,//价格
-			updatedAt       = data.updatedAt,//发布时间
-			createBy        = data.createBy;//发布者
+  			askTagStr       = data.askTagStr, //标签
+  			reason          = data.askReason, //理由
+  			askContentHide  = data.askContentHide,//隐藏详情
+  			askContentShow  = data.askContentShow,//隐藏详情
+  			lnglatXY        = [data.GeoX,data.GeoY],//坐标
+  			price           = data.askPrice,//价格
+  			updatedAt       = data.updatedAt,//发布时间
+  			createBy        = data.createBy;//发布者
 
 		//设置标签头部
 		  askType =  askType.split(",");
@@ -949,9 +949,8 @@ body{
 
         //价格
         $("#price-content .item-inner").text(price);
-
-
 	}
+  
 	function getDetail(){
     $.showPreloader();
 
