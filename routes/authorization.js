@@ -44,7 +44,8 @@ router.get('/wx', function(req, res, next) {
 });
 
 router.get('/pay_t', function(req, res, next) {
-    var totalFee = req.query.totalFee;
+    //var totalFee = req.query.totalFee;
+    var totalFee = 3;
     totalFee = parseFloat(totalFee);
     totalFee = totalFee * 100;
     var secret = '9157e84975386b6dee6a499cc639973e';
