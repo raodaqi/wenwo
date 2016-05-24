@@ -199,7 +199,7 @@ router.get('/withdraw', function(req, res, next) {
                 mchid : mchid,
                 nonce_str : nonceStr,
                 partner_trade_no : partnerTradeNo,
-                openid : '123',
+                openid : openid,
                 check_name : checkName,
                 amount : amount,
                 desc : desc,
