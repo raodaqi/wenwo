@@ -139,6 +139,21 @@ router.get('/askdetail', function(req, res, next) {
     query.find().then(function (resultes) {
         //console.log(resultes[0]);
         if (resultes != null) {
+            var query = new AV.Query('AskMe');
+            query.get(askId).then(function (ask) {
+                var askCreate = ask.get('createBy');
+                if (userName == askCreate) {
+                    var result = {
+                        code : 200,
+                        nobuy : '1',
+                        own: 1,
+                        data : ask,
+                        message : 'operation successed'
+                    }
+                    res.send(result);
+                    return;
+                }
+            });
             var relation = resultes[0].relation('haved');
             if (relation == null) {
                 var query = new AV.Query('AskMe');
@@ -148,6 +163,7 @@ router.get('/askdetail', function(req, res, next) {
                     var result = {
                         code : 200,
                         nobuy : '1',
+                        own: 0,
                         data : post,
                         message : 'operation successed'
                     }
@@ -169,6 +185,7 @@ router.get('/askdetail', function(req, res, next) {
                             var result = {
                                 code : 200,
                                 data : post,
+                                own: 0,
                                 nobuy : '0',
                                 message : 'operation successed'
                             }
@@ -186,6 +203,7 @@ router.get('/askdetail', function(req, res, next) {
                         var result = {
                             code : 200,
                             nobuy : '1',
+                            own: 0,
                             data : post,
                             message : 'operation successed'
                         }
@@ -205,6 +223,7 @@ router.get('/askdetail', function(req, res, next) {
                 var result = {
                     code : 200,
                     nobuy : '1',
+                    own: 0,
                     data : post,
                     message : 'operation successed'
                 }
@@ -695,7 +714,7 @@ router.post('/sendask', function(req, res, next) {
     ask.set('askContentHide', contentHide);
     ask.set('askPrice', price);
     ask.set('staus', '2');
-    ask.set('askLevel', '1');
+    //ask.set('askLevel', '1');
     ask.set('askDefault',remark);
     ask.set('askTagStr', tag);
     var relation = ask.relation('askTag');
