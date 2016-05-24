@@ -88,3 +88,25 @@ function GetLength(str) {
   }
   return realLength;
 };
+
+//详情内容隐藏
+function deShow(text){
+      var str = {};
+      str = text.split("##");
+      var show = '';
+      var hidden = '';
+      var detail = ''
+      for(var i = 0; i < str.length; i++){
+        if(i%2){
+          var starLen = ''
+          for(var j = 0; j < str[i].length; j++){
+            starLen += '*';
+          }
+          detail += '<span class="hidden-text">'+starLen+'</span>';
+        }else{
+          detail += str[i];
+        }
+      }
+      $(".de-show").empty();
+      $(".de-show").append(detail);
+    }
