@@ -162,9 +162,10 @@ router.get('/pay', function(req, res, next) {
 
 
 router.get('/withdraw', function(req, res, next) {
-    // var amount = req.query.amount;
-    // amount = parseFloat(amount);
-    // amount = amount * 100;
+    //var amount = req.query.amount;
+    var amount = 1;
+    amount = parseFloat(amount);
+    amount = amount * 100;
     var code = req.query.code;
     var secret = '9157e84975386b6dee6a499cc639973e';
     if (code == null) {
@@ -181,7 +182,7 @@ router.get('/withdraw', function(req, res, next) {
     var partnerTradeNo = '1234567890';
     //var openid = '';
     var checkName = 'NO_CHECK';
-    var amount = 1;
+
     var desc = '提现';
     var ip = req.ip;
     ip = ip.substr(ip.lastIndexOf(':')+1, ip.length);
