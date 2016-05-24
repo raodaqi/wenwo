@@ -209,8 +209,8 @@ router.get('/withdraw', function(req, res, next) {
             };
             var sign = getSign(data);
             data.sign = sign;
-            console.log(data);
-            console.log(buildXML(data));
+            //console.log(data);
+            //console.log(buildXML(data));
             //return;
             request({
                 url: "https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers",

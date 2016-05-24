@@ -327,10 +327,10 @@ router.post('/askedit', function(req, res, next) {
         }
 
         ask.set('staus', '2');
-        ask.save().then(function () {
+        ask.save().then(function (ask) {
             var result = {
                 code : 200,
-                data : results,
+                data : ask,
                 message : 'Operation succeeded'
             }
             res.send(result);
@@ -338,7 +338,6 @@ router.post('/askedit', function(req, res, next) {
         }, function(err) {
             var result = {
                 code : 800,
-                data : results,
                 message : err.message
             }
             res.send(result);
@@ -753,9 +752,10 @@ router.post('/sendask', function(req, res, next) {
                     }
 
                 }
-                ask.save().then(function(post) {
+                ask.save().then(function(ask) {
                     var result = {
                         code : 200,
+                        data : ask,
                         message : 'Operation succeeded'
                     }
                     res.send(result);
