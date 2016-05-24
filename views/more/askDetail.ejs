@@ -599,9 +599,10 @@ body{
   .del{
     width: 20%;
     margin-left: 40%;
-    height: 40px;
-    line-height: 40px;
+    height: 34px;
+    line-height: 34px;
     text-align: center;
+    font-size: 16px;
   }
   .modal-overlay{
     height: 100% !important;
@@ -894,8 +895,8 @@ body{
 
   // })
   $(document).on('click','.del', function () {
-      $.prompt('What is your name?', function (value) {
-          $.alert('Your name is "' + value + '". You clicked Ok button');
+      $.prompt('请填写退款理由', function (value) {
+          $.alert('你已成功申请退款 ');
       });
   });
   $(".modal-button").click(function(){

@@ -137,6 +137,12 @@
         border: 1px solid #C5C1C1;
         word-wrap: break-word;
     }
+    .place{
+        height: 40px;
+        line-height: 40px;
+        width: 300px;
+        padding-left: 10px;
+    }
 </style>
 <body>
     <div class="wrap">
@@ -190,7 +196,7 @@
                     </div>
                     <div>
                         <span>价格:</span>
-                        <input class="input-edit input-price" type="text" value="0.00">
+                        <input class="input-edit input-price" type="text" value="">
                     </div>
                     <button class='btn_send'>发布</button>
                 </div>
@@ -434,14 +440,16 @@
               township : address.addressComponent.township
             }
           // var address = JSON.stringify(address);
-
+          console.log(address);
+          var strs = address.province+"-"+address.city+"-"+address.district+"-"+address.township;
+          console.log(strs);
+          $(".place").empty();
+          $(".place").append(strs);
           // detail = detail.replace(address[0]+address[1]+address[2]+address[3],"");
           var replace = ""+address.province+address.city+address.district+address.township+"";
           detail = detail.replace(replace,"");
           address.detail = detail;
           var address = JSON.stringify(address);
-          console.log(address);
-          $(".place").append(address);
           $("#address-content .item-inner").attr("data-address",address);
           $("#address-content .item-inner").text(detail);
         }
@@ -597,7 +605,7 @@
             tag = JSON.stringify(tag);
             console.log(tag);
             var reason = $('.edit-reason').val();
-            var detail = $('.de-show').val();
+            var detail = $('.de-show').text();
             var price = $('.input-price').val();
             console.log(reason);
             console.log(detail);
