@@ -124,6 +124,14 @@ router.get('/withdraw', function(req, res, next) {
   }
   // res.render('more/withdraw');
 });
+
+router.get('/withdraw/test', function(req, res, next) {
+
+  var username =  req.query.username;
+  res.render('more/withdraw',{username:username});
+
+});
+
 router.get('/watch-us', function(req, res, next) {
   var user = AV.User.current();
   if(!user){
