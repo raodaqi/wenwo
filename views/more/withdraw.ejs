@@ -96,8 +96,32 @@ body{
 	line-height: 35px;
 	width: 100%;
 	background-color: #d8d8d8;
-	float: left;
 	padding-left: 20px;
+}
+.my-money{
+	font-size: 14px;
+	color: gray;
+	padding-left: 20px;
+	padding-top: 10px;
+}
+.leave-money{
+	float: left;
+	padding-right: 20px;
+}
+.all-withdraw{
+	color: #efc553;
+}
+.money-error{
+	display: none;
+}
+.my-money.error{
+	color: red;
+}
+.error .money-content{
+	display: none;
+}
+.error .money-error{
+	display: block;
 }
 </style>
 <body>
@@ -118,7 +142,22 @@ body{
 		<div class="iconfont icon-wenhao wen"><a></a></div>
 	</div>
 	<div class="num"><span style="font-weight: 600">￥</span>
-	<input class="withdraw_title_num" placeholder="请填写提现金额:">
+		<!-- <input class="withdraw_title_num" type="number" placeholder="请填写提现金额:"> -->
+		<input class="withdraw_title_num"  placeholder="请填写提现金额:">
+	</div>
+	<div class="my-money">
+		<div class="money-content">
+			<div class="leave-money">
+				<span>钱包余额</span>
+				<span class="money-num" data-money="0.00">￥0.00</span>
+			</div>
+			<div class="all-withdraw">全部提现</div>
+		</div>
+		<div class="money-error">
+			<div class="leave-money">
+				<span>输入金额超过钱包余额</span>
+			</div>
+		</div>
 	</div>
 	<!-- <div class="withdraw_title">
 		<div class="withdraw_title_word">请输入你的支付宝账号：</div>
@@ -126,29 +165,130 @@ body{
 	</div> -->
 	<button class="submit_btn">确认</button>
 <script type="text/javascript">
-$(".zuo").click(function(){
-		history.go(-1);
+	$(".zuo").click(function(){
+			history.go(-1);
+		})
+	$(".wen").click(function(){
+		window.location.href="/more/present-rules";
 	})
-$(".wen").click(function(){
-	window.location.href="/more/present-rules";
-})
+
+	function withdraw(mon){
+		//提现以分为单位
+		var mon = parseInt(mon*100);
+
+		var data = {
+			username : "<%= username %>",
+			amount : mon
+		};
+		$.ajax({
+	        type : "GET",
+	        dataType: "json",
+	        data: data,
+	        url : "/authorization/withdraw",
+	        success : function(result){
+	          console.log(result);
+	          $.alert("提现成功!");
+	        },
+	      error: function(error){
+	          // $.alert(error);
+	          $("body").empty();
+	          $("body").text(error);
+	        }
+	      })
+	}
+
 $(".submit_btn").click(function(){
+	// var mon = $(".withdraw_title_num").val();
+	// console.log(mon);
 	var mon = $(".withdraw_title_num").val();
+	console.log(isNaN(mon));
+	var nan = isNaN(mon);
+	mon = parseFloat(mon).toFixed(2);
 	console.log(mon);
-	pay();
-	function pay(){
+	var money =  $(".money-num").attr("data-money");
+
+	if(mon > money){
+		$.toast("输入金额超过钱包余额");
+		return ;
+	}
+	if(!mon || nan){
+		$.toast("金额只能为数字");
+		return ;
+	}
+	if(mon <= 0){
+		$.toast("金额不能小于0");
+		return;
+	}
+	withdraw(mon);
+})
+
+getMywallet();
+function getMywallet(){
+
+	$.showPreloader("正在加载");
+
 	 $.ajax({
         type : "GET",
         dataType: "json",
-        url : "/authorization/pay_t",
+        data:{username:"<%=username%>"},
+        url : "/wallet/mywallet",
         success : function(result){
-          alert("提现成功!!");
-          },
-      error: function(error){
+          $.hidePreloader();
+          console.log(result);
+          var wallet = result.money;
+          // $(".balance_money").append(wallet);         
+          var wallets = parseFloat(wallet).toFixed(2);
+          // var  str = wallets +"元";
+          // $(".withdraw_cash_money").append(str);
+          console.log(wallets);
+          $(".money-num").attr("data-money",wallets);
+          $(".money-num").text("￥"+wallets);
+        },
+      	error: function(error){
+      	  $.hidePreloader();
           alert(error);
         }
       })
 }
+
+$(".withdraw_title_num").on("input change",function(){
+	var mon = $(this).val();
+	console.log($(this).val().length);
+
+	if(!$(this).val().length){
+		$(".my-money").removeClass("error");
+		return;
+	}
+
+	var nan = isNaN(mon);
+	mon = parseFloat(mon).toFixed(2);
+	console.log(mon);
+	var money =  $(".money-num").attr("data-money");
+
+	if(mon > money){
+		$(".money-error").text("输入金额超过钱包余额");
+		$(".my-money").addClass("error");
+		return ;
+	}
+
+	if(!mon || nan){
+		$(".money-error").text("输入金额只能为数字");
+		$(".my-money").addClass("error");
+		return ;
+	}
+	if(mon <= 0){
+		// $.toast("金额不能小于0");
+		$(".money-error").text("输入金额不能小于0");
+		$(".my-money").addClass("error");
+		return;
+	}
+
+	$(".my-money").removeClass("error");
+})
+
+$(".all-withdraw").on("click",function(){
+	var money =  $(".money-num").attr("data-money");
+	$(".withdraw_title_num").val(money);
 })
 </script>
 </html>

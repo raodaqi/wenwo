@@ -131,6 +131,9 @@ $(".zuo").click(function(){
 	})
 
 function pay(mon){
+	//充值以分为单位。
+	var mon = parseInt(mon*100);
+	
 		var data = {
 			totalFee : mon
 		};
