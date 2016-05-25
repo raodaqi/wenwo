@@ -45,7 +45,7 @@ router.get('/wx', function(req, res, next) {
     authorize(res, urlApi);
 });
 
-router.post('/pay_t', function(req, res, next) {
+router.get('/pay_t', function(req, res, next) {
     var totalFee = req.param('totalFee');
     console.log(totalFee);
     //var totalFee = 3;
