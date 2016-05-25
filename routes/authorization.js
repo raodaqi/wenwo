@@ -74,7 +74,7 @@ router.get('/pay_t', function(req, res, next) {
         console.log(totalFee);
         var urlApi = "http://wenwo.leanapp.cn/authorization/pay_t?totalFee="+totalFee;
         //var urlApi = "/authorization/pay_t";
-        authorize(res, urlApi);
+        authorizeNotInfo(res, urlApi);
         return;
     }
     getAccessToken(appid, secret, code, res, {
@@ -445,6 +445,16 @@ function authorize(res,urlApi) {
     //var urlApi = "http://wenwo.leanapp.cn/authorization/";
     urlApi = encodeURIComponent(urlApi);
     var url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+urlApi+'&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect';
+
+    res.redirect(url);
+}
+function authorizeNotInfo(res,urlApi) {
+    var appid = 'wx99f15635dd7d9e3c';
+    var secret = '9157e84975386b6dee6a499cc639973e';
+
+    //var urlApi = "http://wenwo.leanapp.cn/authorization/";
+    urlApi = encodeURIComponent(urlApi);
+    var url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+urlApi+'&response_type=code&scope=snsapi_base&state=1#wechat_redirect';
 
     res.redirect(url);
 }
