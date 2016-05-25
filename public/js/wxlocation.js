@@ -54,7 +54,7 @@ var data = {
                 //   zoom:18,
                 //   center: [longitude, latitude] 
                 // });
-                $.hidePreloader();
+                // $.hidePreloader();
                 if(!(localStorage.lng && localStorage.lat)){
                     map.setZoomAndCenter(14,[longitude,latitude]);
                 }
