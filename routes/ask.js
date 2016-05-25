@@ -133,12 +133,13 @@ router.get('/askhide', function(req, res, next) {
 
 router.get('/askdetail', function(req, res, next) {
     var askId = req.param('ask_id');
+    console.log(askId);
     var userName = req.param('username');
     var query = new AV.Query('UserInfo');
     query.equalTo('userName', userName);
     query.find().then(function (resultes) {
         //console.log(resultes[0]);
-        if (resultes != null) {
+        if (resultes != null && resultes !='') {
             var query = new AV.Query('AskMe');
             query.get(askId).then(function (ask) {
                 var askCreate = ask.get('createBy');
@@ -155,7 +156,7 @@ router.get('/askdetail', function(req, res, next) {
                 }
             });
             var relation = resultes[0].relation('haved');
-            if (relation == null) {
+            if (relation == null || relation == '') {
                 var query = new AV.Query('AskMe');
                 query.get(askId).then(function (post) {
 
@@ -180,8 +181,9 @@ router.get('/askdetail', function(req, res, next) {
                     //console.log(askId);
                     if (list[i].attributes.ask.id == askId) {
                         var query = new AV.Query('AskMe');
+                        //console.log('ask');
                         query.get(askId).then(function (post) {
-
+                            //console.log('post');
                             var result = {
                                 code : 200,
                                 data : post,
