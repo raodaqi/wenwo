@@ -96,6 +96,9 @@ app.get('/wenwo', function(req, res) {
 app.get('/test', function(req, res) {
   res.render("test");
 });
+app.get('/wxpay/test', function(req, res) {
+  res.render("wxpay/jsapi");
+});
 app.post('/test', function(req, res) {
   res.send("hello");
 });
