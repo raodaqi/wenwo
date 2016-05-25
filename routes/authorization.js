@@ -67,6 +67,7 @@ router.get('/pay_t', function(req, res, next) {
     // });
     var code = req.query.code;
     if (code == null) {
+        totalFee = totalFee / 100;
         var urlApi = "http://wenwo.leanapp.cn/authorization/pay_t?totalFee="+totalFee;
         //var urlApi = "/authorization/pay_t";
         authorize(res, urlApi);

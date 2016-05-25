@@ -117,8 +117,8 @@
 //        });
         $.ajax({
             type: "get",
-            url: 'ask/getbuy',
-            data: {ask_id:'572e305d2e958a0066904f7d'},
+            url: 'authorization/pay_t',
+            data: {total:'0.01'},
             dataType: "json",
             success : function(result) {
                 console.log(result);
