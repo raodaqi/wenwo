@@ -80,6 +80,13 @@ router.get('/moneyBox', function(req, res, next) {
   }
   // res.render('more/moneyBox');
 });
+
+router.get('/moneyBox/test', function(req, res, next) {
+  var username =  req.query.username;
+  res.render('more/moneyBox',{username:username});
+  // res.render('more/moneyBox');
+});
+
 router.get('/contact-us', function(req, res, next) {
   var user = AV.User.current();
   if(!user){
