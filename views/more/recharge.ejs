@@ -69,15 +69,17 @@ body{
 	background-color: #efc553;
 }
 .withdraw_title_icon{
-	height: 100px;
+	/*height: 100px;
 	width: 100%;
 	line-height: 100px;
 	text-align: center;
-	margin-top: 40px;
+	margin-top: 40px;*/
 }
 .withdraw_title_icon img{
-	height: 100px;
-	width: 245px;
+	display: block;
+	/*height: 100px;*/
+	width: 200px;
+	margin: 50px auto; 
 	line-height: 100px;
 	text-align: center;
 }
@@ -130,23 +132,32 @@ $(".zuo").click(function(){
 
 $(".submit_btn").click(function(){
 	var mon = $(".withdraw_title_num").val();
-console.log(mon);
-pay();
-function pay(){
-	$.ajax({
-        type : "GET",
-        dataType: "json",
-        data:{totalFee: mon },
-        url : "/authorization/pay_t",
-        success : function(result){
-          console.log(result);
-        alert("充值成功!!");
-          },
-      error: function(error){
-          alert(error);
-        }
-      })
-}
+	mon = parseFloat(mon).toFixed(2);
+	console.log(mon);
+	if(mon <= 0 || !mon){
+		return;
+	}
+	
+	pay();
+	function pay(){
+		var data{
+			username : <%= user %>,
+			
+		}
+		$.ajax({
+	        type : "GET",
+	        dataType: "json",
+	        data:{totalFee: mon },
+	        url : "/authorization/pay_t",
+	        success : function(result){
+	          console.log(result);
+	          $.alert("充值成功!");
+	        },
+	      error: function(error){
+	          $.alert(error);
+	        }
+	      })
+	}
 })
 </script>
 </html>

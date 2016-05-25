@@ -148,14 +148,19 @@ $("#withdraw").click(function(){
 $("#recharge").click(function(){
 	window.location.href="/more/recharge";
 })
+
 getMywallet();
 function getMywallet(){
+
+	$.showPreloader("正在加载");
+
 	 $.ajax({
         type : "GET",
         dataType: "json",
         data:{username:"<%=username%>"},
         url : "/wallet/mywallet",
         success : function(result){
+          $.hidePreloader();
           console.log(result);
           var wallet = result.money;
           // $(".balance_money").append(wallet);         
@@ -166,6 +171,7 @@ function getMywallet(){
           $(".money-num").text("￥"+wallets);
         },
       	error: function(error){
+      	  $.hidePreloader();
           alert(error);
         }
       })

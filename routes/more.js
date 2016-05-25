@@ -192,6 +192,14 @@ router.get('/recharge', function(req, res, next) {
   }
   // res.render('more/recharge');
 });
+
+router.get('/recharge/test', function(req, res, next) {
+
+  var username =  req.query.username;
+  res.render('more/recharge',{username:username});
+
+});
+
 router.get('/present-rules', function(req, res, next) {
   var user = AV.User.current();
   if(!user){
@@ -222,6 +230,12 @@ router.get('/invite', function(req, res, next) {
   }
   // res.render('more/invite');
 });
+router.get('/invite/test', function(req, res, next) {
+  var username =  req.query.username;
+  res.render('more/invite',{username:username});
+});
+
+
 // 新增 Todo 项目
 router.post('/', function(req, res, next) {
   var content = req.body.content;

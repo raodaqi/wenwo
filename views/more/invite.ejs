@@ -3,7 +3,7 @@
 body{
 	width: 100%;
 	height: 100%;
-	background-color: white;
+	background-color: #EFEFF4;
 }
 .titles{
 	height: 40px;
@@ -42,13 +42,16 @@ body{
 	min-height: 200px;
 }
 .introduce button{
-	margin-left: 5%;
-	width: 90%;
+	display: block;
+	width: 80%;
+	margin:0 auto; 
 	border: 0;
 	border-radius: 5px;
 	background-color: #efc553;
 	margin-top: 50px;
-	height: 35px;
+	height: 50px;
+	color: white;
+	text-align: center;
 }
 .introduce_icon{
 	height: 140px;
@@ -63,11 +66,25 @@ body{
 	line-height: 100px;
 }
 .introduce_word{
-	width: 100%;
-	height: auto;
-	min-height: 100px;
-	padding: 0 5%;
+	/*width: 100%;*/
+	/*text-indent:2em;*/
+	width: 90%;
+	font-size: 15px;
+	margin: 20px auto; 
 	word-wrap:break-word;
+}
+.invite-img{
+	padding: 10px 15px;
+	width: 100%;
+}
+.modal{
+	position: absolute;
+	top: 0;
+	left: 0;
+	margin:0 !important;
+	padding: 0 !important; 
+	width: 100%;
+	height: 100%;
 }
 </style>
 <body>
@@ -89,7 +106,9 @@ body{
 		<button id="invite">邀请好友</button>
 	</div>
 	<div class="modal-overlay modal-overlay-visible" style="display:none;"></div>
-	<div class="modal modal-in" style="display: none; margin-top: -72px;"><div class="modal-inner"></div></div>
+	<div class="modal modal-in" style="display: none; margin-top: -72px;">
+		<img class="invite-img" src="/img/invite.png">
+	</div>
 <script type="text/javascript">
 $(".zuo").click(function(){
 		history.go(-1);
@@ -98,7 +117,7 @@ $("#invite").on('click',function(){
 	$(".modal-overlay-visible").show();
 	$(".modal-in").show();
 })
-$(".modal-overlay-visible").on('click',function(){
+$(".modal-in").on('click',function(){
 	$(".modal-overlay-visible").hide();
 	$(".modal-in").hide();
 })
