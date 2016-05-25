@@ -321,7 +321,7 @@ function getStaus(staus) {
                 case "6": temp = "防坑";break;
             }
             return temp;
-        }
+        }       
 getMyask();
 function getMyask(){
 	 $.ajax({
@@ -334,6 +334,18 @@ function getMyask(){
           for(var i = 0; i < result.data.length; i++){
           	if(result.data[i].staus == 1){
           		var tag = result.data[i].askTagStr;
+          		$.ajax({
+						type : "get",
+				        dataType: "json",
+				        url : "/ask/tagshow",
+				        data:{tag:tag},
+				        success : function(result){
+          				console.log(result);
+          				 },
+     					 	error: function(error){
+         			 		alert(error);
+       					 }
+					})
                 var temp = JSON.parse(tag);
                 var tab = "";
                 console.log(temp);
@@ -361,6 +373,18 @@ function getMyask(){
             else {
             	if(result.data[i].staus == 2){
             		var tag = result.data[i].askTagStr;
+            		$.ajax({
+						type : "get",
+				        dataType: "json",
+				        url : "/ask/tagshow",
+				        data:{tag:tag},
+				        success : function(result){
+          				console.log(result);
+          				 },
+     					 	error: function(error){
+         			 		alert(error);
+       					 }
+					})
 	                var temp = JSON.parse(tag);
 	                var tab = "";
 	                console.log(temp);

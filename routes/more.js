@@ -30,6 +30,12 @@ router.get('/order', function(req, res, next) {
   // res.render('more/order');
 });
 
+router.get('/order/test/', function(req, res) {
+  var username =  req.query.username;
+  // var id = req.params.id;
+  res.render('more/order',{username:username});
+});
+
 router.get('/share', function(req, res, next) {
   var user = AV.User.current();
   if(!user){
@@ -41,6 +47,12 @@ router.get('/share', function(req, res, next) {
   // res.render('more/share');
 });
 
+router.get('/share/test/', function(req, res) {
+  var username =  req.query.username;
+  // var id = req.params.id;
+  res.render('more/share',{username:username});
+});
+
 router.get('/personalPage', function(req, res, next) {
   var user = AV.User.current();
   if(!user){
@@ -49,6 +61,12 @@ router.get('/personalPage', function(req, res, next) {
     var username = user.get('user');
     res.render('more/personalPage',{username:username});
   }
+
+router.get('/personalPage/test/', function(req, res) {
+  var username =  req.query.username;
+  // var id = req.params.id;
+  res.render('more/personalPage',{username:username});
+});
 
   // res.render('more/personalPage');
 });
@@ -83,6 +101,11 @@ router.get('/purchase-detail/:id', function(req, res, next) {
   }
   // var id = req.params.id;
   // res.render('more/purchase-detail',{id:id});
+});
+router.get('/purchase-detail/test/:id', function(req, res) {
+  var username =  req.query.username;
+  var id = req.params.id;
+  res.render('more/purchase-detail',{id:id,username:username});
 });
 router.get('/withdraw', function(req, res, next) {
   var user = AV.User.current();
