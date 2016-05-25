@@ -331,6 +331,7 @@ function getMyask(){
         url : "/ask/myask",
         success : function(result){
           console.log(result);
+          $.hidePreloader();
           for(var i = 0; i < result.data.length; i++){
           	if(result.data[i].staus == 1){
           		var tag = result.data[i].askTagStr;
@@ -341,6 +342,8 @@ function getMyask(){
 				        data:{tag:tag},
 				        success : function(result){
           				console.log(result);
+          				// var photo = result.data.userHead;
+          				// $(".information_img").attr("src",photo);
           				 },
      					 	error: function(error){
          			 		alert(error);
@@ -380,6 +383,8 @@ function getMyask(){
 				        data:{tag:tag},
 				        success : function(result){
           				console.log(result);
+          				// var photo = result.data.userHead;
+          				// $(".information_img").attr("src",photo);
           				 },
      					 	error: function(error){
          			 		alert(error);
@@ -416,7 +421,6 @@ function getMyask(){
           		}
             }
           }
-                  $.hidePreloader();
           },
       error: function(error){
           alert(error);

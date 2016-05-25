@@ -59,7 +59,6 @@ body{
 }
 .informations{
 	width: 100%;
-	/*border-bottom: 1px solid #EAEAEA;*/
 	height: auto;
 }
 .information{
@@ -215,17 +214,20 @@ $.ajax({
             dataType: "json",
             success : function(result) {
                 console.log(result);
+                $.hidePreloader();
                 for(var i = 0;i < result.data.length; i++){
                 	var time = formatDate("y.m.d",result.data[i].updatedAt);
                 	var price = result.data[i].price;
                 	var name = result.data[i].byName;
+                	// var photo = result.data.userHead;
+          				// $(".information_img").attr("src",photo);
                 	var str = '<div class="information"><div class="information_img"><img src="/img/test.jpg"></div><div class="information_name">'+name+'</div><div class="information_content"><div class="information_time">'+time+'</div><div class="information_money">实得酬金：￥'+price+'</div></div></div>';
                 	$(".details").append(str);
                 }
                 var money = price*result.data.length;
                 money = parseFloat(money.toFixed(2));
                 $("#mon").append(money);
-                 $.hidePreloader();
+          
             },
             error : function(){}
         });
@@ -241,6 +243,8 @@ $.ajax({
                 	var time = formatDate("y.m.d",result.data[i].updatedAt);
                 	var name = result.data[i].userName;
                 	var info = result.data[i].info;
+                	// var photo = result.data.userHead;
+          				// $(".information_img").attr("src",photo);
                 	var str = '<div class="informations"><div class="information"><div class="information_img"><img src="/img/test.jpg"></div><div class="information_name">'+name+'</div><div class="information_content"><div class="information_time">'+time+'</div><div class="information_money"><div class="refund refund1"><span style="margin-left: 35px;">退款</span><div class="iconfont icon-xia right"></div></div><div class="refund refund2"><span>退款理由</span><div class="iconfont icon-shang right"></div></div></div></div></div><div class="information_refund">'+info+'</div></div>';
                 	$(".details").append(str);
                 }

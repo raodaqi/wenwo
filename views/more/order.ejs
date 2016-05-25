@@ -91,6 +91,7 @@ body{
 	box-sizing: border-box;
 	font-size: 15px;
 	font-weight: 600;
+	overflow: hidden;
 }
 .information_price{
 	height: 40px;
@@ -156,6 +157,19 @@ body{
 	line-height: 80px;
 	text-align: center;
 }
+.ordername{
+	width: 71%;
+}
+.no-order{
+	background-color: #DEE2E6;
+}
+.word{
+	margin-top: 40px;
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+}
 </style>
 <body>
 <% include footer.ejs %>
@@ -173,13 +187,14 @@ body{
 </div>
 <div class="content">
 	<div class="buttons-tab">
-		<a href="#tab1" class="tab-link active button">收藏</a>
-		<a href="#tab2" class="tab-link button">订单</a>
+		<a href="#tab1" class="tab-link active button">订单</a>
+		<a href="#tab2" class="tab-link button">收藏</a>
 	</div>
 	<div class="content-block">
 		<div class="tabs">
 			<div id="tab1" class="tab active">
 				<div class="content-block" id="type1">
+					<!-- <div class="no-order"></div> -->
 					<!-- <div class="informations">
 						<div class="information">
 							<div class="information_img"><img src="/img/u28.png"></div>
@@ -257,10 +272,12 @@ function getHode(){
         url : "/hode/haved",
         success : function(result){
           console.log(result);
+          $.hidePreloader();
           for(var i = 0; i< result.data.length; i++){   
           	console.log(result.data[i].type);    	
           	if(result.data[i].type ==1){
-          		var id = result.data[i].ask.objectId;
+          		var id = '';
+          		id = result.data[i].ask.objectId;
           		console.log(id);
           		$.ajax({
 			        type : "GET",
@@ -269,10 +286,28 @@ function getHode(){
 			        url : "/ask/askdetail",
 			        success : function(result){
 			          console.log(result);
+			          if(result.data.length == 0){
+			          	var st = '<div class="content no-order"><div class="word">暂时没有订单....</div></div>';
+			          	$("#type2").append(st);
+			          }
 			          var tabs = "";
           		if (result.data.askTagStr != null)
 			      {       		
           		var tag = result.data.askTagStr;
+     //      		$.ajax({
+					// 	type : "get",
+				 //        dataType: "json",
+				 //        url : "/ask/tagshow",
+				 //        data:{tag:tag},
+				 //        success : function(result){
+     //      				console.log(result);
+     //      				var photo = result.data.userHead;
+     //      				$(".information_img").attr("src",photo);
+     //      				 },
+     // 					 	error: function(error){
+     //     			 		alert(error);
+     //   					 }
+					// })
                 var temp = JSON.parse(tag);               
                 console.log(temp);
             	}
@@ -287,7 +322,7 @@ function getHode(){
                    // var buyNum = result.data.buyNum;
           		var str = "";
           		var str = '<div class="informations"><div class="information"><div class="information_img"><img src="/img/u28.png"></div><div class="information_name"><div class="information_name_word collect-concent">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tabs+'</div><div class="information_price"></div></div><div class="menu_icon"><div class="iconfont icon-you" style="font-size:32px;"></div></div>	</div></div></div>';
-          		$("#type1").append(str);
+          		$("#type2").append(str);
           		console.log(str);
           		// var time = result.data.createdAt;
           		// $("#collect-time").append(time); 
@@ -306,10 +341,28 @@ function getHode(){
 			        url : "/ask/askdetail",
 			        success : function(result){
 			          console.log(result);
+			          if(result.data.length == 0){
+			          	var st = '<div class="content no-order"><div class="word">暂时没有收藏商品....</div></div>';
+			          	$("#type2").append(st);
+			          }
 			          var tabs= "";
 			     if (result.data.askTagStr != null)
 			     {       		
           		var tag = result.data.askTagStr;
+     //      		$.ajax({
+					// 	type : "get",
+				 //        dataType: "json",
+				 //        url : "/ask/tagshow",
+				 //        data:{tag:tag},
+				 //        success : function(result){
+     //      				console.log(result);
+     //      				var photo = result.data.userHead;
+     //      				$(".information_img").attr("src",photo);
+     //      				 },
+     // 					 	error: function(error){
+     //     			 		alert(error);
+     //   					 }
+					// })
                 var temp = JSON.parse(tag);                
                 console.log(temp);
             	}
@@ -323,8 +376,8 @@ function getHode(){
                    var price = result.data.askPrice;
                    var buyNum = result.data.buyNum;
           			var str = "";
-          			var str = '<div class="informations"><div class="information"><div class="information_img"><img src="/img/u28.png"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp;&nbsp;"+getTitle(strs[1])+':'+tabs+'</span></div><div class="information_price">￥ &nbsp;'+price+'</div></div><div class="information_state"></div><div class="information_Purchase_number"></div></div></div>';
-          		$("#type2").append(str);
+          			var str = '<div class="informations"><div class="information"><div class="information_img"><img src="/img/u28.png"></div><div class="information_name ordername"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp;&nbsp;"+getTitle(strs[1])+':'+tabs+'</span></div><div class="information_price">￥ &nbsp;'+price+'</div></div></div></div>';
+          		$("#type1").append(str);
           		// var time = result.data.createdAt;
           		// $("#order-time").append(time); 
 			           },
@@ -333,8 +386,7 @@ function getHode(){
 			        }
 			      })           		         	
 			}    
-			} 
-			        $.hidePreloader();  	
+			}   	
           },
       error: function(error){
           alert(error);
