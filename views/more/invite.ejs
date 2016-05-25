@@ -88,7 +88,6 @@ body{
 }
 </style>
 <body>
-<% include footer.ejs %>
 <div class="titles">
 	<div class="return">
 		<div class="iconfont icon-zuo zuo">
@@ -109,6 +108,8 @@ body{
 	<div class="modal modal-in" style="display: none; margin-top: -72px;">
 		<img class="invite-img" src="/img/invite.png">
 	</div>
+<% include footer.ejs %>
+<script type="text/javascript" src="/js/wxlocation.js"></script>
 <script type="text/javascript">
 $(".zuo").click(function(){
 		history.go(-1);
