@@ -118,7 +118,7 @@ body{
 		<!-- <div class="iconfont icon-wenhao wen"></div> -->
 	</div>
 	<div class="num"><span style="font-weight: 600">￥</span>
-	<input class="withdraw_title_num" placeholder="请填写充值金额:">
+		<input class="withdraw_title_num" type="number"  placeholder="请填写充值金额:">
 	</div>
 	<!-- <div class="withdraw_title">
 		<div class="withdraw_title_word">请输入你的支付宝账号：</div>
@@ -130,24 +130,15 @@ $(".zuo").click(function(){
 		history.go(-1);
 	})
 
-$(".submit_btn").click(function(){
-	var mon = $(".withdraw_title_num").val();
-	mon = parseFloat(mon).toFixed(2);
-	console.log(mon);
-	if(mon <= 0 || !mon){
-		return;
-	}
-	
-	pay();
-	function pay(){
-		var data{
-			username : <%= user %>,
-			
-		}
+function pay(mon){
+		var data = {
+			username : "<%= username %>",
+			totalFee : mon
+		};
 		$.ajax({
 	        type : "GET",
 	        dataType: "json",
-	        data:{totalFee: mon },
+	        data: data,
 	        url : "/authorization/pay_t",
 	        success : function(result){
 	          console.log(result);
@@ -158,6 +149,23 @@ $(".submit_btn").click(function(){
 	        }
 	      })
 	}
+
+$(".submit_btn").click(function(){
+	var mon = $(".withdraw_title_num").val();
+	console.log(isNaN(mon));
+	var nan = isNaN(mon);
+	mon = parseFloat(mon).toFixed(2);
+	console.log(mon);
+	if(!mon || nan){
+		$.toast("金额只能为数字");
+		return ;
+	}
+	if(mon <= 0){
+		$.toast("金额不能小于0");
+		return;
+	}
+	
+	pay(mon);
 })
 </script>
 </html>
