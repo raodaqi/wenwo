@@ -116,9 +116,9 @@
 //            error : function(){}
 //        });
         $.ajax({
-            type: "get",
+            type: "post",
             url: 'authorization/pay_t',
-            data: {total:'0.01'},
+            data: {totalFee:'1'},
             dataType: "json",
             success : function(result) {
                 console.log(result);

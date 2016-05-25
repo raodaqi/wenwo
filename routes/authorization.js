@@ -45,11 +45,14 @@ router.get('/wx', function(req, res, next) {
     authorize(res, urlApi);
 });
 
-router.get('/pay_t', function(req, res, next) {
-    var totalFee = req.query.totalFee;
+router.post('/pay_t', function(req, res, next) {
+    var totalFee = req.param('totalFee');
+    console.log(totalFee);
     //var totalFee = 3;
     totalFee = parseFloat(totalFee);
-    totalFee = totalFee * 100;
+    // totalFee = totalFee / 100;
+    // totalFee = totalFee * 100;
+    console.log(totalFee);
     var secret = '9157e84975386b6dee6a499cc639973e';
 
 
@@ -67,7 +70,8 @@ router.get('/pay_t', function(req, res, next) {
     // });
     var code = req.query.code;
     if (code == null) {
-        totalFee = totalFee / 100;
+        // totalFee = totalFee / 100;
+        console.log(totalFee);
         var urlApi = "http://wenwo.leanapp.cn/authorization/pay_t?totalFee="+totalFee;
         //var urlApi = "/authorization/pay_t";
         authorize(res, urlApi);
@@ -149,14 +153,15 @@ router.get('/pay', function(req, res, next) {
 router.get('/withdraw', function(req, res, next) {
     var code = req.query.code;
     var secret = '9157e84975386b6dee6a499cc639973e';
+    var username = req.query.username;
+    var amount = req.query.amount;
     if (code == null) {
         var urlApi = "http://wenwo.leanapp.cn/authorization/withdraw?amount="+amount+"&username="+username;
         //var urlApi = "/authorization/pay_t";
         authorize(res, urlApi);
         return;
     }
-    var username = req.query.username;
-    var amount = req.query.amount;
+
     var query = new AV.Query('Config');
     query.find().then(function (configs) {
         for (var i = 0; i < configs.length; i++) {
@@ -189,8 +194,8 @@ router.get('/withdraw', function(req, res, next) {
                                 return;
                             }
                             else {
-                                amount = parseFloat(amount);
-                                amount = amount * 100;
+                                // amount = parseFloat(amount);
+                                // amount = amount * 100;
                                 var date = new Date();
                                 date = moment(date).format("YYYYMMDDHHmmss");
                                 var str = date + getNonceStr(10);
