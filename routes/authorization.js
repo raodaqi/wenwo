@@ -67,7 +67,7 @@ router.get('/pay_t', function(req, res, next) {
     // });
     var code = req.query.code;
     if (code == null) {
-        var urlApi = "http://wenwo.leanapp.cn/authorization/pay_t";
+        var urlApi = "http://wenwo.leanapp.cn/authorization/pay_t?totalFee="+totalFee;
         //var urlApi = "/authorization/pay_t";
         authorize(res, urlApi);
         return;
@@ -146,91 +146,138 @@ router.get('/pay', function(req, res, next) {
 
 
 router.get('/withdraw', function(req, res, next) {
-    var amount = req.query.amount;
-    //var amount = 1;
-    amount = parseFloat(amount);
-    amount = amount * 100;
     var code = req.query.code;
     var secret = '9157e84975386b6dee6a499cc639973e';
     if (code == null) {
-        var urlApi = "http://wenwo.leanapp.cn/authorization/withdraw";
+        var urlApi = "http://wenwo.leanapp.cn/authorization/withdraw?amount="+amount+"&username="+username;
         //var urlApi = "/authorization/pay_t";
         authorize(res, urlApi);
         return;
     }
-    var date = new Date();
-    date = moment(date).format("YYYYMMDDHHmmss");
-    var str = date + getNonceStr(10);
-
-    var appid = 'wx99f15635dd7d9e3c';
-    var mchid = '1298230401';
-    var nonceStr = getNonceStr();
-    //var sign = getSign();
-    var partnerTradeNo = str;
-    //var openid = '';
-    var checkName = 'NO_CHECK';
-
-    var desc = '提现';
-    var ip = req.ip;
-    ip = ip.substr(ip.lastIndexOf(':')+1, ip.length);
-
-    getAccessToken(appid, secret, code, res, {
-        success:function (result) {
-            var codeData = result.data;
-            codeData = JSON.parse(codeData);
-            var accessToken = codeData.access_token;
-            var openid = codeData.openid;
-            var expiresIn = codeData.expires_in;
-
-            var data = {
-                mch_appid : appid,
-                mchid : mchid,
-                nonce_str : nonceStr,
-                partner_trade_no : partnerTradeNo,
-                openid : openid,
-                check_name : checkName,
-                amount : amount,
-                desc : desc,
-                spbill_create_ip : ip
-            };
-            var sign = getSign(data);
-            data.sign = sign;
-            //console.log(data);
-            //console.log(buildXML(data));
-            //return;
-            request({
-                url: "https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers",
-                method: 'POST',
-                body: buildXML(data),
-                agentOptions: {
-                    pfx: fs.readFileSync('./routes/certificate/apiclient_cert.p12'),
-                    passphrase: mchid
-                }
-            }, function(err, response, body){
-                //console.log(err)
-                //console.log(response);
-                console.log(body);
-                parseXML(body, function (err, result) {
-                    console.log(result);
-                    if (result.return_code == 'SUCCESS' && result.return_msg == '') {
-                        var withdraw = new Withdraw();
-                        withdraw.set('nonceStr', result.nonce_str);
-                        withdraw.set('partnerTradeNo', result.partner_trade_no);
-                        withdraw.set('paymentNo', result.payment_no);
-                        withdraw.set('paymentTime', result.payment_time);
-                        withdraw.save().then(function (post) {
-                            var result = {
-                                code : 200,
-                                data : post,
-                                message : 'Operation succeeded'
+    var username = req.query.username;
+    var amount = req.query.amount;
+    var query = new AV.Query('Config');
+    query.find().then(function (configs) {
+        for (var i = 0; i < configs.length; i++) {
+            if (configs[i].get('name') == 'commission') {
+                var commission = parseInt(configs[i].get('value'));
+                //var amount = 1;
+                var query = new AV.Query('UserInfo');
+                query.equalTo('userName', username);
+                query.find().then(function(results) {
+                    if (results[0] == '' || results[0] == null) {
+                        var result = {
+                            code : 300,
+                            message : '未找到该用户'
+                        };
+                        res.send(result);
+                        return;
+                    }
+                    else {
+                        var allAmount = Math.ceil(parseFloat(amount)/100*commission*100)/100;
+                        var id = results[0].attributes.wallet.id;
+                        var query = new AV.Query('Wallet');
+                        query.get(id).then(function (wallet) {
+                            var money = wallet.get('money');
+                            if (parseFloat(money) < parseFloat(allAmount)) {
+                                var result = {
+                                    code : 700,
+                                    message : '余额不足'
+                                };
+                                res.send(result);
+                                return;
                             }
-                            res.send(result);
+                            else {
+                                amount = parseFloat(amount);
+                                amount = amount * 100;
+                                var date = new Date();
+                                date = moment(date).format("YYYYMMDDHHmmss");
+                                var str = date + getNonceStr(10);
+
+                                var appid = 'wx99f15635dd7d9e3c';
+                                var mchid = '1298230401';
+                                var nonceStr = getNonceStr();
+                                //var sign = getSign();
+                                var partnerTradeNo = str;
+                                //var openid = '';
+                                var checkName = 'NO_CHECK';
+
+                                var desc = '提现';
+                                var ip = req.ip;
+                                ip = ip.substr(ip.lastIndexOf(':')+1, ip.length);
+                                var codeData = result.data;
+                                codeData = JSON.parse(codeData);
+                                var accessToken = codeData.access_token;
+                                var openid = codeData.openid;
+                                var expiresIn = codeData.expires_in;
+
+                                var data = {
+                                    mch_appid : appid,
+                                    mchid : mchid,
+                                    nonce_str : nonceStr,
+                                    partner_trade_no : partnerTradeNo,
+                                    openid : openid,
+                                    check_name : checkName,
+                                    amount : amount,
+                                    desc : desc,
+                                    spbill_create_ip : ip
+                                };
+                                var sign = getSign(data);
+                                data.sign = sign;
+                                //console.log(data);
+                                //console.log(buildXML(data));
+                                //return;
+                                getAccessToken(appid, secret, code, res, {
+                                    success:function (result) {
+
+                                        request({
+                                            url: "https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers",
+                                            method: 'POST',
+                                            body: buildXML(data),
+                                            agentOptions: {
+                                                pfx: fs.readFileSync('./routes/certificate/apiclient_cert.p12'),
+                                                passphrase: mchid
+                                            }
+                                        }, function(err, response, body){
+                                            //console.log(err)
+                                            //console.log(response);
+                                            console.log(body);
+                                            parseXML(body, function (err, result) {
+                                                console.log(result);
+                                                if (result.return_code == 'SUCCESS' && result.return_msg == '') {
+                                                    var withdraw = new Withdraw();
+                                                    withdraw.set('nonceStr', result.nonce_str);
+                                                    withdraw.set('partnerTradeNo', result.partner_trade_no);
+                                                    withdraw.set('paymentNo', result.payment_no);
+                                                    withdraw.set('paymentTime', result.payment_time);
+                                                    withdraw.save().then(function (post) {
+                                                        wallet.set('money', parseFloat(parseFloat(money) - parseFloat(allAmount)));
+                                                        wallet.save().then(function (wallet) {
+                                                            var result = {
+                                                                code : 200,
+                                                                data : wallet,
+                                                                message : 'Operation succeeded'
+                                                            };
+                                                            res.send(result);
+                                                        });
+
+                                                    });
+                                                }
+                                            });
+                                        });
+                                    }
+                                });
+                            }
                         });
+
                     }
                 });
-            });
+            }
         }
     });
+
+
+
 
 
 
