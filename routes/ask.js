@@ -840,8 +840,8 @@ router.get('/tagshow', function (req, res, next) {
                 return;
             }
             else {
-                if (tags[0].get('tagUrl') == null) {
-                    if (tags[1] == null) {
+                if (tags[0].get('tagUrl') == null ) {
+                    if (tags[1] == null || tags[1].get('tagUrl')) {
                         var result = {
                             code : 400,
                             url : 0,
@@ -882,8 +882,9 @@ router.get('/tagshow', function (req, res, next) {
         queryL1.equalTo('tagName', tag[0]);
         queryL2.equalTo('tagName', tag[1]);
         queryL3.equalTo('tagName', tag[2]);
-        var mainQuery = AV.Query.or(queryL1, queryL2, queryL3);
-        mainQuery.contains('type', type);
+        var fQuery = AV.Query.or(queryL1, queryL2);
+        var mainQuery = AV.Query.or(fQuery, queryL3);
+        //mainQuery.contains('type', type);
         mainQuery.find().then(function (tags) {
             console.log(tags);
             if (tags == '') {
@@ -897,8 +898,8 @@ router.get('/tagshow', function (req, res, next) {
             }
             else {
                 if (tags[0].get('tagUrl') == null) {
-                    if (tags[1] == null) {
-                        if (tags[2] == null) {
+                    if (tags[1] == null || tags[1].get('tagUrl') == null) {
+                        if (tags[2] == null || tags[1].get('tagUrl') == null) {
                             var result = {
                                 code : 400,
                                 url : 0,
