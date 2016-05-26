@@ -1955,7 +1955,17 @@
           $.hidePreloader();
           if(result.code == 200){
             for(var i = 0; i < result.data.length;i++){
-              
+
+              // console.log(result.data[i]);
+              tagShow(result.data[i].askType,result.data[i].askTagStr,{
+                success:function(){
+
+                },
+                error:function(error){
+
+                }
+              });
+
               //这里来判断内容
               var icon = new AMap.Icon({
                   image : "/img/hotPot.jpg",//24px*24px
