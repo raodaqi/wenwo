@@ -45,6 +45,8 @@ router.get('/wx', function(req, res, next) {
     authorize(res, urlApi);
 });
 
+
+
 router.get('/pay_t', function(req, res, next) {
     var totalFee = req.param('totalFee');
     console.log(totalFee);
@@ -146,6 +148,20 @@ router.get('/test', function(req, res, next) {
 });
 
 router.get('/pay', function(req, res, next) {
+    var totalFee = req.query.totalFee;
+    var user = AV.User.current();
+    if (user == null || user == '') {
+        var result = {
+            code : 200,
+            message : '用户未登录'
+        }
+        res.send(result);
+        return
+    }
+    else {
+        var authData = user.get('authData');
+        console.log(authData);
+    }
 
 });
 
