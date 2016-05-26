@@ -322,6 +322,13 @@ router.get('/withdraw', function(req, res, next) {
 
                                         });
                                     }
+                                    else {
+                                        var re = {
+                                            code : 400,
+                                            message : result.return_msg
+                                        };
+                                        res.send(re);
+                                    }
                                 });
                             });
                             //     }
