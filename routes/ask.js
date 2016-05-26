@@ -1103,7 +1103,20 @@ router.get('/getrefund', function (req, res, next) {
 
 router.post('/addtag', function (req, res, next) {
     var type = req.query.type;
-    
+    var url = req.query.url;
+    var tagname = req.query.tag_name;
+    var tag = new Tag();
+    tag.set('tagOrderby', type);
+    tag.set('tagName', tagname);
+    tag.set('tagUrl', url);
+    tag.save().then(function (tag) {
+        var result = {
+            code : 200,
+            data : tag,
+            message : 'operation succeeded'
+        }
+        res.send(result);
+    });
 });
 
 function setTag(tag, type, callback) {

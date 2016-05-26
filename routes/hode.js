@@ -25,7 +25,16 @@ router.post('/haved', function(req, res, next) {
     }
     query.equalTo('userName', userName);
     query.find().then(function (resultes) {
+
         var relation = resultes[0].relation('haved');
+        if (relation == null || relation == '') {
+            var result = {
+                code : 200,
+                data:'',
+                message : 'operation successed'
+            }
+            res.send(result);
+        }
         //relation.include('ask');
         relation.query().find().then(function (list) {
             console.log(list);
