@@ -32,5 +32,5 @@ ask/askadmin  `[get]`
             
 编辑信息:
 ask/askedit    `[post]`
-        
+        `ask_id`   `Y`   
          

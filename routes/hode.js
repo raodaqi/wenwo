@@ -25,7 +25,14 @@ router.post('/haved', function(req, res, next) {
     }
     query.equalTo('userName', userName);
     query.find().then(function (resultes) {
-
+        if (resultes == null || resultes == '') {
+            var result = {
+                code : 400,
+                data:'',
+                message : '没有该用户'
+            }
+            res.send(result);
+        }
         var relation = resultes[0].relation('haved');
         if (relation == null || relation == '') {
             var result = {
