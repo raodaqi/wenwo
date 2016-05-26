@@ -194,6 +194,7 @@ router.get('/withdraw', function(req, res, next) {
     var secret = '9157e84975386b6dee6a499cc639973e';
     var username = req.query.username;
     var amount = req.query.amount;
+    console.log(amount);
     // if (code == null) {
     //     var urlApi = "http://wenwo.leanapp.cn/authorization/withdraw?amount="+amount+"&username="+username;
     //     //var urlApi = "/authorization/pay_t";
@@ -233,7 +234,7 @@ router.get('/withdraw', function(req, res, next) {
                     return;
                 }
                 else {
-                    var reamount = parseInt(parseFloat(amount) - parseFloat(amount)/10000*commission);
+                    var reamount = parseInt(amount) - parseInt(amount)*parseInt(commission.get('value'))/100;
                     var id = results[0].attributes.wallet.id;
                     var query = new AV.Query('Wallet');
                     query.get(id).then(function (wallet) {
