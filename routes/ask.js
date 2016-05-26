@@ -858,169 +858,439 @@ router.get('/tagshow', function (req, res, next) {
 
     tag = tag.split(',');
     console.log(tag);
-    if (tag.length == 1) {
-        var query = new AV.Query('Tag');
-        query.equalTo('tagName', tag[0]);
-        query.contains('type', type);
-        query.find().then(function (tags) {
-            if (tags == '') {
-                var result = {
-                    code : 404,
-                    url : 0,
-                    message : '没有该标签'
-                }
-                res.send(result);
-                return;
-            }
-            else {
-                if (tags[0].get('tagUrl') == null) {
-                    var result = {
-                        code : 400,
-                        url : 0,
-                        message : '无效url'
-                    }
-                    res.send(result);
-                    return;
-                }
-                else {
-                    var result = {
-                        code : 200,
-                        url : tags[0].get('tagUrl'),
-                        message : '操作成功'
-                    }
-                    res.send(result);
-                    return;
-                }
+    // if (tag.length == 1) {
+    //     var query = new AV.Query('Tag');
+    //     query.equalTo('tagName', tag[0]);
+    //     query.contains('type', type);
+    //     query.find().then(function (tags) {
+    //         if (tags == '') {
+    //             var result = {
+    //                 code : 404,
+    //                 url : 0,
+    //                 message : '没有该标签'
+    //             }
+    //             res.send(result);
+    //             return;
+    //         }
+    //         else {
+    //             if (tags[0].get('tagUrl') == null) {
+    //                 var result = {
+    //                     code : 400,
+    //                     url : 0,
+    //                     message : '无效url'
+    //                 }
+    //                 res.send(result);
+    //                 return;
+    //             }
+    //             else {
+    //                 var result = {
+    //                     code : 200,
+    //                     url : tags[0].get('tagUrl'),
+    //                     message : '操作成功'
+    //                 }
+    //                 res.send(result);
+    //                 return;
+    //             }
+    //
+    //             res.send(result);
+    //             return;
+    //         }
+    //     });
+    // }
+    // else if (tag.length == 2) {
+    //     var queryL1 = new AV.Query('Tag');
+    //     var queryL2 = new AV.Query('Tag');
+    //     queryL1.equalTo('tagName', tag[0]);
+    //     queryL2.equalTo('tagName', tag[1]);
+    //     var mainQuery = AV.Query.or(queryL1, queryL2);
+    //     mainQuery.contains('type', type);
+    //     mainQuery.find().then(function (tags) {
+    //         console.log(tags);
+    //         if (tags == '') {
+    //             var result = {
+    //                 code : 404,
+    //                 url : 0,
+    //                 message : '没有该标签'
+    //             }
+    //             res.send(result);
+    //             return;
+    //         }
+    //         else {
+    //             if (tags[0].get('tagUrl') == null ) {
+    //                 if (tags[1] == null || tags[1].get('tagUrl')) {
+    //                     var result = {
+    //                         code : 400,
+    //                         url : 0,
+    //                         message : '无效url'
+    //                     }
+    //                     res.send(result);
+    //                     return;
+    //                 }
+    //                 else {
+    //                     var result = {
+    //                         code : 200,
+    //                         url : tags[1].get('tagUrl'),
+    //                         message : '操作成功'
+    //                     }
+    //                     res.send(result);
+    //                     return;
+    //                 }
+    //
+    //             }
+    //             else {
+    //                 var result = {
+    //                     code : 200,
+    //                     url : tags[0].get('tagUrl'),
+    //                     message : '操作成功'
+    //                 }
+    //             }
+    //
+    //             res.send(result);
+    //             return;
+    //         }
+    //     });
+    //
+    // }
+    // else if (tag.length == 3) {
+    //     var queryL1 = new AV.Query('Tag');
+    //     var queryL2 = new AV.Query('Tag');
+    //     var queryL3 = new AV.Query('Tag');
+    //     queryL1.equalTo('tagName', tag[0]);
+    //     queryL2.equalTo('tagName', tag[1]);
+    //     queryL3.equalTo('tagName', tag[2]);
+    //     var fQuery = AV.Query.or(queryL1, queryL2);
+    //     var mainQuery = AV.Query.or(fQuery, queryL3);
+    //     //mainQuery.contains('type', type);
+    //     mainQuery.find().then(function (tags) {
+    //         console.log(tags);
+    //         if (tags == '') {
+    //             var result = {
+    //                 code : 404,
+    //                 url : 0,
+    //                 message : '没有该标签'
+    //             }
+    //             res.send(result);
+    //             return;
+    //         }
+    //         else {
+    //             if (tags[0].get('tagUrl') == null) {
+    //                 if (tags[1] == null || tags[1].get('tagUrl') == null) {
+    //                     if (tags[2] == null || tags[1].get('tagUrl') == null) {
+    //                         var result = {
+    //                             code : 400,
+    //                             url : 0,
+    //                             message : '无效url'
+    //                         }
+    //                         res.send(result);
+    //                         return;
+    //                     }
+    //                     else {
+    //                         var result = {
+    //                             code : 200,
+    //                             url : tags[2].get('tagUrl'),
+    //                             message : '操作成功'
+    //                         }
+    //                         res.send(result);
+    //                         return;
+    //                     }
+    //
+    //                 }
+    //                 else {
+    //                     var result = {
+    //                         code : 200,
+    //                         url : tags[1].get('tagUrl'),
+    //                         message : '操作成功'
+    //                     }
+    //                     res.send(result);
+    //                     return;
+    //                 }
+    //
+    //             }
+    //             else {
+    //                 var result = {
+    //                     code : 200,
+    //                     url : tags[0].get('tagUrl'),
+    //                     message : '操作成功'
+    //                 }
+    //             }
+    //
+    //             res.send(result);
+    //             return;
+    //         }
+    //     });
+    //
+    // }
+    var query = new AV.Query('Tag');
+    query.equalTo('tagName', tag[0]);
+    query.find().then(function (resultes) {
+        if (resultes == null || resultes == '' ) {
+            if (tag[1] != null) {
+                var query = new AV.Query('Tag');
+                query.equalTo('tagName', tag[1]);
+                query.find().then(function (resultes) {
+                    if (resultes == null || resultes == '' ) {
+                        if (tag[2] != null) {
+                            var query = new AV.Query('Tag');
+                            query.equalTo('tagName', tag[2]);
+                            query.find().then(function (resultes) {
+                                if (resultes == null || resultes == '' ) {
+                                    var result = {
+                                        code : 400,
+                                        url : 0,
+                                        message : '没有url'
+                                    };
+                                    res.send(result);
+                                    return;
+                                }
+                                else {
+                                    for (var i = 0; i < resultes.length; i++) {
 
-                res.send(result);
-                return;
-            }
-        });
-    }
-    else if (tag.length == 2) {
-        var queryL1 = new AV.Query('Tag');
-        var queryL2 = new AV.Query('Tag');
-        queryL1.equalTo('tagName', tag[0]);
-        queryL2.equalTo('tagName', tag[1]);
-        var mainQuery = AV.Query.or(queryL1, queryL2);
-        mainQuery.contains('type', type);
-        mainQuery.find().then(function (tags) {
-            console.log(tags);
-            if (tags == '') {
-                var result = {
-                    code : 404,
-                    url : 0,
-                    message : '没有该标签'
-                }
-                res.send(result);
-                return;
-            }
-            else {
-                if (tags[0].get('tagUrl') == null ) {
-                    if (tags[1] == null || tags[1].get('tagUrl')) {
-                        var result = {
-                            code : 400,
-                            url : 0,
-                            message : '无效url'
-                        }
-                        res.send(result);
-                        return;
-                    }
-                    else {
-                        var result = {
-                            code : 200,
-                            url : tags[1].get('tagUrl'),
-                            message : '操作成功'
-                        }
-                        res.send(result);
-                        return;
-                    }
+                                        if ((type.indexOf(resultes[i].get('tagOrderby')) >= 0  || resultes[i].get('tagOrderby').indexOf(type) >= 0) && resultes[i].get('tagUrl') != '') {
+                                            var result = {
+                                                code : 200,
+                                                url : resultes[i].get('tagUrl'),
+                                                message : '操作成功'
+                                            }
+                                            res.send(result);
+                                        }
 
-                }
-                else {
-                    var result = {
-                        code : 200,
-                        url : tags[0].get('tagUrl'),
-                        message : '操作成功'
-                    }
-                }
+                                    }
+                                    var result = {
+                                        code : 400,
+                                        url : 0,
+                                        message : '没有url'
+                                    };
+                                    res.send(result);
+                                    return;
 
-                res.send(result);
-                return;
-            }
-        });
+                                }
 
-    }
-    else if (tag.length == 3) {
-        var queryL1 = new AV.Query('Tag');
-        var queryL2 = new AV.Query('Tag');
-        var queryL3 = new AV.Query('Tag');
-        queryL1.equalTo('tagName', tag[0]);
-        queryL2.equalTo('tagName', tag[1]);
-        queryL3.equalTo('tagName', tag[2]);
-        var fQuery = AV.Query.or(queryL1, queryL2);
-        var mainQuery = AV.Query.or(fQuery, queryL3);
-        //mainQuery.contains('type', type);
-        mainQuery.find().then(function (tags) {
-            console.log(tags);
-            if (tags == '') {
-                var result = {
-                    code : 404,
-                    url : 0,
-                    message : '没有该标签'
-                }
-                res.send(result);
-                return;
-            }
-            else {
-                if (tags[0].get('tagUrl') == null) {
-                    if (tags[1] == null || tags[1].get('tagUrl') == null) {
-                        if (tags[2] == null || tags[1].get('tagUrl') == null) {
-                            var result = {
-                                code : 400,
-                                url : 0,
-                                message : '无效url'
-                            }
-                            res.send(result);
-                            return;
+                            });
                         }
                         else {
                             var result = {
-                                code : 200,
-                                url : tags[2].get('tagUrl'),
-                                message : '操作成功'
-                            }
+                                code : 400,
+                                url : 0,
+                                message : '没有url'
+                            };
                             res.send(result);
                             return;
                         }
-
                     }
                     else {
-                        var result = {
-                            code : 200,
-                            url : tags[1].get('tagUrl'),
-                            message : '操作成功'
+
+                        for (var i = 0; i < resultes.length; i++) {
+                            console.log(resultes[i]);
+                            if ((type.indexOf(resultes[i].get('tagOrderby')) >= 0  || resultes[i].get('tagOrderby').indexOf(type) >= 0) && resultes[i].get('tagUrl') != '') {
+                                var result = {
+                                    code : 200,
+                                    url : resultes[i].get('tagUrl'),
+                                    message : '操作成功'
+                                }
+                                res.send(result);
+                                return;
+                            }
                         }
-                        res.send(result);
-                        return;
-                    }
+                        if (tag[2] != null) {
+                            var query = new AV.Query('Tag');
+                            query.equalTo('tagName', tag[2]);
+                            query.find().then(function (resultes) {
+                                if (resultes == null || resultes == '') {
+                                    var result = {
+                                        code : 400,
+                                        url : 0,
+                                        message : '没有url'
+                                    };
+                                    res.send(result);
+                                    return;
+                                }
+                                else {
+                                    for (var i = 0; i < resultes.length; i++) {
 
-                }
-                else {
-                    var result = {
-                        code : 200,
-                        url : tags[0].get('tagUrl'),
-                        message : '操作成功'
-                    }
-                }
+                                        if ((type.indexOf(resultes[i].get('tagOrderby')) >= 0  || resultes[i].get('tagOrderby').indexOf(type) >= 0) && resultes[i].get('tagUrl') != '') {
+                                            var result = {
+                                                code : 200,
+                                                url : resultes[i].get('tagUrl'),
+                                                message : '操作成功'
+                                            }
+                                            res.send(result);
+                                            return;
+                                        }
 
+                                    }
+                                    var result = {
+                                        code : 400,
+                                        url : 0,
+                                        message : '没有url'
+                                    };
+                                    res.send(result);
+                                    return;
+
+                                }
+
+                            });
+                        }
+                        else {
+                            var result = {
+                                code : 400,
+                                url : 0,
+                                message : '没有url'
+                            };
+                            res.send(result);
+                            return;
+                        }
+                    }
+                });
+            }
+            else {
+
+                var result = {
+                    code : 400,
+                    url : 0,
+                    message : '没有url'
+                };
                 res.send(result);
                 return;
             }
-        });
+        }
+        else {
+            for (var i = 0; i < resultes.length; i++) {
+                console.log(resultes[i]);
+                if ((type.indexOf(resultes[i].get('tagOrderby')) >= 0  || resultes[i].get('tagOrderby').indexOf(type) >= 0) && resultes[i].get('tagUrl') != '') {
+                    var result = {
+                        code : 200,
+                        url : resultes[i].get('tagUrl'),
+                        message : '操作成功'
+                    }
+                    res.send(result);
+                    return;
+                }
+            }
+            if (tag[1] != null) {
+                var query = new AV.Query('Tag');
+                query.equalTo('tagName', tag[1]);
+                query.find().then(function (resultes) {
+                    if (resultes == null || resultes == '' ) {
+                        if (tag[2] != null) {
+                            var query = new AV.Query('Tag');
+                            query.equalTo('tagName', tag[2]);
+                            query.find().then(function (resultes) {
+                                if (resultes == null || resultes == '' ) {
+                                    var result = {
+                                        code : 400,
+                                        url : 0,
+                                        message : '没有url'
+                                    };
+                                    res.send(result);
+                                    return;
+                                }
+                                else {
+                                    for (var i = 0; i < resultes.length; i++) {
+                                        if (type.indexOf(resultes[i].get('tagOrderby')) >= 0  || resultes[i].get('tagOrderby').indexOf(type) >= 0) {
+                                            var result = {
+                                                code : 200,
+                                                url : resultes[i].get('tagUrl'),
+                                                message : '操作成功'
+                                            }
+                                            res.send(result);
+                                            return;
+                                        }
 
-    }
+                                    }
+                                    var result = {
+                                        code : 400,
+                                        url : 0,
+                                        message : '没有url'
+                                    };
+                                    res.send(result);
+                                    return;
+                                }
 
+                            });
+                        }
+                        else {
+                            var result = {
+                                code : 400,
+                                url : 0,
+                                message : '没有url'
+                            };
+                            res.send(result);
+                            return;
+                        }
+                    }
+                    else {
+                        for (var i = 0; i < resultes.length; i++) {
+                            if (type.indexOf(resultes[i].get('tagOrderby')) >= 0  || resultes[i].get('tagOrderby').indexOf(type) >= 0) {
+                                var result = {
+                                    code : 200,
+                                    url : resultes[i].get('tagUrl'),
+                                    message : '操作成功'
+                                }
+                                res.send(result);
+                                return;
+                            }
+                        }
+                        if (tag[2] != null) {
+                            var query = new AV.Query('Tag');
+                            query.equalTo('tagName', tag[2]);
+                            query.find().then(function (resultes) {
+                                if (resultes == null || resultes == '' ) {
+                                    var result = {
+                                        code : 400,
+                                        url : 0,
+                                        message : '没有url'
+                                    };
+                                    res.send(result);
+                                    return;
+                                }
+                                else {
+                                    for (var i = 0; i < resultes.length; i++) {
+                                        if (type.indexOf(resultes[i].get('tagOrderby')) >= 0  || resultes[i].get('tagOrderby').indexOf(type) >= 0) {
+                                            var result = {
+                                                code : 200,
+                                                url : resultes[i].get('tagUrl'),
+                                                message : '操作成功'
+                                            }
+                                            res.send(result);
+                                            return;
+                                        }
+
+                                    }
+                                    var result = {
+                                        code : 400,
+                                        url : 0,
+                                        message : '没有url'
+                                    };
+                                    res.send(result);
+                                    return;
+
+                                }
+
+                            });
+                        }
+                        else {
+                            var result = {
+                                code : 400,
+                                url : 0,
+                                message : '没有url'
+                            };
+                            res.send(result);
+                            return;
+                        }
+                    }
+                });
+            }
+            else {
+                var result = {
+                    code : 400,
+                    url : 0,
+                    message : '没有url'
+                };
+                res.send(result);
+                return;
+            }
+        }
+    });
 });
 
 router.get('/gettag', function (req, res, next) {
