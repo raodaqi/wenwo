@@ -152,7 +152,7 @@ router.get('/pay', function(req, res, next) {
     var user = AV.User.current();
     if (user == null || user == '') {
         var result = {
-            code : 200,
+            code : 300,
             message : '用户未登录'
         }
         res.send(result);
