@@ -53,3 +53,6 @@ a {
 .modal-overlay{
     height: 100% !important;
 }
+.amap_lib_placeSearch_poi{
+    display: none !important;
+}

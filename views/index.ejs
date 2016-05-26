@@ -1898,7 +1898,7 @@
     // markerShow.setMap(mapShow);
 
     //获取二级标签链接
-    function tagShow(type,tagStr,callback){
+    function tagShow(type,tagStr,leave,resultData,callback){
       var data = {
         type   : type,
         tag    : tagStr
@@ -1909,10 +1909,11 @@
         dataType: "json",
         url : "/ask/tagshow",
         success : function(result){
-          console.log(result);
+          callback.success(result,type,leave,resultData);
         },
         error:function(error){
           console.log(error);
+          callback.error(error);
         }
       });
     }
@@ -1957,65 +1958,129 @@
             for(var i = 0; i < result.data.length;i++){
 
               // console.log(result.data[i]);
-              tagShow(result.data[i].askType,result.data[i].askTagStr,{
-                success:function(){
+              tagShow(result.data[i].askType,result.data[i].askTagStr,result.data[i].askLevel,result.data[i],{
+                success:function(result,type,leave,data){
+                  console.log(result);
+                  console.log(leave);
+                  var leave = parseInt(leave) + 1;
+                  console.log(data);
+                  var showType = type.split(",")[0];
+                  console.log(showType);
+                  var image = '/img/common/wenwo.png';
+                  if(result.code == 200){
+                    // leave
+
+                  }else if(result.code == 400){
+                    image = "/img/common/theme"+showType+"-"+leave+".png";
+                  }
+                  //这里来判断内容
+                  var icon = new AMap.Icon({
+                      image : image,//24px*24px
+                      size : new AMap.Size(50,50)
+                  });
+                  var marker = new AMap.Marker({
+                    icon : icon,//24px*24px
+                    map : map,
+                    position: [data.GeoX,data.GeoY],
+                    draggable: false,
+                    clickable:true,
+                    cursor: 'move',
+                    raiseOnDrag: false
+                  });
+                  marker.setExtData({
+                    askType         : data.askType,
+                    askId           : data.objectId,
+                    tagName         : data.askTag,
+                    askReason       : data.askReason,
+                    askContentShow  : data.askContentShow,
+                    price           : data.askPrice,
+                    createBy        : data.createBy,
+                    updatedAt       : data.updatedAt,
+                    lng             : data.GeoX,
+                    lat             : data.GeoY,
+                    askIsFree       : data.askIsFree,
+                    askTagStr       : data.askTagStr,
+                    likeNum         : data.likeNum
+                  })
+                  markers.push(marker);
+
+                  //监听marker点击事件
+                  marker.on("click",function(){
+                    console.log("点击marker");
+                    extData =  this.getExtData();
+                    console.log("点击前");
+                    console.log(extData);
+                    var lng = extData.lng;
+                    var lat = extData.lat;
+                    console.log(extData.askTagStr);
+                    // $("")
+                    $(".up").text();
+                    $(".down").text(extData.askReason+"test");
+                    console.log(extData);
+                    setDetail(extData);
+                    // //设置地图中心位置为点击的marker上
+                    map.setZoomAndCenter(map.getZoom(),[lng,lat]);
+                  });
+
+                  marker.setMap(map);
+                  addCluster(0);
 
                 },
                 error:function(error){
-
+                  console.log(result);
                 }
               });
 
-              //这里来判断内容
-              var icon = new AMap.Icon({
-                  image : "/img/hotPot.jpg",//24px*24px
-                  size : new AMap.Size(50,50)
-              });
-              var marker = new AMap.Marker({
-                icon : icon,//24px*24px
-                map : map,
-                position: [result.data[i].GeoX,result.data[i].GeoY],
-                draggable: false,
-                clickable:true,
-                cursor: 'move',
-                raiseOnDrag: false
-              });
-              marker.setExtData({
-                askType         : result.data[i].askType,
-                askId           : result.data[i].objectId,
-                tagName         : result.data[i].askTag,
-                askReason       : result.data[i].askReason,
-                askContentShow  : result.data[i].askContentShow,
-                price           : result.data[i].askPrice,
-                createBy        : result.data[i].createBy,
-                updatedAt       : result.data[i].updatedAt,
-                lng             : result.data[i].GeoX,
-                lat             : result.data[i].GeoY,
-                askIsFree       : result.data[i].askIsFree,
-                askTagStr       : result.data[i].askTagStr,
-                likeNum         : result.data[i].likeNum
-              })
-              markers.push(marker);
+              // //这里来判断内容
+              // var icon = new AMap.Icon({
+              //     image : "/img/hotPot.jpg",//24px*24px
+              //     size : new AMap.Size(50,50)
+              // });
+              // var marker = new AMap.Marker({
+              //   icon : icon,//24px*24px
+              //   map : map,
+              //   position: [result.data[i].GeoX,result.data[i].GeoY],
+              //   draggable: false,
+              //   clickable:true,
+              //   cursor: 'move',
+              //   raiseOnDrag: false
+              // });
+              // marker.setExtData({
+              //   askType         : result.data[i].askType,
+              //   askId           : result.data[i].objectId,
+              //   tagName         : result.data[i].askTag,
+              //   askReason       : result.data[i].askReason,
+              //   askContentShow  : result.data[i].askContentShow,
+              //   price           : result.data[i].askPrice,
+              //   createBy        : result.data[i].createBy,
+              //   updatedAt       : result.data[i].updatedAt,
+              //   lng             : result.data[i].GeoX,
+              //   lat             : result.data[i].GeoY,
+              //   askIsFree       : result.data[i].askIsFree,
+              //   askTagStr       : result.data[i].askTagStr,
+              //   likeNum         : result.data[i].likeNum
+              // })
+              // markers.push(marker);
 
-              //监听marker点击事件
-              marker.on("click",function(){
-                console.log("点击marker");
-                extData =  this.getExtData();
-                console.log("点击前");
-                console.log(extData);
-                var lng = extData.lng;
-                var lat = extData.lat;
-                console.log(extData.askTagStr);
-                // $("")
-                $(".up").text();
-                $(".down").text(extData.askReason+"test");
-                console.log(extData);
-                setDetail(extData);
-                // //设置地图中心位置为点击的marker上
-                map.setZoomAndCenter(map.getZoom(),[lng,lat]);
-              });
+              // //监听marker点击事件
+              // marker.on("click",function(){
+              //   console.log("点击marker");
+              //   extData =  this.getExtData();
+              //   console.log("点击前");
+              //   console.log(extData);
+              //   var lng = extData.lng;
+              //   var lat = extData.lat;
+              //   console.log(extData.askTagStr);
+              //   // $("")
+              //   $(".up").text();
+              //   $(".down").text(extData.askReason+"test");
+              //   console.log(extData);
+              //   setDetail(extData);
+              //   // //设置地图中心位置为点击的marker上
+              //   map.setZoomAndCenter(map.getZoom(),[lng,lat]);
+              // });
 
-              marker.setMap(map);
+              // marker.setMap(map);
             }
             addCluster(0);
           }

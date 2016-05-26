@@ -141,7 +141,8 @@
           console.log($(".amap-marker").length);
           if($(".amap-marker").length > 5){
             clearInterval(timeIv);
-            map.clearMap();
+            // map.clearMap();
+            $(".amap_lib_placeSearch_poi").hide();
           }
          }, 10);
       });
