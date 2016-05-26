@@ -194,8 +194,8 @@ body{
 		<div class="tabs">
 			<div id="tab1" class="tab active">
 				<div class="content-block" id="type1">
-					<!-- <div class="informations">
-						<div class="information">
+					<div class="informations" id="infor1">
+						<!-- <div class="information">
 							<div class="information_img"><img src="/img/u28.png"></div>
 							<div class="information_name">
 								<div class="information_name_word">住：<span>标签</span><span>标签</span><span>标签</span></div>
@@ -204,14 +204,14 @@ body{
 							<div class="menu_icon">
 								<div class="iconfont icon-you" style="font-size:32px;"></div>
 							</div>			
-						</div>
-					</div> -->
+						</div> -->
+					</div>
 				</div>
 			</div>
 			<div id="tab2" class="tab">
 				<div class="content-block" id="type2">
-					<!-- <div class="informations">
-						<div class="information">
+					<div class="informations" id="infor2">
+						<!-- <div class="information">
 							<div class="information_img"><img src="/img/u28.png"></div>
 							<div class="information_name">
 								<div class="information_name_word">住：<span>标签</span><span>标签</span><span>标签</span></div>
@@ -219,8 +219,8 @@ body{
 							</div>
 							<div class="information_state"></div>
 							<div class="information_Purchase_number"></div>				
-						</div>
-					</div> -->
+						</div> -->
+					</div>
 				</div>
 			</div>
 		</div>
@@ -236,8 +236,10 @@ $(".zuo").click(function(){
 $(".map_view").click(function(){
 	window.location.href="/";
 })
-$(".information").click(function(){
-	window.location.href="/more/askdetail";
+$(".content-block").on("click",".information",function(){
+	var mid = $(this).attr("data-mid");
+	console.log(mid);
+	window.location.href="/more/askdetail"+mid;
 })
 function getStaus(staus) {
             var temp = "";
@@ -267,13 +269,13 @@ function getHode(){
 	 $.ajax({
         type : "POST",
         dataType: "json",
-        data:{username:"<%=username%>",staus:1},
+        data:{username:"<%=username%>",staus:2},
         url : "/hode/haved",
         success : function(result){
           console.log(result);
           $.hidePreloader();
           if(result.data.length == 0){
-			var st = '<div class="content no-order"><div class="word">暂时没有订单....</div></div>';
+			var st = '<div class="content no-order"><div class="word">暂时没有收藏商品....</div></div>';
 		  	$("#type2").append(st);
 			}
           for(var i = 0; i< result.data.length; i++){   
@@ -303,8 +305,8 @@ function getHode(){
                    var strs = type.split(",")
                    console.log(strs);
           		var str = "";
-          		var str = '<div class="informations"><div class="information"><div class="information_img"><img src="/img/u28.png"></div><div class="information_name"><div class="information_name_word collect-concent">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tabs+'</div><div class="information_price"></div></div><div class="menu_icon"><div class="iconfont icon-you" style="font-size:32px;"></div></div>	</div></div></div>';
-          		$("#type2").append(str);
+          		var str = '<div class="information" data-mid='+id+'><div class="information_img"><img src="/img/u28.png"></div><div class="information_name"><div class="information_name_word collect-concent">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tabs+'</div></div><div class="menu_icon"><div class="iconfont icon-you" style="font-size:32px;"></div></div>	</div></div>';
+          		$("#infor2").append(str);
 			           },
 			      error: function(error){
 			          alert(error);
@@ -358,8 +360,8 @@ function GetHode(){
                    var price = result.data.askPrice;
                    var buyNum = result.data.buyNum;
           			var str = "";
-          			var str = '<div class="informations"><div class="information"><div class="information_img"><img src="/img/u28.png"></div><div class="information_name ordername"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp;&nbsp;"+getTitle(strs[1])+':'+tabs+'</span></div><div class="information_price">￥ &nbsp;'+price+'</div></div></div></div>';
-          		$("#type1").append(str);
+          			var str = '<div class="information" data-mid='+id+'><div class="information_img"><img src="/img/u28.png"></div><div class="information_name ordername"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp;&nbsp;"+getTitle(strs[1])+':'+tabs+'</span></div><div class="information_price">￥ &nbsp;'+price+'</div></div></div>';
+          		$("#infor1").append(str);
 			           },
 			      error: function(error){
 			          alert(error);
