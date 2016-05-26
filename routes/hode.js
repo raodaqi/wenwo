@@ -40,9 +40,9 @@ router.post('/haved', function(req, res, next) {
             res.send(result);
         }
         //relation.include('ask');
-        if (staus != '3') {
-            relation.equalTo('type', staus);
-        }
+        // if (staus != '3') {
+        //     relation.equalTo('type', staus);
+        // }
         relation.query().find().then(function (list) {
             console.log(list);
 
@@ -52,10 +52,26 @@ router.post('/haved', function(req, res, next) {
             //         list[i].attributes.ask.data = ask;
             //     });
             // }
+            if (staus == 3) {
+                var result = {
+                    code : 200,
+                    data:list,
+                    message : 'operation successed'
+                }
+                res.send(result);
+            }
+            var data = new Array();
+            var j = 0;
+            for (var i = 0; i <  list.length; i++) {
+                if (list[i].get('staus') == staus) {
+                    data[j] = list[i];
+                    j++;
+                }
+            }
 
             var result = {
                 code : 200,
-                data:list,
+                data:data,
                 message : 'operation successed'
             }
             res.send(result);
