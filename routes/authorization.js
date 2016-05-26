@@ -233,7 +233,7 @@ router.get('/withdraw', function(req, res, next) {
                     return;
                 }
                 else {
-                    var reamount = parseInt(parseFloat(amount) - parseFloat(amount)/100*commission);
+                    var reamount = parseInt(parseFloat(amount) - parseFloat(amount)/10000*commission);
                     var id = results[0].attributes.wallet.id;
                     var query = new AV.Query('Wallet');
                     query.get(id).then(function (wallet) {
