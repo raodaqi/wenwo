@@ -63,7 +63,7 @@ router.post('/haved', function(req, res, next) {
             var data = new Array();
             var j = 0;
             for (var i = 0; i <  list.length; i++) {
-                if (list[i].get('staus') == staus) {
+                if (list[i].get('type') == staus) {
                     data[j] = list[i];
                     j++;
                 }
