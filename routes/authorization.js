@@ -238,7 +238,7 @@ router.get('/withdraw', function(req, res, next) {
                     var query = new AV.Query('Wallet');
                     query.get(id).then(function (wallet) {
                         var money = wallet.get('money');
-                        if (parseFloat(money) < parseFloat(amount)) {
+                        if (parseFloat(money) < parseFloat(amount)/100) {
                             var result = {
                                 code : 700,
                                 message : '余额不足'
