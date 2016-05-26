@@ -283,7 +283,7 @@ router.get('/withdraw', function(req, res, next) {
                             };
                             data.sign = getSign(data);
 
-                            //console.log(data);
+                            console.log(data);
                             //console.log(buildXML(data));
                             //return;
                             // getAccessToken(appid, secret, code, res, {
