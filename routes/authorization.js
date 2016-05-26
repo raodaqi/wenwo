@@ -181,7 +181,7 @@ router.get('/pay', function(req, res, next) {
         }, function(err, result){
             // in express
             //console.log(result);
-            res.send({payargs:result, appId:result.appId, timeStamp:result.timeStamp, package:result.package, signType:result.signType, paySign:result.paySign, nonceStr:result.nonceStr});
+            res.send({code:200,payargs:result});
         });
 
     }
