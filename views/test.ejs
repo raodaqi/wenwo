@@ -117,8 +117,8 @@
 //        });
         $.ajax({
             type: "get",
-            url: 'authorization/pay',
-            data: {totalFee:'1'},
+            url: 'authorization/withdraw',
+            data: {amount:'1'},
             dataType: "json",
             success : function(result) {
                 console.log(result);
