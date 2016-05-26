@@ -559,7 +559,7 @@ router.get('/myask', function(req, res, next) {
 router.get('/cancel', function(req, res, next) {
     //type  下架  取消审批
     var askId = req.param('ask_id');
-    var staus = req.param('staus');
+    //var staus = req.param('staus');
     var userName = req.param('username');
     var query = new AV.Query('AskMe');
     query.get(askId).then(function (ask) {
@@ -572,7 +572,7 @@ router.get('/cancel', function(req, res, next) {
             res.send(result);
         }
         else {
-            ask.set('staus', staus);
+            ask.set('staus', 3);
             ask.save().then(function () {
                 var result = {
                     code: 200,
