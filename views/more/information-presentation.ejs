@@ -838,12 +838,13 @@ $(document).on('click','#grounding', function () {
       $.confirm('上架该商品?', '提示', function () {
         $.ajax({
           type : "GET",
-          data: {ask_id   : "<%= id %>"},
+          data: {ask_id   : "<%= id %>",username:"<%=username%>"},
           dataType: "json",
-          url : "/ask/askdetail",
+          url : "/ask/cancel",
           success : function(result){
             console.log(result);
             $.alert('请求成功，等待管理审核');
+             window.location.href="more/share";
              },
           error: function(error){
             // alert(error);
@@ -856,12 +857,13 @@ $(document).on('click','#undercarriage', function () {
       $.confirm('下架该商品?', '提示', function () {
         $.ajax({
           type : "GET",
-          data: {ask_id   : "<%= id %>"},
+          data: {ask_id   : "<%= id %>",username:"<%=username%>"},
           dataType: "json",
-          url : "/ask/askdetail",
+          url : "/ask/up",
           success : function(result){
             console.log(result);
              $.alert('商品下架成功');
+             window.location.href="more/share";
              },
           error: function(error){
             // alert(error);
@@ -874,12 +876,13 @@ $(document).on('click','#del', function () {
       $.confirm('删除该商品?', '提示', function () {
         $.ajax({
           type : "GET",
-          data: {ask_id   : "<%= id %>"},
+          data: {ask_id   : "<%= id %>",username:"<%=username%>"},
           dataType: "json",
-          url : "/ask/askdetail",
+          url : "/ask/del",
           success : function(result){
             console.log(result);
               $.alert('商品删除成功');
+              window.location.href="more/share";
              },
           error: function(error){
             // alert(error);
