@@ -7,7 +7,7 @@
  * staus == 5   审批未通过
  * staus == 3   未上架
  * staus == 4   所有
- *
+ * staus == 6   删除
  */
 var router = require('express').Router();
 var AV = require('leanengine');
@@ -573,6 +573,80 @@ router.get('/cancel', function(req, res, next) {
         }
         else {
             ask.set('staus', 3);
+            ask.save().then(function () {
+                var result = {
+                    code: 200,
+                    data: results,
+                    message: 'Operation succeeded'
+                }
+                res.send(result);
+            }, function (err) {
+                var result = {
+                    code: 800,
+                    data: results,
+                    message: err.message
+                }
+                res.send(result);
+                //console.log('Failed to create new object, with error message: ' + err.message);
+            });
+        }
+    });
+});
+
+router.get('/up', function(req, res, next) {
+
+    var askId = req.param('ask_id');
+    //var staus = req.param('staus');
+    var userName = req.param('username');
+    var query = new AV.Query('AskMe');
+    query.get(askId).then(function (ask) {
+        if (askId.get('creatBy') != userName) {
+            var result = {
+                code: 800,
+                data: results,
+                message: 'illegal operation'
+            }
+            res.send(result);
+        }
+        else {
+            ask.set('staus', 2);
+            ask.save().then(function () {
+                var result = {
+                    code: 200,
+                    data: results,
+                    message: 'Operation succeeded'
+                }
+                res.send(result);
+            }, function (err) {
+                var result = {
+                    code: 800,
+                    data: results,
+                    message: err.message
+                }
+                res.send(result);
+                //console.log('Failed to create new object, with error message: ' + err.message);
+            });
+        }
+    });
+});
+
+router.get('/del', function(req, res, next) {
+
+    var askId = req.param('ask_id');
+    //var staus = req.param('staus');
+    var userName = req.param('username');
+    var query = new AV.Query('AskMe');
+    query.get(askId).then(function (ask) {
+        if (askId.get('creatBy') != userName) {
+            var result = {
+                code: 800,
+                data: results,
+                message: 'illegal operation'
+            }
+            res.send(result);
+        }
+        else {
+            ask.set('staus', 6);
             ask.save().then(function () {
                 var result = {
                     code: 200,
