@@ -20,9 +20,6 @@ router.post('/haved', function(req, res, next) {
     var userName = req.param('username');
     var staus = req.param('staus');
     var query = new AV.Query('UserInfo');
-    if (staus != '3') {
-        query.equalTo('type', staus);
-    }
     query.equalTo('userName', userName);
     query.find().then(function (resultes) {
         if (resultes == null || resultes == '') {
@@ -43,6 +40,9 @@ router.post('/haved', function(req, res, next) {
             res.send(result);
         }
         //relation.include('ask');
+        if (staus != '3') {
+            relation.equalTo('type', staus);
+        }
         relation.query().find().then(function (list) {
             console.log(list);
 
