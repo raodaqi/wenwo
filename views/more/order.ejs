@@ -194,7 +194,6 @@ body{
 		<div class="tabs">
 			<div id="tab1" class="tab active">
 				<div class="content-block" id="type1">
-					<!-- <div class="no-order"></div> -->
 					<!-- <div class="informations">
 						<div class="information">
 							<div class="information_img"><img src="/img/u28.png"></div>
@@ -276,8 +275,7 @@ function getHode(){
           for(var i = 0; i< result.data.length; i++){   
           	console.log(result.data[i].type);    	
           	if(result.data[i].type ==1){
-          		var id = '';
-          		id = result.data[i].ask.objectId;
+          		var id = result.data[i].ask.objectId;
           		console.log(id);
           		$.ajax({
 			        type : "GET",
@@ -323,7 +321,7 @@ function getHode(){
           		var str = "";
           		var str = '<div class="informations"><div class="information"><div class="information_img"><img src="/img/u28.png"></div><div class="information_name"><div class="information_name_word collect-concent">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tabs+'</div><div class="information_price"></div></div><div class="menu_icon"><div class="iconfont icon-you" style="font-size:32px;"></div></div>	</div></div></div>';
           		$("#type2").append(str);
-          		console.log(str);
+          		// console.log(str);
           		// var time = result.data.createdAt;
           		// $("#collect-time").append(time); 
 			           },
@@ -343,7 +341,7 @@ function getHode(){
 			          console.log(result);
 			          if(result.data.length == 0){
 			          	var st = '<div class="content no-order"><div class="word">暂时没有收藏商品....</div></div>';
-			          	$("#type2").append(st);
+			          	$("#type1").append(st);
 			          }
 			          var tabs= "";
 			     if (result.data.askTagStr != null)

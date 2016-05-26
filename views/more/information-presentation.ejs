@@ -536,11 +536,21 @@ body{
       font-size: 10px;
       color:#8E8E8E;
     }
-    .buy-num-content{
+    .buy-num-content,.staus1,.staus2{
     	position: absolute;
     	bottom: 0;
     	right: 0px;
     	font-size: 10px;
+    }
+    .staus1{
+      color: blue;
+      display: none;
+      text-align: center;
+    }
+    .staus2{
+      color: red;
+      display: none;
+      text-align: center;
     }
     .buy-num{
     	border-radius: 5px;
@@ -562,9 +572,17 @@ body{
       float: left;
       border:0;
       margin-left: 5%;
+      border-radius: 3px;
+      font-size: 16px;
     }
     .btn2{
       margin-left: 10%;
+      color: #FD8686;
+      background-color:#B3E5FB;
+    }
+    .btn1{
+      color: white;
+      background-color: #FDDE8A;
     }
     .more{
       color: white;
@@ -693,6 +711,8 @@ body{
 		        	<span class="buy-num">20</span>
 		        	<span>人</span>
 		        </div>
+            <div class="staus1">审批中</div>
+            <div class="staus2">审批失败</div>
 		      </div>
 		    </div>
 
@@ -814,6 +834,60 @@ body{
 $(".more").click(function(){
     window.location.href="/todos/send?type=edit&askid="+"<%=id%>";
   })
+$(document).on('click','#grounding', function () {
+      $.confirm('上架该商品?', '提示', function () {
+        $.ajax({
+          type : "GET",
+          data: {ask_id   : "<%= id %>"},
+          dataType: "json",
+          url : "/ask/askdetail",
+          success : function(result){
+            console.log(result);
+            $.alert('请求成功，等待管理审核');
+             },
+          error: function(error){
+            // alert(error);
+            $.alert(error);
+          }
+        });
+      });
+  });
+$(document).on('click','#undercarriage', function () {
+      $.confirm('下架该商品?', '提示', function () {
+        $.ajax({
+          type : "GET",
+          data: {ask_id   : "<%= id %>"},
+          dataType: "json",
+          url : "/ask/askdetail",
+          success : function(result){
+            console.log(result);
+             $.alert('商品下架成功');
+             },
+          error: function(error){
+            // alert(error);
+            $.alert(error);
+          }
+        });
+      });
+  });
+$(document).on('click','#del', function () {
+      $.confirm('删除该商品?', '提示', function () {
+        $.ajax({
+          type : "GET",
+          data: {ask_id   : "<%= id %>"},
+          dataType: "json",
+          url : "/ask/askdetail",
+          success : function(result){
+            console.log(result);
+              $.alert('商品删除成功');
+             },
+          error: function(error){
+            // alert(error);
+            $.alert(error);
+          }
+        });
+      });
+  });
 	function formatDetail(data){
 		
 		var staus           = data.staus,     //状态
@@ -831,10 +905,23 @@ $(".more").click(function(){
       if(staus == 1){
         $("#grounding").hide();
         $("#undercarriage").show();
+        $(".buy-num-content").show();
+        $(".staus1").hide();
+        $(".staus2").hide();
       }
-      else if(staus ==2 ||staus == 5){
+      else if(staus ==2){
          $("#grounding").show();
         $("#undercarriage").hide();
+         $(".buy-num-content").hide();
+        $(".staus1").show();
+        $(".staus2").hide();
+      }
+      else if(staus ==5){
+         $("#grounding").show();
+        $("#undercarriage").hide();
+         $(".buy-num-content").hide();
+        $(".staus2").show();
+        $(".staus1").hide();
       }
 		//设置标签头部
 		  askType =  askType.split(",");
