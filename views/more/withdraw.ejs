@@ -187,7 +187,14 @@ body{
 	        url : "/authorization/withdraw",
 	        success : function(result){
 	          console.log(result);
-	          $.alert("提现成功!");
+	          if(result.code == 200){
+	          	$.toast("提交成功");
+	          	setTimeout(function(){
+	          		window.location.reload();
+	          	}, 500);
+	          }else{
+	          	$.toast(result.message);
+	          }
 	        },
 	      error: function(error){
 	          // $.alert(error);

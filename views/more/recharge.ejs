@@ -147,9 +147,6 @@ function pay(mon){
 	          console.log(result);
 	          if(result.code == 200){
 	          	initPay(result.payargs);
-	          	console.log(result.payargs);
-	          	$("body").empty();
-	          	$("body").text(result.payargs);
 	          }else{
 	          	$.alert(result.message);
 	          }

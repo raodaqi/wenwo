@@ -1897,6 +1897,26 @@
     //   });
     // markerShow.setMap(mapShow);
 
+    //获取二级标签链接
+    function tagShow(type,tagStr,callback){
+      var data = {
+        type   : type,
+        tag    : tagStr
+      };
+      $.ajax({
+        type : "GET",
+        data: data,
+        dataType: "json",
+        url : "/ask/tagshow",
+        success : function(result){
+          console.log(result);
+        },
+        error:function(error){
+          console.log(error);
+        }
+      });
+    }
+
     function getMap(lng,lat){
       //详情地点显示
       var mapShow;
@@ -1935,7 +1955,7 @@
           $.hidePreloader();
           if(result.code == 200){
             for(var i = 0; i < result.data.length;i++){
-
+              
               //这里来判断内容
               var icon = new AMap.Icon({
                   image : "/img/hotPot.jpg",//24px*24px
