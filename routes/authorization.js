@@ -233,7 +233,7 @@ router.get('/withdraw', function(req, res, next) {
                     return;
                 }
                 else {
-                    var allAmount = Math.ceil(parseFloat(amount)/100*commission*100)/100;
+                    var reamount = parseInt(parseFloat(amount) - parseFloat(amount)/100*commission);
                     var id = results[0].attributes.wallet.id;
                     var query = new AV.Query('Wallet');
                     query.get(id).then(function (wallet) {
@@ -277,7 +277,7 @@ router.get('/withdraw', function(req, res, next) {
                                 partner_trade_no : partnerTradeNo,
                                 openid : openid,
                                 check_name : checkName,
-                                amount : amount,
+                                amount : reamount,
                                 desc : desc,
                                 spbill_create_ip : ip
                             };
@@ -310,7 +310,7 @@ router.get('/withdraw', function(req, res, next) {
                                         withdraw.set('paymentNo', result.payment_no);
                                         withdraw.set('paymentTime', result.payment_time);
                                         withdraw.save().then(function (post) {
-                                            wallet.set('money', parseFloat(parseFloat(money) - parseFloat(allAmount)));
+                                            wallet.set('money', parseFloat(parseFloat(money) - parseFloat(amount)/100));
                                             wallet.save().then(function (wallet) {
                                                 var result = {
                                                     code : 200,

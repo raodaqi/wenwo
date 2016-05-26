@@ -60,6 +60,7 @@ ask/islike   `[get]`
 获取踩赞信息:
 ask/getlike  `[get]`
 `ask_id`   `Y`
+
 获取我的信息:
 ask/myask   `[get]`
 `page`  `N`  `信息页数`
@@ -70,10 +71,122 @@ ask/myask   `[get]`
                                    * staus == 3   未上架
                                    * staus == 4   所有
                                    * staus == 6   删除`
+                                   
 删除信息:
 ask/del   `[get]`
 `ask_id`   `Y`
 `username`  `Y`
-上架信息:
-ask/up    `[]`
 
+上架信息:
+ask/up    `[get]`
+`ask_id`   `Y`
+`username`  `Y`
+
+下架信息:   
+ask/cancel `[get]`
+`ask_id`   `Y`
+`username`  `Y`
+
+审批信息:
+ask/approval  `[get]`
+`ask_id`   `Y`
+`staus`    `Y`    `staus==1 审批通过, staus==5 审批未通过`
+
+发布信息:
+ask/sendask `[post]`
+`ask_id`   `Y`
+        `username`  `Y`
+        `type`     `Y`   `一级标签`
+        `price`     `Y`  `信息价格`
+        `geo_x`     `Y`   `坐标x`
+        `geo_y`     `Y`   `坐标y`
+        `position`   `Y`    `地理位置`
+        `reason`     `Y`   `推荐理由`    
+        `content_show`    `Y`    `显式信息`
+        `content_hide`    `N`    `隐式信息`
+        `tag`       `Y`   `二级标签`
+        `remark`     `N`    `备注`
+        
+获取二级标签图片url:
+ask/tagshow   `[get]`
+`type`   `Y`   `一级标签`
+`tag`     `Y`     `tagStr`
+
+获取推荐二级标签:
+ask/gettag    `[get]`
+`type`  `Y`    `一级标签`
+`size`  `N`   `个数`
+
+获取购买信息:
+ask/getnuy   `[get]`
+`ask_id`    `Y`
+
+获取退款信息:
+ask/getrefund   `[get]`
+`ask_id`    `Y`
+
+添加二级标签:
+ask/addtag   `[post]`
+`type`   `Y`  `一级标签`
+`tag_name`   `Y`
+`url`    `Y`
+
+微信授权:
+authorization/wx  
+
+微信支付:
+authorization/pay `[get]`
+`totalFee`  `Y`  `金钱  单位:分`
+
+提现:
+authorization/withdraw   `[get]`
+`username`    `Y`
+`amount`    `Y`    `金钱  单位:分   大于100`
+
+获取购买/收藏信息:
+hode/haved    `[post]`
+`username`   `Y`     
+`staus`    `N`   `* staus = 1   购买
+                   * staus = 2   收藏
+                   * staus = 3   所有`
+                   
+购买/收藏:
+hode/get   `[post]`
+`username`   `Y`  
+`ask_id`      `Y`
+
+删除购买:
+hode/del    `[post]`
+`username`   `Y`  
+`ask_id`      `Y`
+
+退款:
+hode/refund   `[post]`
+`username`   `Y`  
+`ask_id`      `Y`
+
+获取意见:
+manage/getviews  `[get]`
+
+管理员注册:
+manage/regist   `[post]`
+`name`      `Y`   
+`password`   `Y`
+
+管理员登录:
+manage/login   `[post]`
+`name`      `Y`   
+`password`   `Y`
+
+获取用户信息:
+user/getuserinfo   `[get]`
+`username`   `Y`
+
+发表意见:
+user/suggestion  `[post]`
+`view`    `Y`    `意见`
+`contact`    `Y`   `联系方式`
+
+获取钱包信息:
+wallet/mywallet    `[get]`
+`username`   `Y`  
