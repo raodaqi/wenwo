@@ -161,6 +161,29 @@ router.get('/pay', function(req, res, next) {
     else {
         var authData = user.get('authData');
         console.log(authData);
+        var openid = authData.weixin.openid;
+        var accessToken = authData.weixin.access_token;
+        var expiresIn = authData.weixin.expires_in;
+
+        var ip = req.ip;
+        ip = ip.substr(ip.lastIndexOf(':')+1, ip.length);
+        console.log(ip);
+        var notifyUrl = 'http://wenwo.leanapp.cn/notify';
+        //notifyUrl = encodeURIComponent(notifyUrl);
+        wxpay.getBrandWCPayRequestParams({
+            openid: openid,
+            body: '公众号支付测试',
+            detail: '公众号支付测试',
+            out_trade_no: '20150331'+Math.random().toString().substr(2, 10),
+            total_fee: totalFee,
+            spbill_create_ip: ip,
+            notify_url:notifyUrl
+        }, function(err, result){
+            // in express
+            //console.log(result);
+            res.send({payargs:result, appId:result.appId, timeStamp:result.timeStamp, package:result.package, signType:result.signType, paySign:result.paySign, nonceStr:result.nonceStr});
+        });
+
     }
 
 });
