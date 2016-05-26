@@ -312,6 +312,7 @@ body{
 </div>
 	</div>
 <script type="text/javascript">
+$.showPreloader();
 	$(".money_box").click(function(){
 		window.location.href="/more/moneyBox";
 	})
@@ -379,6 +380,7 @@ function getUserinfo(){
         url : "/user/getuserinfo",
         success : function(result){
           console.log(result);
+          $.hidePreloader();
           var photo = result.data.userHead;
           var username = result.data.uName;
           $(".userphoto").attr("src",photo);
