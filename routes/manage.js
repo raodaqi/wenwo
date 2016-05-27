@@ -7,6 +7,17 @@ var AV = require('leanengine');
 var Admin = AV.Object.extend('AdminAccount');
 
 router.get('/', function(req, res, next) {
+    var user = AV.User.current();
+    if(!user){
+        res.redirect('/signin');
+    }else{
+        var username = user.get('user');
+        res.render('manage/index',{username:username});
+    }
+    res.render('manage/index');
+});
+
+router.get('/signin', function(req, res, next) {
     res.render('manage/index');
 });
 
