@@ -9,7 +9,7 @@ var Admin = AV.Object.extend('AdminAccount');
 router.get('/', function(req, res, next) {
     var user = AV.User.current();
     if(!user){
-        res.redirect('/signin');
+        res.redirect('manage/signin');
     }else{
         var username = user.get('user');
         res.render('manage/index',{username:username});
@@ -18,7 +18,11 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/signin', function(req, res, next) {
-    res.render('manage/index');
+    res.render('manage/signin');
+});
+
+router.get('/signup', function(req, res, next) {
+    res.render('manage/signup');
 });
 
 router.post('/regist', function(req, res, next) {

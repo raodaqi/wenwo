@@ -108,7 +108,7 @@
   <div class="signin-content">
     <div>
       <div class="divider">
-        <span>登录</span>
+        <span>注册</span>
       </div>
     </div>
     <form action="/signin" method="post">
@@ -117,7 +117,7 @@
       <input type="password" placeholder="密码" class="form-control form-container" name="password">
 
     </form>
-      <button class="form-container btn btn-block btn-content" id="signin">登录</button>
+      <button class="form-container btn btn-block btn-content" id="signin">注册</button>
   </div>
 <script src="/js/jquery.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
@@ -158,7 +158,7 @@
   console.log(history);
   $("#signin").on("click",function(event){
 
-      loadingShow("正在注册");
+      loadingShow("正在登陆");
 
       var name = $("input[name=name]").val();
 
@@ -172,13 +172,14 @@
           type : "POST",
           data: data,
           dataType: "json",
-          url : "/manage/login",
+          url : "/manage/regist",
           success : function(result){
+            console.log(result);
             loadingHide();
-
+            return;
             if(result.username){
               // alert("登陆成功");
-              tipShow("登陆成功");
+              tipShow("注册成功");
               setTimeout(function(){
 
                 loadingShow("正在跳转");
