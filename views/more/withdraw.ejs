@@ -245,7 +245,10 @@ $(".submit_btn").click(function(){
 	console.log(mon);
 	var money =  $(".money-num").attr("data-money");
 
-	if(mon > money){
+	var tmon = parseInt(mon * 100);
+	var tmoney = parseInt(money * 100);
+
+	if(tmon > tmoney){
 		$.toast("输入金额超过钱包余额");
 		return ;
 	}
