@@ -739,7 +739,7 @@ body{
 
             </div> -->
         <div class="autor-content-block">
-          <div class="ask-get" style="display: block;"><img src="/img/common/HeadBg-25.png"></div>
+          <div class="ask-get" style="display: block;"><img src="/img/common/buyed.png"></div>
 		      <div class="autor-content">
 		        <!-- <img class="autor-img" src="/img/test.jpg"> -->
 		        <div class="autor-text">
@@ -913,6 +913,7 @@ body{
          var str = $(".modal-text-input").val();
           console.log(str);
          if( str ==''){
+          $.toast('退款理由不能为空 ');
           // console.log(12345);
           return  ;
          }
