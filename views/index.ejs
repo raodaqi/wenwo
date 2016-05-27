@@ -2512,6 +2512,22 @@
       // $.popup('.ask-detail');
     })
 
+    function doLike(type){
+      $(".votebar .iconfont").removeClass("liked");
+      var num = parseInt($(".voteNum").text());
+      console.log(num);
+      if(type == 1){
+        num++;
+        $(".voteNum").text(num);
+        $(".votebar-like").addClass("liked");
+      }else{
+        num--;
+        $(".voteNum").text(num);
+        $(".votebar-hate").addClass("liked");
+      }
+    }
+
+    var likeType = 1;
     function askLike(askId,type){
       var data = {
           ask_id   : askId,
@@ -2525,13 +2541,21 @@
           url : "/ask/like",
           success : function(result){
             console.log(result);
-            if(result == 200){
-              $(".votebar .iconfont").removeClass("liked");
-              if(type == 1){
-                $(".votebar-like").addClass("liked");
-              }else{
-                $(".votebar-hate").addClass("liked");
-              }
+            if(result.code == 200){
+              // $(".votebar .iconfont").removeClass("liked");
+              // var num = parseInt($(".voteNum").text());
+              // console.log(num);
+              // if(type == 1){
+              //   num++;
+              //   $(".voteNum").text(num);
+              //   $(".votebar-like").addClass("liked");
+              // }else{
+              //   num--;
+              //   $(".voteNum").text(num);
+              //   $(".votebar-hate").addClass("liked");
+              // }
+            }else{
+              $.alert(result.message);
             }
           },
           error : function(error){
@@ -2555,6 +2579,8 @@
             type = 2;
           }
 
+          likeType = type;
+          doLike(type);
           askLike(askId,type);
         }
       })
