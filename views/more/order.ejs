@@ -276,7 +276,7 @@ function getHode(){
 	 $.ajax({
         type : "POST",
         dataType: "json",
-        data:{username:"<%=username%>",staus:2},
+        data:{username:"<%=username%>",staus:1},
         url : "/hode/haved",
         success : function(result){
           console.log(result);
@@ -364,7 +364,7 @@ function GetHode(){
                    var type = result.data.askType;
                    var strs = type.split(",")
                    console.log(strs);
-                   var price = result.data.askPrice;
+                   var price = result.data.askPrice.replace(/\s+/g,"");;
                    var buyNum = result.data.buyNum;
           			var str = "";
           			var str = '<div class="information" data-mid='+id+'><div class="information_img"><img src="/img/u28.png"></div><div class="information_name ordername"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp;&nbsp;"+getTitle(strs[1])+':'+tabs+'</span></div><div class="information_price">￥ &nbsp;'+price+'</div></div></div>';
