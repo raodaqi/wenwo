@@ -554,10 +554,24 @@ body{
     }
     .ask-get {
       position: absolute;
-      top: 5px;
+      top: 10px;
       right: 20px;
       font-size: 40px;
       color: red;
+      height: 4.5rem;
+      line-height: 4.5rem;
+      width: 4.5rem;
+      z-index: 9999;
+  }
+  .ask-get img{
+    width: 4.5rem;
+    height: 4.5rem;
+    background-size: cover;
+    /*transform:rotate(7deg);*/
+/*-ms-transform:rotate(7deg);  */ /* IE 9 */
+/*-moz-transform:rotate(7deg); */ /* Firefox */
+/*-webkit-transform:rotate(7deg);*/ /* Safari 和 Chrome */
+/*-o-transform:rotate(7deg); */ /* Opera */
   }
   .more-content{
     position: absolute;
@@ -725,7 +739,7 @@ body{
 
             </div> -->
         <div class="autor-content-block">
-          <div class="ask-get iconfont icon-buy" style="display: block;"></div>
+          <div class="ask-get" style="display: block;"><img src="/img/common/HeadBg-25.png"></div>
 		      <div class="autor-content">
 		        <!-- <img class="autor-img" src="/img/test.jpg"> -->
 		        <div class="autor-text">
@@ -896,7 +910,34 @@ body{
   // })
   $(document).on('click','.del', function () {
       $.prompt('请填写退款理由', function (value) {
-          $.alert('你已成功申请退款 ');
+         var str = $(".modal-text-input").val();
+          console.log(str);
+         if( str ==''){
+          // console.log(12345);
+          return  ;
+         }
+         else{
+          var data = {
+                  ask_id   : "<%= id %>",
+                  username : "<%= username %>"
+                   }
+           $.ajax({
+          type : "POST",
+          data: data,
+          dataType: "json",
+          url : "/hode/refund",
+          success : function(result){
+             $.toast('你已成功申请退款 ');
+             window.location.href = "/more/order";
+             },
+          error: function(error){
+            // alert(error);
+            // $.hidePreloader();
+            $.alert(error);
+          }
+        });
+
+        }
       });
   });
   $(".modal-button").click(function(){
@@ -940,7 +981,7 @@ body{
         var spanContent = '';
         for(var i in tag){
           console.log(tag[i]);
-          var spanContent = spanContent + '<span class="type-item">'+tag[i]+'</span>';
+          var spanContent = spanContent + '<span class="type-item">'+tag[i].tag_name+'</span>';
         }
         $("#tag-content .card-content-inner").append(spanContent);
 

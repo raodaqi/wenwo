@@ -60,9 +60,13 @@ body{
 }
 .information_name{
 	height: 80px;
-	width: 42%;
+	width: 61%;
 	float: left;
 	border-bottom:1px solid #EAEAEA;
+	white-space:nowrap;
+	 text-overflow:ellipsis; 
+	 -o-text-overflow:ellipsis;
+	  overflow:hidden;
 	/*border-right:1px solid #EAEAEA;*/
 }
 .information_img{
@@ -159,6 +163,11 @@ body{
 }
 .ordername{
 	width: 71%;
+	white-space:nowrap; 
+	text-overflow:ellipsis; 
+	-o-text-overflow:ellipsis; 
+	overflow:hidden;
+
 }
 .no-order{
 	background-color: #DEE2E6;
@@ -239,7 +248,7 @@ $(".map_view").click(function(){
 $(".content-block").on("click",".information",function(){
 	var mid = $(this).attr("data-mid");
 	console.log(mid);
-	window.location.href="/more/askdetail"+mid;
+	window.location.href="/more/askdetail/"+mid;
 })
 function getStaus(staus) {
             var temp = "";
@@ -298,7 +307,7 @@ function getHode(){
                 console.log(temp);
             	}
                 for (var j = 0; j < temp.length; j++) {
-                	tabs = tabs +'<span>'+ temp[j]+'</span>';
+                	tabs = tabs +'<span>'+ temp[j].tag_name+'</span>';
                    }
                    console.log(tabs);
                    var type = result.data.askType;
@@ -351,7 +360,7 @@ function GetHode(){
                 console.log(temp);
             	}
                 for (var j = 0; j < temp.length; j++) {
-                	tabs = tabs +'<span>'+ temp[j]+'</span>';
+                	tabs = tabs +'<span>'+ temp[j].tag_name+'</span>';
                    }
                    console.log(tabs);
                    var type = result.data.askType;

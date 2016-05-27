@@ -954,7 +954,7 @@ $(document).on('click','#del', function () {
         var spanContent = '';
         for(var i in tag){
           console.log(tag[i]);
-          var spanContent = spanContent + '<span class="type-item">'+tag[i]+'</span>';
+          var spanContent = spanContent + '<span class="type-item">'+tag[i].tag_name+'</span>';
         }
         $("#tag-content .card-content-inner").append(spanContent);
 
