@@ -122,7 +122,7 @@ router.post('/get', function(req, res, next) {
                                 have.set('ask', post);
                                 have.set('type', '1');
                                 have.set('by', userName);
-                                have.set('askDate', post.get('updateAt'));
+                                have.set('askDate', post.updatedAt);
                                 have.set('price', post.get('askPrice'));
                                 have.set('byName', user.get('uName'));
                                 have.set('byUrl', user.get('userHead'));
@@ -183,7 +183,7 @@ router.post('/get', function(req, res, next) {
                                         have.set('ask', post);
                                         have.set('type', '2');
                                         have.set('by', userName);
-                                        have.set('askDate', post.get('updateAt'));
+                                        have.set('askDate', post.updatedAt);
                                         have.set('price', post.get('askPrice'));
                                         have.set('byName', user.get('uName'));
                                         have.set('byUrl', user.get('userHead'));
@@ -302,6 +302,8 @@ router.post('/refund', function(req, res, next) {
                             var refundInfo = new RefundInfo();
                             refundInfo.set('info', info);
                             refundInfo.set('userName', userName);
+                            refundInfo.set('by', resultes[0].get('uName'));
+                            refundInfo.set('byUrl', resultes[0].get('userHead'));
                             refundInfo.save().then(function (result) {
                                 var relation = post.relation('refundInfo');
                                 relation.add(result);
