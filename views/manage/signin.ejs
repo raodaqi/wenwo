@@ -119,6 +119,26 @@
     </form>
       <button class="form-container btn btn-block btn-content" id="signin">登录</button>
   </div>
+
+  <div class="ui-poptips ui-poptips-success" style="display:none">
+    <div class="ui-poptips-cnt">温馨提示内容</div>
+</div>
+
+<div class="ui-dialog" id="dialog">
+    <div class="ui-dialog-cnt">
+      <header class="ui-dialog-hd ui-border-b">
+            <h3>温馨提示</h3>
+       </header>
+        <div class="ui-dialog-bd">
+            <h4>确定要退出吗？</h4>
+            <div> </div>
+        </div>
+        <div class="ui-dialog-ft">
+            <fbutton type="button" class="delete-cancel" data-role="button">取消</fbutton>
+            <fbutton type="button" class="delete-sub">确定</fbutton>
+        </div>
+    </div>        
+</div>
 <script src="/js/jquery.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
 <script type="text/javascript">
@@ -155,10 +175,11 @@
   $(window).load(function() {
     $("#loading").removeClass("show");
   });
+
   console.log(history);
   $("#signin").on("click",function(event){
 
-      loadingShow("正在注册");
+      loadingShow("正在登录");
 
       var name = $("input[name=name]").val();
 
@@ -176,7 +197,7 @@
           success : function(result){
             loadingHide();
 
-            if(result.username){
+            if(result.code == 200){
               // alert("登陆成功");
               tipShow("登陆成功");
               setTimeout(function(){
@@ -187,12 +208,12 @@
               },1000);
             }else{
               // alert(result.message);
-              if(result.code == 216){
-                tipShow("你的账号没有通过验证");
-              }else{
-                tipShow("用户名或密码错误");
-              }
-              
+              // if(result.code == 400){
+              //   tipShow("你的账号没有通过验证");
+              // }else{
+              //   tipShow("用户名或密码错误");
+              // }
+              tipShow(result.message);
             }
           },
           error: function(error){
