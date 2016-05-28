@@ -97,7 +97,7 @@ router.post('/login', function (req, res, next) {
             if (resultes[i].get('adminName') == name && resultes[i].get('password') == password) {
                 var result = {
                     code : 200,
-                    user : resultes[i].get('adminName'),
+                    user : resultes[i],
                     message : '登录成功'
                 }
                 res.send(result);
