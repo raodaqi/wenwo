@@ -112,7 +112,7 @@ router.post('/get', function(req, res, next) {
                     post.set('buyNum', num);
                     var buyRelation = post.relation('haved');
                     post.save().then(function (post) {
-                        if (post.get('askIsFree') == '1') {//收藏
+                        if (post.get('askIsFree') == '1' && parseFloat(post.get('askPrice')) == 0) {//收藏
                             var query = new AV.Query('UserInfo');
                             query.equalTo('userName', userName);
                             query.find().then(function (resultes) {

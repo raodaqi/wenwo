@@ -26,8 +26,8 @@ router.get('/signup', function(req, res, next) {
 });
 
 router.post('/regist', function(req, res, next) {
-    var adminName = req.query.name;
-    var password = req.query.password;
+    var adminName = req.param('name');
+    var password = req.param('password');
 
     if (adminName == '' || adminName == null) {
         var result = {
@@ -73,8 +73,8 @@ router.post('/regist', function(req, res, next) {
 });
 
 router.post('/login', function (req, res, next) {
-    var name = req.query.name;
-    var password = req.query.password;
+    var name = req.param('name');
+    var password = req.param('password');
     if (name == '' || name == null) {
         var result = {
             code : 400,
