@@ -71,6 +71,9 @@ body{
 	width: 100%;
 	height: 60px;
 	display: none;
+	padding-left: 15px;
+	padding-top: 2px;
+	white-space:normal;
 }
 .information_img{
 	height: 60px;
@@ -81,7 +84,7 @@ body{
 .information_img img{
 	height: 50px;
 	line-height: 50px;
-	width: 60px;
+	width: 50px;
 	border-radius: 50%;
 }
 .information_name{
@@ -220,9 +223,10 @@ $.ajax({
                 	var time = formatDate("y.m.d",result.data[i].updatedAt);
                 	var price = result.data[i].price.replace(/\s+/g,"");
                 	var name = result.data[i].byName;
-                	// var photo = result.data.userHead;
+                	var photo = result.data[i].byUrl;
+                	console.log(photo);
           				// $(".information_img").attr("src",photo);
-                	var str = '<div class="information"><div class="information_img"><img src="/img/test.jpg" class="photo"></div><div class="information_name">'+name+'</div><div class="information_content"><div class="information_time">'+time+'</div><div class="information_money">实得酬金：￥'+price+'</div></div></div>';
+                	var str = '<div class="information"><div class="information_img"><img src="'+photo+'"></div><div class="information_name">'+name+'</div><div class="information_content"><div class="information_time">'+time+'</div><div class="information_money">实得酬金：￥'+price+'</div></div></div>';
                 	$(".details").append(str);
                 }
                 console.log(parseFloat(price.replace(/\s+/g,"")));
@@ -248,9 +252,10 @@ $.ajax({
                 	var time = formatDate("y.m.d",result.data[i].updatedAt);
                 	var name = result.data[i].userName;
                 	var info = result.data[i].info;
-                	// var photo = result.data.userHead;
+                	var photo = result.data[i].byUrl;
+                	console.log(photo);
           				// $(".information_img").attr("src",photo);
-                	var str = '<div class="informations"><div class="information"><div class="information_img"><img src="/img/test.jpg" class="photo"></div><div class="information_name">'+name+'</div><div class="information_content"><div class="information_time">'+time+'</div><div class="information_money"><div class="refund refund1"><span style="margin-left: 35px;">退款</span><div class="iconfont icon-xia right"></div></div><div class="refund refund2"><span>退款理由</span><div class="iconfont icon-shang right"></div></div></div></div></div><div class="information_refund">'+info+'</div></div>';
+                	var str = '<div class="informations"><div class="information"><div class="information_img"><img src="'+photo+'" ></div><div class="information_name">'+name+'</div><div class="information_content"><div class="information_time">'+time+'</div><div class="information_money"><div class="refund refund1"><span style="margin-left: 35px;">退款</span><div class="iconfont icon-xia right"></div></div><div class="refund refund2"><span>退款理由</span><div class="iconfont icon-shang right"></div></div></div></div></div><div class="information_refund">'+info+'</div></div>';
                 	$(".details").append(str);
                 }
             },

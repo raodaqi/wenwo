@@ -920,7 +920,8 @@ body{
          else{
           var data = {
                   ask_id   : "<%= id %>",
-                  username : "<%= username %>"
+                  username : "<%= username %>",
+                  refundInfo: str 
                    }
            $.ajax({
           type : "POST",
