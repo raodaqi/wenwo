@@ -164,6 +164,7 @@ hode/del    `[post]`
 hode/refund   `[post]`
 `username`   `Y`  
 `ask_id`      `Y`
+`refundInfo`  `Y`  `退款理由`
 
 获取意见:
 manage/getviews  `[get]`
