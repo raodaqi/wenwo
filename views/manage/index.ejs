@@ -1328,8 +1328,10 @@
                                 list += '<li><span class="ask-id">'+result.data[i].objectId+'</span><span class="del">X</span><span class="staus hidden-text">'+getStaus(result.data[i].staus)+'</span></li>';
                             }else if(result.data[i].staus == 5){
                                 list += '<li><span class="ask-id">'+result.data[i].objectId+'</span><span class="del">X</span><span class="staus notpass">'+getStaus(result.data[i].staus)+'</span></li>';
-                            }else{
+                            }else if(result.data[i].staus == 1){
                                 list += '<li><span class="ask-id">'+result.data[i].objectId+'</span><span class="del">X</span><span class="staus pass">'+getStaus(result.data[i].staus)+'</span></li>';
+                            }else{
+                                list += '<li><span class="ask-id">'+result.data[i].objectId+'</span><span class="del">X</span><span class="staus">'+getStaus(result.data[i].staus)+'</span></li>';
                             }
                             // list += '<li><span class="ask-id">'+result.data[i].objectId+'</span><span class="del">X</span><span class="staus">'+getStaus(result.data[i].staus)+'</span></li>';
                         }
