@@ -45,31 +45,56 @@ router.post('/regist', function(req, res, next) {
         res.send(result);
         return;
     }
-    var query = new AV.Query('AdminAccount');
-    query.find().then(function (resultes) {
-        for (var i = 0; i < resultes.length; i++) {
-            if (resultes[i].get('adminName') == adminName) {
-                var result = {
-                    code : 600,
-                    message : '该用户名已经被注册'
-                }
-                res.send(result);
-                return;
-            }
-        }
-        var account = new Admin();
-        account.set('adminName', adminName);
-        account.set('password', password);
-        account.save().then(function (account) {
-            var result = {
-                code : 200,
-                message : '操作成功'
-            }
-            res.send(result);
-            return;
-        });
-    });
+    // var query = new AV.Query('AdminAccount');
+    // query.find().then(function (resultes) {
+    //     for (var i = 0; i < resultes.length; i++) {
+    //         if (resultes[i].get('adminName') == adminName) {
+    //             var result = {
+    //                 code : 600,
+    //                 message : '该用户名已经被注册'
+    //             }
+    //             res.send(result);
+    //             return;
+    //         }
+    //     }
+    //     var account = new Admin();
+    //     account.set('adminName', adminName);
+    //     account.set('password', password);
+    //     account.save().then(function (account) {
+    //         var result = {
+    //             code : 200,
+    //             message : '操作成功'
+    //         }
+    //         res.send(result);
+    //         return;
+    //     });
+    // });
+    var user = new AV.User();
+    user.set('username', adminName);
+    user.set('password', password);
+    //user.set('email', 'hang@leancloud.rocks');
 
+// other fields can be set just like with AV.Object
+    //user.set('phone', '186-1234-0000');
+    user.signUp().then(function(user) {
+        // 注册成功，可以使用了
+        console.log(user);
+        var result = {
+            code : 200,
+            user:user,
+            message : '操作成功'
+        }
+        res.send(result);
+        return;
+    }, function(error) {
+        // 失败了
+        console.log('Error: ' + error.code + ' ' + error.message);
+        var result = {
+            code : 400,
+            message : error.message
+        }
+        res.send(result);
+    });
 });
 
 router.post('/login', function (req, res, next) {
@@ -91,25 +116,42 @@ router.post('/login', function (req, res, next) {
         res.send(result);
         return;
     }
-    var query = new AV.Query('AdminAccount');
-    query.find().then(function (resultes) {
-        for (var i = 0; i < resultes.length; i++ ) {
-            if (resultes[i].get('adminName') == name && resultes[i].get('password') == password) {
-                var result = {
-                    code : 200,
-                    user : resultes[i],
-                    message : '登录成功'
-                }
-                res.send(result);
-                return;
-            }
-        }
+    // var query = new AV.Query('AdminAccount');
+    // query.find().then(function (resultes) {
+    //     for (var i = 0; i < resultes.length; i++ ) {
+    //         if (resultes[i].get('adminName') == name && resultes[i].get('password') == password) {
+    //             var result = {
+    //                 code : 200,
+    //                 user : resultes[i],
+    //                 message : '登录成功'
+    //             }
+    //             res.send(result);
+    //             return;
+    //         }
+    //     }
+    //     var result = {
+    //         code : 400,
+    //         message : '用户名或密码错误'
+    //     }
+    //     res.send(result);
+    //     return;
+    // });
+    AV.User.logIn(name, password).then(function() {
+        // 成功了，现在可以做其他事情了
+        var user = AV.User.current();
         var result = {
-            code : 400,
-            message : '用户名或密码错误'
+            code : 200,
+            user:user,
+            message : '操作成功'
         }
         res.send(result);
-        return;
+    }, function() {
+        // 失败了
+        var result = {
+            code : 400,
+            message : '登录失败'
+        }
+        res.send(result);
     });
 });
 
