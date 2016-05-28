@@ -278,7 +278,8 @@ router.post('/del', function(req, res, next) {
 router.post('/refund', function(req, res, next) {
     var askId = req.param('ask_id');
     var userName = req.param('username');
-    var info = req.query.info;
+    var refundInfos = req.param('refundInfo');
+    console.log(refundInfos);
 
     var query = new AV.Query('UserInfo');
     query.equalTo('userName', userName);
@@ -286,7 +287,7 @@ router.post('/refund', function(req, res, next) {
         //console.log(resultes[0]);
         var relation = resultes[0].relation('haved');
         relation.query().find().then(function (list) {
-            console.log(list);
+            //console.log(list);
             var flag = 0;
             for (var i = 0; i < list.length; i++) {
                 //console.log(list[i].attributes.ask.id);
@@ -300,7 +301,8 @@ router.post('/refund', function(req, res, next) {
                         var query = new AV.Query('AskMe');
                         query.get(askId).then(function (post) {
                             var refundInfo = new RefundInfo();
-                            refundInfo.set('info', info);
+                            console.log(refundInfos);
+                            refundInfo.set('info', refundInfos);
                             refundInfo.set('userName', userName);
                             refundInfo.set('by', resultes[0].get('uName'));
                             refundInfo.set('byUrl', resultes[0].get('userHead'));
@@ -342,7 +344,7 @@ router.post('/refund', function(req, res, next) {
             if (flag == 0) {
                 var result = {
                     code : 400,
-                    message : 'not yet have this ask'
+                    message : '未购买'
                 }
                 res.send(result);
                 return;

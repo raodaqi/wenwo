@@ -115,10 +115,30 @@
 //            },
 //            error : function(){}
 //        });
+//        $.ajax({
+//            type: "post",
+//            url: 'hode/get',
+//            data: {ask_id:'57449cf92e958a006b737752', username:'573b0c63ad5b950057533669'},
+//            dataType: "json",
+//            success : function(result) {
+//                console.log(result);
+//            },
+//            error : function(){}
+//        });
+//        $.ajax({
+//            type: "post",
+//            url: 'hode/refund',
+//            data: {ask_id:'57449cf92e958a006b737752', username:'573b0c63ad5b950057533669', refundInfo:'kanbudong'},
+//            dataType: "json",
+//            success : function(result) {
+//                console.log(result);
+//            },
+//            error : function(){}
+//        });
         $.ajax({
-            type: "get",
-            url: 'authorization/withdraw',
-            data: {amount:'100'},
+            type: "post",
+            url: 'hode/haved',
+            data: {username:'573b0e3df38c8400673bb48d', staus:1},
             dataType: "json",
             success : function(result) {
                 console.log(result);
