@@ -2,6 +2,15 @@
 <html>
 <head>
     <title>WenWo</title>
+     <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name='description', content='wenwo,问我,当地人,旅游,攻略,信息,分享'>
+    <meta name='author', content='raodqi'>
+    <link rel="icon" type="image/x-icon" href="/img/logo.png" media="screen">
+    <title>问我——像个当地人一样去旅游</title>
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1462821367_1895313.css">
+    <link rel="stylesheet" href="/css/sm.min.css">
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <!-- <link rel="stylesheet" href="/css/bootstrap.min.css"> -->
 </head>
 <style>
     * {
@@ -38,23 +47,26 @@
 
     }
     .side-bar ul {
-        border-radius: 10px;
+        /*border-radius: 10px;*/
         overflow: hidden;
     }
     .side-bar ul li {
         /*margin-bottom: 10px;*/
         text-align: center;
-        height: 30px;
+        height: 40px;
         font-size: 18px;
-        line-height: 30px;
+        line-height: 40px;
         background: #eee;
-        padding-top: 10px;
-        padding-bottom: 10px;
+        margin:10px; 
+       /* padding-top: 10px;
+        padding-bottom: 10px;*/
     }
     ul li:hover {
-        background: #ddd !important;
+        /*background: #ddd !important;*/
+        background: #f8bd38 !important;
+        color: white;
     }
-    .content {
+    .manage-content {
         background: #eee;
         width: 880px;
         border-radius: 10px;
@@ -82,8 +94,8 @@
         color: red;
     }
     .check li {
-        padding: 5px 0 5px 0;
-        font-size: 16px;
+        padding: 10px 0;
+        font-size: 20px;
         text-align: center;
 
     }
@@ -91,7 +103,8 @@
         background: #eee !important;
     }
     .side-bar-backcheck {
-        background: #ddd !important;
+        background: #f8bd38 !important;
+        color: white;
     }
     .btn_pass, .btn_not, .btn_send {
         margin: 0;
@@ -110,38 +123,121 @@
         height: 100px;
         width: 300px;
     }
-    .input-edit {
-        height: 20px;
+    .input-edit,#search {
+        height: 30px;
         width: 240px;
         padding: 0 10px 0 10px;
+        font-size: 15px;
+        /*border-radius: 2px;
+        border: none;
+        box-shadow: none;
+        outline: none;
+        background-color: transparent;
+        padding-left: 10px;
+        margin-left: 10px;
+        text-transform: lowercase;
+        background-color: white;*/
     }
     .input-price {
-        text-align: right;
+        text-align: left;
     }
     .container-show{
-        height: 280px;
-        width: 50%;
+        height: 400px;
+        width: 400px;
         background-color: white;
     }
     .left{
         float: left;
+        margin-right: 10px;
     }
     .hidden-text{
         color: red;
     }
     .de-show{
-        height: auto;
-        min-height: 40px;
-        width: 34%;
-        margin-top: 20px;
-        border: 1px solid #C5C1C1;
-        word-wrap: break-word;
+        padding:10px;
+        font-size: 15px; 
+        width: 300px;
     }
     .place{
-        height: 40px;
-        line-height: 40px;
-        width: 300px;
+        color: red;
+        font-size: 15px;
+        /*width: 300px;*/
         padding-left: 10px;
+        line-height: 30px;
+    }
+    .check-box label{
+        margin-right: 10px;
+    }
+    .check-box,.div-tag,.div-reason{
+        margin-bottom: 10px;
+    } 
+    .type-item {
+        display: inline-block;
+        padding: 0px 20px;
+        /* color: #FFC222; */
+        /* background-color: #FFDC7F; */
+        height: 30px;
+        line-height: 30px;
+        font-weight: 400;
+        font-size: 15px;
+        text-align: center;
+        margin: 0 .5rem .2rem 0;
+        border-radius: 3px;
+        border: 1px solid #393e49;
+    }
+    .edit-reason,.edit-detail{
+        font-size: 15px;
+        padding: 10px;
+        border-radius: 10px;
+    }
+    .button-start{
+        display: inline-block;
+        text-align: center;
+        font-size: 15px;
+        color: white;
+        width: 100px;
+        margin: 10px auto;
+        height: 30px;
+        line-height: 30px;
+        border-radius: 5px;
+        background-color: #efc553 !important;
+        cursor: pointer;
+        margin-left: 100px;
+    }
+    .edit-detail{
+        height: 200px;
+    }
+    #search{
+        width: 400px;
+        display: block;
+    } 
+    body{
+        overflow: auto;
+    }
+    .address-content{
+        /*float: left;*/
+        margin-bottom: 10px;
+    }
+    .amap-sug-result{
+        top:213px !important;
+    }
+    .geolocation-position img{
+        width: 40px;
+        height: 40px;
+    }
+    .modal-overlay{
+        display: none !important;
+    }
+    .modal-inner{
+        background: rgba(0,0,0,.8);
+        color: white;
+    }
+    .notpass{
+        color: #B9B9B9;
+    }
+    .pass{
+        color: #4CAF50;
+        font-weight: bolder;
     }
 </style>
 <body>
@@ -152,15 +248,15 @@
         <div>
             <div class="list side-bar">
                 <ul>
-                    <li class="send-bar">发布信息</li>
+                    <li class="send-bar side-bar-backcheck">发布信息</li>
                     <li class="check-bar">审核信息</li>
                     <li class="manage-bar">管理消息</li>
                     <li class="total-bar">统计信息</li>
                     <li class="account-bar">帐号管理</li>
                 </ul>
             </div>
-            <div class="list content">
-                <div class="content-title send" style="display: none">
+            <div class="list manage-content">
+                <div class="content-title send">
                     <div class="check-box">
                         <span>主题:</span>
                         <input type="checkbox" value="1" id="checkbox-1" name="" defaultChecked="false"/>
@@ -176,27 +272,37 @@
                         <input type="checkbox" value="6" id="checkbox-6" name="" defaultChecked="false"/>
                         <label for="checkbox-6">防坑</label>
                     </div>
-                    <div>
-                        <span>标签:</span>
-                        <input class="input-edit input-tag" type="text" placeholder="每个标签以;结束">
-                    </div>
-                    <div>
-                        <span>推荐理由:</span>
-                        <textarea class="edit-reason"></textarea>
-                    </div>
-                    <div>
-                        <span>详情:</span>
-                        <textarea class="edit-detail" id="detail" placeholder="隐藏内容以“##隐藏内容##”方式隐藏"></textarea>
-                        <div class="de-show"></div>
-                    </div>
-                    <div style="margin-top:20px;">
-                        <span>地图标注:</span><input type="text" id="search" placeholder="搜索地点">
+                    <div class="address-content">
+                        <span>地图标注:</span><input type="text" id="search" placeholder="请输入你要标注的地址">
                         <div class="place"></div>
                          <div class="container-show" id="container"></div>
                     </div>
+                    <div class="tag-content">
+                        <!-- <span class="type-item">火锅</span> -->
+                    </div>
+                    <div class="div-tag">
+                        <span>标签:</span>
+                        <input class="input-edit input-tag" type="text" placeholder="每个标签以;结束">
+                    </div>
+                    <div class="div-reason">
+                        <span>推荐理由:</span>
+                        <textarea class="edit-reason" placeholder="说说为什么？"></textarea>
+                    </div>
+                    <div class="div-tag">
+                        <span>详情:</span>
+                        <div class="button-start">隐藏</div>
+                        <textarea class="edit-detail" id="detail" placeholder="隐藏内容以“##隐藏内容##”方式隐藏"></textarea>
+                        <div class="de-show"></div>
+                    </div>
+
+                    <!-- <div class="address-content">
+                        <span>地图标注:</span><input type="text" id="search" placeholder="请输入你要标注的地址">
+                        <div class="place"></div>
+                         <div class="container-show" id="container"></div>
+                    </div> -->
                     <div>
                         <span>价格:</span>
-                        <input class="input-edit input-price" type="text" value="">
+                        <input class="input-edit input-price" type="number" value="">
                     </div>
                     <button class='btn_send'>发布</button>
                 </div>
@@ -211,6 +317,14 @@
                     <div>
                         <div class="left">ID:</div>
                         <div class="detail-id"></div>
+                    </div>
+                    <div>
+                        <div class="left">上传者:</div>
+                        <div class="detail-createBy"></div>
+                    </div>
+                    <div>
+                        <div class="left">上传时间:</div>
+                        <div class="detail-time"></div>
                     </div>
                     <div>
                         <div class="left">状态:</div>
@@ -229,11 +343,12 @@
                         <div class="detail-reason"></div>
                     </div>
                     <div>
-                        <div class="left">详情:</div>
+                        <div class="left">详情(红色为隐藏部分):</div>
                         <div class="detail-information"></div>
                     </div>
                     <div>
                         <div>地图标注:</div>
+                        <div class="add-detail"></div>
                         <div class="container-show" id="show2"></div>
                     </div>
                     <div>
@@ -264,7 +379,7 @@
 
         </div>
     </div>
-    <script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='/js/zepto.min.js' charset='utf-8'></script>
      <!-- <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=cb84c659c88a7cc83b935a009b3a9cfd&plugin=AMap.Geocoder"></script> -->
      <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=cb84c659c88a7cc83b935a009b3a9cfd&plugin=AMap.Geocoder"></script>
 
@@ -272,7 +387,199 @@
      <script type="text/javascript" src="/js/common.js"></script>
 
      <!-- <script type="text/javascript" src="/js/map.js"></script> -->
+     <script>
+     (function(Zepto){
+            Zepto.fn.getCursorPosition = function(){
+                if(this.lengh == 0) return -1;
+                return $(this).getSelectionStart();
+            }
+            Zepto.fn.setCursorPosition = function(position){
+                if(this.lengh == 0) return this;
+                return $(this).setSelection(position, position);
+            }
+            Zepto.fn.getSelection = function(){
+                if(this.lengh == 0) return -1;
+                var s = $(this).getSelectionStart();
+                var e = $(this).getSelectionEnd();
+                return this[0].value.substring(s,e);
+            }
+            Zepto.fn.getSelectionStart = function(){
+                if(this.lengh == 0) return -1;
+                input = this[0];
+
+                var pos = input.value.length;
+
+                if (input.createTextRange) {
+                    var r = document.selection.createRange().duplicate();
+                    r.moveEnd('character', input.value.length);
+                    if (r.text == '') 
+                    pos = input.value.length;
+                    pos = input.value.lastIndexOf(r.text);
+                } else if(typeof(input.selectionStart)!="undefined")
+                pos = input.selectionStart;
+
+                return pos;
+            }
+            Zepto.fn.getSelectionEnd = function(){
+                if(this.lengh == 0) return -1;
+                input = this[0];
+
+                var pos = input.value.length;
+
+                if (input.createTextRange) {
+                    var r = document.selection.createRange().duplicate();
+                    r.moveStart('character', -input.value.length);
+                    if (r.text == '') 
+                    pos = input.value.length;
+                    pos = input.value.lastIndexOf(r.text);
+                } else if(typeof(input.selectionEnd)!="undefined")
+                pos = input.selectionEnd;
+
+                return pos;
+            }
+            Zepto.fn.setSelection = function(selectionStart, selectionEnd) {
+                    if(this.lengh == 0) return this;
+                    input = this[0];
+
+                    if (input.createTextRange) {
+                            var range = input.createTextRange();
+                            range.collapse(true);
+                            range.moveEnd('character', selectionEnd);
+                            range.moveStart('character', selectionStart);
+                            range.select();
+                    } else if (input.setSelectionRange) {
+                            input.focus();
+                            input.setSelectionRange(selectionStart, selectionEnd);
+                    }
+
+                    return this;
+            }
+            Zepto.fn.insertAtCousor = function(myValue){
+                var $t=$(this)[0];
+                if (document.selection) {
+                    this.focus();
+                    sel = document.selection.createRange();
+                    sel.text = myValue;
+                    this.focus();
+                }else if($t.selectionStart || $t.selectionStart == '0'){
+                    var startPos = $t.selectionStart;
+                    var endPos = $t.selectionEnd;
+                    var scrollTop = $t.scrollTop;
+                    $t.value = $t.value.substring(0, startPos) + myValue + $t.value.substring(endPos, $t.value.length);
+                    this.focus();
+                    $t.selectionStart = startPos + myValue.length;
+                    $t.selectionEnd = startPos + myValue.length;
+                    $t.scrollTop = scrollTop;
+                }else{
+                    this.value += myValue;
+                    this.focus();
+                }
+            }
+        })(Zepto);
+     </script>
     <script>
+    window.onload = function(){
+    AMap.plugin(['AMap.ToolBar','AMap.Scale'],function(){
+        var toolBar = new AMap.ToolBar({
+            offset: new AMap.Pixel(10, 10)
+          });
+        var scale = new AMap.Scale({
+          offset: new AMap.Pixel(-5, 7)
+        });
+        map.addControl(toolBar);
+        map.addControl(scale);
+    });
+
+    $.hidePreloader();
+  }
+
+  //在输入框内添加标签
+    $(".input-edit").on("input change",function(){
+      console.log($(this).val());
+      var text = $(this).val();
+      if(text.indexOf(";")!=-1 || text.indexOf("；")!=-1 || text.indexOf(",")!=-1 || text.indexOf("，")!=-1){
+        var text = text.substr(0,text.length-1);
+        $(".ww-typeHelper-input").val(text);
+        
+        var len = GetLength(text);
+        console.log(len);
+        if(len > 10){
+          $.toast("标签字数过多");
+          return;
+        }
+        var tagNum = $(".tag-content .type-item").length;
+        if(tagNum >= 3){
+          $.toast("最多只能选择三个二级标签");
+          return;
+        }
+
+        console.log(text);
+        var span = '<span class="type-item">'+text+'</span>';
+        // $("this").before(span);
+        $(".ww-typeHelper-left").before(span);
+        $(this).val('');
+        $(".tag-content").append(span);
+      }
+    })
+
+    //点击二级标签删除主页二级标签
+    $(".tag-content").on("click",".type-item",function(){
+
+      $(this).remove();
+      var $_this = $(this);
+      var span = '<span class="type-item">'+ $(this).text()+'</span>';
+      $(".tag-li").append(span);
+      $.each($("#tag-content .type-item"),function(i,v){
+        console.log($(v).text());
+        if($(v).text() == $_this.text()){
+          $(v).remove();
+        }
+      })
+
+    })
+
+  //详情内容隐藏
+    function deShow(text){
+      var str = {};
+      str = text.split("##");
+      var show = '';
+      var hidden = '';
+      var detail = ''
+      for(var i = 0; i < str.length; i++){
+        if(i%2){
+          var starLen = ''
+          for(var j = 0; j < str[i].length; j++){
+            starLen += '*';
+          }
+          detail += '<span class="hidden-text">'+starLen+'</span>';
+        }else{
+          detail += str[i];
+        }
+      }
+      $(".de-show").empty();
+      $(".de-show").append(detail);
+    }
+
+  //详情输入后显示到主页
+    $("#dedit-detail").on("input change",function(){
+      var text = $("#detail").val();
+
+      //显示到主页
+      $("#detail-content .card-content-inner").text(text);
+      deShow(text);
+    })
+
+    $(".button-start,.button-end").on("click",function(){
+      // var text = $("#detail").val();
+      // $("#detail").val(text+"##");
+      // $("#detail-content .card-content-inner").text($("#detail").val());
+      // localStorage["detail"] = $("#detail").val();
+      $("#detail").insertAtCousor("##");
+      var text = $("#detail").val();
+      $("#detail-content .card-content-inner").text(text);
+      deShow(text);
+    })
+
     // reason();
     // function reason(){
     //   var  detail = $("#hidden-content").val();
@@ -378,7 +685,8 @@
     var map, geolocation;
     //加载地图，调用浏览器定位服务
     map = new AMap.Map('container', {
-        resizeEnable: true
+        resizeEnable: true,
+        zoom:17
     });
     map.plugin('AMap.Geolocation', function() {
         geolocation = new AMap.Geolocation({
@@ -443,15 +751,21 @@
           console.log(address);
           var strs = address.province+"-"+address.city+"-"+address.district+"-"+address.township;
           console.log(strs);
-          $(".place").empty();
-          $(".place").append(strs);
+
+          // $(".place").empty();
+          // $(".place").append(strs);
+
           // detail = detail.replace(address[0]+address[1]+address[2]+address[3],"");
           var replace = ""+address.province+address.city+address.district+address.township+"";
           detail = detail.replace(replace,"");
           address.detail = detail;
+          $(".place").empty();
+          $(".place").append(replace+detail);
+
           var address = JSON.stringify(address);
-          $("#address-content .item-inner").attr("data-address",address);
-          $("#address-content .item-inner").text(detail);
+          // $("#address-content .item-inner").attr("data-address",address);
+          // $("#address-content .item-inner").text(detail);
+          $(".address-content").attr("data-address",address);
         }
       });
 
@@ -465,12 +779,6 @@
       marker = new AMap.Marker({
         icon : icon,//24px*24px
         map : map,
-        tagName:"火锅;超辣的",
-        askReason:"味道真的不错",
-        askContentShow:"这里的味道真的不错",
-        price:0.2,
-        createBy:"hanqi",
-        createAt:"2016-04-19",
         position: [e.lnglat.getLng(),e.lnglat.getLat()],
         draggable: true,
         cursor: 'move',
@@ -525,20 +833,24 @@
               district : address.addressComponent.district,
               township : address.addressComponent.township
             }
-            $(".place").empty();
+            // $(".place").empty();
             var place = ""+address.province+"-"+address.city+"-"+address.district+"-"+address.township+"";
-            console.log(place);
-            $(".place").append(place);
+            // console.log(place);
+            // $(".place").append(place);
             // var address = JSON.stringify(address);
             console.log(address);
             var replace = ""+address.province+address.city+address.district+address.township+"";
             detail = detail.replace(replace,"");
             address.detail = detail;
+
+            $(".place").empty();
+             $(".place").append(replace+detail);
+
             console.log(detail);
             var address = JSON.stringify(address);
             console.log(address);
-            $("#address-content .item-inner").attr("data-address",address);
-            $("#address-content .item-inner").text(detail);
+            $(".address-content").attr("data-address",address);
+            // $(".address-content").text(detail);
           },
           error:function(error){
             console.log(error);
@@ -566,7 +878,31 @@
       //   });
 
 
-
+      function getHideText(){
+          var text = $("#detail").val();
+          // console.log(text.indexOf("##"));
+          var str = {};
+          str = text.split("##");
+          var show = '';
+          var hidden = '';
+          for(var i = 0; i < str.length; i++){
+            if(i%2){
+              hidden += str[i]+"##";
+            }else{
+              if( i == str.length-1){
+                show += str[i];
+              }else{
+                show += str[i]+"##";
+              }
+              
+            }
+          }
+          var textDetail = {
+            show:show,
+            hidden:hidden
+          }
+          return(textDetail);
+        }
 
 
 
@@ -581,7 +917,12 @@
                     type += i+1;
                 }
             }
+            if (type.length == 0) {
+                $.toast("主题不能为空");
+                return;
+            }
             if (type.length > 2) {
+                $.toast("主题不能多于两个");
                 return;
             }
             if (type.length == 2) {
@@ -590,49 +931,100 @@
             }
             console.log(type);
 
-            var temp = $('.input-tag').val();
-            temp = temp.replace('；', ';');
-            temp = temp.split(";");
+            // var temp = $('.input-tag').val();
+            // temp = temp.replace('；', ';');
+            // temp = temp.split(";");
+            // var tag = new Array();
+            // for (var i = 0; i < temp.length; i++) {
+            //     tag[i] = {
+            //         tag_name:temp[i]
+            //     }
+            // }
+            // if (tag[0].tag_name == "") {
+            //     return;
+            // }
+            //获取填写的tag
             var tag = new Array();
-            for (var i = 0; i < temp.length; i++) {
+            var $_tag = $(".tag-content .type-item");
+            if(!$_tag.length){
+              $.toast("你还没有填写标签");
+               return;
+            }else{
+              $.each($_tag,function(i,v){
                 tag[i] = {
-                    tag_name:temp[i]
+                  tag_name: $(this).text()
                 }
+                // $(this).text();
+              })
+              tag = JSON.stringify(tag);
             }
-            if (tag[0].tag_name == "") {
-                return;
-            }
-            tag = JSON.stringify(tag);
+            // tag = JSON.stringify(tag);
             console.log(tag);
             var reason = $('.edit-reason').val();
-            var detail = $('.de-show').text();
+            // var detail = $('.de-show').text();
             var price = $('.input-price').val();
+            //获取详情
+            var detail = $("#detail").val();
+            var content_show = '',
+                content_hide = '';
+            if(!detail){
+              $.toast("你还没有填写信息详情");
+              return;
+            }else{
+              var detailContent = getHideText();
+              console.log(detailContent);
+              content_show = detailContent.show;
+              content_hide = detailContent.hidden;
+            }
+
             console.log(reason);
             console.log(detail);
             console.log(price);
+
+
+            if(!price){
+              isfree = 1;
+              price  = 0;
+            }else{
+              isfree = 0;
+            }
+
+            //获取标注位置的经纬度
+            lng = $("#container").attr("data-lng");
+            lat = $("#container").attr("data-lat");
+            if(!lng || !lat){
+              $.toast("你还没有添加地图标注");
+              return;
+            }
+
+            var position = $(".address-content").attr("data-address");
+            $.showPreloader("正在提交");
+
             var data = {
-                username:'admin',
-                type:type,
-                //isfree:0,
-                geo_x:123,
-                geo_y:456,
-                position:'123',
-                reason:reason,
-                content_show:detail,
-                content_hide:'',
-                price:price,
-                tag:tag,
-                remark:''
+                username     : '<%= username %>',
+                type         : type,
+                geo_x        : lng,
+                geo_y        : lat,
+                position     : position,
+                reason       : reason,
+                content_show : content_show,
+                content_hide : content_hide,
+                isfree       : isfree,
+                price        : price,
+                tag          : tag
 
             }
+            console.log(data);
+            // return ;
             $.ajax({
                 type: "post",
-                url: '../../ask/sendask',
+                url: '/ask/sendask',
                 data: data,
                 dataType: "json",
                 success : function(result) {
                     console.log(result);
                     if (result.code == 200) {
+                        $.toast("发布成功");
                         for (var i = 0; i < $('.check-box').find('input').length; i++) {
                             $('.check-box').find('input')[i].checked = false;
                         }
@@ -640,9 +1032,12 @@
                         $('.edit-reason').val("");
                         $('.de-show').val("");
                         $('.input-price').val("0.00");
+                    }else{
+                        $.toast(result.message);
                     }
                 },
-                error : function(){
+                error : function(error){
+                     $.toast("服务器异常");
                     console.log('err');
                 }
             });
@@ -776,9 +1171,10 @@
             console.log($(this).text());
             $('.check-detail').show();
             var askId = $(this).text();
+            $.showPreloader("正在加载");
             $.ajax({
                 type: "get",
-                url: '../../ask/askadmin',
+                url: '/ask/askadmin',
                 data: {ask_id:askId},
                 dataType: "json",
                 success : function(result) {
@@ -794,6 +1190,35 @@
                             console.log(temp);
                         }
                         $('.detail-id').empty();
+                        //获取上传者
+                        $('.detail-createBy').text(result.data.createBy);
+                        var data = {
+                          username : result.data.createBy
+                        }
+                        $.hidePreloader();
+                        $.ajax({
+                          type : "GET",
+                          data: data,
+                          dataType: "json",
+                          url : "/user/getuserinfo",
+                          success : function(result){
+                            console.log(result);
+                            // $.hidePreloader();
+                            if(result.code == 200){
+                              var photo = result.data.userHead;
+                              var username = result.data.uName;
+                              $('.detail-createBy').text(username);
+                            }else if(result.code == 890){
+                              
+                            }
+                          },
+                          error:function(error){
+                            $.toast("服务器异常");
+                          }
+                        });
+
+
+                        $('.detail-time').empty();
                         $('.detail-status').empty();
                         $('.detail-subject').empty();
                         $('.detail-reason').empty();
@@ -801,20 +1226,47 @@
                         $('.detail-price').empty();
                         $('.detail-label').empty();
                         $(".detail-id").append(result.data.objectId);
+                        $('.detail-time').text(formatDate("y.m.d",result.data.updatedAt));
+
                         $(".detail-status").append(getStaus(result.data.staus));
+                        // if(result.data.staus == 5){
+                        //     $(".detail-status").addClass("hidden-text");
+                        // }
                         var subject = getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1]);
                         $(".detail-subject").append(subject);
                         var label = '';
                         if (result.data.askTagStr != null) {
                             for (var i = 0; i < temp.length; i++) {
-                                label += temp[i] + "&nbsp&nbsp";
+                                // label += temp[i].tag_name + "&nbsp&nbsp";
+                                if(temp[i].tag_name){
+                                    label += '<span class="type-item">'+temp[i].tag_name+'</span>';
+                                }
+                                // label += '<span class="type-item">'+temp[i].tag_name+'</span>';
                             }
                         }
                         console.log(label);
                         $(".detail-label").append(label);
                         $(".detail-reason").append(result.data.askReason);
-                        var detail = result.data.askContentShow + result.data.askContentHide;
-                        $(".detail-information").append(detail);
+                        // var detail = result.data.askContentShow + result.data.askContentHide;
+                        // $(".detail-information").append(detail);
+                        //解析详情
+                        var show = result.data.askContentShow.split("##");
+                        var hidden = result.data.askContentHide.split("##");
+                        var reasonDetail = '';
+                        console.log("len:"+hidden.length);
+                        for(var i = 0; i < hidden.length;i++){
+                          if(hidden[i]){
+                            reasonDetail += show[i] + "<span class='hidden-text'>"+ hidden[i] + "</span>";
+                          }
+                        }
+                        if(!hidden.length){
+                          reasonDetail = show;
+                        }
+
+                        $(".detail-information").append(reasonDetail);
+                        var askPosition = JSON.parse(result.data.askPosition);
+                        $(".add-detail").text(askPosition.province+"-"+askPosition.city+"-"+askPosition.district+"-"+askPosition.township+"-"+askPosition.detail);
+
                         $(".detail-price").append(result.data.askPrice);
                         //详情地点显示
                         map = new AMap.Map('show2', {
@@ -871,7 +1323,17 @@
                     if (result.code == 200) {
                         var list = "";
                         for (var i = 0; i < result.data.length; i++) {
-                            list += '<li><span class="ask-id">'+result.data[i].objectId+'</span><span class="del">X</span><span class="staus">'+getStaus(result.data[i].staus)+'</span></li>';
+                            if(result.data[i].staus == 2){
+                                // $(".detail-status").addClass("hidden-text");
+                                list += '<li><span class="ask-id">'+result.data[i].objectId+'</span><span class="del">X</span><span class="staus hidden-text">'+getStaus(result.data[i].staus)+'</span></li>';
+                            }else if(result.data[i].staus == 5){
+                                list += '<li><span class="ask-id">'+result.data[i].objectId+'</span><span class="del">X</span><span class="staus notpass">'+getStaus(result.data[i].staus)+'</span></li>';
+                            }else if(result.data[i].staus == 1){
+                                list += '<li><span class="ask-id">'+result.data[i].objectId+'</span><span class="del">X</span><span class="staus pass">'+getStaus(result.data[i].staus)+'</span></li>';
+                            }else{
+                                list += '<li><span class="ask-id">'+result.data[i].objectId+'</span><span class="del">X</span><span class="staus">'+getStaus(result.data[i].staus)+'</span></li>';
+                            }
+                            // list += '<li><span class="ask-id">'+result.data[i].objectId+'</span><span class="del">X</span><span class="staus">'+getStaus(result.data[i].staus)+'</span></li>';
                         }
                         $('.manage ul').empty();
                         $('.manage ul').append(list);
