@@ -1023,6 +1023,7 @@
                 dataType: "json",
                 success : function(result) {
                     console.log(result);
+                    $.hidePreloader();
                     if (result.code == 200) {
                         $.toast("发布成功");
                         for (var i = 0; i < $('.check-box').find('input').length; i++) {
@@ -1032,12 +1033,14 @@
                         $('.edit-reason').val("");
                         $('.de-show').val("");
                         $('.input-price').val("0.00");
+                        window.location.reload();
                     }else{
                         $.toast(result.message);
                     }
                 },
                 error : function(error){
-                     $.toast("服务器异常");
+                    $.hidePreloader();
+                    $.toast("服务器异常");
                     console.log('err');
                 }
             });
@@ -1257,6 +1260,10 @@
                         for(var i = 0; i < hidden.length;i++){
                           if(hidden[i]){
                             reasonDetail += show[i] + "<span class='hidden-text'>"+ hidden[i] + "</span>";
+                          }else{
+                            if(show[i]){
+                                reasonDetail+=show[i];
+                            }
                           }
                         }
                         if(!hidden.length){
@@ -1315,7 +1322,7 @@
         function manageAsk() {
             $.ajax({
                 type: "get",
-                url: '../../ask/allask',
+                url: '/ask/allask',
                 data: {staus:4},
                 dataType: "json",
                 success : function(result) {

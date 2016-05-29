@@ -12,9 +12,10 @@ router.get('/', function(req, res, next) {
         res.redirect('manage/signin');
     }else{
         var username = user.get('username');
+        console.log(username);
         res.render('manage/index',{username:username});
     }
-    res.render('manage/index');
+    // res.render('manage/index');
 });
 
 router.get('/signin', function(req, res, next) {
