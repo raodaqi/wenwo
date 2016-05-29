@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
     if(!user){
         res.redirect('manage/signin');
     }else{
-        var username = user.get('user');
+        var username = user.get('username');
         res.render('manage/index',{username:username});
     }
     res.render('manage/index');
