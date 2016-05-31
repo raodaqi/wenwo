@@ -346,11 +346,11 @@
     .modal-overlay, .popup-overlay, .preloader-indicator-overlay{
       height: initial;
     }
-    .ask-detail{
+    /*一半的效果*/
+    /*.ask-detail{
       top:60%;
       height: 40%;
       z-index: 10402;
-      /*box-shadow: 0 -.05rem .1rem rgba(0,0,0,.3);*/
       top: 50%;
       height: 50%;
       box-sizing: border-box;
@@ -358,7 +358,17 @@
       background-color: #efc553;
       padding-bottom: 30px;
       padding-top: 10px;
+    }*/
+    .ask-detail{
+      height: 40%;
+      z-index: 10402;
+      height: 100%;
+      box-sizing: border-box;
+      background-color: #efc553;
+      padding-bottom: 30px;
+      padding-top: 10px;
     }
+
     .card-cover{
       height:300px;
     }
@@ -755,7 +765,7 @@
   }
   .bar-tab{
     position: absolute;
-    z-index: 10000;
+    z-index: 20000;
     height: 40px;
     width: 100%;
   }
@@ -765,7 +775,8 @@
   #slide .content-block{
     margin:0;
     padding:0;
-  } 
+  }
+
   </style>
   <body>
   <div class="page page-current" id='router'>
@@ -1055,6 +1066,10 @@
     </div>
 
     <div class="wenwo-get button">我要购买</div>
+
+     <nav class="bar-tab">
+      <div class="iconfont icon-x ask-detail-cancel"></div>
+    </nav>
   </div>
 </div>
 
@@ -1336,6 +1351,14 @@
   //关闭信息列表
   $(".marker-content-cancel").on("click",function(){
     $.closeModal('.marker-content');
+  })
+
+  $(".ask-detail-cancel").on("click",function(){
+    $(".amap-active").css("-webkit-transform", "rotate(0deg) !important;");
+    // $(".amap-marker-list-content").remove();
+    // $(".amap-active").removeClass("amap-active");
+    $.closeModal('.ask-detail');
+
   })
 
       // var map = new AMap.Map('container',{
