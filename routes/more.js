@@ -149,6 +149,13 @@ router.get('/watch-us', function(req, res, next) {
   }
   // res.render('more/watch-us');
 });
+
+router.get('/watch-us/test', function(req, res, next) {
+  var username =  req.query.username;
+  res.render('more/watch-us',{username:username});
+  // res.render('more/moneyBox');
+});
+
 router.get('/personal-data', function(req, res, next) {
   var user = AV.User.current();
   if(!user){
