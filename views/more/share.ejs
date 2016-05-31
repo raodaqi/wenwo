@@ -387,7 +387,7 @@ function getMyask(){
           				// $(".information_img").attr("src",photo);
           				 },
      					 	error: function(error){
-         			 		alert(error);
+         			 		$.alert('网络异常');
        					 }
 					})
 	                var temp = JSON.parse(tag);
@@ -423,7 +423,7 @@ function getMyask(){
           }
           },
       error: function(error){
-          alert(error);
+          $.alert('网络异常');
         }
       })
 }

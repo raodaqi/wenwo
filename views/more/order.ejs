@@ -316,13 +316,13 @@ function getHode(){
           		$("#infor2").append(str);
 			           },
 			      error: function(error){
-			          alert(error);
+			          $.alert('网络异常');
 			        }
 			      })  
 			      }        	
           },
       error: function(error){
-          alert(error);
+         $.alert('网络异常');
         }
       })
 }
@@ -371,13 +371,13 @@ function GetHode(){
           		$("#infor1").append(str);
 			           },
 			      error: function(error){
-			          alert(error);
+			          $.alert('网络异常');
 			        }
 			      })           		         	
 			}      	
           },
       error: function(error){
-          alert(error);
+          $.alert('网络异常');
         }
       })
 }

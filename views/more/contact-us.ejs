@@ -114,7 +114,9 @@ $.ajax({
             success : function(result) {
                 console.log(result);
             },
-            error : function(){}
+            error : function(){
+            	$.alert('网络异常');
+            }
         });
 })
 </script>

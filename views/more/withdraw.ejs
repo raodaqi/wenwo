@@ -287,7 +287,7 @@ function getMywallet(){
         },
       	error: function(error){
       	  $.hidePreloader();
-          alert(error);
+          $.alert('网络异常');
         }
       })
 }

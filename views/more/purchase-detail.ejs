@@ -237,7 +237,9 @@ $.ajax({
                 console.log(money);
                 $("#mon").append(money);          
             },
-            error : function(){}
+            error : function(){
+            	$.alert('网络异常');
+            }
         });
 
 $.ajax({
@@ -259,7 +261,9 @@ $.ajax({
                 	$(".details").append(str);
                 }
             },
-            error : function(){}
+            error : function(){
+            	$.alert('网络异常');
+            }
         });
 </script>
 </html>

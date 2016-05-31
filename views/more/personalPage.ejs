@@ -390,7 +390,7 @@ function getUserinfo(){
           // $(".user_name").append(name);
           },
       error: function(error){
-          alert(error);
+          $.alert('网络异常');
         }
       })
 }
@@ -408,7 +408,7 @@ function getMywallet(){
           $(".money").append(money);
           },
       error: function(error){
-          alert(error);
+          $.alert('网络异常');
         }
       })
 }
