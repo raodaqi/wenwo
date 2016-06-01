@@ -978,7 +978,7 @@
     
     <div class="votebar">
       <div class="votebar-like iconfont icon-shangjiantou"></div>
-      <div class="voteNum">90</div>
+      <div class="voteNum">20</div>
       <div class="votebar-hate iconfont icon-jiantouxia"></div>
     </div>
     
@@ -1065,7 +1065,7 @@
       </div>
     </div>
 
-    <div class="wenwo-get button">我要购买</div>
+    <div class="wenwo-get button">偷看</div>
 
      <nav class="bar-tab">
       <div class="iconfont icon-x ask-detail-cancel"></div>
@@ -2183,9 +2183,12 @@
       $("#detail-content  .card-content-inner").append(detailContent);
 
       $(".wenwo-get").attr("data-askId",askId);
-      if(isfree == "1"){
-        $(".wenwo-get").text("我要收藏");
+      console.log(price.replace(/\s+/g,""));
+      if(isfree == "1" || price.replace(/\s+/g,"")=="0.00"){
+        $(".wenwo-get").text("珍藏");
         $(".votebar").show();
+      }else{
+        $(".wenwo-get").text("偷看");
       }
 
       //判断是否点赞过
@@ -2364,7 +2367,9 @@
         username : "<%= username %>",
         ask_id   : $(".wenwo-get").attr("data-askId")
       }
-      $.confirm('你确定要购买吗?', '小问提醒',
+      var str = '你确定要'+$(this).text()+'吗?';
+
+      $.confirm(str, '小问提醒',
         function () {
           $.ajax({
             type : "POST",
@@ -2438,6 +2443,9 @@
         ask_id   : askId,
         username : "<%= username %>"
       }
+
+      $.showPreloader("正在加载");
+
       //判断是否购买
       $.ajax({
         type : "GET",
@@ -2468,9 +2476,11 @@
                 lat             : result.data.GeoY,
                 askIsFree       : result.data.askIsFree,
                 askTagStr       : result.data.askTagStr,
+                likeNum         : result.data.likeNum,
                 geted           : 1
               }
 
+              $.hidePreloader();
               setDetail(extData);
               $.popup('.ask-detail');
             // askType =  askType.split(",");

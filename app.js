@@ -77,7 +77,7 @@ app.get('/', function(req, res) {
 
 console.log(user);
   //username = decodeURI(username);
-  if (user == null || user.get('user') != username) {
+  if (!user) {
     authorize(req, res);
   }
   else  {
