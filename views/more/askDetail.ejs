@@ -1056,7 +1056,7 @@ body{
           error: function(error){
             // alert(error);
             $.hidePreloader();
-            $.alert(error);
+            $.alert('error');
           }
         });
 	}
@@ -1144,7 +1144,7 @@ function getMyasks(){
           // }
           },
       error: function(error){
-          alert(error);
+          $.alert('error');
         }
       })
 }

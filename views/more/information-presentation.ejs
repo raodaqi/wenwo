@@ -843,12 +843,12 @@ $(document).on('click','#grounding', function () {
           url : "/ask/cancel",
           success : function(result){
             console.log(result);
-            $.alert('请求成功，等待管理审核');
+            $.toast('请求成功，等待管理审核');
              window.location.href="more/share";
              },
           error: function(error){
             // alert(error);
-            $.alert(error);
+            $.alert('error');
           }
         });
       });
@@ -862,12 +862,12 @@ $(document).on('click','#undercarriage', function () {
           url : "/ask/up",
           success : function(result){
             console.log(result);
-             $.alert('商品下架成功');
+             $.toast('商品下架成功');
              window.location.href="more/share";
              },
           error: function(error){
             // alert(error);
-            $.alert(error);
+            $.alert('error');
           }
         });
       });
@@ -881,12 +881,12 @@ $(document).on('click','#del', function () {
           url : "/ask/del",
           success : function(result){
             console.log(result);
-              $.alert('商品删除成功');
+              $.toast('商品删除成功');
               window.location.href="more/share";
              },
           error: function(error){
             // alert(error);
-            $.alert(error);
+            $.alert('error');
           }
         });
       });
@@ -1029,7 +1029,7 @@ $(document).on('click','#del', function () {
           error: function(error){
             // alert(error);
             $.hidePreloader();
-            $.alert(error);
+            $.alert('error');
           }
         });
 	}
@@ -1117,7 +1117,7 @@ function getMyasks(){
           // }
           },
       error: function(error){
-          alert(error);
+          $.alert('error');
         }
       })
 }

@@ -404,8 +404,19 @@ function getMyask(){
 	                   var strs = type.split(",")
 	                   console.log(strs);
 	                   var price = result.data[i].askPrice;
-	                   var url = "http://wx.qlogo.cn/mmopen/mh167obZj79Ddnr6JGFibBZuY9WtknIt76REfjA9Nia1GNQ80f4bEgCBGNVkt11wAKmYjnBgZlhH8FZvuAC8pEtOvrQWUnI48q/";
-	                var str = '<div class="information"><div class="information_img"><img src="'+url+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state blue">'+getStaus(result.data[i].staus)+'</div></div>';
+	                    var type = result.data.askType;
+                   var strs = type.split(",")
+                   console.log(strs);
+                   var showType = type.split(",")[0];
+                   var leave = parseTnt(leave) + 1;
+                   var img = '/img/common/wenwo.png';
+                   if(result.code == 200){
+
+                   }else if(result.code == 400){
+                   	img = "/img/common/theme"+showType+"-"+leave+".png";
+                   }
+	                   // var url = "http://wx.qlogo.cn/mmopen/mh167obZj79Ddnr6JGFibBZuY9WtknIt76REfjA9Nia1GNQ80f4bEgCBGNVkt11wAKmYjnBgZlhH8FZvuAC8pEtOvrQWUnI48q/";
+	                var str = '<div class="information"><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state blue">'+getStaus(result.data[i].staus)+'</div></div>';
 	          		$("#content2").append(str);
             	}
             	if(result.data[i].staus == 5)
@@ -421,8 +432,19 @@ function getMyask(){
 	                   var strs = type.split(",")
 	                   console.log(strs);
 	                   var price = result.data[i].askPrice;
-	                   var url = "http://wx.qlogo.cn/mmopen/mh167obZj79Ddnr6JGFibBZuY9WtknIt76REfjA9Nia1GNQ80f4bEgCBGNVkt11wAKmYjnBgZlhH8FZvuAC8pEtOvrQWUnI48q/";
-	                var str = '<div class="information"><div class="information_img"><img src="'+url+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state red">'+getStaus(result.data[i].staus)+'</div></div>';
+	                    var type = result.data.askType;
+                   var strs = type.split(",")
+                   console.log(strs);
+                   var showType = type.split(",")[0];
+                   var leave = parseTnt(leave) + 1;
+                   var img = '/img/common/wenwo.png';
+                   if(result.code == 200){
+
+                   }else if(result.code == 400){
+                   	img = "/img/common/theme"+showType+"-"+leave+".png";
+                   }
+	                   // var url = "http://wx.qlogo.cn/mmopen/mh167obZj79Ddnr6JGFibBZuY9WtknIt76REfjA9Nia1GNQ80f4bEgCBGNVkt11wAKmYjnBgZlhH8FZvuAC8pEtOvrQWUnI48q/";
+	                var str = '<div class="information"><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state red">'+getStaus(result.data[i].staus)+'</div></div>';
 	          		$("#content2").append(str);
           		}
             }
