@@ -311,8 +311,9 @@ function getHode(){
                    var type = result.data.askType;
                    var strs = type.split(",")
                    console.log(strs);
+                   var url = "http://wx.qlogo.cn/mmopen/mh167obZj79Ddnr6JGFibBZuY9WtknIt76REfjA9Nia1GNQ80f4bEgCBGNVkt11wAKmYjnBgZlhH8FZvuAC8pEtOvrQWUnI48q/";
           		var str = "";
-          		var str = '<div class="information" data-mid='+id+'><div class="information_img"><img src="/img/u28.png"></div><div class="information_name"><div class="information_name_word collect-concent">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tabs+'</div></div><div class="menu_icon"><div class="iconfont icon-you" style="font-size:32px;"></div></div>	</div></div>';
+          		var str = '<div class="information" data-mid='+id+'><div class="information_img"><img src="'+url+'"></div><div class="information_name"><div class="information_name_word collect-concent">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tabs+'</div></div><div class="menu_icon"><div class="iconfont icon-you" style="font-size:32px;"></div></div>	</div></div>';
           		$("#infor2").append(str);
 			           },
 			      error: function(error){
@@ -364,10 +365,13 @@ function GetHode(){
                    var type = result.data.askType;
                    var strs = type.split(",")
                    console.log(strs);
-                   var price = result.data.askPrice.replace(/\s+/g,"");;
-                   var buyNum = result.data.buyNum;
+                   var price = result.data.askPrice.replace(/\s+/g,"");
+                   console.log(price);
+                   // var buyNum = result.data.buyNum;
+                   var url = "http://wx.qlogo.cn/mmopen/mh167obZj79Ddnr6JGFibBZuY9WtknIt76REfjA9Nia1GNQ80f4bEgCBGNVkt11wAKmYjnBgZlhH8FZvuAC8pEtOvrQWUnI48q/";
+                   console.log(url);
           			var str = "";
-          			var str = '<div class="information" data-mid='+id+'><div class="information_img"><img src="/img/u28.png"></div><div class="information_name ordername"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp;&nbsp;"+getTitle(strs[1])+':'+tabs+'</span></div><div class="information_price">￥ &nbsp;'+price+'</div></div></div>';
+          			var str = '<div class="information" data-mid='+id+'><div class="information_img"><img src="'+url+'"></div><div class="information_name ordername"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp;&nbsp;"+getTitle(strs[1])+':'+tabs+'</span></div><div class="information_price">￥ &nbsp;'+price+'</div></div></div>';
           		$("#infor1").append(str);
 			           },
 			      error: function(error){
