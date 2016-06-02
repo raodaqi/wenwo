@@ -80,7 +80,8 @@ console.log(user);
   if (!user) {
     authorize(req, res);
   }
-  else  {
+  else{
+    var username = user.get('user');
     console.log(username);
     res.render('index', { username: username });
   }
