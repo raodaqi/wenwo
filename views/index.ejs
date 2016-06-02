@@ -2371,6 +2371,7 @@
 
       $.confirm(str, '小问提醒',
         function () {
+          $.showPreloader("正在购买");
           $.ajax({
             type : "POST",
             data: data,
@@ -2379,11 +2380,16 @@
             success : function(result){
               console.log(result);
               if(result.code == 200){
+                $.hidePreloader();
                 $.toast('购买成功');
                 $(".ask-get, #address-content").show();
                 $(".wenwo-get").hide();
               }else if(result.code == 600){
-                $.alert("余额不足");
+
+                $.toast("余额不足");
+                setTimeout(function(){
+                  window.location.href="/more/recharge";
+                }, 1000);
               }else{
                 $.alert(result.message);
               }
