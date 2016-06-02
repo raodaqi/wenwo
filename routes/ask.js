@@ -563,27 +563,27 @@ router.get('/cancel', function(req, res, next) {
     var userName = req.param('username');
     var query = new AV.Query('AskMe');
     query.get(askId).then(function (ask) {
-        if (askId.get('creatBy') != userName) {
+        if (ask.get('creatBy') != userName) {
             var result = {
                 code: 800,
-                data: results,
+                data: ask,
                 message: 'illegal operation'
             }
             res.send(result);
         }
         else {
             ask.set('staus', 3);
-            ask.save().then(function () {
+            ask.save().then(function (ask) {
                 var result = {
                     code: 200,
-                    data: results,
+                    data: ask,
                     message: 'Operation succeeded'
                 }
                 res.send(result);
             }, function (err) {
                 var result = {
                     code: 800,
-                    data: results,
+                    data: err,
                     message: err.message
                 }
                 res.send(result);
@@ -600,27 +600,27 @@ router.get('/up', function(req, res, next) {
     var userName = req.param('username');
     var query = new AV.Query('AskMe');
     query.get(askId).then(function (ask) {
-        if (askId.get('creatBy') != userName) {
+        if (ask.get('creatBy') != userName) {
             var result = {
                 code: 800,
-                data: results,
+                data: ask,
                 message: 'illegal operation'
             }
             res.send(result);
         }
         else {
             ask.set('staus', 2);
-            ask.save().then(function () {
+            ask.save().then(function (ask) {
                 var result = {
                     code: 200,
-                    data: results,
+                    data: ask,
                     message: 'Operation succeeded'
                 }
                 res.send(result);
             }, function (err) {
                 var result = {
                     code: 800,
-                    data: results,
+                    data: err,
                     message: err.message
                 }
                 res.send(result);

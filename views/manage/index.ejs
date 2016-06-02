@@ -252,6 +252,7 @@
                     <li class="check-bar">审核信息</li>
                     <li class="manage-bar">管理消息</li>
                     <li class="total-bar">统计信息</li>
+                    <li class="account-bar">二级标签管理</li>
                     <li class="account-bar">帐号管理</li>
                 </ul>
             </div>
@@ -385,6 +386,169 @@
 
      <script type="text/javascript" src="/js/sm.min.js"></script>
      <script type="text/javascript" src="/js/common.js"></script>
+
+     <script type="text/javascript" src="/js/plupload.full.min.js"></script>
+     <script type="text/javascript" src="/js/qiniu.min.js"></script>
+
+
+     <script>
+        var uploader = Qiniu.uploader({
+            runtimes: 'html5,flash,html4',    //上传模式,依次退化
+            browse_button: 'dropbox',       //上传选择的点选按钮，**必需**
+            uptoken_url: '/token',
+
+            domain: 'http://qiniu-plupload.qiniudn.com/',
+                //bucket 域名，下载资源时用到，**必需**
+            container: 'multiple',           //上传区域DOM ID，默认是browser_button的父元素，
+            max_file_size: '2048mb',           //最大文件体积限制
+            flash_swf_url: 'js/plupload/Moxie.swf',  //引入flash,相对路径
+            max_retries: 3,                   //上传失败最大重试次数
+            dragdrop: true,                   //开启可拖曳上传
+            drop_element: 'create-list-logo',        //拖曳上传区域元素的ID，拖曳文件或文件夹后可触发上传
+            chunk_size: '4mb',                //分块上传时，每片的体积
+            auto_start: false,                 //选择文件后自动上传，若关闭需要自己绑定事件触发上传
+            init: {
+                'FilesAdded': function(up, files) {
+                    $(".app-logo-loading").show();
+                    plupload.each(files, function(file) {
+                       var myDate=new Date();
+                       time = myDate.getTime();
+                       fileName = files[0].name;
+                       var name = files[0].name;
+
+                       fileName = "pcs/"+user+"/"+time+"/"+fileName;
+
+                       if(up.files.length > 1){
+                        for(var i = 0; i < up.files.length - 1;i++){
+                          up.removeFile(up.files[i].id);
+                        }
+                       }
+
+                       previewImage(files[0],function(imgsrc){
+                              $(".app-logo").attr("src",imgsrc);
+                              $(".app-logo-loading").hide();
+                          })
+                    });
+                },
+                'BeforeUpload': function(up, file) {
+                       // 每个文件上传前,处理相关的事情
+                },
+                'UploadProgress': function(up, file) {
+                       // 每个文件上传时,处理相关的事情
+                       $(".squre").text(file.percent+"%");
+                       console.log(file.percent);
+                       // console.log(up);
+                },
+                'FileUploaded': function(up, file, info) {
+                       console.log(info);
+                       var res = JSON.parse(info);
+                       var sourceLink = "http://7xojmy.com1.z0.glb.clouddn.com/" + res.key; //获取上传成功后的文件的Url
+                       console.log(sourceLink);
+
+                       var webappid = $(".web-app-change").attr("data-appid");
+                       if(webappid){
+                        var name = $(".web-app input[name=name]").val();
+                        var describe = $(".web-app input[name=describe]").val();
+                        var path = $(".web-app input[name=url]").val();
+                        var logo = sourceLink;
+                        if(!checkUrl(path)){
+                          tipShow("你填写的链接格式不正确");
+                          return 0;
+                        }else if(!check("应用名称不能为空",name) || !check("应用描述不能为空",describe)){
+                          return 0;
+                        }
+                        loadingShow("正在更改");
+                        var type = $(".web-app .type-li.active").data("type");
+                        var version = $(".web-app input[name=version]").val();
+                        console.log(type);
+                        // 可以先查询出要修改的那条存储
+                        var AppInfo = AV.Object.extend('AppInfo');
+                        var query = new AV.Query(AppInfo);
+                        // 这个 id 是要修改条目的 objectId，你在生成这个实例并成功保存时可以获取到，请看前面的文档
+                        query.get(webappid).then(function(post) {
+                          // 成功，回调中可以取得这个 Post 对象的一个实例，然后就可以修改它了
+                          post.set("logo", logo);
+                          post.set("describe", describe);
+                          post.set("path", path);
+                          post.set("type", type);
+                          post.set("version", version);
+                          post.set("name", name);
+                          post.save();
+                          tipShow("更改成功");
+                          loadingShow("正在刷新");
+                          setTimeout(function(){
+                            location.reload();
+                          }, 500);
+
+                        }, function(error) {
+                          // 失败了
+                          console.log(error);
+                        });
+                        return ;
+                       }
+
+                       var name = $(".web-app input[name=name]").val();
+                       var describe = $(".web-app input[name=describe]").val();
+                       var path = $(".web-app input[name=url]").val();
+                       var logo = sourceLink;
+
+                       if(!checkUrl(sourceLink) || !check("应用名称不能为空",name) || !check("应用描述不能为空",describe)){
+                          // alert("你填写的链接格式不正确");
+                          tipShow("你填写的链接格式不正确");
+                          return 0;
+                        }
+                      loadingShow("正在上传");
+                      var type = $(".web-app .type-li.active").data("type");
+                      var version = $(".web-app input[name=version]").val();
+                      console.log(type);
+
+                      var AppInfo = AV.Object.extend("AppInfo");
+                      var AppInfo = new AppInfo();
+                      AppInfo.set("logo", logo);
+                      AppInfo.set("describe", describe);
+                      AppInfo.set("path", path);
+                      AppInfo.set("type", type);
+                      AppInfo.set("version", version);
+                      AppInfo.set("name", name);
+                      AppInfo.set("uploader", user);
+
+                      AppInfo.save(null, {
+                        success: function(post) {
+                          // 成功保存之后，执行其他逻辑.
+                          // alert('success');
+                          loadingHide();
+                          tipShow("上传成功");
+                          loadingShow("正在刷新");
+                          setTimeout(function(){
+                             location.reload();
+                          }, 500);
+                        },
+                        error: function(post, error) {
+                          // alert('error');
+                          tipShow("上传失败");
+                        }
+                      });
+
+                },
+                'Error': function(up, err, errTip) {
+                       //上传出错时,处理相关的事情
+                       loadingHide();
+                       tipShow("上传出错");
+                },
+                'UploadComplete': function() {
+                       //队列文件处理完毕后,处理相关的事情
+                },
+                'Key': function(up, file) {
+                    // 若想在前端对每个文件的key进行个性化处理，可以配置该函数
+                    // 该配置必须要在 unique_names: false , save_key: false 时才生效
+                    var key = "";
+                    key = fileName;
+                    // do something with key here
+                    return key
+                }
+              }
+          });
+     </script>
 
      <!-- <script type="text/javascript" src="/js/map.js"></script> -->
      <script>
