@@ -359,21 +359,31 @@ function getMyask(){
                 	tab = tab +'<span>'+ temp[j].tag_name+'</span>';
                    }
                    var type = result.data[i].askType;
-                   var strs = type.split(",")
+                   var strs = type.split(",");
                    console.log(strs);
                    var buyNum = result.data[i].buyNum;
                    var time = formatDate("y.m.d",result.data[i].updatedAt);
                    var price = result.data[i].askPrice;
                    var mid = result.data[i].objectId;
-                   var url = "http://wx.qlogo.cn/mmopen/mh167obZj79Ddnr6JGFibBZuY9WtknIt76REfjA9Nia1GNQ80f4bEgCBGNVkt11wAKmYjnBgZlhH8FZvuAC8pEtOvrQWUnI48q/";
+                   // var url = "http://wx.qlogo.cn/mmopen/mh167obZj79Ddnr6JGFibBZuY9WtknIt76REfjA9Nia1GNQ80f4bEgCBGNVkt11wAKmYjnBgZlhH8FZvuAC8pEtOvrQWUnI48q/";
                    console.log(mid);
-                   console.log(1234);
+                    var showType = type.split(",")[0];
+                   console.log(showType);
+                   // var leave = parseTnt(0) + 1;
+                   var img = '/img/common/wenwo.png';
+                   if(result.code == 400){
+
+                   }else if(result.code == 200){
+                   	img = "/img/common/theme"+showType+'-1.png';
+                   	console.log(img);
+                   }
+                   // console.log(1234);
                    if(price == 0)
                    {
-                   	var str = '<div class="information"><div class="information_img"><img src="'+url+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+'&nbsp;&nbsp;'+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_time"><div class="left">'+time+'</div></div><div class="information_Purchase_number information_collect_number" data-mid='+mid+'>收藏人数：<span class="num">'+buyNum+'</span>人</div></div>';
+                   	var str = '<div class="information"><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+'&nbsp;&nbsp;'+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_time"><div class="left">'+time+'</div></div><div class="information_Purchase_number information_collect_number" data-mid='+mid+'>收藏人数：<span class="num">'+buyNum+'</span>人</div></div>';
                    }
                    else{
-                   var str = '<div class="information"><div class="information_img"><img src="'+url+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+'&nbsp;&nbsp;'+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_time"><div class="left">'+time+'</div></div><div class="information_Purchase_number" data-mid='+mid+'>购买人数：<span class="num">'+buyNum+'</span>人</div></div>';
+                   var str = '<div class="information"><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+'&nbsp;&nbsp;'+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_time"><div class="left">'+time+'</div></div><div class="information_Purchase_number" data-mid='+mid+'>购买人数：<span class="num">'+buyNum+'</span>人</div></div>';
                    }
           		$("#content1").append(str);
             }
@@ -401,19 +411,20 @@ function getMyask(){
 	                	tab = tab +'<span>'+ temp[j].tag_name+'</span>';
 	                   }
 	                   var type = result.data[i].askType;
-	                   var strs = type.split(",")
+	                   var strs = type.split(",");
 	                   console.log(strs);
 	                   var price = result.data[i].askPrice;
-	                    var type = result.data.askType;
-                   var strs = type.split(",")
-                   console.log(strs);
+	                    // var type = result.data.askType;
+                   // var strs = type.split(",");
+                   // console.log(strs);
                    var showType = type.split(",")[0];
-                   var leave = parseTnt(leave) + 1;
+                   // var leave = parseTnt(leave) + 1;
                    var img = '/img/common/wenwo.png';
-                   if(result.code == 200){
+                   if(result.code == 400){
 
-                   }else if(result.code == 400){
-                   	img = "/img/common/theme"+showType+"-"+leave+".png";
+                   }else if(result.code == 200){
+                   	img = "/img/common/theme"+showType+'-1.png';
+                   	console.log(img);
                    }
 	                   // var url = "http://wx.qlogo.cn/mmopen/mh167obZj79Ddnr6JGFibBZuY9WtknIt76REfjA9Nia1GNQ80f4bEgCBGNVkt11wAKmYjnBgZlhH8FZvuAC8pEtOvrQWUnI48q/";
 	                var str = '<div class="information"><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state blue">'+getStaus(result.data[i].staus)+'</div></div>';
@@ -429,19 +440,19 @@ function getMyask(){
 	                	tab = tab +'<span>'+ temp[j].tag_name+'</span>';
 	                   }
 	                   var type = result.data[i].askType;
-	                   var strs = type.split(",")
+	                   var strs = type.split(",");
 	                   console.log(strs);
 	                   var price = result.data[i].askPrice;
-	                    var type = result.data.askType;
-                   var strs = type.split(",")
-                   console.log(strs);
+	                    // var type = result.data.askType;
+                   // var strs = type.split(",");
+                   // console.log(strs);
                    var showType = type.split(",")[0];
-                   var leave = parseTnt(leave) + 1;
+                   // var leave = parseTnt(leave) + 1;
                    var img = '/img/common/wenwo.png';
-                   if(result.code == 200){
+                   if(result.code == 400){
 
-                   }else if(result.code == 400){
-                   	img = "/img/common/theme"+showType+"-"+leave+".png";
+                   }else if(result.code == 200){
+                   	img = "/img/common/theme"+showType+'-1.png';
                    }
 	                   // var url = "http://wx.qlogo.cn/mmopen/mh167obZj79Ddnr6JGFibBZuY9WtknIt76REfjA9Nia1GNQ80f4bEgCBGNVkt11wAKmYjnBgZlhH8FZvuAC8pEtOvrQWUnI48q/";
 	                var str = '<div class="information"><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state red">'+getStaus(result.data[i].staus)+'</div></div>';

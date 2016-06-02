@@ -840,7 +840,7 @@ $(document).on('click','#grounding', function () {
           type : "GET",
           data: {ask_id   : "<%= id %>",username:"<%=username%>"},
           dataType: "json",
-          url : "/ask/cancel",
+          url : "/ask/up",
           success : function(result){
             console.log(result);
             $.toast('请求成功，等待管理审核');
@@ -859,7 +859,7 @@ $(document).on('click','#undercarriage', function () {
           type : "GET",
           data: {ask_id   : "<%= id %>",username:"<%=username%>"},
           dataType: "json",
-          url : "/ask/up",
+          url : "/ask/cancel",
           success : function(result){
             console.log(result);
              $.toast('商品下架成功');

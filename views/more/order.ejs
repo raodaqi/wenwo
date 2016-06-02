@@ -309,15 +309,16 @@ function getHode(){
                    }
                    console.log(tabs);
                    var type = result.data.askType;
-                   var strs = type.split(",")
+                   var strs = type.split(",");
                    console.log(strs);
                    var showType = type.split(",")[0];
-                   var leave = parseTnt(leave) + 1;
+                   console.log(showType);
+                   // var leave = parseTnt(0) + 1;
                    var img = '/img/common/wenwo.png';
-                   if(result.code == 200){
+                   if(result.code == 400){
 
-                   }else if(result.code == 400){
-                   	img = "/img/common/theme"+showType+"-"+leave+".png";
+                   }else if(result.code == 200){
+                   	img = "/img/common/theme"+showType+'-1.png';  
                    }
                     // var url = "http://wx.qlogo.cn/mmopen/mh167obZj79Ddnr6JGFibBZuY9WtknIt76REfjA9Nia1GNQ80f4bEgCBGNVkt11wAKmYjnBgZlhH8FZvuAC8pEtOvrQWUnI48q/";
           		var str = "";
@@ -371,21 +372,22 @@ function GetHode(){
                    }
                    console.log(tabs);
                    var type = result.data.askType;
-                   var strs = type.split(",")
+                   var strs = type.split(",");
                    console.log(strs);
                    var price = result.data.askPrice.replace(/\s+/g,"");
                    console.log(price);
                    var buyNum = result.data.buyNum;
                    var showType = type.split(",")[0];
-                   var leave = parseTnt(leave) + 1;
+                   console.log(showType);
+                   // var leave = parseTnt(0) + 1;
                    var img = '/img/common/wenwo.png';
-                   if(result.code == 200){
+                   if(result.code == 400){
 
-                   }else if(result.code == 400){
-                   	img = "/img/common/theme"+showType+"-"+leave+".png";
+                   }else if(result.code == 200){
+                   	img = "/img/common/theme"+showType+'-1.png';
                    }
                    // var url = "http://wx.qlogo.cn/mmopen/mh167obZj79Ddnr6JGFibBZuY9WtknIt76REfjA9Nia1GNQ80f4bEgCBGNVkt11wAKmYjnBgZlhH8FZvuAC8pEtOvrQWUnI48q/";
-                   console.log(url);
+                   // console.log(url);
           			var str = "";
           			var str = '<div class="information" data-mid='+id+'><div class="information_img"><img src="'+img+'"></div><div class="information_name ordername"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp;&nbsp;"+getTitle(strs[1])+':'+tabs+'</span></div><div class="information_price">￥ &nbsp;'+price+'</div></div></div>';
           		$("#infor1").append(str);
