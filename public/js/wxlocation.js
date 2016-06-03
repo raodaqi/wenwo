@@ -55,10 +55,12 @@ var data = {
                 //   center: [longitude, latitude] 
                 // });
                 $.hidePreloader();
-                if(!(localStorage.lng && localStorage.lat)){
-                    map.setZoomAndCenter(14,[longitude,latitude]);
-                }
-                
+                // if(!(localStorage.lng && localStorage.lat)){
+                //     map.setZoomAndCenter(14,[longitude,latitude]);
+                // }
+                map.setZoomAndCenter(14,[longitude,latitude]);
+                $("#container").attr("data-longitude",longitude);
+                $("#container").attr("data-latitude",latitude);
             },
             error: function(error){
               console.log(error);

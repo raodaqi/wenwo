@@ -2650,6 +2650,14 @@
         }
       })
 
+    //返回我的位置
+    $("#container").on("click",".geolocation-position",function(){
+      var longitude = $("#container").attr("data-longitude");
+      var latitude  = $("#container").attr("data-latitude");
+      if(longitude && latitude){
+        map.setZoomAndCenter(14,[longitude,latitude]);
+      }
+    })
 
   </script>
 </html>
