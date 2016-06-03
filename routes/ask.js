@@ -870,8 +870,12 @@ router.post('/sendask', function(req, res, next) {
 router.get('/tagshow', function (req, res, next) {
     var type = req.query.type;
     var tag = req.query.tag;
-
-    tag = tag.split(',');
+    tag = JSON.parse(tag);
+    console.log(tag);
+    //tag = tag.split(',');
+    for (var i = 0; i < tag.length; i++) {
+        tag[i] = tag[i].tag_name;
+    }
     console.log(tag);
     // if (tag.length == 1) {
     //     var query = new AV.Query('Tag');

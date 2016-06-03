@@ -115,7 +115,7 @@
 //            },
 //            error : function(){}
 //        });
-        console.log(parseFloat('0.01'));
+        //console.log(parseFloat('0.01'));
 //        $.ajax({
 //            type: "post",
 //            url: 'hode/get',
@@ -146,10 +146,20 @@
 //            },
 //            error : function(){}
 //        });
+//        $.ajax({
+//            type: "post",
+//            url: 'manage/login',
+//            data: {name:'raodaqi', password:'rdq951019'},
+//            dataType: "json",
+//            success : function(result) {
+//                console.log(result);
+//            },
+//            error : function(){}
+//        });
         $.ajax({
-            type: "post",
-            url: 'manage/login',
-            data: {name:'raodaqi', password:'rdq951019'},
+            type: "get",
+            url: 'ask/tagshow',
+            data: {type:'1', tag:'[{"tag_name":"123"},{"tag_name":"大是大非"},{"tag_name":"美食"}]'},
             dataType: "json",
             success : function(result) {
                 console.log(result);
