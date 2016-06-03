@@ -2034,6 +2034,8 @@
                     lat             : data.GeoY,
                     askIsFree       : data.askIsFree,
                     askTagStr       : data.askTagStr,
+                    userHead        : data.createByUrl,
+                    uName           : data.createByName,
                     likeNum         : data.likeNum
                   })
                   markers.push(marker);
@@ -2141,6 +2143,8 @@
           price         = extData.price,//信息价格
           createBy      = extData.createBy,//发布者
           likeNum       = extData.likeNum,//赞踩数量
+          uName         = extData.uName,
+          userHead      = extData.userHead,
           updatedAt     = extData.updatedAt;//发布时间
       askType =  askType.split(",");
       var typeText = '';
@@ -2153,6 +2157,15 @@
       }
       //设置上传者名字
       $(".autor-name").text(createBy);
+      $(".autor-name").text(uName);
+      //设置上传者的头像
+      if(userHead){
+        $(".autor-img").attr("src",userHead);
+      }else{
+        userHead = '/img/common/wenwo.png';
+        $(".autor-img").attr("src",userHead);
+      }
+      
       //设置信息主题
       $(".autor-theme").text(typeText);
       //设置信息上传时间
@@ -2563,6 +2576,8 @@
                 askIsFree       : result.data.askIsFree,
                 askTagStr       : result.data.askTagStr,
                 likeNum         : result.data.likeNum,
+                userHead        : result.userHead,
+                uName           : result.uName,
                 geted           : 1
               }
 
