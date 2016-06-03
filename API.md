@@ -191,3 +191,10 @@ user/suggestion  `[post]`
 获取钱包信息:
 wallet/mywallet    `[get]`
 `username`   `Y`  
+
+编辑二级标签
+ask/edittag `[post]`
+`type`  `Y`
+`level`     `Y`
+`tag_name`  `Y`
+`url`   `Y`

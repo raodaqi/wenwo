@@ -1415,20 +1415,72 @@ router.post('/addtag', function (req, res, next) {
     var url = req.query.url;
     var tagname = req.query.tag_name;
 
-    var query = new AV.Query('');
-
-    var tag = new Tag();
-    tag.set('tagOrderby', type);
-    tag.set('tagName', tagname);
-    tag.set('tagUrl', url);
-    tag.save().then(function (tag) {
-        var result = {
-            code : 200,
-            data : tag,
-            message : 'operation succeeded'
+    var query = new AV.Query('Tag');
+    query.equalTo('tagName', tagname);
+    query.equalTo('tagOrderby', type);
+    query.find().then(function (resultes) {
+        if (resultes == '' || resultes == null) {
+            var tag = new Tag();
+            tag.set('tagOrderby', type);
+            tag.set('tagName', tagname);
+            tag.set('tagUrl', url);
+            tag.save().then(function (tag) {
+                var result = {
+                    code : 200,
+                    data : tag,
+                    message : 'operation succeeded'
+                }
+                res.send(result);
+            });
         }
-        res.send(result);
+        else {
+            var result = {
+                code : 600,
+                message : '该标签已存在'
+            }
+            res.send(result);
+        }
     });
+
+
+});
+
+router.post('/edittag', function (req, res, next) {
+    var type = req.param('type');
+    var level = req.param('level');
+    var name = req.param('tag_name');
+    var url = req.param('url');
+
+    var query = new AV.Query('Tag');
+    query.equalTo('tagName', name);
+    query.equalTo('tagOrderby', type);
+    query.find().then(function (resultes) {
+        if (resultes == null || resultes == '') {
+            var result = {
+                code : 600,
+                message : '该标签不存在'
+            }
+            res.send(result);
+        }
+        else  {
+            switch (level) {
+                case 0 : resultes[0].set('tagUrl', url);break;
+                case 1 : resultes[0].set('tagUrl1', url);break;
+                case 2 : resultes[0].set('tagUrl2', url);break;
+                case 3 : resultes[0].set('tagUrl3', url);break;
+            }
+            resultes[0].save().then(function (saved) {
+                var result = {
+                    code : 200,
+                    data : saved,
+                    message : '操作成功'
+                }
+                res.send(result);
+            });
+        }
+
+    });
+    
 });
 
 function setTag(tag, type, callback) {
