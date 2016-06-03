@@ -775,6 +775,7 @@ router.post('/sendask', function(req, res, next) {
     }
     var contentHide = req.param('content_hide');
     var price = req.param('price') != null ? req.param('price') : 0;
+    price = price.replace(/\s+/g,"");
 
     var tag = req.param('tag');
     if (!tag) {
