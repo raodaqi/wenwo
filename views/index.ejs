@@ -1550,7 +1550,7 @@
     })
 
     //绑定marker点击事件
-    $("#container").on("touchstart",".amap-icon",function(){
+    $("#container").bind("click",".amap-icon",function(){
       // $(this).addClass("amap-active");
       // alert("123");
       console.log("icon");
@@ -1891,7 +1891,9 @@
     $("#container").on("touchstart",function(e){
       console.log("ok");
       if($(".ask-detail").hasClass("modal-in")){
-         $.closeModal(".ask-detail");
+
+         // $.closeModal(".ask-detail");
+
          $("#ask-detail-cancel").hide();
       }
       $(".amap-active").css("-webkit-transform", "rotate(0deg) !important;");
@@ -1900,7 +1902,8 @@
     $(".marker-content").on("touchstart",".bar",function(e){
       console.log("ok");
       if($(".ask-detail").hasClass("modal-in")){
-         $.closeModal(".ask-detail");
+         // $.closeModal(".ask-detail");
+         
          $("#ask-detail-cancel").hide();
       }
     })
@@ -2525,7 +2528,7 @@
     // }
 
     //点击列表弹出详情
-    $(".marker-content").on("click","li",function(){
+    $(".popup.marker-content").bind("touchstart","li",function(){
       var askId = $(this).data("askid");
 
       var data = {
