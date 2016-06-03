@@ -788,80 +788,87 @@ router.post('/sendask', function(req, res, next) {
     }
     var remark = req.param('remark');
 
-
-    var ask = new Ask();
-    ask.set('createBy', userName);
-    ask.set('askType', type);
-    if (price == '0' || price == '0.00') {
-        ask.set('askIsFree', '1');
-    }
-    else {
-        ask.set('askIsFree', '0');
-    }
-    //ask.set('askGeo', geo);
-    ask.set('GeoX', geoX);
-    ask.set('GeoY', geoY);
-    ask.set('askPosition', position);
-    ask.set('askReason', reason);
-    ask.set('askContentShow', contentShow);
-    ask.set('askContentHide', contentHide);
-    ask.set('askPrice', price);
-    ask.set('staus', '2');
-    //ask.set('askLevel', '1');
-    ask.set('askDefault',remark);
-    ask.set('askTagStr', tag);
-    var relation = ask.relation('askTag');
-
-    tag = JSON.parse(tag);
-
-    setTag(tag, type, {
-        success:function () {
-            console.log('add');
-            var query = new AV.Query('Tag');
-            query.equalTo('tagOrderby', type);
-            query.find().then(function(results) {
-                console.log(results);
-                var relation = ask.relation('askTag');
-                for (var i = 0; i < results.length; i++) {
-                    console.log(results[i].get('tagName'));
-
-                    if (tag.length == 1) {
-                        var temp = (results[i].get('tagName') == tag[0].tag_name);
-
-                    }
-                    else if (tag.length == 2) {
-                        var temp = (results[i].get('tagName') == tag[0].tag_name) || (results[i].get('tagName') == tag[1].tag_name);
-
-                    }
-                    else if (tag.length == 3) {
-                        var temp = (results[i].get('tagName') == tag[0].tag_name) || (results[i].get('tagName') == tag[1].tag_name) || (results[i].get('tagName') == tag[2].tag_name);
-
-                    }
-                    console.log(temp);
-                    if (temp) {
-                        console.log(results[i]);
-                        relation.add(results[i]);
-                    }
-
-                }
-                ask.save().then(function(ask) {
-                    var result = {
-                        code : 200,
-                        data : ask,
-                        message : 'Operation succeeded'
-                    }
-                    res.send(result);
-                }, function(error) {
-                    // 失败
-                    console.log('Error: ' + error.code + ' ' + error.message);
-                });
-
-            });
-        },
-        error:function () {
-            
+    var query = new AV.Query('UserInfo');
+    query.get(userName).then(function (user) {
+        var ask = new Ask();
+        ask.set('createBy', userName);
+        ask.set('askType', type);
+        if (price == '0' || price == '0.00') {
+            ask.set('askIsFree', '1');
         }
+        else {
+            ask.set('askIsFree', '0');
+        }
+        //ask.set('askGeo', geo);
+        ask.set('GeoX', geoX);
+        ask.set('GeoY', geoY);
+        ask.set('askPosition', position);
+        ask.set('askReason', reason);
+        ask.set('askContentShow', contentShow);
+        ask.set('askContentHide', contentHide);
+        ask.set('askPrice', price);
+        ask.set('staus', '2');
+        ask.set('createByName', user.get('uName'));
+        ask.set('createByUrl', user.get('userHead'));
+
+        //ask.set('askLevel', '1');
+        ask.set('askDefault',remark);
+        ask.set('askTagStr', tag);
+        var relation = ask.relation('askTag');
+
+        tag = JSON.parse(tag);
+
+        setTag(tag, type, {
+            success:function () {
+                console.log('add');
+                var query = new AV.Query('Tag');
+                query.equalTo('tagOrderby', type);
+                query.find().then(function(results) {
+                    console.log(results);
+                    var relation = ask.relation('askTag');
+                    for (var i = 0; i < results.length; i++) {
+                        console.log(results[i].get('tagName'));
+
+                        if (tag.length == 1) {
+                            var temp = (results[i].get('tagName') == tag[0].tag_name);
+
+                        }
+                        else if (tag.length == 2) {
+                            var temp = (results[i].get('tagName') == tag[0].tag_name) || (results[i].get('tagName') == tag[1].tag_name);
+
+                        }
+                        else if (tag.length == 3) {
+                            var temp = (results[i].get('tagName') == tag[0].tag_name) || (results[i].get('tagName') == tag[1].tag_name) || (results[i].get('tagName') == tag[2].tag_name);
+
+                        }
+                        console.log(temp);
+                        if (temp) {
+                            console.log(results[i]);
+                            relation.add(results[i]);
+                        }
+
+                    }
+                    ask.save().then(function(ask) {
+                        var result = {
+                            code : 200,
+                            data : ask,
+                            message : 'Operation succeeded'
+                        }
+                        res.send(result);
+                    }, function(error) {
+                        // 失败
+                        console.log('Error: ' + error.code + ' ' + error.message);
+                    });
+
+                });
+            },
+            error:function () {
+
+            }
+        });
+
     });
+
 
 
 
