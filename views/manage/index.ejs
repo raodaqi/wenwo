@@ -239,6 +239,37 @@
         color: #4CAF50;
         font-weight: bolder;
     }
+    .tag-li-list{
+        /*height: 80px;*/
+        /*line-height: 100px;*/
+        /*display: inline-block;*/
+        float: left;
+        width: 200px;
+        text-align: center;
+        font-size: 18px;
+
+    }
+    .tag-img,.tag-tag,.tag-type{
+        width: 80px;
+        height: 80px;
+    }
+    .tag-tag,.tag-type{
+        width: 200px;
+        text-align: center;
+        line-height: 80px;
+    }
+    .content-title.tag li{
+        width: 100%;
+    }
+    .content-title.tag ul li:hover {
+        color: black !important;
+    }
+    .list-img{
+        width: 100px;
+    }
+    #multiple{
+        display: none;
+    }
 </style>
 <body>
     <div class="wrap">
@@ -373,18 +404,70 @@
                 </div>
                 <div class="content-title tag">
                     <ul>
-                        <li><span class="ask-id">456789adf</span><span class="del">X</span><span class="staus">已上架</span></li>
+                        <li>
+                            <div class="tag-li-list">二级标签名</div>
+                            <div class="tag-li-list">所属一级标签</div>
+                            <div class="tag-li-list list-img">无</div>
+                            <div class="tag-li-list list-img">青铜</div>
+                            <div class="tag-li-list list-img">白银</div>
+                            <div class="tag-li-list list-img">黄金</div>
+                        </li>
+                        <div class="tag-list-content">
+                            
+                        </div>
+                        <!-- <li>
+                            <div class="tag-li-list">
+                                <div class="tag-tag">火锅</div>
+                            </div>
+                            <div class="tag-li-list">
+                                <div class="tag-type">美食,出行</div>
+                            </div>
+                            <div class="tag-li-list list-img img1">
+                                <img class="tag-img" src="/img/test.jpg" alt="">
+                            </div>
+                            <div class="tag-li-list list-img img2">
+                                <img class="tag-img" src="/img/test.jpg" alt="">
+                            </div>
+                            <div class="tag-li-list list-img img3">
+                                <img class="tag-img" src="/img/test.jpg" alt="">
+                            </div>
+                            <div class="tag-li-list list-img img4">
+                                <img class="tag-img" src="/img/test.jpg" alt="">
+                            </div>
+                        </li>
 
+                        <li>
+                            <div class="tag-li-list">
+                                <div class="tag-tag">火锅</div>
+                            </div>
+                            <div class="tag-li-list">
+                                <div class="tag-type">美食,出行</div>
+                            </div>
+                            <div class="tag-li-list list-img img1">
+                                <img class="tag-img" src="/img/test.jpg" alt="">
+                            </div>
+                            <div class="tag-li-list list-img img2">
+                                <img class="tag-img" src="/img/test.jpg" alt="">
+                            </div>
+                            <div class="tag-li-list list-img img3">
+                                <img class="tag-img" src="/img/test.jpg" alt="">
+                            </div>
+                            <div class="tag-li-list list-img img4">
+                                <img class="tag-img" src="/img/test.jpg" alt="">
+                            </div>
+                        </li> -->
                     </ul>
                 </div>
                 <div class="content-title account" style="display: none">
                     <div>
-
+    
                     </div>
                 </div>
             </div>
 
         </div>
+
+        <input id="multiple" class="hidden" type="file" id="upload" multiple>
     </div>
     <script type='text/javascript' src='/js/zepto.min.js' charset='utf-8'></script>
      <!-- <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=cb84c659c88a7cc83b935a009b3a9cfd&plugin=AMap.Geocoder"></script> -->
@@ -662,6 +745,61 @@
 
     $.hidePreloader();
   }
+
+
+  //加载二级标签
+  function showTag(){
+    var data = {
+
+    };
+     $.ajax({
+        type: "get",
+        url: '/ask/getalltag',
+        data: data,
+        dataType: "json",
+        success:function(taglist){
+            console.log(taglist);
+            var str = '<li><div class="tag-li-list"><div class="tag-tag">火锅</div></div><div class="tag-li-list"><div class="tag-type">美食,出行</div></div><div class="tag-li-list list-img img1"><img class="tag-img" src="/img/test.jpg" alt=""></div><div class="tag-li-list list-img img2"><img class="tag-img" src="/img/test.jpg" alt=""></div><div class="tag-li-list list-img img3"><img class="tag-img" src="/img/test.jpg" alt=""></div><div class="tag-li-list list-img img4"><img class="tag-img" src="/img/test.jpg" alt=""></div></li>';
+            if(taglist.code == 200){
+                var list = '';
+                for(var i = 0; i < taglist.data.length; i++){
+                    var tagUrl = taglist.data[i].tagUrl ? taglist.data[i].tagUrl : "/img/add.jpg";
+                    var tagUrl1 = taglist.data[i].tagUrl1 ? taglist.data[i].tagUrl1 : "/img/add.jpg";
+                    var tagUrl2 = taglist.data[i].tagUrl2 ? taglist.data[i].tagUrl2 : "/img/add.jpg";
+                    var tagUrl3 = taglist.data[i].tagUrl3 ? taglist.data[i].tagUr3 : "/img/add.jpg";
+                    // if(!taglist.data[i].tagUrl){
+                    //     tagUrl
+                    // }
+                    var type = taglist.data[i].tagOrderby;
+                    console.log(type);
+                    type = type.split(",")
+                    var typeName = '';
+                    if(type.length == 1){
+                        typeName = formatType(type[0]);
+                    }else{
+                        typeName = formatType(type[0]) + ','+ formatType(type[1]);
+                    }
+                    list += '<li data-id="'+taglist.data[i].objectId+'"><div class="tag-li-list"><div class="tag-tag">'+taglist.data[i].tagName+'</div></div><div class="tag-li-list"><div class="tag-type">'+typeName+'</div></div><div class="tag-li-list list-img img1"><img class="tag-img" data-type="0" src="'+tagUrl+'" alt=""></div><div class="tag-li-list list-img img2"><img class="tag-img" data-type="1" src="'+tagUrl1+'" alt=""></div><div class="tag-li-list list-img img3"><img class="tag-img" data-type="2" src="'+tagUrl2+'" alt=""></div><div class="tag-li-list list-img img4"><img class="tag-img" data-type="3" src="'+tagUrl3+'" alt=""></div></li>';
+                }
+                $(".tag-list-content").append(list);
+            }
+            
+        },
+        error:function(error){
+            console.log(error);
+        },
+    });
+  }
+    showTag();
+
+    //上传更改图片
+    $(".tag-list-content").on("click",".tag-img",function(){
+        var id = $(this).parent().parent("li").attr("data-id");
+        var type = $(this).attr("data-type");
+        console.log(id);
+        console.log(type);
+        $("#multiple").click();
+    })
 
   //在输入框内添加标签
     $(".input-edit").on("input change",function(){

@@ -96,6 +96,9 @@
     #detail,.de-show{
       height: 150px;
       word-break:break-all;
+      /*overflow: scroll;*/
+    }
+    .de-show{
       overflow: scroll;
     }
     .ww-typeHelper,.add-search {
@@ -605,7 +608,7 @@
                           <div class="item-media item-left"><i class="iconfont icon-qian"></i></div>
                           <div class="item-media item-right"><i class="iconfont icon-youjiantou"></i></div>
                           <div class="item-inner">
-                            <div class="item-title">价格</div>
+                            <div class="item-title">信息价格</div>
                           </div>
                         </a>
                       </li>
@@ -1762,7 +1765,7 @@
             lng,//经度
             lat,//维度
             isfree = 1,//是否是免费信息
-            price;//信息价格
+            price = 0.00;//信息价格
 
         //获取主题
         var $_active = $(".theme-li-active");
@@ -1822,9 +1825,9 @@
         }
 
         //获取信息价格
-        price = $("#price-picker").val();
+        price = $("#price-picker").val().replace(/\s+/g,"");
         console.log(price);
-        if(price == "0 . 0 0"){
+        if(price == "0 . 0 0" || price == "0.00"){
           isfree = 1;
         }else{
           isfree = 0;

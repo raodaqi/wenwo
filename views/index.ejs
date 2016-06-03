@@ -776,6 +776,11 @@
     margin:0;
     padding:0;
   }
+  .bar-tab{
+    position: absolute;
+    /*background-color:#efc553; */
+    bottom:0;
+  }
 
   </style>
   <body>
@@ -1566,7 +1571,9 @@
       console.log(askTagStr[0]);
       var tagList = '';
       for(var i = 0; i < askTagStr.length;i++){
-        tagList += '<div class="type-item">'+askTagStr[i].tag_name+'</div>' 
+        if(askTagStr[i].tag_name){
+          tagList += '<div class="type-item">'+askTagStr[i].tag_name+'</div>'
+        }  
       }
       var div = '<div class="amap-marker-list-content" style="display:none"><div class="up">'+tagList+'<div class="up-price-right">￥'+extData.price+'</div></div><div class="down">'+extData.askReason+'</div></div>';
       $(this).after(div);
@@ -2016,6 +2023,7 @@
                     tagName         : data.askTag,
                     askReason       : data.askReason,
                     askContentShow  : data.askContentShow,
+                    askContentHide  : data.askContentHide,
                     price           : data.askPrice,
                     createBy        : data.createBy,
                     updatedAt       : data.updatedAt,
@@ -2123,6 +2131,7 @@
           askTagStr     = extData.askTagStr,//二级标签
           reason        = extData.askReason,//推荐理由
           content_show  = extData.askContentShow,//详情显示部分
+          content_hide  = extData.askContentHide,//详情显示部分
           lng           = extData.lng,//经度
           lat           = extData.lat,//维度
           isfree        = extData.askIsFree,//是否是免费信息
@@ -2179,6 +2188,22 @@
           detailContent += str[i]+hidden;
         }
       }
+      console.log("price:"+price+"isfree:"+isfree);
+      if(price == "0.00" || isfree == "1"){ 
+      console.log("ko"); 
+        //解析详情
+        var show = content_show.split("##");
+        var hidden = content_hide.split("##");
+        detailContent = '';
+        for(var i = 0; i < hidden.length;i++){
+          detailContent += show[i] + hidden[i];
+        }
+        if(!hidden.length){
+          detailContent = show;
+        }
+      }
+
+
       $("#detail-content  .card-content-inner").empty();
       $("#detail-content  .card-content-inner").append(detailContent);
 
@@ -2475,6 +2500,7 @@
                 tagName         : result.data.askTag,
                 askReason       : result.data.askReason,
                 askContentShow  : result.data.askContentShow,
+                askContentHide  : result.data.askContentHide,
                 price           : result.data.askPrice,
                 createBy        : result.data.createBy,
                 updatedAt       : result.data.updatedAt,

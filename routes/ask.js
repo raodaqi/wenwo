@@ -48,7 +48,11 @@ router.get('/allask', function(req, res, next) {
     query.find().then(function(results) {
         //console.log(results);
         for (var i = 0; i < results.length; i++) {
-            results[i].attributes.askContentHide = '****';
+            // results[i].attributes.askContentHide = '****';
+            if(results[i].attributes.askIsFree == "0" || results[i].attributes.askPrice !="0.00"){
+                results[i].attributes.askContentHide = '****';
+            }
+
             // var test = results[i].get('askTag');
             // console.log(test);
             // var relation = results[i].relation('askTag');
@@ -160,7 +164,11 @@ router.get('/askdetail', function(req, res, next) {
                 var query = new AV.Query('AskMe');
                 query.get(askId).then(function (post) {
 
-                    post.attributes.askContentHide = '****';
+                    console.log(post.attributes.askIsFree);
+                    if(post.attributes.askIsFree == "0" || post.attributes.askPrice !="0.00"){
+                        post.attributes.askContentHide = '****';
+                    }
+                    
                     var result = {
                         code : 200,
                         nobuy : '1',
@@ -201,7 +209,10 @@ router.get('/askdetail', function(req, res, next) {
                 if (flag == 0) {
                     var query = new AV.Query('AskMe');
                     query.get(askId).then(function (post) {
-                        post.attributes.askContentHide = '****';
+                        // post.attributes.askContentHide = '****';
+                        if(post.attributes.askIsFree == "0" || post.attributes.askPrice!="0.00"){
+                            post.attributes.askContentHide = '****';
+                        }
                         var result = {
                             code : 200,
                             nobuy : '1',
@@ -221,7 +232,10 @@ router.get('/askdetail', function(req, res, next) {
         else {
             var query = new AV.Query('AskMe');
             query.get(askId).then(function (post) {
-                post.attributes.askContentHide = '****';
+                // post.attributes.askContentHide = '****';
+                 if(post.attributes.askIsFree == "0" || post.attributes.askPrice!="0.00"){
+                    post.attributes.askContentHide = '****';
+                }
                 var result = {
                     code : 200,
                     nobuy : '1',
@@ -296,7 +310,7 @@ router.post('/askedit', function(req, res, next) {
         }
         if (price != null) {
             ask.set('askPrice', price);
-            if (price == '0') {
+            if (price == '0' || price == "0.00") {
                 ask.set('askIsFree', '1');
             }
             else {
@@ -761,6 +775,7 @@ router.post('/sendask', function(req, res, next) {
     }
     var contentHide = req.param('content_hide');
     var price = req.param('price') != null ? req.param('price') : 0;
+
     var tag = req.param('tag');
     if (!tag) {
         var result = {
@@ -776,7 +791,7 @@ router.post('/sendask', function(req, res, next) {
     var ask = new Ask();
     ask.set('createBy', userName);
     ask.set('askType', type);
-    if (price == '0') {
+    if (price == '0' || price == '0.00') {
         ask.set('askIsFree', '1');
     }
     else {
@@ -1317,6 +1332,26 @@ router.get('/gettag', function (req, res, next) {
     }
     mainquery.addDescending('times');
 
+
+    mainquery.find().then(function (list) {
+        console.log(list);
+        var result = {
+            code : 200,
+            data : list,
+            message : 'Operation succeeded'
+        }
+        res.send(result);
+    });
+});
+
+router.get('/getalltag', function (req, res, next) {
+    var size = req.param('size') != null ? req.param('size') : null;
+
+    var mainquery = new AV.Query('Tag');
+    if (size != null) {
+        mainquery.limit(size);
+    }
+    mainquery.addDescending('times');
 
     mainquery.find().then(function (list) {
         console.log(list);
