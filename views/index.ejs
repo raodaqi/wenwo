@@ -365,7 +365,7 @@
       height: 100%;
       box-sizing: border-box;
       background-color: #efc553;
-      padding-bottom: 30px;
+      padding-bottom: 50px;
       padding-top: 10px;
     }
 
@@ -778,7 +778,7 @@
   }
   .bar-tab{
     position: absolute;
-    /*background-color:#efc553; */
+    background-color:#efc553; 
     bottom:0;
   }
 
@@ -1036,8 +1036,8 @@
               <a class="item-link item-content">
                 <div class="item-media item-left"> <i class="iconfont icon-dingwei"></i>
                 </div>
-                <div class="item-media item-right"> <i class="iconfont icon-youjiantou"></i>
-                </div>
+                <!-- <div class="item-media item-right"> <i class="iconfont icon-youjiantou"></i>
+                </div> -->
                 <div class="item-inner">
                   <div class="item-title ">成都信息工程大学</div>
                 </div>
@@ -1071,11 +1071,10 @@
     </div>
 
     <div class="wenwo-get button">偷看</div>
-
-     <nav class="bar-tab">
-      <div class="iconfont icon-x ask-detail-cancel"></div>
-    </nav>
   </div>
+  <nav class="bar-tab" id="ask-detail-cancel" style="display:none">
+    <div class="iconfont icon-x ask-detail-cancel"></div>
+  </nav>
 </div>
 
     <!-- <div class="page page-current" id='router'>
@@ -1363,7 +1362,7 @@
     // $(".amap-marker-list-content").remove();
     // $(".amap-active").removeClass("amap-active");
     $.closeModal('.ask-detail');
-
+    $("#ask-detail-cancel").hide();
   })
 
       // var map = new AMap.Map('container',{
@@ -1893,6 +1892,7 @@
       console.log("ok");
       if($(".ask-detail").hasClass("modal-in")){
          $.closeModal(".ask-detail");
+         $("#ask-detail-cancel").hide();
       }
       $(".amap-active").css("-webkit-transform", "rotate(0deg) !important;");
     })
@@ -1901,12 +1901,15 @@
       console.log("ok");
       if($(".ask-detail").hasClass("modal-in")){
          $.closeModal(".ask-detail");
+         $("#ask-detail-cancel").hide();
       }
     })
 
     $("#container").on("touchstart",".amap-marker-list-content",function(e){
       // console.log($(this));
       $.popup('.ask-detail');
+      $("#ask-detail-cancel").show();
+
       console.log("test");
       $(".amap-active").css("-webkit-transform", "rotate(90deg) !important;");
     })
@@ -2212,6 +2215,7 @@
       if(isfree == "1" || price.replace(/\s+/g,"")=="0.00"){
         $(".wenwo-get").text("珍藏");
         $(".votebar").show();
+        $("#address-content").show();
       }else{
         $(".wenwo-get").text("偷看");
       }
@@ -2252,6 +2256,9 @@
 
 
       if(!extData.geted){
+
+        // $.showPreloader("正在查询");
+
         var data = {
           ask_id   : askId,
           username : "<%= username %>"
@@ -2263,12 +2270,13 @@
           dataType: "json",
           url : "/ask/askdetail",
           success : function(result){
+
+            // $.hidePreloader();
             console.log(result);
             if(result.nobuy == "1"){
               $(".ask-get, #address-content").hide();
               $(".wenwo-get").show();
               $(".votebar").show();
-
             }else{
               $(".ask-get, #address-content").show();
               $(".wenwo-get").hide();
@@ -2283,14 +2291,37 @@
               if(!hidden.length){
                 reasonDetail = show;
               }
+
+              //解析详情
+              console.log("ceshi:"+reasonDetail);
+
+
               $("#detail-content  .card-content-inner").empty();
               $("#detail-content  .card-content-inner").append(reasonDetail);
             }
+
+            if(result.data.askIsFree == "1" || result.data.askPrice == "0.00"){
+              $("#address-content").show();
+            }
           },
           error : function(error){
+            $.hidePreloader();
             $.alert('网络异常');
           }
         });
+      }else{
+        //解析详情
+        var show = content_show.split("##");
+        var hidden = content_hide.split("##");
+        detailContent = '';
+        for(var i = 0; i < hidden.length;i++){
+          detailContent += show[i] + hidden[i];
+        }
+        if(!hidden.length){
+          detailContent = show;
+        }
+        $("#detail-content  .card-content-inner").empty();
+        $("#detail-content  .card-content-inner").append(detailContent);
       }
       // var data = {
       //   ask_id   : askId,
@@ -2493,7 +2524,30 @@
             }else{
               $(".ask-get, #address-content").show();
               $(".wenwo-get").hide();
+
+              var show = result.data.askContentShow.split("##");
+              var hidden = result.data.askContentHide.split("##");
+              var reasonDetail = '';
+              for(var i = 0; i < hidden.length;i++){
+                reasonDetail += show[i] + hidden[i];
+              }
+              if(!hidden.length){
+                reasonDetail = show;
+              }
+
+              //解析详情
+              console.log("ceshi:"+reasonDetail);
+
+
+              $("#detail-content  .card-content-inner").empty();
+              $("#detail-content  .card-content-inner").append(reasonDetail);
             }
+
+
+            if(result.data.askIsFree == "1" || result.data.askPrice == "0.00"){
+              $("#address-content").show();
+            }
+
             var extData = {
                 askType         : result.data.askType,
                 askId           : result.data.objectId,
@@ -2515,6 +2569,7 @@
               $.hidePreloader();
               setDetail(extData);
               $.popup('.ask-detail');
+              $("#ask-detail-cancel").show();
             // askType =  askType.split(",");
             // var typeText = '';
             // console.log(askType);
