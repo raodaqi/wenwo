@@ -830,7 +830,7 @@ body{
                 </div>
               </div>
 
-              <div class="del">退款</div>
+              <!-- <div class="del">退款</div> -->
               <!-- <div class="card" id="price-content" data-href="router6">
                 <div class="card-header">价格</div>
                 <div class="card-content">
@@ -908,44 +908,44 @@ body{
     // $(".modal-in").show();
 
   // })
-  $(document).on('click','.del', function () {
-      $.prompt('请填写退款理由', function (value) {
-         var str = $(".modal-text-input").val();
-          console.log(str);
-         if( str ==''){
-          $.toast('退款理由不能为空 ');
-          // console.log(12345);
-          return  ;
-         }
-         else{
-          var data = {
-                  ask_id   : "<%= id %>",
-                  username : "<%= username %>",
-                  refundInfo: str 
-                   }
-           $.ajax({
-          type : "POST",
-          data: data,
-          dataType: "json",
-          url : "/hode/refund",
-          success : function(result){
-             $.toast('你已成功申请退款 ');
-             window.location.href = "/more/order";
-             },
-          error: function(error){
-            // alert(error);
-            // $.hidePreloader();
-            $.alert(error);
-          }
-        });
+  // $(document).on('click','.del', function () {
+  //     $.prompt('请填写退款理由', function (value) {
+  //        var str = $(".modal-text-input").val();
+  //         console.log(str);
+  //        if( str ==''){
+  //         $.toast('退款理由不能为空 ');
+  //         // console.log(12345);
+  //         return  ;
+  //        }
+  //        else{
+  //         var data = {
+  //                 ask_id   : "<%= id %>",
+  //                 username : "<%= username %>",
+  //                 refundInfo: str 
+  //                  }
+  //          $.ajax({
+  //         type : "POST",
+  //         data: data,
+  //         dataType: "json",
+  //         url : "/hode/refund",
+  //         success : function(result){
+  //            $.toast('你已成功申请退款 ');
+  //            window.location.href = "/more/order";
+  //            },
+  //         error: function(error){
+  //           // alert(error);
+  //           // $.hidePreloader();
+  //           $.alert(error);
+  //         }
+  //       });
 
-        }
-      });
-  });
-  $(".modal-button").click(function(){
-    $(".modal-overlay-visible").hide();
-    $(".modal-in").hide();
-  })
+  //       }
+  //     });
+  // });
+  // $(".modal-button").click(function(){
+  //   $(".modal-overlay-visible").hide();
+  //   $(".modal-in").hide();
+  // })
 	function formatDetail(data){
 		
 		var staus           = data.staus,     //状态
