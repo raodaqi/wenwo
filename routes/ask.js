@@ -1464,10 +1464,10 @@ router.post('/edittag', function (req, res, next) {
         }
         else  {
             switch (level) {
-                case 0 : resultes[0].set('tagUrl', url);break;
-                case 1 : resultes[0].set('tagUrl1', url);break;
-                case 2 : resultes[0].set('tagUrl2', url);break;
-                case 3 : resultes[0].set('tagUrl3', url);break;
+                case '0' : resultes[0].set('tagUrl', url);break;
+                case '1' : resultes[0].set('tagUrl1', url);break;
+                case '2' : resultes[0].set('tagUrl2', url);break;
+                case '3' : resultes[0].set('tagUrl3', url);break;
             }
             resultes[0].save().then(function (saved) {
                 var result = {

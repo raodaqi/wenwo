@@ -156,10 +156,20 @@
 //            },
 //            error : function(){}
 //        });
+//        $.ajax({
+//            type: "get",
+//            url: 'ask/tagshow',
+//            data: {type:'1', tag:'[{"tag_name":"123"},{"tag_name":"大是大非"},{"tag_name":"美食"}]'},
+//            dataType: "json",
+//            success : function(result) {
+//                console.log(result);
+//            },
+//            error : function(){}
+//        });
         $.ajax({
-            type: "get",
-            url: 'ask/tagshow',
-            data: {type:'1', tag:'[{"tag_name":"123"},{"tag_name":"大是大非"},{"tag_name":"美食"}]'},
+            type: "post",
+            url: 'ask/edittag',
+            data: {type:'1',level:'1', tag_name:'美食', url:'hahhahahhahaha'},
             dataType: "json",
             success : function(result) {
                 console.log(result);
