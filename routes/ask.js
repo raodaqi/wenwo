@@ -876,7 +876,7 @@ router.get('/tagshow', function (req, res, next) {
     for (var i = 0; i < tag.length; i++) {
         tag[i] = tag[i].tag_name;
     }
-    console.log(tag);
+    // console.log(tag);
     // if (tag.length == 1) {
     //     var query = new AV.Query('Tag');
     //     query.equalTo('tagName', tag[0]);
@@ -1739,6 +1739,20 @@ function setTag(tag, type, callback) {
 
 }
 
-
+function findUrl(type, tag, index, res) {
+    if (tag[index] == '' || tag[index] == null) {
+        var result = {
+            code : 404,
+            url : '',
+            message : '无效url'
+        }
+        res.send(result);
+    }
+    else {
+        var query = new AV.Query('Tag');
+        query.equalTo('tagName', tag[index]);
+        query.contains('type', type);
+    }
+}
 
 module.exports = router;
