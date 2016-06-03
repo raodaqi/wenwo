@@ -165,7 +165,7 @@ router.get('/askdetail', function(req, res, next) {
                 query.get(askId).then(function (post) {
 
                     console.log(post.attributes.askIsFree);
-                    if(post.attributes.askIsFree == "0" || post.attributes.askPrice !="0.00"){
+                    if((post.attributes.askIsFree == "0" && parseFloat(post.attributes.askPrice) != 0 )){
                         post.attributes.askContentHide = '****';
                     }
                     
@@ -1067,7 +1067,7 @@ router.get('/tagshow', function (req, res, next) {
                                         if ((type.indexOf(resultes[i].get('tagOrderby')) >= 0  || resultes[i].get('tagOrderby').indexOf(type) >= 0) && resultes[i].get('tagUrl') != '') {
                                             var result = {
                                                 code : 200,
-                                                url : resultes[i].get('tagUrl'),
+                                                url : resultes[i],
                                                 message : '操作成功'
                                             }
                                             res.send(result);
@@ -1103,7 +1103,7 @@ router.get('/tagshow', function (req, res, next) {
                             if ((type.indexOf(resultes[i].get('tagOrderby')) >= 0  || resultes[i].get('tagOrderby').indexOf(type) >= 0) && resultes[i].get('tagUrl') != '') {
                                 var result = {
                                     code : 200,
-                                    url : resultes[i].get('tagUrl'),
+                                    url : resultes[i],
                                     message : '操作成功'
                                 }
                                 res.send(result);
@@ -1129,7 +1129,7 @@ router.get('/tagshow', function (req, res, next) {
                                         if ((type.indexOf(resultes[i].get('tagOrderby')) >= 0  || resultes[i].get('tagOrderby').indexOf(type) >= 0) && resultes[i].get('tagUrl') != '') {
                                             var result = {
                                                 code : 200,
-                                                url : resultes[i].get('tagUrl'),
+                                                url : resultes[i],
                                                 message : '操作成功'
                                             }
                                             res.send(result);
@@ -1178,7 +1178,7 @@ router.get('/tagshow', function (req, res, next) {
                 if ((type.indexOf(resultes[i].get('tagOrderby')) >= 0  || resultes[i].get('tagOrderby').indexOf(type) >= 0) && resultes[i].get('tagUrl') != '') {
                     var result = {
                         code : 200,
-                        url : resultes[i].get('tagUrl'),
+                        url : resultes[i],
                         message : '操作成功'
                     }
                     res.send(result);
@@ -1208,7 +1208,7 @@ router.get('/tagshow', function (req, res, next) {
                                         if (type.indexOf(resultes[i].get('tagOrderby')) >= 0  || resultes[i].get('tagOrderby').indexOf(type) >= 0) {
                                             var result = {
                                                 code : 200,
-                                                url : resultes[i].get('tagUrl'),
+                                                url : resultes[i],
                                                 message : '操作成功'
                                             }
                                             res.send(result);
@@ -1242,7 +1242,7 @@ router.get('/tagshow', function (req, res, next) {
                             if (type.indexOf(resultes[i].get('tagOrderby')) >= 0  || resultes[i].get('tagOrderby').indexOf(type) >= 0) {
                                 var result = {
                                     code : 200,
-                                    url : resultes[i].get('tagUrl'),
+                                    url : resultes[i],
                                     message : '操作成功'
                                 }
                                 res.send(result);
@@ -1267,7 +1267,7 @@ router.get('/tagshow', function (req, res, next) {
                                         if (type.indexOf(resultes[i].get('tagOrderby')) >= 0  || resultes[i].get('tagOrderby').indexOf(type) >= 0) {
                                             var result = {
                                                 code : 200,
-                                                url : resultes[i].get('tagUrl'),
+                                                url : resultes[i],
                                                 message : '操作成功'
                                             }
                                             res.send(result);
@@ -1414,6 +1414,9 @@ router.post('/addtag', function (req, res, next) {
     var type = req.query.type;
     var url = req.query.url;
     var tagname = req.query.tag_name;
+
+    var query = new AV.Query('');
+
     var tag = new Tag();
     tag.set('tagOrderby', type);
     tag.set('tagName', tagname);
