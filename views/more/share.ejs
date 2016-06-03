@@ -344,7 +344,7 @@ function getMyask(){
 						type : "get",
 				        dataType: "json",
 				        url : "/ask/tagshow",
-				        data:{tag:tag},
+				        data:{tag:tag,type:1},
 				        success : function(result){
           				console.log(result);
           				// var photo = result.data.userHead;
@@ -367,7 +367,6 @@ function getMyask(){
                    var time = formatDate("y.m.d",result.data[i].updatedAt);
                    var price = result.data[i].askPrice;
                    var mid = result.data[i].objectId;
-                   // var url = "http://wx.qlogo.cn/mmopen/mh167obZj79Ddnr6JGFibBZuY9WtknIt76REfjA9Nia1GNQ80f4bEgCBGNVkt11wAKmYjnBgZlhH8FZvuAC8pEtOvrQWUnI48q/";
                    console.log(mid);
                     var showType = type.split(",")[0];
                    console.log(showType);
@@ -379,7 +378,6 @@ function getMyask(){
                    	img = "/img/common/theme"+showType+'-1.png';
                    	console.log(img);
                    }
-                   // console.log(1234);
                    if(price == 0)
                    {
                    	var str = '<div class="information"><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+'&nbsp;&nbsp;'+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_time"><div class="left">'+time+'</div></div><div class="information_Purchase_number information_collect_number" data-mid='+mid+'>收藏人数：<span class="num">'+buyNum+'</span>人</div></div>';
@@ -396,11 +394,9 @@ function getMyask(){
 						type : "get",
 				        dataType: "json",
 				        url : "/ask/tagshow",
-				        data:{tag:tag},
+				        data:{tag:tag,type:2},
 				        success : function(result){
           				console.log(result);
-          				// var photo = result.data.userHead;
-          				// $(".information_img").attr("src",photo);
           				 },
      					 	error: function(error){
          			 		$.alert('网络异常');
@@ -428,7 +424,6 @@ function getMyask(){
                    	img = "/img/common/theme"+showType+'-1.png';
                    	console.log(img);
                    }
-	                   // var url = "http://wx.qlogo.cn/mmopen/mh167obZj79Ddnr6JGFibBZuY9WtknIt76REfjA9Nia1GNQ80f4bEgCBGNVkt11wAKmYjnBgZlhH8FZvuAC8pEtOvrQWUnI48q/";
 	                var str = '<div class="information"><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state blue">'+getStaus(result.data[i].staus)+'</div></div>';
 	          		$("#content2").append(str);
             	}
@@ -456,7 +451,6 @@ function getMyask(){
                    }else if(result.code == 200){
                    	img = "/img/common/theme"+showType+'-1.png';
                    }
-	                   // var url = "http://wx.qlogo.cn/mmopen/mh167obZj79Ddnr6JGFibBZuY9WtknIt76REfjA9Nia1GNQ80f4bEgCBGNVkt11wAKmYjnBgZlhH8FZvuAC8pEtOvrQWUnI48q/";
 	                var str = '<div class="information"><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state red">'+getStaus(result.data[i].staus)+'</div></div>';
 	          		$("#content2").append(str);
           		}
