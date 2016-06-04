@@ -299,9 +299,10 @@ $(".content-block").on("click",".information_Purchase_number",function(){
 	window.location.href="/more/purchase-detail/"+mid;	
 })
 $(".informations").on("click",".information",function(){
-	// console.log(1);
-	var id = $(this).attr("data-id");
-	window.location.href = "/more/information-presentation/"+id;
+	console.log(1);
+	var mid = $(this).attr("data-mid");
+	console.log(mid);
+	window.location.href = "/more/information-presentation/"+mid;
 })
 
 $(".zuo").click(function(){
@@ -383,10 +384,10 @@ function getMyask(){
                    }
                    if(price == 0)
                    {
-                   	var str = '<div class="information data-id = '+mid+'"><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+'&nbsp;&nbsp;'+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_time"><div class="left">'+time+'</div></div><div class="information_Purchase_number information_collect_number" data-mid='+mid+'>收藏人数：<span class="num">'+buyNum+'</span>人</div></div>';
+                   	var str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+'&nbsp;&nbsp;'+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_time"><div class="left">'+time+'</div></div><div class="information_Purchase_number information_collect_number" data-mid='+mid+'>收藏人数：<span class="num">'+buyNum+'</span>人</div></div>';
                    }
                    else{
-                   var str = '<div class="information data-id = '+mid+'"><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+'&nbsp;&nbsp;'+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_time"><div class="left">'+time+'</div></div><div class="information_Purchase_number" data-mid='+mid+'>购买人数：<span class="num">'+buyNum+'</span>人</div></div>';
+                   var str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+'&nbsp;&nbsp;'+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_time"><div class="left">'+time+'</div></div><div class="information_Purchase_number" data-mid='+mid+'>购买人数：<span class="num">'+buyNum+'</span>人</div></div>';
                    }
           		$("#content1").append(str);
             }
@@ -415,6 +416,8 @@ function getMyask(){
 	                   var strs = type.split(",");
 	                   console.log(strs);
 	                   var price = result.data[i].askPrice;
+	                   var mid = result.data[i].objectId;
+	                   console.log(mid);
 	                    // var type = result.data.askType;
                    // var strs = type.split(",");
                    // console.log(strs);
@@ -427,7 +430,7 @@ function getMyask(){
                    	img = "/img/common/theme"+showType+'-1.png';
                    	console.log(img);
                    }
-	                var str = '<div class="information data-id = '+mid+'"><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state blue">'+getStaus(result.data[i].staus)+'</div></div>';
+	                var str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state blue">'+getStaus(result.data[i].staus)+'</div></div>';
 	          		$("#content2").append(str);
             	}
             	if(result.data[i].staus == 5)
@@ -443,6 +446,8 @@ function getMyask(){
 	                   var strs = type.split(",");
 	                   console.log(strs);
 	                   var price = result.data[i].askPrice;
+	                   var mid = result.data[i].objectId;
+	                   console.log(mid);
 	                    // var type = result.data.askType;
                    // var strs = type.split(",");
                    // console.log(strs);
@@ -454,7 +459,7 @@ function getMyask(){
                    }else if(result.code == 200){
                    	img = "/img/common/theme"+showType+'-1.png';
                    }
-	                var str = '<div class="information data-id = '+mid+'"><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state red">'+getStaus(result.data[i].staus)+'</div></div>';
+	                var str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state red">'+getStaus(result.data[i].staus)+'</div></div>';
 	          		$("#content2").append(str);
           		}
             }
