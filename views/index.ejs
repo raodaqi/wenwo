@@ -815,7 +815,7 @@
             </div>
             <div class="list-li" data-href="/more/contact-us">
               <span class="iconfont icon-dianhua"></span>
-              <label>联系我们</label>
+              <label>意见反馈</label>
             </div>
           </div>
         </div>
@@ -999,10 +999,10 @@
         <img class="autor-img" src="/img/test.jpg">
         <div class="autor-text">
           <div class="autor-list-content">
-          来自：<span class="autor-name">jessica</span>
-          的<span class="autor-theme">防坑</span>指南
+          来自：<span class="autor-name"></span>
+          的<span class="autor-theme"></span>指南
           </div>
-          <label class="autor-time">2016.04.20</label>
+          <label class="autor-time">-.-.-</label>
         </div>
       </div>
     </div>
@@ -2027,7 +2027,7 @@
                       image : image,//24px*24px
                       size : new AMap.Size(50,50)
                   });
-                  var marker = new AMap.Marker({
+                  marker = new AMap.Marker({
                     icon : icon,//24px*24px
                     map : map,
                     position: [data.GeoX,data.GeoY],
@@ -2058,7 +2058,7 @@
                   markers.push(marker);
 
                   //监听marker点击事件
-                  marker.on("click",function(){
+                  marker.on("touchstart",function(){
                     console.log("点击marker");
                     extData =  this.getExtData();
                     console.log("点击前");
@@ -2143,6 +2143,24 @@
         }
       });
     }
+
+    //监听marker点击事件
+                  // markers.on("click",function(){
+                  //   console.log("点击marker");
+                  //   extData =  this.getExtData();
+                  //   console.log("点击前");
+                  //   console.log(extData);
+                  //   var lng = extData.lng;
+                  //   var lat = extData.lat;
+                  //   console.log(extData.askTagStr);
+                  //   // $("")
+                  //   $(".up").text();
+                  //   $(".down").text(extData.askReason+"test");
+                  //   console.log(extData);
+                  //   setDetail(extData);
+                  //   // //设置地图中心位置为点击的marker上
+                  //   map.setZoomAndCenter(map.getZoom(),[lng,lat]);
+                  // });
 
 
     function setDetail(extData){
@@ -2457,7 +2475,7 @@
 
       $.confirm(str, '小问提醒',
         function () {
-          $.showPreloader("正在购买");
+          $.showPreloader("正在"+str.split("你确定要")[1].split("吗?")[0]);
           $.ajax({
             type : "POST",
             data: data,
@@ -2467,7 +2485,7 @@
               console.log(result);
               if(result.code == 200){
                 $.hidePreloader();
-                $.toast('购买成功');
+                $.toast('操作成功');
                 $(".ask-get, #address-content").show();
                 $(".wenwo-get").hide();
               }else if(result.code == 600){
