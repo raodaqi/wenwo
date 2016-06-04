@@ -23,7 +23,7 @@ var Like = AV.Object.extend('Like');
 router.get('/allask', function(req, res, next) {
     //page      size
     var page = req.param('page') != null ? req.param('page') : 0;
-    var size = req.param('size') != null ? req.param('size') : null;
+    var size = req.param('size') != null ? req.param('size') : 1000;
     var staus = req.param('staus') != null ? req.param('staus') : '1';
     var type = req.param('type') != null ? req.param('type') : null;
     //console.log(staus);
