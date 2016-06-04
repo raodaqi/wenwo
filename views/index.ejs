@@ -1206,7 +1206,7 @@
             </div>
             <div class="list-li" data-href="/more/contact-us">
               <span class="iconfont icon-dianhua"></span>
-              <label>联系我们</label>
+              <label>意见反馈</label>
             </div>
           </div>
         <!-- </div> -->
@@ -1417,6 +1417,13 @@
         }else{
           detailContent += str[i]+hidden;
         }
+
+        if(str.length == 1){
+          detailContent = str[i];
+        }
+      }
+      if(str.length == 0){
+        detailContent = hidden;
       }
       console.log("price:"+price+"isfree:"+isfree);
       if(price == "0.00" || isfree == "1"){ 
@@ -1519,8 +1526,26 @@
 
               //解析详情
               console.log("ceshi:"+reasonDetail);
+              $("#detail-content  .card-content-inner").empty();
+              $("#detail-content  .card-content-inner").append(reasonDetail);
+            }
 
+            if(result.own){
+              $("#address-content").show();
+              $(".wenwo-get").hide();
+              $(".votebar").show();
 
+              var show = result.data.askContentShow.split("##");
+              var hidden = result.data.askContentHide.split("##");
+              var reasonDetail = '';
+              for(var i = 0; i < hidden.length;i++){
+                reasonDetail += show[i] + hidden[i];
+              }
+              if(!hidden.length){
+                reasonDetail = show;
+              }
+              //解析详情
+              console.log("ceshi:"+reasonDetail);
               $("#detail-content  .card-content-inner").empty();
               $("#detail-content  .card-content-inner").append(reasonDetail);
             }
@@ -2732,6 +2757,19 @@
                 $.toast('操作成功');
                 $(".ask-get, #address-content").show();
                 $(".wenwo-get").hide();
+
+
+                var show = result.data.askContentShow.split("##");
+                var hidden = result.data.askContentHide.split("##");
+                detailContent = '';
+                for(var i = 0; i < hidden.length;i++){
+                  detailContent += show[i] + hidden[i];
+                }
+                if(!hidden.length){
+                  detailContent = show;
+                }
+                $("#detail-content  .card-content-inner").empty();
+                $("#detail-content  .card-content-inner").append(detailContent);
 
                 // var show = result.content_show.split("##");
                 // var hidden = content_hide.split("##");
