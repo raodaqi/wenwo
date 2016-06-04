@@ -200,15 +200,29 @@ router.post('/get', function(req, res, next) {
                                                 post.save().then(function () {
                                                     var query = new AV.Query('AskMe');
                                                     query.get(askId).then(function (ask) {
-                                                        var by = ask.get('createBy');
+                                                        var byId = ask.get('createBy');
+                                                        var query = new AV.Query('UserInfo');
+                                                        query.get(byId).then(function (user) {
+                                                            if (user.attributes.wallet) {
+                                                                var id = user.attributes.wallet.id;
+                                                                var query = new AV.Query('Wallet');
+                                                                query.get(id).then(function (wallet) {
+                                                                    //console.log(post);
+                                                                    wallet.set('money', parseFloat((wallet.get('money')+price)).toFixed(2));
+                                                                    wallet.save().then(function (re) {
+                                                                        var result = {
+                                                                            code : 200,
+                                                                            data : ask,
+                                                                            message : '操作成功'
+                                                                        }
+                                                                        res.send(result);
+                                                                        return;
+                                                                    });
+                                                                });
 
-                                                        var result = {
-                                                            code : 200,
-                                                            data : ask,
-                                                            message : '操作成功'
-                                                        }
-                                                        res.send(result);
-                                                        return;
+                                                            }
+                                                        });
+
                                                     });
 
                                                 });
