@@ -1196,7 +1196,7 @@
               <span class="iconfont icon-paper-airplane"></span>
               <label>我的分享</label>
             </div>
-            <div class="list-li" data-href="/more/personalPage">
+            <div class="list-li" data-href="/more/invite">
               <span class="iconfont icon-jiahaoyou"></span>
               <label>邀请好友</label>
             </div>
@@ -1939,7 +1939,20 @@
 
                 //聚合点击事件
                 cluster.on("click",function(clusterContent){
+                  console.log(clusterContent);
+
                   if(map.getZoom() < 19){
+
+                    // $.each(this.getMarkers(),function(i,v){
+                    //   console.log(this);
+                    // })
+
+                    // map.on("click",function(e){
+                    //     console.log('您在[ '+e.lnglat.getLng()+','+e.lnglat.getLat()+' ]的位置点击了地图！');
+                    //     map.setCenter([e.lnglat.getLng(),e.lnglat.getLat()]);
+                    // })
+                    map.setCenter([clusterContent.lnglat.lng,clusterContent.lnglat.lat]);
+                    map.zoomIn();
                     map.zoomIn();
                   }else{
                     console.log(clusterContent);
@@ -3061,5 +3074,10 @@
       }
     })
 
+
+    // map.on("click",function(e){
+    //     console.log('您在[ '+e.lnglat.getLng()+','+e.lnglat.getLat()+' ]的位置点击了地图！');
+    //     map.setCenter([e.lnglat.getLng(),e.lnglat.getLat()]);
+    // })
   </script>
 </html>
