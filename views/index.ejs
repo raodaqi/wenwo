@@ -1785,7 +1785,7 @@
     })
 
     //绑定marker点击事件
-    $("#container").bind("click",".amap-icon",function(){
+    $("#container").bind("touchstart",".amap-icon",function(){
       // $(this).addClass("amap-active");
       // alert("123");
       console.log("icon");
@@ -2297,7 +2297,7 @@
                   markers.push(marker);
 
                   //监听marker点击事件
-                  marker.on("touchstart",function(){
+                  marker.on("click",function(){
                     console.log("点击marker");
                     markerExtData =  this.getExtData();
                     console.log("点击前");
