@@ -652,7 +652,7 @@ router.get('/del', function(req, res, next) {
     var userName = req.param('username');
     var query = new AV.Query('AskMe');
     query.get(askId).then(function (ask) {
-        if (askId.get('creatBy') != userName) {
+        if (ask.get('creatBy') != userName) {
             var result = {
                 code: 800,
                 data: results,
@@ -792,7 +792,7 @@ router.post('/sendask', function(req, res, next) {
     var query = new AV.Query('UserInfo');
     query.equalTo('userName', userName);
     query.find().then(function (user) {
-        console.log(user);
+        //console.l
         user = user[0];
         var ask = new Ask();
         ask.set('createBy', userName);

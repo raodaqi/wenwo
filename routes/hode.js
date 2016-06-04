@@ -132,12 +132,17 @@ router.post('/get', function(req, res, next) {
                                     buyRelation.add(result);
                                     resultes[0].save().then(function () {
                                         post.save().then(function () {
-                                            var result = {
-                                                code : 200,
-                                                message : '操作成功'
-                                            }
-                                            res.send(result);
-                                            return;
+                                            var query = new AV.Query('AskMe');
+                                            query.get(askId).then(function (ask) {
+                                                var result = {
+                                                    code : 200,
+                                                    data : ask,
+                                                    message : '操作成功'
+                                                }
+                                                res.send(result);
+                                                return;
+                                            });
+
                                         });
 
                                     });
@@ -193,12 +198,19 @@ router.post('/get', function(req, res, next) {
                                             buyRelation.add(result);
                                             resultes[0].save().then(function () {
                                                 post.save().then(function () {
-                                                    var result = {
-                                                        code : 200,
-                                                        message : '操作成功'
-                                                    }
-                                                    res.send(result);
-                                                    return;
+                                                    var query = new AV.Query('AskMe');
+                                                    query.get(askId).then(function (ask) {
+                                                        var by = ask.get('createBy');
+
+                                                        var result = {
+                                                            code : 200,
+                                                            data : ask,
+                                                            message : '操作成功'
+                                                        }
+                                                        res.send(result);
+                                                        return;
+                                                    });
+
                                                 });
 
                                             });
