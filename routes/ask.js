@@ -790,7 +790,10 @@ router.post('/sendask', function(req, res, next) {
     var remark = req.param('remark');
 
     var query = new AV.Query('UserInfo');
-    query.get(userName).then(function (user) {
+    query.equalTo('userName', userName);
+    query.find().then(function (user) {
+        console.log(user);
+        user = user[0];
         var ask = new Ask();
         ask.set('createBy', userName);
         ask.set('askType', type);

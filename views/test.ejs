@@ -30,40 +30,41 @@
 //            },
 //            error : function(){}
 //        });
-//        var tag = new Array();
-//        tag[0] = {
-//            tag_name:'hanqi'
-//        }
+        var tag = new Array();
+        tag[0] = {
+            tag_name:'鱼火锅'
+        }
 //        tag[1] = {
 //            tag_name:'222'
 //        }
-//
-//        tag = JSON.stringify(tag);
-//        var data = {
-//            username:'hanqi',
-//            type:1,
-//            isfree:0,
-//            geo:123,
-//            position:'asd',
-//            reason:'asd',
-//            content_show:'asd',
-//            content_hide:'asd',
-//            price:0.1,
-//            tag:tag,
-//            remark:'asd'
-//
-//        }
-//        console.log(data);
-//        $.ajax({
-//            type: "post",
-//            url: 'ask/sendask',
-//            data: data,
-//            dataType: "json",
-//            success : function(result) {
-//                console.log(result);
-//            },
-//            error : function(){}
-//        });
+
+        tag = JSON.stringify(tag);
+        var data = {
+            username:'wenwo',
+            type:1,
+            isfree:0,
+            geo_x:123,
+            geo_y:123,
+            position:'asd',
+            reason:'asd',
+            content_show:'asd',
+            content_hide:'asd',
+            price:0.1,
+            tag:tag,
+            remark:'asd'
+
+        }
+        console.log(data);
+        $.ajax({
+            type: "post",
+            url: 'ask/sendask',
+            data: data,
+            dataType: "json",
+            success : function(result) {
+                console.log(result);
+            },
+            error : function(){}
+        });
 //
 //        $.ajax({
 //            type: "get",
@@ -156,16 +157,16 @@
 //            },
 //            error : function(){}
 //        });
-        $.ajax({
-            type: "get",
-            url: 'ask/tagshow',
-            data: {type:'4', tag:'[{"tag_name":"xxxxxxx"},{"tag_name":"hanqi"},{"tag_name":"可以"}]'},
-            dataType: "json",
-            success : function(result) {
-                console.log(result);
-            },
-            error : function(){}
-        });
+//        $.ajax({
+//            type: "get",
+//            url: 'ask/tagshow',
+//            data: {type:'4', tag:'[{"tag_name":"xxxxxxx"},{"tag_name":"hanqi"},{"tag_name":"可以"}]'},
+//            dataType: "json",
+//            success : function(result) {
+//                console.log(result);
+//            },
+//            error : function(){}
+//        });
 //        $.ajax({
 //            type: "post",
 //            url: 'ask/edittag',
