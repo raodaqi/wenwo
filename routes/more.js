@@ -98,11 +98,11 @@ router.get('/contact-us', function(req, res, next) {
   // res.render('more/contact-us');
 });
 
-router.get('/contact-us/test', function(req, res, next) {
-  var username =  req.query.username;
-  res.render('more/contact-us',{username:username});
-  // res.render('more/moneyBox');
-});
+// router.get('/contact-us/test', function(req, res, next) {
+//   var username =  req.query.username;
+//   res.render('more/contact-us',{username:username});
+//   // res.render('more/moneyBox');
+// });
 
 router.get('/purchase-detail/:id', function(req, res, next) {
   var user = AV.User.current();
@@ -251,10 +251,10 @@ router.get('/invite', function(req, res, next) {
   }
   // res.render('more/invite');
 });
-// router.get('/invite/test', function(req, res, next) {
-//   var username =  req.query.username;
-//   res.render('more/invite',{username:username});
-// });
+router.get('/invite/test', function(req, res, next) {
+  var username =  req.query.username;
+  res.render('more/invite',{username:username});
+});
 
 
 // 新增 Todo 项目
