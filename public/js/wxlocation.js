@@ -29,12 +29,22 @@ var data = {
           ]
         });
         wx.ready(function(){
-          var shareData = {
+          if(IMGURL){
+            var shareData = {
+              title: '问我——像个当地人一样去旅游',
+              desc: '说走就走，我带着你，你带着钱。',
+              link: IMGURL,
+              imgUrl: 'http://wenwo.leanapp.cn/img/wx/share.jpg'
+            };
+          }else{
+            var shareData = {
               title: '问我——像个当地人一样去旅游',
               desc: '说走就走，我带着你，你带着钱。',
               link: result.url,
               imgUrl: 'http://wenwo.leanapp.cn/img/wx/share.jpg'
-          };
+            };
+          }
+          
           wx.onMenuShareAppMessage(shareData);
           wx.onMenuShareTimeline(shareData);
           wx.onMenuShareQQ(shareData);
