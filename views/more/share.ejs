@@ -88,7 +88,7 @@ body{
 }
 .information_name{
 	height: 80px;
-	width: 40%;
+	width: 50%;
 	float: left;
 	border-bottom:1px solid #EAEAEA;
 	/*border-right:1px solid #EAEAEA;*/
@@ -135,7 +135,7 @@ body{
 }
 .information_state,.information_time{
 	height: 40px;
-	width: 30%;
+	width: 24%;
 	/*border-right: 1px solid #EAEAEA;*/
 	line-height: 40px;
 	float: right;
@@ -206,6 +206,8 @@ body{
 .information_name_word span{
 	margin-left: 4px;
 	background-color: #efc553;
+	padding: 3px 5px;
+	border-radius: 3px;
 }
 .icon-jia1{
 	font-size: 24px;
@@ -298,7 +300,8 @@ $(".content-block").on("click",".information_Purchase_number",function(){
 })
 $(".informations").on("click",".information",function(){
 	// console.log(1);
-	window.location.href = "/more/information-presentation";
+	var id = $(this).attr("data-id");
+	window.location.href = "/more/information-presentation/"+id;
 })
 
 $(".zuo").click(function(){
@@ -380,10 +383,10 @@ function getMyask(){
                    }
                    if(price == 0)
                    {
-                   	var str = '<div class="information"><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+'&nbsp;&nbsp;'+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_time"><div class="left">'+time+'</div></div><div class="information_Purchase_number information_collect_number" data-mid='+mid+'>收藏人数：<span class="num">'+buyNum+'</span>人</div></div>';
+                   	var str = '<div class="information data-id = '+mid+'"><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+'&nbsp;&nbsp;'+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_time"><div class="left">'+time+'</div></div><div class="information_Purchase_number information_collect_number" data-mid='+mid+'>收藏人数：<span class="num">'+buyNum+'</span>人</div></div>';
                    }
                    else{
-                   var str = '<div class="information"><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+'&nbsp;&nbsp;'+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_time"><div class="left">'+time+'</div></div><div class="information_Purchase_number" data-mid='+mid+'>购买人数：<span class="num">'+buyNum+'</span>人</div></div>';
+                   var str = '<div class="information data-id = '+mid+'"><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+'&nbsp;&nbsp;'+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_time"><div class="left">'+time+'</div></div><div class="information_Purchase_number" data-mid='+mid+'>购买人数：<span class="num">'+buyNum+'</span>人</div></div>';
                    }
           		$("#content1").append(str);
             }
@@ -424,7 +427,7 @@ function getMyask(){
                    	img = "/img/common/theme"+showType+'-1.png';
                    	console.log(img);
                    }
-	                var str = '<div class="information"><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state blue">'+getStaus(result.data[i].staus)+'</div></div>';
+	                var str = '<div class="information data-id = '+mid+'"><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state blue">'+getStaus(result.data[i].staus)+'</div></div>';
 	          		$("#content2").append(str);
             	}
             	if(result.data[i].staus == 5)
@@ -451,7 +454,7 @@ function getMyask(){
                    }else if(result.code == 200){
                    	img = "/img/common/theme"+showType+'-1.png';
                    }
-	                var str = '<div class="information"><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state red">'+getStaus(result.data[i].staus)+'</div></div>';
+	                var str = '<div class="information data-id = '+mid+'"><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state red">'+getStaus(result.data[i].staus)+'</div></div>';
 	          		$("#content2").append(str);
           		}
             }
