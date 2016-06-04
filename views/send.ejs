@@ -1865,8 +1865,8 @@
                 $.toast("提交成功");
                 localStorage.clear();
                 $.showPreloader("正在跳转");
-                window.location.href="/more/information-presentation/test/"+sendAskId+"?username="+"<%=username%>";
-                // window.location.href="/more/information-presentation/5731cfa81532bc0065181ff1";
+                // window.location.href="/more/information-presentation/test/"+sendAskId+"?username="+"<%=username%>";
+                window.location.href="/more/information-presentation/"+sendAskId;
               }else{
                 $.hidePreloader();
                 $.toast(result.message);
@@ -1892,8 +1892,8 @@
                 var askId = result.data.objectId;
 
                 $.showPreloader("正在跳转");
-                window.location.href="/more/information-presentation/test/"+askId+"?username="+"<%=username%>";
-                // window.location.href="/more/information-presentation/"+askId;
+                // window.location.href="/more/information-presentation/test/"+askId+"?username="+"<%=username%>";
+                window.location.href="/more/information-presentation/"+askId;
               }else{
                 $.hidePreloader();
                 $.toast(result.message);

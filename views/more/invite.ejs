@@ -89,6 +89,9 @@ body{
 	width: 100%;
 	height: 100%;
 }
+.modal-overlay, .popup-overlay, .preloader-indicator-overlay{
+	background: rgba(0,0,0,.8);
+}
 </style>
 <body>
 <div class="titles">
@@ -112,6 +115,9 @@ body{
 		<img class="invite-img" src="/img/invite.png">
 	</div>
 <% include footer.ejs %>
+<script>
+	var IMGURL = "http://wenwo.leanapp.cn";
+</script>
 <script type="text/javascript" src="/js/wxlocation.js"></script>
 <script type="text/javascript">
 	$(".zuo").click(function(){

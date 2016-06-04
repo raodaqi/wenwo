@@ -30,11 +30,11 @@ router.get('/order', function(req, res, next) {
   // res.render('more/order');
 });
 
-// router.get('/order/test/', function(req, res) {
-//   var username =  req.query.username;
-//   // var id = req.params.id;
-//   res.render('more/order',{username:username});
-// });
+router.get('/order/test/', function(req, res) {
+  var username =  req.query.username;
+  // var id = req.params.id;
+  res.render('more/order',{username:username});
+});
 
 router.get('/share', function(req, res, next) {
   var user = AV.User.current();
@@ -47,11 +47,11 @@ router.get('/share', function(req, res, next) {
   // res.render('more/share');
 });
 
-// router.get('/share/test/', function(req, res) {
-//   var username =  req.query.username;
-//   // var id = req.params.id;
-//   res.render('more/share',{username:username});
-// });
+router.get('/share/test/', function(req, res) {
+  var username =  req.query.username;
+  // var id = req.params.id;
+  res.render('more/share',{username:username});
+});
 
 router.get('/personalPage', function(req, res, next) {
   var user = AV.User.current();
@@ -178,11 +178,11 @@ router.get('/information-presentation/:id', function(req, res, next) {
   // var id = req.params.id;
   // res.render('more/information-presentation',{id:id});
 });
-// router.get('/information-presentation/test/:id', function(req, res) {
-//   var username =  req.query.username;
-//   var id = req.params.id;
-//   res.render('more/information-presentation',{id:id,username:username});
-// });
+router.get('/information-presentation/test/:id', function(req, res) {
+  var username =  req.query.username;
+  var id = req.params.id;
+  res.render('more/information-presentation',{id:id,username:username});
+});
 
 router.get('/askdetail/:id', function(req, res, next) {
   // authorize(req,res);
@@ -251,10 +251,10 @@ router.get('/invite', function(req, res, next) {
   }
   // res.render('more/invite');
 });
-// router.get('/invite/test', function(req, res, next) {
-//   var username =  req.query.username;
-//   res.render('more/invite',{username:username});
-// });
+router.get('/invite/test', function(req, res, next) {
+  var username =  req.query.username;
+  res.render('more/invite',{username:username});
+});
 
 
 // 新增 Todo 项目
