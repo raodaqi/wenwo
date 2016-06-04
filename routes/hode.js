@@ -207,8 +207,9 @@ router.post('/get', function(req, res, next) {
                                                                 var id = user.attributes.wallet.id;
                                                                 var query = new AV.Query('Wallet');
                                                                 query.get(id).then(function (wallet) {
-                                                                    //console.log(post);
-                                                                    wallet.set('money', parseFloat((wallet.get('money')+price)).toFixed(2));
+                                                                    //console.log(wallet);
+                                                                    console.log('money'+parseFloat((wallet.get('money')+price)).toFixed(2));
+                                                                    wallet.set('money', parseFloat(parseFloat((wallet.get('money')+price)).toFixed(2)));
                                                                     wallet.save().then(function (re) {
                                                                         var result = {
                                                                             code : 200,
