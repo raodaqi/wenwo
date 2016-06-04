@@ -598,7 +598,7 @@ router.get('/cancel', function(req, res, next) {
     var userName = req.param('username');
     var query = new AV.Query('AskMe');
     query.get(askId).then(function (ask) {
-        if (ask.get('creatBy') != userName) {
+        if (ask.get('createBy') != userName) {
             var result = {
                 code: 800,
                 data: ask,
@@ -607,7 +607,7 @@ router.get('/cancel', function(req, res, next) {
             res.send(result);
         }
         else {
-            ask.set('staus', 3);
+            ask.set('staus', '3');
             ask.save().then(function (ask) {
                 var result = {
                     code: 200,

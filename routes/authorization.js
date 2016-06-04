@@ -188,6 +188,10 @@ router.get('/pay', function(req, res, next) {
 
 });
 
+router.get('/withdrawapply', function(req, res, next) {
+    var username = req.query.username;
+    var amount = req.query.amount;
+})
 
 router.get('/withdraw', function(req, res, next) {
     //var code = req.query.code;
