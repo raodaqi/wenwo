@@ -1292,7 +1292,12 @@
 
             if(!price){
               isfree = 1;
-              price  = 0;
+              price  = 0.00;
+            }else{
+              isfree = 0;
+            }
+            if(price == "0 . 0 0" || price == "0.00"){
+              isfree = 1;
             }else{
               isfree = 0;
             }
