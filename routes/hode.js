@@ -177,7 +177,7 @@ router.post('/get', function(req, res, next) {
                                     }
                                     else {
                                         console.log((money-price).toString());
-                                        wallet.set('money', (money-price));
+                                        wallet.set('money', (money-price).toFixed(2));
                                         wallet.save().then(function () {
 
                                         },function (error) {
@@ -345,7 +345,7 @@ router.post('/refund', function(req, res, next) {
                                         console.log(wallet.get('money'));
                                         var money = parseFloat(wallet.get('money'));
                                         console.log((money+price).toString());
-                                        wallet.set('money', (money+price));
+                                        wallet.set('money', (money+price).toFixed(2));
                                         wallet.save().then(function () {
                                             var result = {
                                                 code : 200,
