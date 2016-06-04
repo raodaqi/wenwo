@@ -844,7 +844,7 @@ $(document).on('click','#grounding', function () {
           success : function(result){
             console.log(result);
             $.toast('请求成功，等待管理审核');
-             window.location.href="more/share";
+             window.location.href="/more/share";
              },
           error: function(error){
             // alert(error);
@@ -863,7 +863,7 @@ $(document).on('click','#undercarriage', function () {
           success : function(result){
             console.log(result);
              $.toast('商品下架成功');
-             window.location.href="more/share";
+             window.location.href="/more/share";
              },
           error: function(error){
             // alert(error);
@@ -882,7 +882,7 @@ $(document).on('click','#del', function () {
           success : function(result){
             console.log(result);
               $.toast('商品删除成功');
-              window.location.href="more/share";
+              window.location.href="/more/share";
              },
           error: function(error){
             // alert(error);

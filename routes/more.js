@@ -178,11 +178,11 @@ router.get('/information-presentation/:id', function(req, res, next) {
   // var id = req.params.id;
   // res.render('more/information-presentation',{id:id});
 });
-// router.get('/information-presentation/test/:id', function(req, res) {
-//   var username =  req.query.username;
-//   var id = req.params.id;
-//   res.render('more/information-presentation',{id:id,username:username});
-// });
+router.get('/information-presentation/test/:id', function(req, res) {
+  var username =  req.query.username;
+  var id = req.params.id;
+  res.render('more/information-presentation',{id:id,username:username});
+});
 
 router.get('/askdetail/:id', function(req, res, next) {
   // authorize(req,res);
