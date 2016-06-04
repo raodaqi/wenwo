@@ -781,6 +781,9 @@
     background-color:#efc553; 
     bottom:0;
   }
+  /*#ask-detail-cancel{
+    display: block !important;
+  }*/
 
   </style>
   <body>
@@ -1336,6 +1339,238 @@
   <script type="text/javascript" src="/js/map.js"></script>
   <script type="text/javascript" src="/js/wxlocation.js"></script>
   <script>
+    function setDetail(extData){
+      console.log(extData);
+      var askId         = extData.askId,
+          askType       = extData.askType,//主题类型
+          tag           = extData.tagName,//二级标签
+          setAskTagStr  = extData.askTagStr,//二级标签
+          reason        = extData.askReason,//推荐理由
+          content_show  = extData.askContentShow,//详情显示部分
+          content_hide  = extData.askContentHide,//详情显示部分
+          lng           = extData.lng,//经度
+          lat           = extData.lat,//维度
+          isfree        = extData.askIsFree,//是否是免费信息
+          price         = extData.price,//信息价格
+          createBy      = extData.createBy,//发布者
+          likeNum       = extData.likeNum,//赞踩数量
+          uName         = extData.uName,
+          userHead      = extData.userHead,
+          updatedAt     = extData.updatedAt;//发布时间
+      //设置上传者名字
+      $(".autor-name").text(createBy);
+      $(".autor-name").text(uName);
+      //设置上传者的头像
+      if(userHead){
+        $(".autor-img").attr("src",userHead);
+      }else{
+        userHead = '/img/common/wenwo.png';
+        $(".autor-img").attr("src",userHead);
+      }
+      
+      //设置信息主题
+      askType =  askType.split(",");
+      var typeText = '';
+      console.log(askType);
+      for(var i = 0; i < askType.length; i++){
+        typeText = formatType(askType[i]);
+        if(i == 1){
+          typeText = formatType(askType[i-1]) +","+ formatType(askType[i]);
+        }
+      }
+
+      $(".autor-theme").text(typeText);
+      //设置信息上传时间
+      console.log(updatedAt);
+      $(".autor-time").text(formatDate("y.m.d",updatedAt));
+
+      //设置赞踩
+      $(".votebar .voteNum").text(likeNum);
+      
+      // if()
+      // $(".votebar").data("askid",askId);
+      $(".votebar").attr("data-askid",askId);
+      
+      //设置标签
+      var setAskTagStr = JSON.parse(setAskTagStr);
+
+      console.log(setAskTagStr[0]);
+      var tagList = '';
+      for(var i = 0; i < setAskTagStr.length;i++){
+        tagList += '<div class="type-item">'+setAskTagStr[i].tag_name+'</div>' 
+      }
+
+      $("#tag-content .card-content-inner").empty();
+      $("#tag-content .card-content-inner").append(tagList);
+
+      //设置推荐理由
+      $("#reason-content .card-content-inner").text(reason);
+
+      //设置描述
+      var detail = content_show;
+      var hidden = '<span class="hidden-text">***</span>';
+      str = detail.split("##");
+      var detailContent = '';
+      for(var i = 0; i < str.length; i++){
+        if(i%2){
+          detailContent += str[i];
+        }else{
+          detailContent += str[i]+hidden;
+        }
+      }
+      console.log("price:"+price+"isfree:"+isfree);
+      if(price == "0.00" || isfree == "1"){ 
+      console.log("ko"); 
+        //解析详情
+        var show = content_show.split("##");
+        var hidden = content_hide.split("##");
+        detailContent = '';
+        for(var i = 0; i < hidden.length;i++){
+          detailContent += show[i] + hidden[i];
+        }
+        if(!hidden.length){
+          detailContent = show;
+        }
+      }
+
+
+      $("#detail-content  .card-content-inner").empty();
+      $("#detail-content  .card-content-inner").append(detailContent);
+
+      $(".wenwo-get").attr("data-askId",askId);
+      console.log(price.replace(/\s+/g,""));
+      if(isfree == "1" || price.replace(/\s+/g,"")=="0.00"){
+        $(".wenwo-get").text("珍藏");
+        $(".votebar").show();
+        $("#address-content").show();
+      }else{
+        $(".wenwo-get").text("偷看");
+      }
+
+      //判断是否点赞过
+        var data = {
+          ask_id   : askId,
+          username : "<%= username %>"
+        }
+        $.ajax({
+          type : "GET",
+          data: data,
+          dataType: "json",
+          url : "/ask/isliked",
+          success : function(result){
+            console.log(result);
+            if(result.code == 200){
+              var isliked = result.isliked;
+              //如果isliked=1点赞，2踩
+              if(isliked){
+
+                $(".votebar .iconfont").removeClass("liked");
+                if(isliked == 1){
+                  //赞过
+                  $(".votebar-like").addClass("liked");
+                }else{
+                  //踩过
+                  $(".votebar-hate").addClass("liked");
+                }
+              }
+            }
+          },
+          error : function(error){
+            $.alert('网络异常');
+          }
+        });
+
+
+
+      if(!extData.geted){
+
+        var data = {
+          ask_id   : askId,
+          username : "<%= username %>"
+        }
+        //判断是否购买
+        $.ajax({
+          type : "GET",
+          data: data,
+          dataType: "json",
+          url : "/ask/askdetail",
+          success : function(result){
+
+            // $.hidePreloader();
+            console.log(result);
+            if(result.nobuy == "1"){
+              $(".ask-get, #address-content").hide();
+              $(".wenwo-get").show();
+              $(".votebar").show();
+            }else{
+              $(".ask-get, #address-content").show();
+              $(".wenwo-get").hide();
+              $(".votebar").show();
+
+              var show = result.data.askContentShow.split("##");
+              var hidden = result.data.askContentHide.split("##");
+              var reasonDetail = '';
+              for(var i = 0; i < hidden.length;i++){
+                reasonDetail += show[i] + hidden[i];
+              }
+              if(!hidden.length){
+                reasonDetail = show;
+              }
+
+              //解析详情
+              console.log("ceshi:"+reasonDetail);
+
+
+              $("#detail-content  .card-content-inner").empty();
+              $("#detail-content  .card-content-inner").append(reasonDetail);
+            }
+
+            if(result.data.askIsFree == "1" || result.data.askPrice == "0.00"){
+              $("#address-content").show();
+            }
+          },
+          error : function(error){
+            $.hidePreloader();
+            $.alert('网络异常');
+          }
+        });
+      }else{
+        //解析详情
+        var show = content_show.split("##");
+        var hidden = content_hide.split("##");
+        detailContent = '';
+        for(var i = 0; i < hidden.length;i++){
+          detailContent += show[i] + hidden[i];
+        }
+        if(!hidden.length){
+          detailContent = show;
+        }
+        $("#detail-content  .card-content-inner").empty();
+        $("#detail-content  .card-content-inner").append(detailContent);
+      }
+
+      //设置地点
+      var lnglatXY = [lng,lat];
+      getAddress(lnglatXY,{
+          success:function(address){
+            var detail = address.formattedAddress;
+            var address = {
+              province : address.addressComponent.province,
+              city     : address.addressComponent.city,
+              district : address.addressComponent.district,
+              township : address.addressComponent.township
+            }
+            var replace = ""+address.province+address.city+address.district+address.township+"";
+            detail = detail.replace(replace,"");
+            $("#address-content .item-title").text(detail);
+          }
+        });
+
+      //设置价格
+      $("#price-content .item-title").text(price);
+    }
+  </script>
+  <script>
   window.onload = function(){
     AMap.plugin(['AMap.ToolBar','AMap.Scale'],function(){
         var toolBar = new AMap.ToolBar({
@@ -1378,7 +1613,7 @@
     // })
     // $.popup('.ask-detail');
     // $.popup('.marker-content');
-    var extData;
+    var markerExtData;
     $(".header-sousuo").on("click",function(){
       $.router.load("#router1");
     });
@@ -1566,22 +1801,26 @@
       // }else{
       //   var askTagStr = '';
       // }
-      var askTagStr = JSON.parse(extData.askTagStr);
-      console.log(askTagStr[0]);
-      var tagList = '';
-      for(var i = 0; i < askTagStr.length;i++){
-        if(askTagStr[i].tag_name){
-          tagList += '<div class="type-item">'+askTagStr[i].tag_name+'</div>'
-        }  
+      if(markerExtData){
+        var askTagStr = JSON.parse(markerExtData.askTagStr);
+        console.log(askTagStr[0]);
+        var tagList = '';
+        for(var i = 0; i < askTagStr.length;i++){
+          if(askTagStr[i].tag_name){
+            tagList += '<div class="type-item">'+askTagStr[i].tag_name+'</div>'
+          }  
+        }
+        var div = '<div class="amap-marker-list-content" style="display:none"><div class="up">'+tagList+'<div class="up-price-right">￥'+markerExtData.price+'</div></div><div class="down">'+markerExtData.askReason+'</div></div>';
+        $(this).after(div);
+        if($(this).parent().hasClass("amap-active")){
+          $(this).parent().removeClass("amap-active");
+        }else{
+          $(".amap-marker").removeClass("amap-active");
+          $(this).parent().addClass("amap-active");
+        }
       }
-      var div = '<div class="amap-marker-list-content" style="display:none"><div class="up">'+tagList+'<div class="up-price-right">￥'+extData.price+'</div></div><div class="down">'+extData.askReason+'</div></div>';
-      $(this).after(div);
-      if($(this).parent().hasClass("amap-active")){
-        $(this).parent().removeClass("amap-active");
-      }else{
-        $(".amap-marker").removeClass("amap-active");
-        $(this).parent().addClass("amap-active");
-      }
+      
+      
     })
 
 
@@ -1682,7 +1921,7 @@
                     // var li = '<li><div class="item-content"><div class="item-media"><img src="/img/hotPot.jpg"></div><div class="item-inner"><div class=""><div class="type-item">火锅</div><div class="type-item">火锅</div><div class="type-item">火锅</div></div><div class="item-subtitle">这家火锅真的很好吃。</div><div class="up-price-right">￥0 . 3 2</div><div class="iconfont icon-youjiantou item-right"></div></div></div></li>';
                     var li = '';
                     $.each(clusterContent.markers,function(i,v){
-                      var extData =  this.getExtData();
+                      var markerExtData =  this.getExtData();
                       // var object = JSON.stringify(extData);
                       // var object = {
                       //   askId         : extData.askId,
@@ -1699,14 +1938,14 @@
                       // }
                       // object = JSON.stringify(object);
 
-                      var askTagStr = JSON.parse(extData.askTagStr);
+                      var askTagStr = JSON.parse(markerExtData.askTagStr);
                       console.log(askTagStr[0]);
                       var tagList = '';
                       for(var i = 0; i < askTagStr.length;i++){
                         tagList += '<div class="type-item">'+askTagStr[i].tag_name+'</div>' 
                       }
 
-                      li += '<li data-askId='+extData.askId+'><div class="item-content"><div class="item-media"><img src="'+extData.img+'"></div><div class="item-inner"><div class="">'+tagList+'</div><div class="item-subtitle">'+extData.askReason+'</div><div class="up-price-right">￥'+extData.price+'</div><div class="iconfont icon-youjiantou item-right"></div></div></div></li>';
+                      li += '<li data-askId='+markerExtData.askId+'><div class="item-content"><div class="item-media"><img src="'+markerExtData.img+'"></div><div class="item-inner"><div class="">'+tagList+'</div><div class="item-subtitle">'+markerExtData.askReason+'</div><div class="up-price-right">￥'+markerExtData.price+'</div><div class="iconfont icon-youjiantou item-right"></div></div></div></li>';
                     })
                     $(".marker-content ul").empty();
                     $(".marker-content ul").append(li);
@@ -2060,19 +2299,24 @@
                   //监听marker点击事件
                   marker.on("touchstart",function(){
                     console.log("点击marker");
-                    extData =  this.getExtData();
+                    markerExtData =  this.getExtData();
                     console.log("点击前");
-                    console.log(extData);
-                    var lng = extData.lng;
-                    var lat = extData.lat;
-                    console.log(extData.askTagStr);
+                    // alert(extData.uName);
+                    // console.log(extData);
+                    var lng = markerExtData.lng;
+                    var lat = markerExtData.lat;
+                    // alert(markerExtData.askTagStr);
                     // $("")
                     $(".up").text();
-                    $(".down").text(extData.askReason+"test");
-                    console.log(extData);
-                    setDetail(extData);
-                    // //设置地图中心位置为点击的marker上
+                    $(".down").text(markerExtData.askReason+"test");
+                    console.log(markerExtData);
                     map.setZoomAndCenter(map.getZoom(),[lng,lat]);
+
+                    // $(".ask-detail").text(markerExtData.askTagStr);
+                    setDetail(markerExtData);
+                    $.popup(".ask-detail");
+                    // //设置地图中心位置为点击的marker上
+                    // map.setZoomAndCenter(map.getZoom(),[lng,lat]);
                   });
 
                   marker.setMap(map);
@@ -2163,306 +2407,306 @@
                   // });
 
 
-    function setDetail(extData){
-      console.log(extData);
-      var askId         = extData.askId
-          askType       = extData.askType,//主题类型
-          tag           = extData.tagName,//二级标签
-          askTagStr     = extData.askTagStr,//二级标签
-          reason        = extData.askReason,//推荐理由
-          content_show  = extData.askContentShow,//详情显示部分
-          content_hide  = extData.askContentHide,//详情显示部分
-          lng           = extData.lng,//经度
-          lat           = extData.lat,//维度
-          isfree        = extData.askIsFree,//是否是免费信息
-          price         = extData.price,//信息价格
-          createBy      = extData.createBy,//发布者
-          likeNum       = extData.likeNum,//赞踩数量
-          uName         = extData.uName,
-          userHead      = extData.userHead,
-          updatedAt     = extData.updatedAt;//发布时间
-      askType =  askType.split(",");
-      var typeText = '';
-      console.log(askType);
-      for(var i = 0; i < askType.length; i++){
-        typeText = formatType(askType[i]);
-        if(i == 1){
-          typeText = formatType(askType[i-1]) +","+ formatType(askType[i]);
-        }
-      }
-      //设置上传者名字
-      $(".autor-name").text(createBy);
-      $(".autor-name").text(uName);
-      //设置上传者的头像
-      if(userHead){
-        $(".autor-img").attr("src",userHead);
-      }else{
-        userHead = '/img/common/wenwo.png';
-        $(".autor-img").attr("src",userHead);
-      }
+    // function setDetail(extData){
+    //   console.log(extData);
+    //   var askId         = extData.askId
+    //       askType       = extData.askType,//主题类型
+    //       tag           = extData.tagName,//二级标签
+    //       askTagStr     = extData.askTagStr,//二级标签
+    //       reason        = extData.askReason,//推荐理由
+    //       content_show  = extData.askContentShow,//详情显示部分
+    //       content_hide  = extData.askContentHide,//详情显示部分
+    //       lng           = extData.lng,//经度
+    //       lat           = extData.lat,//维度
+    //       isfree        = extData.askIsFree,//是否是免费信息
+    //       price         = extData.price,//信息价格
+    //       createBy      = extData.createBy,//发布者
+    //       likeNum       = extData.likeNum,//赞踩数量
+    //       uName         = extData.uName,
+    //       userHead      = extData.userHead,
+    //       updatedAt     = extData.updatedAt;//发布时间
+    //   askType =  askType.split(",");
+    //   var typeText = '';
+    //   console.log(askType);
+    //   for(var i = 0; i < askType.length; i++){
+    //     typeText = formatType(askType[i]);
+    //     if(i == 1){
+    //       typeText = formatType(askType[i-1]) +","+ formatType(askType[i]);
+    //     }
+    //   }
+    //   //设置上传者名字
+    //   $(".autor-name").text(createBy);
+    //   $(".autor-name").text(uName);
+    //   //设置上传者的头像
+    //   if(userHead){
+    //     $(".autor-img").attr("src",userHead);
+    //   }else{
+    //     userHead = '/img/common/wenwo.png';
+    //     $(".autor-img").attr("src",userHead);
+    //   }
       
-      //设置信息主题
-      $(".autor-theme").text(typeText);
-      //设置信息上传时间
-      console.log(updatedAt);
-      $(".autor-time").text(formatDate("y.m.d",updatedAt));
+    //   //设置信息主题
+    //   $(".autor-theme").text(typeText);
+    //   //设置信息上传时间
+    //   console.log(updatedAt);
+    //   $(".autor-time").text(formatDate("y.m.d",updatedAt));
 
-      //设置赞踩
-      $(".votebar .voteNum").text(likeNum);
+    //   //设置赞踩
+    //   $(".votebar .voteNum").text(likeNum);
 
-      // if()
-      $(".votebar").data("askid",askId);
-
-
-      //设置标签
-      var askTagStr = JSON.parse(askTagStr);
-      console.log(askTagStr[0]);
-      var tagList = '';
-      for(var i = 0; i < askTagStr.length;i++){
-        tagList += '<div class="type-item">'+askTagStr[i].tag_name+'</div>' 
-      }
-      $("#tag-content .card-content-inner").empty();
-      $("#tag-content .card-content-inner").append(tagList);
-
-      //设置推荐理由
-      $("#reason-content .card-content-inner").text(reason);
-
-      //设置描述
-      var detail = content_show;
-      var hidden = '<span class="hidden-text">***</span>';
-      str = detail.split("##");
-      var detailContent = '';
-      for(var i = 0; i < str.length; i++){
-        if(i%2){
-          detailContent += str[i];
-        }else{
-          detailContent += str[i]+hidden;
-        }
-      }
-      console.log("price:"+price+"isfree:"+isfree);
-      if(price == "0.00" || isfree == "1"){ 
-      console.log("ko"); 
-        //解析详情
-        var show = content_show.split("##");
-        var hidden = content_hide.split("##");
-        detailContent = '';
-        for(var i = 0; i < hidden.length;i++){
-          detailContent += show[i] + hidden[i];
-        }
-        if(!hidden.length){
-          detailContent = show;
-        }
-      }
+    //   // if()
+    //   $(".votebar").data("askid",askId);
 
 
-      $("#detail-content  .card-content-inner").empty();
-      $("#detail-content  .card-content-inner").append(detailContent);
+    //   //设置标签
+    //   var askTagStr = JSON.parse(askTagStr);
+    //   console.log(askTagStr[0]);
+    //   var tagList = '';
+    //   for(var i = 0; i < askTagStr.length;i++){
+    //     tagList += '<div class="type-item">'+askTagStr[i].tag_name+'</div>' 
+    //   }
+    //   $("#tag-content .card-content-inner").empty();
+    //   $("#tag-content .card-content-inner").append(tagList);
 
-      $(".wenwo-get").attr("data-askId",askId);
-      console.log(price.replace(/\s+/g,""));
-      if(isfree == "1" || price.replace(/\s+/g,"")=="0.00"){
-        $(".wenwo-get").text("珍藏");
-        $(".votebar").show();
-        $("#address-content").show();
-      }else{
-        $(".wenwo-get").text("偷看");
-      }
+    //   //设置推荐理由
+    //   $("#reason-content .card-content-inner").text(reason);
 
-      //判断是否点赞过
-        var data = {
-          ask_id   : askId,
-          username : "<%= username %>"
-        }
-        $.ajax({
-          type : "GET",
-          data: data,
-          dataType: "json",
-          url : "/ask/isliked",
-          success : function(result){
-            console.log(result);
-            if(result.code == 200){
-              var isliked = result.isliked;
-              //如果isliked=1点赞，2踩
-              if(isliked){
-
-                $(".votebar .iconfont").removeClass("liked");
-                if(isliked == 1){
-                  //赞过
-                  $(".votebar-like").addClass("liked");
-                }else{
-                  //踩过
-                  $(".votebar-hate").addClass("liked");
-                }
-              }
-            }
-          },
-          error : function(error){
-            $.alert('网络异常');
-          }
-        });
+    //   //设置描述
+    //   var detail = content_show;
+    //   var hidden = '<span class="hidden-text">***</span>';
+    //   str = detail.split("##");
+    //   var detailContent = '';
+    //   for(var i = 0; i < str.length; i++){
+    //     if(i%2){
+    //       detailContent += str[i];
+    //     }else{
+    //       detailContent += str[i]+hidden;
+    //     }
+    //   }
+    //   console.log("price:"+price+"isfree:"+isfree);
+    //   if(price == "0.00" || isfree == "1"){ 
+    //   console.log("ko"); 
+    //     //解析详情
+    //     var show = content_show.split("##");
+    //     var hidden = content_hide.split("##");
+    //     detailContent = '';
+    //     for(var i = 0; i < hidden.length;i++){
+    //       detailContent += show[i] + hidden[i];
+    //     }
+    //     if(!hidden.length){
+    //       detailContent = show;
+    //     }
+    //   }
 
 
+    //   $("#detail-content  .card-content-inner").empty();
+    //   $("#detail-content  .card-content-inner").append(detailContent);
 
-      if(!extData.geted){
+    //   $(".wenwo-get").attr("data-askId",askId);
+    //   console.log(price.replace(/\s+/g,""));
+    //   if(isfree == "1" || price.replace(/\s+/g,"")=="0.00"){
+    //     $(".wenwo-get").text("珍藏");
+    //     $(".votebar").show();
+    //     $("#address-content").show();
+    //   }else{
+    //     $(".wenwo-get").text("偷看");
+    //   }
 
-        // $.showPreloader("正在查询");
+    //   //判断是否点赞过
+    //     var data = {
+    //       ask_id   : askId,
+    //       username : "<%= username %>"
+    //     }
+    //     $.ajax({
+    //       type : "GET",
+    //       data: data,
+    //       dataType: "json",
+    //       url : "/ask/isliked",
+    //       success : function(result){
+    //         console.log(result);
+    //         if(result.code == 200){
+    //           var isliked = result.isliked;
+    //           //如果isliked=1点赞，2踩
+    //           if(isliked){
 
-        var data = {
-          ask_id   : askId,
-          username : "<%= username %>"
-        }
-        //判断是否购买
-        $.ajax({
-          type : "GET",
-          data: data,
-          dataType: "json",
-          url : "/ask/askdetail",
-          success : function(result){
-
-            // $.hidePreloader();
-            console.log(result);
-            if(result.nobuy == "1"){
-              $(".ask-get, #address-content").hide();
-              $(".wenwo-get").show();
-              $(".votebar").show();
-            }else{
-              $(".ask-get, #address-content").show();
-              $(".wenwo-get").hide();
-              $(".votebar").show();
-
-              var show = result.data.askContentShow.split("##");
-              var hidden = result.data.askContentHide.split("##");
-              var reasonDetail = '';
-              for(var i = 0; i < hidden.length;i++){
-                reasonDetail += show[i] + hidden[i];
-              }
-              if(!hidden.length){
-                reasonDetail = show;
-              }
-
-              //解析详情
-              console.log("ceshi:"+reasonDetail);
+    //             $(".votebar .iconfont").removeClass("liked");
+    //             if(isliked == 1){
+    //               //赞过
+    //               $(".votebar-like").addClass("liked");
+    //             }else{
+    //               //踩过
+    //               $(".votebar-hate").addClass("liked");
+    //             }
+    //           }
+    //         }
+    //       },
+    //       error : function(error){
+    //         $.alert('网络异常');
+    //       }
+    //     });
 
 
-              $("#detail-content  .card-content-inner").empty();
-              $("#detail-content  .card-content-inner").append(reasonDetail);
-            }
 
-            if(result.data.askIsFree == "1" || result.data.askPrice == "0.00"){
-              $("#address-content").show();
-            }
-          },
-          error : function(error){
-            $.hidePreloader();
-            $.alert('网络异常');
-          }
-        });
-      }else{
-        //解析详情
-        var show = content_show.split("##");
-        var hidden = content_hide.split("##");
-        detailContent = '';
-        for(var i = 0; i < hidden.length;i++){
-          detailContent += show[i] + hidden[i];
-        }
-        if(!hidden.length){
-          detailContent = show;
-        }
-        $("#detail-content  .card-content-inner").empty();
-        $("#detail-content  .card-content-inner").append(detailContent);
-      }
-      // var data = {
-      //   ask_id   : askId,
-      //   username : "<%= username %>"
-      // }
-      // //判断是否购买
-      // $.ajax({
-      //   type : "GET",
-      //   data: data,
-      //   dataType: "json",
-      //   url : "/ask/askdetail",
-      //   success : function(result){
-      //     console.log(result);
-      //     if(result.nobuy == "1"){
-      //       $(".ask-get, #address-content").hide();
-      //       $(".wenwo-get").show();
-      //     }else{
-      //       $(".ask-get, #address-content").show();
-      //       $(".wenwo-get").hide();
-      //     }
-      //   },
-      //   error : function(error){
-      //     $.alert('网络异常');
-      //   }
-      // });
+    //   if(!extData.geted){
 
-      // //绑定marker点击事件
-      // $("#container").on("touchstart",".amap-icon",function(){
-      //   // $(this).addClass("amap-active");
-      //   // alert("123");
-      //   console.log("点击后");
-      //   console.log(extData);
+    //     // $.showPreloader("正在查询");
 
-      //   // return ;
+    //     var data = {
+    //       ask_id   : askId,
+    //       username : "<%= username %>"
+    //     }
+    //     //判断是否购买
+    //     $.ajax({
+    //       type : "GET",
+    //       data: data,
+    //       dataType: "json",
+    //       url : "/ask/askdetail",
+    //       success : function(result){
 
-      //   $(".amap-active").css("-webkit-transform", "rotate(0deg) !important;");
-      //   $(".amap-marker-list-content").remove();
-      //   // var div = '<div class="amap-marker-list-content" style="display:none"><div class="up">火锅<div class="up-price-right">0.8元</div></div><div class="down">这个真的很好吃</div></div>';
+    //         // $.hidePreloader();
+    //         console.log(result);
+    //         if(result.nobuy == "1"){
+    //           $(".ask-get, #address-content").hide();
+    //           $(".wenwo-get").show();
+    //           $(".votebar").show();
+    //         }else{
+    //           $(".ask-get, #address-content").show();
+    //           $(".wenwo-get").hide();
+    //           $(".votebar").show();
+
+    //           var show = result.data.askContentShow.split("##");
+    //           var hidden = result.data.askContentHide.split("##");
+    //           var reasonDetail = '';
+    //           for(var i = 0; i < hidden.length;i++){
+    //             reasonDetail += show[i] + hidden[i];
+    //           }
+    //           if(!hidden.length){
+    //             reasonDetail = show;
+    //           }
+
+    //           //解析详情
+    //           console.log("ceshi:"+reasonDetail);
+
+
+    //           $("#detail-content  .card-content-inner").empty();
+    //           $("#detail-content  .card-content-inner").append(reasonDetail);
+    //         }
+
+    //         if(result.data.askIsFree == "1" || result.data.askPrice == "0.00"){
+    //           $("#address-content").show();
+    //         }
+    //       },
+    //       error : function(error){
+    //         $.hidePreloader();
+    //         $.alert('网络异常');
+    //       }
+    //     });
+    //   }else{
+    //     //解析详情
+    //     var show = content_show.split("##");
+    //     var hidden = content_hide.split("##");
+    //     detailContent = '';
+    //     for(var i = 0; i < hidden.length;i++){
+    //       detailContent += show[i] + hidden[i];
+    //     }
+    //     if(!hidden.length){
+    //       detailContent = show;
+    //     }
+    //     $("#detail-content  .card-content-inner").empty();
+    //     $("#detail-content  .card-content-inner").append(detailContent);
+    //   }
+    //   // var data = {
+    //   //   ask_id   : askId,
+    //   //   username : "<%= username %>"
+    //   // }
+    //   // //判断是否购买
+    //   // $.ajax({
+    //   //   type : "GET",
+    //   //   data: data,
+    //   //   dataType: "json",
+    //   //   url : "/ask/askdetail",
+    //   //   success : function(result){
+    //   //     console.log(result);
+    //   //     if(result.nobuy == "1"){
+    //   //       $(".ask-get, #address-content").hide();
+    //   //       $(".wenwo-get").show();
+    //   //     }else{
+    //   //       $(".ask-get, #address-content").show();
+    //   //       $(".wenwo-get").hide();
+    //   //     }
+    //   //   },
+    //   //   error : function(error){
+    //   //     $.alert('网络异常');
+    //   //   }
+    //   // });
+
+    //   // //绑定marker点击事件
+    //   // $("#container").on("touchstart",".amap-icon",function(){
+    //   //   // $(this).addClass("amap-active");
+    //   //   // alert("123");
+    //   //   console.log("点击后");
+    //   //   console.log(extData);
+
+    //   //   // return ;
+
+    //   //   $(".amap-active").css("-webkit-transform", "rotate(0deg) !important;");
+    //   //   $(".amap-marker-list-content").remove();
+    //   //   // var div = '<div class="amap-marker-list-content" style="display:none"><div class="up">火锅<div class="up-price-right">0.8元</div></div><div class="down">这个真的很好吃</div></div>';
         
-      //   var askTagStr = JSON.parse(extData.askTagStr);
-      //   console.log(askTagStr[0]);
-      //   var tagList = '';
-      //   for(var i = 0; i < askTagStr.length;i++){
-      //     tagList += '<div class="type-item">'+askTagStr[i]+'</div>' 
-      //   }
-      //   var div = '<div class="amap-marker-list-content" style="display:none"><div class="up">'+tagList+'<div class="up-price-right">￥'+extData.price+'</div></div><div class="down">'+extData.askReason+'</div></div>';
-      //   $(this).after(div);
-      //   if($(this).parent().hasClass("amap-active")){
-      //     $(this).parent().removeClass("amap-active");
-      //   }else{
-      //     $(".amap-marker").removeClass("amap-active");
-      //     $(this).parent().addClass("amap-active");
-      //   }
-      // })
+    //   //   var askTagStr = JSON.parse(extData.askTagStr);
+    //   //   console.log(askTagStr[0]);
+    //   //   var tagList = '';
+    //   //   for(var i = 0; i < askTagStr.length;i++){
+    //   //     tagList += '<div class="type-item">'+askTagStr[i]+'</div>' 
+    //   //   }
+    //   //   var div = '<div class="amap-marker-list-content" style="display:none"><div class="up">'+tagList+'<div class="up-price-right">￥'+extData.price+'</div></div><div class="down">'+extData.askReason+'</div></div>';
+    //   //   $(this).after(div);
+    //   //   if($(this).parent().hasClass("amap-active")){
+    //   //     $(this).parent().removeClass("amap-active");
+    //   //   }else{
+    //   //     $(".amap-marker").removeClass("amap-active");
+    //   //     $(this).parent().addClass("amap-active");
+    //   //   }
+    //   // })
 
 
-      //设置地点
-      var lnglatXY = [lng,lat];
-      getAddress(lnglatXY,{
-          success:function(address){
-            var detail = address.formattedAddress;
-            var address = {
-              province : address.addressComponent.province,
-              city     : address.addressComponent.city,
-              district : address.addressComponent.district,
-              township : address.addressComponent.township
-            }
-            var replace = ""+address.province+address.city+address.district+address.township+"";
-            detail = detail.replace(replace,"");
-            $("#address-content .item-title").text(detail);
-          }
-        });
+    //   //设置地点
+    //   var lnglatXY = [lng,lat];
+    //   getAddress(lnglatXY,{
+    //       success:function(address){
+    //         var detail = address.formattedAddress;
+    //         var address = {
+    //           province : address.addressComponent.province,
+    //           city     : address.addressComponent.city,
+    //           district : address.addressComponent.district,
+    //           township : address.addressComponent.township
+    //         }
+    //         var replace = ""+address.province+address.city+address.district+address.township+"";
+    //         detail = detail.replace(replace,"");
+    //         $("#address-content .item-title").text(detail);
+    //       }
+    //     });
 
-      //设置价格
-      $("#price-content .item-title").text(price);
+    //   //设置价格
+    //   $("#price-content .item-title").text(price);
 
-      // $("#reason-content .card-content-inner").text(reason);
-      // $("#price-content  .card-content-inner").text("￥ "+price);
-      // var detail = content_show;
-      // var hidden = '<span class="hidden-text">***</span>';
-      // str = detail.split("##");
-      // var detailContent = '';
-      // for(var i = 0; i < str.length; i++){
-      //   if(i%2){
-      //     detailContent += str[i];
-      //   }else{
-      //     detailContent += str[i]+hidden;
-      //   }
-      // }
-      // $("#detail-content  .card-content-inner").empty();
-      // $("#detail-content  .card-content-inner").append(detailContent);
-      // getMap(lng,lat);
-    }
+    //   // $("#reason-content .card-content-inner").text(reason);
+    //   // $("#price-content  .card-content-inner").text("￥ "+price);
+    //   // var detail = content_show;
+    //   // var hidden = '<span class="hidden-text">***</span>';
+    //   // str = detail.split("##");
+    //   // var detailContent = '';
+    //   // for(var i = 0; i < str.length; i++){
+    //   //   if(i%2){
+    //   //     detailContent += str[i];
+    //   //   }else{
+    //   //     detailContent += str[i]+hidden;
+    //   //   }
+    //   // }
+    //   // $("#detail-content  .card-content-inner").empty();
+    //   // $("#detail-content  .card-content-inner").append(detailContent);
+    //   // getMap(lng,lat);
+    // }
 
     //购买
     $(".wenwo-get").on("touchstart",function(){
@@ -2596,7 +2840,7 @@
               $("#address-content").show();
             }
 
-            var extData = {
+            var getExtData = {
                 askType         : result.data.askType,
                 askId           : result.data.objectId,
                 tagName         : result.data.askTag,
@@ -2617,7 +2861,7 @@
               }
 
               $.hidePreloader();
-              setDetail(extData);
+              setDetail(getExtData);
               $.popup('.ask-detail');
               $("#ask-detail-cancel").show();
             // askType =  askType.split(",");
@@ -2735,7 +2979,8 @@
     }
     //赞
       $(".votebar-like,.votebar-hate").on("click",function(){
-        var askId = $(this).parent(".votebar").data("askid");
+        // var askId = $(this).parent(".votebar").data("askid");
+        var askId = $(this).parent(".votebar").attr("data-askid");
         var type = 0;
         console.log(askId);
         if($(this).hasClass("liked")){
