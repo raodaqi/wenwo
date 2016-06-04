@@ -269,6 +269,7 @@ router.get('/getask', function(req, res, next) {
 router.get('/askadmin', function(req, res, next) {
     var askId = req.param('ask_id');
     var query = new AV.Query('AskMe');
+    query.limit(1000);
     query.get(askId).then(function (ask) {
         //ask.attributes.askContentHide = '****';
         var result = {
