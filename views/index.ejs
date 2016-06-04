@@ -1339,6 +1339,8 @@
   <script type="text/javascript" src="/js/map.js"></script>
   <script type="text/javascript" src="/js/wxlocation.js"></script>
   <script>
+    var CLICK = 0;
+
     function setDetail(extData){
       console.log(extData);
       var askId         = extData.askId,
@@ -1638,7 +1640,7 @@
     // })
     // $.popup('.ask-detail');
     // $.popup('.marker-content');
-    var markerExtData;
+    markerExtData = {};
     $(".header-sousuo").on("click",function(){
       $.router.load("#router1");
     });
@@ -1810,11 +1812,17 @@
     })
 
     //绑定marker点击事件
-    $("#container").bind("touchstart",".amap-icon",function(){
+    $("#container").bind("touchend",".amap-icon",function(){
       // $(this).addClass("amap-active");
       // alert("123");
       console.log("icon");
-      console.log($(this));
+      console.log(CLICK);
+      console.log(markerExtData);
+      // if(CLICK == 0){
+      //   console.log(markerExtData);
+      //   return;
+      // }
+      // CLICK = 0;
 
       // return ;
 
@@ -1844,8 +1852,6 @@
           $(this).parent().addClass("amap-active");
         }
       }
-      
-      
     })
 
 
@@ -2346,6 +2352,7 @@
                     // alert(markerExtData.askTagStr);
                     // $("")
                     $(".up").text();
+                    CLICK = 1;
                     $(".down").text(markerExtData.askReason);
                     console.log(markerExtData);
                     map.setZoomAndCenter(map.getZoom(),[lng,lat]);
@@ -2355,6 +2362,49 @@
                     // $.popup(".ask-detail");
                     // //设置地图中心位置为点击的marker上
                     // map.setZoomAndCenter(map.getZoom(),[lng,lat]);
+                      //绑定marker点击事件
+                      // $("#container").bind("touchstart",".amap-icon",function(){
+                      //   // $(this).addClass("amap-active");
+                      //   // alert("123");
+                      //   console.log("icon");
+                      //   console.log($(this));
+                      //   if($(".amap-marker").hasClass("amap-active")){
+                      //     $(".amap-active").css("-webkit-transform", "rotate(0deg) !important;");
+                      //     $(".amap-marker-list-content").remove();
+                      //     $(".amap-marker").removeClass("amap-active");
+                      //     return;
+                      //   }
+
+                      //   // return ;
+
+                      //   $(".amap-active").css("-webkit-transform", "rotate(0deg) !important;");
+                      //   $(".amap-marker-list-content").remove();
+                      //   // var div = '<div class="amap-marker-list-content" style="display:none"><div class="up">火锅<div class="up-price-right">0.8元</div></div><div class="down">这个真的很好吃</div></div>';
+                      //   // if(extData.askTagStr){
+                      //   //   var askTagStr = JSON.parse(extData.askTagStr);
+                      //   // }else{
+                      //   //   var askTagStr = '';
+                      //   // }
+                      //   if(markerExtData && markerExtData!=0){
+                      //     var askTagStr = JSON.parse(markerExtData.askTagStr);
+                      //     console.log(askTagStr[0]);
+                      //     var tagList = '';
+                      //     for(var i = 0; i < askTagStr.length;i++){
+                      //       if(askTagStr[i].tag_name){
+                      //         tagList += '<div class="type-item">'+askTagStr[i].tag_name+'</div>'
+                      //       }  
+                      //     }
+                      //     var div = '<div class="amap-marker-list-content" style="display:none"><div class="up">'+tagList+'<div class="up-price-right">￥'+markerExtData.price+'</div></div><div class="down">'+markerExtData.askReason+'</div></div>';
+                      //     $(this).after(div);
+                      //     if($(this).parent().hasClass("amap-active")){
+                      //       $(this).parent().removeClass("amap-active");
+                      //     }else{
+                      //       $(".amap-marker").removeClass("amap-active");
+                      //       $(this).parent().addClass("amap-active");
+                      //     }
+                      //   }
+                      // })
+                    
                   });
 
                   marker.setMap(map);
