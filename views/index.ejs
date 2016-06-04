@@ -2732,6 +2732,20 @@
                 $.toast('操作成功');
                 $(".ask-get, #address-content").show();
                 $(".wenwo-get").hide();
+
+                // var show = result.content_show.split("##");
+                // var hidden = content_hide.split("##");
+                // detailContent = '';
+                // for(var i = 0; i < hidden.length;i++){
+                //   detailContent += show[i] + hidden[i];
+                // }
+                // if(!hidden.length){
+                //   detailContent = show;
+                // }
+                // $("#detail-content  .card-content-inner").empty();
+                // $("#detail-content  .card-content-inner").append(detailContent);
+
+
               }else if(result.code == 600){
 
                 $.toast("余额不足");
