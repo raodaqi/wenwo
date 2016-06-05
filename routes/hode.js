@@ -107,9 +107,10 @@ router.post('/get', function(req, res, next) {
                 var query = new AV.Query('AskMe');
                 query.get(askId).then(function (post) {
                     console.log(post);
-                    var num = post.get("buyNum");
-                    num = (parseInt(num) + 1).toString();
-                    post.set('buyNum', num);
+                    // var num = post.get("buyNum");
+                    // num = (parseInt(num) + 1).toString();
+                    // post.set('buyNum', num);
+
                     var buyRelation = post.relation('haved');
                     post.save().then(function (post) {
                         if (post.get('askIsFree') == '1' && parseFloat(post.get('askPrice')) == 0) {//收藏
@@ -134,13 +135,36 @@ router.post('/get', function(req, res, next) {
                                         post.save().then(function () {
                                             var query = new AV.Query('AskMe');
                                             query.get(askId).then(function (ask) {
-                                                var result = {
-                                                    code : 200,
-                                                    data : ask,
-                                                    message : '操作成功'
+                                                var relation = ask.relation('haved');
+                                                if (relation == '' || relation == null) {
+                                                    var num = 0;
+                                                    ask.set('buyNum', num.toString());
+                                                    ask.save().then(function (ask) {
+                                                        var result = {
+                                                            code : 200,
+                                                            data : ask,
+                                                            message : '操作成功'
+                                                        }
+                                                        res.send(result);
+                                                        return;
+                                                    });
                                                 }
-                                                res.send(result);
-                                                return;
+                                                else {
+                                                    relation.query().find().then(function (list) {
+                                                        var num = list.length;
+                                                        ask.set('buyNum', num.toString());
+                                                        ask.save().then(function (ask) {
+                                                            var result = {
+                                                                code : 200,
+                                                                data : ask,
+                                                                message : '操作成功'
+                                                            }
+                                                            res.send(result);
+                                                            return;
+                                                        });
+                                                    });
+                                                }
+
                                             });
 
                                         });
@@ -207,13 +231,36 @@ router.post('/get', function(req, res, next) {
                                                                         console.log('money'+parseFloat((wallet.get('money')+price)).toFixed(2));
                                                                         wallet.set('money', parseFloat(parseFloat((wallet.get('money')+price)).toFixed(2)));
                                                                         wallet.save().then(function (re) {
-                                                                            var result = {
-                                                                                code : 200,
-                                                                                data : ask,
-                                                                                message : '操作成功'
+                                                                            var relation = ask.relation('haved');
+                                                                            if (relation == '' || relation == null) {
+                                                                                var num = 0;
+                                                                                ask.set('buyNum', num.toString());
+                                                                                ask.save().then(function (ask) {
+                                                                                    var result = {
+                                                                                        code : 200,
+                                                                                        data : ask,
+                                                                                        message : '操作成功'
+                                                                                    }
+                                                                                    res.send(result);
+                                                                                    return;
+                                                                                });
                                                                             }
-                                                                            res.send(result);
-                                                                            return;
+                                                                            else {
+                                                                                relation.query().find().then(function (list) {
+                                                                                    var num = list.length;
+                                                                                    console.log('num:'+num)
+                                                                                    ask.set('buyNum', num.toString());
+                                                                                    ask.save().then(function (ask) {
+                                                                                        var result = {
+                                                                                            code : 200,
+                                                                                            data : ask,
+                                                                                            message : '操作成功'
+                                                                                        }
+                                                                                        res.send(result);
+                                                                                        return;
+                                                                                    });
+                                                                                });
+                                                                            }
                                                                         });
                                                                     });
 
