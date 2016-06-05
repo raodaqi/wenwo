@@ -44,9 +44,9 @@ router.get('/signin', function(req, res, next) {
     res.render('manage/signin');
 });
 
-router.get('/signup', function(req, res, next) {
-    res.render('manage/signup');
-});
+// router.get('/signup', function(req, res, next) {
+//     res.render('manage/signup');
+// });
 
 router.post('/regist', function(req, res, next) {
     var adminName = req.param('name');
