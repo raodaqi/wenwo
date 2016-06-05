@@ -2906,7 +2906,7 @@
 
     //点击列表弹出详情
     $(".popup.marker-content").bind("touchstart","li",function(){
-      var askId = $(this).data("askid");
+      var askId = $(this).attr("data-askid");
 
       var data = {
         ask_id   : askId,
@@ -2970,8 +2970,8 @@
                 askIsFree       : result.data.askIsFree,
                 askTagStr       : result.data.askTagStr,
                 likeNum         : result.data.likeNum,
-                userHead        : result.userHead,
-                uName           : result.uName,
+                userHead        : result.data.createByUrl,
+                uName           : result.data.createByName,
                 geted           : 1
               }
 
