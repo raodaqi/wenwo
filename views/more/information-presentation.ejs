@@ -901,7 +901,7 @@ $(document).on('click','#del', function () {
 			askContentShow  = data.askContentShow,//隐藏详情
 			lnglatXY        = [data.GeoX,data.GeoY],//坐标
 			price           = data.askPrice,//价格
-			buyNum          = data.buyNum,//购买人数
+			// buyNum          = data.buyNum,//购买人数
 			updatedAt       = data.updatedAt,//发布时间
 			createBy        = data.createBy;//发布者
 
@@ -940,7 +940,21 @@ $(document).on('click','#del', function () {
 	      $(".autor-name").text("我");
 
 	      //购买数量
-	      $(".buy-num").text(buyNum);
+        $.ajax({
+                          type: "GET",
+                          url: '/ask/getbuy',
+                          data: {ask_id:"<%= id %>",username:'<%=username%>'},
+                          dataType: "json",
+                          success : function(result) {
+                                 console.log(result);
+                                 var buyNum = result.data.length;
+                                 $(".buy-num").text(buyNum);
+                                  },
+                          error : function(){
+                              $.alert('网络异常');
+                           }
+                       }); 
+	      
 
 	      //设置信息主题
 	      $(".autor-theme").text(typeText);
