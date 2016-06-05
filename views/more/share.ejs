@@ -368,7 +368,13 @@ function getMyask(){
                    var type = result.data[i].askType;
                    var strs = type.split(",");
                    console.log(strs);
-                   var buyNum = result.data[i].buyNum;
+                   if(result.data.length == result.data[i].buyNum)
+                   {
+                   	var buyNum = result.data.length;
+                   }
+                   else{
+                   	var buyNum = result.data.length;
+                   }
                    var time = formatDate("y.m.d",result.data[i].updatedAt);
                    var price = result.data[i].askPrice;
                    var mid = result.data[i].objectId;
