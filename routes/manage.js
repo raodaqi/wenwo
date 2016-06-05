@@ -191,5 +191,251 @@ router.get('/getviews', function(req, res, next) {
     });
 });
 
+router.get('/getapply', function(req, res, next) {
+    var query = new AV.Query('Apply');
+    query.addAscending('updatedAt');
+    query.find().then(function (applys) {
+        var result = {
+            code : 200,
+            data: applys,
+            message : 'operation successed'
+        }
+        res.send(result);
+    });
+});
+
+router.get('/applyinfo', function(req, res, next) {
+    // var user = AV.User.current();
+    // if (user == null || user == '') {
+    //     var result = {
+    //         code : 300,
+    //         message : '用户未登录'
+    //     };
+    //     res.send(result);
+    //     return;
+    // }
+    // var applyId = req.query.apply_id;
+    // var staus = req.query.staus; //staus = 0 未处理  = 1 通过  =2 失败
+    // var query = new AV.Query('Apply');
+    // query.get(applyId).then(function (apply) {
+    //     apply.set('staus', staus);
+    //     apply.set('operationBy', user.get('username'));
+    //     apply.save().then(function (apply) {
+    //         if (staus == '2') {
+    //             var result = {
+    //                 code : 200,
+    //                 data: apply,
+    //                 message : 'operation successed'
+    //             }
+    //             res.send(result);
+    //         }
+    //         else if (staus == '1') {
+    //
+    //         }
+    //     });
+    // })
+
+    var applyId = req.query.apply_id;
+    var query = new AV.Query('Apply');
+    query.get(applyId).then(function (apply) {
+        var userName = apply.get('userName');
+        var amount = apply.get('amount');
+
+    });
+
+});
+
+router.get('/apply', function(req, res, next) {
+    var user = AV.User.current();
+    if (user == null || user == '') {
+        var result = {
+            code : 300,
+            message : '用户未登录'
+        };
+        res.send(result);
+        return;
+    }
+    var applyId = req.query.apply_id;
+    var staus = req.query.staus; //staus = 0 未处理  = 1 通过  =2 失败
+    var query = new AV.Query('Apply');
+    query.get(applyId).then(function (apply) {
+        apply.set('staus', staus);
+        apply.set('operationBy', user.get('username'));
+        apply.save().then(function (apply) {
+            if (staus == '2') {
+                var result = {
+                    code : 200,
+                    data: apply,
+                    message : 'operation successed'
+                }
+                res.send(result);
+            }
+            else if (staus == '1') {
+                var secret = '9157e84975386b6dee6a499cc639973e';
+                var username = apply.get('userName');
+                var amount = apply.get('amount');
+                console.log(amount);
+                // if (code == null) {
+                //     var urlApi = "http://wenwo.leanapp.cn/authorization/withdraw?amount="+amount+"&username="+username;
+                //     //var urlApi = "/authorization/pay_t";
+                //     authorize(res, urlApi);
+                //     return;
+                // }
+                // var user = AV.User.current();
+                // if (user == null || user == '') {
+                //     var result = {
+                //         code : 300,
+                //         message : '用户未登录'
+                //     }
+                //     res.send(result);
+                //     return;
+                // }
+                //else {
+                var query = new AV.Query('Apply');
+                query.equalTo('user', username);
+                query.first().then(function (user) {
+                    var authData = user.get('authData');
+                    var openid = authData.weixin.openid;
+                    var accessToken = authData.weixin.access_token;
+                    var expiresIn = authData.weixin.expires_in;
+                    var query = new AV.Query('Config');
+                    var id = '5745403d49830c006265dacb';
+                    query.get(id).then(function (commission) {
+                        //for (var i = 0; i < configs.length; i++) {
+                        //if (configs[i].get('name') == 'commission') {
+                        //var commission = parseInt(configs[i].get('value'));
+                        //var amount = 1;
+                        var query = new AV.Query('UserInfo');
+                        query.equalTo('userName', username);
+                        query.find().then(function(results) {
+                            if (results[0] == '' || results[0] == null) {
+                                var result = {
+                                    code : 300,
+                                    message : '未找到该用户'
+                                };
+                                res.send(result);
+                                return;
+                            }
+                            else {
+                                var reamount = parseInt(amount) - parseInt(amount)*parseInt(commission.get('value'))/100;
+                                var id = results[0].attributes.wallet.id;
+                                var query = new AV.Query('Wallet');
+                                query.get(id).then(function (wallet) {
+                                    var money = wallet.get('money');
+                                    if (parseFloat(money) < parseFloat(amount)/100) {
+                                        var result = {
+                                            code : 700,
+                                            message : '余额不足'
+                                        };
+                                        res.send(result);
+                                        return;
+                                    }
+                                    else {
+                                        // amount = parseFloat(amount);
+                                        // amount = amount * 100;
+                                        var date = new Date();
+                                        date = moment(date).format("YYYYMMDDHHmmss");
+                                        var str = date + getNonceStr(10);
+
+                                        var appid = 'wx99f15635dd7d9e3c';
+                                        var mchid = '1298230401';
+                                        var nonceStr = getNonceStr();
+                                        //var sign = getSign();
+                                        var partnerTradeNo = str;
+                                        //var openid = '';
+                                        var checkName = 'NO_CHECK';
+
+                                        var desc = '提现';
+                                        var ip = req.ip;
+                                        ip = ip.substr(ip.lastIndexOf(':')+1, ip.length);
+                                        //var codeData = result.data;
+                                        // codeData = JSON.parse(codeData);
+                                        // var accessToken = codeData.access_token;
+                                        // var openid = codeData.openid;
+                                        // var expiresIn = codeData.expires_in;
+
+                                        var data = {
+                                            mch_appid : appid,
+                                            mchid : mchid,
+                                            nonce_str : nonceStr,
+                                            partner_trade_no : partnerTradeNo,
+                                            openid : openid,
+                                            check_name : checkName,
+                                            amount : reamount,
+                                            desc : desc,
+                                            spbill_create_ip : ip
+                                        };
+                                        data.sign = getSign(data);
+
+                                        console.log(data);
+                                        //console.log(buildXML(data));
+                                        //return;
+                                        // getAccessToken(appid, secret, code, res, {
+                                        //     success:function (result) {
+
+                                        request({
+                                            url: "https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers",
+                                            method: 'POST',
+                                            body: buildXML(data),
+                                            agentOptions: {
+                                                pfx: fs.readFileSync('./routes/certificate/apiclient_cert.p12'),
+                                                passphrase: mchid
+                                            }
+                                        }, function(err, response, body){
+                                            //console.log(err)
+                                            //console.log(response);
+                                            console.log(body);
+                                            parseXML(body, function (err, result) {
+                                                console.log(result);
+                                                if (result.return_code == 'SUCCESS' && result.return_msg == '') {
+                                                    var withdraw = new Withdraw();
+                                                    withdraw.set('nonceStr', result.nonce_str);
+                                                    withdraw.set('partnerTradeNo', result.partner_trade_no);
+                                                    withdraw.set('paymentNo', result.payment_no);
+                                                    withdraw.set('paymentTime', result.payment_time);
+                                                    withdraw.save().then(function (post) {
+                                                        //wallet.set('money', parseFloat(parseFloat(money) - parseFloat(amount)/100));
+                                                        //wallet.save().then(function (wallet) {
+                                                            var result = {
+                                                                code : 200,
+                                                                data : wallet,
+                                                                message : 'Operation succeeded'
+                                                            };
+                                                            res.send(result);
+                                                        //});
+
+                                                    });
+                                                }
+                                                else {
+                                                    var re = {
+                                                        code : 400,
+                                                        message : result.return_msg
+                                                    };
+                                                    res.send(re);
+                                                }
+                                            });
+                                        });
+                                        //     }
+                                        // });
+                                    }
+                                });
+
+                            }
+                        });
+                        //}
+                        //}
+                    });
+                });
+
+                //}
+
+
+
+
+
+            }
+        });
+    })
+});
 
 module.exports = router;

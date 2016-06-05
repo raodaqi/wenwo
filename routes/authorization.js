@@ -16,6 +16,7 @@ var Wallet = AV.Object.extend('Wallet');
 var md5 = require('MD5');
 var moment = require("moment");
 var User = AV.Object.extend('_User');
+var Apply = AV.Object.extend('Apply');
 var Withdraw = AV.Object.extend('Withdraw');
 // `AV.Object.extend` 方法一定要放在全局变量，否则会造成堆栈溢出。
 // 详见： https://leancloud.cn/docs/js_guide.html#对象
@@ -191,7 +192,45 @@ router.get('/pay', function(req, res, next) {
 router.get('/withdrawapply', function(req, res, next) {
     var username = req.query.username;
     var amount = req.query.amount;
-})
+
+    var query = new AV.Query('UserInfo');
+    query.equalTo('userName', userName);
+    query.find().then(function(results) {
+        if (results[0].attributes.wallet) {
+            var id = results[0].attributes.wallet.id;
+            var query = new AV.Query('Wallet');
+            query.get(id).then(function (wallet) {
+                var money = wallet.get('money');
+                if (money < parseFloat(amount)/100) {
+                    var result = {
+                        code : 700,
+                        message : '余额不足'
+                    };
+                    res.send(result);
+                }
+                else {
+                    wallet.set('money', parseFloat((money-parseFloat(amount)/100).toFixed(2)));
+                    wallet.save().then(function (wallet) {
+                        var apply = new Apply();
+                        apply.set('userName', username);
+                        apply.set('amount', amount);
+                        apply.save().then(function (apply) {
+                            var result = {
+                                code : 200,
+                                data : wallet,
+                                message : 'Operation succeeded'
+                            };
+                            res.send(result);
+                        });
+                    });
+                }
+            });
+
+        }
+
+
+    });
+});
 
 router.get('/withdraw', function(req, res, next) {
     //var code = req.query.code;

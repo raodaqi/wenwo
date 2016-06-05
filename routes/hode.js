@@ -177,59 +177,59 @@ router.post('/get', function(req, res, next) {
                                     }
                                     else {
                                         console.log((money-price).toString());
-                                        wallet.set('money', (money-price).toFixed(2));
+                                        wallet.set('money', parseFloat((money-price).toFixed(2)));
                                         wallet.save().then(function () {
-
-                                        },function (error) {
-                                            console.log('Error: ' + error.code + ' ' + error.message);
-                                        });
-                                        var relation = resultes[0].relation('haved');
-                                        var have = new Haved();
-                                        have.set('ask', post);
-                                        have.set('type', '2');
-                                        have.set('by', userName);
-                                        have.set('askDate', post.updatedAt);
-                                        have.set('price', post.get('askPrice'));
-                                        have.set('byName', user.get('uName'));
-                                        have.set('byUrl', user.get('userHead'));
-                                        have.save().then(function (result) {
-                                            console.log(result);
-                                            relation.add(result);
-                                            buyRelation.add(result);
-                                            resultes[0].save().then(function () {
-                                                post.save().then(function () {
-                                                    var query = new AV.Query('AskMe');
-                                                    query.get(askId).then(function (ask) {
-                                                        var byId = ask.get('createBy');
-                                                        var query = new AV.Query('UserInfo');
-                                                        query.get(byId).then(function (user) {
-                                                            if (user.attributes.wallet) {
-                                                                var id = user.attributes.wallet.id;
-                                                                var query = new AV.Query('Wallet');
-                                                                query.get(id).then(function (wallet) {
-                                                                    //console.log(wallet);
-                                                                    console.log('money'+parseFloat((wallet.get('money')+price)).toFixed(2));
-                                                                    wallet.set('money', parseFloat(parseFloat((wallet.get('money')+price)).toFixed(2)));
-                                                                    wallet.save().then(function (re) {
-                                                                        var result = {
-                                                                            code : 200,
-                                                                            data : ask,
-                                                                            message : '操作成功'
-                                                                        }
-                                                                        res.send(result);
-                                                                        return;
+                                            var relation = resultes[0].relation('haved');
+                                            var have = new Haved();
+                                            have.set('ask', post);
+                                            have.set('type', '2');
+                                            have.set('by', userName);
+                                            have.set('askDate', post.updatedAt);
+                                            have.set('price', post.get('askPrice'));
+                                            have.set('byName', user.get('uName'));
+                                            have.set('byUrl', user.get('userHead'));
+                                            have.save().then(function (result) {
+                                                console.log(result);
+                                                relation.add(result);
+                                                buyRelation.add(result);
+                                                resultes[0].save().then(function () {
+                                                    post.save().then(function () {
+                                                        var query = new AV.Query('AskMe');
+                                                        query.get(askId).then(function (ask) {
+                                                            var byId = ask.get('createBy');
+                                                            var query = new AV.Query('UserInfo');
+                                                            query.get(byId).then(function (user) {
+                                                                if (user.attributes.wallet) {
+                                                                    var id = user.attributes.wallet.id;
+                                                                    var query = new AV.Query('Wallet');
+                                                                    query.get(id).then(function (wallet) {
+                                                                        //console.log(wallet);
+                                                                        console.log('money'+parseFloat((wallet.get('money')+price)).toFixed(2));
+                                                                        wallet.set('money', parseFloat(parseFloat((wallet.get('money')+price)).toFixed(2)));
+                                                                        wallet.save().then(function (re) {
+                                                                            var result = {
+                                                                                code : 200,
+                                                                                data : ask,
+                                                                                message : '操作成功'
+                                                                            }
+                                                                            res.send(result);
+                                                                            return;
+                                                                        });
                                                                     });
-                                                                });
 
-                                                            }
+                                                                }
+                                                            });
+
                                                         });
 
                                                     });
 
                                                 });
-
                                             });
+                                        },function (error) {
+                                            console.log('Error: ' + error.code + ' ' + error.message);
                                         });
+
                                     }
                                 });
 
