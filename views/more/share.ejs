@@ -225,7 +225,10 @@ body{
 .red{
 	color: red;
 }
-.num{
+#num1{
+	padding: 0 4px;
+}
+#num2{
 	padding: 0 4px;
 }
 </style>
@@ -345,20 +348,20 @@ function getMyask(){
           for(var i = 0; i < result.data.length; i++){
           	if(result.data[i].staus == 1){
           		var tag = result.data[i].askTagStr;
-          		$.ajax({
-						type : "get",
-				        dataType: "json",
-				        url : "/ask/tagshow",
-				        data:{tag:tag,type:1},
-				        success : function(result){
-          				console.log(result);
+      //     		$.ajax({
+						// type : "get",
+				  //       dataType: "json",
+				  //       url : "/ask/tagshow",
+				  //       data:{tag:tag,type:1},
+				  //       success : function(result){
+      //     				console.log(result);
           				// var photo = result.data.userHead;
           				// $(".information_img").attr("src",photo);
-          				 },
-     					 	error: function(error){
-         			 		$.alert('error');
-       					 }
-					})
+     //      				 },
+     // 					 	error: function(error){
+     //     			 		$.alert('error');
+     //   					 }
+					// })
                 var temp = JSON.parse(tag);
                 var tab = "";
                 console.log(temp);
@@ -367,17 +370,11 @@ function getMyask(){
                    }
                    var type = result.data[i].askType;
                    var strs = type.split(",");
-                   console.log(strs);
-                   if(result.data.length == result.data[i].buyNum)
-                   {
-                   	var buyNum = result.data.length;
-                   }
-                   else{
-                   	var buyNum = result.data.length;
-                   }
+                   console.log(strs);                   
                    var time = formatDate("y.m.d",result.data[i].updatedAt);
                    var price = result.data[i].askPrice;
-                   var mid = result.data[i].objectId;
+                   var mid = result.data[i].objectId; 
+       				var buyNum = '';               
                    console.log(mid);
                     var showType = type.split(",")[0];
                    console.log(showType);
@@ -391,12 +388,43 @@ function getMyask(){
                    }
                    if(price == 0)
                    {
-                   	var str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+'&nbsp;&nbsp;'+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_time"><div class="left">'+time+'</div></div><div class="information_Purchase_number information_collect_number" data-mid='+mid+'>收藏人数：<span class="num">'+buyNum+'</span>人</div></div>';
+                   	var str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+'&nbsp;&nbsp;'+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_time"><div class="left">'+time+'</div></div><div class="information_Purchase_number information_collect_number" data-mid='+mid+'>收藏人数：<span id="num1">'+buyNum+'</span>人</div></div>';
+                   	$("#content1").append(str);
+			          		// $(".num").empty();
+			          		$.ajax({
+							            type: "GET",
+							            url: '/ask/getbuy',
+							            data: {ask_id:mid,username:'<%=username%>'},
+							            dataType: "json",
+							            success : function(result) {
+			               						 console.log(result);
+			               						 var buyNum = result.data.length;
+			               						 $("#num1").append(buyNum);
+			               						  },
+			            				error : function(){
+			            						$.alert('网络异常');
+			           					 }
+			       					 }); 
                    }
                    else{
-                   var str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+'&nbsp;&nbsp;'+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_time"><div class="left">'+time+'</div></div><div class="information_Purchase_number" data-mid='+mid+'>购买人数：<span class="num">'+buyNum+'</span>人</div></div>';
+                   var str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+'&nbsp;&nbsp;'+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_time"><div class="left">'+time+'</div></div><div class="information_Purchase_number" data-mid='+mid+'>购买人数：<span id="num2">'+buyNum+'</span>人</div></div>';
+                   $("#content1").append(str);
+          		// $(".num").empty();
+          		$.ajax({
+				            type: "GET",
+				            url: '/ask/getbuy',
+				            data: {ask_id:mid,username:'<%=username%>'},
+				            dataType: "json",
+				            success : function(result) {
+               						 console.log(result);
+               						 var buyNum = result.data.length;
+               						 $("#num2").append(buyNum);
+               						  },
+            				error : function(){
+            						$.alert('网络异常');
+           					 }
+       					 }); 
                    }
-          		$("#content1").append(str);
             }
             else {
             	if(result.data[i].staus == 2){
