@@ -50,8 +50,9 @@ router.get('/allask', function(req, res, next) {
         for (var i = 0; i < results.length; i++) {
             // results[i].attributes.askContentHide = '****';
             if(results[i].attributes.askIsFree == "0" || results[i].attributes.askPrice !="0.00"){
+                var length = results[i].get('askContentHide').length;
                 results[i].attributes.askContentHide = '';
-                for (var j = 0; j < results[i].get('askContentHide').length; j++) {
+                for (var j = 0; j < length; j++) {
                     results[i].attributes.askContentHide += '*';
                 }
             }
@@ -169,8 +170,9 @@ router.get('/askdetail', function(req, res, next) {
 
                     console.log(post.attributes.askIsFree);
                     if((post.attributes.askIsFree == "0" && parseFloat(post.attributes.askPrice) != 0 )){
+                        var length = post.get('askContentHide').length;
                         post.attributes.askContentHide = '';
-                        for (var i = 0; i < post.get('askContentHide').length; i++) {
+                        for (var i = 0; i < length ; i++) {
                             post.attributes.askContentHide += '*';
                         }
                     }
@@ -217,13 +219,13 @@ router.get('/askdetail', function(req, res, next) {
                     query.get(askId).then(function (post) {
                         // post.attributes.askContentHide = '****';
                         if(post.attributes.askIsFree == "0" || post.attributes.askPrice!="0.00"){
+                            var length = post.get('askContentHide').length;
+
                             post.attributes.askContentHide = '';
-                            for (var i = 0; i < post.get('askContentHide').length; i++) {
-                                post.attributes.askContentHide = '';
-                                for (var i = 0; i < post.get('askContentHide').length; i++) {
-                                    post.attributes.askContentHide += '*';
-                                }
+                            for (var i = 0; i < length; i++) {
+                                post.attributes.askContentHide += '*';
                             }
+
 
                         }
                         var result = {
@@ -247,8 +249,9 @@ router.get('/askdetail', function(req, res, next) {
             query.get(askId).then(function (post) {
                 // post.attributes.askContentHide = '****';
                  if(post.attributes.askIsFree == "0" || post.attributes.askPrice!="0.00"){
+                     var length = post.get('askContentHide').length;
                      post.attributes.askContentHide = '';
-                     for (var i = 0; i < post.get('askContentHide').length; i++) {
+                     for (var i = 0; i < length; i++) {
                          post.attributes.askContentHide += '*';
                      }
                 }
@@ -272,8 +275,9 @@ router.get('/getask', function(req, res, next) {
     var askId = req.param('ask_id');
     var query = new AV.Query('AskMe');
     query.get(askId).then(function (ask) {
+        var length = ask.get('askContentHide').length;
         ask.attributes.askContentHide = '';
-        for (var i = 0; i < ask.get('askContentHide').length; i++) {
+        for (var i = 0; length; i++) {
             ask.attributes.askContentHide += '*';
         }
         var result = {

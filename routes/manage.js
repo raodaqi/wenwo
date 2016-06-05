@@ -270,9 +270,10 @@ router.get('/applyinfo', function(req, res, next) {
                     }
                     console.log('withdrawTotal:' + withdrawTotal);
                     var data = {
-                        totalGet : totalGet,
-                        totalHaved : totalHaved,
-                        withdrawTotal : withdrawTotal
+                        totalGet : parseFloat(totalGet).toFixed(2),
+                        totalHaved : parseFloat(totalHaved).toFixed(2),
+                        withdrawTotal : parseFloat(withdrawTotal).toFixed(2),
+                        thisWithdraw : parseFloat(parseFloat(amount) / 100).toFixed(2)
                     }
                     var result = {
                         code : 200,
