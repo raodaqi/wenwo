@@ -248,7 +248,7 @@ router.post('/get', function(req, res, next) {
                                                                             else {
                                                                                 relation.query().find().then(function (list) {
                                                                                     var num = list.length;
-                                                                                    console.log('num:'+num)
+                                                                                    console.log('num:'+num);
                                                                                     ask.set('buyNum', num.toString());
                                                                                     ask.save().then(function (ask) {
                                                                                         var result = {

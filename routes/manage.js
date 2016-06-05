@@ -235,13 +235,56 @@ router.get('/applyinfo', function(req, res, next) {
     //     });
     // })
 
-    var applyId = req.query.apply_id;
-    var query = new AV.Query('Apply');
-    query.get(applyId).then(function (apply) {
-        var userName = apply.get('userName');
-        var amount = apply.get('amount');
+    var userName = req.query.username;
+    var amount = req.query.amount;
 
-    });
+    //var applyId = req.query.apply_id;
+    //var query = new AV.Query('Apply');
+    //query.get(applyId).then(function (apply) {
+        //var userName = apply.get('userName');
+        //var amount = apply.get('amount');
+    console.log(userName);
+    console.log(amount);
+        var query = new AV.Query('AskMe');
+        query.equalTo('createBy', userName);
+        query.find().then(function (resultes) {
+            var totalGet = 0;
+            for (var i = 0; i < resultes.length; i++) {
+                totalGet += (parseFloat(resultes[i].get('askPrice')) * parseInt(resultes[i].get('buyNum')));
+            }
+            console.log('tatalGet:' + totalGet);
+            var query = new AV.Query('Haved');
+            query.equalTo('by', userName);
+            query.find().then(function (haved) {
+                var totalHaved = 0;
+                for (var i = 0; i < haved.length; i++) {
+                    totalHaved += parseFloat(haved[i].get('price'));
+                }
+                console.log('totalHaved:' + totalHaved);
+                var query = new AV.Query('Withdraw');
+                query.equalTo('userName', userName);
+                query.find().then(function (withdraw) {
+                    var withdrawTotal = 0;
+                    for (var i = 0; i < withdraw.length; i++) {
+                        withdrawTotal += parseFloat(withdraw[i].get('amount')/100);
+                    }
+                    console.log('withdrawTotal:' + withdrawTotal);
+                    var data = {
+                        totalGet : totalGet,
+                        totalHaved : totalHaved,
+                        withdrawTotal : withdrawTotal
+                    }
+                    var result = {
+                        code : 200,
+                        data: data,
+                        message : 'operation successed'
+                    }
+                    res.send(result);
+                });
+            });
+        });
+
+    //});
 
 });
 
@@ -393,6 +436,8 @@ router.get('/apply', function(req, res, next) {
                                                     withdraw.set('partnerTradeNo', result.partner_trade_no);
                                                     withdraw.set('paymentNo', result.payment_no);
                                                     withdraw.set('paymentTime', result.payment_time);
+                                                    withdraw.set('userName', username);
+                                                    withdraw.set('amount', amount);
                                                     withdraw.save().then(function (post) {
                                                         //wallet.set('money', parseFloat(parseFloat(money) - parseFloat(amount)/100));
                                                         //wallet.save().then(function (wallet) {

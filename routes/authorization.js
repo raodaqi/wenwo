@@ -353,6 +353,8 @@ router.get('/withdraw', function(req, res, next) {
                                         withdraw.set('partnerTradeNo', result.partner_trade_no);
                                         withdraw.set('paymentNo', result.payment_no);
                                         withdraw.set('paymentTime', result.payment_time);
+                                        withdraw.set('userName', username);
+                                        withdraw.set('amount', amount);
                                         withdraw.save().then(function (post) {
                                             wallet.set('money', parseFloat(parseFloat(money) - parseFloat(amount)/100));
                                             wallet.save().then(function (wallet) {

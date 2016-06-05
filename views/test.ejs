@@ -117,16 +117,16 @@
 //            error : function(){}
 //        });
         //console.log(parseFloat('0.01'));
-        $.ajax({
-            type: "post",
-            url: 'hode/get',
-            data: {ask_id:'5752e4e8816dfa005f6d94cb', username:'573b0c63ad5b950057533669'},
-            dataType: "json",
-            success : function(result) {
-                console.log(result);
-            },
-            error : function(){}
-        });
+//        $.ajax({
+//            type: "post",
+//            url: 'hode/get',
+//            data: {ask_id:'5752e4e8816dfa005f6d94cb', username:'573b0c63ad5b950057533669'},
+//            dataType: "json",
+//            success : function(result) {
+//                console.log(result);
+//            },
+//            error : function(){}
+//        });
 //        $.ajax({
 //            type: "post",
 //            url: 'hode/refund',
@@ -187,6 +187,16 @@
 //            },
 //            error : function(){}
 //        });
+        $.ajax({
+            type: "get",
+            url: 'manage/applyinfo',
+            data: {amount:'10', username:'573b0c63ad5b950057533669'},
+            dataType: "json",
+            success : function(result) {
+                console.log(result);
+            },
+            error : function(){}
+        });
     }
 </script>
 </body>
