@@ -30,11 +30,11 @@ router.get('/order', function(req, res, next) {
   // res.render('more/order');
 });
 
-// router.get('/order/test/', function(req, res) {
-//   var username =  req.query.username;
-//   // var id = req.params.id;
-//   res.render('more/order',{username:username});
-// });
+router.get('/order/test/', function(req, res) {
+  var username =  req.query.username;
+  // var id = req.params.id;
+  res.render('more/order',{username:username});
+});
 
 router.get('/share', function(req, res, next) {
   var user = AV.User.current();
@@ -47,11 +47,11 @@ router.get('/share', function(req, res, next) {
   // res.render('more/share');
 });
 
-// router.get('/share/test/', function(req, res) {
-//   var username =  req.query.username;
-//   // var id = req.params.id;
-//   res.render('more/share',{username:username});
-// });
+router.get('/share/test/', function(req, res) {
+  var username =  req.query.username;
+  // var id = req.params.id;
+  res.render('more/share',{username:username});
+});
 
 router.get('/personalPage', function(req, res, next) {
   var user = AV.User.current();
@@ -62,11 +62,11 @@ router.get('/personalPage', function(req, res, next) {
     res.render('more/personalPage',{username:username});
   }
 
-// router.get('/personalPage/test/', function(req, res) {
-//   var username =  req.query.username;
-//   // var id = req.params.id;
-//   res.render('more/personalPage',{username:username});
-// });
+router.get('/personalPage/test/', function(req, res) {
+  var username =  req.query.username;
+  // var id = req.params.id;
+  res.render('more/personalPage',{username:username});
+});
 
   // res.render('more/personalPage');
 });
@@ -81,11 +81,11 @@ router.get('/moneyBox', function(req, res, next) {
   // res.render('more/moneyBox');
 });
 
-// router.get('/moneyBox/test', function(req, res, next) {
-//   var username =  req.query.username;
-//   res.render('more/moneyBox',{username:username});
-//   // res.render('more/moneyBox');
-// });
+router.get('/moneyBox/test', function(req, res, next) {
+  var username =  req.query.username;
+  res.render('more/moneyBox',{username:username});
+  // res.render('more/moneyBox');
+});
 
 router.get('/contact-us', function(req, res, next) {
   var user = AV.User.current();
@@ -98,11 +98,11 @@ router.get('/contact-us', function(req, res, next) {
   // res.render('more/contact-us');
 });
 
-// router.get('/contact-us/test', function(req, res, next) {
-//   var username =  req.query.username;
-//   res.render('more/contact-us',{username:username});
-//   // res.render('more/moneyBox');
-// });
+router.get('/contact-us/test', function(req, res, next) {
+  var username =  req.query.username;
+  res.render('more/contact-us',{username:username});
+  // res.render('more/moneyBox');
+});
 
 router.get('/purchase-detail/:id', function(req, res, next) {
   var user = AV.User.current();
@@ -116,11 +116,11 @@ router.get('/purchase-detail/:id', function(req, res, next) {
   // var id = req.params.id;
   // res.render('more/purchase-detail',{id:id});
 });
-// router.get('/purchase-detail/test/:id', function(req, res) {
-//   var username =  req.query.username;
-//   var id = req.params.id;
-//   res.render('more/purchase-detail',{id:id,username:username});
-// });
+router.get('/purchase-detail/test/:id', function(req, res) {
+  var username =  req.query.username;
+  var id = req.params.id;
+  res.render('more/purchase-detail',{id:id,username:username});
+});
 router.get('/withdraw', function(req, res, next) {
   var user = AV.User.current();
   if(!user){
@@ -132,12 +132,12 @@ router.get('/withdraw', function(req, res, next) {
   // res.render('more/withdraw');
 });
 
-// router.get('/withdraw/test', function(req, res, next) {
+router.get('/withdraw/test', function(req, res, next) {
 
-//   var username =  req.query.username;
-//   res.render('more/withdraw',{username:username});
+  var username =  req.query.username;
+  res.render('more/withdraw',{username:username});
 
-// });
+});
 
 router.get('/watch-us', function(req, res, next) {
   var user = AV.User.current();
@@ -150,11 +150,11 @@ router.get('/watch-us', function(req, res, next) {
   // res.render('more/watch-us');
 });
 
-// router.get('/watch-us/test', function(req, res, next) {
-//   var username =  req.query.username;
-//   res.render('more/watch-us',{username:username});
-//   // res.render('more/moneyBox');
-// });
+router.get('/watch-us/test', function(req, res, next) {
+  var username =  req.query.username;
+  res.render('more/watch-us',{username:username});
+  // res.render('more/moneyBox');
+});
 
 router.get('/personal-data', function(req, res, next) {
   var user = AV.User.current();
@@ -178,11 +178,11 @@ router.get('/information-presentation/:id', function(req, res, next) {
   // var id = req.params.id;
   // res.render('more/information-presentation',{id:id});
 });
-// router.get('/information-presentation/test/:id', function(req, res) {
-//   var username =  req.query.username;
-//   var id = req.params.id;
-//   res.render('more/information-presentation',{id:id,username:username});
-// });
+router.get('/information-presentation/test/:id', function(req, res) {
+  var username =  req.query.username;
+  var id = req.params.id;
+  res.render('more/information-presentation',{id:id,username:username});
+});
 
 router.get('/askdetail/:id', function(req, res, next) {
   // authorize(req,res);
@@ -197,11 +197,11 @@ router.get('/askdetail/:id', function(req, res, next) {
     res.render('more/askDetail',{id:id,username:username});
   }
 });
-// router.get('/askdetail/test/:id', function(req, res) {
-//   var username =  req.query.username;
-//   var id = req.params.id;
-//   res.render('more/askDetail',{id:id,username:username});
-// });
+router.get('/askdetail/test/:id', function(req, res) {
+  var username =  req.query.username;
+  var id = req.params.id;
+  res.render('more/askDetail',{id:id,username:username});
+});
 
 router.get('/recharge', function(req, res, next) {
   var user = AV.User.current();
@@ -214,12 +214,12 @@ router.get('/recharge', function(req, res, next) {
   // res.render('more/recharge');
 });
 
-// router.get('/recharge/test', function(req, res, next) {
+router.get('/recharge/test', function(req, res, next) {
 
-//   var username =  req.query.username;
-//   res.render('more/recharge',{username:username});
+  var username =  req.query.username;
+  res.render('more/recharge',{username:username});
 
-// });
+});
 
 router.get('/present-rules', function(req, res, next) {
   var user = AV.User.current();
@@ -251,10 +251,10 @@ router.get('/invite', function(req, res, next) {
   }
   // res.render('more/invite');
 });
-// router.get('/invite/test', function(req, res, next) {
-//   var username =  req.query.username;
-//   res.render('more/invite',{username:username});
-// });
+router.get('/invite/test', function(req, res, next) {
+  var username =  req.query.username;
+  res.render('more/invite',{username:username});
+});
 
 
 // 新增 Todo 项目
