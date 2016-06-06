@@ -732,19 +732,19 @@
      </script>
     <script>
     window.onload = function(){
-    AMap.plugin(['AMap.ToolBar','AMap.Scale'],function(){
-        var toolBar = new AMap.ToolBar({
-            offset: new AMap.Pixel(10, 10)
-          });
-        var scale = new AMap.Scale({
-          offset: new AMap.Pixel(-5, 7)
+        AMap.plugin(['AMap.ToolBar','AMap.Scale'],function(){
+            var toolBar = new AMap.ToolBar({
+                offset: new AMap.Pixel(10, 10)
+              });
+            var scale = new AMap.Scale({
+              offset: new AMap.Pixel(-5, 7)
+            });
+            map.addControl(toolBar);
+            map.addControl(scale);
         });
-        map.addControl(toolBar);
-        map.addControl(scale);
-    });
 
-    $.hidePreloader();
-  }
+        $.hidePreloader();
+    }
 
 
   //加载二级标签
