@@ -706,10 +706,10 @@ router.get('/del', function(req, res, next) {
     });
 });
 
-router.get('/approval', function(req, res, next) {
-    var askId = req.param('ask_id');
-    var staus = req.param('staus');
-    var reason = req.query.reason;
+router.post('/approval', function(req, res, next) {
+    var askId = req.body.ask_id;
+    var staus = req.body.staus;
+    var reason = req.body.reason;
     var query = new AV.Query('AskMe');
 
     query.get(askId).then(function (ask) {

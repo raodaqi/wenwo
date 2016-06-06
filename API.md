@@ -88,7 +88,7 @@ ask/cancel `[get]`
 `username`  `Y`
 
 审批信息:
-ask/approval  `[get]`
+ask/approval  `[post]`
 `ask_id`   `Y`
 `staus`    `Y`    `staus==1 审批通过, staus==5 审批未通过`
 `reason`   `未通过理由`
