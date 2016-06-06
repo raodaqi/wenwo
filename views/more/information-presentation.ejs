@@ -834,6 +834,41 @@ body{
 $(".more").click(function(){
     window.location.href="/todos/send?type=edit&askid="+"<%=id%>";
   })
+$(".list-block").click(function(){
+  // console.log(1234);
+  var data = {
+      ask_id   : "<%= id %>",
+      username : "<%= username %>"
+    }
+    // $.showPreloader();
+    $.ajax({
+          type : "GET",
+          data: data,
+          dataType: "json",
+          url : "/ask/askdetail",
+          success : function(result){
+            console.log(result);
+            var geox = result.data.GeoX;
+            console.log(geox);
+            var geoy = result.data.GeoY;
+            console.log(geoy);
+            window.location.href="/?"+geox+"&"+geoy;
+            // $.hidePreloader();
+            // if(result.code == 200){
+              // $.hidePreloader();
+            //   formatDetail(result.data);
+            // }else{
+              // $.hidePreloader();
+            //   $.toast(result.message);
+            // }
+          },
+          error: function(error){
+            // alert(error);
+            $.hidePreloader();
+            $.alert('error');
+          }
+        });
+})
 $(document).on('click','#grounding', function () {
       $.confirm('上架该商品?', '提示', function () {
         $.ajax({

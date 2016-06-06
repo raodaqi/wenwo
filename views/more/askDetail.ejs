@@ -801,7 +801,7 @@ body{
                       <li>
                         <a class="item-link item-content">
                           <div class="item-media item-left"><i class="iconfont icon-dingwei"></i></div>
-                          <!-- <div class="item-media item-right"><i class="iconfont icon-youjiantou"></i></div> -->
+                          <div class="item-media item-right"><i class="iconfont icon-youjiantou"></i></div>
                           <div class="item-inner">
                             <div class="item-title ">成都信息工程大学</div>
                           </div>
@@ -946,6 +946,41 @@ body{
   //   $(".modal-overlay-visible").hide();
   //   $(".modal-in").hide();
   // })
+  $(".list-block").click(function(){
+  // console.log(1234);
+  var data = {
+      ask_id   : "<%= id %>",
+      username : "<%= username %>"
+    }
+    // $.showPreloader();
+    $.ajax({
+          type : "GET",
+          data: data,
+          dataType: "json",
+          url : "/ask/askdetail",
+          success : function(result){
+            console.log(result);
+            var geox = result.data.GeoX;
+            console.log(geox);
+            var geoy = result.data.GeoY;
+            console.log(geoy);
+            window.location.href="/?"+geox+"&"+geoy;
+            // $.hidePreloader();
+            // if(result.code == 200){
+              // $.hidePreloader();
+            //   formatDetail(result.data);
+            // }else{
+              // $.hidePreloader();
+            //   $.toast(result.message);
+            // }
+          },
+          error: function(error){
+            // alert(error);
+            $.hidePreloader();
+            $.alert('error');
+          }
+        });
+})
 	function formatDetail(data){
 		
 		var staus           = data.staus,     //状态

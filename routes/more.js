@@ -256,6 +256,20 @@ router.get('/invite/test', function(req, res, next) {
   res.render('more/invite',{username:username});
 });
 
+router.get('/moneyDetail', function(req, res, next) {
+  var user = AV.User.current();
+  if(!user){
+    authorize(req, res);
+  }else{
+    var username = user.get('user');
+    res.render('more/moneyDetail',{username:username});
+  }
+  // res.render('more/invite');
+});
+router.get('/moneyDetail/test', function(req, res, next) {
+  var username =  req.query.username;
+  res.render('more/moneyDetail',{username:username});
+});
 
 // 新增 Todo 项目
 router.post('/', function(req, res, next) {
