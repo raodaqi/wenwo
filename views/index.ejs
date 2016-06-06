@@ -787,6 +787,16 @@
 
   </style>
   <body>
+  
+   <!-- <div class="preloader-modal">
+    <div class="modal-content">
+      <div class="modal-inner">
+        <i class="ui-loading-bright"></i>
+        <div class="modal-title">加载中</div>
+      </div>
+    </div>
+  </div> -->
+
   <div class="page page-current" id='router'>
     <div class="slide-content">
       <div class="left-content">
@@ -1213,6 +1223,8 @@
     </div>
   </div>
 
+ 
+
   </body>
   <script type='text/javascript' src='/js/zepto.min.js' charset='utf-8'></script>
   <script type='text/javascript' src='/js/sm.min.js' charset='utf-8'></script>
@@ -1612,10 +1624,6 @@
 
     $.hidePreloader();
   }
-  $("body").on("click",function(){
-        $.showPreloader();
-        alert("123");
-      })
 
 
   //关闭信息列表
