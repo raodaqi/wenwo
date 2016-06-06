@@ -709,9 +709,12 @@ router.get('/del', function(req, res, next) {
 router.get('/approval', function(req, res, next) {
     var askId = req.param('ask_id');
     var staus = req.param('staus');
+    var reason = req.query.reason;
     var query = new AV.Query('AskMe');
+
     query.get(askId).then(function (ask) {
         ask.set('staus', staus);
+        ask.set('askDefault', reason);
         ask.save().then(function () {
             var result = {
                 code : 200,

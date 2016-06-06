@@ -91,6 +91,7 @@ ask/cancel `[get]`
 ask/approval  `[get]`
 `ask_id`   `Y`
 `staus`    `Y`    `staus==1 审批通过, staus==5 审批未通过`
+`reason`   `未通过理由`
 
 发布信息:
 ask/sendask `[post]`
