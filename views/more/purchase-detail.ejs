@@ -253,7 +253,7 @@ $.ajax({
                 console.log(money);
                 $("#mon").append(money);          
             },
-            error : function(){
+            error : function(error){
             	$.alert('网络异常');
             }
         });
@@ -277,7 +277,7 @@ $.ajax({
                 	$(".details").append(str);
                 }
             },
-            error : function(){
+            error : function(error){
             	$.alert('网络异常');
             }
         });

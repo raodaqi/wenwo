@@ -420,7 +420,7 @@ function getMyask(){
                						 var buyNum = result.data.length;
                						 $("#num2").append(buyNum);
                						  },
-            				error : function(){
+            				error : function(error){
             						$.alert('网络异常');
            					 }
        					 }); 

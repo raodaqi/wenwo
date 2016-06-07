@@ -865,7 +865,7 @@ $(".list-block").click(function(){
           error: function(error){
             // alert(error);
             $.hidePreloader();
-            $.alert('error');
+            $.alert('网络异常');
           }
         });
 })
@@ -883,7 +883,7 @@ $(document).on('click','#grounding', function () {
              },
           error: function(error){
             // alert(error);
-            $.alert('error');
+            $.alert('网络异常');
           }
         });
       });
@@ -902,7 +902,7 @@ $(document).on('click','#undercarriage', function () {
              },
           error: function(error){
             // alert(error);
-            $.alert('error');
+            $.alert('网络异常');
           }
         });
       });
@@ -921,7 +921,7 @@ $(document).on('click','#del', function () {
              },
           error: function(error){
             // alert(error);
-            $.alert('error');
+            $.alert('网络异常');
           }
         });
       });
@@ -1078,7 +1078,7 @@ $(document).on('click','#del', function () {
           error: function(error){
             // alert(error);
             $.hidePreloader();
-            $.alert('error');
+            $.alert('网络异常');
           }
         });
 	}
@@ -1166,7 +1166,7 @@ function getMyasks(){
           // }
           },
       error: function(error){
-          $.alert('error');
+          $.alert('网络异常');
         }
       })
 }
