@@ -73,6 +73,10 @@ app.use(function(req, res, next) {
 
 app.get('/', function(req, res) {
   var username = req.query.username;
+
+  //
+  var lng = req.query.geox;
+  var lat = req.query.geoy;
   var user = AV.User.current();
 
 console.log(user);
@@ -83,15 +87,23 @@ console.log(user);
   else{
     var username = user.get('user');
     console.log(username);
-    res.render('index', { username: username });
+    if(lng && lat){
+      res.render('index', { username: username, lng:lng, lat:lat});
+    }
+    res.render('index', { username: username, lng:"0", lat:"0"});
   }
 
 });
 
 app.get('/wenwo', function(req, res) {
   var username =  req.query.username;
+  var lng = req.query.geox;
+  var lat = req.query.geoy;
   //username = decodeURI(username);
-  res.render('index', { username: username });
+  if(lng && lat){
+    res.render('index', { username: username, lng:lng, lat:lat});
+  }
+  res.render('index', { username: username, lng:"0", lat:"0"});
 });
 
 app.get('/test', function(req, res) {

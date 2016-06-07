@@ -1365,10 +1365,20 @@
   // </script>
   <script type="text/javascript" src="/js/map.js"></script>
   <script type="text/javascript" src="/js/wxlocation.js"></script>
-  <script>
+  <script> 
+
     var CLICK = 0,
         LIKENUM = 20,
         LIKETYPE = 0;
+    var lng = "<%=lng%>";
+    var lat = "<%=lat%>";
+
+    if(lng == "0" || lat=="0"){
+      initLocation();
+    }else{
+      map.setZoomAndCenter(18, [lng, lat]);
+    }
+
     //初始化隐藏区域
     function initHide(){
       $("#address-content").hide();
