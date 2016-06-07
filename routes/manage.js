@@ -245,45 +245,83 @@ router.get('/applyinfo', function(req, res, next) {
         //var amount = apply.get('amount');
     console.log(userName);
     console.log(amount);
-        var query = new AV.Query('AskMe');
-        query.equalTo('createBy', userName);
-        query.find().then(function (resultes) {
-            var totalGet = 0;
-            for (var i = 0; i < resultes.length; i++) {
-                totalGet += (parseFloat(resultes[i].get('askPrice')) * parseInt(resultes[i].get('buyNum')));
-            }
-            console.log('tatalGet:' + totalGet);
+
+
+        // var query = new AV.Query('AskMe');
+        // query.equalTo('createBy', userName);
+        // query.find().then(function (resultes) {
+        //     var totalGet = 0;
+        //     for (var i = 0; i < resultes.length; i++) {
+        //         totalGet += (parseFloat(resultes[i].get('askPrice')) * parseInt(resultes[i].get('buyNum')));
+        //     }
+        //     console.log('tatalGet:' + totalGet);
+        //     var query = new AV.Query('Haved');
+        //     query.equalTo('by', userName);
+        //     query.find().then(function (haved) {
+        //         var totalHaved = 0;
+        //         for (var i = 0; i < haved.length; i++) {
+        //             totalHaved += parseFloat(haved[i].get('price'));
+        //         }
+        //         console.log('totalHaved:' + totalHaved);
+        //         var query = new AV.Query('Withdraw');
+        //         query.equalTo('userName', userName);
+        //         query.find().then(function (withdraw) {
+        //             var withdrawTotal = 0;
+        //             for (var i = 0; i < withdraw.length; i++) {
+        //                 withdrawTotal += parseFloat(withdraw[i].get('amount')/100);
+        //             }
+        //             console.log('withdrawTotal:' + withdrawTotal);
+        //             var data = {
+        //                 totalGet : parseFloat(totalGet).toFixed(2),
+        //                 totalHaved : parseFloat(totalHaved).toFixed(2),
+        //                 withdrawTotal : parseFloat(withdrawTotal).toFixed(2),
+        //                 thisWithdraw : parseFloat(parseFloat(amount) / 100).toFixed(2)
+        //             }
+        //             var result = {
+        //                 code : 200,
+        //                 data: data,
+        //                 message : 'operation successed'
+        //             }
+        //             res.send(result);
+        //         });
+        //     });
+        // });
+
+
+        var query = new AV.Query('Haved');
+        query.equalTo('askOwn', userName);
+        query.limit(1000);
+        query.find().then(function (saleList) {
             var query = new AV.Query('Haved');
             query.equalTo('by', userName);
-            query.find().then(function (haved) {
-                var totalHaved = 0;
-                for (var i = 0; i < haved.length; i++) {
-                    totalHaved += parseFloat(haved[i].get('price'));
-                }
-                console.log('totalHaved:' + totalHaved);
-                var query = new AV.Query('Withdraw');
+            query.limit(1000);
+            query.find().then(function (buyList) {
+                var query = new AV.Query('Order');
                 query.equalTo('userName', userName);
-                query.find().then(function (withdraw) {
-                    var withdrawTotal = 0;
-                    for (var i = 0; i < withdraw.length; i++) {
-                        withdrawTotal += parseFloat(withdraw[i].get('amount')/100);
-                    }
-                    console.log('withdrawTotal:' + withdrawTotal);
-                    var data = {
-                        totalGet : parseFloat(totalGet).toFixed(2),
-                        totalHaved : parseFloat(totalHaved).toFixed(2),
-                        withdrawTotal : parseFloat(withdrawTotal).toFixed(2),
-                        thisWithdraw : parseFloat(parseFloat(amount) / 100).toFixed(2)
-                    }
-                    var result = {
-                        code : 200,
-                        data: data,
-                        message : 'operation successed'
-                    }
-                    res.send(result);
+                query.limit(1000);
+                query.find().then(function (payList) {
+                    var query = new AV.Query('Withdraw');
+                    query.equalTo('userName', userName);
+                    query.limit(1000);
+                    query.find().then(function (withdrawList) {
+                        var data = {
+                            saleList:saleList,
+                            buyList:buyList,
+                            payList:payList,
+                            withdrawList:withdrawList
+                        };
+                        var result = {
+                            code : 200,
+                            data: data,
+                            message : 'operation successed'
+                        }
+                        res.send(result);
+                    });
                 });
             });
         });
+
+
 
     //});
 
