@@ -453,6 +453,7 @@ function getMyask(){
             }
             else {
             	if(result.data[i].staus == 2){
+            		var staus = result.data[i].staus;
             		var tag = result.data[i].askTagStr;
 	                var temp = JSON.parse(tag);
 	                var tab = "";
@@ -492,7 +493,7 @@ function getMyask(){
 					                   }					                   
 					                   }
 					                   var str = '';
-					                    str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state blue">'+getStaus(result.data[i].staus)+'</div></div>';
+					                    str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state blue">'+getStaus(staus)+'</div></div>';
 	          							$("#content2").append(str);
 					                   },
 					            error : function(error){
@@ -503,7 +504,7 @@ function getMyask(){
             	else if(result.data[i].staus == 5)
             	{            		
 	            	var tag = result.data[i].askTagStr;
-	            	// console.log(result.data[i].staus);
+	            	var staus = result.data[i].staus;
 	                var temp = JSON.parse(tag);
 	                var tab = "";
 	                console.log(temp);
@@ -527,29 +528,29 @@ function getMyask(){
                    }else if(result.code == 200){
                    	img = "/img/common/theme"+showType+'-1.png';
                    }
-                   $.ajax({
-					            type: "get",
-					            url: "/ask/tagshow",
-					            data: {type:1, tag:tag},
-					            dataType: "json",
-					            success : function(result) {
-					                console.log(result);
-					                console.log(123456);
-					                 if(result.code == 200){
-					                   if(result.url.tagUrl){
-					                   	img = result.url.tagUrl;
-					                   	console.log(img);
-					                   }					                   
-					                   }
+                 //   $.ajax({
+					            // type: "get",
+					            // url: "/ask/tagshow",
+					            // data: {type:1, tag:tag},
+					            // dataType: "json",
+					            // success : function(result) {
+					            //     console.log(result);
+					            //     console.log(123456);
+					            //      if(result.code == 200){
+					            //        if(result.url.tagUrl){
+					            //        	img = result.url.tagUrl;
+					            //        	console.log(img);
+					            //        }					                   
+					            //        }
 					                   var str = '';
-					                    str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state red">'+getStaus(result.data[i].staus)+'</div></div>';
+					                    str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state red">'+getStaus(staus)+'</div></div>';
 					                    console.log(str);
 	          								$("#content2").append(str);
-					                   },
-					            error : function(error){
-					            	$.alert('网络异常');
-					            }
-					        });
+					        //            },
+					        //     error : function(error){
+					        //     	$.alert('网络异常');
+					        //     }
+					        // });
           		}
             }
           }
