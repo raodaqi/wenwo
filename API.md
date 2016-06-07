@@ -199,3 +199,9 @@ ask/edittag `[post]`
 `level`     `Y`
 `tag_name`  `Y`
 `url`   `Y`
+
+后台下架
+ask/admincancle `[post]`
+`ask_id`
+`username`  `必须为wenwo`
+`cancle_reason`   `下架理由`

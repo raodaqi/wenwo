@@ -305,6 +305,44 @@ router.get('/askadmin', function(req, res, next) {
     });
 });
 
+router.post('/admincancle', function (req, res, next) {
+    var askId = req.param('ask_id');
+    //var staus = req.param('staus');
+    var userName = req.param('username');
+    var cancleReason = req.body.cancle_reason;
+    var query = new AV.Query('AskMe');
+    query.get(askId).then(function (ask) {
+        if ('wenwo' != userName) {
+            var result = {
+                code: 800,
+                data: ask,
+                message: 'illegal operation'
+            };
+            res.send(result);
+        }
+        else {
+            ask.set('staus', '3');
+            ask.set('askDefault', cancleReason);
+            ask.save().then(function (ask) {
+                var result = {
+                    code: 200,
+                    data: ask,
+                    message: 'Operation succeeded'
+                }
+                res.send(result);
+            }, function (err) {
+                var result = {
+                    code: 800,
+                    data: err,
+                    message: err.message
+                }
+                res.send(result);
+                //console.log('Failed to create new object, with error message: ' + err.message);
+            });
+        }
+    });
+});
+
 router.post('/askedit', function(req, res, next) {
     var askId = req.param('ask_id');
     var username = req.query.username;
