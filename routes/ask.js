@@ -424,30 +424,30 @@ router.get('/like', function(req, res, next) {
                                     ask.set('likeNum', (parseInt(ask.get('likeNum'))-2).toString());
                                 }
                                 ask.save().then(function (ask) {
-                                    var relation = ask.relation('like');
-                                    relation.query().find().then(function (list) {
-                                        var likeNum = 0;
-                                        var disLikeNum = 0;
-                                        for (var i = 0; i < list.length; i++) {
-                                            if (list[i].get('type') == 1 || list[i].get('type') == '1') {
-                                                likeNum++;
-                                            }
-                                            else {
-                                                disLikeNum++;
-                                            }
-                                        }
-                                        var data = {
-                                            likeNum:likeNum,
-                                            disLikeNum:disLikeNum
-                                        };
+                                    // var relation = ask.relation('like');
+                                    // relation.query().find().then(function (list) {
+                                        // var likeNum = 0;
+                                        // var disLikeNum = 0;
+                                        // for (var i = 0; i < list.length; i++) {
+                                        //     if (list[i].get('type') == 1 || list[i].get('type') == '1') {
+                                        //         likeNum++;
+                                        //     }
+                                        //     else {
+                                        //         disLikeNum++;
+                                        //     }
+                                        // }
+                                        // var data = {
+                                        //     likeNum:likeNum,
+                                        //     disLikeNum:disLikeNum
+                                        // };
                                         var result = {
                                             code : 200,
-                                            data:data,
+                                            data:ask,
                                             message : '操作成功'
                                         }
                                         res.send(result);
                                         return;
-                                    });
+                                    //});
 
                                 });
                             });
@@ -478,30 +478,30 @@ router.get('/like', function(req, res, next) {
                                     }
                                 }
                                 ask.save().then(function (ask) {
-                                    var relation = ask.relation('like');
-                                    relation.query().find().then(function (list) {
-                                        var likeNum = 0;
-                                        var disLikeNum = 0;
-                                        for (var i = 0; i < list.length; i++) {
-                                            if (list[i].get('type') == 1 || list[i].get('type') == '1') {
-                                                likeNum++;
-                                            }
-                                            else {
-                                                disLikeNum++;
-                                            }
-                                        }
-                                        var data = {
-                                            likeNum:likeNum,
-                                            disLikeNum:disLikeNum
-                                        };
+                                    // var relation = ask.relation('like');
+                                    // relation.query().find().then(function (list) {
+                                    //     var likeNum = 0;
+                                    //     var disLikeNum = 0;
+                                    //     for (var i = 0; i < list.length; i++) {
+                                    //         if (list[i].get('type') == 1 || list[i].get('type') == '1') {
+                                    //             likeNum++;
+                                    //         }
+                                    //         else {
+                                    //             disLikeNum++;
+                                    //         }
+                                    //     }
+                                    //     var data = {
+                                    //         likeNum:likeNum,
+                                    //         disLikeNum:disLikeNum
+                                    //     };
                                         var result = {
                                             code : 200,
-                                            data:data,
+                                            data:ask,
                                             message : '操作成功'
                                         }
                                         res.send(result);
                                         return;
-                                    });
+                                    // });
                                 });
 
                             });
