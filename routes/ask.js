@@ -426,6 +426,89 @@ router.post('/askedit', function(req, res, next) {
 
 });
 
+router.post('/adminedit', function(req, res, next) {
+    var askId = req.param('ask_id');
+    var username = req.query.username;
+    var type = req.param('type') != null ? req.param('type') : null ;
+    var price = req.param('price') != null ? req.param('price') : null;
+    var geoX = req.param('geo_x') != null ? req.param('geo_x') : null;
+    var geoY = req.param('geo_y') != null ? req.param('geo_y') : null;
+    var position = req.param('position') != null ? req.param('position') : null;
+    var reason = req.param('reason') != null ? req.param('reason') : null;
+    var contentShow = req.param('content_show') != null ? req.param('content_show') : null;
+    var contentHide = req.param('content_hide') != null ? req.param('content_hide') : null;
+    var tag = req.param('tag') != null ? req.param('tag') : null;
+    var remark = req.param('remark') != null ? req.param('remark') : null;
+
+    var query = new AV.Query('AskMe');
+    query.get(askId).then(function (ask) {
+        //var askOwner = ask.get('createBy');
+        if ('wenwo' == username) {
+            var result = {
+                code : 600,
+                message : '未拥有该信息'
+            }
+            res.send(result);
+            return;
+        }
+        if (type != null) {
+            ask.set('askType', type);
+        }
+        if (price != null) {
+            ask.set('askPrice', price);
+            if (price == '0' || price == "0.00") {
+                ask.set('askIsFree', '1');
+            }
+            else {
+                ask.set('askIsFree', '0');
+            }
+        }
+        if (geoX != null) {
+            ask.set('GeoX', geoX);
+        }
+        if (geoY != null) {
+            ask.set('GeoY', geoY);
+        }
+        if (position != null) {
+            ask.set('askPosition', position);
+        }
+        if (reason != null) {
+            ask.set('askReason', reason);
+        }
+        if (contentShow != null) {
+            ask.set('askContentShow', contentShow);
+        }
+        if (contentHide != null) {
+            ask.set('askContentHide', contentHide);
+        }
+        if (remark != null) {
+            ask.set('askDefault',remark);
+        }
+        if (tag != null) {
+            ask.set('askTagStr', tag);
+        }
+
+        ask.set('staus', '2');
+        ask.save().then(function (ask) {
+            var result = {
+                code : 200,
+                data : ask,
+                message : 'Operation succeeded'
+            }
+            res.send(result);
+            return;
+        }, function(err) {
+            var result = {
+                code : 800,
+                message : err.message
+            }
+            res.send(result);
+            //console.log('Failed to create new object, with error message: ' + err.message);
+        });
+    });
+
+});
+
 router.get('/like', function(req, res, next) {
     var askId = req.param('ask_id');
     var userName = req.param('username');

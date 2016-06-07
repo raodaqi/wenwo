@@ -205,3 +205,18 @@ ask/admincancle `[post]`
 `ask_id`
 `username`  `必须为wenwo`
 `cancle_reason`   `下架理由`
+
+后台编辑信息
+ask/adminedit  `[post]`
+`ask_id`   `Y`
+        `username`  `Y`   `只能为wenwo`
+        `type`     `N`   `一级标签`
+        `price`     `N`  `信息价格`
+        `geo_x`     `N`   `坐标x`
+        `geo_y`     `N`   `坐标y`
+        `position`   `N`    `地理位置`
+        `reason`     `N`   `推荐理由`    
+        `content_show`    `N`    `显式信息`
+        `content_hide`    `N`    `隐式信息`
+        `tag`       `N`   `二级标签`
+        `remark`     `N`    `备注`
