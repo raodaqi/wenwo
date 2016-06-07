@@ -475,7 +475,7 @@
       background-color: #efc553;
       text-align: center;
       z-index: 10000;
-      line-height: 30px;
+      line-height: 25px;
       border-radius: 20px;
     }
     .address-info{
@@ -501,7 +501,8 @@
       text-overflow: ellipsis; 
     }
     .geolocation-position img{
-      width: 40px;
+      /*width: 40px;*/
+      width: 2rem;
     }
     .card-header{
       min-height:2rem;
@@ -653,7 +654,7 @@
       z-index: 300;
     }
     .ask-get{
-      background:url(/img/common/buy.png);
+      background:url(/img/common/buyed.png);
       background-size: cover;
       border-radius: 50%;
       width: 60px;
@@ -784,6 +785,9 @@
   /*#ask-detail-cancel{
     display: block !important;
   }*/
+  #address-content .iconfont,#price-content .iconfont{
+    line-height:30px;
+  }
 
   </style>
   <body>
@@ -996,7 +1000,7 @@
     
     <div class="votebar">
       <div class="votebar-like iconfont icon-shangjiantou"></div>
-      <div class="voteNum">20</div>
+      <div class="voteNum">-</div>
       <div class="votebar-hate iconfont icon-jiantouxia"></div>
     </div>
     
@@ -1138,6 +1142,13 @@
             <input type="search" id='search' placeholder='搜索地点'/>
           </div>
           <div class="hot-content">
+           <div class="hot-li">
+              <label class="iconfont icon-dingwei"></label>
+              <div class="hot-detail">
+                <div class="big">成都信息工程大学航空港校区</div>
+                <div class="small">四川省成都市双流区</div>
+              </div>
+            </div>
             <div class="hot-li">
               <label class="iconfont icon-dingwei"></label>
               <div class="hot-detail">
@@ -1352,8 +1363,13 @@
   <script type="text/javascript" src="/js/wxlocation.js"></script>
   <script>
     var CLICK = 0;
+    //初始化隐藏区域
+    function initHide(){
+      $("#address-content").hide();
+    }
 
     function setDetail(extData){
+      initHide();
       console.log(extData);
       var askId         = extData.askId,
           askType       = extData.askType,//主题类型
@@ -1468,6 +1484,9 @@
         $(".wenwo-get").text("偷看");
       }
 
+
+      //先将点赞清空
+      $(".votebar .iconfont").removeClass("liked");
       //判断是否点赞过
         var data = {
           ask_id   : askId,
@@ -1480,12 +1499,11 @@
           url : "/ask/isliked",
           success : function(result){
             console.log(result);
+
             if(result.code == 200){
               var isliked = result.isliked;
               //如果isliked=1点赞，2踩
               if(isliked){
-
-                $(".votebar .iconfont").removeClass("liked");
                 if(isliked == 1){
                   //赞过
                   $(".votebar-like").addClass("liked");
@@ -1497,7 +1515,7 @@
             }
           },
           error : function(error){
-            $.alert('网络异常');
+            $.toast('网络异常');
           }
         });
 
@@ -1570,7 +1588,7 @@
           },
           error : function(error){
             $.hidePreloader();
-            $.alert('网络异常');
+            $.toast('网络异常');
           }
         });
       }else{
@@ -1653,7 +1671,9 @@
     // $.popup('.ask-detail');
     // $.popup('.marker-content');
     markerExtData = {};
-    $(".header-sousuo").on("click",function(){
+
+    //点击搜索和定位，跳转到地址搜索页面
+    $(".header-sousuo,.address-content").on("click",function(){
       $.router.load("#router1");
     });
 
@@ -1810,7 +1830,7 @@
     //   }
     // })
     $(".add").on("click",function(){
-      console.log("123");
+      $.showPreloader("正在跳转");
       window.location.href="/todos/send#router1";
     })
 
@@ -2858,7 +2878,6 @@
                 // $("#detail-content  .card-content-inner").empty();
                 // $("#detail-content  .card-content-inner").append(detailContent);
 
-
               }else if(result.code == 600){
 
                 $.toast("余额不足");
@@ -3053,17 +3072,27 @@
       // $.popup('.ask-detail');
     })
 
-    function doLike(type){
+    function doLike(type,likedNum){
+      //判断之前是否点过赞
+      var likeNum = 0;//点赞基数
+      // $(".liked").
+
       $(".votebar .iconfont").removeClass("liked");
       var num = parseInt($(".voteNum").text());
       console.log(num);
       if(type == 1){
         num++;
         $(".voteNum").text(num);
+        if(likedNum){
+          $(".voteNum").text(likedNum);
+        }
         $(".votebar-like").addClass("liked");
       }else{
         num--;
         $(".voteNum").text(num);
+        if(likedNum){
+          $(".voteNum").text(likedNum);
+        }
         $(".votebar-hate").addClass("liked");
       }
     }
@@ -3095,12 +3124,13 @@
               //   $(".voteNum").text(num);
               //   $(".votebar-hate").addClass("liked");
               // }
+              doLike(type);
             }else{
-              $.alert(result.message);
+              $.toast(result.message);
             }
           },
           error : function(error){
-            $.alert('网络异常');
+            $.toast('网络异常');
           }
         });
     }
@@ -3122,7 +3152,7 @@
           }
 
           likeType = type;
-          doLike(type);
+          // doLike(type);
           askLike(askId,type);
         }
       })
