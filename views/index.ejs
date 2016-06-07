@@ -789,6 +789,9 @@
   #address-content .iconfont,#price-content .iconfont{
     line-height:30px;
   }
+  .amap-scale-line div{
+    border: 0;
+  }
 
   </style>
   <body>
@@ -1644,7 +1647,7 @@
             offset: new AMap.Pixel(60, 10)
           });
         var scale = new AMap.Scale({
-          offset: new AMap.Pixel(-5, 7)
+          offset: new AMap.Pixel(5, 5)
         });
         map.addControl(toolBar);
         map.addControl(scale);
