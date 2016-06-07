@@ -220,3 +220,11 @@ ask/adminedit  `[post]`
         `content_hide`    `N`    `隐式信息`
         `tag`       `N`   `二级标签`
         `remark`     `N`    `备注`
+        
+后台获取提现
+manage/getapply `[get]`
+
+后台提现审批
+manage/apply  `[get]`
+`apply_id`   `Y` `提现id`
+`staus`   `Y`  `状态   //staus = 0 未处理  = 1 通过  =2 失败`

@@ -127,6 +127,7 @@ router.post('/get', function(req, res, next) {
                                 have.set('price', post.get('askPrice'));
                                 have.set('byName', user.get('uName'));
                                 have.set('byUrl', user.get('userHead'));
+                                have.set('askOwn', post.get('createBy'));
                                 have.save().then(function (result) {
                                     console.log(result);
                                     relation.add(result);
@@ -212,6 +213,7 @@ router.post('/get', function(req, res, next) {
                                             have.set('price', post.get('askPrice'));
                                             have.set('byName', user.get('uName'));
                                             have.set('byUrl', user.get('userHead'));
+                                            have.set('askOwn', post.get('createBy'));
                                             have.save().then(function (result) {
                                                 console.log(result);
                                                 relation.add(result);
