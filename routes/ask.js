@@ -1951,17 +1951,17 @@ function findUrl(type, tag, index, res) {
         return;
     }
     else {
-        console.log('find');
-        console.log(type);
-        console.log(tag);
-        console.log(index);
+        // console.log('find');
+        // console.log(type);
+        // console.log(tag);
+        // console.log(index);
         var query = new AV.Query('Tag');
         query.equalTo('tagName', tag[index]);
         query.contains('tagOrderby', type);
         query.find().then(function (resultes) {
-            console.log(resultes);
+            //console.log(resultes);
             if (resultes == null || resultes == "") {
-                console.log('next');
+                //console.log('next');
                 findUrl(type, tag, index + 1, res);
             }
             else {
@@ -1976,6 +1976,7 @@ function findUrl(type, tag, index, res) {
                         return;
                     }
                 }
+                //console.log('next');
                 findUrl(type, tag, index + 1, res);
             }
         });
