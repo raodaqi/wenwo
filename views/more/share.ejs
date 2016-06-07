@@ -388,9 +388,26 @@ function getMyask(){
                    }
                    if(price == 0)
                    {
-                   	var str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+'&nbsp;&nbsp;'+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_time"><div class="left">'+time+'</div></div><div class="information_Purchase_number information_collect_number" data-mid='+mid+'>收藏人数：<span id="num1">'+buyNum+'</span>人</div></div>';
+                   	$.ajax({
+					            type: "get",
+					            url: "/ask/tagshow",
+					            data: {type:1, tag:tag},
+					            dataType: "json",
+					            success : function(result) {
+					                console.log(result);
+					                 if(result.code == 200){
+					                   if(result.url.tagUrl){
+					                   	img = result.url.tagUrl;
+					                   	console.log(img);
+					                   }					                   
+					                   }
+					                   var str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+'&nbsp;&nbsp;'+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_time"><div class="left">'+time+'</div></div><div class="information_Purchase_number information_collect_number" data-mid='+mid+'>收藏人数：<span id="num1">'+buyNum+'</span>人</div></div>';
                    	$("#content1").append(str);
-			          		// $(".num").empty();
+					                   },
+					            error : function(error){
+					            	$.alert('网络异常');
+					            }
+					        });
 			          		$.ajax({
 							            type: "GET",
 							            url: '/ask/getbuy',
@@ -407,8 +424,26 @@ function getMyask(){
 			       					 }); 
                    }
                    else{
-                   var str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+'&nbsp;&nbsp;'+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_time"><div class="left">'+time+'</div></div><div class="information_Purchase_number" data-mid='+mid+'>购买人数：<span id="num2">'+buyNum+'</span>人</div></div>';
+                   	$.ajax({
+					            type: "get",
+					            url: "/ask/tagshow",
+					            data: {type:1, tag:tag},
+					            dataType: "json",
+					            success : function(result) {
+					                console.log(result);
+					                 if(result.code == 200){
+					                   if(result.url.tagUrl){
+					                   	img = result.url.tagUrl;
+					                   	console.log(img);
+					                   }					                   
+					                   }
+					                   var str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+'&nbsp;&nbsp;'+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_time"><div class="left">'+time+'</div></div><div class="information_Purchase_number" data-mid='+mid+'>购买人数：<span id="num2">'+buyNum+'</span>人</div></div>';
                    $("#content1").append(str);
+					                   },
+					            error : function(error){
+					            	$.alert('网络异常');
+					            }
+					        });
           		// $(".num").empty();
           		$.ajax({
 				            type: "GET",
@@ -429,18 +464,18 @@ function getMyask(){
             else {
             	if(result.data[i].staus == 2){
             		var tag = result.data[i].askTagStr;
-            		$.ajax({
-						type : "get",
-				        dataType: "json",
-				        url : "/ask/tagshow",
-				        data:{tag:tag,type:2},
-				        success : function(result){
-          				console.log(result);
-          				 },
-     					 	error: function(error){
-         			 		$.alert('网络异常');
-       					 }
-					})
+     //        		$.ajax({
+					// 	type : "get",
+				 //        dataType: "json",
+				 //        url : "/ask/tagshow",
+				 //        data:{tag:tag,type:2},
+				 //        success : function(result){
+     //      				console.log(result);
+     //      				 },
+     // 					 	error: function(error){
+     //     			 		$.alert('网络异常');
+     //   					 }
+					// })
 	                var temp = JSON.parse(tag);
 	                var tab = "";
 	                console.log(temp);
@@ -465,8 +500,26 @@ function getMyask(){
                    	img = "/img/common/theme"+showType+'-1.png';
                    	console.log(img);
                    }
-	                var str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state blue">'+getStaus(result.data[i].staus)+'</div></div>';
-	          		$("#content2").append(str);
+                   $.ajax({
+					            type: "get",
+					            url: "/ask/tagshow",
+					            data: {type:2, tag:tag},
+					            dataType: "json",
+					            success : function(result) {
+					                console.log(result);
+					                 if(result.code == 200){
+					                   if(result.url.tagUrl){
+					                   	img = result.url.tagUrl;
+					                   	console.log(img);
+					                   }					                   
+					                   }
+					                   var str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state blue">'+getStaus(result.data[i].staus)+'</div></div>';
+	          							$("#content2").append(str);
+					                   },
+					            error : function(error){
+					            	$.alert('网络异常');
+					            }
+					        });	                
             	}
             	if(result.data[i].staus == 5)
             	{            		
@@ -494,8 +547,26 @@ function getMyask(){
                    }else if(result.code == 200){
                    	img = "/img/common/theme"+showType+'-1.png';
                    }
-	                var str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state red">'+getStaus(result.data[i].staus)+'</div></div>';
-	          		$("#content2").append(str);
+                   $.ajax({
+					            type: "get",
+					            url: "/ask/tagshow",
+					            data: {type:5, tag:tag},
+					            dataType: "json",
+					            success : function(result) {
+					                console.log(result);
+					                 if(result.code == 200){
+					                   if(result.url.tagUrl){
+					                   	img = result.url.tagUrl;
+					                   	console.log(img);
+					                   }					                   
+					                   }
+					                   var str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state red">'+getStaus(result.data[i].staus)+'</div></div>';
+	          								$("#content2").append(str);
+					                   },
+					            error : function(error){
+					            	$.alert('网络异常');
+					            }
+					        });
           		}
             }
           }

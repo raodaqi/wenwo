@@ -291,7 +291,6 @@ function getHode(){
         url : "/hode/haved",
         success : function(result){
           console.log(result);
-          $.hidePreloader();
           if(result.data.length == 0){
 			var st = '<div class="content no-order"><div class="word">暂时没有收藏商品....</div></div>';
 		  	$("#type2").append(st);
@@ -308,6 +307,7 @@ function getHode(){
 			        url : "/ask/askdetail",
 			        success : function(result){
 			          console.log(result);
+			          $.hidePreloader();
 			          var tabs = "";
           		if (result.data.askTagStr != null)
 			      {       		
@@ -331,10 +331,27 @@ function getHode(){
                    }else if(result.code == 200){
                    	img = "/img/common/theme"+showType+'-1.png';  
                    }
-                    // var url = "http://wx.qlogo.cn/mmopen/mh167obZj79Ddnr6JGFibBZuY9WtknIt76REfjA9Nia1GNQ80f4bEgCBGNVkt11wAKmYjnBgZlhH8FZvuAC8pEtOvrQWUnI48q/";
-          		var str = "";
-          		var str = '<div class="information" data-mid='+id+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word collect-concent">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tabs+'</div></div><div class="menu_icon"><div class="iconfont icon-you" style="font-size:32px;"></div></div>	</div></div>';
+          			$.ajax({
+					            type: "get",
+					            url: "/ask/tagshow",
+					            data: {type:1, tag:tag},
+					            dataType: "json",
+					            success : function(result) {
+					                console.log(result);
+					                 if(result.code == 200){
+					                 	if(result.url.tagUrl){
+					                   	img = result.url.tagUrl;
+					                   	console.log(img);
+					                   }					                   
+					                   }
+					                   var str = "";
+					                   var str = '<div class="information" data-mid='+id+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word collect-concent">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tabs+'</div></div><div class="menu_icon"><div class="iconfont icon-you" style="font-size:32px;"></div></div></div></div>';
           		$("#infor2").append(str);
+					            },
+					            error : function(error){
+					            	$.alert('网络异常');
+					            }
+					        });
 			           },
 			      error: function(error){
 			          $.alert('网络异常');
@@ -356,7 +373,6 @@ function GetHode(){
         url : "/hode/haved",
         success : function(result){
           console.log(result);
-          $.hidePreloader();
           if(result.data.length == 0){
 			var st = '<div class="content no-order"><div class="word">暂时没有订单....</div></div>';
 			$("#type1").append(st);
@@ -371,10 +387,12 @@ function GetHode(){
 			        url : "/ask/askdetail",
 			        success : function(result){
 			          console.log(result);
+			          $.hidePreloader();
 			          var tabs= "";
 			     if (result.data.askTagStr != null)
 			     {       		
           		var tag = result.data.askTagStr;
+
                 var temp = JSON.parse(tag);                
                 console.log(temp);
             	}
@@ -396,12 +414,28 @@ function GetHode(){
 
                    }else if(result.code == 200){
                    	img = "/img/common/theme"+showType+'-1.png';
-                   }
-                   // var url = "http://wx.qlogo.cn/mmopen/mh167obZj79Ddnr6JGFibBZuY9WtknIt76REfjA9Nia1GNQ80f4bEgCBGNVkt11wAKmYjnBgZlhH8FZvuAC8pEtOvrQWUnI48q/";
-                   // console.log(url);
-          			var str = "";
-          			var str = '<div class="information" data-mid='+id+'><div class="information_img"><img src="'+img+'"></div><div class="information_name ordername"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp;&nbsp;"+getTitle(strs[1])+':'+tabs+'</span></div><div class="information_price">￥ &nbsp;'+price+'</div></div></div>';
-          		$("#infor1").append(str);
+                   }                   
+		          		$.ajax({
+					            type: "get",
+					            url: "/ask/tagshow",
+					            data: {type:2, tag:tag},
+					            dataType: "json",
+					            success : function(result) {
+					                console.log(result);
+					                 if(result.code == 200){
+					                   if(result.url.tagUrl){
+					                   	img = result.url.tagUrl;
+					                   	console.log(img);
+					                   }					                   
+					                   }
+					                   var str = "";
+					          			var str = '<div class="information" data-mid='+id+'><div class="information_img"><img src="'+img+'"></div><div class="information_name ordername"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp;&nbsp;"+getTitle(strs[1])+':'+tabs+'</span></div><div class="information_price">￥ &nbsp;'+price+'</div></div></div>';
+					          			$("#infor1").append(str);
+					            },
+					            error : function(error){
+					            	$.alert('网络异常');
+					            }
+					        });
 			           },
 			      error: function(error){
 			          $.alert('网络异常');

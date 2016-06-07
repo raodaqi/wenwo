@@ -14,7 +14,7 @@ body{
 	background-color: #efc553;
 }
 .title_word{
-	width: 50%;
+	width: 35%;
 	height: 40px;
 	line-height: 40px;
 	float: left;
@@ -114,8 +114,12 @@ body{
 	height: 40px;
 	line-height: 40px;
 	padding: 0 5px;
-	width: 10%;
+	width: 20%;
 	float: left;
+	text-align: center;
+	font-size: 17px;
+	color: white;
+	font-weight: 600;
 }
 </style>
 <body>
@@ -127,7 +131,7 @@ body{
 		</div>
 	</div>
 	<div class="title_word">钱包</div>
-	<div class="detail"></div>
+	<div class="detail">明细</div>
 </div>
 	<div class="balance">
 		<div class="iconfont icon-qianBao money"></div>
@@ -156,7 +160,9 @@ $("#withdraw").click(function(){
 $("#recharge").click(function(){
 	window.location.href="/more/recharge";
 })
-
+$(".detail").click(function(){
+	window.location.href="/more/moneyDetail";
+})
 getMywallet();
 function getMywallet(){
 
