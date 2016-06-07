@@ -9,6 +9,7 @@
     <title>问我——像个当地人一样去旅游</title>
     <link rel="stylesheet" href="http://at.alicdn.com/t/font_1462821367_1895313.css">
     <link rel="stylesheet" href="/css/sm.min.css">
+    <link rel="stylesheet" href="/css/common.css">
     <!-- 新 Bootstrap 核心 CSS 文件 -->
     <!-- <link rel="stylesheet" href="/css/bootstrap.min.css"> -->
 </head>
@@ -467,6 +468,9 @@
 
         </div>
 
+        <div id="dropbox" class="dropbox" style="display:none">
+        </div>
+
         <input id="multiple" class="hidden" type="file" id="upload" multiple>
     </div>
     <script type='text/javascript' src='/js/zepto.min.js' charset='utf-8'></script>
@@ -481,10 +485,16 @@
 
 
      <script>
+        var TAGID = '',
+            TAGTYPE = '',
+            $TAG,
+            TAGLEAVE = '',
+            TAGNAME = '';
+
         var uploader = Qiniu.uploader({
             runtimes: 'html5,flash,html4',    //上传模式,依次退化
             browse_button: 'dropbox',       //上传选择的点选按钮，**必需**
-            uptoken_url: '/token',
+            uptoken_url: '/manage/token',
 
             domain: 'http://qiniu-plupload.qiniudn.com/',
                 //bucket 域名，下载资源时用到，**必需**
@@ -505,18 +515,19 @@
                        fileName = files[0].name;
                        var name = files[0].name;
 
-                       fileName = "pcs/"+user+"/"+time+"/"+fileName;
+                       fileName = "wenwo/"+time+"/"+fileName;
 
                        if(up.files.length > 1){
                         for(var i = 0; i < up.files.length - 1;i++){
                           up.removeFile(up.files[i].id);
                         }
                        }
-
+                       console.log($TAG);
                        previewImage(files[0],function(imgsrc){
-                              $(".app-logo").attr("src",imgsrc);
-                              $(".app-logo-loading").hide();
-                          })
+                            $TAG.attr("src",imgsrc);
+                            uploader.start();
+                              // $(".app-logo-loading").hide();
+                        })
                     });
                 },
                 'BeforeUpload': function(up, file) {
@@ -524,105 +535,48 @@
                 },
                 'UploadProgress': function(up, file) {
                        // 每个文件上传时,处理相关的事情
-                       $(".squre").text(file.percent+"%");
+                       // $(".squre").text(file.percent+"%");
+                       $.showPreloader("正在提交");
                        console.log(file.percent);
                        // console.log(up);
                 },
                 'FileUploaded': function(up, file, info) {
                        console.log(info);
                        var res = JSON.parse(info);
-                       var sourceLink = "http://7xojmy.com1.z0.glb.clouddn.com/" + res.key; //获取上传成功后的文件的Url
+                       var sourceLink = "http://o83np3eq2.bkt.clouddn.com/" + res.key; //获取上传成功后的文件的Url
                        console.log(sourceLink);
-
-                       var webappid = $(".web-app-change").attr("data-appid");
-                       if(webappid){
-                        var name = $(".web-app input[name=name]").val();
-                        var describe = $(".web-app input[name=describe]").val();
-                        var path = $(".web-app input[name=url]").val();
-                        var logo = sourceLink;
-                        if(!checkUrl(path)){
-                          tipShow("你填写的链接格式不正确");
-                          return 0;
-                        }else if(!check("应用名称不能为空",name) || !check("应用描述不能为空",describe)){
-                          return 0;
-                        }
-                        loadingShow("正在更改");
-                        var type = $(".web-app .type-li.active").data("type");
-                        var version = $(".web-app input[name=version]").val();
-                        console.log(type);
-                        // 可以先查询出要修改的那条存储
-                        var AppInfo = AV.Object.extend('AppInfo');
-                        var query = new AV.Query(AppInfo);
-                        // 这个 id 是要修改条目的 objectId，你在生成这个实例并成功保存时可以获取到，请看前面的文档
-                        query.get(webappid).then(function(post) {
-                          // 成功，回调中可以取得这个 Post 对象的一个实例，然后就可以修改它了
-                          post.set("logo", logo);
-                          post.set("describe", describe);
-                          post.set("path", path);
-                          post.set("type", type);
-                          post.set("version", version);
-                          post.set("name", name);
-                          post.save();
-                          tipShow("更改成功");
-                          loadingShow("正在刷新");
-                          setTimeout(function(){
-                            location.reload();
-                          }, 500);
-
-                        }, function(error) {
-                          // 失败了
-                          console.log(error);
-                        });
-                        return ;
+                       var data = {
+                          type      : TAGLEAVE,
+                          level     : TAGTYPE,
+                          tag_name  : TAGNAME,
+                          url       : sourceLink
                        }
-
-                       var name = $(".web-app input[name=name]").val();
-                       var describe = $(".web-app input[name=describe]").val();
-                       var path = $(".web-app input[name=url]").val();
-                       var logo = sourceLink;
-
-                       if(!checkUrl(sourceLink) || !check("应用名称不能为空",name) || !check("应用描述不能为空",describe)){
-                          // alert("你填写的链接格式不正确");
-                          tipShow("你填写的链接格式不正确");
-                          return 0;
-                        }
-                      loadingShow("正在上传");
-                      var type = $(".web-app .type-li.active").data("type");
-                      var version = $(".web-app input[name=version]").val();
-                      console.log(type);
-
-                      var AppInfo = AV.Object.extend("AppInfo");
-                      var AppInfo = new AppInfo();
-                      AppInfo.set("logo", logo);
-                      AppInfo.set("describe", describe);
-                      AppInfo.set("path", path);
-                      AppInfo.set("type", type);
-                      AppInfo.set("version", version);
-                      AppInfo.set("name", name);
-                      AppInfo.set("uploader", user);
-
-                      AppInfo.save(null, {
-                        success: function(post) {
-                          // 成功保存之后，执行其他逻辑.
-                          // alert('success');
-                          loadingHide();
-                          tipShow("上传成功");
-                          loadingShow("正在刷新");
-                          setTimeout(function(){
-                             location.reload();
-                          }, 500);
-                        },
-                        error: function(post, error) {
-                          // alert('error');
-                          tipShow("上传失败");
-                        }
+                       $.ajax({
+                          type : "POST",
+                          data: data,
+                          dataType: "json",
+                          url : "ask/edittag",
+                          success : function(result){
+                            $.hidePreloader();
+                            if(result.code == 200){
+                                $.toast("操作成功");
+                                console.log(result);
+                            }else{
+                                $.toast(result.message);
+                            }
+                            
+                          },
+                          error:function(error){
+                            $.hidePreloader();
+                            $.toast("网络出错");
+                            console.log(error);
+                          }
                       });
 
                 },
                 'Error': function(up, err, errTip) {
                        //上传出错时,处理相关的事情
-                       loadingHide();
-                       tipShow("上传出错");
+                       console.log(err);
                 },
                 'UploadComplete': function() {
                        //队列文件处理完毕后,处理相关的事情
@@ -637,6 +591,33 @@
                 }
               }
           });
+
+      //plupload中为我们提供了mOxie对象
+      //有关mOxie的介绍和说明请看：https://github.com/moxiecode/moxie/wiki/API
+      //如果你不想了解那么多的话，那就照抄本示例的代码来得到预览的图片吧
+      function previewImage(file,callback){//file为plupload事件监听函数参数中的file对象,callback为预览图片准备完成的回调函数
+        if(!file || !/image\//.test(file.type)) return; //确保文件是图片
+        if(file.type=='image/gif'){//gif使用FileReader进行预览,因为mOxie.Image只支持jpg和png
+          var fr = new mOxie.FileReader();
+          fr.onload = function(){
+            callback(fr.result);
+            fr.destroy();
+            fr = null;
+          }
+          fr.readAsDataURL(file.getSource());
+        }else{
+          var preloader = new mOxie.Image();
+          preloader.onload = function() {
+            // preloader.downsize( 300, 300 );//先压缩一下要预览的图片,宽300，高300
+            // preloader.downsize( 93, 93 );//先压缩一下要预览的图片,宽300，高300
+            var imgsrc = preloader.type=='image/jpeg' ? preloader.getAsDataURL('image/jpeg',80) : preloader.getAsDataURL(); //得到图片src,实质为一个base64编码的数据
+            callback && callback(imgsrc); //callback传入的参数为预览图片的url
+            preloader.destroy();
+            preloader = null;
+          };
+          preloader.load( file.getSource() );
+        }
+      }
      </script>
 
      <!-- <script type="text/javascript" src="/js/map.js"></script> -->
@@ -766,11 +747,12 @@
                     var tagUrl = taglist.data[i].tagUrl ? taglist.data[i].tagUrl : "/img/add.jpg";
                     var tagUrl1 = taglist.data[i].tagUrl1 ? taglist.data[i].tagUrl1 : "/img/add.jpg";
                     var tagUrl2 = taglist.data[i].tagUrl2 ? taglist.data[i].tagUrl2 : "/img/add.jpg";
-                    var tagUrl3 = taglist.data[i].tagUrl3 ? taglist.data[i].tagUr3 : "/img/add.jpg";
+                    var tagUrl3 = taglist.data[i].tagUrl3 ? taglist.data[i].tagUrl3 : "/img/add.jpg";
                     // if(!taglist.data[i].tagUrl){
                     //     tagUrl
                     // }
                     var type = taglist.data[i].tagOrderby;
+                    var tagType = type;
                     console.log(type);
                     type = type.split(",")
                     var typeName = '';
@@ -779,7 +761,7 @@
                     }else{
                         typeName = formatType(type[0]) + ','+ formatType(type[1]);
                     }
-                    list += '<li data-id="'+taglist.data[i].objectId+'"><div class="tag-li-list"><div class="tag-tag">'+taglist.data[i].tagName+'</div></div><div class="tag-li-list"><div class="tag-type">'+typeName+'</div></div><div class="tag-li-list list-img img1"><img class="tag-img" data-type="0" src="'+tagUrl+'" alt=""></div><div class="tag-li-list list-img img2"><img class="tag-img" data-type="1" src="'+tagUrl1+'" alt=""></div><div class="tag-li-list list-img img3"><img class="tag-img" data-type="2" src="'+tagUrl2+'" alt=""></div><div class="tag-li-list list-img img4"><img class="tag-img" data-type="3" src="'+tagUrl3+'" alt=""></div></li>';
+                    list += '<li data-id="'+taglist.data[i].objectId+'" id="id'+taglist.data[i].objectId+'"><div class="tag-li-list"><div class="tag-tag">'+taglist.data[i].tagName+'</div></div><div class="tag-li-list"><div class="tag-type" data-type="'+tagType+'">'+typeName+'</div></div><div class="tag-li-list list-img img1"><img class="tag-img" data-type="0" src="'+tagUrl+'" alt=""></div><div class="tag-li-list list-img img2"><img class="tag-img" data-type="1" src="'+tagUrl1+'" alt=""></div><div class="tag-li-list list-img img3"><img class="tag-img" data-type="2" src="'+tagUrl2+'" alt=""></div><div class="tag-li-list list-img img4"><img class="tag-img" data-type="3" src="'+tagUrl3+'" alt=""></div></li>';
                 }
                 $(".tag-list-content").append(list);
             }
@@ -796,9 +778,17 @@
     $(".tag-list-content").on("click",".tag-img",function(){
         var id = $(this).parent().parent("li").attr("data-id");
         var type = $(this).attr("data-type");
+        var name = $("#id"+id+" .tag-tag").text();
+        $TAG = $(this);
+        TAGID = id;
+        TAGTYPE = type;
+        TAGLEAVE = $("#id"+id+" .tag-type").attr("data-type");
+        TAGNAME = name;
         console.log(id);
-        console.log(type);
-        $("#multiple").click();
+        console.log(name);
+        $("#multiple,#dropbox").click();
+        uploader.start();
+
     })
 
   //在输入框内添加标签
@@ -1479,6 +1469,8 @@
             }
             else if ($(this).hasClass('account-bar')) {
                 $('.account').show();
+            }else if($(this).hasClass('tag-bar')){
+                $('.tag').show();
             }
         });
         $('.check ul').on('click', "li", function () {
