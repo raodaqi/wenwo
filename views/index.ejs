@@ -1363,7 +1363,9 @@
   <script type="text/javascript" src="/js/map.js"></script>
   <script type="text/javascript" src="/js/wxlocation.js"></script>
   <script>
-    var CLICK = 0;
+    var CLICK = 0,
+        LIKENUM = 20,
+        LIKETYPE = 0;
     //初始化隐藏区域
     function initHide(){
       $("#address-content").hide();
@@ -1417,6 +1419,9 @@
 
       //设置赞踩
       $(".votebar .voteNum").text(likeNum);
+
+      //设置全局踩赞数量
+      LIKENUM = likeNum;
       
       // if()
       // $(".votebar").data("askid",askId);
@@ -1507,9 +1512,13 @@
               if(isliked){
                 if(isliked == 1){
                   //赞过
+                  LIKETYPE = 1;
+                  LIKENUM--;
                   $(".votebar-like").addClass("liked");
                 }else{
                   //踩过
+                  LIKETYPE = 2;
+                  LIKENUM++;
                   $(".votebar-hate").addClass("liked");
                 }
               }
@@ -3076,24 +3085,20 @@
     function doLike(type,likedNum){
       //判断之前是否点过赞
       var likeNum = 0;//点赞基数
-      // $(".liked").
-
       $(".votebar .iconfont").removeClass("liked");
-      var num = parseInt($(".voteNum").text());
+      var num = parseInt(LIKENUM);
       console.log(num);
       if(type == 1){
-        num++;
-        $(".voteNum").text(num);
-        if(likedNum){
-          $(".voteNum").text(likedNum);
-        }
+        $(".voteNum").text(num+1);
+        // if(likedNum){
+        //   $(".voteNum").text(likedNum);
+        // }
         $(".votebar-like").addClass("liked");
       }else{
-        num--;
-        $(".voteNum").text(num);
-        if(likedNum){
-          $(".voteNum").text(likedNum);
-        }
+        $(".voteNum").text(num-1);
+        // if(likedNum){
+        //   $(".voteNum").text(likedNum);
+        // }
         $(".votebar-hate").addClass("liked");
       }
     }
@@ -3125,9 +3130,27 @@
               //   $(".voteNum").text(num);
               //   $(".votebar-hate").addClass("liked");
               // }
-              doLike(type);
+              // doLike(type);
             }else{
               $.toast(result.message);
+              // $(".voteNum").text(num-1);
+              // if(likedNum){
+              //   $(".voteNum").text(likedNum);
+              // }
+              // $(".votebar-hate").addClass("liked");
+              var num = parseInt(LIKENUM);
+              if(LIKETYPE == 0){
+                $(".votebar .iconfont").removeClass("liked");
+                $(".voteNum").text(num);
+              }else if(LIKETYPE == 1){
+                $(".votebar .iconfont").removeClass("liked");
+                $(".voteNum").text(num+1);
+                $(".votebar-like").addClass("liked");
+              }else if(LIKETYPE == 2){
+                $(".votebar .iconfont").removeClass("liked");
+                $(".voteNum").text(num-1);
+                $(".votebar-hate").addClass("liked");
+              }
             }
           },
           error : function(error){
@@ -3153,7 +3176,7 @@
           }
 
           likeType = type;
-          // doLike(type);
+          doLike(type);
           askLike(askId,type);
         }
       })
