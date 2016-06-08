@@ -334,7 +334,7 @@ function getHode(){
           			$.ajax({
 					            type: "get",
 					            url: "/ask/tagshow",
-					            data: {type:1, tag:tag},
+					            data: {type:type, tag:tag},
 					            dataType: "json",
 					            success : function(result) {
 					                console.log(result);
@@ -418,7 +418,7 @@ function GetHode(){
 		          		$.ajax({
 					            type: "get",
 					            url: "/ask/tagshow",
-					            data: {type:1, tag:tag},
+					            data: {type:type, tag:tag},
 					            dataType: "json",
 					            success : function(result) {
 					                console.log(result);
