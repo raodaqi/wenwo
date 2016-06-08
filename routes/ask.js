@@ -44,6 +44,7 @@ router.get('/allask', function(req, res, next) {
     }
     
     query.skip(page);
+    query.descending('createdAt');
 
     query.find().then(function(results) {
         //console.log(results);
