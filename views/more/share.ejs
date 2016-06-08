@@ -340,14 +340,14 @@ function getMyask(){
 	 $.ajax({
         type : "get",
         dataType: "json",
-        data:{username:"<%=username%>",staus:4},
+        data:{username:"<%=username%>",staus:1},
         url : "/ask/myask",
         success : function(result){
           console.log(result);
           $.hidePreloader();
           for(var i = 0; i < result.data.length; i++){
-          	if(result.data[i].staus == 1){
           		var tag = result.data[i].askTagStr;
+          		console.log(tag);
                 var temp = JSON.parse(tag);
                 var tab = "";
                 console.log(temp);
@@ -355,12 +355,14 @@ function getMyask(){
                 	tab = tab +'<span>'+ temp[j].tag_name+'</span>';
                    }
                    var type = result.data[i].askType;
+                   console.log(type);
                    var strs = type.split(",");
                    console.log(strs); 
                    var buyNum = '';                  
                    var time = formatDate("y.m.d",result.data[i].updatedAt);
                    var price = result.data[i].askPrice;
                    console.log(price);
+                   // if(price == 0){console.log('输出');}
                    var mid = result.data[i].objectId;               
                    console.log(mid);
                     var showType = type.split(",")[0];
@@ -368,48 +370,52 @@ function getMyask(){
                    // var leave = parseTnt(0) + 1;
                    var img = '/img/common/wenwo.png';
                    if(result.code == 400){
-
                    }else if(result.code == 200){
                    	img = "/img/common/theme"+showType+'-1.png';
                    	console.log(img);
                    }
                    if(price == 0)
                    {
-                   	var tag = result.data[i].askTagStr;
                    	$.ajax({
-							type: "GET",
-							url: '/ask/getbuy',
-						 data: {ask_id:mid,username:'<%=username%>'},
-							dataType: "json",
-							success : function(result) {
-			               	console.log(result);
-			               	var buyNum = result.data.length;
-		                 //   	$.ajax({
-							            // type: "get",
-							            // url: "/ask/tagshow",
-							            // data: {type:1, tag:tag},
-							            // dataType: "json",
-							            // success : function(results) {
-							            //     console.log(results);
-							            //      if(results.code == 200){
-							            //        if(results.url.tagUrl){
-							            //        	img = results.url.tagUrl;
-							            //        	console.log(img);
-							            //        }					                   
-							            //        }					                   
-			               						 var str = '';
-					                    		str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+'&nbsp;&nbsp;'+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_time"><div class="left">'+time+'</div></div><div class="information_Purchase_number information_collect_number" data-mid='+mid+'>收藏人数：<span>'+buyNum+'</span>人</div></div>';
-                   								$("#content1").append(str);
-			               						  },
-			            				error : function(){
-			            						$.alert('网络异常');
-			           					 }
-			       					 }); 					                   
-					        //            },
-					        //     error : function(error){
-					        //     	$.alert('网络异常');
-					        //     }
-					        // });			          		
+						type: "GET",
+						url: '/ask/getbuy',
+						data: {ask_id:mid,username:'<%=username%>'},
+						dataType: "json",
+						success : function(result) {
+			            console.log(result);
+			            var buyNum = result.data.length;
+		                   	$.ajax({
+							    type: "get",
+							    url: "/ask/tagshow",
+							    data: {type:type, tag:tag},
+							    dataType: "json",
+							    success : function(result) {
+							    	console.log(tag);
+							    	console.log('你好');
+							    console.log(result);
+							    if(result.code == 200){
+							    	if(result.url.tagUrl){
+							    		img = result.url.tagUrl;
+							            console.log(img);
+							        }					                   
+							    }
+							    if(result.code == 404){
+							    	img = "/img/common/theme"+showType+'-1.png';
+							    }					                   
+			               		var str = '';
+					            str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+'&nbsp;&nbsp;'+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_time"><div class="left">'+time+'</div></div><div class="information_Purchase_number information_collect_number" data-mid='+mid+'>收藏人数：<span>'+buyNum+'</span>人</div></div>';
+					            console.log(str);
+                   				$("#content1").append(str);
+			               		},
+			            		error : function(error){
+			            			$.alert('网络异常');
+			           			}
+			       				}); 					                   
+						},
+						error : function(error){
+					   		 $.alert('网络异常');
+					    	}
+						});			          		
                    }
                    else{
                    	 $.ajax({
@@ -420,146 +426,189 @@ function getMyask(){
 						success : function(result) {
                			console.log(result);
                			var buyNum = result.data.length;
-                  //  				$.ajax({
-					            	// type: "get",
-					            	// url: "/ask/tagshow",
-					            	// data: {type:1, tag:tag},
-					            	// dataType: "json",
-					            	// success : function(results) {
-					             //    console.log(results);
-					             //     if(results.code == 200){
-					             //       if(results.url.tagUrl){
-					             //       	img = results.url.tagUrl;
-					             //       	console.log(img);
-					             //       }					                   
-					             //       }					                  
-               						 	var str = '';
-					                    str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+'&nbsp;&nbsp;'+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_time"><div class="left">'+time+'</div></div><div class="information_Purchase_number" data-mid='+mid+'>购买人数：<span>'+buyNum+'</span>人</div></div>';
-                   						$("#content1").append(str);
-               						  },
-            				error : function(error){
-            						$.alert('网络异常');
+                   			$.ajax({
+					    	type: "get",
+					    	url: "/ask/tagshow",
+					    	data: {type:type, tag:tag},
+					    	dataType: "json",
+					    	success : function(result) {
+					    		console.log(tag);
+					    	console.log(result);
+					    	if(result.code == 200){
+					    		if(result.url.tagUrl){
+					    		img = result.url.tagUrl;
+					       		 console.log(img);
+					    	    }					                   
+					    	}	
+					    	 if(result.code == 404){
+							    	img = "/img/common/theme"+showType+'-1.png';
+							    }				                  
+               			var str = '';
+					    		str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+'&nbsp;&nbsp;'+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_time"><div class="left">'+time+'</div></div><div class="information_Purchase_number" data-mid='+mid+'>购买人数：<span>'+buyNum+'</span>人</div></div>';
+					    console.log(str);
+                   		$("#content1").append(str);
+               			},
+            			error : function(error){
+            				$.alert('网络异常');
            					 }
        					 }); 
 					                   
-					        //            },
-					        //     error : function(error){
-					        //     	$.alert('网络异常');
-					        //     }
-					        // });
-          		
-                   }
-            }
-            else {
-            	if(result.data[i].staus == 2){
-            		var staus = result.data[i].staus;
-            		var tag = result.data[i].askTagStr;
-	                var temp = JSON.parse(tag);
-	                var tab = "";
-	                console.log(temp);
-	                for (var j = 0; j < temp.length; j++) {
-	                	tab = tab +'<span>'+ temp[j].tag_name+'</span>';
-	                   }
-	                   var type = result.data[i].askType;
-	                   var strs = type.split(",");
-	                   console.log(strs);
-	                   var price = result.data[i].askPrice;
-	                   var mid = result.data[i].objectId;
-	                   console.log(mid);
-	                    // var type = result.data.askType;
-                   // var strs = type.split(",");
-                   // console.log(strs);
-                   var showType = type.split(",")[0];
-                   // var leave = parseTnt(leave) + 1;
-                   var img = '/img/common/wenwo.png';
-                   if(result.code == 400){
-
-                   }else if(result.code == 200){
-                   	img = "/img/common/theme"+showType+'-1.png';
-                   	console.log(img);
-                   }
-                 //   $.ajax({
-					            // type: "get",
-					            // url: "/ask/tagshow",
-					            // data: {type:1, tag:tag},
-					            // dataType: "json",
-					            // success : function(result) {
-					            //     console.log(result);
-					            //      if(result.code == 200){
-					            //        if(result.url.tagUrl){
-					            //        	img = result.url.tagUrl;
-					            //        	console.log(img);
-					            //        }					                   
-					            //        }
-					                   var str = '';
-					                    str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state blue">'+getStaus(staus)+'</div></div>';
-	          							$("#content2").append(str);
-					                   // },
-					        //     error : function(error){
-					        //     	$.alert('网络异常');
-					        //     }
-					        // });	                
-            	}
-            	else if(result.data[i].staus == 5)
-            	{    
-            	var staus = result.data[i].staus;        		
-	            	var tag = result.data[i].askTagStr;
-	            	// console.log(result.data[i].staus);
-	                var temp = JSON.parse(tag);
-	                var tab = "";
-	                console.log(temp);
-	                for (var j = 0; j < temp.length; j++) {
-	                	tab = tab +'<span>'+ temp[j].tag_name+'</span>';
-	                   }
-	                   var type = result.data[i].askType;
-	                   var strs = type.split(",");
-	                   console.log(strs);
-	                   var price = result.data[i].askPrice;
-	                   var mid = result.data[i].objectId;
-	                   console.log(mid);
-	                    // var type = result.data.askType;
-                   // var strs = type.split(",");
-                   // console.log(strs);
-                   var showType = type.split(",")[0];
-                   // var leave = parseTnt(leave) + 1;
-                   var img = '/img/common/wenwo.png';
-                   if(result.code == 400){
-
-                   }else if(result.code == 200){
-                   	img = "/img/common/theme"+showType+'-1.png';
-                   }
-                 //   $.ajax({
-					            // type: "get",
-					            // url: "/ask/tagshow",
-					            // data: {type:1, tag:tag},
-					            // dataType: "json",
-					            // success : function(result) {
-					            //     console.log(result);
-					            //     console.log(123456);
-					            //      if(result.code == 200){
-					            //        if(result.url.tagUrl){
-					            //        	img = result.url.tagUrl;
-					            //        	console.log(img);
-					            //        }					                   
-					            //        }
-					                   var str = '';
-					                    str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state red">'+getStaus(staus)+'</div></div>';
-					                    console.log(str);
-	          								$("#content2").append(str);
-					        //            },
-					        //     error : function(error){
-					        //     	$.alert('网络异常');
-					        //     }
-					        // });
-          		}
-            }
-          }
+					    },
+					    error : function(error){
+					   	$.alert('网络异常');
+					        }
+					    });          		
+                   	}
+          	}
           },
       error: function(error){
           $.alert('网络异常');
         }
-      })
+      });
 }
+
+
+getmyask();
+function getmyask(){
+	 $.ajax({
+        type : "get",
+        dataType: "json",
+        data:{username:"<%=username%>",staus:2},
+        url : "/ask/myask",
+        success : function(result){
+          console.log(result);
+          $.hidePreloader();
+          for(var i = 0; i < result.data.length; i++){
+            		var staus = result.data[i].staus;
+            		var tag = result.data[i].askTagStr;
+            		console.log(tag);
+	                var temp = JSON.parse(tag);
+	                var tab = "";
+	                console.log(temp);
+	                for (var j = 0; j < temp.length; j++) {
+	                	tab = tab +'<span>'+ temp[j].tag_name+'</span>';
+	                }
+	                var type = result.data[i].askType;
+	                console.log(type);
+	                var strs = type.split(",");
+	                console.log(strs);
+	                var price = result.data[i].askPrice;
+	                console.log(price);
+	                var mid = result.data[i].objectId;
+	                console.log(mid);
+                   	var showType = type.split(",")[0];
+                   // var leave = parseTnt(leave) + 1;
+                   	var img = '/img/common/wenwo.png';
+                   	if(result.code == 400){
+                   	}else if(result.code == 200){
+                   	img = "/img/common/theme"+showType+'-1.png';
+                   	console.log(img);
+                   	}
+                   	$.ajax({
+					    type: "get",
+					    url: "/ask/tagshow",
+					    data: {type:type, tag:tag},
+					    dataType: "json",
+					    success : function(result) {
+					    	console.log(tag);
+					    console.log(result);
+					    if(result.code == 200){
+					    if(result.url.tagUrl){
+					    img = result.url.tagUrl;
+					    console.log(img);
+					    }					                   
+					    }
+					     if(result.code == 404){
+							    	img = "/img/common/theme"+showType+'-1.png';
+							    }
+					    var str = '';
+					    str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state blue">'+getStaus(staus)+'</div></div>';
+	          			$("#content2").append(str);
+					    },
+					    error : function(error){
+					        $.alert('网络异常');
+					     }
+					    });	                
+          	}
+          },
+      error: function(error){
+          $.alert('网络异常');
+        }
+      });
+}
+
+
+
+Myask();
+function Myask(){
+	 $.ajax({
+        type : "get",
+        dataType: "json",
+        data:{username:"<%=username%>",staus:5},
+        url : "/ask/myask",
+        success : function(result){
+          console.log(result);
+          $.hidePreloader();
+          for(var i = 0; i < result.data.length; i++){  
+            			var staus = result.data[i].staus;        		
+	            		var tag= result.data[i].askTagStr;
+	            		console.log(tag);
+	                	var temp = JSON.parse(tag);
+	                	var tab = "";
+	                	console.log(temp);
+	                	for (var j = 0; j < temp.length; j++) {
+	                	tab = tab +'<span>'+ temp[j].tag_name+'</span>';
+	                   }
+	                   var type = result.data[i].askType;
+	                   console.log(type);
+	                   var strs = type.split(",");
+	                   console.log(strs);
+	                   var price = result.data[i].askPrice;
+	                   console.log(price);
+	                   var mid = result.data[i].objectId;
+	                   console.log(mid);
+                   		var showType = type.split(",")[0];
+                   		var img = '/img/common/wenwo.png';
+                   		if(result.code == 400){
+                   		}else if(result.code == 200){
+                   			img = "/img/common/theme"+showType+'-1.png';
+                   		}
+                   		$.ajax({
+					            type: "get",
+					            url: "/ask/tagshow",
+					            data: {type:type, tag:tag},
+					            dataType: "json",
+					            success : function(result) {
+					            	console.log(tag);
+					                console.log(result);
+					                console.log(123456);
+					                 if(result.code == 200){
+					                   if(result.url.tagUrl){
+					                   	img = result.url.tagUrl;
+					                   	console.log(img);
+					                   }					                   
+					                   }
+					                    if(result.code == 404){
+							    	img = "/img/common/theme"+showType+'-1.png';
+							    }
+					                   var str = '';
+					                    str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state red">'+getStaus(staus)+'</div></div>';
+					                    console.log(str);
+	          								$("#content2").append(str);
+					                   },
+					            error : function(error){
+					            	$.alert('网络异常');
+					            }
+					        });
+          	}
+          },
+      error: function(error){
+          $.alert('网络异常');
+        }
+      });
+}
+
+
 
 </script>
 </html>
