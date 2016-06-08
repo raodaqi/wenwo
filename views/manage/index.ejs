@@ -271,6 +271,12 @@
     #multiple{
         display: none;
     }
+    .modal-text-input{
+        color: black;
+    }
+    .modal-button{
+        background: rgba(0,0,0,.8);
+    }
 </style>
 <body>
     <div class="wrap">
@@ -1351,48 +1357,101 @@
         });
         $('.check-detail').on('click', ".btn_pass", function () {
             //console.log('pass click');
+            $.showPreloader("正在提交");
             var askId = $('.detail-id').text();
             console.log(askId);
             $.ajax({
-                type: "get",
-                url: '../../ask/approval',
+                type: "POST",
+                url: '/ask/approval',
                 data: {ask_id:askId,staus:1},
                 dataType: "json",
                 success : function(result) {
+                    $.hidePreloader();
                     console.log(result);
                     if (result.code == 200) {
+                        $.toast("提交成功");
                         $('.check-detail').hide();
                         checkAsk();
                         $('.check').show();
+                    }else{
+                        $.toast(result.message);
                     }
                 },
                 error : function(){
+                    $.hidePreloader();
+                    $.toast("服务器异常");
                     console.log('err');
                 }
             });
         });
-        $('.check-detail').on('click', ".btn_not", function () {
-            //console.log('pass click');
-            var askId = $('.detail-id').text();
-            console.log(askId);
-            $.ajax({
-                type: "get",
-                url: '../../ask/approval',
-                data: {ask_id:askId,staus:5},
-                dataType: "json",
-                success : function(result) {
-                    console.log(result);
-                    if (result.code == 200) {
-                        $('.check-detail').hide();
-                        checkAsk();
-                        $('.check').show();
+
+        //点击不通过
+         $(document).on('click','.btn_not', function () {
+              $.prompt('输入不通过理由',
+                function (value) {
+                  // $.alert('Your name is "' + value + '". You clicked Ok button');
+
+                  //点击确定后提交不通过理由
+                    var askId = $('.detail-id').text();
+                    var reason = $(".modal-text-input").val();
+                    console.log(askId);
+                    var data = {
+                        ask_id : askId,
+                        staus  : 5,
+                        reason : reason
                     }
+                    $.showPreloader("正在提交");
+                    $.ajax({
+                        type: "POST",
+                        url: '/ask/approval',
+                        data: data,
+                        dataType: "json",
+                        success : function(result) {
+                            console.log(result);
+                            $.hidePreloader();
+                            if (result.code == 200) {
+                                $.toast("提交成功");
+                                $(".modal-text-input").val('');
+                                $('.check-detail').hide();
+                                checkAsk();
+                                $('.check').show();
+                            }
+                        },
+                        error : function(){
+                            $.hidePreloader();
+                            console.log('err');
+                        }
+                    });
                 },
-                error : function(){
-                    console.log('err');
+                function (value) {
+                  
                 }
-            });
-        });
+              );
+          });
+        // $('.check-detail').on('click', ".btn_not", function () {
+        //     //console.log('pass click');
+        //     var askId = $('.detail-id').text();
+        //     console.log(askId);
+        //     $.ajax({
+        //         type: "get",
+        //         url: '../../ask/approval',
+        //         data: {ask_id:askId,staus:5},
+        //         dataType: "json",
+        //         success : function(result) {
+        //             console.log(result);
+        //             if (result.code == 200) {
+        //                 $('.check-detail').hide();
+        //                 checkAsk();
+        //                 $('.check').show();
+        //             }
+        //         },
+        //         error : function(){
+        //             console.log('err');
+        //         }
+        //     });
+        // });
+
+
         $('.side-bar').on('click', 'ul li', function () {
             $('.side-bar li').removeClass('side-bar-back');
             $('.side-bar li').removeClass('side-bar-backcheck');
