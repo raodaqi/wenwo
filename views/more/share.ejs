@@ -376,88 +376,88 @@ function getMyask(){
                    }
                    if(price == 0)
                    {
-                   	$.ajax({
-						type: "GET",
-						url: '/ask/getbuy',
-						data: {ask_id:mid,username:'<%=username%>'},
-						dataType: "json",
-						success : function(result) {
-			            console.log(result);
-			            var buyNum = result.data.length;
-		                   	$.ajax({
-							    type: "get",
-							    url: "/ask/tagshow",
-							    data: {type:type, tag:tag},
-							    dataType: "json",
-							    success : function(result) {
-							    	console.log(tag);
-							    	console.log('你好');
-							    console.log(result);
-							    if(result.code == 200){
-							    	if(result.url.tagUrl){
-							    		img = result.url.tagUrl;
-							            console.log(img);
-							        }					                   
-							    }
-							    if(result.code == 404){
-							    	img = "/img/common/theme"+showType+'-1.png';
-							    }					                   
+      //              	$.ajax({
+						// type: "GET",
+						// url: '/ask/getbuy',
+						// data: {ask_id:mid,username:'<%=username%>'},
+						// dataType: "json",
+						// success : function(result) {
+			   //          console.log(result);
+			   //          var buyNum = result.data.length;
+
+
+
+		         //           	$.ajax({
+							    // type: "get",
+							    // url: "/ask/tagshow",
+							    // data: {type:type, tag:tag},
+							    // dataType: "json",
+							    // success : function(result) {
+							    // console.log(result);
+							    // if(result.code == 200){
+							    // 	if(result.url.tagUrl){
+							    // 		img = result.url.tagUrl;
+							    //         console.log(img);
+							    //     }					                   
+							    // }
+							    // if(result.code == 404){
+							    // 	img = "/img/common/theme"+showType+'-1.png';
+							    // }					                   
 			               		var str = '';
 					            str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+'&nbsp;&nbsp;'+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_time"><div class="left">'+time+'</div></div><div class="information_Purchase_number information_collect_number" data-mid='+mid+'>收藏人数：<span>'+buyNum+'</span>人</div></div>';
 					            console.log(str);
                    				$("#content1").append(str);
-			               		},
-			            		error : function(error){
-			            			$.alert('网络异常');
-			           			}
-			       				}); 					                   
-						},
-						error : function(error){
-					   		 $.alert('网络异常');
-					    	}
-						});			          		
+			           //     		},
+			           //  		error : function(error){
+			           //  			$.alert('网络异常');
+			           // 			}
+			       				// }); 	
+						// },
+						// error : function(error){
+					 //   		 $.alert('网络异常');
+					 //    	}
+						// });			          		
                    }
                    else{
-                   	 $.ajax({
-						type: "GET",
-						url: '/ask/getbuy',
-						data: {ask_id:mid,username:'<%=username%>'},
-						dataType: "json",
-						success : function(result) {
-               			console.log(result);
-               			var buyNum = result.data.length;
-                   			$.ajax({
-					    	type: "get",
-					    	url: "/ask/tagshow",
-					    	data: {type:type, tag:tag},
-					    	dataType: "json",
-					    	success : function(result) {
-					    		console.log(tag);
-					    	console.log(result);
-					    	if(result.code == 200){
-					    		if(result.url.tagUrl){
-					    		img = result.url.tagUrl;
-					       		 console.log(img);
-					    	    }					                   
-					    	}	
-					    	 if(result.code == 404){
-							    	img = "/img/common/theme"+showType+'-1.png';
-							    }				                  
-               			var str = '';
-					    		str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+'&nbsp;&nbsp;'+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_time"><div class="left">'+time+'</div></div><div class="information_Purchase_number" data-mid='+mid+'>购买人数：<span>'+buyNum+'</span>人</div></div>';
-					    console.log(str);
-                   		$("#content1").append(str);
-               			},
-            			error : function(error){
-            				$.alert('网络异常');
-           					 }
-       					 }); 
-					                   
-					    },
-					    error : function(error){
-					   	$.alert('网络异常');
-					        }
-					    });          		
+      //              	 $.ajax({
+						// type: "GET",
+						// url: '/ask/getbuy',
+						// data: {ask_id:mid,username:'<%=username%>'},
+						// dataType: "json",
+						// success : function(result) {
+      //          				console.log(result);
+      //          				var buyNum = result.data.length;
+	          //          			$.ajax({
+						    	// type: "get",
+						    	// url: "/ask/tagshow",
+						    	// data: {type:type, tag:tag},
+						    	// dataType: "json",
+						    	// success : function(result) {
+						    	// 	console.log(tag);
+						    	//  	console.log(result);
+						    	// 	if(result.code == 200){
+						    	// 		if(result.url.tagUrl){
+						    	// 			img = result.url.tagUrl;
+						     //   		 		console.log(img);
+						    	//     		}					                   
+						    	// 	}	
+						    	// 	 if(result.code == 404){
+								   //  	img = "/img/common/theme"+showType+'-1.png';
+								   //  }				                  
+			               			var str = '';
+								    		str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+'&nbsp;&nbsp;'+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_time"><div class="left">'+time+'</div></div><div class="information_Purchase_number" data-mid='+mid+'>购买人数：<span>'+buyNum+'</span>人</div></div>';
+								    console.log(str);
+			                   		$("#content1").append(str);
+			             //   			},
+			            	// 		error : function(error){
+			            	// 			$.alert('网络异常');
+			           		// 			 }
+			       					 // });          
+					    // },
+					    // error : function(error){
+					   	// $.alert('网络异常');
+					    //     }
+					    // });          		
                    	}
           	}
           },
