@@ -282,7 +282,38 @@ function getStaus(staus) {
             }
             return temp;
         }
-        getHode();
+
+    function askdetail(username,ask_id,resultData,callback){
+      $.ajax({
+        type : "GET",
+        url: "/ask/askdetail",
+		data: {username:"<%=username%>",ask_id:ask_id},
+        dataType: "json",
+        success : function(result){
+          callback.success(result,username,ask_id,resultData);
+        },
+        error:function(error){
+          console.log(error);
+          callback.error(error);
+        }
+      });
+    }
+    function tagShow(type,tag,resultData,callback){
+      $.ajax({
+        type : "GET",
+        url: "/ask/tagshow",
+		data: {type:type, tag:tag},
+        dataType: "json",
+        success : function(result){
+          callback.success(result,type,tag,resultData);
+        },
+        error:function(error){
+          console.log(error);
+          callback.error(error);
+        }
+      });
+    }
+getHode();
 function getHode(){
 	 $.ajax({
         type : "POST",
@@ -297,48 +328,42 @@ function getHode(){
 			}
           for(var i = 0; i< result.data.length; i++){   
           	console.log(result.data[i].type);    	
-          	// if(result.data[i].type ==1){
           		var id = result.data[i].ask.objectId;
           		console.log(id);
-          		$.ajax({
-			        type : "GET",
-			        dataType: "json",
-			        data:{username:"<%=username%>",ask_id:id},
-			        url : "/ask/askdetail",
-			        success : function(result){
-			          console.log(result);
-			          $.hidePreloader();
-			          var tabs = "";
-          		if (result.data.askTagStr != null)
-			      {       		
-          		var tag = result.data.askTagStr;
-                var temp = JSON.parse(tag);               
-                console.log(temp);
-            	}
-                for (var j = 0; j < temp.length; j++) {
-                	tabs = tabs +'<span>'+ temp[j].tag_name+'</span>';
-                   }
-                   console.log(tabs);
-                   var type = result.data.askType;
-                   var strs = type.split(",");
-                   console.log(strs);
-                   var showType = type.split(",")[0];
-                   console.log(showType);
-                   // var leave = parseTnt(0) + 1;
-                   var img = '/img/common/wenwo.png';
-                   if(result.code == 400){
+          		askdetail("<%=username%>",id,result.data[i],{
+			   	success:function(result,username,ask_id,resultData){  
+						console.log(result);
+						console.log(12345);
+						$.hidePreloader();
+						var tabs = "";
+				        if (result.data.askTagStr)
+							{       		
+				          		var tag = result.data.askTagStr;
+				          		console.log(tag);
+				                var temp = JSON.parse(tag);               
+				                console.log(temp);
+				            }
+				            console.log(temp);
+				        for (var j = 0; j < temp.length; j++) {
+				            tabs = tabs +'<span>'+ temp[j].tag_name+'</span>';
+				            }
+				            console.log(tabs);
+				                   var type = result.data.askType;
+				                   var strs = type.split(",");
+				                   console.log(strs);
+				                   var showType = type.split(",")[0];
+				                   console.log(showType);
+				                   // var leave = parseTnt(0) + 1;
+				                   var img = '/img/common/wenwo.png';
+				                   if(result.code == 400){
 
-                   }else if(result.code == 200){
-                   	img = "/img/common/theme"+showType+'-1.png';  
-                   }
-          			$.ajax({
-					            type: "get",
-					            url: "/ask/tagshow",
-					            data: {type:type, tag:tag},
-					            dataType: "json",
-					            success : function(result) {
-					                console.log(result);
-					                 if(result.code == 200){
+				                   }else if(result.code == 200){
+				                   	img = "/img/common/theme"+showType+'-1.png';  
+				                   }
+				                   tagShow(type,tag,result.data[i],{
+			   					success:function(result,type,tag,resultData){  
+							    console.log(result);
+							    if(result.code == 200){
 					                 	if(result.url.tagUrl){
 					                   	img = result.url.tagUrl;
 					                   	console.log(img);
@@ -346,17 +371,78 @@ function getHode(){
 					                   }
 					                   var str = "";
 					                   var str = '<div class="information" data-mid='+id+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word collect-concent">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tabs+'</div></div><div class="menu_icon"><div class="iconfont icon-you" style="font-size:32px;"></div></div></div></div>';
-          		$("#infor2").append(str);
-					            },
-					            error : function(error){
-					            	$.alert('网络异常');
-					            }
-					        });
-			           },
-			      error: function(error){
-			          $.alert('网络异常');
-			        }
-			      })  
+          								$("#infor2").append(str);
+							    },
+			   			error:function(){
+
+			   			}
+			   		});
+							},
+			   			error:function(){
+
+			   			}
+			   		});
+         //  		$.ajax({
+			      //   type : "GET",
+			      //   dataType: "json",
+			      //   data:{username:"<%=username%>",ask_id:id},
+			      //   url : "/ask/askdetail",
+			      //   success : function(result){
+			      //     console.log(result);
+			      //     $.hidePreloader();
+			      //     var tabs = "";
+         //  		if (result.data.askTagStr != null)
+			      // {       		
+         //  		var tag = result.data.askTagStr;
+         //        var temp = JSON.parse(tag);               
+         //        console.log(temp);
+         //    	}
+         //        for (var j = 0; j < temp.length; j++) {
+         //        	tabs = tabs +'<span>'+ temp[j].tag_name+'</span>';
+         //           }
+         //           console.log(tabs);
+         //           var type = result.data.askType;
+         //           var strs = type.split(",");
+         //           console.log(strs);
+         //           var showType = type.split(",")[0];
+         //           console.log(showType);
+         //           // var leave = parseTnt(0) + 1;
+         //           var img = '/img/common/wenwo.png';
+         //           if(result.code == 400){
+
+         //           }else if(result.code == 200){
+         //           	img = "/img/common/theme"+showType+'-1.png';  
+         //           }
+
+
+         //  			$.ajax({
+					    //         type: "get",
+					    //         url: "/ask/tagshow",
+					    //         data: {type:type, tag:tag},
+					    //         dataType: "json",
+					    //         success : function(result) {
+					    //             console.log(result);
+					    //              if(result.code == 200){
+					    //              	if(result.url.tagUrl){
+					    //                	img = result.url.tagUrl;
+					    //                	console.log(img);
+					    //                }					                   
+					    //                }
+					    //                console.log(i);
+					    //                console.log(123444);
+					    //                var str = "";
+					    //                var str = '<div class="information" data-mid='+id+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word collect-concent">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tabs+'</div></div><div class="menu_icon"><div class="iconfont icon-you" style="font-size:32px;"></div></div></div></div>';
+         //  		$("#infor2").append(str);
+					    //         },
+					    //         error : function(error){
+					    //         	$.alert('网络异常');
+					    //         }
+					    //     });
+			      //      },
+			      // error: function(error){
+			      //     $.alert('网络异常');
+			      //   }
+			      // })  
 			      }        	
           },
       error: function(error){
@@ -379,51 +465,41 @@ function GetHode(){
 			}
           for(var i = 0; i< result.data.length; i++){      	
           		var id = result.data[i].ask.objectId;
-          		console.log(id);    	
-          		$.ajax({
-			        type : "GET",
-			        dataType: "json",
-			        data:{username:"<%=username%>",ask_id:id},
-			        url : "/ask/askdetail",
-			        success : function(result){
-			          console.log(result);
-			          $.hidePreloader();
-			          var tabs= "";
-			     if (result.data.askTagStr != null)
-			     {       		
-          		var tag = result.data.askTagStr;
+          		console.log(id);   
 
-                var temp = JSON.parse(tag);                
-                console.log(temp);
-            	}
-                for (var j = 0; j < temp.length; j++) {
-                	tabs = tabs +'<span>'+ temp[j].tag_name+'</span>';
-                   }
-                   console.log(tabs);
-                   var type = result.data.askType;
-                   var strs = type.split(",");
-                   console.log(strs);
-                   var price = result.data.askPrice.replace(/\s+/g,"");
-                   console.log(price);
-                   var buyNum = result.data.buyNum;
-                   var showType = type.split(",")[0];
-                   console.log(showType);
-                   // var leave = parseTnt(0) + 1;
-                   var img = '/img/common/wenwo.png';
-                   if(result.code == 400){
+          		askdetail("<%=username%>",id,result.data,{
+			   			success:function(result,username,ask_id,resultData){  
+							    console.log(result);
+							    $.hidePreloader();
+							    var tabs = "";
+				          		if (result.data.askTagStr != null)
+							      {       		
+				          		var tag = result.data.askTagStr;
+				                var temp = JSON.parse(tag);               
+				                console.log(temp);
+				            	}
+				                for (var j = 0; j < temp.length; j++) {
+				                	tabs = tabs +'<span>'+ temp[j].tag_name+'</span>';
+				                   }
+				                   console.log(tabs);
+				                   var type = result.data.askType;
+				                   var strs = type.split(",");
+				                   console.log(strs);
+				                   var showType = type.split(",")[0];
+				                   console.log(showType);
+				                   var price = result.data.askPrice;
+				                   // var leave = parseTnt(0) + 1;
+				                   var img = '/img/common/wenwo.png';
+				                   if(result.code == 400){
 
-                   }else if(result.code == 200){
-                   	img = "/img/common/theme"+showType+'-1.png';
-                   }                   
-		          		$.ajax({
-					            type: "get",
-					            url: "/ask/tagshow",
-					            data: {type:type, tag:tag},
-					            dataType: "json",
-					            success : function(result) {
-					                console.log(result);
-					                 if(result.code == 200){
-					                   if(result.url.tagUrl){
+				                   }else if(result.code == 200){
+				                   	img = "/img/common/theme"+showType+'-1.png';  
+				                   }
+				                   	tagShow(type,tag,result.data[i],{
+			   						success:function(result,type,tag,resultData){  
+							    	console.log(result);
+							    	if(result.code == 200){
+					                 	if(result.url.tagUrl){
 					                   	img = result.url.tagUrl;
 					                   	console.log(img);
 					                   }					                   
@@ -431,16 +507,80 @@ function GetHode(){
 					                   var str = "";
 					          			var str = '<div class="information" data-mid='+id+'><div class="information_img"><img src="'+img+'"></div><div class="information_name ordername"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp;&nbsp;"+getTitle(strs[1])+':'+tabs+'</span></div><div class="information_price">￥ &nbsp;'+price+'</div></div></div>';
 					          			$("#infor1").append(str);
-					            },
-					            error : function(error){
-					            	$.alert('网络异常');
-					            }
-					        });
-			           },
-			      error: function(error){
-			          $.alert('网络异常');
-			        }
-			      })           		         	
+					                   		    },
+			   			error:function(){
+
+			   			}
+			   		});
+							},
+			   			error:function(){
+
+			   			}
+			   		});
+
+   //        		$.ajax({
+			//         type : "GET",
+			//         dataType: "json",
+			//         data:{username:"<%=username%>",ask_id:id},
+			//         url : "/ask/askdetail",
+			//         success : function(result){
+			//           console.log(result);
+			//           $.hidePreloader();
+			//           var tabs= "";
+			//      if (result.data.askTagStr != null)
+			//      {       		
+   //        		var tag = result.data.askTagStr;
+
+   //              var temp = JSON.parse(tag);                
+   //              console.log(temp);
+   //          	}
+   //              for (var j = 0; j < temp.length; j++) {
+   //              	tabs = tabs +'<span>'+ temp[j].tag_name+'</span>';
+   //                 }
+   //                 console.log(tabs);
+   //                 var type = result.data.askType;
+   //                 var strs = type.split(",");
+   //                 console.log(strs);
+   //                 var price = result.data.askPrice.replace(/\s+/g,"");
+   //                 console.log(price);
+   //                 var buyNum = result.data.buyNum;
+   //                 var showType = type.split(",")[0];
+   //                 console.log(showType);
+   //                 // var leave = parseTnt(0) + 1;
+   //                 var img = '/img/common/wenwo.png';
+   //                 if(result.code == 400){
+
+   //                 }else if(result.code == 200){
+   //                 	img = "/img/common/theme"+showType+'-1.png';
+   //                 }                   
+		 //          		$.ajax({
+			// 		            type: "get",
+			// 		            url: "/ask/tagshow",
+			// 		            data: {type:type, tag:tag},
+			// 		            dataType: "json",
+			// 		            success : function(result) {
+			// 		                console.log(result);
+			// 		                 if(result.code == 200){
+			// 		                   if(result.url.tagUrl){
+			// 		                   	img = result.url.tagUrl;
+			// 		                   	console.log(img);
+			// 		                   }					                   
+			// 		                   }
+			// 		                   console.log(i);
+			// 		                   console.log(123444);
+			// 		                   var str = "";
+			// 		          			var str = '<div class="information" data-mid='+id+'><div class="information_img"><img src="'+img+'"></div><div class="information_name ordername"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp;&nbsp;"+getTitle(strs[1])+':'+tabs+'</span></div><div class="information_price">￥ &nbsp;'+price+'</div></div></div>';
+			// 		          			$("#infor1").append(str);
+			// 		            },
+			// 		            error : function(error){
+			// 		            	$.alert('网络异常');
+			// 		            }
+			// 		        });
+			//            },
+			//       error: function(error){
+			//           $.alert('网络异常');
+			//         }
+			//       })           		         	
 			}      	
           },
       error: function(error){

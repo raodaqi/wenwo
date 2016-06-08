@@ -336,6 +336,23 @@ function getStaus(staus) {
             return temp;
         }       
 getMyask();
+
+ function tagShow(type,tag,resultData,callback){
+      $.ajax({
+        type : "GET",
+        url: "/ask/tagshow",
+		data: {type:type, tag:tag},
+        dataType: "json",
+        success : function(result){
+          callback.success(result,type,tag,resultData);
+        },
+        error:function(error){
+          console.log(error);
+          callback.error(error);
+        }
+      });
+    }
+
 function getMyask(){
 	 $.ajax({
         type : "get",
@@ -358,107 +375,71 @@ function getMyask(){
                    console.log(type);
                    var strs = type.split(",");
                    console.log(strs); 
-                   var buyNum = '';                  
+                   var buyNum = result.data[i].buyNum;                  
                    var time = formatDate("y.m.d",result.data[i].updatedAt);
                    var price = result.data[i].askPrice;
                    console.log(price);
-                   // if(price == 0){console.log('输出');}
                    var mid = result.data[i].objectId;               
                    console.log(mid);
                     var showType = type.split(",")[0];
                    console.log(showType);
-                   // var leave = parseTnt(0) + 1;
                    var img = '/img/common/wenwo.png';
                    if(result.code == 400){
                    }else if(result.code == 200){
                    	img = "/img/common/theme"+showType+'-1.png';
                    	console.log(img);
                    }
-                   if(price == 0)
+                   if(true)
                    {
-      //              	$.ajax({
-						// type: "GET",
-						// url: '/ask/getbuy',
-						// data: {ask_id:mid,username:'<%=username%>'},
-						// dataType: "json",
-						// success : function(result) {
-			   //          console.log(result);
-			   //          var buyNum = result.data.length;
+			   		tagShow(type,tag,result.data[i],{
+			   			success:function(result,type,tag,resultData){  
+							    console.log(resultData);
+							    var tag = resultData.askTagStr;
+				          		console.log(tag);
+				                var temp = JSON.parse(tag);
+				                var tab = "";
+				                console.log(temp);
+				                for (var j = 0; j < temp.length; j++) {
+				                	tab = tab +'<span>'+ temp[j].tag_name+'</span>';
+				                }
+							   var type = resultData.askType;
+			                   console.log(type);
+			                   var strs = type.split(",");
+			                   console.log(strs); 
+			                   var buyNum = resultData.buyNum;                  
+			                   var time = formatDate("y.m.d",resultData.updatedAt);
+			                   var price = resultData.askPrice;
+			                   console.log(price);
+			                   var mid = resultData.objectId;               
+			                   console.log(mid);
+			                    var showType = type.split(",")[0];
+			                   console.log(showType);
 
-
-
-		         //           	$.ajax({
-							    // type: "get",
-							    // url: "/ask/tagshow",
-							    // data: {type:type, tag:tag},
-							    // dataType: "json",
-							    // success : function(result) {
-							    // console.log(result);
-							    // if(result.code == 200){
-							    // 	if(result.url.tagUrl){
-							    // 		img = result.url.tagUrl;
-							    //         console.log(img);
-							    //     }					                   
-							    // }
-							    // if(result.code == 404){
-							    // 	img = "/img/common/theme"+showType+'-1.png';
-							    // }					                   
+			                   if(result.code == 200){
+							    	if(result.url.tagUrl){
+							    		img = result.url.tagUrl;
+							            console.log(img);
+							        }					                   
+							    }
+			                   if(result.code == 404){
+							    	img = "/img/common/theme"+showType+'-1.png';
+							    }					                   
 			               		var str = '';
-					            str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+'&nbsp;&nbsp;'+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_time"><div class="left">'+time+'</div></div><div class="information_Purchase_number information_collect_number" data-mid='+mid+'>收藏人数：<span>'+buyNum+'</span>人</div></div>';
-					            console.log(str);
-                   				$("#content1").append(str);
-			           //     		},
-			           //  		error : function(error){
-			           //  			$.alert('网络异常');
-			           // 			}
-			       				// }); 	
-						// },
-						// error : function(error){
-					 //   		 $.alert('网络异常');
-					 //    	}
-						// });			          		
-                   }
-                   else{
-      //              	 $.ajax({
-						// type: "GET",
-						// url: '/ask/getbuy',
-						// data: {ask_id:mid,username:'<%=username%>'},
-						// dataType: "json",
-						// success : function(result) {
-      //          				console.log(result);
-      //          				var buyNum = result.data.length;
-	          //          			$.ajax({
-						    	// type: "get",
-						    	// url: "/ask/tagshow",
-						    	// data: {type:type, tag:tag},
-						    	// dataType: "json",
-						    	// success : function(result) {
-						    	// 	console.log(tag);
-						    	//  	console.log(result);
-						    	// 	if(result.code == 200){
-						    	// 		if(result.url.tagUrl){
-						    	// 			img = result.url.tagUrl;
-						     //   		 		console.log(img);
-						    	//     		}					                   
-						    	// 	}	
-						    	// 	 if(result.code == 404){
-								   //  	img = "/img/common/theme"+showType+'-1.png';
-								   //  }				                  
-			               			var str = '';
-								    		str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+'&nbsp;&nbsp;'+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_time"><div class="left">'+time+'</div></div><div class="information_Purchase_number" data-mid='+mid+'>购买人数：<span>'+buyNum+'</span>人</div></div>';
-								    console.log(str);
-			                   		$("#content1").append(str);
-			             //   			},
-			            	// 		error : function(error){
-			            	// 			$.alert('网络异常');
-			           		// 			 }
-			       					 // });          
-					    // },
-					    // error : function(error){
-					   	// $.alert('网络异常');
-					    //     }
-					    // });          		
-                   	}
+			               		console.log(i);
+			               		if(price == 0){
+			               			str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+'&nbsp;&nbsp;'+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_time"><div class="left">'+time+'</div></div><div class="information_Purchase_number information_collect_number" data-mid='+mid+'>收藏人数：<span>'+buyNum+'</span>人</div></div>';
+			               		}else{
+			               			// var str = '';
+								    str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+'&nbsp;&nbsp;'+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_time"><div class="left">'+time+'</div></div><div class="information_Purchase_number" data-mid='+mid+'>购买人数：<span>'+buyNum+'</span>人</div></div>';
+			               		}
+			               		$("#content1").append(str);
+			   			},
+			   			error:function(){
+
+			   			}
+			   		});
+			   		}
+		        
           	}
           },
       error: function(error){
@@ -504,31 +485,77 @@ function getmyask(){
                    	img = "/img/common/theme"+showType+'-1.png';
                    	console.log(img);
                    	}
-                   	$.ajax({
-					    type: "get",
-					    url: "/ask/tagshow",
-					    data: {type:type, tag:tag},
-					    dataType: "json",
-					    success : function(result) {
-					    	console.log(tag);
-					    console.log(result);
-					    if(result.code == 200){
-					    if(result.url.tagUrl){
-					    img = result.url.tagUrl;
-					    console.log(img);
-					    }					                   
-					    }
-					     if(result.code == 404){
-							    	img = "/img/common/theme"+showType+'-1.png';
+                   	tagShow(type,tag,result.data[i],{
+			   			success:function(result,type,tag,resultData){  
+							    console.log(resultData);
+							    var tag = resultData.askTagStr;
+				          		console.log(tag);
+				                var temp = JSON.parse(tag);
+				                var tab = "";
+				                console.log(temp);
+				                for (var j = 0; j < temp.length; j++) {
+				                	tab = tab +'<span>'+ temp[j].tag_name+'</span>';
+				                }
+							   var type = resultData.askType;
+			                   console.log(type);
+			                   var strs = type.split(",");
+			                   console.log(strs); 
+			                   var buyNum = resultData.buyNum;                  
+			                   var time = formatDate("y.m.d",resultData.updatedAt);
+			                   var price = resultData.askPrice;
+			                   console.log(price);
+			                   var mid = resultData.objectId;               
+			                   console.log(mid);
+			                    var showType = type.split(",")[0];
+			                   console.log(showType);
+			                   if(result.code == 200){
+							    	if(result.url.tagUrl){
+							    		img = result.url.tagUrl;
+							            console.log(img);
+							        }					                   
 							    }
-					    var str = '';
-					    str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state blue">'+getStaus(staus)+'</div></div>';
-	          			$("#content2").append(str);
-					    },
-					    error : function(error){
-					        $.alert('网络异常');
-					     }
-					    });	                
+			                   if(result.code == 404){
+							    	img = "/img/common/theme"+showType+'-1.png';
+							    }					                   
+			               		var str = '';
+			               		str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state blue">'+getStaus(staus)+'</div></div>';
+	          					$("#content2").append(str);
+			               		},
+			   			error:function(){
+
+			   			}
+			   		});
+
+
+
+
+
+
+         //           	$.ajax({
+					    // type: "get",
+					    // url: "/ask/tagshow",
+					    // data: {type:type, tag:tag},
+					    // dataType: "json",
+					    // success : function(result) {
+					    // 	console.log(tag);
+					    // console.log(result);
+					    // if(result.code == 200){
+					    // if(result.url.tagUrl){
+					    // img = result.url.tagUrl;
+					    // console.log(img);
+					    // }					                   
+					    // }
+					    //  if(result.code == 404){
+							  //   	img = "/img/common/theme"+showType+'-1.png';
+							  //   }
+					    // var str = '';
+					    // str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state blue">'+getStaus(staus)+'</div></div>';
+	        //   			$("#content2").append(str);
+					    // },
+					    // error : function(error){
+					    //     $.alert('网络异常');
+					    //  }
+					    // });	                
           	}
           },
       error: function(error){
@@ -536,8 +563,6 @@ function getmyask(){
         }
       });
 }
-
-
 
 Myask();
 function Myask(){
@@ -573,25 +598,41 @@ function Myask(){
                    		}else if(result.code == 200){
                    			img = "/img/common/theme"+showType+'-1.png';
                    		}
-                   		$.ajax({
-					            type: "get",
-					            url: "/ask/tagshow",
-					            data: {type:type, tag:tag},
-					            dataType: "json",
-					            success : function(result) {
-					            	console.log(tag);
-					                console.log(result);
-					                console.log(123456);
-					                 if(result.code == 200){
-					                   if(result.url.tagUrl){
-					                   	img = result.url.tagUrl;
-					                   	console.log(img);
-					                   }					                   
-					                   }
-					                    if(result.code == 404){
-							    	img = "/img/common/theme"+showType+'-1.png';
+
+                   		tagShow(type,tag,result.data[i],{
+			   			success:function(result,type,tag,resultData){  
+							    console.log(resultData);
+							    var tag = resultData.askTagStr;
+				          		console.log(tag);
+				                var temp = JSON.parse(tag);
+				                var tab = "";
+				                console.log(temp);
+				                for (var j = 0; j < temp.length; j++) {
+				                	tab = tab +'<span>'+ temp[j].tag_name+'</span>';
+				                }
+							   var type = resultData.askType;
+			                   console.log(type);
+			                   var strs = type.split(",");
+			                   console.log(strs); 
+			                   var buyNum = resultData.buyNum;                  
+			                   var time = formatDate("y.m.d",resultData.updatedAt);
+			                   var price = resultData.askPrice;
+			                   console.log(price);
+			                   var mid = resultData.objectId;               
+			                   console.log(mid);
+			                    var showType = type.split(",")[0];
+			                   console.log(showType);
+			                   if(result.code == 200){
+							    	if(result.url.tagUrl){
+							    		img = result.url.tagUrl;
+							            console.log(img);
+							        }					                   
 							    }
-					                   var str = '';
+			                   if(result.code == 404){
+							    	img = "/img/common/theme"+showType+'-1.png';
+							    }		
+
+							  	var str = '';
 					                    str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state red">'+getStaus(staus)+'</div></div>';
 					                    console.log(str);
 	          								$("#content2").append(str);
@@ -600,6 +641,34 @@ function Myask(){
 					            	$.alert('网络异常');
 					            }
 					        });
+
+           //         		$.ajax({
+					      //       type: "get",
+					      //       url: "/ask/tagshow",
+					      //       data: {type:type, tag:tag},
+					      //       dataType: "json",
+					      //       success : function(result) {
+					      //       	console.log(tag);
+					      //           console.log(result);
+					      //           console.log(123456);
+					      //            if(result.code == 200){
+					      //              if(result.url.tagUrl){
+					      //              	img = result.url.tagUrl;
+					      //              	console.log(img);
+					      //              }					                   
+					      //              }
+					      //               if(result.code == 404){
+							    // 	img = "/img/common/theme"+showType+'-1.png';
+							    // }
+					      //              var str = '';
+					      //               str = '<div class="information" data-mid = '+mid+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tab+'</div><div class="information_price">￥'+price+'</div></div><div class="information_state red">'+getStaus(staus)+'</div></div>';
+					      //               console.log(str);
+	          // 								$("#content2").append(str);
+					      //              },
+					      //       error : function(error){
+					      //       	$.alert('网络异常');
+					      //       }
+					      //   });
           	}
           },
       error: function(error){
