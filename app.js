@@ -18,7 +18,7 @@ var ask = require('./routes/ask');
 var wallet = require('./routes/wallet');
 var hode = require('./routes/hode');
 var authorization = require('./routes/authorization');
-var config = require('../config');
+var config = require('./config');
 
 var wxpay = WXPay({
   appid: config.appid,
