@@ -192,7 +192,7 @@ router.get('/withdrawapply', function(req, res, next) {
     var amount = req.query.amount;
 
     var query = new AV.Query('UserInfo');
-    query.equalTo('userName', userName);
+    query.equalTo('userName', username);
     query.find().then(function(results) {
         if (results[0].attributes.wallet) {
             var id = results[0].attributes.wallet.id;
