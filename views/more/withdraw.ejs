@@ -203,6 +203,37 @@ body{
 
 	})
 
+	// function withdraw(mon){
+	// 	//提现以分为单位
+	// 	var mon = parseInt(mon*100);
+
+	// 	var data = {
+	// 		username : "<%= username %>",
+	// 		amount : mon
+	// 	};
+	// 	$.ajax({
+	//         type : "GET",
+	//         dataType: "json",
+	//         data: data,
+	//         url : "/authorization/withdraw",
+	//         success : function(result){
+	//           console.log(result);
+	//           if(result.code == 200){
+	//           	$.toast("提交成功");
+	//           	setTimeout(function(){
+	//           		window.location.href = "/more/moneyBox";
+	//           	}, 500);
+	//           }else{
+	//           	$.toast(result.message);
+	//           }
+	//         },
+	//       error: function(error){
+	//           $.toast('网络异常');
+	//           // $("body").empty();
+	//           // $("body").text(error);
+	//         }
+	//       })
+	// }
 	function withdraw(mon){
 		//提现以分为单位
 		var mon = parseInt(mon*100);
@@ -212,10 +243,10 @@ body{
 			amount : mon
 		};
 		$.ajax({
-	        type : "GET",
+	        type : "POST",
 	        dataType: "json",
 	        data: data,
-	        url : "/authorization/withdraw",
+	        url : "authorization/withdrawapply",
 	        success : function(result){
 	          console.log(result);
 	          if(result.code == 200){
