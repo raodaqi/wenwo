@@ -272,7 +272,7 @@ function authorize(req, res) {
   console.log(req.rawHeaders);
   //var url = req.rawHeaders[17];
   url = "http://" + req.headers.host + url;
-      console.log(url);
+  url = encodeURIComponent(url);
   //var urlApi = "http://wenwo.leanapp.cn/authorization/?url="+url;
   var urlApi = "http://" + req.headers.host + "/authorization/?url=" + url;
   console.log(urlApi);
