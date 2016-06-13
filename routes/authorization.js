@@ -142,10 +142,8 @@ router.get('/pay_t', function(req, res, next) {
 });
 
 router.get('/test', function(req, res, next) {
-    var date = new Date();
-    date = moment(date).format("YYYYMMDDHHmmss");
-    var str = date + getNonceStr(10);
-    console.log(str);
+    console.log(req.rawHeaders[15]);
+    console.log(req.rawHeaders[1]);
 });
 
 router.get('/pay', function(req, res, next) {
