@@ -267,11 +267,12 @@ function authorize(req, res) {
   var appid = 'wx99f15635dd7d9e3c';
   var secret = '9157e84975386b6dee6a499cc639973e';
 
-  //var url = req.originalUrl;
+  var url = req.originalUrl;
   //url = 'http://wenwo.leanapp.cn' + url;
   console.log(req.rawHeaders);
-  var url = req.rawHeaders[17];
-  console.log(url);
+  //var url = req.rawHeaders[17];
+  url = "http://" + req.headers.host + url;
+      console.log(url);
   //var urlApi = "http://wenwo.leanapp.cn/authorization/?url="+url;
   var urlApi = "http://" + req.headers.host + "/authorization/?url=" + url;
   console.log(urlApi);
