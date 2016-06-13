@@ -1058,10 +1058,10 @@
               <a class="item-link item-content">
                 <div class="item-media item-left"> <i class="iconfont icon-dingwei"></i>
                 </div>
-                <!-- <div class="item-media item-right"> <i class="iconfont icon-youjiantou"></i>
-                </div> -->
+                <div class="item-media item-right"> <i class="iconfont icon-youjiantou"></i>
+                </div>
                 <div class="item-inner">
-                  <div class="item-title ">成都信息工程大学</div>
+                  <div class="item-title"></div>
                 </div>
               </a>
             </li>
@@ -1083,7 +1083,7 @@
                   <i class="iconfont icon-youjiantou"></i>
                 </div> -->
                 <div class="item-inner">
-                  <div class="item-title">价格</div>
+                  <div class="item-title">0</div>
                 </div>
               </a>
             </li>
@@ -1632,6 +1632,8 @@
 
       //设置地点
       var lnglatXY = [lng,lat];
+      $("#address-content").attr("data-lng",lng);
+      $("#address-content").attr("data-lat",lat);
       getAddress(lnglatXY,{
           success:function(address){
             var detail = address.formattedAddress;
@@ -1700,6 +1702,24 @@
     $(".header-sousuo,.address-content").on("click",function(){
       $.router.load("#router1");
     });
+
+    //点击地点地图定位到相应位置
+    $("#address-content").on("click",function(){
+      var lng = $(this).attr("data-lng");
+      var lat = $(this).attr("data-lat");
+      if($(".marker-content").hasClass("modal-in")){
+        if(lng && lat){
+          $.closeModal('.ask-detail');
+          $("#ask-detail-cancel").hide();
+          $.closeModal('.marker-content');
+          map.setZoomAndCenter(18, [lng, lat]);
+        }
+      }else{
+        $(".amap-active").css("-webkit-transform", "rotate(0deg) !important;");
+        $.closeModal('.ask-detail');
+        $("#ask-detail-cancel").hide();
+      }
+    })
 
     $(".user-info .user-photo").on("click",function(){
       window.location.href="/more/personalPage";
