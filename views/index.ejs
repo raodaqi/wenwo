@@ -744,6 +744,7 @@
   }
   .marker-content .list-block{
     margin: 0;
+    margin-bottom: 50px;
   }
   .marker-content .item-subtitle{
     overflow-x: hidden !important;
@@ -2002,7 +2003,8 @@
                 cluster.on("click",function(clusterContent){
                   console.log(clusterContent);
 
-                  if(map.getZoom() < 19){
+                  // if(map.getZoom() < 19){
+                  if(false){
 
                     // $.each(this.getMarkers(),function(i,v){
                     //   console.log(this);
@@ -2959,7 +2961,8 @@
     // }
 
     //点击列表弹出详情
-    $(".popup.marker-content").bind("touchstart","li",function(){
+    // $(".popup.marker-content").bind("touchstart","li",function(){
+    $(".popup.marker-content").bind("click","li",function(){
       var askId = $(this).attr("data-askid");
 
       var data = {
