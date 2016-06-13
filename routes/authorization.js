@@ -142,8 +142,9 @@ router.get('/pay_t', function(req, res, next) {
 });
 
 router.get('/test', function(req, res, next) {
+    console.log(req.headers.host);
     console.log(req.rawHeaders[15]);
-    console.log(req.rawHeaders[1]);
+    console.log(req.rawHeaders);
 });
 
 router.get('/pay', function(req, res, next) {

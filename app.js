@@ -269,10 +269,12 @@ function authorize(req, res) {
 
   //var url = req.originalUrl;
   //url = 'http://wenwo.leanapp.cn' + url;
-  var url = req.rawHeaders[15];
+  console.log(req.rawHeaders);
+  var url = req.rawHeaders[17];
   console.log(url);
   //var urlApi = "http://wenwo.leanapp.cn/authorization/?url="+url;
-  var urlApi = "http://" + req.rawHeaders[1] + "/authorization/?url=" + url;
+  var urlApi = "http://" + req.headers.host + "/authorization/?url=" + url;
+  console.log(urlApi);
   urlApi = encodeURIComponent(urlApi);
   var url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+urlApi+'&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect';
 
