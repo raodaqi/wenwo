@@ -228,3 +228,8 @@ manage/getapply `[get]`
 manage/apply  `[get]`
 `apply_id`   `Y` `提现id`
 `staus`   `Y`  `状态   //staus = 0 未处理  = 1 通过  =2 失败`
+
+提交提现审批
+authorization/withdrawapply `[post]`
+`username`
+`amount`  `Y`   `提现金额`
