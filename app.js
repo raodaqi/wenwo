@@ -268,6 +268,7 @@ function authorize(req, res) {
   var secret = '9157e84975386b6dee6a499cc639973e';
 
   var url = req.originalUrl;
+  console.log(url);
   //url = 'http://wenwo.leanapp.cn' + url;
   //console.log(req.rawHeaders);
   //var url = req.rawHeaders[17];
