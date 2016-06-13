@@ -18,14 +18,15 @@ var moment = require("moment");
 var User = AV.Object.extend('_User');
 var Apply = AV.Object.extend('Apply');
 var Withdraw = AV.Object.extend('Withdraw');
+var config=require('../config');
 // `AV.Object.extend` 方法一定要放在全局变量，否则会造成堆栈溢出。
 // 详见： https://leancloud.cn/docs/js_guide.html#对象
 var resG;
-var appid = 'wx99f15635dd7d9e3c';
+var appid = config.appid;
 var key = 'myworldwenwo20151016myworldwenwo';
 var mchid = '1298230401';
 var wxpay = WXPay({
-    appid: appid,
+    appid: config.appid,
     mch_id: mchid,
     partner_key: key, //微信商户平台API密钥
     pfx: fs.readFileSync('./routes/certificate/apiclient_cert.p12'), //微信商户平台证书
@@ -56,7 +57,7 @@ router.get('/pay_t', function(req, res, next) {
     // totalFee = totalFee / 100;
     // totalFee = totalFee * 100;
     console.log(totalFee);
-    var secret = '9157e84975386b6dee6a499cc639973e';
+    var secret = config.appsecret;
 
 
     // var body = 'test';
@@ -142,9 +143,7 @@ router.get('/pay_t', function(req, res, next) {
 });
 
 router.get('/test', function(req, res, next) {
-    console.log(req.headers.host);
-    console.log(req.rawHeaders[15]);
-    console.log(req.rawHeaders);
+    console.log(config);
 });
 
 router.get('/pay', function(req, res, next) {
@@ -296,7 +295,7 @@ router.get('/withdraw', function(req, res, next) {
                             date = moment(date).format("YYYYMMDDHHmmss");
                             var str = date + getNonceStr(10);
 
-                            var appid = 'wx99f15635dd7d9e3c';
+                            var appid = config.appid;
                             var mchid = '1298230401';
                             var nonceStr = getNonceStr();
                             //var sign = getSign();
@@ -402,8 +401,8 @@ router.get('/', function(req, res, next) {
     console.log(req.query.url);
     var urlReq = decodeURIComponent(req.query.url);
     console.log(urlReq);
-    var appid = 'wx99f15635dd7d9e3c';
-    var secret = '9157e84975386b6dee6a499cc639973e';
+    var appid = config.appid;
+    var secret = config.appsecret;
 
     var code = req.query.code;
     resG = res;
@@ -546,8 +545,8 @@ function unified(appid, mchid, body, notifyUrl, ip, total, secret, callback) {
 // }
 
 function authorize(res,urlApi) {
-    var appid = 'wx99f15635dd7d9e3c';
-    var secret = '9157e84975386b6dee6a499cc639973e';
+    var appid = config.appid;
+    var secret = config.appsecret;
 
     //var urlApi = "http://wenwo.leanapp.cn/authorization/";
     urlApi = encodeURIComponent(urlApi);
@@ -556,8 +555,8 @@ function authorize(res,urlApi) {
     res.redirect(url);
 }
 function authorizeNotInfo(res,urlApi) {
-    var appid = 'wx99f15635dd7d9e3c';
-    var secret = '9157e84975386b6dee6a499cc639973e';
+    var appid = config.appid;
+    var secret = config.appsecret;
 
     //var urlApi = "http://wenwo.leanapp.cn/authorization/";
     urlApi = encodeURIComponent(urlApi);

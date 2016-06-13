@@ -18,8 +18,10 @@ var ask = require('./routes/ask');
 var wallet = require('./routes/wallet');
 var hode = require('./routes/hode');
 var authorization = require('./routes/authorization');
+var config = require('../config');
+
 var wxpay = WXPay({
-  appid: 'wx99f15635dd7d9e3c',
+  appid: config.appid,
   mch_id: '1298230401',
   partner_key: 'myworldwenwo20151016myworldwenwo', //微信商户平台API密钥
   pfx: fs.readFileSync('./routes/certificate/apiclient_cert.p12'), //微信商户平台证书
@@ -28,7 +30,7 @@ var wxpay = WXPay({
 // var wechat = require('wechat');
 // var config = {
 //   token: 'wenwo',
-//   appid: 'wx99f15635dd7d9e3c',
+//   appid: config.appid,
 //   encodingAESKey: 'PwwbrWMutl378fjwD5P1IkGZom5zEmXw0Coo7lVDuP6'
 // };
 
@@ -264,8 +266,8 @@ app.use(function(err, req, res, next) { // jshint ignore:line
 });
 
 function authorize(req, res) {
-  var appid = 'wx99f15635dd7d9e3c';
-  var secret = '9157e84975386b6dee6a499cc639973e';
+  var appid = config.appid;
+  var secret = config.appsecret;
 
   var url = req.originalUrl;
   console.log(url);
