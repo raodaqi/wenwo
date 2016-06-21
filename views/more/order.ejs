@@ -325,6 +325,7 @@ function getHode(){
           if(result.data.length == 0){
 			var st = '<div class="content no-order"><div class="word">暂时没有收藏商品....</div></div>';
 		  	$("#type2").append(st);
+		  	$.hidePreloader();
 			}
           for(var i = 0; i< result.data.length; i++){   
           	console.log(result.data[i].type);    	
@@ -372,6 +373,7 @@ function getHode(){
 					                   var str = "";
 					                   var str = '<div class="information" data-mid='+id+'><div class="information_img"><img src="'+img+'"></div><div class="information_name"><div class="information_name_word collect-concent">'+getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1])+':'+tabs+'</div></div><div class="menu_icon"><div class="iconfont icon-you" style="font-size:32px;"></div></div></div></div>';
           								$("#infor2").append(str);
+          								$.hidePreloader();
 							    },
 			   			error:function(){
 
@@ -462,6 +464,7 @@ function GetHode(){
           if(result.data.length == 0){
 			var st = '<div class="content no-order"><div class="word">暂时没有订单....</div></div>';
 			$("#type1").append(st);
+			$.hidePreloader();
 			}
           for(var i = 0; i< result.data.length; i++){      	
           		var id = result.data[i].ask.objectId;
@@ -507,6 +510,7 @@ function GetHode(){
 					                   var str = "";
 					          			var str = '<div class="information" data-mid='+id+'><div class="information_img"><img src="'+img+'"></div><div class="information_name ordername"><div class="information_name_word">'+getTitle(strs[0])+"&nbsp;&nbsp;"+getTitle(strs[1])+':'+tabs+'</span></div><div class="information_price">￥ &nbsp;'+price+'</div></div></div>';
 					          			$("#infor1").append(str);
+					          			$.hidePreloader();
 					                   		    },
 			   			error:function(){
 
