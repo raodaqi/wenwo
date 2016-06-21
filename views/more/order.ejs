@@ -445,7 +445,8 @@ function getHode(){
 			      //     $.alert('网络异常');
 			      //   }
 			      // })  
-			      }        	
+			      }  
+			 $.hidePreloader();      	
           },
       error: function(error){
          $.alert('网络异常');
@@ -585,7 +586,8 @@ function GetHode(){
 			//           $.alert('网络异常');
 			//         }
 			//       })           		         	
-			}      	
+			} 
+			$.hidePreloader();     	
           },
       error: function(error){
           $.alert('网络异常');
