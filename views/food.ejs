@@ -10,7 +10,7 @@
   <link rel="icon" type="image/x-icon" href="/img/logo.png" media="screen">
   <title>问我——像个当地人一样去旅游</title>
   <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="http://at.alicdn.com/t/font_1462821367_1895313.css">
+  <link rel="stylesheet" href="http:////at.alicdn.com/t/font_1467969350_567877.css">
   <link rel="stylesheet" href="/css/sm.min.css">
   <script src="/js/jweixin-1.0.0.js"></script>
 </head>
@@ -83,6 +83,17 @@
       color: #585858;
       line-height: 1.5rem;
     }
+    .header-me{
+      position: absolute;
+      float: left;
+      line-height: 40px;
+      font-size: 1rem;
+      font-weight: bold;
+      z-index: 2;
+    }
+    #me{
+      z-index: 40000;
+    }
   </style>
 <body>
   <!-- <header class="bar bar-nav">
@@ -90,6 +101,7 @@
   </header> -->
   <div class="wenwo-content page page-current" id='find'>
     <header class="bar bar-nav">
+      <div class="header-me iconfont icon-gerenzhongxin"></div>
       <h1 class="title">问我&bull;美食</h1>
     </header>
     <!-- 这里是所有的信息列表 -->
@@ -188,6 +200,59 @@
     </div>
   </div>
 
+  <!-- 这里是所有的信息列表 -->
+  <div class="wenwo-content page" id="me">
+    <header class="bar bar-nav">
+      <a class="button button-link button-nav pull-left back" href="#">
+        <span class="icon icon-left"></span>
+      </a>
+      <h1 class="title">个人中心</h1>
+    </header>
+    <div class="content">
+      <div class="wenwo-li">
+        <div class="up-content">
+          <img src="http://wx.qlogo.cn/mmopen/zngt7mjBQUdFiaKIVGQbhF3jRURfqibW3EtNPALJewxicdPAyGfyMpZkeHZIW1UXUmjEia3QicdYqickSiaywQcKBUS6GMWSEw67Rry/" alt="" class="user-pic">
+          <div class="ask-content">
+            <div class="ask-tag">鱼火锅</div>
+            <div class="ask-reason">好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃</div>
+          </div>
+        </div>
+        <div class="down-content">
+          <div class="down-like">想吃23</div>
+          <div class="down-time">2016-07-07</div>
+        </div>
+      </div>
+
+      <div class="wenwo-li">
+        <div class="up-content">
+          <img src="http://wx.qlogo.cn/mmopen/zngt7mjBQUdFiaKIVGQbhF3jRURfqibW3EtNPALJewxicdPAyGfyMpZkeHZIW1UXUmjEia3QicdYqickSiaywQcKBUS6GMWSEw67Rry/" alt="" class="user-pic">
+          <div class="ask-content">
+            <div class="ask-tag">鱼火锅</div>
+            <div class="ask-reason">好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃</div>
+          </div>
+        </div>
+        <div class="down-content">
+          <div class="down-like">想吃23</div>
+          <div class="down-time">2016-07-07</div>
+        </div>
+      </div>
+
+      <div class="wenwo-li">
+        <div class="up-content">
+          <img src="http://wx.qlogo.cn/mmopen/zngt7mjBQUdFiaKIVGQbhF3jRURfqibW3EtNPALJewxicdPAyGfyMpZkeHZIW1UXUmjEia3QicdYqickSiaywQcKBUS6GMWSEw67Rry/" alt="" class="user-pic">
+          <div class="ask-content">
+            <div class="ask-tag">鱼火锅</div>
+            <div class="ask-reason">好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃</div>
+          </div>
+        </div>
+        <div class="down-content">
+          <div class="down-like">想吃23</div>
+          <div class="down-time">2016-07-07</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <nav class="bar bar-tab">
     <a class="tab-item find active" data-type="find" href="#">
       <span class="icon icon-home"></span>
@@ -214,6 +279,9 @@
       }else{
         url = "find";
       }
+      if(url == "me"){
+        url = "find";
+      }
       console.log(url);
       $(".tab-item").removeClass("active");
       $("."+url).addClass("active");
@@ -223,9 +291,13 @@
   $(".tab-item").on("click",function(){
     // console.log($());
     var type = $(this).attr("data-type");
+    var active = $(".active").attr("data-type");
     console.log(type);
     $(".tab-item").removeClass("active");
     $(this).addClass("active");
+    if(type == active){
+      return;
+    }
     if(type == "like"){
       $.router.load("#like"); 
     }else if(type == "find"){
@@ -238,6 +310,10 @@
 
   $(".wenwo-li").on("click",function(){
     $.router.load("/detail");
+  })
+  $(".icon-gerenzhongxin").on("click",function(){
+    console.log("123");
+    $.router.load("#me");
   })
   // $(".edit").on("click",function(){
   //   $.router.load("/todos/send/test?username=573c1eb271cfe4006c18274f");
