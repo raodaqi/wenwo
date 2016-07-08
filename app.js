@@ -108,6 +108,28 @@ app.get('/wenwo', function(req, res) {
   res.render('index', { username: username, lng:"0", lat:"0"});
 });
 
+app.get('/food', function(req, res) {
+  var username =  req.query.username;
+  var lng = req.query.geox;
+  var lat = req.query.geoy;
+  //username = decodeURI(username);
+  if(lng && lat){
+    res.render('food', { username: username, lng:lng, lat:lat});
+  }
+  res.render('food', { username: username, lng:"0", lat:"0"});
+});
+app.get('/edit', function(req, res) {
+  var username =  req.query.username;
+  var type = req.query.type;
+  var askid = req.query.askid;
+  //username = decodeURI(username);
+  res.render('edit', {username:username,type:type,askid:askid});
+});
+
+app.get('/detail', function(req, res) {
+  res.render('detail', {});
+});
+
 app.get('/test', function(req, res) {
   res.render("test");
 });

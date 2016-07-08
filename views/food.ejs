@@ -1,0 +1,246 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <!-- <meta name='viewport', content='width=device-width, initial-scale=1.0'>
+  -->
+  <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+  <meta name='description', content='wenwo,问我,当地人,旅游,攻略,信息,分享'>
+  <meta name='author', content='raodqi'>
+  <link rel="icon" type="image/x-icon" href="/img/logo.png" media="screen">
+  <title>问我——像个当地人一样去旅游</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="http://at.alicdn.com/t/font_1462821367_1895313.css">
+  <link rel="stylesheet" href="/css/sm.min.css">
+  <script src="/js/jweixin-1.0.0.js"></script>
+</head>
+  <style>
+    @font-face {font-family: 'webfont';
+      src: url('//at.alicdn.com/t/vlddunszd2pousor.eot'); /* IE9*/
+      src: url('//at.alicdn.com/t/vlddunszd2pousor.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+      url('//at.alicdn.com/t/vlddunszd2pousor.woff') format('woff'), /* chrome、firefox */
+      url('//at.alicdn.com/t/vlddunszd2pousor.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+      url('//at.alicdn.com/t/vlddunszd2pousor.svg#思源黑体-极细') format('svg'); /* iOS 4.1- */
+    }
+    html{
+      font-size: 20px;
+    }
+    body{
+      position: absolute;
+      left: 0;
+      right: 0 !important;
+      padding:0;
+      margin:0;
+      width: 100%;
+      overflow: hidden;
+      background-color: #E8E8E8;
+    }
+    .title{
+      font-weight: bold;
+      font-family: 'webfont';
+    }
+    .wenwo-li{
+      background-color: white;
+      height: 6.5rem;
+      padding:0.5rem;
+      border-bottom: 1px solid #B9B9B9;
+    }
+    .up-content{
+      height: 4rem;
+    }
+    .user-pic{
+      float: left;
+      display: block;
+      width: 3.5rem;
+      height: 3.5rem;
+      border-radius: 0.2rem;
+
+      /*border:1px solid gray;*/
+    }
+    .ask-content{
+      padding-left: 4rem;
+    }
+    .ask-tag{
+      font-weight: bold;
+      font-size: 0.8rem;
+      color: #000;
+    }
+    .ask-content{
+      font-size: 0.6rem;
+      color: #585858;
+    }
+    .down-like{
+      padding:0.2rem 0.6rem;
+      display: inline-block;
+      border:1px solid #D0D0D0;
+      color: #000;
+      font-weight: bold;
+      font-size: 0.7rem;
+    }
+    .down-time{
+      float: right;
+      font-size: 0.6rem;
+      color: #585858;
+      line-height: 1.5rem;
+    }
+  </style>
+<body>
+  <!-- <header class="bar bar-nav">
+    <h1 class="title">问我&bull;美食</h1>
+  </header> -->
+  <div class="wenwo-content page page-current" id='find'>
+    <header class="bar bar-nav">
+      <h1 class="title">问我&bull;美食</h1>
+    </header>
+    <!-- 这里是所有的信息列表 -->
+    <div class="content">
+      <div class="wenwo-li">
+        <div class="up-content">
+          <img src="http://wx.qlogo.cn/mmopen/zngt7mjBQUdFiaKIVGQbhF3jRURfqibW3EtNPALJewxicdPAyGfyMpZkeHZIW1UXUmjEia3QicdYqickSiaywQcKBUS6GMWSEw67Rry/" alt="" class="user-pic">
+          <div class="ask-content">
+            <div class="ask-tag">鱼火锅</div>
+            <div class="ask-reason">好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃</div>
+          </div>
+        </div>
+        <div class="down-content">
+          <div class="down-like">想吃23</div>
+          <div class="down-time">2016-07-07</div>
+        </div>
+      </div>
+
+      <div class="wenwo-li">
+        <div class="up-content">
+          <img src="http://wx.qlogo.cn/mmopen/zngt7mjBQUdFiaKIVGQbhF3jRURfqibW3EtNPALJewxicdPAyGfyMpZkeHZIW1UXUmjEia3QicdYqickSiaywQcKBUS6GMWSEw67Rry/" alt="" class="user-pic">
+          <div class="ask-content">
+            <div class="ask-tag">鱼火锅</div>
+            <div class="ask-reason">好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃</div>
+          </div>
+        </div>
+        <div class="down-content">
+          <div class="down-like">想吃23</div>
+          <div class="down-time">2016-07-07</div>
+        </div>
+      </div>
+
+      <div class="wenwo-li">
+        <div class="up-content">
+          <img src="http://wx.qlogo.cn/mmopen/zngt7mjBQUdFiaKIVGQbhF3jRURfqibW3EtNPALJewxicdPAyGfyMpZkeHZIW1UXUmjEia3QicdYqickSiaywQcKBUS6GMWSEw67Rry/" alt="" class="user-pic">
+          <div class="ask-content">
+            <div class="ask-tag">鱼火锅</div>
+            <div class="ask-reason">好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃</div>
+          </div>
+        </div>
+        <div class="down-content">
+          <div class="down-like">想吃23</div>
+          <div class="down-time">2016-07-07</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 这里是所有的信息列表 -->
+  <div class="wenwo-content page" id="like">
+    <header class="bar bar-nav">
+      <h1 class="title">喜欢</h1>
+    </header>
+    <div class="content">
+      <div class="wenwo-li">
+        <div class="up-content">
+          <img src="http://wx.qlogo.cn/mmopen/zngt7mjBQUdFiaKIVGQbhF3jRURfqibW3EtNPALJewxicdPAyGfyMpZkeHZIW1UXUmjEia3QicdYqickSiaywQcKBUS6GMWSEw67Rry/" alt="" class="user-pic">
+          <div class="ask-content">
+            <div class="ask-tag">鱼火锅</div>
+            <div class="ask-reason">好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃</div>
+          </div>
+        </div>
+        <div class="down-content">
+          <div class="down-like">想吃23</div>
+          <div class="down-time">2016-07-07</div>
+        </div>
+      </div>
+
+      <div class="wenwo-li">
+        <div class="up-content">
+          <img src="http://wx.qlogo.cn/mmopen/zngt7mjBQUdFiaKIVGQbhF3jRURfqibW3EtNPALJewxicdPAyGfyMpZkeHZIW1UXUmjEia3QicdYqickSiaywQcKBUS6GMWSEw67Rry/" alt="" class="user-pic">
+          <div class="ask-content">
+            <div class="ask-tag">鱼火锅</div>
+            <div class="ask-reason">好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃</div>
+          </div>
+        </div>
+        <div class="down-content">
+          <div class="down-like">想吃23</div>
+          <div class="down-time">2016-07-07</div>
+        </div>
+      </div>
+
+      <div class="wenwo-li">
+        <div class="up-content">
+          <img src="http://wx.qlogo.cn/mmopen/zngt7mjBQUdFiaKIVGQbhF3jRURfqibW3EtNPALJewxicdPAyGfyMpZkeHZIW1UXUmjEia3QicdYqickSiaywQcKBUS6GMWSEw67Rry/" alt="" class="user-pic">
+          <div class="ask-content">
+            <div class="ask-tag">鱼火锅</div>
+            <div class="ask-reason">好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃</div>
+          </div>
+        </div>
+        <div class="down-content">
+          <div class="down-like">想吃23</div>
+          <div class="down-time">2016-07-07</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="bar bar-tab">
+    <a class="tab-item find active" data-type="find" href="#">
+      <span class="icon icon-home"></span>
+      <span class="tab-label">发现</span>
+    </a>
+    <a class="tab-item edit" data-type="edit" href="#">
+      <span class="icon icon-edit"></span>
+      <span class="tab-label">发布</span>
+    </a>
+    <a class="tab-item like" data-type="like" href="#">
+      <span class="icon icon-emoji"></span>
+      <span class="tab-label">喜欢</span>
+    </a>
+  </nav>
+</body>
+<script type='text/javascript' src='/js/zepto.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='/js/sm.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='/js/common.js' charset='utf-8'></script>
+<script>
+  function init(){
+    var url = window.location.hash;
+      if(url){
+        url = url.split("#")[1];
+      }else{
+        url = "find";
+      }
+      console.log(url);
+      $(".tab-item").removeClass("active");
+      $("."+url).addClass("active");
+  }
+  init();
+
+  $(".tab-item").on("click",function(){
+    // console.log($());
+    var type = $(this).attr("data-type");
+    console.log(type);
+    $(".tab-item").removeClass("active");
+    $(this).addClass("active");
+    if(type == "like"){
+      $.router.load("#like"); 
+    }else if(type == "find"){
+      $.router.load("#find");
+      // $.router.back();
+    }else if(type == "edit"){
+      $.router.load("/edit?username=573c1eb271cfe4006c18274f");
+    }
+  })
+
+  $(".wenwo-li").on("click",function(){
+    $.router.load("/detail");
+  })
+  // $(".edit").on("click",function(){
+  //   $.router.load("/todos/send/test?username=573c1eb271cfe4006c18274f");
+  // })
+</script>
+</html>

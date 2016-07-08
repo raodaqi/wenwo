@@ -7965,7 +7965,6 @@ Device/OS Detection
         //这里的 以 push 开头的是私有事件，不要用
         $(window).on('pageLoadStart', function() {
             $.showIndicator();
-
         });
         $(window).on('pageAnimationStart', function() {
             $.hideIndicator();

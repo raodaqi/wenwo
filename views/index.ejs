@@ -1092,7 +1092,7 @@
       </div>
     </div>
 
-    <div class="wenwo-get button">偷看</div>
+    <div class="wenwo-get button">购买</div>
   </div>
   <nav class="bar-tab" id="ask-detail-cancel" style="display:none">
     <div class="iconfont icon-x ask-detail-cancel"></div>
@@ -1497,11 +1497,11 @@
       $(".wenwo-get").attr("data-askId",askId);
       console.log(price.replace(/\s+/g,""));
       if(isfree == "1" || price.replace(/\s+/g,"")=="0.00"){
-        $(".wenwo-get").text("珍藏");
+        $(".wenwo-get").text("收藏");
         $(".votebar").show();
         $("#address-content").show();
       }else{
-        $(".wenwo-get").text("偷看");
+        $(".wenwo-get").text("购买");
       }
 
 
@@ -2670,11 +2670,11 @@
     //   $(".wenwo-get").attr("data-askId",askId);
     //   console.log(price.replace(/\s+/g,""));
     //   if(isfree == "1" || price.replace(/\s+/g,"")=="0.00"){
-    //     $(".wenwo-get").text("珍藏");
+    //     $(".wenwo-get").text("收藏");
     //     $(".votebar").show();
     //     $("#address-content").show();
     //   }else{
-    //     $(".wenwo-get").text("偷看");
+    //     $(".wenwo-get").text("购买");
     //   }
 
     //   //判断是否点赞过

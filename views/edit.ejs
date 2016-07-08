@@ -1,0 +1,2031 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+  <meta charset='utf-8'>
+    <!-- <meta name='viewport', content='width=device-width, initial-scale=1.0'> -->
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name='description', content='wenwo,问我,当地人,旅游,攻略,信息,分享'>
+    <meta name='author', content='raodqi'>
+    <link rel="icon" type="image/x-icon" href="/img/logo.png" media="screen">
+    <title>问我——像个当地人一样去旅游</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1462906314_8605804.css">
+    <link rel="stylesheet" href="/css/sm.min.css">
+    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=cb84c659c88a7cc83b935a009b3a9cfd&plugin=AMap.Geocoder"></script>
+    <script src="/js/jweixin-1.0.0.js"></script>
+  </head>
+  <style>
+    body{
+      padding:0;
+      margin:0;
+    }
+    .type-item{
+      display: inline-block;
+      padding: 0px 20px;
+      /*color: #FFC222;*/
+      /*background-color: #FFDC7F;*/
+      height: 30px;
+      line-height: 30px;
+      font-weight: 400;
+      font-size: 15px;
+      text-align: center;
+      margin: 0 .5rem .2rem 0;
+      border-radius: 3px;
+      border:1px solid #393e49;
+    }
+    .next{
+      float: right;
+    }
+    .theme-ul{
+      text-align: center;
+      width: 240px;
+      height: 300px;
+      box-sizing: border-box;
+      margin:0 auto; 
+    }
+    .theme-li{
+      /*display: inline-block;*/
+      float: left;
+      text-align: center;
+      /*margin: 10px;*/
+      width: 120px;
+      height: 100px;
+      /*line-height: 100px;*/
+      /*border-radius: 50%;*/
+      border:1px solid #FFC222;
+    }
+    .theme-li.active{
+      background-color: #FFC222;
+      color:white;
+    }
+    .recommend-reason,.tag-content,.result-detail,.add-content,.price-content{
+      padding: 10px;
+      margin-top: 20px;
+    }
+    #reason,#detail,.de-show{
+      width: 100%;
+      box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+      border: 1px solid #ccc;
+      min-height: 100px;
+      resize:none;
+      border-radius:3px;
+      padding:5px 10px;
+    }
+    #reason,#detail,.de-show{
+      background-color: #efc553;
+      height: 15rem;
+      border-radius: 0.5rem;
+      padding:0.8rem 1rem;
+      font-size: 0.75rem;
+      color:#FFF;
+    }
+    #reason{
+      height: 10rem;
+      font-size: 0.75rem;
+    }
+    input:-ms-input-placeholder,
+    textarea:-ms-input-placeholder {
+        color: gray;
+    }
+
+    input::-webkit-input-placeholder,
+    textarea::-webkit-input-placeholder {
+        color: gray;
+    }
+
+    #detail,.de-show{
+      height: 150px;
+      word-break:break-all;
+      /*overflow: scroll;*/
+    }
+    .de-show{
+      overflow: scroll;
+    }
+    .ww-typeHelper,.add-search {
+        position: relative;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        display: block;
+        color: #555;
+        vertical-align: middle;
+        border-radius: 3px;
+        max-width: 100%;
+        cursor: text;
+        width: 100%;
+        font-size: 14px;
+        line-height: 1.5;
+        padding: 6px 12px;
+    }
+    .add-search{
+      background-color: #efc553;
+      padding:2px 3px;
+    }
+    .ww-typeHelper{
+      background-color: #efc553;
+      height: 6rem;
+      border-radius: 0.25rem;
+    }
+    .ww-typeHelper-input,.search-input{
+        border: none;
+        box-shadow: none;
+        outline: none;
+        background-color: transparent;
+        padding: 0;
+        margin: 0;
+        text-transform: lowercase;
+        width: 6rem;
+        max-width: 100%;
+        padding-left: 30px;
+    }
+    .search-input{
+      background-color: #fff;
+      border-radius: 0.25rem;
+      height: 30px;
+      padding-left: 10px;
+    }
+    .ww-typeHelper-input{
+      background-color: #FFF;
+      border-radius: 2px;
+      height: 1.5rem;
+      /*position: absolute;
+      bottom:5px;
+      left:5px;
+      box-sizing: border-box;
+      margin-right: 50px;
+      border-radius: 2px;
+      height: 1rem;*/
+      /*float: right;*/
+    }
+    .ww-typeHelper-left{
+      width: 100%;
+      position: absolute;
+      bottom:5px;
+      left:5px;
+      box-sizing: border-box;
+      padding-right: 3rem;
+      height: 1.5rem;
+    }
+    .ww_typeHelper-button{
+      background-color: #e5a41b;
+      position: absolute;
+      bottom:5px;
+      right:5px;
+      width: 30px;
+      text-align: center;
+      height: 1.5rem;
+      line-height: 1.5rem;
+      color: #FFF;
+      border-radius: 0.15rem;
+      width: 2.3rem;
+      font-size: 0.5rem;
+    }
+    .techTags {
+        /*display: none;*/
+        width: 100%;
+        padding: 6px 0.1rem;
+        margin-bottom: 21px;
+        /*background-color: #fff;*/
+        /*border: 1px solid transparent;*/
+        border-radius: 3px;
+        /*box-shadow: 0 1px 1px rgba(0,0,0,.05);*/
+        padding-bottom: 21px;
+        margin-top: 0.5rem;
+    }
+    .hidden-content{
+      margin-top: 10px;
+      text-align: center;
+    }
+    .hidden-content .button{
+      width: 100px;
+      margin: 0 auto;
+      height: 30px;
+      line-height: 30px;
+    }
+    .hidden-text{
+      color: red;
+    }
+    .theme-content-block{
+      text-align: center;
+    }
+    .theme-content{
+      text-align: center;
+      margin: 20px auto;
+      width: 100px;
+      height: 100px;
+      line-height: 100px;
+      border-radius: 50%;
+      border: 1px solid #FFC222;
+      display: inline-block;
+    }
+    .search-input{
+      width: 100%;
+    }
+    #container{
+      width: 100%;
+      /*height: 300px;*/
+      min-height: 350px;
+      height: 60%;
+      border: 1px solid #ccc;
+      box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    }
+    .amap-sug-result{
+      z-index: 9999;
+    }
+    .list-block{
+      /*background: white;*/
+      background-color: #efc553;
+      border-radius: 5px;
+    }
+    .list-block .item-inner{
+      border-radius: 5px;
+    }
+    .right-icon{
+      float: right;
+    }
+    #price-picker{
+    }
+    .theme-hidden{
+      display: none;
+    }
+    .card-cover{
+      height:300px;
+    }
+    .container-hidden{
+      position: absolute;
+      z-index: 100;
+      height: 100%;
+      width: 100%;
+      top: 0px;
+      left: 0px;
+    }
+    .send-button{
+      margin-top: 50px;
+      background: none;
+    }
+    .header-title{
+      color:#393e49;
+      font-weight: bolder;
+      position: absolute;
+      background-color: #efc553;
+      left: 50%;
+      top:5px;
+      width: 50px;
+      margin-left: -25px;
+      text-align: center;
+    }
+    .page-current{
+      /*margin-top: 30px;*/
+    }
+    /*.bar{
+      background-color: #efc553;
+    }*/
+    .card{
+      background-color: #F3D27B;
+    }
+    .card-header{
+      min-height:2rem;
+      font-weight: bold;
+      border-bottom: 1px solid #BBA05F;
+      padding:0rem .75rem;
+    }
+    .bar .button-link{
+      color:#393e49;
+    }
+    .bar-footer-nav{
+      bottom:0;
+    }
+    #theme1,#theme3,#theme5{
+      border-right: 0;
+    }
+    #theme1,#theme2,#theme3,#theme4{
+      border-bottom: 0;
+    }
+    .theme-li{
+      border:0;
+    }
+    #theme1,.theme1{
+      background-color: #FDB8AF;
+    }
+    #theme2,.theme2{
+      background-color: #DFECA1;
+    }
+    #theme3,.theme3{
+      background-color: #ADF5EC;
+    }
+    #theme4,.theme4{
+      background-color: #E0C1F3;
+    }
+    #theme5,.theme5{
+      background-color: #FFD99C;
+    }
+    #theme6,.theme6{
+      background-color: #B6C6FE;
+    }
+    .theme-li img{
+      width: 40px;
+      height: 40px;
+      margin-top:30px;
+    }
+    .list-block .item-link .item-inner{
+      background-image: none;
+      display: block;
+      margin-left: 1.25rem;
+      overflow-x:hidden !important;
+      white-space: nowrap;
+      line-height: 29px;
+      text-overflow: ellipsis;
+    }
+    .item-left{
+      position: absolute;
+      margin-top: -2px;
+    }
+    .item-left .iconfont{
+      font-size: 20px;
+    }
+    .item-right{
+      position: absolute;
+      right:10px;
+    }
+    .list-block{
+      background-color: #F3D27B;
+    }
+    .send-button-a{
+      position: absolute;
+      right: 5px;
+    }
+    .page{
+      background-color: white;
+    }
+    .theme-list-content{
+      padding: 0 2%;
+      text-align: center;
+      height: 50px;
+      /*width: 96%;*/
+      /*width: 300px;*/
+      margin:30px auto;
+      /*width: 100%;*/
+      /*box-sizing: border-box; */
+    }
+    .theme-list{
+      width: 16.666%;
+      display: block;
+      float: left;
+      text-align: center;
+    }
+    .theme-list img{
+      width: 70%;
+    }
+    .theme-list-active img{
+      width: 85%;
+      margin-top: -7px;
+    }
+    .theme-list-content .theme-down-text{
+      font-size: 13px;
+      font-weight: bold;
+      display: none;
+    }
+    .theme-list-active .theme-down {
+      display: none;
+    }
+    .theme-down{
+      height: 3px;
+      width: 70%;
+      margin:5px auto; 
+    }
+    .theme-list-active .theme-down-text{
+      display: block;
+    }
+    .theme-li-active img{
+      width: 50px;
+      height: 50px;
+      margin-top: 15px;
+    }
+    .theme-li-text{
+      display: none;
+    }
+    .theme-li-active .theme-li-text{
+      font-size: 15px;
+      font-weight: bold;
+      display: block;
+      color: #000;
+    }
+    .ww_typeHelper-input-left{
+      position: absolute;
+      color: #efc553;
+      font-size: 25px;
+      top:-6px;
+      left:5px;
+    }
+    .help{
+      display: block;
+      float: left;
+      font-size: 25px;
+      color: #efc553;
+      line-height: 30px;
+      margin-left: 20px;
+    }
+    .button-start{
+      color: #3d4145 !important;
+      background-color: #efc553 !important;
+    }
+    .help-content{
+      padding: 10px;
+      font-size: 13px;
+      color: #efc553;
+      display: none;
+    }
+    #detail-content .card-content-inner,#reason-content .card-content-inner{
+      word-break:break-all;
+    }
+    .right-hidden{
+      margin-right: 5px !important;
+    }
+    /*.geolocation-position{
+      width: 40px;
+      height: 40px;
+    }*/
+    .geolocation-position img{
+      width: 40px;
+      height: 40px;
+    }
+    /*.bar{
+      height: 1.5rem;
+    }*/
+    .bar-footer-nav:before{
+      content: '';
+      /*width: 2px;*/
+      border-left: 1px solid #969696;
+      height: 44px;
+      position: absolute;
+      left:50%;
+      z-index: 2;
+    }
+  }
+  </style>
+  <body>
+     <!-- <div class="header-label">
+      <div class="header-cancel iconfont icon-zuo"></div>
+      <div class="header-title">
+        发表
+      </div>
+    </div> -->
+    <div class="page page-current" id='router'>
+      <header class="bar bar-nav">
+        <a class="button button-link button-nav pull-left" href="food?username=573b0e3df38c8400673bb48d">
+          <!-- <a class="button button-link button-nav pull-left"> -->
+            <span class="icon icon-left"></span>
+        </a>
+        <h1 class='title'>发布</h1>
+      </header>
+      <div class="content">
+        <div class="theme-content-block">
+           <div class="card" id="tag-content" data-href="router2">
+              <div class="card-header">标签</div>
+              <div class="card-content">
+                <div class="card-content-inner">
+                  <!-- <span class="type-item">火锅</span>
+                  <span class="type-item">冒菜</span> -->
+                </div>
+              </div>
+            </div>
+
+            <div class="card" id="reason-content" data-href="router3">
+              <div class="card-header">推荐理由</div>
+              <div class="card-content">
+                <div class="card-content-inner">
+                  请填写推荐理由
+                </div>
+              </div>
+            </div>
+
+            <div class="card" id="detail-content" data-href="router4">
+              <div class="card-header">详情</div>
+              <div class="card-content">
+                <div class="card-content-inner">
+                  请描述详情
+                </div>
+              </div>
+            </div>
+
+             <!-- <div class="content-block-title">地图标注</div>
+              <div class="card demo-card-header-pic" data-href="router5">
+                <div valign="bottom" class="card-header color-white no-border no-padding">
+                  <div class="container-hidden"></div>
+                  <div class='card-cover' id="container-show"></div>
+                </div>
+              </div> -->
+
+              <div class="card" id="address-content" data-href="router5">
+                <div class="card-content">
+                  <div class="list-block">
+                    <ul>
+                      <li>
+                        <a class="item-link item-content">
+                          <div class="item-media item-left"><i class="iconfont icon-dingwei"></i></div>
+                          <div class="item-media item-right"><i class="iconfont icon-youjiantou"></i></div>
+                          <div class="item-inner">
+                            <div class="item-title ">成都信息工程大学</div>
+                          </div>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card" id="price-content" data-href="router6">
+                <div class="card-content">
+                  <div class="list-block">
+                    <ul>
+                      <li>
+                        <a class="item-link item-content">
+                          <div class="item-media item-left"><i class="iconfont icon-qian"></i></div>
+                          <div class="item-media item-right"><i class="iconfont icon-youjiantou"></i></div>
+                          <div class="item-inner">
+                            <div class="item-title">信息价格</div>
+                          </div>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- <div class="card" id="price-content" data-href="router6">
+                <div class="card-header">价格</div>
+                <div class="card-content">
+                  <div class="card-content-inner">￥0.2</div>
+                </div>
+              </div>
+            
+              <div class="card">
+                <div class="send-button">
+                  <a href="#" class="button button-big button-fill button-success send-button-a">提交</a>
+                </div>
+              </div> -->
+            
+
+        </div>
+      </div>
+    </div>
+    <!-- 主题筛选 -->
+    <div class="page" id='router1'>
+      <header class="bar bar-nav">
+        <a class="button button-link button-nav pull-left" href="#router">
+          <span class="icon icon-left"></span>
+        </a>
+        <h1 class='title'>主题</h1>
+      </header>
+      <div class="content">
+        <div class="content-block">
+          <div class="theme-ul">
+            <div class="theme-li" id="theme1" data-type="1">
+              <img src="/img/themes-02.png">
+              <div class="theme-li-text">美食</div>
+            </div>
+            <div class="theme-li" id="theme2" data-type="2">
+              <img src="/img/themes-03.png">
+              <div class="theme-li-text">住宿</div>
+            </div>
+            <div class="theme-li" id="theme3" data-type="3">
+              <img src="/img/themes-04.png">
+              <div class="theme-li-text">出行</div>
+            </div>
+            <div class="theme-li" id="theme4" data-type="4">
+              <img src="/img/themes-05.png">
+              <div class="theme-li-text">购物</div>
+            </div>
+            <div class="theme-li" id="theme5" data-type="5">
+              <img src="/img/themes-06.png">
+              <div class="theme-li-text">游玩</div>
+            </div>
+            <div class="theme-li" id="theme6" data-type="6">
+              <img src="/img/themes-07.png">
+              <div class="theme-li-text">防坑</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="bar bar-footer-nav">
+        <a class="button button-link button-nav pull-left" href="#router">
+          <span class="icon icon-left"></span>
+          预览
+        </a>
+        <a class="button button-link button-nav pull-right next" href="#router2">
+          下一步
+          <span class="icon icon-right"></span>
+        </a>
+      </footer>
+    </div>
+    <!-- 标签填写 -->
+    <div class="page" id='router2'>
+      <header class="bar bar-nav">
+        <!-- <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
+          <span class="icon icon-left"></span>
+          返回
+        </a> -->
+        <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
+          <span class="icon icon-left"></span>
+        </a>
+
+        <h1 class='title'>标签</h1>
+      </header>
+      <div class="content">
+        <div class="tag-content">
+          <!-- <textarea name="tag" id="tag"></textarea> -->
+          <div class="ww-typeHelper">
+            <div class="ww-typeHelper-left">
+              <div class="ww_typeHelper-input-left iconfont icon-bianji"></div>
+              <input type="text" data-role="ww_typeHelper-input" class="ww-typeHelper-input" placeholder="" style="width: 20em;">
+            </div>
+            <div class="ww_typeHelper-button">确定</div>          
+          </div>
+          <div role="tabpanel" class="techTags panel-default techTags-panel" data-tech="">
+            <div class="tag-ul">
+              <div class="tag-li eat-ul">
+                <span class="type-item">火锅</span>
+              </div>
+              
+            </div>
+            
+          </div>
+        </div>
+      </div>
+
+      <footer class="bar bar-footer-nav">
+        <a class="button button-link button-nav pull-left" href="#router">
+          <span class="icon icon-left"></span>
+          预览
+        </a>
+        <a class="button button-link button-nav pull-right next" href="#router3">
+          下一步
+          <span class="icon icon-right"></span>
+        </a>
+      </footer>
+    </div>
+    <!-- 推荐理由填写 -->
+    <div class="page" id='router3'>
+      <header class="bar bar-nav">
+        <!-- <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
+          <span class="icon icon-left"></span>
+          返回
+        </a> -->
+        <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
+          <span class="icon icon-left"></span>
+        </a>
+        <h1 class='title'>推荐理由</h1>
+      </header>
+      <div class="content">
+        <div class="recommend-reason">
+          <textarea name="reason" id="reason" placeholder="说说为什么？"></textarea>
+        </div>
+      </div>
+
+      <footer class="bar bar-footer-nav">
+        <a class="button button-link button-nav pull-left" href="#router">
+          <span class="icon icon-left"></span>
+          预览
+        </a>
+        <a class="button button-link button-nav pull-right next" href="#router4">
+          下一步
+          <span class="icon icon-right"></span>
+        </a>
+      </footer>
+    </div>
+    <!-- 信息详情填写 -->
+    <div class="page" id='router4'>
+      <header class="bar bar-nav">
+        <!-- <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
+          <span class="icon icon-left"></span>
+          返回
+        </a> -->
+        <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
+          <span class="icon icon-left"></span>
+        </a>
+        <h1 class='title'>信息详情</h1>
+        <a class="button button-link button-nav pull-right button-start right-hidden">
+          隐藏
+        </a>
+      </header>
+      <div class="content">
+        <!-- <div class="hidden-content row">
+          <div class="col-50">
+            <a href="#" class="button  button-fill button-success button-start">隐藏开始</a>
+          </div>
+          <div class="col-50">
+            <a href="#" class="button  button-fill button-success button-end">隐藏结束</a>
+          </div>
+        </div> -->
+        <div class="result-detail">
+          <textarea name="detail" id="detail" placeholder="1.描述你分享的信息的详细情况
+
+2.分享的内容默认是显示的
+
+3.隐藏的内容通过“##隐藏内容##”方式隐藏"></textarea>
+        <div class="de-show"></div>
+
+        </div>
+        <div class="other-content">
+          <div class="help iconfont icon-bangzhu"></div>
+          <div class="hidden-content">
+            <a href="#" class="button  button-fill button-success button-start">隐藏</a>
+          </div>
+        </div>
+        <div class="help-content">描述你分享的信息的详细情况,分享的内容默认是显示的,隐藏的内容通过“##隐藏内容##”方式隐藏.</div>
+        
+      </div>
+
+      <footer class="bar bar-footer-nav">
+        <a class="button button-link button-nav pull-left" href="#router">
+          <span class="icon icon-left"></span>
+          预览
+        </a>
+        <a class="button button-link button-nav pull-right next" href="#router5">
+          下一步
+          <span class="icon icon-right"></span>
+        </a>
+      </footer>
+    </div>
+    <!-- 地点标注 -->
+     <div class="page" id='router5'>
+      <header class="bar bar-nav">
+        <!-- <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
+          <span class="icon icon-left"></span>
+          返回
+        </a> -->
+        <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
+          <span class="icon icon-left"></span>
+        </a>
+        <h1 class='title'>地点标注</h1>
+      </header>
+      <div class="content">
+        <div class="add-content">
+          <div class="add-search">
+            <input type="text" class="search-input" id="address" name="address" placeholder="请输入你要标注的地址">          
+          </div>
+          <div id="container"></div>
+        </div>
+      </div>
+      <footer class="bar bar-footer-nav">
+        <a class="button button-link button-nav pull-left" href="#router">
+          <span class="icon icon-left"></span>
+          预览
+        </a>
+        <a class="button button-link button-nav pull-right next" href="#router6">
+          下一步
+          <span class="icon icon-right"></span>
+        </a>
+      </footer>
+    </div>
+    <!-- 价格填写 -->
+     <div class="page" id='router6'>
+      <header class="bar bar-nav">
+        <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
+          <span class="icon icon-left"></span>
+        </a>
+        <h1 class='title'>价格</h1>
+      </header>
+      <div class="content">
+        <div class="price-content">
+          <!-- ￥<input type="text" id='price-picker' value="0.00" /> -->
+          <div class="list-block">
+            <div class="item-content">
+              <div class="item-inner">
+              <!-- <div class="item-title label">价格<div class="right-icon">￥</div></div> -->
+                ￥
+                <div class="item-input">
+                  <input type="text" id='price-picker' value="0 . 0 0" />          
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="send-button">
+            <a href="#" class="button button-big button-fill button-success send-button-a">提交</a>
+          </div> -->
+        </div>
+      </div>
+      <footer class="bar bar-footer-nav">
+        <a class="button button-link button-nav pull-left" href="#router">
+          <span class="icon icon-left"></span>
+          预览
+        </a>
+        <a class="button button-link button-nav pull-right next" href="#router">
+          完成
+          <span class="icon icon-right"></span>
+        </a>
+      </footer>
+
+    </div>
+
+  </body>
+  <script type='text/javascript' src='/js/zepto.min.js' charset='utf-8'></script>
+  <script type='text/javascript' src='/js/sm.min.js' charset='utf-8'></script>
+  <script type="text/javascript" src="/js/common.js"></script>
+  <script type="text/javascript" src="/js/map.js"></script>
+  <script type="text/javascript" src="/js/wxlocation.js"></script>
+  <script> 
+    $(".tab-item").on("click",function(){
+      // console.log($());
+      var type = $(this).attr("data-type");
+      console.log(type);
+      $(".tab-item").removeClass("active");
+      $(this).addClass("active");
+      if(type == "like"){
+        $.router.load("/food?username=573b0e3df38c8400673bb48d#like"); 
+      }else if(type == "find"){
+        $.router.load("/food?username=573b0e3df38c8400673bb48d");
+        // $.router.back();
+      }
+    })
+  </script>
+  <script>
+
+  initLocation();
+  window.onload = function() {
+    map.plugin(["AMap.ToolBar"], function() {
+      map.addControl(new AMap.ToolBar());
+    });
+    $.hidePreloader();
+  }
+
+  //初始化,异步获取标签
+  function getTag(themeType){
+
+    $.showPreloader("正在加载");
+
+    var data = {
+      type   :  themeType,
+      size   :  10
+    }
+    $.ajax({
+      type : "GET",
+      data: data,
+      dataType: "json",
+      url : "/ask/gettag",
+      success: function(result){
+        $.hidePreloader();
+        console.log(result);
+        if(result.code == 200){
+          var li = ''
+          for(var i in result.data){
+            var exit = 0;
+
+            $.each($(".ww-typeHelper .type-item"),function(j,v){
+              // console.log(result.data[i].tagName);
+              // console.log($(v).text());
+              if(result.data[i].tagName == $(v).text()){
+                exit = 1;
+              }
+            })
+            console.log(exit);
+            if(!exit && result.data[i].tagName){
+              li += '<span class="type-item">'+result.data[i].tagName+'</span>';
+            }
+            
+          }
+          $(".tag-li").empty();
+          $(".tag-li").append(li);
+        }
+        
+      },
+      error:function(error){
+        $.hidePreloader();
+        console.log(error);
+      }
+    })
+  }
+
+  //获取二级标签
+  $("#tag-content,#router1 .next").on("click",function(){
+    console.log(localStorage.type);
+    var LStype = localStorage.type;
+    if(LStype){
+      getTag(LStype);
+    }
+  })
+
+
+    var marker;
+    //获取地址
+    function getAddress(lnglatXY,callback){
+      var geocoder = new AMap.Geocoder({
+            radius: 1000,
+            extensions: "all"
+        });        
+        geocoder.getAddress(lnglatXY, function(status, result) {
+            if (status === 'complete' && result.info === 'OK') {
+              var address = result.regeocode; //返回地址描述
+              console.log(address);
+              callback.success(address);
+              // console.log(address);
+
+              // if(type == "detail"){
+              //   console.log(address.formattedAddress);
+              //   return address.formattedAddress;
+              // }
+              var address = {
+                province : address.addressComponent.province,
+                city     : address.addressComponent.city,
+                district : address.addressComponent.district
+              }
+              // console.log(address);
+              // return address;
+            }
+        }); 
+    }
+
+    //
+
+    //初始化localStorage数据
+    function initLocationData(){
+
+      //初始化标签
+      console.log(localStorage.tag);
+      if(localStorage.tag){
+        tag = JSON.parse(localStorage.tag);
+        console.log(tag);
+        var spanContent = '';
+        for(var i in tag){
+          console.log(tag[i]);
+          var spanContent = spanContent + '<span class="type-item">'+tag[i]+'</span>';
+        }
+        // $(".ww-typeHelper-input").before(spanContent);
+        $(".ww-typeHelper-left").before(spanContent);
+        $("#tag-content .card-content-inner").append(spanContent);
+      }
+
+      //初始化推荐理由
+      console.log(localStorage.reason);
+      if(localStorage.reason){
+        $("#reason").val(localStorage.reason);
+        $("#reason-content .card-content-inner").text(localStorage.reason);
+      }
+
+      //初始化信息详情
+      console.log(localStorage.detail);
+      if(localStorage.detail){
+        $("#detail").val(localStorage.detail);
+
+        var str = {};
+        str = localStorage.detail.split("##");
+        var show = '';
+        var hidden = '';
+        var detail = ''
+        for(var i = 0; i < str.length; i++){
+          if(i%2){
+            var starLen = ''
+            for(var j = 0; j < str[i].length; j++){
+              starLen += '*';
+            }
+            detail += '<span class="hidden-text">'+starLen+'</span>';
+          }else{
+            detail += str[i];
+          }
+        }
+        $(".de-show").empty();
+        $(".de-show").append(detail);
+
+        $("#detail-content .card-content-inner").text(localStorage.detail);
+        deShow(localStorage.detail);
+      }
+
+      //初始化地址信息
+      if(localStorage.address){
+        $("#address").val(localStorage.address);
+      }
+      //初始化坐标信息
+      console.log(localStorage.lng);
+      console.log(localStorage.lat);
+      var lnglatXY = [localStorage.lng,localStorage.lat];
+      // getAddress(lnglatXY);
+      // var detail = getAddress(lnglatXY,"detail");
+      // console.log(detail);
+
+      if(localStorage.lng && localStorage.lat){
+
+        // address.formattedAddress
+        getAddress(lnglatXY,{
+          success:function(address){
+            var detail = address.formattedAddress;
+            var address = {
+              province : address.addressComponent.province,
+              city     : address.addressComponent.city,
+              district : address.addressComponent.district,
+              township : address.addressComponent.township
+            }
+            // var address = JSON.stringify(address);
+
+            // detail = detail.replace(address[0]+address[1]+address[2]+address[3],"");
+            var replace = ""+address.province+address.city+address.district+address.township+"";
+            detail = detail.replace(replace,"");
+            address.detail = detail;
+            address = JSON.stringify(address);
+            console.log(address);
+            $("#address-content .item-inner").attr("data-address",address);
+            $("#address-content .item-inner").text(detail);
+          }
+        });
+
+        $("#container").attr("data-lng",localStorage.lng);
+        $("#container").attr("data-lat",localStorage.lat);
+
+        //详情地点显示
+        map = new AMap.Map('container', {
+          resizeEnable: true,
+          zoom:15,
+          center: [localStorage.lng,localStorage.lat],
+          buttonOffset: new AMap.Pixel(60, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+          zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+          buttonPosition:'LB'
+        });
+        // var marker = new AMap.Marker({
+        //   map : map,
+        //   tagName:"火锅;超辣的",
+        //   askReason:"味道真的不错",
+        //   askContentShow:"这里的味道真的不错",
+        //   price:0.2,
+        //   createBy:"hanqi",
+        //   createAt:"2016-04-19",
+        //   zoom:15,
+        //   center: [localStorage.lng,localStorage.lat],
+        //   position: [localStorage.lng,localStorage.lat],
+        //   draggable: true,
+        //   cursor: 'move',
+        //   raiseOnDrag: true,
+        //   clickable:true
+        // });
+
+        // mapShow = new AMap.Map('container-show', {
+        //   resizeEnable: true,
+        //   zoom:15,
+        //   center: [localStorage.lng,localStorage.lat]
+        // });
+
+        marker = new AMap.Marker({
+          map : map,
+          position: [localStorage.lng,localStorage.lat],
+          draggable: true,
+          cursor: 'move',
+          raiseOnDrag: true,
+          clickable:true
+        });
+
+        // var markerShow = new AMap.Marker({
+        //   map : mapShow,
+        //   position: [localStorage.lng,localStorage.lat],
+        //   draggable: true,
+        //   cursor: 'move',
+        //   raiseOnDrag: true,
+        //   clickable:true
+        // });
+
+         marker.setMap(map);
+         // markerShow.setMap(mapShow);
+      }else{
+        $("#address-content .item-inner").text("地点");
+      }
+
+      //初始化价格信息
+      console.log(localStorage.price);
+      if(localStorage.price){
+        $("#price-picker").val(localStorage.price);
+        // $("#price-content .card-content-inner").text("￥ "+localStorage.price);
+        $("#price-content .item-inner").text(localStorage.price);
+      }
+    }
+
+    function formatDetail(data){
+      console.log(data);
+      var staus           = data.staus,     //状态
+          askTagStr       = data.askTagStr, //标签
+          reason          = data.askReason, //理由
+          askContentHide  = data.askContentHide,//隐藏详情
+          askContentShow  = data.askContentShow,//隐藏详情
+          lnglatXY        = [data.GeoX,data.GeoY],//坐标
+          lng             = data.GeoX,
+          lat             = data.GeoY,
+          price           = data.askPrice,//价格
+          updatedAt       = data.updatedAt,//发布时间
+          createBy        = data.createBy;//发布者
+
+      //标签
+      var tag = JSON.parse(askTagStr);
+        console.log(tag);
+        var spanContent = '';
+        for(var i in tag){
+          console.log(tag[i]);
+          var spanContent = spanContent + '<span class="type-item">'+tag[i].tag_name+'</span>';
+        }
+        // $("#tag-content .card-content-inner").append(spanContent);
+        $(".ww-typeHelper-left").before(spanContent);
+        $("#tag-content .card-content-inner").append(spanContent);
+
+        //推荐理由
+        $("#reason").val(reason);
+        $("#reason-content .card-content-inner").text(reason);
+
+        //解析详情
+        var show = askContentShow.split("##");
+        var hidden = askContentHide.split("##");
+        var reasonDetail = '';
+        console.log("len:"+hidden.length);
+        for(var i = 0; i < hidden.length;i++){
+          if(hidden[i]){
+            reasonDetail += show[i] + "##"+ hidden[i] + "##";
+          }
+        }
+        if(!hidden.length){
+          reasonDetail = show;
+        }
+
+        $("#detail-content .card-content-inner").text(reasonDetail);
+        $("#detail").val(reasonDetail);
+        deShow(reasonDetail);
+
+        // var str = {};
+        // str = localStorage.detail.split("##");
+        // var show = '';
+        // var hidden = '';
+        // var detail = ''
+        // for(var i = 0; i < str.length; i++){
+        //   if(i%2){
+        //     var starLen = ''
+        //     for(var j = 0; j < str[i].length; j++){
+        //       starLen += '*';
+        //     }
+        //     detail += '<span class="hidden-text">'+starLen+'</span>';
+        //   }else{
+        //     detail += str[i];
+        //   }
+        // }
+        // $(".de-show").empty();
+        // $(".de-show").append(detail);
+
+        // $("#detail-content .card-content-inner").text(localStorage.detail);
+
+        //解析地址
+        getAddress(lnglatXY,{
+          success:function(address){
+            var detail = address.formattedAddress;
+            var address = {
+              province : address.addressComponent.province,
+              city     : address.addressComponent.city,
+              district : address.addressComponent.district,
+              township : address.addressComponent.township
+            }
+            // var address = JSON.stringify(address);
+
+            // detail = detail.replace(address[0]+address[1]+address[2]+address[3],"");
+            var replace = ""+address.province+address.city+address.district+address.township+"";
+            detail = detail.replace(replace,"");
+            address.detail = detail;
+            address = JSON.stringify(address);
+            console.log(address);
+            $("#address-content .item-inner").attr("data-address",address);
+            $("#address-content .item-inner").text(detail);
+          }
+        });
+
+        $("#container").attr("data-lng",lng);
+        $("#container").attr("data-lat",lat);
+
+        //详情地点显示
+        map = new AMap.Map('container', {
+          resizeEnable: true,
+          zoom:15,
+          center: [lng,lat],
+          buttonOffset: new AMap.Pixel(60, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+          zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+          buttonPosition:'LB'
+        });
+        // var marker = new AMap.Marker({
+        //   map : map,
+        //   tagName:"火锅;超辣的",
+        //   askReason:"味道真的不错",
+        //   askContentShow:"这里的味道真的不错",
+        //   price:0.2,
+        //   createBy:"hanqi",
+        //   createAt:"2016-04-19",
+        //   zoom:15,
+        //   center: [localStorage.lng,localStorage.lat],
+        //   position: [localStorage.lng,localStorage.lat],
+        //   draggable: true,
+        //   cursor: 'move',
+        //   raiseOnDrag: true,
+        //   clickable:true
+        // });
+
+        // mapShow = new AMap.Map('container-show', {
+        //   resizeEnable: true,
+        //   zoom:15,
+        //   center: [localStorage.lng,localStorage.lat]
+        // });
+
+        marker = new AMap.Marker({
+          map : map,
+          position: [lng,lat],
+          draggable: true,
+          cursor: 'move',
+          raiseOnDrag: true,
+          clickable:true
+        });
+
+        // var markerShow = new AMap.Marker({
+        //   map : mapShow,
+        //   position: [localStorage.lng,localStorage.lat],
+        //   draggable: true,
+        //   cursor: 'move',
+        //   raiseOnDrag: true,
+        //   clickable:true
+        // });
+
+         marker.setMap(map);
+
+        //价格
+        console.log(price);
+        if(price){
+          $("#price-picker").val(price);
+          // $("#price-content .card-content-inner").text("￥ "+localStorage.price);
+          $("#price-content .item-inner").text(price);
+        }
+       
+  }
+
+    function initEditData(sendAskId){
+      $.ajax({
+        type: "get",
+        url: '/ask/askdetail',
+        data: {ask_id:sendAskId,username:"<%= username %>"},
+        dataType: "json",
+        success : function(result) {
+          console.log(result);
+          if(result.code == 200){
+            formatDetail(result.data);
+          }
+        },
+        error : function(error){
+          $.alert("网络异常");
+        }
+      })
+    }
+
+    var sendType = "<%= type %>";
+    var sendAskId = "<%= askid %>";
+    if(sendType == "edit"){
+      console.log("edit");
+      $("#router .title").text("编辑");
+      initEditData(sendAskId);
+    }else{
+      $("#router .title").text("发布");
+      initLocationData();
+    }
+
+    
+  </script>
+  <script>
+    $(".card,.theme-list-content").on("click",function(){
+      var href = $(this).data("href");
+      if(href){
+        $.router.load("#"+href);
+      }
+    })
+
+    //帮助
+    $(".help").on("click",function(){
+      if($(".help-content").hasClass("help-content-active")){
+        $(".help-content").hide();
+        $(".help-content").removeClass("help-content-active");
+      }else{
+        $(".help-content").show();
+        $(".help-content").addClass("help-content-active");
+      }
+    })
+
+    //选择主题
+    $(".theme-ul .theme-li").on("click",function(){
+      // $(".theme-li").removeClass("active-first");
+      // // console.log($(".active").length);
+      // $(this).addClass("active-first");
+      // if($(this).hasClass("active")){
+      //   $(this).removeClass("active");
+      //   $(".theme1").attr("data-type",$("#"+$(".theme-li.active")[0].id).attr("data-type"));
+      //   $(".theme1").text($("#"+$(".theme-li.active")[0].id).text());
+      //   $(".theme2").addClass("theme-hidden");
+      // }else{
+      //   // $(this).addClass("active");
+      //   if($(".active").length < 2){
+      //     // $(".theme-li.active-first").removeClass("active");
+      //     $(".theme1").attr("data-type",$(this).attr("data-type"));
+      //     $(".theme1").text($(this).text());
+      //     $(this).addClass("active");
+      //     $(".theme2").addClass("theme-hidden");
+      //     if($(".active").length == 2){
+      //       console.log($(".theme-li.active"));
+      //       // $(".theme1").attr("data-type")
+      //       // $(".theme1").attr("data-type",$(this).attr("data-type"));
+      //       // $(".theme1").text($(this).attr("data-text"));
+      //       $(".theme1").attr("data-type",$("#"+$(".theme-li.active")[0].id).attr("data-type"));
+      //       $(".theme1").text($("#"+$(".theme-li.active")[0].id).text());
+      //       $(".theme2").attr("data-type",$("#"+$(".theme-li.active")[1].id).attr("data-type"));
+      //       $(".theme2").text($("#"+$(".theme-li.active")[1].id).text());
+      //       $(".theme2").removeClass("theme-hidden");
+      //     }
+
+      //   }else{
+      //     $.alert("最多只能选择两个主题");
+      //   }
+      var type = $(this).data("type");
+      console.log(type);
+      if($(this).hasClass("theme-li-active")){
+        console.log("remove");
+        $(this).removeClass("theme-li-active");
+        $(".theme-list"+type).removeClass("theme-list-active");
+      }else{
+        var len = $(".theme-li-active").length;
+        if(len < 2){
+          $(this).addClass("theme-li-active");
+          $(".theme-list"+type).addClass("theme-list-active");
+          // if("")
+        }else{
+          $.toast("最多只能选择两个主题");
+        }
+      }
+
+      //获取主题
+        var $_active = $(".theme-li-active");
+        if(!$_active.length){
+
+        }else{
+          if($_active.length == 1){
+            var type = $(".theme-li-active").attr("data-type");
+          }else{
+            var type = $("#"+$(".theme-li-active")[0].id).attr("data-type") + ","+$("#"+$(".theme-li-active")[1].id).attr("data-type");
+          }
+          localStorage["type"] = type;
+        }
+      
+      // }
+      // console.log($(".active").length);
+      // if($(".active").length == 3){
+      //   // $(".theme-li.active-first").removeClass("active");
+      // }
+
+        //获取主题
+        // var $_active = $(".theme-li.active");
+        // if(!$_active.length){
+
+        // }else{
+        //   if($_active.length == 1){
+        //     var type = $(".theme-li.active").attr("data-type");
+        //   }else{
+        //     var type = $("#"+$(".theme-li.active")[0].id).attr("data-type") + ","+$("#"+$(".theme-li.active")[1].id).attr("data-type");
+        //   }
+        //   localStorage["type"] = type;
+        // }
+    })
+
+    function setlocalStorageTag(){
+      //获取填写的tag
+        var $_tag = $(".ww-typeHelper .type-item");
+        var tag = {};
+        if(!$_tag.length){
+          localStorage["tag"] = '';
+        }else{
+          $.each($_tag,function(i,v){
+            tag[i] = $(this).text();
+          })
+          tag = JSON.stringify(tag);
+          localStorage["tag"] = tag;
+        }
+    }
+    //在输入框内添加标签
+    $(".ww-typeHelper-input").on("input change",function(){
+      console.log($(this).val());
+      var text = $(this).val();
+      if(text.indexOf(";")!=-1 || text.indexOf("；")!=-1 || text.indexOf(",")!=-1 || text.indexOf("，")!=-1){
+        var text = text.substr(0,text.length-1);
+        $(".ww-typeHelper-input").val(text);
+        
+        var len = GetLength(text);
+        console.log(len);
+        if(len > 10){
+          $.toast("标签字数过多");
+          return;
+        }
+        var tagNum = $(".tag-content .ww-typeHelper .type-item").length;
+        if(tagNum >= 3){
+          $.toast("最多只能选择三个二级标签");
+          return;
+        }
+
+        console.log(text);
+        var span = '<span class="type-item">'+text+'</span>';
+        // $("this").before(span);
+        $(".ww-typeHelper-left").before(span);
+        $(this).val('');
+        $("#tag-content .card-content-inner").append(span);
+        setlocalStorageTag();
+      }
+    })
+
+    $(".ww_typeHelper-button").on("click",function(){
+
+      console.log($(".ww-typeHelper-input").val());
+      var text = $(".ww-typeHelper-input").val();
+      var len = GetLength(text);
+      console.log(len);
+      if(len > 10){
+        $.toast("标签字数过多");
+        return;
+      }
+      var tagNum = $(".tag-content .ww-typeHelper .type-item").length;
+      if(tagNum >= 3){
+        $.toast("最多只能选择三个二级标签");
+        return;
+      }
+      
+      var span = '<span class="type-item">'+text+'</span>';
+      $(".ww-typeHelper-left").before(span);
+      $(".ww-typeHelper-input").val('');
+      $("#tag-content .card-content-inner").append(span);
+
+      // if(text.indexOf(";")!=-1 || text.indexOf("；")!=-1 || text.indexOf(",")!=-1 || text.indexOf("，")!=-1){
+      //   var text = text.substr(0,text.length-1);
+      //   console.log(text);
+      //   var span = '<span class="type-item">'+text+'</span>';
+      //   // $("this").before(span);
+      //   $(".ww-typeHelper-left").before(span);
+      //   $(this).val('');
+      //   $("#tag-content .card-content-inner").append(span);
+      //   setlocalStorageTag();
+      // }
+    })
+
+    //点击二级标签删除主页二级标签
+    $(".ww-typeHelper").on("click",".type-item",function(){
+      console.log($(".tag-content .ww-typeHelper .type-item").length);
+
+      $(this).remove();
+      var $_this = $(this);
+      var span = '<span class="type-item">'+ $(this).text()+'</span>';
+      $(".tag-li").append(span);
+      $.each($("#tag-content .type-item"),function(i,v){
+        console.log($(v).text());
+        if($(v).text() == $_this.text()){
+          $(v).remove();
+        }
+      })
+      //获取填写的tag
+      setlocalStorageTag();
+    })
+    //点击默认标签添加标签
+    $(".tag-ul").on("click",".type-item",function(){
+      console.log($(".tag-content .ww-typeHelper .type-item").length);
+      var tagNum = $(".tag-content .ww-typeHelper .type-item").length;
+      if(tagNum >= 3){
+        $.toast("最多只能选择三个二级标签");
+        return;
+      }
+
+      var span = '<span class="type-item">'+ $(this).text()+'</span>';
+      $(this).remove();
+      // $(".ww-typeHelper-input").before(span);
+      $(".ww-typeHelper-left").before(span);
+      $("#tag-content .card-content-inner").append(span);
+      //获取填写的tag
+      setlocalStorageTag();
+    })
+
+    //推荐理由输入后显示到主页
+    $("#reason").on("input change",function(){
+      $("#reason-content .card-content-inner").text($(this).val());
+      localStorage["reason"] = $(this).val();
+    })
+
+
+    $(".button-start,.button-end").on("click",function(){
+      var text = $("#detail").val();
+      $("#detail").val(text+"##");
+      $("#detail-content .card-content-inner").text($("#detail").val());
+      localStorage["detail"] = $("#detail").val();
+    })
+
+    function getHideText(){
+      var text = $("#detail").val();
+      // console.log(text.indexOf("##"));
+      var str = {};
+      str = text.split("##");
+      var show = '';
+      var hidden = '';
+      for(var i = 0; i < str.length; i++){
+        if(i%2){
+          hidden += str[i]+"##";
+        }else{
+          if( i == str.length-1){
+            show += str[i];
+          }else{
+            show += str[i]+"##";
+          }
+          
+        }
+      }
+      var textDetail = {
+        show:show,
+        hidden:hidden
+      }
+      return(textDetail);
+    }
+
+
+    //详情输入后显示到主页
+    $("#detail").on("input change",function(){
+      var text = $("#detail").val();
+
+      //显示到主页
+      $("#detail-content .card-content-inner").text(text);
+      deShow(text);
+      // var str = {};
+      // str = text.split("##");
+      // var show = '';
+      // var hidden = '';
+      // var detail = ''
+      // for(var i = 0; i < str.length; i++){
+      //   if(i%2){
+      //     var starLen = ''
+      //     for(var j = 0; j < str[i].length; j++){
+      //       starLen += '*';
+      //     }
+      //     detail += '<span class="hidden-text">'+starLen+'</span>';
+      //   }else{
+      //     detail += str[i];
+      //   }
+      // }
+      // $(".de-show").empty();
+      // $(".de-show").append(detail);
+      localStorage["detail"] = $("#detail").val();
+    })
+
+    // $("#detail").focus(function(){
+    //   $("#detail,.de-show").css("height","100px !important");
+    // });
+
+    // $("#detail").blur(function(){
+    //   $("#detail,.de-show").css("height","150px !important");
+    // });
+
+    //更换价格的时候调用
+    $("#price-picker").on("input change",function(){
+      console.log($(this).val());
+      // $("#price-content .card-content-inner").text("￥ "+$(this).val());
+      $("#price-content .item-inner").text($(this).val());
+      localStorage["price"] = $(this).val();
+    })
+
+
+    //提交所有信息
+    $(".send-button-a").on("click",function(){
+        var type,//主题类型
+            tag = new Array(),//二级标签
+            reason,//推荐理由
+            content_show,//详情显示部分
+            content_hide,//详情隐藏部分
+            lng,//经度
+            lat,//维度
+            isfree = 1,//是否是免费信息
+            price = 0.00;//信息价格
+
+        //获取主题
+        var $_active = $(".theme-li-active");
+        if(!$_active.length){
+          $.toast("你还没有选择主题");
+          // $.router.load("#router1");
+          return;
+        }else{
+          if($_active.length == 1){
+            var type = $(".theme-li-active").attr("data-type");
+          }else{
+            var type = $("#"+$(".theme-li-active")[0].id).attr("data-type") + ","+$("#"+$(".theme-li-active")[1].id).attr("data-type");
+          }
+          console.log(type);
+        }
+
+        //获取填写的tag
+        var $_tag = $(".ww-typeHelper .type-item");
+        if(!$_tag.length){
+          $.toast("你还没有填写标签");
+           return;
+        }else{
+          $.each($_tag,function(i,v){
+            tag[i] = {
+              tag_name: $(this).text()
+            }
+            // $(this).text();
+          })
+          tag = JSON.stringify(tag);
+        }
+
+        //获取推荐理由
+        var reason = $("#reason").val();
+        if(!reason){
+          $.toast("你还没有填写推荐理由");
+          return;
+        }
+
+        //获取详情
+        var detail = $("#detail").val();
+        if(!detail){
+          $.toast("你还没有填写信息详情");
+          return;
+        }else{
+          var detailContent = getHideText();
+          console.log(detailContent);
+          content_show = detailContent.show;
+          content_hide = detailContent.hidden;
+        }
+
+        //获取标注位置的经纬度
+        lng = $("#container").attr("data-lng");
+        lat = $("#container").attr("data-lat");
+        if(!lng || !lat){
+          $.toast("你还没有添加地图标注");
+          return;
+        }
+
+        //获取信息价格
+        price = $("#price-picker").val().replace(/\s+/g,"");
+        console.log(price);
+        if(price == "0 . 0 0" || price == "0.00"){
+          isfree = 1;
+        }else{
+          isfree = 0;
+        }
+        var data = {
+          username     : "<%= username %>",
+          type         : type,
+          tag          : tag,
+          reason       : reason,
+          content_show : content_show,
+          content_hide : content_hide,
+          position     : $("#address-content .item-inner").attr("data-address"),
+          geo_x        : lng,
+          geo_y        : lat,
+          isfree       : isfree,
+          price        : price,
+          addContent   : $("#address-content .item-inner").text()
+        }
+        console.log(data);
+        // return ;
+        //发送请求 url：/ask/sendask
+        $.showPreloader("正在提交");
+
+        if(sendType == "edit"){
+          data["ask_id"] = sendAskId;
+           $.ajax({
+            type : "POST",
+            data: data,
+            dataType: "json",
+            url : "/ask/askedit",
+            success : function(result){
+              console.log(result);
+              if(result.code){
+                $.hidePreloader();
+                $.toast("提交成功");
+                localStorage.clear();
+                $.showPreloader("正在跳转");
+                // window.location.href="/more/information-presentation/test/"+sendAskId+"?username="+"<%=username%>";
+                window.location.href="/more/information-presentation/"+sendAskId;
+              }else{
+                $.hidePreloader();
+                $.toast(result.message);
+              }
+            },
+            error: function(error){
+              // alert(error);
+              $.alert(error);
+            }
+          });
+        }else{
+          $.ajax({
+            type : "POST",
+            data: data,
+            dataType: "json",
+            url : "/ask/sendask",
+            success : function(result){
+              console.log(result);
+              if(result.code == 200){
+                $.hidePreloader();
+                $.toast("提交成功");
+                localStorage.clear();
+                var askId = result.data.objectId;
+
+                $.showPreloader("正在跳转");
+                // window.location.href="/more/information-presentation/test/"+askId+"?username="+"<%=username%>";
+                window.location.href="/more/information-presentation/"+askId;
+              }else{
+                $.hidePreloader();
+                $.toast(result.message);
+              }
+            },
+            error: function(error){
+              // alert(error);
+              $.alert(error);
+            }
+          });
+        }
+        // $.ajax({
+        //   type : "POST",
+        //   data: data,
+        //   dataType: "json",
+        //   url : "/ask/sendask",
+        //   success : function(result){
+        //     console.log(result);
+        //     if(result.code){
+        //       $.hidePreloader();
+        //       $.toast("提交成功");
+        //       localStorage.clear();
+        //     }else{
+        //       $.hidePreloader();
+        //       $.toast(result.message);
+        //     }
+        //   },
+        //   error: function(error){
+        //     // alert(error);
+        //     $.alert(error);
+        //   }
+        // });
+
+    })
+
+    //sui框架picker引用（价格选择）
+    $("#price-picker").picker({
+      toolbarTemplate: '<header class="bar bar-nav">\
+      <button class="button button-link pull-right close-picker">确定</button>\
+      <h1 class="title">请设置出售价格</h1>\
+      </header>',
+      rotateEffect:true,
+      cols: [
+        {
+          textAlign: 'center',
+          values: ['0']
+          //如果你希望显示文案和实际值不同，可以在这里加一个displayValues: [.....]
+        },
+        {
+          textAlign: 'center',
+          values: ['.']
+        },
+        {
+          textAlign: 'center',
+          values: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+        },
+        {
+          textAlign: 'center',
+          values: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+        }
+      ]
+    });
+
+    // //地点显示
+    // mapShow = new AMap.Map('container-show', {
+    //     // resizeEnable: true,
+    //     // zoomEnable:false,
+    //     // dragEnable:false
+    //     resizeEnable: true
+    // });
+    // mapShow.plugin('AMap.Geolocation', function() {
+    //     geolocation = new AMap.Geolocation({
+    //         enableHighAccuracy: true,//是否使用高精度定位，默认:true
+    //         timeout: 10000,          //超过10秒后停止定位，默认：无穷大
+    //         zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+    //     });
+    //     geolocation.getCurrentPosition();
+    //     AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
+    //     AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
+    // });
+
+    // //解析定位结果
+    // function onComplete(data) {
+    //     console.log("定位成功");
+    //     var str=['定位成功'];
+    //     str.push('经度：' + data.position.getLng());
+    //     str.push('纬度：' + data.position.getLat());
+    //     str.push('精度：' + data.accuracy + ' 米');
+    //     str.push('是否经过偏移：' + (data.isConverted ? '是' : '否'));
+
+    //     // mapShow = new AMap.Map('container-show', {
+    //     //     resizeEnable: true,
+    //     //     center:[data.position.getLng(),data.position.getLat()],
+    //     //     zoom:20
+    //     // });
+    // }
+    // //解析定位错误信息
+    // function onError(data) {
+    //     console.log("定位失败");
+    // }
+
+    //输入框填写的地址内容
+    $("#address").on("input change",function(){
+      localStorage["address"] = $(this).val();
+    })
+
+    var timeIv;
+    //地点标注搜索
+    AMap.plugin(['AMap.Autocomplete','AMap.PlaceSearch'],function(){
+      var autoOptions = {
+        input: "address"//使用联想输入的input的id
+      };
+      autocomplete= new AMap.Autocomplete(autoOptions);
+      var placeSearch = new AMap.PlaceSearch({
+            map:map
+      })
+      AMap.event.addListener(autocomplete, "select", function(e){
+         //TODO 针对选中的poi实现自己的功能
+         // console.log("123");
+         // console.log(e);
+         // $(".amap-marker").css("display","none !important");
+         placeSearch.search(e.poi.name);
+         console.log($(".amap-marker"));
+
+         //这里是设置一个延时来判断是否标注加载完成
+         timeIv = setInterval(function(){
+          console.log($(".amap-marker").length);
+          if($(".amap-marker").length > 5){
+            clearInterval(timeIv);
+            map.clearMap();
+          }
+         }, 10);
+         
+      });
+
+      // var placeSearchShow = new AMap.PlaceSearch({
+      //       map:mapShow
+      // })
+      // AMap.event.addListener(autocomplete, "select", function(e){
+      //    //TODO 针对选中的poi实现自己的功能
+      //    console.log(e);
+      //    placeSearchShow.search(e.poi.name)
+      // });
+    });
+
+
+    //点击标注
+    map.on('click', function(e) {
+
+      //clear all markers
+      map.clearMap();
+      // mapShow.clearMap();
+      lnglatXY = [e.lnglat.getLng(), e.lnglat.getLat()]; //已知点坐标
+      getAddress(lnglatXY,{
+        success:function(address){
+          var detail = address.formattedAddress;
+          // var address = {
+          //   province : address.addressComponent.province,
+          //   city     : address.addressComponent.city,
+          //   district : address.addressComponent.district
+          // }
+          var address = {
+              province : address.addressComponent.province,
+              city     : address.addressComponent.city,
+              district : address.addressComponent.district,
+              township : address.addressComponent.township
+            }
+          // var address = JSON.stringify(address);
+
+          // detail = detail.replace(address[0]+address[1]+address[2]+address[3],"");
+          var replace = ""+address.province+address.city+address.district+address.township+"";
+          detail = detail.replace(replace,"");
+          address.detail = detail;
+          var address = JSON.stringify(address);
+          console.log(address);
+          $("#address-content .item-inner").attr("data-address",address);
+          $("#address-content .item-inner").text(detail);
+        }
+      });
+
+      console.log('您在[ '+e.lnglat.getLng()+','+e.lnglat.getLat()+' ]的位置点击了地图！');
+        // alert('您在[ '+e.lnglat.getLng()+','+e.lnglat.getLat()+' ]的位置点击了地图！');
+      var icon = new AMap.Icon({
+          // image : 'http://vdata.amap.com/icons/b18/1/2.png',//24px*24px
+          //icon可缺省，缺省时为默认的蓝色水滴图标，
+          // size : new AMap.Size(24,24)
+      });
+      // var marker = new AMap.Marker({
+      //         icon : icon,//24px*24px
+      //         offset : new AMap.Pixel(e.lnglat.getLat(),e.lnglat.getLng()),
+      //         map : map
+      // });
+      marker = new AMap.Marker({
+        icon : icon,//24px*24px
+        map : map,
+        tagName:"火锅;超辣的",
+        askReason:"味道真的不错",
+        askContentShow:"这里的味道真的不错",
+        price:0.2,
+        createBy:"hanqi",
+        createAt:"2016-04-19",
+        position: [e.lnglat.getLng(),e.lnglat.getLat()],
+        draggable: true,
+        cursor: 'move',
+        raiseOnDrag: true,
+        clickable:true
+      });
+
+      // var markerShow = new AMap.Marker({
+      //   icon : icon,//24px*24px
+      //   map : mapShow,
+      //   position: [e.lnglat.getLng(),e.lnglat.getLat()],
+      //   draggable: true,
+      //   cursor: 'move',
+      //   raiseOnDrag: true,
+      //   clickable:true
+      // });
+
+      localStorage["lng"] = e.lnglat.getLng();
+      localStorage["lat"] = e.lnglat.getLat();
+
+      $("#container").attr("data-lng",e.lnglat.getLng());
+      $("#container").attr("data-lat",e.lnglat.getLat());
+      // //拖动标注后回调的坐标
+      //  marker.on("dragend",function(){
+      //   console.log(this.getPosition());
+      //   var lat = this.getPosition().lat;
+      //   var lng = this.getPosition().lng;
+      //   $("#container").attr("data-lng",lng);
+      //   $("#container").attr("data-lat",lat);
+
+      //   localStorage["lng"] = lng;
+      //   localStorage["lat"] = lat;
+
+      //   // mapShow.clearMap();
+      //   // var markerShow = new AMap.Marker({
+      //   //   icon : icon,//24px*24px
+      //   //   map : mapShow,
+      //   //   position: [lng,lat],
+      //   //   draggable: true,
+      //   //   cursor: 'move',
+      //   //   raiseOnDrag: true,
+      //   //   clickable:true
+      //   // });
+      // })
+      marker.setMap(map);
+      // markerShow.setMap(mapShow);
+    });
+    /*
+    相比来说这家鱼火锅是我吃过味道比较好的一家，在##成都信息工程大学北三街##，人均消费20多的样子，可以吃到很饱，素菜是免费的。
+    */
+    if(marker){
+      //拖动标注后回调的坐标
+       marker.on("dragend",function(){
+        console.log(this.getPosition());
+        var lat = this.getPosition().lat;
+        var lng = this.getPosition().lng;
+        $("#container").attr("data-lng",lng);
+        $("#container").attr("data-lat",lat);
+
+        localStorage["lng"] = lng;
+        localStorage["lat"] = lat;
+
+        // mapShow.clearMap();
+        // var markerShow = new AMap.Marker({
+        //   icon : icon,//24px*24px
+        //   map : mapShow,
+        //   position: [lng,lat],
+        //   draggable: true,
+        //   cursor: 'move',
+        //   raiseOnDrag: true,
+        //   clickable:true
+        // });
+        var lnglatXY = [lng,lat];
+        getAddress(lnglatXY,{
+          success:function(address){
+            var detail = address.formattedAddress;
+            // var address = {
+            //   province : address.addressComponent.province,
+            //   city     : address.addressComponent.city,
+            //   district : address.addressComponent.district
+            // }
+            var address = {
+              province : address.addressComponent.province,
+              city     : address.addressComponent.city,
+              district : address.addressComponent.district,
+              township : address.addressComponent.township
+            }
+            // var address = JSON.stringify(address);
+
+            var replace = ""+address.province+address.city+address.district+address.township+"";
+            detail = detail.replace(replace,"");
+            address.detail = detail;
+            console.log(detail);
+            var address = JSON.stringify(address);
+            console.log(address);
+            $("#address-content .item-inner").attr("data-address",address);
+            $("#address-content .item-inner").text(detail);
+          }
+        });
+      })
+    }
+    
+  </script>
+</html>
