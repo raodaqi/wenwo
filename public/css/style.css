@@ -127,3 +127,6 @@ a {
 .bar-tab {
     z-index: 20001 !important;
 }
+.card{
+    text-align: left;
+}

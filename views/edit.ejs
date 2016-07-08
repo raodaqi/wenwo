@@ -62,7 +62,7 @@
       padding: 10px;
       margin-top: 20px;
     }
-    #reason,#detail,.de-show{
+    #reason,#detail,.de-show,#trade-name{
       width: 100%;
       box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
       border: 1px solid #ccc;
@@ -71,9 +71,10 @@
       border-radius:3px;
       padding:5px 10px;
     }
-    #reason,#detail,.de-show{
-      background-color: #efc553;
-      height: 15rem;
+    #reason,#detail,.de-show,#trade-name{
+      /*background-color: #efc553;*/
+      background-color: #cccccc;
+      height: 12rem;
       border-radius: 0.5rem;
       padding:0.8rem 1rem;
       font-size: 0.75rem;
@@ -94,9 +95,8 @@
     }
 
     #detail,.de-show{
-      height: 150px;
+/*      height: 150px;*/
       word-break:break-all;
-      /*overflow: scroll;*/
     }
     .de-show{
       overflow: scroll;
@@ -118,11 +118,13 @@
         padding: 6px 12px;
     }
     .add-search{
-      background-color: #efc553;
+      /*background-color: #efc553;*/
+      background-color: #cccccc;
       padding:2px 3px;
     }
     .ww-typeHelper{
-      background-color: #efc553;
+      /*background-color: #efc553;*/
+      background-color: #cccccc;
       height: 6rem;
       border-radius: 0.25rem;
     }
@@ -167,7 +169,7 @@
       height: 1.5rem;
     }
     .ww_typeHelper-button{
-      background-color: #e5a41b;
+      background-color: #676767;
       position: absolute;
       bottom:5px;
       right:5px;
@@ -234,7 +236,8 @@
     }
     .list-block{
       /*background: white;*/
-      background-color: #efc553;
+      /*background-color: #efc553;*/
+      background-color: #cccccc;
       border-radius: 5px;
     }
     .list-block .item-inner{
@@ -281,12 +284,14 @@
       background-color: #efc553;
     }*/
     .card{
-      background-color: #F3D27B;
+      /*background-color: #F3D27B;*/
+      background-color: #e7e7e7;
     }
     .card-header{
       min-height:2rem;
       font-weight: bold;
-      border-bottom: 1px solid #BBA05F;
+      /*border-bottom: 1px solid #BBA05F;*/
+      border-bottom: 1px solid #CCCCCC;
       padding:0rem .75rem;
     }
     .bar .button-link{
@@ -294,38 +299,6 @@
     }
     .bar-footer-nav{
       bottom:0;
-    }
-    #theme1,#theme3,#theme5{
-      border-right: 0;
-    }
-    #theme1,#theme2,#theme3,#theme4{
-      border-bottom: 0;
-    }
-    .theme-li{
-      border:0;
-    }
-    #theme1,.theme1{
-      background-color: #FDB8AF;
-    }
-    #theme2,.theme2{
-      background-color: #DFECA1;
-    }
-    #theme3,.theme3{
-      background-color: #ADF5EC;
-    }
-    #theme4,.theme4{
-      background-color: #E0C1F3;
-    }
-    #theme5,.theme5{
-      background-color: #FFD99C;
-    }
-    #theme6,.theme6{
-      background-color: #B6C6FE;
-    }
-    .theme-li img{
-      width: 40px;
-      height: 40px;
-      margin-top:30px;
     }
     .list-block .item-link .item-inner{
       background-image: none;
@@ -348,7 +321,8 @@
       right:10px;
     }
     .list-block{
-      background-color: #F3D27B;
+      /*background-color: #F3D27B;*/
+      background-color: #e7e7e7;
     }
     .send-button-a{
       position: absolute;
@@ -412,7 +386,8 @@
     }
     .ww_typeHelper-input-left{
       position: absolute;
-      color: #efc553;
+      /*color: #efc553;*/
+      color: #cccccc;
       font-size: 25px;
       top:-6px;
       left:5px;
@@ -477,10 +452,13 @@
             <span class="icon icon-left"></span>
         </a>
         <h1 class='title'>发布</h1>
+         <a class="button button-link button-nav pull-right send-button-a">
+          确定
+        </a>
       </header>
       <div class="content">
         <div class="theme-content-block">
-           <div class="card" id="tag-content" data-href="router2">
+           <div class="card" id="tag-content" data-href="router1">
               <div class="card-header">标签</div>
               <div class="card-content">
                 <div class="card-content-inner">
@@ -489,17 +467,17 @@
                 </div>
               </div>
             </div>
-
-            <div class="card" id="reason-content" data-href="router3">
-              <div class="card-header">推荐理由</div>
+            
+            <div class="card" id="tradeName-content" data-href="router2">
+              <div class="card-header">店名</div>
               <div class="card-content">
                 <div class="card-content-inner">
-                  请填写推荐理由
+                  请填写店名
                 </div>
               </div>
             </div>
 
-            <div class="card" id="detail-content" data-href="router4">
+            <div class="card" id="detail-content" data-href="router3">
               <div class="card-header">详情</div>
               <div class="card-content">
                 <div class="card-content-inner">
@@ -508,13 +486,14 @@
               </div>
             </div>
 
-             <!-- <div class="content-block-title">地图标注</div>
-              <div class="card demo-card-header-pic" data-href="router5">
-                <div valign="bottom" class="card-header color-white no-border no-padding">
-                  <div class="container-hidden"></div>
-                  <div class='card-cover' id="container-show"></div>
+            <div class="card" id="reason-content" data-href="router4">
+              <div class="card-header">推荐理由</div>
+              <div class="card-content">
+                <div class="card-content-inner">
+                  请填写推荐理由
                 </div>
-              </div> -->
+              </div>
+            </div>
 
               <div class="card" id="address-content" data-href="router5">
                 <div class="card-content">
@@ -533,99 +512,12 @@
                   </div>
                 </div>
               </div>
-
-              <div class="card" id="price-content" data-href="router6">
-                <div class="card-content">
-                  <div class="list-block">
-                    <ul>
-                      <li>
-                        <a class="item-link item-content">
-                          <div class="item-media item-left"><i class="iconfont icon-qian"></i></div>
-                          <div class="item-media item-right"><i class="iconfont icon-youjiantou"></i></div>
-                          <div class="item-inner">
-                            <div class="item-title">信息价格</div>
-                          </div>
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <!-- <div class="card" id="price-content" data-href="router6">
-                <div class="card-header">价格</div>
-                <div class="card-content">
-                  <div class="card-content-inner">￥0.2</div>
-                </div>
-              </div>
-            
-              <div class="card">
-                <div class="send-button">
-                  <a href="#" class="button button-big button-fill button-success send-button-a">提交</a>
-                </div>
-              </div> -->
-            
-
         </div>
       </div>
-    </div>
-    <!-- 主题筛选 -->
-    <div class="page" id='router1'>
-      <header class="bar bar-nav">
-        <a class="button button-link button-nav pull-left" href="#router">
-          <span class="icon icon-left"></span>
-        </a>
-        <h1 class='title'>主题</h1>
-      </header>
-      <div class="content">
-        <div class="content-block">
-          <div class="theme-ul">
-            <div class="theme-li" id="theme1" data-type="1">
-              <img src="/img/themes-02.png">
-              <div class="theme-li-text">美食</div>
-            </div>
-            <div class="theme-li" id="theme2" data-type="2">
-              <img src="/img/themes-03.png">
-              <div class="theme-li-text">住宿</div>
-            </div>
-            <div class="theme-li" id="theme3" data-type="3">
-              <img src="/img/themes-04.png">
-              <div class="theme-li-text">出行</div>
-            </div>
-            <div class="theme-li" id="theme4" data-type="4">
-              <img src="/img/themes-05.png">
-              <div class="theme-li-text">购物</div>
-            </div>
-            <div class="theme-li" id="theme5" data-type="5">
-              <img src="/img/themes-06.png">
-              <div class="theme-li-text">游玩</div>
-            </div>
-            <div class="theme-li" id="theme6" data-type="6">
-              <img src="/img/themes-07.png">
-              <div class="theme-li-text">防坑</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <footer class="bar bar-footer-nav">
-        <a class="button button-link button-nav pull-left" href="#router">
-          <span class="icon icon-left"></span>
-          预览
-        </a>
-        <a class="button button-link button-nav pull-right next" href="#router2">
-          下一步
-          <span class="icon icon-right"></span>
-        </a>
-      </footer>
     </div>
     <!-- 标签填写 -->
-    <div class="page" id='router2'>
+    <div class="page" id='router1'>
       <header class="bar bar-nav">
-        <!-- <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
-          <span class="icon icon-left"></span>
-          返回
-        </a> -->
         <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
           <span class="icon icon-left"></span>
         </a>
@@ -659,19 +551,72 @@
           <span class="icon icon-left"></span>
           预览
         </a>
+        <a class="button button-link button-nav pull-right next" href="#router2">
+          下一步
+          <span class="icon icon-right"></span>
+        </a>
+      </footer>
+    </div>
+    <!-- 店名填写 -->
+    <div class="page" id='router2'>
+      <header class="bar bar-nav">
+        <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
+          <span class="icon icon-left"></span>
+        </a>
+        <h1 class='title'>店名</h1>
+      </header>
+      <div class="content">
+        <div class="recommend-reason">
+          <textarea name="trade" id="trade-name" placeholder="请填写店名"></textarea>
+        </div>
+      </div>
+
+      <footer class="bar bar-footer-nav">
+        <a class="button button-link button-nav pull-left" href="#router">
+          <span class="icon icon-left"></span>
+          预览
+        </a>
         <a class="button button-link button-nav pull-right next" href="#router3">
           下一步
           <span class="icon icon-right"></span>
         </a>
       </footer>
     </div>
-    <!-- 推荐理由填写 -->
+    <!-- 信息详情填写 -->
     <div class="page" id='router3'>
       <header class="bar bar-nav">
-        <!-- <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
+        <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
           <span class="icon icon-left"></span>
-          返回
+        </a>
+        <h1 class='title'>信息详情</h1>
+        <!-- <a class="button button-link button-nav pull-right button-start right-hidden">
+          隐藏
         </a> -->
+      </header>
+      <div class="content">
+        <div class="result-detail">
+          <textarea name="detail" id="detail" placeholder="1.描述你分享的信息的详细情况
+
+2.分享的内容默认是显示的
+
+3.隐藏的内容通过“##隐藏内容##”方式隐藏"></textarea>
+        </div>
+      </div>
+
+      <footer class="bar bar-footer-nav">
+        <a class="button button-link button-nav pull-left" href="#router">
+          <span class="icon icon-left"></span>
+          预览
+        </a>
+        <a class="button button-link button-nav pull-right next" href="#router4">
+          下一步
+          <span class="icon icon-right"></span>
+        </a>
+      </footer>
+    </div>
+    <!-- 推荐理由填写 -->
+    <div class="page" id='router4'>
+      <header class="bar bar-nav">
         <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
           <span class="icon icon-left"></span>
         </a>
@@ -688,53 +633,24 @@
           <span class="icon icon-left"></span>
           预览
         </a>
-        <a class="button button-link button-nav pull-right next" href="#router4">
+        <a class="button button-link button-nav pull-right next" href="#router5">
           下一步
           <span class="icon icon-right"></span>
         </a>
       </footer>
     </div>
-    <!-- 信息详情填写 -->
-    <div class="page" id='router4'>
+    <!-- 图片添加 -->
+    <div class="page" id='router6'>
       <header class="bar bar-nav">
-        <!-- <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
-          <span class="icon icon-left"></span>
-          返回
-        </a> -->
         <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
           <span class="icon icon-left"></span>
         </a>
-        <h1 class='title'>信息详情</h1>
-        <a class="button button-link button-nav pull-right button-start right-hidden">
-          隐藏
-        </a>
+        <h1 class='title'>展示图片</h1>
       </header>
       <div class="content">
-        <!-- <div class="hidden-content row">
-          <div class="col-50">
-            <a href="#" class="button  button-fill button-success button-start">隐藏开始</a>
-          </div>
-          <div class="col-50">
-            <a href="#" class="button  button-fill button-success button-end">隐藏结束</a>
-          </div>
-        </div> -->
-        <div class="result-detail">
-          <textarea name="detail" id="detail" placeholder="1.描述你分享的信息的详细情况
-
-2.分享的内容默认是显示的
-
-3.隐藏的内容通过“##隐藏内容##”方式隐藏"></textarea>
-        <div class="de-show"></div>
-
+        <div class="recommend-reason">
+          <textarea name="reason" id="reason" placeholder="说说为什么？"></textarea>
         </div>
-        <div class="other-content">
-          <div class="help iconfont icon-bangzhu"></div>
-          <div class="hidden-content">
-            <a href="#" class="button  button-fill button-success button-start">隐藏</a>
-          </div>
-        </div>
-        <div class="help-content">描述你分享的信息的详细情况,分享的内容默认是显示的,隐藏的内容通过“##隐藏内容##”方式隐藏.</div>
-        
       </div>
 
       <footer class="bar bar-footer-nav">
@@ -751,10 +667,6 @@
     <!-- 地点标注 -->
      <div class="page" id='router5'>
       <header class="bar bar-nav">
-        <!-- <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
-          <span class="icon icon-left"></span>
-          返回
-        </a> -->
         <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
           <span class="icon icon-left"></span>
         </a>
@@ -773,51 +685,11 @@
           <span class="icon icon-left"></span>
           预览
         </a>
-        <a class="button button-link button-nav pull-right next" href="#router6">
+        <a class="button button-link button-nav pull-right next" href="#router">
           下一步
           <span class="icon icon-right"></span>
         </a>
       </footer>
-    </div>
-    <!-- 价格填写 -->
-     <div class="page" id='router6'>
-      <header class="bar bar-nav">
-        <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
-          <span class="icon icon-left"></span>
-        </a>
-        <h1 class='title'>价格</h1>
-      </header>
-      <div class="content">
-        <div class="price-content">
-          <!-- ￥<input type="text" id='price-picker' value="0.00" /> -->
-          <div class="list-block">
-            <div class="item-content">
-              <div class="item-inner">
-              <!-- <div class="item-title label">价格<div class="right-icon">￥</div></div> -->
-                ￥
-                <div class="item-input">
-                  <input type="text" id='price-picker' value="0 . 0 0" />          
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- <div class="send-button">
-            <a href="#" class="button button-big button-fill button-success send-button-a">提交</a>
-          </div> -->
-        </div>
-      </div>
-      <footer class="bar bar-footer-nav">
-        <a class="button button-link button-nav pull-left" href="#router">
-          <span class="icon icon-left"></span>
-          预览
-        </a>
-        <a class="button button-link button-nav pull-right next" href="#router">
-          完成
-          <span class="icon icon-right"></span>
-        </a>
-      </footer>
-
     </div>
 
   </body>

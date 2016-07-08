@@ -1,0 +1,194 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <!-- <meta name='viewport', content='width=device-width, initial-scale=1.0'>
+  -->
+  <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+  <meta name='description', content='wenwo,问我,当地人,旅游,攻略,信息,分享'>
+  <meta name='author', content='raodqi'>
+  <link rel="icon" type="image/x-icon" href="/img/logo.png" media="screen">
+  <title>问我——像个当地人一样去旅游</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="http://at.alicdn.com/t/font_1462821367_1895313.css">
+  <link rel="stylesheet" href="/css/sm.min.css">
+  <script src="/js/jweixin-1.0.0.js"></script>
+</head>
+  <style>
+    @font-face {font-family: 'webfont';
+      src: url('//at.alicdn.com/t/vlddunszd2pousor.eot'); /* IE9*/
+      src: url('//at.alicdn.com/t/vlddunszd2pousor.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+      url('//at.alicdn.com/t/vlddunszd2pousor.woff') format('woff'), /* chrome、firefox */
+      url('//at.alicdn.com/t/vlddunszd2pousor.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+      url('//at.alicdn.com/t/vlddunszd2pousor.svg#思源黑体-极细') format('svg'); /* iOS 4.1- */
+    }
+    html{
+      font-size: 20px;
+    }
+    body{
+      position: absolute;
+      left: 0;
+      right: 0 !important;
+      padding:0;
+      margin:0;
+      width: 100%;
+      overflow: hidden;
+      background-color: #E8E8E8;
+    }
+    .title{
+      font-weight: bold;
+      font-family: 'webfont';
+    }
+    .detail-pic-bg,.bg-mask{
+      height: 14rem;
+      width: 100%;
+      /*background: #fff;*/
+      position: absolute;
+    }
+    .bg-mask{
+      background: rgba(0,0,0,0.5);
+    }
+    .pic-bg{
+      display: block;
+      position: absolute;
+      /*width: 6rem;*/
+      /*height: 100%;*/
+      /*margin-top: 2rem;
+      margin-left: 50%;
+      transform: translateX(-50%);*/
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+    }
+    .username-content{
+      position: absolute;
+      bottom:3rem;
+      padding-left: .5rem;
+      font-size: 1rem;
+      color: white;
+    }
+    .like,.bug{
+      position: absolute;
+      border-radius: 0.2rem;
+      height: 1.5rem;
+      bottom:1rem;
+      text-align: center;
+      font-size: 0.7rem;
+    }
+    .like{
+      background: #FFF;
+      width: 3rem;
+      margin-left: .5rem;
+      line-height: 1.5rem;
+      color: #000;
+    }
+    .bug{
+      background: #0894ec;
+      width: 4rem;
+      margin-left: 4rem;
+      line-height: 1.5rem;
+      color: #FFF;
+    }
+    .ask-detail{
+      margin-top: 14.5rem;
+    }
+    .ask-detail-li{
+      margin-top: 0.5rem;
+      padding:0.3rem;
+    }
+    .detail-li-title{
+      box-sizing: border-box;
+      padding:0.3rem 0.5rem;
+      background: #C7C7C7;
+      border-radius: 0.2rem;
+      font-size: 0.7rem;
+      color: #000;
+      margin-bottom: 0.3rem;
+    }
+    .detail-li-content{
+      color:#848484;
+      padding-left: 0.3rem;
+      font-size: 0.6rem;
+      word-break:break-all;
+    }
+  </style>
+<body>
+  <!-- <header class="bar bar-nav">
+    <h1 class="title">问我&bull;美食</h1>
+  </header> -->
+  <div class="wenwo-content page page-current" id='detail'>
+    <header class="bar bar-nav">
+      <a class="button button-link button-nav pull-left" href="/food?username=573b0e3df38c8400673bb48d">
+          <!-- <a class="button button-link button-nav pull-left"> -->
+            <span class="icon icon-left"></span>
+        </a>
+      <h1 class="title">鱼火锅</h1>
+    </header>
+    <!-- 这里是所有的信息列表 -->
+    <div class="content">
+      <div class="detail-pic-bg">
+        <img src="http://wx.qlogo.cn/mmopen/zngt7mjBQUdFiaKIVGQbhF3jRURfqibW3EtNPALJewxicdPAyGfyMpZkeHZIW1UXUmjEia3QicdYqickSiaywQcKBUS6GMWSEw67Rry/" alt="" class="pic-bg">
+        <div class="bg-mask"></div>
+        <div class="username-content">
+          <span class="username">ducky</span>
+          <span class="price">￥2.0</span>
+        </div>
+        <div class="like">喜欢</div>
+        <div class="bug">购买</div>
+      </div>
+
+      <div class="ask-detail">
+        <div class="ask-detail-reason ask-detail-li">
+          <div class="detail-li-title">推荐理由</div>
+          <div class="detail-reason detail-li-content">相信我就够了</div>
+        </div>
+        <div class="ask-detail-rtname ask-detail-li">
+          <div class="detail-li-title">店名</div>
+          <div class="detail-rtname detail-li-content">重庆鱼火锅</div>
+        </div>
+        <div class="ask-detail-content ask-detail-li">
+          <div class="detail-li-title">详情</div>
+          <div class="detail-content detail-li-content">重庆鱼火锅testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttest</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+<script type='text/javascript' src='/js/zepto.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='/js/sm.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='/js/common.js' charset='utf-8'></script>
+<script>
+  function init(){
+    var url = window.location.hash;
+      if(url){
+        url = url.split("#")[1];
+      }else{
+        url = "find";
+      }
+      console.log(url);
+      $(".tab-item").removeClass("active");
+      $("."+url).addClass("active");
+  }
+  init();
+
+  $(".tab-item").on("click",function(){
+    // console.log($());
+    var type = $(this).attr("data-type");
+    console.log(type);
+    $(".tab-item").removeClass("active");
+    $(this).addClass("active");
+    if(type == "like"){
+      $.router.load("#like"); 
+    }else if(type == "find"){
+      $.router.load("#find");
+      // $.router.back();
+    }else if(type == "edit"){
+      $.router.load("/edit?username=573c1eb271cfe4006c18274f");
+    }
+  })
+  // $(".edit").on("click",function(){
+  //   $.router.load("/todos/send/test?username=573c1eb271cfe4006c18274f");
+  // })
+</script>
+</html>
