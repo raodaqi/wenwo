@@ -37,7 +37,7 @@ router.get('/allask', function(req, res, next) {
     }
 
     if (type != null) {
-        query.contains("type", type);
+        query.contains("askType", type);
     }
     if (size != null) {
         query.limit(size);
