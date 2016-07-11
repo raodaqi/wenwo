@@ -111,54 +111,91 @@
       font-size: 0.6rem;
       word-break:break-all;
     }
+    .no-user{
+      margin-top: 40px;
+      text-align: center;
+      color: #A7A7A7;
+    }
+    
   </style>
 <body>
   <!-- <header class="bar bar-nav">
     <h1 class="title">问我&bull;美食</h1>
   </header> -->
-  <div class="wenwo-content page page-current" id='detail'>
-    <header class="bar bar-nav">
-      <a class="button button-link button-nav pull-left" href="/food?username=573b0e3df38c8400673bb48d">
-          <!-- <a class="button button-link button-nav pull-left"> -->
-            <span class="icon icon-left"></span>
-        </a>
-      <h1 class="title">鱼火锅</h1>
-    </header>
-    <!-- 这里是所有的信息列表 -->
-    <div class="content">
-      <div class="detail-pic-bg">
-        <img src="http://wx.qlogo.cn/mmopen/zngt7mjBQUdFiaKIVGQbhF3jRURfqibW3EtNPALJewxicdPAyGfyMpZkeHZIW1UXUmjEia3QicdYqickSiaywQcKBUS6GMWSEw67Rry/" alt="" class="pic-bg">
-        <div class="bg-mask"></div>
-        <div class="username-content">
-          <span class="username">ducky</span>
-          <span class="price">￥2.0</span>
+  <% if(askid){ %>
+    <div class="wenwo-content page page-current" id='detail'>
+      <header class="bar bar-nav">
+        <a class="button button-link button-nav pull-left" href="/food?username=573b0e3df38c8400673bb48d">
+            <!-- <a class="button button-link button-nav pull-left"> -->
+              <span class="icon icon-left"></span>
+          </a>
+        <h1 class="title">鱼火锅</h1>
+      </header>
+      <!-- 这里是所有的信息列表 -->
+      <div class="content">
+        <div class="detail-pic-bg">
+          <img src="http://wx.qlogo.cn/mmopen/zngt7mjBQUdFiaKIVGQbhF3jRURfqibW3EtNPALJewxicdPAyGfyMpZkeHZIW1UXUmjEia3QicdYqickSiaywQcKBUS6GMWSEw67Rry/" alt="" class="pic-bg">
+          <div class="bg-mask"></div>
+          <div class="username-content">
+            <span class="username">ducky</span>
+            <span class="price">￥2.0</span>
+          </div>
+          <div class="like">喜欢</div>
+          <div class="bug">购买</div>
         </div>
-        <div class="like">喜欢</div>
-        <div class="bug">购买</div>
-      </div>
 
-      <div class="ask-detail">
-        <div class="ask-detail-reason ask-detail-li">
-          <div class="detail-li-title">推荐理由</div>
-          <div class="detail-reason detail-li-content">相信我就够了</div>
-        </div>
-        <div class="ask-detail-rtname ask-detail-li">
-          <div class="detail-li-title">店名</div>
-          <div class="detail-rtname detail-li-content">重庆鱼火锅</div>
-        </div>
-        <div class="ask-detail-content ask-detail-li">
-          <div class="detail-li-title">详情</div>
-          <div class="detail-content detail-li-content">重庆鱼火锅testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttest</div>
+        <div class="ask-detail">
+          <div class="ask-detail-reason ask-detail-li">
+            <div class="detail-li-title">推荐理由</div>
+            <div class="detail-reason detail-li-content">相信我就够了</div>
+          </div>
+          <div class="ask-detail-rtname ask-detail-li">
+            <div class="detail-li-title">店名</div>
+            <div class="detail-rtname detail-li-content">重庆鱼火锅</div>
+          </div>
+          <div class="ask-detail-content ask-detail-li">
+            <div class="detail-li-title">详情</div>
+            <div class="detail-content detail-li-content">重庆鱼火锅testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttest</div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  <% }else{ %>
+    <div class="error-content content pull-to-refresh-content" data-ptr-distance="55">
+      <div class="pull-to-refresh-layer">
+        <div class="preloader"></div>
+        <div class="pull-to-refresh-arrow"></div>
+      </div>
+      <div class="card-container no-user">链接有误...</div>
+    </div>
+  <% } %>
 
 </body>
 <script type='text/javascript' src='/js/zepto.min.js' charset='utf-8'></script>
 <script type='text/javascript' src='/js/sm.min.js' charset='utf-8'></script>
 <script type='text/javascript' src='/js/common.js' charset='utf-8'></script>
 <script>
+  // //下拉刷新
+  // // 添加'refresh'监听器
+  // $(document).on('refresh', '.pull-to-refresh-content',function(e) {
+  //     // 模拟2s的加载过程
+  //     setTimeout(function() {
+  //         // 加载完毕需要重置
+  //         $.pullToRefreshDone('.pull-to-refresh-content');
+  //     }, 1000);
+  // });
+  // //下拉刷新初始化
+  // $.initPullToRefresh(".content");
+</script>
+<script>
+  //页面加载执行
+  $(function(){
+    console.log("<%=askid%>");
+    var askid = "<%=askid%>";
+    if(askid){
+      getAskDetail(askid);
+    }
+  });
   function init(){
     var url = window.location.hash;
       if(url){
@@ -170,6 +207,40 @@
       $(".tab-item").removeClass("active");
       $("."+url).addClass("active");
   }
+  function getAskDetail(askid,username){
+    var username = username ? username : '';
+    var data = {
+      username  : username,
+      ask_id    : askid
+    }
+    $.ajax({
+      type : "GET",
+      data: data,
+      dataType: "json",
+      url : "/ask/askdetail",
+      success: function(result){
+        console.log(result);
+        if(result.code == 200){
+          var data = result.data;
+          $(".title").text(formatTag(data.askTagStr));
+          $(".username").text(data.createByName);
+          $(".price").text(" ￥"+data.askPrice);
+          $(".pic-bg").attr("src",data.createByUrl);
+          $(".detail-reason").text(data.askReason);
+          $(".detail-rtname").text(data.createByName);
+          $(".detail-content").text(data.askContentShow);
+        }else{
+
+        }
+        // callback.success(result);
+      },
+      error:function(error){
+        console.log(error);
+        // callback.error(error);
+      },
+    })
+  }
+
   init();
 
   $(".tab-item").on("click",function(){

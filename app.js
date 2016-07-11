@@ -128,7 +128,8 @@ app.get('/edit', function(req, res) {
 });
 
 app.get('/detail', function(req, res) {
-  res.render('detail', {});
+  var askid =  req.query.askid;
+  res.render('detail', {askid:askid});
 });
 
 app.get('/test', function(req, res) {

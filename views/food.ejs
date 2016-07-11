@@ -94,6 +94,21 @@
     #me{
       z-index: 40000;
     }
+    .infinite-scroll-preloader {
+      margin-top:10px;
+    }
+    .ask-reason{
+     max-height: 36px;
+     /*overflow: hidden;*/
+     overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    }
+    .content{
+      padding-bottom: 50px;
+    }
   </style>
 <body>
   <!-- <header class="bar bar-nav">
@@ -105,8 +120,8 @@
       <h1 class="title">问我&bull;美食</h1>
     </header>
     <!-- 这里是所有的信息列表 -->
-    <div class="content">
-      <div class="wenwo-li">
+    <div class="content pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="55" data-distance="100">
+     <!--  <div class="wenwo-li">
         <div class="up-content">
           <img src="http://wx.qlogo.cn/mmopen/zngt7mjBQUdFiaKIVGQbhF3jRURfqibW3EtNPALJewxicdPAyGfyMpZkeHZIW1UXUmjEia3QicdYqickSiaywQcKBUS6GMWSEw67Rry/" alt="" class="user-pic">
           <div class="ask-content">
@@ -147,6 +162,51 @@
           <div class="down-time">2016-07-07</div>
         </div>
       </div>
+    </div> -->
+    <!-- <div class="content pull-to-refresh-content" data-ptr-distance="55"> -->
+      <!-- 默认的下拉刷新层 -->    
+      <div class="pull-to-refresh-layer">
+        <div class="preloader"></div>
+        <div class="pull-to-refresh-arrow"></div>
+      </div>
+      <!-- 下面是正文 -->    
+      <!-- <div class="card-container">
+        <div class="card">
+          <div class="card-header">card</div>
+          <div class="card-content">
+            <div class="card-content-inner">这里是第1个card，下拉刷新会出现第2个card。</div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+    <div class="wenwo-ul"></div>
+      <!-- <div class="wenwo-li card-container">
+        <div class="up-content">
+          <img src="http://wx.qlogo.cn/mmopen/zngt7mjBQUdFiaKIVGQbhF3jRURfqibW3EtNPALJewxicdPAyGfyMpZkeHZIW1UXUmjEia3QicdYqickSiaywQcKBUS6GMWSEw67Rry/" alt="" class="user-pic">    
+          <div class="ask-content">
+            <div class="ask-tag">鱼火锅</div>
+            <div class="ask-reason">好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃</div>
+          </div>
+        </div>
+        <div class="down-content">
+          <div class="down-like">想吃23</div>
+          <div class="down-time">2016-07-07</div>
+        </div>
+      </div>
+    </div> -->
+    <!-- <div class="list-container"></div> -->
+    <!-- <div class="list-block">
+          <ul class="list-container">
+           
+          </ul>
+        </div>
+        <div class="infinite-scroll-preloader" >
+          <div class="preloader">
+          </div>
+        </div>
+    </div> -->
+    <div class="infinite-scroll-preloader" >
+      <div class="preloader"></div>
     </div>
   </div>
 
@@ -272,6 +332,21 @@
 <script type='text/javascript' src='/js/sm.min.js' charset='utf-8'></script>
 <script type='text/javascript' src='/js/common.js' charset='utf-8'></script>
 <script>
+  //下拉刷新
+  // 添加'refresh'监听器
+  $(document).on('refresh', '.pull-to-refresh-content',function(e) {
+      // 模拟2s的加载过程
+      setTimeout(function() {
+          // 加载完毕需要重置
+          $.pullToRefreshDone('.pull-to-refresh-content');
+      }, 1000);
+  });
+  //下拉刷新初始化
+  // $.initPullToRefresh(".content");
+</script>
+<script>
+  // console.log("测试",$(".ask-reason").text().visualLength());
+  //初始化主页链接
   function init(){
     var url = window.location.hash;
       if(url){
@@ -286,7 +361,125 @@
       $(".tab-item").removeClass("active");
       $("."+url).addClass("active");
   }
+
+  //获取美食信息
+  function getAskMe(page,size,staus,callback){
+    var staus = staus ? staus : 1;
+    var data = {
+      page  : page,
+      size  : size,
+      staus : staus
+    }
+    $.ajax({
+      type : "GET",
+      data: data,
+      dataType: "json",
+      url : "/ask/allask",
+      success: function(result){
+        // console.log(result);
+        callback.success(result);
+      },
+      error:function(error){
+        // console.log(error);
+        callback.error(error);
+      },
+    })
+  }
+
+  // function initData(){
+    // 加载flag
+    var loading = false;
+    // 最多可加载的条目
+    var maxItems = 100;
+
+    // 每次加载添加多少条目
+    var itemsPerLoad = 20;
+
+    //getAskLoad  0代表空闲 1代表占用
+    var getAskLoad = 0;
+
+    function addItems(number, lastIndex) {
+
+      //屏蔽其他请求
+      console.log(lastIndex);
+      var page = parseInt(lastIndex/number + 1);
+      if(!getAskLoad){
+        console.log(page);
+        getAskMe(page,number,'',{
+          success:function(result){
+            // 生成新条目的HTML
+            console.log(result);
+            var html = '';
+            var data = result.data;
+            if(data){
+              for (var i = 0; i < data.length; i++) {
+                html += '<div class="wenwo-li" data-id='+data[i].objectId+'><div class="up-content"><img src="'+data[i].createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">'+formatTag(data[i].askTagStr)+'</div><div class="ask-reason">'+data[i].askContentShow+'</div></div></div><div class="down-content"><div class="down-like">想吃23</div><div class="down-time">'+formatDate("y.m.d",data[i].updatedAt)+'</div></div></div>';
+              }
+              // 添加新条目
+              $('.wenwo-ul').append(html);
+              // itemsPerLoad
+              getAskLoad = 0;
+            }
+            
+          },  
+          error:function(error){
+          }
+        })
+      }
+
+      // // 生成新条目的HTML
+      // var html = '';
+      // for (var i = lastIndex + 1; i <= lastIndex + number; i++) {
+      //   html += '<li class="item-content"><div class="item-inner"><div class="item-title">Item ' + i + '</div></div></li>';
+      // }
+      // // 添加新条目
+      // $('.wenwo-ul').append(html);
+      getAskLoad = 1;
+    }
+    //预先加载20条
+    addItems(itemsPerLoad, 0);
+
+    // 上次加载的序号
+
+    var lastIndex = 20;
+
+    // 注册'infinite'事件处理函数
+    $(document).on('infinite', '.infinite-scroll-bottom',function() {
+
+      console.log("123");
+      // 如果正在加载，则退出
+      if (loading) return;
+
+      // 设置flag
+      loading = true;
+
+      // 模拟1s的加载过程
+      // setTimeout(function() {
+        // 重置加载flag
+        loading = false;
+
+        if (lastIndex >= maxItems) {
+          // 加载完毕，则注销无限加载事件，以防不必要的加载
+          $.detachInfiniteScroll($('.infinite-scroll'));
+          // 删除加载提示符
+          $('.infinite-scroll-preloader').remove();
+          return;
+        }
+
+        // 更新最后加载的序号
+        lastIndex = $('.wenwo-li').length;
+        // 添加新条目
+        addItems(itemsPerLoad, lastIndex);
+        //容器发生改变,如果是js滚动，需要刷新滚动
+        $.refreshScroller();
+      // }, 1000);
+    });
+  // }
+  // initData();
+  // getAskMe(2,10);
   init();
+
+  $.init();
 
   $(".tab-item").on("click",function(){
     // console.log($());
@@ -308,8 +501,12 @@
     }
   })
 
-  $(".wenwo-li").on("click",function(){
-    $.router.load("/detail");
+  $(".wenwo-ul").on("click",".wenwo-li",function(){
+    // $.router.load("/detail");
+    console.log($(this).attr("data-id"));
+    var askId = $(this).attr("data-id");
+    $.showPreloader("正在跳转");
+    $.router.load("/detail?askid="+askId);
   })
   $(".icon-gerenzhongxin").on("click",function(){
     console.log("123");

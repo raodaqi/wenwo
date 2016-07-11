@@ -23,6 +23,14 @@ function formatDate(format, timestamp, full) {
     });
 };
 
+function formatTag(tag){
+  if(tag){
+    var tag = JSON.parse(tag);
+    return tag[0].tag_name;
+  }
+}
+
+
 function formatType(type) {
     switch (type) {
         case '0':
@@ -88,6 +96,22 @@ function GetLength(str) {
   }
   return realLength;
 };
+
+// function formatTextLength(str,length){
+//   var realLength = 0, 
+//       len = str.length, 
+//       charCode = -1;
+
+//   for (var i = 0; i < len; i++) {
+//     charCode = str.charCodeAt(i);
+//     if (charCode >= 0 && charCode <= 128) realLength += 1;
+//     else realLength += 2;
+//     if(realLength >= length){
+//       return str.substr(0,realLength) + '...';
+//     }
+//   }
+//   return str;
+// }
 
 //详情内容隐藏
 function deShow(text){
