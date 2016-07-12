@@ -43,7 +43,7 @@ router.get('/allask', function(req, res, next) {
         query.limit(size);
     }
     
-    query.skip(page);
+    query.skip(page*size);
     query.descending('createdAt');
 
     query.find().then(function(results) {
@@ -886,6 +886,9 @@ router.post('/approval', function(req, res, next) {
 
 router.post('/sendask', function(req, res, next) {
     var sessionToken = req.param('session_token');
+
+    var images = req.param('images');
+    var shopName = req.param('shop_name');
     var userName = req.param('username');
     if (!userName) {
         var result = {
@@ -990,6 +993,8 @@ router.post('/sendask', function(req, res, next) {
             ask.set('askIsFree', '0');
         }
         //ask.set('askGeo', geo);
+        ask.set('askImage', images);
+        ask.set('shopName', shopName);
         ask.set('GeoX', geoX);
         ask.set('GeoY', geoY);
         ask.set('askPosition', position);
