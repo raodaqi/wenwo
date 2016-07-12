@@ -482,7 +482,7 @@ router.post('/foodlike', function(req, res, next) {
                 } else  {
 
                     var result = {
-                        code : 200,
+                        code : 400,
                         message : '重复操作'
                     }
                     res.send(result);
