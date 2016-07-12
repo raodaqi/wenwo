@@ -22,7 +22,7 @@ var Like = AV.Object.extend('Like');
 
 router.get('/allask', function(req, res, next) {
     //page      size
-    var username = req.param('username');
+    var userName = req.param('username');
     var page = req.param('page') != null ? req.param('page') : 0;
     var size = req.param('size') != null ? req.param('size') : 1000;
     var staus = req.param('staus') != null ? req.param('staus') : '1';
@@ -49,32 +49,64 @@ router.get('/allask', function(req, res, next) {
 
     query.find().then(function(results) {
         //console.log(results);
-        for (var i = 0; i < results.length; i++) {
-            // results[i].attributes.askContentHide = '****';
-            if(results[i].attributes.askIsFree == "0" || results[i].attributes.askPrice !="0.00"){
-                var length = results[i].get('askContentHide').length;
-                results[i].attributes.askContentHide = '';
-                for (var j = 0; j < length; j++) {
-                    results[i].attributes.askContentHide += '*';
+
+        var query = new AV.Query('FoodLike');
+
+        query.equalTo("by", userName);
+
+        query.find().then(function (likeList) {
+
+
+            for (var i = 0; i < results.length; i++) {
+                // results[i].attributes.askContentHide = '****';
+                if(results[i].attributes.askIsFree == "0" || results[i].attributes.askPrice !="0.00"){
+                    var length = results[i].get('askContentHide').length;
+                    results[i].attributes.askContentHide = '';
+                    for (var j = 0; j < length; j++) {
+                        results[i].attributes.askContentHide += '*';
+                    }
                 }
+
+                // var test = results[i].get('askTag');
+                // console.log(test);
+                // var relation = results[i].relation('askTag');
+                // relation.query().find().then(function (list) {
+                //     console.log(list);
+                //
+                // });
+
+                var flag = 0;
+                for ( var k = 0; k < likeList.length; k++) {
+
+                    if (likeList[k].get('ask').id == results[i].id) {
+                        flag ++;
+                        results[i].set('liked', 1);
+
+                        break;
+                    }
+
+                }
+                if (flag == 0) {
+
+                    results[i].set('liked', 0);
+
+
+                }
+
+
             }
 
-            // var test = results[i].get('askTag');
-            // console.log(test);
-            // var relation = results[i].relation('askTag');
-            // relation.query().find().then(function (list) {
-            //     console.log(list);
-            //
-            // });
+            var result = {
+                code : 200,
+                data : results,
+                message : 'Operation succeeded'
+            }
+            res.send(result);
 
-        }
 
-        var result = {
-            code : 200,
-            data : results,
-            message : 'Operation succeeded'
-        }
-        res.send(result);
+        });
+
+
 
     });
 

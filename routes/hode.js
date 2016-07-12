@@ -450,7 +450,7 @@ router.post('/foodlike', function(req, res, next) {
             query.find().then(function (fooLikes) {
                 var flag = 0;
                 for (var i = 0; i<fooLikes.length; i++) {
-                    if (fooLikes[0].get('ask').id == askId) {
+                    if (fooLikes[i].get('ask').id == askId) {
 
                         flag++;
                         break;
@@ -464,6 +464,7 @@ router.post('/foodlike', function(req, res, next) {
                     foodLike.set('by', userName);
                     foodLike.set('byName', user.get('uName'));
                     foodLike.set('byUrl', user.get('userHead'));
+                    ask.set('likeNum', (parseInt(ask.get('likeNum'))+1).toString());
                     foodLike.save().then(function (re) {
 
                         var result = {
