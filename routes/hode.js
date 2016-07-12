@@ -462,7 +462,7 @@ router.post('/foodlike', function(req, res, next) {
                     var foodLike = new FoodLike();
                     foodLike.set('ask', ask);
                     foodLike.set('by', userName);
-                    foodLike.set('buName', user.get('uName'));
+                    foodLike.set('byName', user.get('uName'));
                     foodLike.set('byUrl', user.get('userHead'));
                     foodLike.save().then(function (re) {
 
