@@ -150,14 +150,6 @@
       background-color: #FFF;
       border-radius: 2px;
       height: 1.5rem;
-      /*position: absolute;
-      bottom:5px;
-      left:5px;
-      box-sizing: border-box;
-      margin-right: 50px;
-      border-radius: 2px;
-      height: 1rem;*/
-      /*float: right;*/
     }
     .ww-typeHelper-left{
       width: 100%;
@@ -439,15 +431,9 @@
   }
   </style>
   <body>
-     <!-- <div class="header-label">
-      <div class="header-cancel iconfont icon-zuo"></div>
-      <div class="header-title">
-        发表
-      </div>
-    </div> -->
     <div class="page page-current" id='router'>
       <header class="bar bar-nav">
-        <a class="button button-link button-nav pull-left" href="food?username=573b0e3df38c8400673bb48d">
+        <a class="button button-link button-nav pull-left">
           <!-- <a class="button button-link button-nav pull-left"> -->
             <span class="icon icon-left"></span>
         </a>
@@ -462,8 +448,6 @@
               <div class="card-header">标签</div>
               <div class="card-content">
                 <div class="card-content-inner">
-                  <!-- <span class="type-item">火锅</span>
-                  <span class="type-item">冒菜</span> -->
                 </div>
               </div>
             </div>
@@ -712,9 +696,19 @@
         // $.router.back();
       }
     })
+
+    $("#router .icon-left").on("click",function(){
+      var url = window.location.hash;
+      if(!url.split("#")[1]){
+        $.showPreloader("正在跳转");
+        $.router.back();
+      }else{
+        $.showPreloader("正在跳转");
+        $.router.load("/food");
+      }
+    })
   </script>
   <script>
-
   initLocation();
   window.onload = function() {
     map.plugin(["AMap.ToolBar"], function() {

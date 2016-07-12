@@ -114,6 +114,9 @@ app.get('/food', function(req, res) {
   var lng = req.query.geox;
   var lat = req.query.geoy;
   //username = decodeURI(username);
+  if(!username){
+    username = '573b0e3df38c8400673bb48d';
+  }
   if(lng && lat){
     res.render('food', { username: username, lng:lng, lat:lat});
   }

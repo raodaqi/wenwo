@@ -10,18 +10,11 @@
   <link rel="icon" type="image/x-icon" href="/img/logo.png" media="screen">
   <title>问我——像个当地人一样去旅游</title>
   <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="http:////at.alicdn.com/t/font_1467969350_567877.css">
+  <link rel="stylesheet" href="http://at.alicdn.com/t/font_1468291455_4862251.css">
   <link rel="stylesheet" href="/css/sm.min.css">
   <script src="/js/jweixin-1.0.0.js"></script>
 </head>
   <style>
-    @font-face {font-family: 'webfont';
-      src: url('//at.alicdn.com/t/vlddunszd2pousor.eot'); /* IE9*/
-      src: url('//at.alicdn.com/t/vlddunszd2pousor.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-      url('//at.alicdn.com/t/vlddunszd2pousor.woff') format('woff'), /* chrome、firefox */
-      url('//at.alicdn.com/t/vlddunszd2pousor.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-      url('//at.alicdn.com/t/vlddunszd2pousor.svg#思源黑体-极细') format('svg'); /* iOS 4.1- */
-    }
     html{
       font-size: 20px;
     }
@@ -86,7 +79,7 @@
     .header-me{
       position: absolute;
       float: left;
-      line-height: 40px;
+      line-height: 2rem;
       font-size: 1rem;
       font-weight: bold;
       z-index: 2;
@@ -109,6 +102,89 @@
     .content{
       padding-bottom: 50px;
     }
+    .detail-pic-bg,.bg-mask{
+      height: 10rem;
+      width: 100%;
+      /*background: #fff;*/
+      position: absolute;
+    }
+    .bg-mask{
+      background: rgba(0,0,0,0.8);
+    }
+    .pic-bg{
+      display: block;
+      position: absolute;
+      /*width: 6rem;*/
+      /*height: 100%;*/
+      /*margin-top: 2rem;
+      margin-left: 50%;
+      transform: translateX(-50%);*/
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+    }
+    .user-pic-content{
+      display: block;
+      position: absolute;
+      width: 3rem;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 1rem;
+    }
+    .user-pic{
+      display: block;
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      margin-bottom: 0.3rem;
+    }
+    .user-name{
+      width: 100%;
+      text-align: center;
+      color: white;
+      font-family:"webfont" !important;
+    }
+    .list-content{
+      position: absolute;
+      top:7rem;
+      width: 100%;
+      color: white;
+      box-sizing: border-box;
+      text-align: center;
+      font-size: 0.7rem
+    }
+    .list-li{
+      width: 13.33%;
+      margin: 0 10%;
+      float: left;
+      text-align: center;
+    }
+    .list-li label{
+      display: block;
+      width: 100%;
+      text-align: center;
+    }
+    .list-block{
+      margin-top: 10.5rem;
+    }
+    .item-title{
+      padding-left: 0.5rem;
+    }
+    .before-media{
+      position: absolute;
+      line-height: 2rem;
+      font-size: 1rem;
+    }
+    .my-ask{
+      margin-bottom: 1rem !important;
+    }
+    .ask-end{
+      font-size: .7rem;
+      color: #A7A7A7;
+    }
+    .liked{
+      color:#0894ec;
+    }
   </style>
 <body>
   <!-- <header class="bar bar-nav">
@@ -120,93 +196,17 @@
       <h1 class="title">问我&bull;美食</h1>
     </header>
     <!-- 这里是所有的信息列表 -->
-    <div class="content pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="55" data-distance="100">
-     <!--  <div class="wenwo-li">
-        <div class="up-content">
-          <img src="http://wx.qlogo.cn/mmopen/zngt7mjBQUdFiaKIVGQbhF3jRURfqibW3EtNPALJewxicdPAyGfyMpZkeHZIW1UXUmjEia3QicdYqickSiaywQcKBUS6GMWSEw67Rry/" alt="" class="user-pic">
-          <div class="ask-content">
-            <div class="ask-tag">鱼火锅</div>
-            <div class="ask-reason">好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃</div>
-          </div>
-        </div>
-        <div class="down-content">
-          <div class="down-like">想吃23</div>
-          <div class="down-time">2016-07-07</div>
-        </div>
-      </div>
-
-      <div class="wenwo-li">
-        <div class="up-content">
-          <img src="http://wx.qlogo.cn/mmopen/zngt7mjBQUdFiaKIVGQbhF3jRURfqibW3EtNPALJewxicdPAyGfyMpZkeHZIW1UXUmjEia3QicdYqickSiaywQcKBUS6GMWSEw67Rry/" alt="" class="user-pic">
-          <div class="ask-content">
-            <div class="ask-tag">鱼火锅</div>
-            <div class="ask-reason">好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃</div>
-          </div>
-        </div>
-        <div class="down-content">
-          <div class="down-like">想吃23</div>
-          <div class="down-time">2016-07-07</div>
-        </div>
-      </div>
-
-      <div class="wenwo-li">
-        <div class="up-content">
-          <img src="http://wx.qlogo.cn/mmopen/zngt7mjBQUdFiaKIVGQbhF3jRURfqibW3EtNPALJewxicdPAyGfyMpZkeHZIW1UXUmjEia3QicdYqickSiaywQcKBUS6GMWSEw67Rry/" alt="" class="user-pic">
-          <div class="ask-content">
-            <div class="ask-tag">鱼火锅</div>
-            <div class="ask-reason">好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃</div>
-          </div>
-        </div>
-        <div class="down-content">
-          <div class="down-like">想吃23</div>
-          <div class="down-time">2016-07-07</div>
-        </div>
-      </div>
-    </div> -->
-    <!-- <div class="content pull-to-refresh-content" data-ptr-distance="55"> -->
+    <div class="find-content content pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="55" data-distance="100">
       <!-- 默认的下拉刷新层 -->    
       <div class="pull-to-refresh-layer">
         <div class="preloader"></div>
         <div class="pull-to-refresh-arrow"></div>
       </div>
-      <!-- 下面是正文 -->    
-      <!-- <div class="card-container">
-        <div class="card">
-          <div class="card-header">card</div>
-          <div class="card-content">
-            <div class="card-content-inner">这里是第1个card，下拉刷新会出现第2个card。</div>
-          </div>
-        </div>
+      <div class="wenwo-ul"></div>
+      <div class="infinite-scroll-preloader" >
+        <div class="preloader"></div>
+        <div class="ask-end" style="display:none">哥，这回真的没了</div>
       </div>
-    </div> -->
-    <div class="wenwo-ul"></div>
-      <!-- <div class="wenwo-li card-container">
-        <div class="up-content">
-          <img src="http://wx.qlogo.cn/mmopen/zngt7mjBQUdFiaKIVGQbhF3jRURfqibW3EtNPALJewxicdPAyGfyMpZkeHZIW1UXUmjEia3QicdYqickSiaywQcKBUS6GMWSEw67Rry/" alt="" class="user-pic">    
-          <div class="ask-content">
-            <div class="ask-tag">鱼火锅</div>
-            <div class="ask-reason">好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃</div>
-          </div>
-        </div>
-        <div class="down-content">
-          <div class="down-like">想吃23</div>
-          <div class="down-time">2016-07-07</div>
-        </div>
-      </div>
-    </div> -->
-    <!-- <div class="list-container"></div> -->
-    <!-- <div class="list-block">
-          <ul class="list-container">
-           
-          </ul>
-        </div>
-        <div class="infinite-scroll-preloader" >
-          <div class="preloader">
-          </div>
-        </div>
-    </div> -->
-    <div class="infinite-scroll-preloader" >
-      <div class="preloader"></div>
     </div>
   </div>
 
@@ -215,7 +215,7 @@
     <header class="bar bar-nav">
       <h1 class="title">喜欢</h1>
     </header>
-    <div class="content">
+    <!-- <div class="content">
       <div class="wenwo-li">
         <div class="up-content">
           <img src="http://wx.qlogo.cn/mmopen/zngt7mjBQUdFiaKIVGQbhF3jRURfqibW3EtNPALJewxicdPAyGfyMpZkeHZIW1UXUmjEia3QicdYqickSiaywQcKBUS6GMWSEw67Rry/" alt="" class="user-pic">
@@ -229,33 +229,19 @@
           <div class="down-time">2016-07-07</div>
         </div>
       </div>
+    </div> -->
 
-      <div class="wenwo-li">
-        <div class="up-content">
-          <img src="http://wx.qlogo.cn/mmopen/zngt7mjBQUdFiaKIVGQbhF3jRURfqibW3EtNPALJewxicdPAyGfyMpZkeHZIW1UXUmjEia3QicdYqickSiaywQcKBUS6GMWSEw67Rry/" alt="" class="user-pic">
-          <div class="ask-content">
-            <div class="ask-tag">鱼火锅</div>
-            <div class="ask-reason">好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃</div>
-          </div>
-        </div>
-        <div class="down-content">
-          <div class="down-like">想吃23</div>
-          <div class="down-time">2016-07-07</div>
-        </div>
+    <!-- 这里是想吃的信息列表 -->
+    <div class="like-content content pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="55" data-distance="100">
+      <!-- 默认的下拉刷新层 -->    
+      <div class="pull-to-refresh-layer">
+        <div class="preloader"></div>
+        <div class="pull-to-refresh-arrow"></div>
       </div>
-
-      <div class="wenwo-li">
-        <div class="up-content">
-          <img src="http://wx.qlogo.cn/mmopen/zngt7mjBQUdFiaKIVGQbhF3jRURfqibW3EtNPALJewxicdPAyGfyMpZkeHZIW1UXUmjEia3QicdYqickSiaywQcKBUS6GMWSEw67Rry/" alt="" class="user-pic">
-          <div class="ask-content">
-            <div class="ask-tag">鱼火锅</div>
-            <div class="ask-reason">好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃</div>
-          </div>
-        </div>
-        <div class="down-content">
-          <div class="down-like">想吃23</div>
-          <div class="down-time">2016-07-07</div>
-        </div>
+      <div class="wenwo-ul"></div>
+      <div class="infinite-scroll-preloader" >
+        <div class="preloader"></div>
+        <div class="ask-end" style="display:none">哥，这回真的没了</div>
       </div>
     </div>
   </div>
@@ -269,45 +255,66 @@
       <h1 class="title">个人中心</h1>
     </header>
     <div class="content">
-      <div class="wenwo-li">
-        <div class="up-content">
-          <img src="http://wx.qlogo.cn/mmopen/zngt7mjBQUdFiaKIVGQbhF3jRURfqibW3EtNPALJewxicdPAyGfyMpZkeHZIW1UXUmjEia3QicdYqickSiaywQcKBUS6GMWSEw67Rry/" alt="" class="user-pic">
-          <div class="ask-content">
-            <div class="ask-tag">鱼火锅</div>
-            <div class="ask-reason">好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃</div>
-          </div>
-        </div>
-        <div class="down-content">
-          <div class="down-like">想吃23</div>
-          <div class="down-time">2016-07-07</div>
-        </div>
-      </div>
+      <div class="detail-pic-bg">
+        <img src="http://wx.qlogo.cn/mmopen/zngt7mjBQUdFiaKIVGQbhF3jRURfqibW3EtNPALJewxicdPAyGfyMpZkeHZIW1UXUmjEia3QicdYqickSiaywQcKBUS6GMWSEw67Rry/" alt="" class="pic-bg">
+        <div class="bg-mask"></div>
 
-      <div class="wenwo-li">
-        <div class="up-content">
+        <div class="user-pic-content">
           <img src="http://wx.qlogo.cn/mmopen/zngt7mjBQUdFiaKIVGQbhF3jRURfqibW3EtNPALJewxicdPAyGfyMpZkeHZIW1UXUmjEia3QicdYqickSiaywQcKBUS6GMWSEw67Rry/" alt="" class="user-pic">
-          <div class="ask-content">
-            <div class="ask-tag">鱼火锅</div>
-            <div class="ask-reason">好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃</div>
-          </div>
+          <div class="user-name">饶大奇</div>
         </div>
-        <div class="down-content">
-          <div class="down-like">想吃23</div>
-          <div class="down-time">2016-07-07</div>
-        </div>
-      </div>
 
-      <div class="wenwo-li">
-        <div class="up-content">
-          <img src="http://wx.qlogo.cn/mmopen/zngt7mjBQUdFiaKIVGQbhF3jRURfqibW3EtNPALJewxicdPAyGfyMpZkeHZIW1UXUmjEia3QicdYqickSiaywQcKBUS6GMWSEw67Rry/" alt="" class="user-pic">
-          <div class="ask-content">
-            <div class="ask-tag">鱼火锅</div>
-            <div class="ask-reason">好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃</div>
+        <div class="list-content">
+          <div class="list-li">
+            <label>4</label>
+            <label>想吃</label>
+          </div>
+          <div class="list-li">
+            <label>0</label>
+            <label>发布</label>
+          </div>
+          <div class="list-li">
+            <label>4</label>
+            <label>收益</label>
           </div>
         </div>
-        <div class="down-content">
-          <div class="down-like">想吃23</div>
-          <div class="down-time">2016-07-07</div>
+
+        <div class="list-block">
+          <ul class="my-ask">
+            <li class="item-content item-link">
+              <div class="before-media"><i class="iconfont icon-gouwuche"></i></div>
+              <div class="item-media"><i class="icon icon-f7"></i></div>
+              <div class="item-inner">
+                <div class="item-title">我的订单</div>
+                <div class="item-after">20</div>
+              </div>
+            </li>
+            <li class="item-content item-link">
+              <div class="before-media"><i class="iconfont icon-paper-airplane"></i></div>
+              <div class="item-media"><i class="icon icon-f7"></i></div>
+              <div class="item-inner">
+                <div class="item-title">我的发布</div>
+                <div class="item-after">10</div>
+              </div>
+            </li>
+          </ul>
+
+          <ul class="">
+            <li class="item-content item-link">
+              <div class="before-media"><i class="iconfont icon-fenxiang"></i></div>
+              <div class="item-media"><i class="icon icon-f7"></i></div>
+              <div class="item-inner">
+                <div class="item-title">邀请好友使用</div>
+              </div>
+            </li>
+            <li class="item-content item-link" data-href="http://form.mikecrm.com/Qg7fK7">
+              <div class="before-media"><i class="iconfont icon-mes"></i></div>
+              <div class="item-media"><i class="icon icon-f7"></i></div>
+              <div class="item-inner">
+                <div class="item-title">给我们提意见</div>
+              </div>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -346,6 +353,9 @@
 </script>
 <script>
   // console.log("测试",$(".ask-reason").text().visualLength());
+  //用户名
+  var UserName = "<%= username %>";
+
   //初始化主页链接
   function init(){
     var url = window.location.hash;
@@ -363,12 +373,14 @@
   }
 
   //获取美食信息
-  function getAskMe(page,size,staus,callback){
+  function getAskMe(page,size,staus,username,callback){
     var staus = staus ? staus : 1;
+    var username = username ? username : '';
     var data = {
-      page  : page,
-      size  : size,
-      staus : staus
+      page     : page,
+      size     : size,
+      staus    : staus,
+      username : username
     }
     $.ajax({
       type : "GET",
@@ -386,11 +398,54 @@
     })
   }
 
+  //获取用户想吃列表
+  //获取美食信息
+  function getLikeList(username,callback){
+    var username = username ? username : '';
+    var data = {
+      username : username
+    }
+    $.ajax({
+      type : "POST",
+      data: data,
+      dataType: "json",
+      url : "/hode/foodlikelist",
+      success: function(result){
+        // console.log(result);
+        callback.success(result);
+      },
+      error:function(error){
+        // console.log(error);
+        callback.error(error);
+      },
+    })
+  }
+
+  //想吃 接口
+  function like(username,askid,callback){
+    var data = {
+      username   : username,
+      ask_id     : askid
+    }
+    $.ajax({
+      type : "POST",
+      data: data,
+      dataType: "json",
+      url : "/hode/foodlike",
+      success: function(result){
+        callback.success(result);
+      },
+      error:function(error){
+        callback.error(error);
+      },
+    })
+  }
+
   // function initData(){
     // 加载flag
     var loading = false;
     // 最多可加载的条目
-    var maxItems = 100;
+    // var maxItems = 100;
 
     // 每次加载添加多少条目
     var itemsPerLoad = 20;
@@ -401,11 +456,11 @@
     function addItems(number, lastIndex) {
 
       //屏蔽其他请求
-      console.log(lastIndex);
-      var page = parseInt(lastIndex/number + 1);
+      // console.log(lastIndex);
+      var page = parseInt(lastIndex/number);
       if(!getAskLoad){
         console.log(page);
-        getAskMe(page,number,'',{
+        getAskMe(page,number,'',UserName,{
           success:function(result){
             // 生成新条目的HTML
             console.log(result);
@@ -413,12 +468,23 @@
             var data = result.data;
             if(data){
               for (var i = 0; i < data.length; i++) {
-                html += '<div class="wenwo-li" data-id='+data[i].objectId+'><div class="up-content"><img src="'+data[i].createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">'+formatTag(data[i].askTagStr)+'</div><div class="ask-reason">'+data[i].askContentShow+'</div></div></div><div class="down-content"><div class="down-like">想吃23</div><div class="down-time">'+formatDate("y.m.d",data[i].updatedAt)+'</div></div></div>';
+                html += '<div class="wenwo-li" data-id='+data[i].objectId+'><div class="up-content"><img src="'+data[i].createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">'+formatTag(data[i].askTagStr)+'</div><div class="ask-reason">'+data[i].askContentShow+'</div></div></div><div class="down-content"><div class="down-like '+(data[i].liked ? "liked" : '')+'">想吃<label class="like-num">'+data[i].likeNum+'</label></div><div class="down-time">'+formatDate("y.m.d",data[i].updatedAt)+'</div></div></div>';
               }
               // 添加新条目
-              $('.wenwo-ul').append(html);
+              $('#find .wenwo-ul').append(html);
               // itemsPerLoad
               getAskLoad = 0;
+              if (number > data.length) {
+                // 加载完毕，则注销无限加载事件，以防不必要的加载
+                $.detachInfiniteScroll($('.infinite-scroll'));
+                // 删除加载提示符
+                // $('.infinite-scroll-preloader').remove();
+                $(".preloader").hide();
+                $(".ask-end").show();
+                // $('.infinite-scroll-preloader').append("")
+                getAskLoad = 1;
+                return;
+              }
             }
             
           },  
@@ -458,13 +524,13 @@
         // 重置加载flag
         loading = false;
 
-        if (lastIndex >= maxItems) {
-          // 加载完毕，则注销无限加载事件，以防不必要的加载
-          $.detachInfiniteScroll($('.infinite-scroll'));
-          // 删除加载提示符
-          $('.infinite-scroll-preloader').remove();
-          return;
-        }
+        // if (lastIndex >= maxItems) {
+        //   // 加载完毕，则注销无限加载事件，以防不必要的加载
+        //   $.detachInfiniteScroll($('.infinite-scroll'));
+        //   // 删除加载提示符
+        //   $('.infinite-scroll-preloader').remove();
+        //   return;
+        // }
 
         // 更新最后加载的序号
         lastIndex = $('.wenwo-li').length;
@@ -480,6 +546,27 @@
   init();
 
   $.init();
+
+  //获取想吃列表
+  getLikeList(UserName,{
+    success:function(result){
+      if(result.code == 200){
+        var html = '';
+        var data = result.data;
+        if(data){
+          for (var i = 0; i < data.length; i++) {
+            html += '<div class="wenwo-li" data-id='+data[i].objectId+'><div class="up-content"><img src="'+data[i].createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">'+formatTag(data[i].askTagStr)+'</div><div class="ask-reason">'+data[i].askContentShow+'</div></div></div><div class="down-content"><div class="down-like '+(data[i].liked ? "liked" : '')+'">想吃<label class="like-num">'+data[i].likeNum+'</label></div><div class="down-time">'+formatDate("y.m.d",data[i].updatedAt)+'</div></div></div>';
+          }
+        }
+        // 添加新条目
+        $('#like .wenwo-ul').append(html);
+        $("#like .preloader").hide();
+      }
+    },
+    error:function(error){
+
+    }
+  })
 
   $(".tab-item").on("click",function(){
     // console.log($());
@@ -501,15 +588,42 @@
     }
   })
 
-  $(".wenwo-ul").on("click",".wenwo-li",function(){
+  //点击想吃逻辑
+  $(".wenwo-ul").on("click",".down-like",function(){
+    //获取点击后的id
+    var askId = $(this).parent().parent().attr("data-id");
+    console.log(askId);
+    if(true){
+      var num = $(this).children(".like-num").text();
+      num = parseInt(num)+1;
+      $(this).children(".like-num").text(num);
+      $(this).addClass("liked");
+      like(UserName,askId,{
+        success:function(result){
+          console.log(result);
+          if(result.code == 200){
+          }else{
+            num--;
+            $(this).children(".like-num").text(num);
+          }
+        },
+        error:function(error){
+          console.log(error);
+          num--;
+          $(this).children(".like-num").text(num);
+        }
+      });
+    } 
+  })  
+
+  $(".wenwo-ul").on("click",".up-content",function(){
     // $.router.load("/detail");
-    console.log($(this).attr("data-id"));
-    var askId = $(this).attr("data-id");
+    console.log($(this).parent().attr("data-id"));
+    var askId = $(this).parent().attr("data-id");
     $.showPreloader("正在跳转");
     $.router.load("/detail?askid="+askId);
   })
   $(".icon-gerenzhongxin").on("click",function(){
-    console.log("123");
     $.router.load("#me");
   })
   // $(".edit").on("click",function(){
