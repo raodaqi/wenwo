@@ -15,6 +15,7 @@ var Ask =  AV.Object.extend('AskMe');
 var Haved = AV.Object.extend('Haved');
 var Wallet = AV.Object.extend('Wallet');
 var RefundInfo = AV.Object.extend('RefundInfo');
+var FoodLike = AV.Object.extend('FoodLike');
 
 router.post('/haved', function(req, res, next) {
     var userName = req.param('username');
@@ -432,6 +433,93 @@ router.post('/refund', function(req, res, next) {
     });
 });
 
+router.post('/foodlike', function(req, res, next) {
+    var userName = req.body.username;
+
+    var askId = req.body.ask_id;
+
+    var query = new AV.Query('UserInfo');
+    query.get(userName).then(function (user) {
+
+        var query = new AV.Query('AskMe');
+        query.get(askId).then(function (ask) {
+
+            var query = new AV.Query('FoodLike');
+
+            query.equalTo("by", userName);
+            query.find().then(function (fooLikes) {
+                var flag = 0;
+                for (var i = 0; i<fooLikes.length; i++) {
+                    if (fooLikes[0].get('ask').id == askId) {
+
+                        flag++;
+                        break;
+                    }
+
+                }
+                if (flag == 0) {
+
+                    var foodLike = new FoodLike();
+                    foodLike.set('ask', ask);
+                    foodLike.set('by', userName);
+                    foodLike.set('buName', user.get('uName'));
+                    foodLike.set('byUrl', user.get('userHead'));
+                    foodLike.save().then(function (re) {
+
+                        var result = {
+                            code : 200,
+                            data : re,
+                            message : '操作成功'
+                        }
+                        res.send(result);
+
+
+
+                    });
+
+
+
+                } else  {
+
+                    var result = {
+                        code : 200,
+                        message : '重复操作'
+                    }
+                    res.send(result);
+
+
+
+                }
+            });
+
+        });
+        
+    });
+});
+
+router.post('/foodlikelist', function(req, res, next) {
+    var userName = req.body.username;
+
+
+    var query = new AV.Query('UserInfo');
+    query.get(userName).then(function (user) {
+
+            var query = new AV.Query('FoodLike');
+
+            query.equalTo("by", userName);
+            query.find().then(function (fooLikes) {
+
+                var result = {
+                    code : 200,
+                    data : fooLikes,
+                    message : '操作成功'
+                }
+                res.send(result);
+
+            });
+
+    });
+})
 
 module.exports = router;
 

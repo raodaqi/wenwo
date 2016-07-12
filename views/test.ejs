@@ -198,9 +198,9 @@
 //            error : function(){}
 //        });
         $.ajax({
-            type: "get",
-            url: 'authorization/test',
-            data: {},
+            type: "post",
+            url: 'hode/foodlike',
+            data: {username:"573b0c63ad5b950057533669", ask_id:"575325b12e958a006a65f477"},
             dataType: "json",
             success : function(result) {
                 console.log(result);
