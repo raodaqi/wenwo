@@ -19,414 +19,136 @@
       padding:0;
       margin:0;
     }
-    .type-item{
-      display: inline-block;
-      padding: 0px 20px;
-      /*color: #FFC222;*/
-      /*background-color: #FFDC7F;*/
-      height: 30px;
-      line-height: 30px;
-      font-weight: 400;
-      font-size: 15px;
-      text-align: center;
-      margin: 0 .5rem .2rem 0;
-      border-radius: 3px;
-      border:1px solid #393e49;
-    }
-    .next{
-      float: right;
-    }
-    .theme-ul{
-      text-align: center;
-      width: 240px;
-      height: 300px;
-      box-sizing: border-box;
-      margin:0 auto; 
-    }
-    .theme-li{
-      /*display: inline-block;*/
-      float: left;
-      text-align: center;
-      /*margin: 10px;*/
-      width: 120px;
-      height: 100px;
-      /*line-height: 100px;*/
-      /*border-radius: 50%;*/
-      border:1px solid #FFC222;
-    }
-    .theme-li.active{
-      background-color: #FFC222;
-      color:white;
-    }
-    .recommend-reason,.tag-content,.result-detail,.add-content,.price-content{
-      padding: 10px;
-      margin-top: 20px;
-    }
-    #reason,#detail,.de-show,#trade-name{
-      width: 100%;
-      box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-      border: 1px solid #ccc;
-      min-height: 100px;
-      resize:none;
-      border-radius:3px;
-      padding:5px 10px;
-    }
-    #reason,#detail,.de-show,#trade-name{
-      /*background-color: #efc553;*/
-      background-color: #cccccc;
-      height: 12rem;
-      border-radius: 0.5rem;
-      padding:0.8rem 1rem;
-      font-size: 0.75rem;
-      color:#FFF;
-    }
-    #reason{
-      height: 10rem;
-      font-size: 0.75rem;
-    }
-    input:-ms-input-placeholder,
-    textarea:-ms-input-placeholder {
-        color: gray;
-    }
-
-    input::-webkit-input-placeholder,
-    textarea::-webkit-input-placeholder {
-        color: gray;
-    }
-
-    #detail,.de-show{
-/*      height: 150px;*/
-      word-break:break-all;
-    }
-    .de-show{
-      overflow: scroll;
-    }
-    .ww-typeHelper,.add-search {
-        position: relative;
-        background-color: #fff;
-        border: 1px solid #ccc;
-        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-        display: block;
-        color: #555;
-        vertical-align: middle;
-        border-radius: 3px;
-        max-width: 100%;
-        cursor: text;
-        width: 100%;
-        font-size: 14px;
-        line-height: 1.5;
-        padding: 6px 12px;
-    }
-    .add-search{
-      /*background-color: #efc553;*/
-      background-color: #cccccc;
-      padding:2px 3px;
-    }
-    .ww-typeHelper{
-      /*background-color: #efc553;*/
-      background-color: #cccccc;
-      height: 6rem;
-      border-radius: 0.25rem;
-    }
-    .ww-typeHelper-input,.search-input{
-        border: none;
-        box-shadow: none;
-        outline: none;
-        background-color: transparent;
-        padding: 0;
-        margin: 0;
-        text-transform: lowercase;
-        width: 6rem;
-        max-width: 100%;
-        padding-left: 30px;
-    }
-    .search-input{
-      background-color: #fff;
-      border-radius: 0.25rem;
-      height: 30px;
-      padding-left: 10px;
-    }
-    .ww-typeHelper-input{
-      background-color: #FFF;
-      border-radius: 2px;
-      height: 1.5rem;
-    }
-    .ww-typeHelper-left{
-      width: 100%;
-      position: absolute;
-      bottom:5px;
-      left:5px;
-      box-sizing: border-box;
-      padding-right: 3rem;
-      height: 1.5rem;
-    }
-    .ww_typeHelper-button{
-      background-color: #676767;
-      position: absolute;
-      bottom:5px;
-      right:5px;
-      width: 30px;
-      text-align: center;
-      height: 1.5rem;
-      line-height: 1.5rem;
-      color: #FFF;
-      border-radius: 0.15rem;
-      width: 2.3rem;
-      font-size: 0.5rem;
-    }
-    .techTags {
-        /*display: none;*/
-        width: 100%;
-        padding: 6px 0.1rem;
-        margin-bottom: 21px;
-        /*background-color: #fff;*/
-        /*border: 1px solid transparent;*/
-        border-radius: 3px;
-        /*box-shadow: 0 1px 1px rgba(0,0,0,.05);*/
-        padding-bottom: 21px;
-        margin-top: 0.5rem;
-    }
-    .hidden-content{
-      margin-top: 10px;
-      text-align: center;
-    }
-    .hidden-content .button{
-      width: 100px;
-      margin: 0 auto;
-      height: 30px;
-      line-height: 30px;
-    }
-    .hidden-text{
-      color: red;
-    }
-    .theme-content-block{
-      text-align: center;
-    }
-    .theme-content{
-      text-align: center;
-      margin: 20px auto;
-      width: 100px;
-      height: 100px;
-      line-height: 100px;
-      border-radius: 50%;
-      border: 1px solid #FFC222;
-      display: inline-block;
-    }
-    .search-input{
-      width: 100%;
-    }
-    #container{
-      width: 100%;
-      /*height: 300px;*/
-      min-height: 350px;
-      height: 60%;
-      border: 1px solid #ccc;
-      box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-    }
-    .amap-sug-result{
-      z-index: 9999;
-    }
-    .list-block{
-      /*background: white;*/
-      /*background-color: #efc553;*/
-      background-color: #cccccc;
-      border-radius: 5px;
-    }
-    .list-block .item-inner{
-      border-radius: 5px;
-    }
-    .right-icon{
-      float: right;
-    }
-    #price-picker{
-    }
-    .theme-hidden{
-      display: none;
-    }
-    .card-cover{
-      height:300px;
-    }
-    .container-hidden{
-      position: absolute;
-      z-index: 100;
-      height: 100%;
-      width: 100%;
-      top: 0px;
-      left: 0px;
-    }
-    .send-button{
-      margin-top: 50px;
-      background: none;
-    }
-    .header-title{
-      color:#393e49;
-      font-weight: bolder;
-      position: absolute;
-      background-color: #efc553;
-      left: 50%;
-      top:5px;
-      width: 50px;
-      margin-left: -25px;
-      text-align: center;
-    }
-    .page-current{
-      /*margin-top: 30px;*/
-    }
-    /*.bar{
-      background-color: #efc553;
-    }*/
-    .card{
-      /*background-color: #F3D27B;*/
-      background-color: #e7e7e7;
-    }
-    .card-header{
-      min-height:2rem;
-      font-weight: bold;
-      /*border-bottom: 1px solid #BBA05F;*/
-      border-bottom: 1px solid #CCCCCC;
-      padding:0rem .75rem;
-    }
-    .bar .button-link{
-      color:#393e49;
-    }
-    .bar-footer-nav{
-      bottom:0;
-    }
-    .list-block .item-link .item-inner{
-      background-image: none;
-      display: block;
-      margin-left: 1.25rem;
-      overflow-x:hidden !important;
-      white-space: nowrap;
-      line-height: 29px;
-      text-overflow: ellipsis;
-    }
-    .item-left{
-      position: absolute;
-      margin-top: -2px;
-    }
-    .item-left .iconfont{
-      font-size: 20px;
-    }
-    .item-right{
-      position: absolute;
-      right:10px;
-    }
-    .list-block{
-      /*background-color: #F3D27B;*/
-      background-color: #e7e7e7;
-    }
-    .send-button-a{
-      position: absolute;
-      right: 5px;
-    }
     .page{
-      background-color: white;
+      background: white !important;
     }
-    .theme-list-content{
-      padding: 0 2%;
-      text-align: center;
-      height: 50px;
-      /*width: 96%;*/
-      /*width: 300px;*/
-      margin:30px auto;
-      /*width: 100%;*/
-      /*box-sizing: border-box; */
+    .edit-ul{
+      padding-left: 2rem;
+      margin-top: 2rem;
     }
-    .theme-list{
-      width: 16.666%;
-      display: block;
-      float: left;
-      text-align: center;
+    .edit-li{
+      padding-left: 1.5rem;
     }
-    .theme-list img{
-      width: 70%;
+    .tag{
+      border-left: 2px solid #2B82FD;
     }
-    .theme-list-active img{
-      width: 85%;
-      margin-top: -7px;
+    .reason{
+      border-left: 2px solid #F13A01;
     }
-    .theme-list-content .theme-down-text{
-      font-size: 13px;
-      font-weight: bold;
-      display: none;
+    .detail{
+      border-left: 2px solid #F4BC1C;
     }
-    .theme-list-active .theme-down {
-      display: none;
+    .name{
+      border-left: 2px solid #5459CD;
     }
-    .theme-down{
-      height: 3px;
-      width: 70%;
-      margin:5px auto; 
+    .address{
+      border-left: 2px solid #42B93A;
     }
-    .theme-list-active .theme-down-text{
-      display: block;
+    .price{
+
     }
-    .theme-li-active img{
-      width: 50px;
-      height: 50px;
-      margin-top: 15px;
+    .li-title{
+      font-size: 0.7rem;
+      color: #333333;
     }
-    .theme-li-text{
-      display: none;
-    }
-    .theme-li-active .theme-li-text{
-      font-size: 15px;
-      font-weight: bold;
-      display: block;
-      color: #000;
-    }
-    .ww_typeHelper-input-left{
-      position: absolute;
-      /*color: #efc553;*/
-      color: #cccccc;
-      font-size: 25px;
-      top:-6px;
-      left:5px;
-    }
-    .help{
-      display: block;
-      float: left;
-      font-size: 25px;
-      color: #efc553;
-      line-height: 30px;
-      margin-left: 20px;
-    }
-    .button-start{
-      color: #3d4145 !important;
-      background-color: #efc553 !important;
-    }
-    .help-content{
-      padding: 10px;
-      font-size: 13px;
-      color: #efc553;
-      display: none;
-    }
-    #detail-content .card-content-inner,#reason-content .card-content-inner{
+    .edit-content{
+      padding:0.5rem 0;
+      color: #CCCCCC;
+      font-size: 0.6rem;
       word-break:break-all;
     }
-    .right-hidden{
-      margin-right: 5px !important;
+    .edit-li-img{
+      width: 30px;
+      height: 30px;
+      float: left;
+      margin-top: -0.25rem;
+      margin-left:-2.25rem;
+      background-color: white;
+      border-radius: 50%;
+      background-size: cover;
     }
-    /*.geolocation-position{
-      width: 40px;
-      height: 40px;
-    }*/
-    .geolocation-position img{
-      width: 40px;
-      height: 40px;
-    }
-    /*.bar{
-      height: 1.5rem;
-    }*/
-    .bar-footer-nav:before{
-      content: '';
-      /*width: 2px;*/
-      border-left: 1px solid #969696;
-      height: 44px;
+    .footer-bar{
+      width: 100%;
       position: absolute;
-      left:50%;
-      z-index: 2;
+      bottom: 2rem;
+      height: 40px;
+    }
+    .pre-view{
+      position: absolute;
+      left:30px;
+      background-image: url("/img/edit/left.png");
+      background-size: cover;
+      width: 100px;
+      height: 39px;
+      text-align: center;
+      line-height: 39px;
+      color: #999999;
+      padding-left: 20px;
+      font-size: 14px;
+    }
+    .next-view,.end-view{
+      position: absolute;
+      right: 30px;
+      background-image: url("/img/edit/right.png");
+      background-size: cover;
+      width: 100px;
+      height: 39px;
+      text-align: center;
+      line-height: 39px;
+      color: #999999;
+      padding-right: 20px;
+      font-size: 14px;
+    }
+    .header-bar{
+      position: absolute;
+      width: 100%;
+      top:40px;
+    }
+    .header-content{
+      width: 80%;
+      margin-left:10%;
+    }
+    .line{
+      width: 100%;
+      border: 1px solid #D4D4D4;
+    }
+    .circle{
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      position: absolute;
+      margin-top: -4px;
+    }
+    .circle-index{
+      margin-left: 0%;
+      background-color: #50C3E8;
+    }
+    .circle-tag{
+      margin-left: 16%;
+      background-color: #2B82FD;
+    }
+    .circle-reason{
+      margin-left: 32%;
+      background-color: #F13A01;
+    }
+    .circle-detail{
+      margin-left: 48%;
+      background-color: #5459CD;
+    }
+    .circle-name{
+      margin-left: 64%;
+      background-color: #42B93A;
+    }
+    .circle-address{
+      margin-left: 80%;
+      background-color: #F88827;
+    }
+    .circle-img{
+      width: 30px;
+      height: 30px;
+      margin-left: -10px;
+      margin-top: -10px;
+      border-radius: 50%;
     }
   }
   </style>
@@ -434,83 +156,102 @@
     <div class="page page-current" id='router'>
       <header class="bar bar-nav">
         <a class="button button-link button-nav pull-left">
-          <!-- <a class="button button-link button-nav pull-left"> -->
-            <span class="icon icon-left"></span>
+          <span class="icon icon-left"></span>
         </a>
         <h1 class='title'>发布</h1>
-         <a class="button button-link button-nav pull-right send-button-a">
-          确定
-        </a>
+        <a class="button button-link button-nav pull-right send-button-a">确定</a>
       </header>
       <div class="content">
-        <div class="theme-content-block">
-           <div class="card" id="tag-content" data-href="router1">
-              <div class="card-header">标签</div>
-              <div class="card-content">
-                <div class="card-content-inner">
-                </div>
+        <div class="theme-content-block">        
+          <div class="edit-ul">
+            <!-- 标签 -->
+            <div class="edit-li tag" data-href="#router1">
+              <img src="/img/edit/tag-01.png" class="edit-li-img">
+              <div class="li-title">
+                标签
+              </div>
+              <div class="edit-content">
+                请填写标签
               </div>
             </div>
-            
-            <div class="card" id="tradeName-content" data-href="router2">
-              <div class="card-header">店名</div>
-              <div class="card-content">
-                <div class="card-content-inner">
-                  请填写店名
-                </div>
+            <!-- 推荐理由 -->
+            <div class="edit-li reason" data-href="#router2">
+              <img src="/img/edit/reason-01.png" class="edit-li-img">
+              <div class="li-title">
+                推荐理由
+              </div>
+              <div class="edit-content">
+                请填写推荐理由
+              </div>
+            </div>
+            <!-- 信息详情 -->
+            <div class="edit-li detail" data-href="#router3">
+              <img src="/img/edit/detail-01.png" class="edit-li-img">
+
+              <div class="li-title">
+                信息详情
+              </div>
+              <div class="edit-content">
+                请填写信息详情
+              </div>
+            </div>
+            <!-- 店名 -->
+            <div class="edit-li name" data-href="#router4">
+              <img src="/img/edit/name-01.png" class="edit-li-img">
+
+              <div class="li-title">
+                店名
+              </div>
+              <div class="edit-content">
+                请填写店名
+              </div>
+            </div>
+            <!-- 地址 -->
+            <div class="edit-li address" data-href="#router5">
+              <img src="/img/edit/address-01.png" class="edit-li-img">
+
+              <div class="li-title">
+                地址
+              </div>
+              <div class="edit-content">
+                请填写地址
+              </div>
+            </div>
+            <!-- 价格 -->
+            <div class="edit-li price" data-href="#router6">
+              <img src="/img/edit/price-01.png" class="edit-li-img">
+
+              <div class="li-title">
+                价格
+              </div>
+              <div class="edit-content">
+                请填写价格
               </div>
             </div>
 
-            <div class="card" id="detail-content" data-href="router3">
-              <div class="card-header">详情</div>
-              <div class="card-content">
-                <div class="card-content-inner">
-                  请描述详情
-                </div>
-              </div>
-            </div>
-
-            <div class="card" id="reason-content" data-href="router4">
-              <div class="card-header">推荐理由</div>
-              <div class="card-content">
-                <div class="card-content-inner">
-                  请填写推荐理由
-                </div>
-              </div>
-            </div>
-
-              <div class="card" id="address-content" data-href="router5">
-                <div class="card-content">
-                  <div class="list-block">
-                    <ul>
-                      <li>
-                        <a class="item-link item-content">
-                          <div class="item-media item-left"><i class="iconfont icon-dingwei"></i></div>
-                          <div class="item-media item-right"><i class="iconfont icon-youjiantou"></i></div>
-                          <div class="item-inner">
-                            <div class="item-title ">成都信息工程大学</div>
-                          </div>
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
+          </div>
         </div>
       </div>
     </div>
     <!-- 标签填写 -->
     <div class="page" id='router1'>
-      <header class="bar bar-nav">
-        <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
-          <span class="icon icon-left"></span>
-        </a>
 
-        <h1 class='title'>标签</h1>
+      <header class="header-bar">
+        <div class="header-content">
+          <div class="line"></div>
+          <div class="circle circle-index"></div>
+          <div class="circle circle-tag">
+            <img src="/img/edit/tag-02.png" class="circle-img">
+          </div>
+          <div class="circle circle-reason"></div>
+          <div class="circle circle-detail"></div>
+          <div class="circle circle-name"></div>
+          <div class="circle circle-address"></div>
+        </div>
       </header>
-      <div class="content">
+
+      <!-- <div class="content">
         <div class="tag-content">
-          <!-- <textarea name="tag" id="tag"></textarea> -->
           <div class="ww-typeHelper">
             <div class="ww-typeHelper-left">
               <div class="ww_typeHelper-input-left iconfont icon-bianji"></div>
@@ -528,56 +269,65 @@
             
           </div>
         </div>
-      </div>
+      </div> -->
 
-      <footer class="bar bar-footer-nav">
-        <a class="button button-link button-nav pull-left" href="#router">
-          <span class="icon icon-left"></span>
+      <footer class="footer-bar">
+        <div class="pre-view" data-href="#router">
           预览
-        </a>
-        <a class="button button-link button-nav pull-right next" href="#router2">
+        </div>
+        <div class="next-view" data-href="#router2">
           下一步
-          <span class="icon icon-right"></span>
-        </a>
+        </div>
       </footer>
     </div>
-    <!-- 店名填写 -->
+    <!-- 推荐理由填写 -->
     <div class="page" id='router2'>
-      <header class="bar bar-nav">
-        <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
-          <span class="icon icon-left"></span>
-        </a>
-        <h1 class='title'>店名</h1>
-      </header>
-      <div class="content">
-        <div class="recommend-reason">
-          <textarea name="trade" id="trade-name" placeholder="请填写店名"></textarea>
+      <header class="header-bar">
+        <div class="header-content">
+          <div class="line"></div>
+          <div class="circle circle-index"></div>
+          <div class="circle circle-tag"></div>
+          <div class="circle circle-reason">
+            <img src="/img/edit/reason-02.png" class="circle-img">
+          </div>
+          <div class="circle circle-detail"></div>
+          <div class="circle circle-name"></div>
+          <div class="circle circle-address"></div>
         </div>
-      </div>
+      </header>
 
-      <footer class="bar bar-footer-nav">
-        <a class="button button-link button-nav pull-left" href="#router">
-          <span class="icon icon-left"></span>
+      <!-- <div class="content">
+        <div class="recommend-reason">
+          <textarea name="reason" id="reason" placeholder="说说为什么？"></textarea>
+        </div>
+      </div> -->
+
+      <footer class="footer-bar">
+        <div class="pre-view" data-href="#router">
           预览
-        </a>
-        <a class="button button-link button-nav pull-right next" href="#router3">
+        </div>
+        <div class="next-view" data-href="#router3">
           下一步
-          <span class="icon icon-right"></span>
-        </a>
+        </div>
       </footer>
     </div>
     <!-- 信息详情填写 -->
     <div class="page" id='router3'>
-      <header class="bar bar-nav">
-        <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
-          <span class="icon icon-left"></span>
-        </a>
-        <h1 class='title'>信息详情</h1>
-        <!-- <a class="button button-link button-nav pull-right button-start right-hidden">
-          隐藏
-        </a> -->
+      <header class="header-bar">
+        <div class="header-content">
+          <div class="line"></div>
+          <div class="circle circle-index"></div>
+          <div class="circle circle-tag"></div>
+          <div class="circle circle-reason"></div>
+          <div class="circle circle-detail">
+            <img src="/img/edit/detail-02.png" class="circle-img">
+          </div>
+          <div class="circle circle-name"></div>
+          <div class="circle circle-address"></div>
+        </div>
       </header>
-      <div class="content">
+
+      <!-- <div class="content">
         <div class="result-detail">
           <textarea name="detail" id="detail" placeholder="1.描述你分享的信息的详细情况
 
@@ -585,71 +335,81 @@
 
 3.隐藏的内容通过“##隐藏内容##”方式隐藏"></textarea>
         </div>
-      </div>
+      </div> -->
 
-      <footer class="bar bar-footer-nav">
-        <a class="button button-link button-nav pull-left" href="#router">
-          <span class="icon icon-left"></span>
+      <footer class="footer-bar">
+        <div class="pre-view" data-href="#router">
           预览
-        </a>
-        <a class="button button-link button-nav pull-right next" href="#router4">
+        </div>
+        <div class="next-view" data-href="#router4">
           下一步
-          <span class="icon icon-right"></span>
-        </a>
+        </div>
       </footer>
     </div>
-    <!-- 推荐理由填写 -->
+    <!-- 店名填写 -->
     <div class="page" id='router4'>
-      <header class="bar bar-nav">
-        <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
-          <span class="icon icon-left"></span>
-        </a>
-        <h1 class='title'>推荐理由</h1>
-      </header>
-      <div class="content">
-        <div class="recommend-reason">
-          <textarea name="reason" id="reason" placeholder="说说为什么？"></textarea>
+      <header class="header-bar">
+        <div class="header-content">
+          <div class="line"></div>
+          <div class="circle circle-index"></div>
+          <div class="circle circle-tag"></div>
+          <div class="circle circle-reason"></div>
+          <div class="circle circle-detail"></div>
+          <div class="circle circle-name">
+            <img src="/img/edit/name-02.png" class="circle-img">
+          </div>
+          <div class="circle circle-address"></div>
         </div>
-      </div>
+      </header>
 
-      <footer class="bar bar-footer-nav">
-        <a class="button button-link button-nav pull-left" href="#router">
-          <span class="icon icon-left"></span>
+      <!-- <div class="content">
+        <div class="recommend-reason">
+          <textarea name="trade" id="trade-name" placeholder="请填写店名"></textarea>
+        </div>
+      </div> -->
+
+      <footer class="footer-bar">
+        <div class="pre-view" data-href="#router">
           预览
-        </a>
-        <a class="button button-link button-nav pull-right next" href="#router5">
+        </div>
+        <div class="next-view" data-href="#router5">
           下一步
-          <span class="icon icon-right"></span>
-        </a>
+        </div>
       </footer>
     </div>
     <!-- 图片添加 -->
-    <div class="page" id='router6'>
-      <header class="bar bar-nav">
-        <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
-          <span class="icon icon-left"></span>
-        </a>
-        <h1 class='title'>展示图片</h1>
+    <div class="page" id='router5'>
+      <header class="header-bar">
+        <div class="header-content">
+          <div class="line"></div>
+          <div class="circle circle-index"></div>
+          <div class="circle circle-tag"></div>
+          <div class="circle circle-reason"></div>
+          <div class="circle circle-detail"></div>
+          <div class="circle circle-name"></div>
+          <div class="circle circle-address">
+            <img src="/img/edit/address-02.png" class="circle-img">
+          </div>
+        </div>
       </header>
-      <div class="content">
+
+      <!-- <div class="content">
         <div class="recommend-reason">
           <textarea name="reason" id="reason" placeholder="说说为什么？"></textarea>
         </div>
-      </div>
+      </div> -->
 
-      <footer class="bar bar-footer-nav">
-        <a class="button button-link button-nav pull-left" href="#router">
-          <span class="icon icon-left"></span>
+      <footer class="footer-bar">
+        <div class="pre-view" data-href="#router">
           预览
-        </a>
-        <a class="button button-link button-nav pull-right next" href="#router5">
+        </div>
+        <div class="next-view" data-href="#router6">
           下一步
-          <span class="icon icon-right"></span>
-        </a>
+        </div>
       </footer>
     </div>
     <!-- 地点标注 -->
-     <div class="page" id='router5'>
+     <div class="page" id='router6'>
       <header class="bar bar-nav">
         <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
           <span class="icon icon-left"></span>
@@ -664,15 +424,14 @@
           <div id="container"></div>
         </div>
       </div>
-      <footer class="bar bar-footer-nav">
-        <a class="button button-link button-nav pull-left" href="#router">
-          <span class="icon icon-left"></span>
+
+      <footer class="footer-bar">
+        <div class="pre-view" data-href="#router">
           预览
-        </a>
-        <a class="button button-link button-nav pull-right next" href="#router">
-          下一步
-          <span class="icon icon-right"></span>
-        </a>
+        </div>
+        <div class="end-view">
+          完成
+        </div>
       </footer>
     </div>
 
@@ -706,6 +465,16 @@
         $.showPreloader("正在跳转");
         $.router.load("/food");
       }
+    })
+
+    $(".edit-li,.next-view,.pre-view").on("click",function(){
+      var href = $(this).attr("data-href");
+      if(href.split("#")[1]){
+        $.router.load(href);
+      }else{
+        $.router.load("#"+href);
+      }
+      
     })
   </script>
   <script>
