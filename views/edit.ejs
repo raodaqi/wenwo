@@ -9,7 +9,7 @@
     <link rel="icon" type="image/x-icon" href="/img/logo.png" media="screen">
     <title>问我——像个当地人一样去旅游</title>
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1462906314_8605804.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1468485343_2436674.css">
     <link rel="stylesheet" href="/css/sm.min.css">
     <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=cb84c659c88a7cc83b935a009b3a9cfd&plugin=AMap.Geocoder"></script>
     <script src="/js/jweixin-1.0.0.js"></script>
@@ -76,7 +76,7 @@
     .pre-view{
       position: absolute;
       left:30px;
-      background-image: url("/img/edit/left.png");
+      background: #FFF url("/img/edit/left.png");
       background-size: cover;
       width: 100px;
       height: 39px;
@@ -89,7 +89,7 @@
     .next-view,.end-view{
       position: absolute;
       right: 30px;
-      background-image: url("/img/edit/right.png");
+      background: #FFF url("/img/edit/right.png");
       background-size: cover;
       width: 100px;
       height: 39px;
@@ -105,8 +105,8 @@
       top:40px;
     }
     .header-content{
-      width: 80%;
-      margin-left:10%;
+      width: 84%;
+      margin-left:8%;
     }
     .line{
       width: 100%;
@@ -124,23 +124,27 @@
       background-color: #50C3E8;
     }
     .circle-tag{
-      margin-left: 16%;
+      margin-left: 14%;
       background-color: #2B82FD;
     }
     .circle-reason{
-      margin-left: 32%;
+      margin-left: 28%;
       background-color: #F13A01;
     }
     .circle-detail{
-      margin-left: 48%;
-      background-color: #5459CD;
+      margin-left: 42%;
+      background-color: #F4BC1C;
     }
     .circle-name{
-      margin-left: 64%;
-      background-color: #42B93A;
+      margin-left: 56%;
+      background-color: #5459CD;
     }
     .circle-address{
-      margin-left: 80%;
+      margin-left: 70%;
+      background-color: #42B93A;
+    }
+    .circle-price{
+      margin-left: 84%;
       background-color: #F88827;
     }
     .circle-img{
@@ -149,6 +153,140 @@
       margin-left: -10px;
       margin-top: -10px;
       border-radius: 50%;
+    }
+    .icon-left{
+      color:#F88827;
+      font-weight: bolder;
+      margin-left: 5px;
+    }
+    .send-button-a{
+      display: block;
+      width: 1rem !important;
+      height: 1.1rem !important;
+      background-image: url("/img/edit/edit.svg");
+      background-size: cover;
+      margin: 13px 5px 0 0 !important;
+    }
+    .circle-hide{
+      width: 0;
+    }
+    .page-content{
+      margin-top: 5rem;
+    }
+    .ww-typeHelper-left{
+      text-align: center;
+    }
+    .ww-typeHelper-input{
+      border: 0 !important;
+      padding:10px 10px;
+      text-align: center;
+      font-size: 15px !important;
+      border-bottom: 2px solid #999999 !important;
+    }
+    .techTags{
+      padding: 1rem;
+    }
+    .tag-ul{
+      text-align: center;
+    }
+    .type-item{
+      margin:5px 5px;
+      display: inline-block;
+      background: #EE7E2E;
+      color:white;
+      padding:6px 16px;
+      font-size: 14px;
+      border-radius: 20px;
+    }
+    input:-ms-input-placeholder,
+    textarea:-ms-input-placeholder {
+        color: #CCCCCC;
+    }
+    input::-webkit-input-placeholder,
+    textarea::-webkit-input-placeholder {
+        color: #CCCCCC;
+    }
+    .reason-content,.detail-content,.li-content{
+      width: 80%;
+      margin:0 auto;
+      padding-top: 1rem;
+    }
+    #reason,#detail{
+      margin-top: .5rem;
+      width: 100%;
+      height: 6rem;
+      padding:.5rem;
+    }
+    #name,#price{
+      margin-top: .5rem;
+      width: 100%;
+      height: 37px;
+      padding-left: 10px;
+      font-size: 14px;
+    }
+    /*这里是设置输入框的点击效果*/
+    #name:focus,#price:focus {
+        outline: -webkit-focus-ring-color auto 5px;
+    }
+    input,textarea{
+      resize: none;
+    }
+    .detail-li input{
+      border: 0 !important;
+      width: 100%;
+      padding: 0 10px;
+    }
+    .detail-li-title{
+      background: url("/img/edit/detail-li.png") no-repeat; 
+      width: 60px;
+      height: 26px;
+      background-size: 100% 26px;
+    }
+    .add-content,#container{
+      width: 100%;
+      height: 100%;
+    }
+    .add-header{
+      background:rgba(255,255,255,0.5);
+      top:10px;
+      width: 90%;
+      height: 6rem;
+      margin-left: 5%; 
+      z-index: 2;
+    }
+    .add-header .header-content{
+      margin-top: 1.2rem;
+    }
+    #address{
+      width: 90%;
+      border-radius: 6px;
+      border: 1px solid #EE7E2E;
+      height: 1.5rem;
+      margin:50px 5% 0;
+      padding-left: 28px;
+      font-size: 14px;
+    }
+    .icon-bianji{
+      position: absolute;
+      color: #EE7E2E;
+      font-size: 20px;
+      bottom: 12px;
+      margin-left: 23px;
+    }
+    .tip{
+      margin-top: 10px;
+    }
+    .tip-img{
+      display: block;
+      position: absolute;
+      width: 13px;
+      height: 13px;
+      margin-top:6.5px;
+    }
+    .tip-text{
+      font-size: 12px;
+      color: #CCCCCC;
+      margin-left: 15px;
     }
   }
   </style>
@@ -159,7 +297,7 @@
           <span class="icon icon-left"></span>
         </a>
         <h1 class='title'>发布</h1>
-        <a class="button button-link button-nav pull-right send-button-a">确定</a>
+        <a class="button button-link button-nav pull-right send-button-a"></a>
       </header>
       <div class="content">
         <div class="theme-content-block">        
@@ -239,37 +377,37 @@
       <header class="header-bar">
         <div class="header-content">
           <div class="line"></div>
-          <div class="circle circle-index"></div>
-          <div class="circle circle-tag">
+          <div class="circle circle-index" data-href="#router"></div>
+          <div class="circle circle-tag" data-href="#router1">
             <img src="/img/edit/tag-02.png" class="circle-img">
           </div>
-          <div class="circle circle-reason"></div>
-          <div class="circle circle-detail"></div>
-          <div class="circle circle-name"></div>
-          <div class="circle circle-address"></div>
+          <div class="circle circle-reason" data-href="#router2"></div>
+          <div class="circle circle-detail" data-href="#router3"></div>
+          <div class="circle circle-name" data-href="#router4"></div>
+          <div class="circle circle-address" data-href="#router5"></div>
+          <div class="circle circle-price" data-href="#router6"></div>
         </div>
       </header>
 
-      <!-- <div class="content">
+      <div class="page-content">
         <div class="tag-content">
           <div class="ww-typeHelper">
             <div class="ww-typeHelper-left">
-              <div class="ww_typeHelper-input-left iconfont icon-bianji"></div>
-              <input type="text" data-role="ww_typeHelper-input" class="ww-typeHelper-input" placeholder="" style="width: 20em;">
-            </div>
-            <div class="ww_typeHelper-button">确定</div>          
+              <input type="text" data-role="ww_typeHelper-input" class="ww-typeHelper-input" placeholder="填入或选择信息的标签">
+            </div>        
           </div>
           <div role="tabpanel" class="techTags panel-default techTags-panel" data-tech="">
             <div class="tag-ul">
-              <div class="tag-li eat-ul">
-                <span class="type-item">火锅</span>
-              </div>
-              
+              <span class="type-item">火锅</span>
+              <span class="type-item">羊肉泡馍</span>
+              <span class="type-item">绝味</span>
+              <span class="type-item">羊肉泡馍</span>
+              <span class="type-item">羊肉泡馍</span>
             </div>
             
           </div>
         </div>
-      </div> -->
+      </div>
 
       <footer class="footer-bar">
         <div class="pre-view" data-href="#router">
@@ -285,22 +423,26 @@
       <header class="header-bar">
         <div class="header-content">
           <div class="line"></div>
-          <div class="circle circle-index"></div>
-          <div class="circle circle-tag"></div>
-          <div class="circle circle-reason">
+          <div class="circle circle-index" data-href="#router"></div>
+          <div class="circle circle-tag" data-href="#router1"></div>
+          <div class="circle circle-reason" data-href="#router2">
             <img src="/img/edit/reason-02.png" class="circle-img">
           </div>
-          <div class="circle circle-detail"></div>
-          <div class="circle circle-name"></div>
-          <div class="circle circle-address"></div>
+          <div class="circle circle-detail" data-href="#router3"></div>
+          <div class="circle circle-name" data-href="#router4"></div>
+          <div class="circle circle-address" data-href="#router5"></div>
+          <div class="circle circle-price" data-href="#router6"></div>
         </div>
       </header>
 
-      <!-- <div class="content">
-        <div class="recommend-reason">
-          <textarea name="reason" id="reason" placeholder="说说为什么？"></textarea>
+      <div class="page-content">
+        <div class="reason-content li-content">
+          <div class="reason-title">您推荐这家店的理由：</div>
+          <div class="recommend-reason">
+            <textarea name="reason" id="reason" placeholder=""></textarea>
+          </div>
         </div>
-      </div> -->
+      </div>
 
       <footer class="footer-bar">
         <div class="pre-view" data-href="#router">
@@ -316,26 +458,35 @@
       <header class="header-bar">
         <div class="header-content">
           <div class="line"></div>
-          <div class="circle circle-index"></div>
-          <div class="circle circle-tag"></div>
-          <div class="circle circle-reason"></div>
-          <div class="circle circle-detail">
+          <div class="circle circle-index" data-href="#router"></div>
+          <div class="circle circle-tag" data-href="#router1"></div>
+          <div class="circle circle-reason" data-href="#router2"></div>
+          <div class="circle circle-detail" data-href="#router3">
             <img src="/img/edit/detail-02.png" class="circle-img">
           </div>
-          <div class="circle circle-name"></div>
-          <div class="circle circle-address"></div>
+          <div class="circle circle-name" data-href="#router4"></div>
+          <div class="circle circle-address" data-href="#router5"></div>
+          <div class="circle circle-price" data-href="#router6"></div>
         </div>
       </header>
+      <div class="page-content">
+        <div class="detail-content li-content">
+          <div class="detail-title">请告诉我们一些详细信息：</div>
+          <div class="recommend-detail">
+            <textarea name="detail" id="detail" placeholder=""></textarea>
+          </div>
 
-      <!-- <div class="content">
-        <div class="result-detail">
-          <textarea name="detail" id="detail" placeholder="1.描述你分享的信息的详细情况
-
-2.分享的内容默认是显示的
-
-3.隐藏的内容通过“##隐藏内容##”方式隐藏"></textarea>
+          <div class="detail-li-content">
+            <div class="detail-li">
+              <div class="detail-li-title">
+                <input type="text" name="" class="detail-li-name" value="环境">
+              </div>
+              <input type="text" class="detail-li-val">
+            </div>
+          </div>
         </div>
-      </div> -->
+      </div>
+
 
       <footer class="footer-bar">
         <div class="pre-view" data-href="#router">
@@ -351,22 +502,26 @@
       <header class="header-bar">
         <div class="header-content">
           <div class="line"></div>
-          <div class="circle circle-index"></div>
-          <div class="circle circle-tag"></div>
-          <div class="circle circle-reason"></div>
-          <div class="circle circle-detail"></div>
-          <div class="circle circle-name">
+          <div class="circle circle-index" data-href="#router"></div>
+          <div class="circle circle-tag" data-href="#router1"></div>
+          <div class="circle circle-reason" data-href="#router2"></div>
+          <div class="circle circle-detail" data-href="#router3"></div>
+          <div class="circle circle-name" data-href="#router4">
             <img src="/img/edit/name-02.png" class="circle-img">
           </div>
-          <div class="circle circle-address"></div>
+          <div class="circle circle-address" data-href="#router5"></div>
+          <div class="circle circle-price" data-href="#router6"></div>
         </div>
       </header>
 
-      <!-- <div class="content">
-        <div class="recommend-reason">
-          <textarea name="trade" id="trade-name" placeholder="请填写店名"></textarea>
+      <div class="page-content">
+        <div class="name-content li-content">
+          <div class="name-title">请输入这家店的名字：</div>
+          <div class="recommend-name">
+            <input type="text" name="name" id="name" placeholder="">
+          </div>
         </div>
-      </div> -->
+      </div>
 
       <footer class="footer-bar">
         <div class="pre-view" data-href="#router">
@@ -379,25 +534,28 @@
     </div>
     <!-- 图片添加 -->
     <div class="page" id='router5'>
-      <header class="header-bar">
+      <header class="header-bar add-header">
         <div class="header-content">
           <div class="line"></div>
-          <div class="circle circle-index"></div>
-          <div class="circle circle-tag"></div>
-          <div class="circle circle-reason"></div>
-          <div class="circle circle-detail"></div>
-          <div class="circle circle-name"></div>
-          <div class="circle circle-address">
+          <div class="circle circle-index" data-href="#router"></div>
+          <div class="circle circle-tag" data-href="#router1"></div>
+          <div class="circle circle-reason" data-href="#router2"></div>
+          <div class="circle circle-detail" data-href="#router3"></div>
+          <div class="circle circle-name" data-href="#router4"></div>
+          <div class="circle circle-address" data-href="#router5">
             <img src="/img/edit/address-02.png" class="circle-img">
           </div>
+          <div class="circle circle-price" data-href="#router6"></div>
+        </div>
+        <div class="add-search">
+          <input type="text" class="search-input" id="address" name="address" placeholder="">
+          <div class="ww_typeHelper-input-left iconfont icon-bianji"></div>
         </div>
       </header>
 
-      <!-- <div class="content">
-        <div class="recommend-reason">
-          <textarea name="reason" id="reason" placeholder="说说为什么？"></textarea>
-        </div>
-      </div> -->
+      <div class="add-content">
+        <div id="container"></div>
+      </div>
 
       <footer class="footer-bar">
         <div class="pre-view" data-href="#router">
@@ -410,18 +568,31 @@
     </div>
     <!-- 地点标注 -->
      <div class="page" id='router6'>
-      <header class="bar bar-nav">
-        <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
-          <span class="icon icon-left"></span>
-        </a>
-        <h1 class='title'>地点标注</h1>
-      </header>
-      <div class="content">
-        <div class="add-content">
-          <div class="add-search">
-            <input type="text" class="search-input" id="address" name="address" placeholder="请输入你要标注的地址">          
+      <header class="header-bar">
+        <div class="header-content">
+          <div class="line"></div>
+          <div class="circle circle-index" data-href="#router"></div>
+          <div class="circle circle-tag" data-href="#router1"></div>
+          <div class="circle circle-reason" data-href="#router2"></div>
+          <div class="circle circle-detail" data-href="#router3"></div>
+          <div class="circle circle-name" data-href="#router4"></div>
+          <div class="circle circle-address" data-href="#router5"></div>
+          <div class="circle circle-price circle-hide" data-href="#router6">
+            <img src="/img/edit/price-02.png" class="circle-img">
           </div>
-          <div id="container"></div>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <div class="price-content li-content">
+          <div class="price-title">请输入想设置的价格：</div>
+          <div class="recommend-price">
+            <input type="text" name="price" id="price" placeholder="">
+          </div>
+          <div class="tip">
+            <img src="/img/edit/tip.png" class="tip-img" alt="">
+            <label class="tip-text">您设置的价格在累积到10次查看后，开始付费查看</label>
+          </div>
         </div>
       </div>
 
@@ -429,7 +600,7 @@
         <div class="pre-view" data-href="#router">
           预览
         </div>
-        <div class="end-view">
+        <div class="next-view" data-href="#router">
           完成
         </div>
       </footer>
@@ -467,7 +638,7 @@
       }
     })
 
-    $(".edit-li,.next-view,.pre-view").on("click",function(){
+    $(".edit-li,.next-view,.pre-view,.circle").on("click",function(){
       var href = $(this).attr("data-href");
       if(href.split("#")[1]){
         $.router.load(href);
