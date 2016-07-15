@@ -8,7 +8,7 @@
   <meta name='description', content='wenwo,问我,当地人,旅游,攻略,信息,分享'>
   <meta name='author', content='raodqi'>
   <link rel="icon" type="image/x-icon" href="/img/logo.png" media="screen">
-  <title>问我——像个当地人一样去旅游</title>
+  <title>问我-让经验帮你赚钱</title>
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="http://at.alicdn.com/t/font_1462821367_1895313.css">
   <link rel="stylesheet" href="/css/sm.min.css">
@@ -138,10 +138,10 @@
           <div class="bg-mask"></div>
           <div class="username-content">
             <span class="username">ducky</span>
-            <span class="price">￥2.0</span>
+            
           </div>
           <div class="like">喜欢</div>
-          <div class="bug">购买</div>
+          <div class="bug"><span class="price">2</span>元瞅瞅</div>
         </div>
 
         <div class="ask-detail">
@@ -224,7 +224,7 @@
           var data = result.data;
           $(".title").text(formatTag(data.askTagStr));
           $(".username").text(data.createByName);
-          $(".price").text(" ￥"+data.askPrice);
+          $(".price").text(data.askPrice);
           $(".pic-bg").attr("src",data.createByUrl);
           $(".detail-reason").text(data.askReason);
           $(".detail-rtname").text(data.createByName);

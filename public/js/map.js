@@ -2,23 +2,6 @@
  * Created by duckyRao on 2016/4/14.
  */
 +(function(){
-
-	// if (navigator.geolocation)
- //    {
- //    	navigator.geolocation.getCurrentPosition(showPosition);
- //    }
- //  	else{x.innerHTML="Geolocation is not supported by this browser.";}
-
- //  	function showPosition(position)
-	// {
-	//   // alert("Latitude: " + position.coords.latitude +"<br />Longitude: " + position.coords.longitude);
-	//   var map = new AMap.Map('container',{
- //            resizeEnable: true,
- //            zoom: 10,
- //            center: [103.98,30.58]
- //      });
-	// }
-
 	var map, geolocation;
     //加载地图，调用浏览器定位服务
     map = new AMap.Map('container', {
@@ -54,72 +37,6 @@
     function onError(data) {
         
     }
-    // AMap.plugin(['AMap.ToolBar','AMap.Scale'],function(){
-    //     var toolBar = new AMap.ToolBar({
-    //         offset: new AMap.Pixel(60, 10)
-    //       });
-    //     var scale = new AMap.Scale({
-    //       offset: new AMap.Pixel(-5, 7)
-    //     });
-    //     map.addControl(toolBar);
-    //     map.addControl(scale);
-    // })
-
-    //  map.on('click', function(e) {
-
-    //   //clear all markers
-    //   map.clearMap();
-
-    //  	console.log('您在[ '+e.lnglat.getLng()+','+e.lnglat.getLat()+' ]的位置点击了地图！');
-    //     // alert('您在[ '+e.lnglat.getLng()+','+e.lnglat.getLat()+' ]的位置点击了地图！');
-    //   var icon = new AMap.Icon({
-    //       // image : 'http://vdata.amap.com/icons/b18/1/2.png',//24px*24px
-    //       //icon可缺省，缺省时为默认的蓝色水滴图标，
-    //       // size : new AMap.Size(24,24)
-    //   });
-    //   // var marker = new AMap.Marker({
-    //   //         icon : icon,//24px*24px
-    //   //         offset : new AMap.Pixel(e.lnglat.getLat(),e.lnglat.getLng()),
-    //   //         map : map
-    //   // });
-    //   var marker = new AMap.Marker({
-    //     icon : icon,//24px*24px
-    //     map : map,
-    //     tagName:"火锅;超辣的",
-    //     askReason:"味道真的不错",
-    //     askContentShow:"这里的味道真的不错",
-    //     price:0.2,
-    //     createBy:"hanqi",
-    //     createAt:"2016-04-19",
-    //     position: [e.lnglat.getLng(),e.lnglat.getLat()],
-    //     draggable: true,
-    //     cursor: 'move',
-    //     raiseOnDrag: true,
-    //     clickable:true
-    //   });
-
-    //   //拖动标注后回调的坐标
-    //    marker.on("dragend",function(){
-    //     console.log(this.getPosition());
-    //     var lat = this.getPosition().lat;
-    //     var lng = this.getPosition().lng;
-    //   })
-    //   marker.setMap(map);
-    // });
-
-   
-
-
-
-     //地图搜索功能
-    // var windowsArr = [];
-    // var marker = [];
-    // var mapObj = new AMap.Map("mapContainer", {
-    //         resizeEnable: true,
-    //         center: [116.397428, 39.90923],//地图中心点
-    //         zoom: 13,//地图显示的缩放级别
-    //         keyboardEnable: false
-    // });
     var timeIv;
     AMap.plugin(['AMap.Autocomplete','AMap.PlaceSearch'],function(){
       var autoOptions = {
@@ -147,55 +64,6 @@
          }, 10);
       });
     });
-
-    // var icon = new AMap.Icon({
-    //         image : 'http://vdata.amap.com/icons/b18/1/2.png',//24px*24px
-    //         //icon可缺省，缺省时为默认的蓝色水滴图标，
-    //         size : new AMap.Size(24,24)
-    // });
-    // var marker = new AMap.Marker({
-    //         icon : icon,//24px*24px
-    //         position : provinces[i].center.split(','),
-    //         offset : new AMap.Pixel(-12,-12),
-    //         map : mapObj
-    // });
-
-
-
-    // // 添加点聚合
-    // // var cluster, markers = [];
-    // // addCluster(0);
-    // function addCluster(tag) {
-    //     if (cluster) {
-    //         cluster.setMap(null);
-    //     }
-    //     if (tag == 1) {
-    //         var sts = [{
-    //             url: "http://lbs.amap.com/wp-content/uploads/2014/06/1.png",
-    //             size: new AMap.Size(32, 32),
-    //             offset: new AMap.Pixel(-16, -30)
-    //         }, {
-    //             url: "http://lbs.amap.com/wp-content/uploads/2014/06/2.png",
-    //             size: new AMap.Size(32, 32),
-    //             offset: new AMap.Pixel(-16, -30)
-    //         }, {
-    //             url: "http://lbs.amap.com/wp-content/uploads/2014/06/3.png",
-    //             size: new AMap.Size(48, 48),
-    //             offset: new AMap.Pixel(-24, -45),
-    //             textColor: '#CC0066'
-    //         }];
-    //         map.plugin(["AMap.MarkerClusterer"], function() {
-    //             cluster = new AMap.MarkerClusterer(map, markers, {
-    //                 styles: sts
-    //             });
-    //         });
-    //     } else {
-    //         map.plugin(["AMap.MarkerClusterer"], function() {
-    //             cluster = new AMap.MarkerClusterer(map, markers);
-    //         });
-    //     }
-    // }
-
 
     window.map = map;
 
