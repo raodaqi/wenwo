@@ -510,12 +510,19 @@ router.post('/foodlikelist', function(req, res, next) {
             query.equalTo("by", userName);
 
 
-            //query.include
+            query.include('ask');
             query.find().then(function (fooLikes) {
+
+                var askDetail = new Array();
+
+                for (var i = 0; i < fooLikes.length; i++) {
+                    askDetail[i] = fooLikes[i].get('ask');
+                }
 
                 var result = {
                     code : 200,
-                    data : fooLikes,
+                    data :fooLikes,
+                   askDetail : askDetail,
                     message : '操作成功'
                 }
                 res.send(result);
