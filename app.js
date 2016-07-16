@@ -126,8 +126,18 @@ app.get('/edit', function(req, res) {
   var username =  req.query.username;
   var type = req.query.type;
   var askid = req.query.askid;
-  //username = decodeURI(username);
-  res.render('edit', {username:username,type:type,askid:askid});
+  if(username){
+    res.render('edit', {username:username,type:type,askid:askid});
+  }
+
+  var user = AV.User.current();
+  if (!user) {
+    authorize(req, res);
+  }else{
+    var username = user.get('user');
+    console.log(username);
+    res.render('edit', {username:username,type:type,askid:askid});
+  }
 });
 
 app.get('/detail', function(req, res) {
