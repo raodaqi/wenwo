@@ -76,35 +76,35 @@
     .pre-view{
       position: absolute;
       left:30px;
-      background: #FFF url("/img/edit/left.png");
-      background-size: cover;
-      width: 100px;
-      height: 39px;
+      background: #FFF url("/img/edit/left.png") no-repeat;
+      background-size: 100%;
+      width: 5rem;
+      height: 2rem;
       text-align: center;
-      line-height: 39px;
+      line-height: 2rem;
       color: #999999;
-      padding-left: 20px;
+      padding-left: 1rem ;
       font-size: 14px;
     }
     #router5 .pre-view{
-      background: url("/img/edit/left-empty.png");
-      background-size: cover;
+      background: url("/img/edit/left-empty.png") no-repeat;
+      background-size: 100%;
     }
     #router5 .next-view{
-      background: url("/img/edit/right-empty.png");
-      background-size: cover;
+      background: url("/img/edit/right-empty.png") no-repeat;
+      background-size: 100%;
     }
     .next-view,.end-view{
       position: absolute;
       right: 30px;
-      background: #FFF url("/img/edit/right.png");
-      background-size: cover;
-      width: 100px;
-      height: 39px;
+      background: #FFF url("/img/edit/right.png") no-repeat;
+      background-size: 100%;
+      width: 5rem;
+      height: 2rem;
       text-align: center;
-      line-height: 39px;
+      line-height: 2rem;
       color: #999999;
-      padding-right: 20px;
+      padding-right: 1rem;
       font-size: 14px;
     }
     .header-bar{
@@ -206,6 +206,7 @@
       font-size: 14px;
       border-radius: 20px;
     }
+    
     input:-ms-input-placeholder,
     textarea:-ms-input-placeholder {
         color: #CCCCCC;
@@ -224,6 +225,7 @@
       width: 100%;
       height: 6rem;
       padding:.5rem;
+      font-size: 13px;
     }
     #name,#price{
       margin-top: .5rem;
@@ -249,10 +251,10 @@
       height: 100%;
     }
     .add-header{
-      background:rgba(255,255,255,0.5);
+      background:rgba(255,255,255,0.7);
       top:10px;
       width: 90%;
-      height: 6rem;
+      /*height: 6rem;*/
       margin-left: 5%; 
       z-index: 2;
     }
@@ -266,13 +268,19 @@
       height: 1.5rem;
       margin:50px 5% 0;
       padding-left: 28px;
-      font-size: 14px;
+      font-size: 13px;
+    }
+    #add-detail:-ms-input-placeholder{
+      color: #AEAEAE;
+    }
+    #add-detail::-webkit-input-placeholder{
+      color: #AEAEAE;
     }
     .icon-bianji{
       position: absolute;
       color: #EE7E2E;
       font-size: 20px;
-      bottom: 12px;
+      bottom: 38px;
       margin-left: 23px;
     }
     .tip{
@@ -334,7 +342,6 @@
       width: 60px;
       height: 29px;
       background-size: 100% 29px; 
-      margin-top: 10px;
     }
     .icon-add{
       width: 20px;
@@ -343,6 +350,71 @@
     }
     .amap-sug-result{
       z-index: 2000;
+    }
+    .add-detail{
+      padding:5px 17px; 
+    }
+    .add-detail-text{
+      font-size: 12px;
+      margin-top: 2px;
+      position: absolute;
+    }
+    .add-detail{
+      margin: 5px 0 23px 0;
+    }
+    .add-detail-input{
+      font-size: 12px;
+      line-height: 21px;
+      margin-left: 56px;
+      width: 200px;
+      padding-left: 2px;
+      display: inline-block;
+      float: left;
+      border: 0 !important;
+      background: none;
+    }
+    /*重置调整缩放按钮*/
+    .amap-touch-toolbar .amap-zoomcontrol{
+      bottom:48px !important;
+      width: 30px !important;
+    }
+    .eg-content{
+      font-size: 13px;
+      color: #A5A5A5;
+    }
+    .eg-li{
+      padding:5px 0 0 5px;
+    }
+    .edit-content{
+      padding-right: 20px;
+    }
+    .detail-li{
+      margin-bottom: 5px;
+      height: 30px;
+    }
+    .detail-li-all-content{
+      height: 150px;
+      overflow-y: scroll;
+    }
+    .edit-detail-li{
+      min-height: 20px;
+      margin-top: 10px;
+    }
+    .edit-detail-li-title{
+      background: url("/img/edit/detail-li.png") no-repeat; 
+      min-width: 40px;
+      padding:0 8px;
+      height: 20px;
+      background-size: 100% 20px;
+      text-align: center;
+      float: left;
+    }
+    .edit-detail-li-input{
+      min-height: 21px;
+      margin-left: 50px;
+    }
+    .edit-detail-li-content{
+      word-break: break-all;
     }
   }
   </style>
@@ -362,10 +434,10 @@
             <div class="edit-li tag" data-href="#router1">
               <img src="/img/edit/tag-01.png" class="edit-li-img">
               <div class="li-title">
-                标签
+                美食类别
               </div>
               <div class="edit-content">
-                请填写标签
+                请填写美食类别
               </div>
             </div>
             <!-- 推荐理由 -->
@@ -383,10 +455,12 @@
               <img src="/img/edit/detail-01.png" class="edit-li-img">
 
               <div class="li-title">
-                信息详情
+                美食详情
               </div>
               <div class="edit-content">
-                请填写信息详情
+                <div class="edit-detail">请填写美食详情</div>
+                <div class="edit-detail-li-content">
+                </div>
               </div>
             </div>
             <!-- 店名 -->
@@ -408,7 +482,7 @@
                 地址
               </div>
               <div class="edit-content">
-                请填写地址
+                请填写美食地址并在地图上标注
               </div>
             </div>
             <!-- 价格 -->
@@ -416,10 +490,10 @@
               <img src="/img/edit/price-01.png" class="edit-li-img">
 
               <div class="li-title">
-                价格
+                信息价格
               </div>
               <div class="edit-content">
-                请填写价格
+                请填写查看这条信息的价格
               </div>
             </div>
 
@@ -449,7 +523,7 @@
         <div class="tag-content">
           <div class="ww-typeHelper">
             <div class="ww-typeHelper-left">
-              <input type="text" data-role="ww_typeHelper-input" class="ww-typeHelper-input" placeholder="填入或选择信息的标签">
+              <input type="text" data-role="ww_typeHelper-input" class="ww-typeHelper-input" placeholder="选择或者填入美食的类别">
             </div>        
           </div>
           <div role="tabpanel" class="techTags panel-default techTags-panel" data-tech="">
@@ -493,9 +567,15 @@
 
       <div class="page-content">
         <div class="reason-content li-content">
-          <div class="reason-title content-title">您推荐这家店的理由：</div>
+          <div class="reason-title content-title">给一个让大家相信你的理由吧：</div>
           <div class="recommend-reason">
             <textarea name="reason" id="reason" placeholder=""></textarea>
+          </div>
+          <div class="eg-content"> 
+            <div class="eg-li">eg:好吃到灵魂颤抖的火锅。</div>
+            <div class="eg-li">eg:好吃的忘不掉味道。</div>
+            <div class="eg-li">eg:你要相信一个吃了好多年的老司机。</div>
+            <div class="eg-li">eg:排队排到天荒地老，差点就海枯石烂了！</div>
           </div>
         </div>
       </div>
@@ -529,20 +609,20 @@
         <div class="detail-content li-content">
           <div class="detail-title content-title">请告诉我们一些详细信息：</div>
           <div class="recommend-detail">
-            <textarea name="detail" id="detail" placeholder=""></textarea>
+            <textarea name="detail" id="detail" placeholder="详细的介绍会极大的提高大家付费查看的欲望，所以尽可能详细的描述你推荐的美食吧."></textarea>
           </div>
 
-          <div class="detail-li-content">
-            <div class="detail-li">
-              <div class="detail-li-title">
-                <!-- <label class="detail-label-title">环境</label> -->
-                <input type="text" name="" class="detail-li-name" value="环境">
-              </div>
-              <div class="detail-li-input">
-                <input type="text" class="detail-li-val" placeholder="请在此对卡片内容进行描述">
+          <div class="detail-li-all-content">
+            <div class="detail-li-content">
+              <div class="detail-li">
+                <div class="detail-li-title">
+                  <input type="text" name="detailName0" class="detail-li-name" placeholder="环境">
+                </div>
+                <div class="detail-li-input">
+                  <input type="text" name="detailVal0" class="detail-li-val" placeholder="请在此对卡片内容进行描述">
+                </div>
               </div>
             </div>
-
             <div class="detail-li-title detail-add">
               <div class="iconfont icon-add"></div>
             </div>
@@ -611,8 +691,13 @@
           <div class="circle circle-price" data-href="#router6"></div>
         </div>
         <div class="add-search">
-          <input type="text" class="search-input" id="address" name="address" placeholder="">
+          <input type="text" class="search-input" id="address" name="address" placeholder="请标注美食所在的精确位置">
           <div class="ww_typeHelper-input-left iconfont icon-bianji"></div>
+        </div>
+
+        <div class="add-detail">
+          <div class="add-detail-text">地址附注：</div>
+          <input type="text" class="add-detail-input" id="add-detail" name="adetail" placeholder="请输入一些地址详情来描述地址信息">
         </div>
       </header>
 
@@ -650,7 +735,7 @@
         <div class="price-content li-content">
           <div class="price-title content-title">请输入想设置的价格：</div>
           <div class="recommend-price">
-            <input type="text" name="price" id="price" placeholder="">
+            <input type="number" name="price" id="price" placeholder="">
           </div>
           <div class="tip">
             <img src="/img/edit/tip.png" class="tip-img" alt="">
@@ -712,9 +797,9 @@
   <script>
   initLocation();
   window.onload = function() {
-    // map.plugin(["AMap.ToolBar"], function() {
-    //   map.addControl(new AMap.ToolBar());
-    // });
+    map.plugin(["AMap.ToolBar"], function() {
+      map.addControl(new AMap.ToolBar());
+    });
     $.hidePreloader();
   }
 
@@ -776,6 +861,9 @@
 
 
     var marker;
+    var icon = new AMap.Icon({
+      image: "/img/edit/marker.png",
+    });
     //获取地址
     function getAddress(lnglatXY,callback){
       var geocoder = new AMap.Geocoder({
@@ -828,33 +916,30 @@
       console.log(localStorage.detail);
       if(localStorage.detail){
         $("#detail").val(localStorage.detail);
-
-        var str = {};
-        str = localStorage.detail.split("##");
-        var show = '';
-        var hidden = '';
-        var detail = ''
-        for(var i = 0; i < str.length; i++){
-          if(i%2){
-            var starLen = ''
-            for(var j = 0; j < str[i].length; j++){
-              starLen += '*';
-            }
-            detail += '<span class="hidden-text">'+starLen+'</span>';
-          }else{
-            detail += str[i];
-          }
-        }
-        $(".de-show").empty();
-        $(".de-show").append(detail);
-
-        $("#detail-content .card-content-inner").text(localStorage.detail);
-        deShow(localStorage.detail);
+        $(".edit-detail").text(localStorage.detail);
       }
 
-      //初始化地址信息
-      if(localStorage.address){
-        $("#address").val(localStorage.address);
+      //初始化信息详情列表
+      if(localStorage.detailLi){
+        detailLi = JSON.parse(localStorage.detailLi);
+        if(detailLi.length){
+          $(".detail-li-content").empty();
+          $(".edit-detail-li-content").empty();
+          for(var i = 0; i < detailLi.length;i++){
+            var li = '<div class="detail-li"><div class="detail-li-title"><input type="text" name="detailName'+i+'" class="detail-li-name" placeholder="填写" value="'+detailLi[i].name+'"></div><div class="detail-li-input"><input type="text" name="detailVal'+i+'" class="detail-li-val" placeholder="请在此对卡片内容进行描述" value="'+detailLi[i].val+'"></div></div>';
+            $(".detail-li-content").append(li);
+            $(".detail-li-all-content").scrollTop(1000);
+
+            //初始化显示界面
+            var li = '<div class="edit-detail-li"><div class="edit-detail-li-title">'+detailLi[i].name+'</div><div class="edit-detail-li-input">'+detailLi[i].val+'</div></div>';
+            $(".edit-detail-li-content").append(li);
+          }
+        }
+      }
+
+      //初始化地址详情
+      if(localStorage.adetail){
+        $("#add-detail").val(localStorage.adetail);
       }
 
       //初始化店名
@@ -885,9 +970,8 @@
             detail = detail.replace(replace,"");
             address.detail = detail;
             address = JSON.stringify(address);
-            console.log(address);
-            $("#address-content .item-inner").attr("data-address",address);
-            $("#address-content .item-inner").text(detail);
+            $(".address .edit-content").attr("data-address",address);
+            $(".address .edit-content").text(detail);
           }
         });
 
@@ -906,6 +990,7 @@
 
         marker = new AMap.Marker({
           map : map,
+          icon : icon,
           position: [localStorage.lng,localStorage.lat],
           draggable: true,
           cursor: 'move',
@@ -914,9 +999,6 @@
         });
 
          marker.setMap(map);
-         // markerShow.setMap(mapShow);
-      }else{
-        $("#address-content .item-inner").text("地点");
       }
 
       //初始化价格信息
@@ -985,9 +1067,6 @@
               district : address.addressComponent.district,
               township : address.addressComponent.township
             }
-            // var address = JSON.stringify(address);
-
-            // detail = detail.replace(address[0]+address[1]+address[2]+address[3],"");
             var replace = ""+address.province+address.city+address.district+address.township+"";
             detail = detail.replace(replace,"");
             address.detail = detail;
@@ -1013,6 +1092,7 @@
 
         marker = new AMap.Marker({
           map : map,
+          icon : icon,
           position: [lng,lat],
           draggable: true,
           cursor: 'move',
@@ -1120,47 +1200,73 @@
       $(".reason .edit-content").text($(this).val());
     })
 
-
-    $(".button-start,.button-end").on("click",function(){
-      var text = $("#detail").val();
-      $("#detail").val(text+"##");
-      $("#detail-content .card-content-inner").text($("#detail").val());
-      localStorage["detail"] = $("#detail").val();
+    $(".detail-add").on("click",function(){
+      var len = $(".detail-li").length;
+      console.log(len);
+      var li = '<div class="detail-li"><div class="detail-li-title"><input type="text" name="detailName'+len+'" class="detail-li-name" placeholder="填写"></div><div class="detail-li-input"><input type="text" name="detailVal'+len+'" class="detail-li-val" placeholder="请在此对卡片内容进行描述"></div></div>';
+      $(".detail-li-content").append(li);
+      $(".detail-li-all-content").scrollTop(1000);
     })
 
-    function getHideText(){
-      var text = $("#detail").val();
-      // console.log(text.indexOf("##"));
-      var str = {};
-      str = text.split("##");
-      var show = '';
-      var hidden = '';
-      for(var i = 0; i < str.length; i++){
-        if(i%2){
-          hidden += str[i]+"##";
-        }else{
-          if( i == str.length-1){
-            show += str[i];
-          }else{
-            show += str[i]+"##";
-          }
-          
+    function getAllDetailLiV(){
+      //遍历所有的detail-li
+      var detailLi = [];
+      var j = 0;
+      $(".detail-li").each(function(i,v){
+        //获取所有detail-li里面的name
+        var name = $(this).children(".detail-li-title").children("input").val();
+        var val  = $(this).children(".detail-li-input").children("input").val();
+        var key = {};
+        if(name && val){
+          key.name = name;
+          key.val = val;
+          detailLi[j] = key;
+          j++;
         }
-      }
-      var textDetail = {
-        show:show,
-        hidden:hidden
-      }
-      return(textDetail);
+      })
+      return detailLi;
     }
+
+    $(".detail-li-all-content").on("input change","input",function(){
+      var detailLi = getAllDetailLiV();
+      if(detailLi.length){
+        $(".edit-detail-li-content").empty();
+        for(var i = 0; i < detailLi.length;i++){
+          //更新显示界面
+          var li = '<div class="edit-detail-li"><div class="edit-detail-li-title">'+detailLi[i].name+'</div><div class="edit-detail-li-input">'+detailLi[i].val+'</div></div>';
+          $(".edit-detail-li-content").append(li);
+        }
+      }else{
+        $(".edit-detail-li-content").empty();
+      }
+      //保存到本地数据
+      detailLi = JSON.stringify(detailLi);
+      console.log(detailLi);
+      localStorage["detailLi"] = detailLi;
+      
+    })
+
+    //点击示例显示到推荐理由
+    $(".eg-li").on("click",function(){
+      var text = $(this).text();
+      var text = text.split(":")[1];
+      $("#reason").val(text);
+      $(".reason .edit-content").text(text);
+      //保存到本地数据
+      localStorage["reason"] = text;
+    })
+
+    //地址详情
+    $("#add-detail").on("input change",function(){
+      localStorage["adetail"] = $(this).val();
+    })
 
 
     //详情输入后显示到主页
     $("#detail").on("input change",function(){
       var text = $("#detail").val();
       //显示到主页
-      $("#detail-content .card-content-inner").text(text);
-      deShow(text);
+      $(".edit-detail").text(text);
       localStorage["detail"] = $("#detail").val();
     })
 
@@ -1173,12 +1279,23 @@
 
     //更换价格的时候调用
     $("#price").on("input change",function(){
-      console.log($(this).val());
       var price = $(this).val();
       var priceFloat = parseFloat(price);
+      if(!price){
+        price = 0;
+        return;
+      }
       if(priceFloat != price){
         $.toast("输入格式不对");
         return ;
+      }
+      if(priceFloat > 5){
+        $.toast("输入价格不能高于5元");
+        return;
+      }
+      if(priceFloat < 0){
+        $.toast("输入价格不能小于0元");
+        return;
       }
       localStorage["price"] = $(this).val();
       $(".price .edit-content").text("￥"+$(this).val());
@@ -1187,43 +1304,23 @@
 
     //提交所有信息
     $(".send-button-a").on("click",function(){
-        var type,//主题类型
-            tag = new Array(),//二级标签
+        var tag = new Array(),//二级标签
             reason,//推荐理由
-            content_show,//详情显示部分
-            content_hide,//详情隐藏部分
+            content_show = {},//详情显示部分
+            shopName,//店名
             lng,//经度
             lat,//维度
-            isfree = 1,//是否是免费信息
             price = 0.00;//信息价格
 
-        //获取主题
-        var $_active = $(".theme-li-active");
-        if(!$_active.length){
-          $.toast("你还没有选择主题");
-          // $.router.load("#router1");
-          return;
-        }else{
-          if($_active.length == 1){
-            var type = $(".theme-li-active").attr("data-type");
-          }else{
-            var type = $("#"+$(".theme-li-active")[0].id).attr("data-type") + ","+$("#"+$(".theme-li-active")[1].id).attr("data-type");
-          }
-          console.log(type);
-        }
-
-        //获取填写的tag
-        var $_tag = $(".ww-typeHelper .type-item");
-        if(!$_tag.length){
-          $.toast("你还没有填写标签");
+        //获取填入美食的类别
+        var $_tag = $(".ww-typeHelper-input").val();
+        if(!$_tag){
+          $.toast("你还没有填写美食的类别");
            return;
         }else{
-          $.each($_tag,function(i,v){
-            tag[i] = {
-              tag_name: $(this).text()
-            }
-            // $(this).text();
-          })
+          tag[0] = {
+            tag_name: $_tag
+          }
           tag = JSON.stringify(tag);
         }
 
@@ -1236,14 +1333,30 @@
 
         //获取详情
         var detail = $("#detail").val();
-        if(!detail){
-          $.toast("你还没有填写信息详情");
-          return;
+        if(detail){
+          var detailLi = getAllDetailLiV();
+          content_show.detail = detail;
+          if(detailLi.length){
+            detailLi = JSON.stringify(detailLi);
+            content_show.detailLi = detailLi;
+          }
         }else{
-          var detailContent = getHideText();
-          console.log(detailContent);
-          content_show = detailContent.show;
-          content_hide = detailContent.hidden;
+         var detailLi = getAllDetailLiV();
+         if(!detailLi.length){
+            $.toast("你还没有填写任何信息详情");
+            return ;
+          }else{
+            detailLi = JSON.stringify(detailLi);
+            content_show.detailLi = detailLi;
+          }
+        }
+        content_show = JSON.stringify(content_show);
+
+        //获取店名
+        var shopName = $("#name").val();
+        if(!shopName){
+          $.toast("你还没有填写店名");
+          return;
         }
 
         //获取标注位置的经纬度
@@ -1254,27 +1367,53 @@
           return;
         }
 
+        //获取地址详情
+        var askPosition = $(".address .edit-content").attr("data-address");
+        if(askPosition){
+          var adetail = $("#add-detail").val();
+          if(adetail){
+            askPosition = JSON.parse(askPosition);
+            askPosition.adetail = adetail;
+            askPosition = JSON.stringify(askPosition);
+          }
+          console.log(askPosition);
+        }
+
         //获取信息价格
-        price = $("#price-picker").val().replace(/\s+/g,"");
-        console.log(price);
-        if(price == "0 . 0 0" || price == "0.00"){
-          isfree = 1;
-        }else{
-          isfree = 0;
+        price = $("#price").val().replace(/\s+/g,"");
+        var priceFloat = parseFloat(price);
+        if(!price){
+          price = 0;
+          return;
+        }
+        if(priceFloat != price){
+          $.toast("信息价格格式不对");
+          return ;
+        }
+        if(priceFloat > 5){
+          $.toast("信息价格不能高于5元");
+          return;
+        }
+        if(priceFloat < 0){
+          $.toast("信息价格不能小于0元");
+          return;
+        }
+        var price = priceFloat.toFixed(1);
+        if(price == 0.0){
+          price = 0;
         }
         var data = {
           username     : "<%= username %>",
-          type         : type,
+          type         : 1,
           tag          : tag,
           reason       : reason,
           content_show : content_show,
-          content_hide : content_hide,
-          position     : $("#address-content .item-inner").attr("data-address"),
+          content_hide : 'no',
+          position     : askPosition,
           geo_x        : lng,
           geo_y        : lat,
-          isfree       : isfree,
-          price        : price,
-          addContent   : $("#address-content .item-inner").text()
+          shopName     : shopName,
+          price        : price
         }
         console.log(data);
         // return ;
@@ -1354,22 +1493,26 @@
       })
       AMap.event.addListener(autocomplete, "select", function(e){
          placeSearch.search(e.poi.name);
-          var marker = new AMap.Marker({
-              position: map.getCenter(),
-              draggable: true,
-              cursor: 'move'
-          });
-          marker.setMap(map);
          console.log($(".amap-marker"));
+         lnglatXY = [e.poi.location.lng, e.poi.location.lat]; //已知点坐标
+         console.log(e);
 
-         //这里是设置一个延时来判断是否标注加载完成
-         timeIv = setInterval(function(){
-          console.log($(".amap-marker").length);
-          if($(".amap-marker").length > 5){
-            clearInterval(timeIv);
-            map.clearMap();
-          }
-         }, 10);
+         //选择后存储坐标
+         localStorage["lng"] = e.poi.location.lng;
+         localStorage["lat"] = e.poi.location.lat;
+         $("#container").attr("data-lng",e.poi.location.lng);
+         $("#container").attr("data-lat",e.poi.location.lat);
+
+         map.clearMap();
+          marker = new AMap.Marker({
+            icon : icon,//24px*24px
+            map : map,
+            position: lnglatXY,
+            draggable: true,
+            cursor: 'move',
+            raiseOnDrag: true,
+            clickable:true
+          });
          
       });
     });
@@ -1393,26 +1536,14 @@
           address.detail = detail;
           var address = JSON.stringify(address);
           console.log(address);
-          $("#address-content .item-inner").attr("data-address",address);
-          $("#address-content .item-inner").text(detail);
+          $(".address .edit-content").attr("data-address",address);
+          $(".address .edit-content").text(detail);
         }
       });
 
-      console.log('您在[ '+e.lnglat.getLng()+','+e.lnglat.getLat()+' ]的位置点击了地图！');
-      var icon = new AMap.Icon({
-          // image : 'http://vdata.amap.com/icons/b18/1/2.png',//24px*24px
-          //icon可缺省，缺省时为默认的蓝色水滴图标，
-          // size : new AMap.Size(24,24)
-      });
       marker = new AMap.Marker({
         icon : icon,//24px*24px
         map : map,
-        tagName:"火锅;超辣的",
-        askReason:"味道真的不错",
-        askContentShow:"这里的味道真的不错",
-        price:0.2,
-        createBy:"hanqi",
-        createAt:"2016-04-19",
         position: [e.lnglat.getLng(),e.lnglat.getLat()],
         draggable: true,
         cursor: 'move',
@@ -1427,11 +1558,8 @@
       $("#container").attr("data-lat",e.lnglat.getLat());
       // //拖动标注后回调的坐标
       marker.setMap(map);
-      // markerShow.setMap(mapShow);
     });
-    /*
-    相比来说这家鱼火锅是我吃过味道比较好的一家，在##成都信息工程大学北三街##，人均消费20多的样子，可以吃到很饱，素菜是免费的。
-    */
+
     if(marker){
       //拖动标注后回调的坐标
        marker.on("dragend",function(){
@@ -1447,27 +1575,20 @@
         getAddress(lnglatXY,{
           success:function(address){
             var detail = address.formattedAddress;
-            // var address = {
-            //   province : address.addressComponent.province,
-            //   city     : address.addressComponent.city,
-            //   district : address.addressComponent.district
-            // }
             var address = {
               province : address.addressComponent.province,
               city     : address.addressComponent.city,
               district : address.addressComponent.district,
               township : address.addressComponent.township
             }
-            // var address = JSON.stringify(address);
 
             var replace = ""+address.province+address.city+address.district+address.township+"";
             detail = detail.replace(replace,"");
             address.detail = detail;
-            console.log(detail);
             var address = JSON.stringify(address);
-            console.log(address);
-            $("#address-content .item-inner").attr("data-address",address);
-            $("#address-content .item-inner").text(detail);
+
+            $(".address .edit-content").attr("data-address",address);
+            $(".address .edit-content").text(detail);
           }
         });
       })

@@ -185,6 +185,7 @@
     .liked{
       color:#0894ec;
     }
+    
   </style>
 <body>
   <!-- <header class="bar bar-nav">
@@ -468,7 +469,7 @@
             var data = result.data;
             if(data){
               for (var i = 0; i < data.length; i++) {
-                html += '<div class="wenwo-li" data-id='+data[i].objectId+'><div class="up-content"><img src="'+data[i].createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">'+formatTag(data[i].askTagStr)+'</div><div class="ask-reason">'+data[i].askContentShow+'</div></div></div><div class="down-content"><div class="down-like '+(data[i].liked ? "liked" : '')+'">想吃<label class="like-num">'+data[i].likeNum+'</label></div><div class="down-time">'+formatDate("y.m.d",data[i].updatedAt)+'</div></div></div>';
+                html += '<div class="wenwo-li" data-id='+data[i].objectId+'><div class="up-content"><img src="'+data[i].createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">'+formatTag(data[i].askTagStr)+'</div><div class="ask-reason">'+data[i].askReason+'</div></div></div><div class="down-content"><div class="down-like '+(data[i].liked ? "liked" : '')+'">想吃<label class="like-num">'+data[i].likeNum+'</label></div><div class="down-time">'+formatDate("y.m.d",data[i].updatedAt)+'</div></div></div>';
               }
               // 添加新条目
               $('#find .wenwo-ul').append(html);
