@@ -506,6 +506,65 @@ router.post('/foodlike', function(req, res, next) {
     });
 });
 
+router.post('/cancelfoodlike', function(req, res, next) {
+    var userName = req.body.username;
+
+    var askId = req.body.ask_id;
+
+    var query = new AV.Query('UserInfo');
+    query.get(userName).then(function (user) {
+
+        var query = new AV.Query('AskMe');
+        query.get(askId).then(function (ask) {
+
+            var query = new AV.Query('FoodLike');
+
+            query.equalTo("by", userName);
+            query.find().then(function (fooLikes) {
+                var flag = 0;
+                for (var i = 0; i<fooLikes.length; i++) {
+                    if (fooLikes[i].get('ask').id == askId) {
+
+                        console.log(fooLikes[i].id);
+
+                        var todo = AV.Object.createWithoutData('FoodLike', fooLikes[i].id);
+                        todo.destroy().then(function (success) {
+                            var result = {
+                                code : 200,
+                                message : '操作成功'
+                            };
+                            res.send(result);
+                        }, function (error) {
+                            var result = {
+                                code : 400,
+                                message : '操作失败'
+                            };
+                            res.send(result);
+                        });
+
+                        flag++;
+                        break;
+                    }
+
+                }
+                if (flag == 0) {
+
+                    var result = {
+                        code : 400,
+                        message : '尚未评价'
+                    };
+                    res.send(result);
+
+
+
+                }
+            });
+
+        });
+
+    });
+});
+
 router.post('/foodlikelist', function(req, res, next) {
     var userName = req.body.username;
 
@@ -538,7 +597,7 @@ router.post('/foodlikelist', function(req, res, next) {
             });
 
     });
-})
+});
 
 module.exports = router;
 
