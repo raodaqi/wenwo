@@ -586,9 +586,11 @@ router.get('/like', function(req, res, next) {
                             list[i].save().then(function (lk) {
                                 if (type == 1 || type == '1') {
                                     ask.set('likeNum', (parseInt(ask.get('likeNum'))+2).toString());
+                                    ask.set('score', (parseInt(ask.get('score')) + 1).toString());
                                 }
                                 else {
                                     ask.set('likeNum', (parseInt(ask.get('likeNum'))-2).toString());
+                                    ask.set('score', (parseInt(ask.get('score')) - 5).toString());
                                 }
                                 ask.save().then(function (ask) {
                                     // var relation = ask.relation('like');
@@ -611,7 +613,7 @@ router.get('/like', function(req, res, next) {
                                             code : 200,
                                             data:ask,
                                             message : '操作成功'
-                                        }
+                                        };
                                         res.send(result);
                                         return;
                                     //});
@@ -630,9 +632,11 @@ router.get('/like', function(req, res, next) {
                         relation.add(like);
                         if(type == 1) {
                             ask.set('likeNum', (parseInt(ask.get('likeNum'))+1).toString());
+                            ask.set('score', (parseInt(ask.get('score')) + 1).toString());
                         }
                         else {
                             ask.set('likeNum', (parseInt(ask.get('likeNum'))-1).toString());
+                            ask.set('score', (parseInt(ask.get('score')) - 5).toString());
                         }
                         ask.save().then(function (ask) {
                             var num = parseInt(ask.get('likeNum'));

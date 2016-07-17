@@ -141,6 +141,7 @@ router.post('/get', function(req, res, next) {
                                                 if (relation == '' || relation == null) {
                                                     var num = 0;
                                                     ask.set('buyNum', num.toString());
+                                                    ask.set('score', (parseInt(ask.get('score')) + 1).toString());
                                                     ask.save().then(function (ask) {
                                                         var result = {
                                                             code : 200,
@@ -155,6 +156,7 @@ router.post('/get', function(req, res, next) {
                                                     relation.query().find().then(function (list) {
                                                         var num = list.length;
                                                         ask.set('buyNum', num.toString());
+                                                        ask.set('score', (parseInt(ask.get('score')) + 1).toString());
                                                         ask.save().then(function (ask) {
                                                             var result = {
                                                                 code : 200,
@@ -238,6 +240,7 @@ router.post('/get', function(req, res, next) {
                                                                             if (relation == '' || relation == null) {
                                                                                 var num = 0;
                                                                                 ask.set('buyNum', num.toString());
+                                                                                ask.set('score', (parseInt(ask.get('score')) + 1).toString());
                                                                                 ask.save().then(function (ask) {
                                                                                     var result = {
                                                                                         code : 200,
@@ -253,6 +256,7 @@ router.post('/get', function(req, res, next) {
                                                                                     var num = list.length;
                                                                                     console.log('num:'+num);
                                                                                     ask.set('buyNum', num.toString());
+                                                                                    ask.set('score', (parseInt(ask.get('score')) + 1).toString());
                                                                                     ask.save().then(function (ask) {
                                                                                         var result = {
                                                                                             code : 200,
@@ -467,13 +471,17 @@ router.post('/foodlike', function(req, res, next) {
                     ask.set('likeNum', (parseInt(ask.get('likeNum'))+1).toString());
                     foodLike.save().then(function (re) {
 
-                        var result = {
-                            code : 200,
-                            data : re,
-                            message : '操作成功'
-                        }
-                        res.send(result);
+                        ask.set('score', (parseInt(ask.get('score')) + 1).toString());
+                        ask.save().then(function () {
+                            var result = {
+                                code : 200,
+                                data : re,
+                                message : '操作成功'
+                            };
+                            res.send(result);
 
+
+                        });
 
 
                     });
@@ -485,7 +493,7 @@ router.post('/foodlike', function(req, res, next) {
                     var result = {
                         code : 400,
                         message : '重复操作'
-                    }
+                    };
                     res.send(result);
 
 
