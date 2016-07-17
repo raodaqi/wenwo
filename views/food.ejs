@@ -504,6 +504,26 @@
     })
   }
 
+  //取消想吃 接口
+  function cancelLike(username,askid,callback){
+    var data = {
+      username   : username,
+      ask_id     : askid
+    }
+    $.ajax({
+      type : "POST",
+      data: data,
+      dataType: "json",
+      url : "/hode/cancelfoodlike",
+      success: function(result){
+        callback.success(result);
+      },
+      error:function(error){
+        callback.error(error);
+      },
+    })
+  }
+
   // function initData(){
     // 加载flag
     var loading = false;
@@ -665,8 +685,34 @@
     //获取点击后的id
     var askId = $(this).parent().parent().attr("data-id");
     console.log(askId);
-    if(true){
-      var num = $(this).children(".like-num").text();
+    var num = $(this).children(".like-num").text();
+    //获取是否是已想吃
+    console.log($(this).hasClass("liked"));
+    if($(this).hasClass("liked")){
+      //已经是想吃的    取消想吃
+      num = parseInt(num)-1;
+      $(this).children(".like-num").text(num);
+      $(this).removeClass("liked");
+      cancelLike(UserName,askId,{
+        success:function(result){
+          console.log(result);
+          if(result.code == 200){
+
+          }else{
+            num++;
+            $(this).children(".like-num").text(num);
+            $(this).addClass("liked");
+          }
+        },
+        error:function(error){
+          console.log(error);
+          num++;
+          $(this).children(".like-num").text(num);
+          $(this).addClass("liked");
+        }
+      });
+    }else{
+      //想吃
       num = parseInt(num)+1;
       $(this).children(".like-num").text(num);
       $(this).addClass("liked");
@@ -677,15 +723,17 @@
           }else{
             num--;
             $(this).children(".like-num").text(num);
+            $(this).removeClass("liked");
           }
         },
         error:function(error){
           console.log(error);
           num--;
           $(this).children(".like-num").text(num);
+          $(this).removeClass("liked");
         }
       });
-    } 
+    }
   })  
 
   $(".wenwo-ul").on("click",".up-content",function(){
