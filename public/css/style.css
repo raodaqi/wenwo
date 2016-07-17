@@ -131,3 +131,7 @@ a {
     text-align: left;
     
 }
+.bar .button-link{
+    color:#EE7E2E !important;
+    font-weight: bolder !important;
+}

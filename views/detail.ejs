@@ -63,52 +63,53 @@
     .username-content{
       position: absolute;
       bottom:3rem;
-      padding-left: .5rem;
+      padding-left: .7rem;
       font-size: 1rem;
       color: white;
     }
     .like,.bug{
       position: absolute;
       border-radius: 0.2rem;
-      height: 1.5rem;
+      /*height: 1.5rem;*/
       bottom:1rem;
       text-align: center;
       font-size: 0.7rem;
     }
     .like{
       background: #FFF;
-      width: 3rem;
-      margin-left: .5rem;
-      line-height: 1.5rem;
-      color: #000;
+      padding:5px 10px;
+      margin-left: .7rem;
+      /*color: rgb(255, 102, 153);*/
+      color: rgb(153, 153, 153);
     }
     .bug{
-      background: #0894ec;
-      width: 4rem;
-      margin-left: 4rem;
-      line-height: 1.5rem;
+      background: #EE7E2E;
+      padding:5px 10px;
+      margin-left: 4.6rem;
       color: #FFF;
+    }
+    .likeNum{
+      padding-left: 5px;
+      color: rgb(153, 153, 153);
     }
     .ask-detail{
       margin-top: 14.5rem;
     }
     .ask-detail-li{
-      margin-top: 0.5rem;
       padding:0.3rem;
     }
     .detail-li-title{
       box-sizing: border-box;
       padding:0.3rem 0.5rem;
-      background: #C7C7C7;
       border-radius: 0.2rem;
       font-size: 0.7rem;
-      color: #000;
+      color: #333333;
       margin-bottom: 0.3rem;
     }
     .detail-li-content{
-      color:#848484;
+      color:#999999;
       padding-left: 0.3rem;
-      font-size: 0.6rem;
+      font-size: 0.7rem;
       word-break:break-all;
     }
     .no-user{
@@ -116,14 +117,55 @@
       text-align: center;
       color: #A7A7A7;
     }
-    
+    .edit-li-img{
+      width: 25px;
+      height: 25px;
+      float: left;
+      margin-left: 10px;
+      margin-top: 3px;
+      background-color: white;
+      border-radius: 50%;
+      background-size: cover;
+    }
+    .detail-li-box{
+      margin-left: 40px;
+    }
+    .content{
+      background-color: #FFF;
+      padding-bottom: 20px;
+    }
+    .edit-detail-li-title {
+      background: url("/img/edit/detail-li.png") no-repeat;
+      min-width: 40px;
+      padding: 0 8px;
+      height: 20px;
+      background-size: 100% 20px;
+      text-align: center;
+      float: left;
+    }
+    .edit-detail-li-input {
+      min-height: 21px;
+      margin-left: 60px;
+    }
+    .edit-detail-li {
+      min-height: 20px;
+      margin-top: 10px;
+    }
   </style>
 <body>
   <!-- <header class="bar bar-nav">
     <h1 class="title">问我&bull;美食</h1>
   </header> -->
   <% if(askid){ %>
-    <div class="wenwo-content page page-current" id='detail'>
+    <div class="preloader-modal">
+      <div class="modal-content">
+        <div class="modal-inner"> <i class="ui-loading-bright"></i>
+          <div class="modal-title">加载中</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wenwo-content page page-current" id='detail' style="display:none">
       <header class="bar bar-nav">
         <a class="button button-link button-nav pull-left" href="/food">
             <!-- <a class="button button-link button-nav pull-left"> -->
@@ -140,23 +182,54 @@
             <span class="username">ducky</span>
             
           </div>
-          <div class="like">喜欢</div>
+          <div class="like">想吃<span class="likeNum">2</span></div>
           <div class="bug"><span class="price">2</span>元瞅瞅</div>
         </div>
 
         <div class="ask-detail">
           <div class="ask-detail-reason ask-detail-li">
-            <div class="detail-li-title">推荐理由</div>
-            <div class="detail-reason detail-li-content">相信我就够了</div>
+            <img src="/img/edit/reason-02.png" class="edit-li-img">
+            <div class="detail-li-box">
+              <div class="detail-li-title">推荐理由</div>
+              <div class="detail-reason detail-li-content"></div>
+            </div>
           </div>
-          <div class="ask-detail-rtname ask-detail-li">
-            <div class="detail-li-title">店名</div>
-            <div class="detail-rtname detail-li-content">重庆鱼火锅</div>
-          </div>
+
           <div class="ask-detail-content ask-detail-li">
-            <div class="detail-li-title">详情</div>
-            <div class="detail-content detail-li-content">重庆鱼火锅testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttest</div>
+            <img src="/img/edit/detail-02.png" class="edit-li-img">
+            <div class="detail-li-box">
+              <div class="detail-li-title">详情</div>
+              <div class="detail-content detail-li-content">
+                <div class="edit-detail"></div>
+                <div class="edit-detail-li-content">
+                </div>
+              </div>
+            </div>
           </div>
+
+          <div class="ask-detail-rtname ask-detail-li">
+            <img src="/img/edit/name-02.png" class="edit-li-img">
+            <div class="detail-li-box">
+              <div class="detail-li-title">店名</div>
+              <div class="detail-rtname detail-li-content">
+                请购买以查看
+              </div>
+            </div>
+          </div>
+
+          <div class="ask-detail-address ask-detail-li">
+            <img src="/img/edit/address-02.png" class="edit-li-img">
+            <div class="detail-li-box">
+              <div class="detail-li-title">地址</div>
+              <div class="detail-address detail-li-content">
+                请购买以查看
+              </div>
+            </div>
+          </div>
+
+          <!-- 
+           -->
+
         </div>
       </div>
     </div>
@@ -192,8 +265,10 @@
   $(function(){
     console.log("<%=askid%>");
     var askid = "<%=askid%>";
+    var username = "<%=username%>";
+    console.log(username);
     if(askid){
-      getAskDetail(askid);
+      getAskDetail(askid,username);
     }
   });
   function init(){
@@ -224,11 +299,37 @@
           var data = result.data;
           $(".title").text(formatTag(data.askTagStr));
           $(".username").text(data.createByName);
+          $(".likeNum").text(data.likeNum)
           $(".price").text(data.askPrice);
           $(".pic-bg").attr("src",data.createByUrl);
           $(".detail-reason").text(data.askReason);
-          $(".detail-rtname").text(data.createByName);
-          $(".detail-content").text(data.askContentShow);
+          // $(".detail-rtname").text(data.shopName);
+          //解析美食详情
+          var contentShow = data.askContentShow;
+          if(contentShow){
+            contentShow = JSON.parse(contentShow);
+            if(contentShow.detail || contentShow.detailLi){
+              if(contentShow.detail){
+                $(".edit-detail").text(contentShow.detail);
+              }
+              if(contentShow.detailLi){
+                console.log(contentShow.detailLi);
+                var detailLi = contentShow.detailLi;
+                detailLi = JSON.parse(detailLi);
+                $(".edit-detail-li-content").empty();
+                for(var i = 0; i < detailLi.length;i++){
+                  //初始化显示界面
+                  var li = '<div class="edit-detail-li"><div class="edit-detail-li-title">'+detailLi[i].name+'</div><div class="edit-detail-li-input">'+detailLi[i].val+'</div></div>';
+                  $(".edit-detail-li-content").append(li);
+                }
+              }
+              
+            }else{
+              $(".detail-content").text(contentShow);
+            }
+          }
+          $(".preloader-modal").hide();
+          $("#detail").show();
         }else{
 
         }

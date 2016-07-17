@@ -142,7 +142,8 @@ app.get('/edit', function(req, res) {
 
 app.get('/detail', function(req, res) {
   var askid =  req.query.askid;
-  res.render('detail', {askid:askid});
+  var username = "573b0e3df38c8400673bb48d";
+  res.render('detail', {askid:askid,username:username});
 });
 
 app.get('/test', function(req, res) {

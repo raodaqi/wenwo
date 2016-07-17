@@ -10,7 +10,7 @@
   <link rel="icon" type="image/x-icon" href="/img/logo.png" media="screen">
   <title>问我-让经验帮你赚钱</title>
   <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="http://at.alicdn.com/t/font_1468291455_4862251.css">
+  <link rel="stylesheet" href="http://at.alicdn.com/t/font_1468748497_5722356.css">
   <link rel="stylesheet" href="/css/sm.min.css">
   <script src="/js/jweixin-1.0.0.js"></script>
 </head>
@@ -185,6 +185,58 @@
     .liked{
       color:#0894ec;
     }
+    .iconfont {
+      font-family: "iconfont" !important;
+    }
+    .bar-tab .tab-item.active, .bar-tab .tab-item:active{
+      color: #F88827;
+    }
+    .want-content{
+      display: none;
+      width: 100%;
+      text-align: center;
+      padding-top:70px;
+    }
+    .empty-img{
+      display: block;
+      width: 100px;
+      height: 100%;
+      margin:0 auto;
+    }
+    .empty-title{
+      margin-top: 20px;
+      color: #666666;
+    }
+    .empty-button{
+      width: 180px;
+      height: 35px;
+      margin:40px auto;
+      line-height: 35px;
+      background-color: #F88827;
+      font-size: 16px;
+      color: white;
+      border-radius:5px;
+    }
+
+    .invite-img{
+      padding: 10px 15px;
+      width: 100%;
+    }
+    .modal{
+      position: absolute;
+      top: 0;
+      left: 0;
+      margin:0 !important;
+      padding: 0 !important; 
+      width: 100%;
+      height: 100%;
+    }
+    .modal-overlay, .popup-overlay, .preloader-indicator-overlay{
+      background: rgba(0,0,0,.8);
+    }
+    .preloader-modal{
+      z-index: 40000;
+    }
     
   </style>
 <body>
@@ -214,7 +266,7 @@
   <!-- 这里是所有的信息列表 -->
   <div class="wenwo-content page" id="like">
     <header class="bar bar-nav">
-      <h1 class="title">喜欢</h1>
+      <h1 class="title">想吃</h1>
     </header>
     <!-- <div class="content">
       <div class="wenwo-li">
@@ -240,6 +292,11 @@
         <div class="pull-to-refresh-arrow"></div>
       </div>
       <div class="wenwo-ul"></div>
+      <div class="want-content">
+        <img src="/img/food/want-empty.svg" class="empty-img" alt="">
+        <div class="empty-title">没有想吃的美食？</div>
+        <div class="empty-button" data-href="#food">去随便逛逛</div>
+      </div>
       <div class="infinite-scroll-preloader" >
         <div class="preloader"></div>
         <div class="ask-end" style="display:none">哥，这回真的没了</div>
@@ -282,7 +339,7 @@
 
         <div class="list-block">
           <ul class="my-ask">
-            <li class="item-content item-link">
+            <li class="item-content item-link" data-href="buy ">
               <div class="before-media"><i class="iconfont icon-gouwuche"></i></div>
               <div class="item-media"><i class="icon icon-f7"></i></div>
               <div class="item-inner">
@@ -290,7 +347,7 @@
                 <div class="item-after">20</div>
               </div>
             </li>
-            <li class="item-content item-link">
+            <li class="item-content item-link" data-href="#share">
               <div class="before-media"><i class="iconfont icon-paper-airplane"></i></div>
               <div class="item-media"><i class="icon icon-f7"></i></div>
               <div class="item-inner">
@@ -301,14 +358,14 @@
           </ul>
 
           <ul class="">
-            <li class="item-content item-link">
+            <li class="item-content item-link item-share">
               <div class="before-media"><i class="iconfont icon-fenxiang"></i></div>
               <div class="item-media"><i class="icon icon-f7"></i></div>
               <div class="item-inner">
                 <div class="item-title">邀请爱卿使用</div>
               </div>
             </li>
-            <li class="item-content item-link" data-href="http://form.mikecrm.com/Qg7fK7">
+            <li class="item-content item-link item-message" data-href="http://form.mikecrm.com/Qg7fK7">
               <div class="before-media"><i class="iconfont icon-mes"></i></div>
               <div class="item-media"><i class="icon icon-f7"></i></div>
               <div class="item-inner">
@@ -319,20 +376,25 @@
         </div>
       </div>
     </div>
+
+    <div class="modal-overlay modal-overlay-visible" style="display:none;"></div>
+    <div class="modal modal-in" style="display: none; margin-top: -72px;">
+      <img class="invite-img" src="/img/invite.png">
+    </div>
   </div>
 
   <nav class="bar bar-tab">
     <a class="tab-item find active" data-type="find" href="#">
-      <span class="icon icon-home"></span>
+      <span class="icon iconfont icon-faxian"></span>
       <span class="tab-label">发现</span>
     </a>
     <a class="tab-item edit" data-type="edit" href="#">
-      <span class="icon icon-edit"></span>
+      <span class="icon iconfont icon-bianji"></span>
       <span class="tab-label">发布</span>
     </a>
     <a class="tab-item like" data-type="like" href="#">
-      <span class="icon icon-emoji"></span>
-      <span class="tab-label">喜欢</span>
+      <span class="icon iconfont icon-likeEat"></span>
+      <span class="tab-label">想吃</span>
     </a>
   </nav>
 </body>
@@ -480,7 +542,7 @@
                 $.detachInfiniteScroll($('.infinite-scroll'));
                 // 删除加载提示符
                 // $('.infinite-scroll-preloader').remove();
-                $(".preloader").hide();
+                $(".infinite-scroll-preloader .preloader").hide();
                 $(".ask-end").show();
                 // $('.infinite-scroll-preloader').append("")
                 getAskLoad = 1;
@@ -553,15 +615,19 @@
     success:function(result){
       if(result.code == 200){
         var html = '';
-        var data = result.data;
+        var data = result.askDetail;
+        if(!data.length){
+          $(".infinite-scroll-preloader").hide();
+          $(".want-content").show();
+        }
         if(data){
           for (var i = 0; i < data.length; i++) {
-            html += '<div class="wenwo-li" data-id='+data[i].objectId+'><div class="up-content"><img src="'+data[i].createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">'+formatTag(data[i].askTagStr)+'</div><div class="ask-reason">'+data[i].askContentShow+'</div></div></div><div class="down-content"><div class="down-like '+(data[i].liked ? "liked" : '')+'">想吃<label class="like-num">'+data[i].likeNum+'</label></div><div class="down-time">'+formatDate("y.m.d",data[i].updatedAt)+'</div></div></div>';
+            html += '<div class="wenwo-li" data-id='+data[i].objectId+'><div class="up-content"><img src="'+data[i].createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">'+formatTag(data[i].askTagStr)+'</div><div class="ask-reason">'+data[i].askReason+'</div></div></div><div class="down-content"><div class="down-like liked">想吃<label class="like-num">'+data[i].likeNum+'</label></div><div class="down-time">'+formatDate("y.m.d",data[i].updatedAt)+'</div></div></div>';
           }
         }
         // 添加新条目
         $('#like .wenwo-ul').append(html);
-        $("#like .preloader").hide();
+        $("#like .infinite-scroll-preloader .preloader").hide();
       }
     },
     error:function(error){
@@ -588,6 +654,11 @@
       $.router.load("/edit");
     }
   })
+  $(".empty-button").on("click",function(){
+    $(".tab-item").removeClass("active");
+    $(".find").addClass("active");
+    $.router.load("#find");
+  });
 
   //点击想吃逻辑
   $(".wenwo-ul").on("click",".down-like",function(){
@@ -630,5 +701,51 @@
   // $(".edit").on("click",function(){
   //   $.router.load("/todos/send/test?username=573c1eb271cfe4006c18274f");
   // })
+
+  //初始化个人中心页面
+  function initMePage(username){
+    if(localStorage.userHead && localStorage.uName){
+      $(".pic-bg,.user-pic").attr("src",localStorage.userHead);
+      $(".user-name").text(localStorage.uName);
+    }else{
+      var data = {
+        username   : username
+      }
+      $.ajax({
+        type : "GET",
+        data: data,
+        dataType: "json",
+        url : "/user/getuserinfo",
+        success: function(result){
+          console.log(result);
+          if(result.code = 200){
+            var userHead = result.data.userHead;
+            var uName = result.data.uName;
+            localStorage["userHead"] = userHead;
+            localStorage["uName"] = uName;
+          }
+          
+        },
+        error:function(error){
+          console.log(error);
+        },
+      })
+    } 
+  }
+  initMePage(UserName);
+
+  //邀请好友
+  $(".item-share").on('click',function(){
+    $(".modal-overlay-visible").show();
+    $(".modal-in").show();
+  })
+  $(".modal-in").on('click',function(){
+    $(".modal-overlay-visible").hide();
+    $(".modal-in").hide();
+  })
+  $(".item-message").on("click",function(){
+    $.showPreloader("正在跳转");
+    $.router.load("http://form.mikecrm.com/Qg7fK7");
+  })
 </script>
 </html>
