@@ -27,6 +27,7 @@ router.get('/allask', function(req, res, next) {
     var size = req.param('size') != null ? req.param('size') : 1000;
     var staus = req.param('staus') != null ? req.param('staus') : '1';
     var type = req.param('type') != null ? req.param('type') : null;
+    var geo = req.param('position_geo') != null ? req.param('position_geo') : null;
     //console.log(staus);
     var query = new AV.Query('AskMe');
     // query.include('askTag');
@@ -45,7 +46,18 @@ router.get('/allask', function(req, res, next) {
     }
     
     query.skip(page*size);
-    query.descending('createdAt');
+    if (geo == null || geo == '') {
+
+        query.descending('createdAt');
+
+    } else {
+
+
+    }
+
+
+
+
 
     query.find().then(function(results) {
         //console.log(results);
@@ -922,6 +934,7 @@ router.post('/sendask', function(req, res, next) {
 
     var images = req.param('images');
     var shopName = req.param('shop_name');
+
     var userName = req.param('username');
     if (!userName) {
         var result = {
@@ -1035,9 +1048,15 @@ router.post('/sendask', function(req, res, next) {
         ask.set('askContentShow', contentShow);
         ask.set('askContentHide', contentHide);
         ask.set('askPrice', price);
-        ask.set('staus', '2');
+        ask.set('staus', '1');
         ask.set('createByName', user.get('uName'));
         ask.set('createByUrl', user.get('userHead'));
+        ask.set('askImage', images);
+        ask.set('shopName', shopName);
+
+        var point = new AV.GeoPoint(geoX, geoY);
+        ask.set('positionGeo', point);
+
 
         //ask.set('askLevel', '1');
         ask.set('askDefault',remark);
