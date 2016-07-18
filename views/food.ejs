@@ -92,7 +92,7 @@
       color:#F88827;
       margin-left: 5px;
     }
-    #me,#buy{
+    #me,#buy,#share{
       z-index: 40000;
     }
     .infinite-scroll-preloader {
@@ -174,6 +174,10 @@
     }
     .list-block{
       margin-top: 10.5rem;
+      color:#6A6A6A;
+    }
+    .list-block .iconfont{
+      color:#F88827;
     }
     .item-title{
       padding-left: 0.5rem;
@@ -189,9 +193,6 @@
     .ask-end{
       font-size: .7rem;
       color: #A7A7A7;
-    }
-    .liked{
-      color:#F88827;
     }
     .iconfont {
       font-family: "iconfont" !important;
@@ -240,7 +241,7 @@
       height: 100%;
     }
     .modal-overlay, .popup-overlay, .preloader-indicator-overlay{
-      background: rgba(0,0,0,.8);
+      background: rgba(0,0,0,.7);
     }
     .preloader-modal{
       z-index: 40000;
@@ -250,33 +251,47 @@
       height: 45px;
       margin-top: 3px;
     }
-    .icon-likeEat:before{
-      content:"" !important;
-    }
-    .icon-likeEat{
-      background: url("/img/food/want-icon.svg") no-repeat;
-      background-size: cover;
-      height: 1.25rem !important;
-      width: 1.2rem;
-    }
-    .down-like .icon-likeEat{
-      height: 17px !important;
-      width: 16px;
-    }
-    .active .icon-likeEat,.liked .icon-likeEat{
-      background: url("/img/food/wantted-icon.svg") no-repeat;
-      background-size: cover;
-    }
     .icon-tixing{
       color: #CCCCCC;
       font-weight: 100;
       margin-right: 5px;
     }
+    /*提醒UI*/
+    .tip-content{
+      position: absolute;
+      width: 94%;
+      left: 3%;
+      top: 50%;
+      border-width: 1px;
+      transform: translateY(-50%);
+      border-style: solid;
+      border-color: rgba(153, 153, 153, 1);
+      border-radius: 8px;
+      background-color: rgba(255, 255, 255, 1); 
+      -moz-box-shadow: none;
+      -webkit-box-shadow: none;
+      box-shadow: none;
+      text-align: left;
+      color: #666666;
+    }
+    .tip-content-title{
+      text-align: center;
+      padding: 15px 0 10px 0;
+    }
+    .tip-content-li{
+      padding:5px 10px;
+      font-size: 14px;
+    }
+    .tip-content-get{
+      border-top: 1px solid #DFDFDF;
+      text-align: center;
+      padding:10px 0;
+      margin-top: 20px;
+      color: #EE7E2E;
+      font-size: 16px;
+    }
   </style>
 <body>
-  <!-- <header class="bar bar-nav">
-    <h1 class="title">问我&bull;美食</h1>
-  </header> -->
   <div class="wenwo-content page page-current" id='find'>
     <header class="bar bar-nav">
       <div class="header-me iconfont icon-gerenzhongxin"></div>
@@ -302,22 +317,6 @@
     <header class="bar bar-nav">
       <h1 class="title">想吃</h1>
     </header>
-    <!-- <div class="content">
-      <div class="wenwo-li">
-        <div class="up-content">
-          <img src="http://wx.qlogo.cn/mmopen/zngt7mjBQUdFiaKIVGQbhF3jRURfqibW3EtNPALJewxicdPAyGfyMpZkeHZIW1UXUmjEia3QicdYqickSiaywQcKBUS6GMWSEw67Rry/" alt="" class="user-pic">
-          <div class="ask-content">
-            <div class="ask-tag">鱼火锅</div>
-            <div class="ask-reason">好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃好吃</div>
-          </div>
-        </div>
-        <div class="down-content">
-          <div class="down-like">想吃23</div>
-          <div class="down-time">2016-07-07</div>
-        </div>
-      </div>
-    </div> -->
-
     <!-- 这里是想吃的信息列表 -->
     <div class="like-content content pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="55" data-distance="100">
       <!-- 默认的下拉刷新层 -->    
@@ -329,7 +328,7 @@
       <div class="want-content">
         <img src="/img/food/want-empty.svg" class="empty-img" alt="">
         <div class="empty-title">没有想吃的美食？</div>
-        <div class="empty-button" data-href="#food">去随便逛逛</div>
+        <div class="empty-button" data-href="#find">去随便逛逛</div>
       </div>
       <div class="infinite-scroll-preloader" >
         <div class="preloader"></div>
@@ -343,7 +342,7 @@
       <a class="button button-link button-nav pull-left back" href="#">
         <span class="icon icon-left"></span>
       </a>
-      <h1 class="title">朕查阅的</h1>
+      <h1 class="title">朕，查阅的</h1>
     </header>
   <!-- 这里是购买的的信息列表 -->
     <div class="buy-content content pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="55" data-distance="100">
@@ -355,8 +354,35 @@
       <div class="wenwo-ul"></div>
       <div class="want-content">
         <img src="/img/food/want-empty.svg" class="empty-img" alt="">
-        <div class="empty-title">皇上，您还没有查阅的美食？</div>
-        <div class="empty-button" data-href="#food">去随便逛逛</div>
+        <div class="empty-title">皇上，您还没有查阅任何美食</div>
+        <div class="empty-button" data-href="#find">去查阅美食</div>
+      </div>
+      <div class="infinite-scroll-preloader" >
+        <div class="preloader"></div>
+        <div class="ask-end" style="display:none"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wenwo-content page" id="share">
+    <header class="bar bar-nav">
+      <a class="button button-link button-nav pull-left back" href="#">
+        <span class="icon icon-left"></span>
+      </a>
+      <h1 class="title">朕，分享的</h1>
+    </header>
+  <!-- 这里是购买的的信息列表 -->
+    <div class="share-content content pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="55" data-distance="100">
+      <!-- 默认的下拉刷新层 -->    
+      <div class="pull-to-refresh-layer">
+        <div class="preloader"></div>
+        <div class="pull-to-refresh-arrow"></div>
+      </div>
+      <div class="wenwo-ul"></div>
+      <div class="want-content">
+        <img src="/img/food/want-empty.svg" class="empty-img" alt="">
+        <div class="empty-title">皇上，您还没有分享的美食</div>
+        <div class="empty-button" data-href="edit">点臣妾去分享</div>
       </div>
       <div class="infinite-scroll-preloader" >
         <div class="preloader"></div>
@@ -433,17 +459,29 @@
               <div class="before-media"><i class="iconfont icon-mes"></i></div>
               <div class="item-media"><i class="icon icon-f7"></i></div>
               <div class="item-inner">
-                <div class="item-title">给臣妾提意见</div>
+                <div class="item-title">给小问子提意见</div>
               </div>
             </li>
           </ul>
         </div>
       </div>
     </div>
-
     <div class="modal-overlay modal-overlay-visible" style="display:none;"></div>
-    <div class="modal modal-in" style="display: none; margin-top: -72px;">
+    <div class="modal modal-in model-share" style="display: none; margin-top: -72px;">
       <img class="invite-img" src="/img/invite.png">
+    </div>
+
+    <div class="modal modal-in model-tip" style="display: none; margin-top: -72px;">
+      <div class="tip-content">
+        <div class="tip-content-title">计费说明</div>
+        <div class="tip-content-li">
+          <div>1)&nbsp;&nbsp;&nbsp;收益来源于你分享的内容，你可以设定每条信息的查看价格，其他人查看，需要付费。</div>
+        </div>
+        <div class="tip-content-li">
+          <div>2)&nbsp;&nbsp;&nbsp;收入扣除10%为收益，每天晚10点自动入库微信钱包，但低于1元不入库。</div>
+        </div>
+        <div class="tip-content-get">朕知道了</div>
+      </div>
     </div>
   </div>
 
@@ -496,6 +534,7 @@
         url = "find";
       }
       console.log(url);
+      // $.router.load(url);
       $(".tab-item").removeClass("active");
       $("."+url).addClass("active");
   }
@@ -544,46 +583,6 @@
       },
       error:function(error){
         // console.log(error);
-        callback.error(error);
-      },
-    })
-  }
-
-  //想吃 接口
-  function like(username,askid,callback){
-    var data = {
-      username   : username,
-      ask_id     : askid
-    }
-    $.ajax({
-      type : "POST",
-      data: data,
-      dataType: "json",
-      url : "/hode/foodlike",
-      success: function(result){
-        callback.success(result);
-      },
-      error:function(error){
-        callback.error(error);
-      },
-    })
-  }
-
-  //取消想吃 接口
-  function cancelLike(username,askid,callback){
-    var data = {
-      username   : username,
-      ask_id     : askid
-    }
-    $.ajax({
-      type : "POST",
-      data: data,
-      dataType: "json",
-      url : "/hode/cancelfoodlike",
-      success: function(result){
-        callback.success(result);
-      },
-      error:function(error){
         callback.error(error);
       },
     })
@@ -691,9 +690,9 @@
   // }
   // initData();
   // getAskMe(2,10);
-  init();
 
   $.init();
+  init();
 
   //获取想吃列表
   getLikeList(UserName,{
@@ -702,8 +701,8 @@
         var html = '';
         var data = result.askDetail;
         if(!data.length){
-          $(".infinite-scroll-preloader").hide();
-          $(".want-content").show();
+          $("#like .infinite-scroll-preloader").hide();
+          $("#like .want-content").show();
         }
         if(data){
           for (var i = 0; i < data.length; i++) {
@@ -740,9 +739,15 @@
     }
   })
   $(".empty-button").on("click",function(){
-    $(".tab-item").removeClass("active");
-    $(".find").addClass("active");
-    $.router.load("#find");
+    var href = $(this).attr("data-href");
+    if(href.split("#")[1]){
+      $(".tab-item").removeClass("active");
+      $(".find").addClass("active");
+      $.router.load(href);
+    }else{
+      $.showPreloader("正在跳转");
+      $.router.load(href);
+    }
   });
   $(".my-ask .item-link").on("click",function(){
     var href = $(this).attr("data-href");
@@ -851,8 +856,46 @@
   }
   initMePage(UserName);
 
-  //初始化个人中心页面
+  //初始化购买页面
   function initBuyPage(username){
+      var data = {
+        username   : username,
+        staus      : 1
+      }
+      $.ajax({
+        type : "POST",
+        data: data,
+        dataType: "json",
+        url : "/hode/haved",
+        success: function(result){
+          if(result.code == 200){
+            console.log(result);
+            var html = '';
+            $("#buy .infinite-scroll-preloader").hide();
+            $("#buy .want-content").show();
+            return ;
+            var data = result.askDetail;
+            if(!data.length){
+              $("#buy .infinite-scroll-preloader").hide();
+              $("#buy .want-content").show();
+            }
+            if(data){
+              for (var i = 0; i < data.length; i++) {
+                html += '<div class="wenwo-li" data-id='+data[i].objectId+'><div class="up-content"><img src="'+data[i].createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">'+formatTag(data[i].askTagStr)+'</div><div class="ask-reason">'+data[i].askReason+'</div></div></div><div class="down-content"><div class="down-like liked">想吃<label class="like-num">'+data[i].likeNum+'</label></div><div class="down-time">'+formatDate("y.m.d",data[i].updatedAt)+'</div></div></div>';
+              }
+            }
+            // 添加新条目
+            $('#buy .wenwo-ul').append(html);
+            $("#buy .infinite-scroll-preloader .preloader").hide();
+          }
+        },
+        error:function(error){
+          console.log(error);
+        },
+      })
+  }
+  //初始化分享界面
+  function initSharePage(username){
       var data = {
         username   : username
       }
@@ -860,22 +903,34 @@
         type : "GET",
         data: data,
         dataType: "json",
-        url : "/ask/getnuy",
+        url : "/ask/myask",
         success: function(result){
-          console.log(result);
-          if(result.code = 200){
-            var userHead = result.data.userHead;
-            var uName = result.data.uName;
-            localStorage["userHead"] = userHead;
-            localStorage["uName"] = uName;
+          if(result.code == 200){
+            console.log(result);
+            var html = '';
+            var data = result.data;
+
+            if(!data.length){
+              $("#share .infinite-scroll-preloader").hide();
+              $("#share .want-content").show();
+            }
+            if(data){
+              for (var i = 0; i < data.length; i++) {
+                html += '<div class="wenwo-li" data-id='+data[i].objectId+'><div class="up-content"><img src="'+data[i].createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">'+formatTag(data[i].askTagStr)+'</div><div class="ask-reason">'+data[i].askReason+'</div></div></div><div class="down-content"><div class="down-like liked">想吃<label class="like-num">'+data[i].likeNum+'</label></div><div class="down-time">'+formatDate("y.m.d",data[i].updatedAt)+'</div></div></div>';
+              }
+            }
+            console.log(html);
+            // 添加新条目
+            $('#share .wenwo-ul').append(html);
+            $("#share .infinite-scroll-preloader .preloader").hide();
           }
-          
         },
         error:function(error){
           console.log(error);
         },
       })
   }
+  initSharePage(UserName);
   initBuyPage(UserName);
 
 
@@ -883,7 +938,7 @@
   //邀请好友
   $(".item-share").on('click',function(){
     $(".modal-overlay-visible").show();
-    $(".modal-in").show();
+    $(".model-share").show();
   })
   $(".modal-in").on('click',function(){
     $(".modal-overlay-visible").hide();
@@ -892,6 +947,12 @@
   $(".item-message").on("click",function(){
     $.showPreloader("正在跳转");
     $.router.load("http://form.mikecrm.com/Qg7fK7");
+  })
+
+  //个人中心提醒
+  $(".header-tip").on("click",function(){
+    $(".modal-overlay-visible").show();
+    $(".model-tip").show();
   })
 </script>
 </html>

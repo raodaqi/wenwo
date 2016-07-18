@@ -164,3 +164,43 @@ $.hidePreloader = function(){
 }
 // $.showPreloader();
 // $.showLoad();
+
+//想吃 接口
+  function like(username,askid,callback){
+    var data = {
+      username   : username,
+      ask_id     : askid
+    }
+    $.ajax({
+      type : "POST",
+      data: data,
+      dataType: "json",
+      url : "/hode/foodlike",
+      success: function(result){
+        callback.success(result);
+      },
+      error:function(error){
+        callback.error(error);
+      },
+    })
+  }
+
+  //取消想吃 接口
+  function cancelLike(username,askid,callback){
+    var data = {
+      username   : username,
+      ask_id     : askid
+    }
+    $.ajax({
+      type : "POST",
+      data: data,
+      dataType: "json",
+      url : "/hode/cancelfoodlike",
+      success: function(result){
+        callback.success(result);
+      },
+      error:function(error){
+        callback.error(error);
+      },
+    })
+  }

@@ -79,8 +79,15 @@
       background: #FFF;
       padding:5px 10px;
       margin-left: .7rem;
-      /*color: rgb(255, 102, 153);*/
       color: rgb(153, 153, 153);
+      width: 3.5rem;
+      border-radius: 3px;
+      border: 1px solid #E2E2E2;
+      padding: 0.1rem 0.6rem;
+      display: inline-block;
+      color: #666;
+      font-weight: bold;
+      font-size: 0.7rem;
     }
     .bug{
       background: #EE7E2E;
@@ -88,9 +95,8 @@
       margin-left: 4.6rem;
       color: #FFF;
     }
-    .likeNum{
-      padding-left: 5px;
-      color: rgb(153, 153, 153);
+    .like-num{
+      padding-left: 7px;
     }
     .ask-detail{
       margin-top: 14.5rem;
@@ -151,6 +157,16 @@
       min-height: 20px;
       margin-top: 10px;
     }
+    .like .icon-likeEat,.liked .like .icon-likeEat{
+      width: 20px;
+      height: 19px;
+    }
+    .liked .icon-likeEat{
+      height: 22px !important;
+    }
+    .liked{
+      padding:3.5px 0;
+    }
   </style>
 <body>
   <!-- <header class="bar bar-nav">
@@ -182,7 +198,7 @@
             <span class="username">ducky</span>
             
           </div>
-          <div class="like">想吃<span class="likeNum">2</span></div>
+          <div class="like"><span class="icon iconfont icon-likeEat"></span><span class="like-num">2</span></div>
           <div class="bug"><span class="price">2</span>元瞅瞅</div>
         </div>
 
@@ -262,15 +278,16 @@
 </script>
 <script>
   //页面加载执行
-  $(function(){
+  // $(function(){
     console.log("<%=askid%>");
-    var askid = "<%=askid%>";
-    var username = "<%=username%>";
-    console.log(username);
-    if(askid){
-      getAskDetail(askid,username);
+    var AskId = "<%=askid%>";
+    var UserName = "<%=username%>";
+
+    console.log(UserName);
+    if(AskId){
+      getAskDetail(AskId,UserName);
     }
-  });
+  // });
   function init(){
     var url = window.location.hash;
       if(url){
@@ -299,7 +316,15 @@
           var data = result.data;
           $(".title").text(formatTag(data.askTagStr));
           $(".username").text(data.createByName);
-          $(".likeNum").text(data.likeNum)
+          $(".like-num").text(data.likeNum);
+          //判断是否想吃过
+          if(data.liked){
+            //想吃过
+            $(".like").addClass("liked");
+          }else{
+            //没有想吃过
+          }
+
           $(".price").text(data.askPrice);
           $(".pic-bg").attr("src",data.createByUrl);
           $(".detail-reason").text(data.askReason);
@@ -307,26 +332,29 @@
           //解析美食详情
           var contentShow = data.askContentShow;
           if(contentShow){
-            contentShow = JSON.parse(contentShow);
-            if(contentShow.detail || contentShow.detailLi){
-              if(contentShow.detail){
-                $(".edit-detail").text(contentShow.detail);
-              }
-              if(contentShow.detailLi){
-                console.log(contentShow.detailLi);
-                var detailLi = contentShow.detailLi;
-                detailLi = JSON.parse(detailLi);
-                $(".edit-detail-li-content").empty();
-                for(var i = 0; i < detailLi.length;i++){
-                  //初始化显示界面
-                  var li = '<div class="edit-detail-li"><div class="edit-detail-li-title">'+detailLi[i].name+'</div><div class="edit-detail-li-input">'+detailLi[i].val+'</div></div>';
-                  $(".edit-detail-li-content").append(li);
+            //判断是否是标准json格式
+            if(contentShow.indexOf("{") == -1 || contentShow.indexOf("}") == -1 || contentShow.indexOf(":") == -1){
+              $(".detail-content").text(contentShow);
+            }else{
+              contentShow = JSON.parse(contentShow);
+              console.log(contentShow);
+              if(contentShow.detail || contentShow.detailLi){
+                if(contentShow.detail){
+                  $(".edit-detail").text(contentShow.detail);
+                }
+                if(contentShow.detailLi){
+                  console.log(contentShow.detailLi);
+                  var detailLi = contentShow.detailLi;
+                  detailLi = JSON.parse(detailLi);
+                  $(".edit-detail-li-content").empty();
+                  for(var i = 0; i < detailLi.length;i++){
+                    //初始化显示界面
+                    var li = '<div class="edit-detail-li"><div class="edit-detail-li-title">'+detailLi[i].name+'</div><div class="edit-detail-li-input">'+detailLi[i].val+'</div></div>';
+                    $(".edit-detail-li-content").append(li);
+                  }
                 }
               }
-              
-            }else{
-              $(".detail-content").text(contentShow);
-            }
+            }  
           }
           $(".preloader-modal").hide();
           $("#detail").show();
@@ -359,8 +387,65 @@
       $.router.load("/edit?username=573c1eb271cfe4006c18274f");
     }
   })
+
   // $(".edit").on("click",function(){
   //   $.router.load("/todos/send/test?username=573c1eb271cfe4006c18274f");
   // })
+
+  //点击想吃逻辑
+  $(".content").on("click",".like",function(){
+    //获取点击后的id
+    var askId = AskId;
+
+    var num = $(".like-num").text();
+    //获取是否是已想吃
+    console.log($("liked"));
+    if($(this).hasClass("liked")){
+      //已经是想吃的    取消想吃
+      num = parseInt(num)-1;
+      $(".like-num").text(num);
+      $(this).removeClass("liked");
+      cancelLike(UserName,askId,{
+        success:function(result){
+          console.log(result);
+          if(result.code == 200){
+
+          }else{
+            num++;
+            $(".like-num").text(num);
+            $(".like").addClass("liked");
+          }
+        },
+        error:function(error){
+          console.log(error);
+          num++;
+          $(".like-num").text(num);
+          $(".like").addClass("liked");
+        }
+      });
+    }else{
+      //想吃
+      num = parseInt(num)+1;
+      $(".like-num").text(num);
+      $(this).addClass("liked");
+      like(UserName,askId,{
+        success:function(result){
+          console.log(result);
+          if(result.code == 200){
+          }else{
+            num--;
+            $(".like-num").text(num);
+            $(".like").removeClass("liked");
+          }
+        },
+        error:function(error){
+          console.log(error);
+          num--;
+          $(".like-num").text(num);
+          $(".like").removeClass("liked");
+        }
+      });
+    }
+  }) 
 </script>
 </html>

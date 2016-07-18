@@ -16,6 +16,7 @@ a {
     top: 0;
 }
 
+
 /*.header-more,
 .header-cancel {
     font-size: 15px;
@@ -24,6 +25,7 @@ a {
     line-height: 30px;
     margin-left: 10px;
 }*/
+
 
 /*.type-item {
     display: inline-block;
@@ -127,11 +129,38 @@ a {
 .bar-tab {
     z-index: 20001 !important;
 }
-.card{
+
+.card {
     text-align: left;
-    
 }
-.bar .button-link{
-    color:#EE7E2E !important;
+
+.bar .button-link {
+    color: #EE7E2E !important;
     font-weight: bolder !important;
+}
+
+.icon-likeEat:before {
+    content: "" !important;
+}
+
+.icon-likeEat {
+    background: url("/img/food/want-icon.svg") no-repeat;
+    background-size: cover;
+    height: 1.25rem !important;
+    width: 1.2rem;
+}
+
+.down-like .icon-likeEat {
+    height: 17px !important;
+    width: 16px;
+}
+
+.active .icon-likeEat,
+.liked .icon-likeEat {
+    background: url("/img/food/wantted-icon.svg") no-repeat;
+    background-size: cover;
+}
+
+.liked {
+    color: #F88827;
 }
