@@ -52,11 +52,13 @@ router.get('/allask', function(req, res, next) {
 
     } else {
 
+        var position = geo.split(",");
+
+        var point = new AV.GeoPoint(position[0], position[1]);
+        query.descending('score');
+        query.withinKilometers('positionGeo', point, 5.0);
 
     }
-
-
-
 
 
     query.find().then(function(results) {
