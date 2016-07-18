@@ -529,11 +529,17 @@ router.post('/cancelfoodlike', function(req, res, next) {
 
                         var todo = AV.Object.createWithoutData('FoodLike', fooLikes[i].id);
                         todo.destroy().then(function (success) {
-                            var result = {
-                                code : 200,
-                                message : '操作成功'
-                            };
-                            res.send(result);
+                            ask.set('score', (parseInt(ask.get('score'))+1).toString());
+                            ask.save().then(function (ask) {
+
+                                var result = {
+                                    code : 200,
+                                    message : '操作成功'
+                                };
+                                res.send(result);
+
+                            });
+
                         }, function (error) {
                             var result = {
                                 code : 400,
