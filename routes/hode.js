@@ -605,6 +605,13 @@ router.post('/foodlikelist', function(req, res, next) {
     });
 });
 
+router.post('/buy', function (req, res, next) {
+
+
+    
+
+});
+
 module.exports = router;
 
 

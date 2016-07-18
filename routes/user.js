@@ -188,4 +188,81 @@ router.post('/suggestion', function (req, res, next) {
     });
 });
 
+router.post('/getInfo', function (req, res, next) {
+
+    var userName = req.body.username;
+
+    var query = new AV.Query('UserInfo');
+    query.include('wallet');
+    query.get(userName).then(function (user) {
+
+        if (user == null || user == '') {
+
+            var result = {
+                code : 500,
+                message : '未找到该用户'
+            }
+            res.send(result);
+
+        } else {
+
+            var userShowName = user.get('uName');
+            var userHead = user.get('userHead');
+
+            var query = new AV.Query('FoodLike');
+            query.equalTo('by', userName);
+            query.find().then(function (foodLikeList) {
+
+                var foodLikeListCount = foodLikeList.length;
+
+                var query = new AV.Query('AskMe');
+                query.equalTo('createBy', userName);
+                query.find().then(function (askList) {
+
+                    var askListCount = askList.length;
+
+                    var totalIncome = user.get('wallet').get('total');
+                    // console.log(user.get('wallet').get('total'));
+
+                    var query = new AV.Query('Haved');
+                    query.equalTo('by', userName);
+                    query.find().then(function (buyList) {
+
+                        var buyListCount = buyList.length;
+
+
+                        var data = {
+
+                            userShowName:userShowName,
+                            userHead:userHead,
+                            askListCount:askListCount,
+                            totalIncome:totalIncome,
+                            buyListCount:buyListCount
+
+
+                        };
+
+                        console.log(data);
+
+                        var result = {
+                            code : 200,
+                            data : data,
+                            message : 'operation succeeded'
+                        };
+                        res.send(result);
+
+
+                    });
+
+                });
+
+            });
+
+
+
+        }
+    });
+
+});
+
 module.exports = router;
