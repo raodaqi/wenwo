@@ -233,6 +233,7 @@ router.post('/getInfo', function (req, res, next) {
 
                         var data = {
 
+                            foodLikeListCount:foodLikeListCount,
                             userShowName:userShowName,
                             userHead:userHead,
                             askListCount:askListCount,
