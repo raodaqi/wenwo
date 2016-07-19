@@ -10,7 +10,7 @@
   <link rel="icon" type="image/x-icon" href="/img/logo.png" media="screen">
   <title>问我-让经验帮你赚钱</title>
   <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="http://at.alicdn.com/t/font_1468812577_2710986.css">
+  <link rel="stylesheet" href="http://at.alicdn.com/t/font_1468915240_5629373.css">
   <link rel="stylesheet" href="/css/sm.min.css">
   <script src="/js/jweixin-1.0.0.js"></script>
 </head>
@@ -29,19 +29,23 @@
       background-color: #E8E8E8;
     }
     .title{
-      font-weight: bold;
-      font-family: 'webfont';
-      color:#F88827;
+      /*font-weight: bold;*/
+      /*color:#F88827;*/
+      font-size: 20px;
+    }
+    #find .title{
+      color: #F88827;
+
     }
     .wenwo-li{
       background-color: white;
-      height: 6.5rem;
+      height: 6rem;
       padding:0.5rem;
       /*border-bottom: 1px solid #B9B9B9;*/
       margin-bottom: 2px;
     }
     .up-content{
-      height: 4rem;
+      height: 3.65rem;
     }
     .user-pic{
       float: left;
@@ -64,14 +68,24 @@
       font-size: 0.6rem;
       color: #585858;
     }
-    .down-like{
-      border-radius: 3px;
+    .down-like,.down-buy{
+      border-radius: 15px;
       border: 1px solid  #E2E2E2;
       padding:0.1rem 0.6rem;
       display: inline-block;
       color: #666;
-      font-weight: bold;
       font-size: 0.7rem;
+    }
+    .down-buy{
+      border:0;
+      background-color: #1ccda6;
+      color: white;
+      padding:0.1rem .8rem;
+      font-size: 14px;
+      margin-left: 7px;
+    }
+    .free{
+      background-color: #F88827;
     }
     .like-num{
       padding-left: 0.25rem;
@@ -100,6 +114,8 @@
     }
     .ask-reason{
      max-height: 36px;
+     margin-top: 5px;
+     font-size: 13px;
      /*overflow: hidden;*/
      overflow : hidden;
      text-overflow: ellipsis;
@@ -290,21 +306,49 @@
       color: #EE7E2E;
       font-size: 16px;
     }
+    .ask-price{
+      position: absolute;
+      right:10px;
+      margin-top:-23px;
+    }
+    .preloader-tip{
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      top: 15px;
+      display: none;
+    }
+    .icon-faxian-empty{
+      color:#F88827;
+    }
+    .icon-faxian-empty:before{
+      content: "\e61e";
+    }
+    .active .icon-faxian-empty:before{
+      content: "\e61c" !important; 
+    }
+    .hide-img{
+      width: 0;
+      height: 0;
+    }
   </style>
 <body>
+ <img src="/img/loading.png" alt="" class="hide-img">
   <div class="wenwo-content page page-current" id='find'>
     <header class="bar bar-nav">
       <div class="header-me iconfont icon-gerenzhongxin"></div>
-      <h1 class="title">问我&bull;美食</h1>
+      <h1 class="title">问我美食</h1>
     </header>
     <!-- 这里是所有的信息列表 -->
     <div class="find-content content pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="55" data-distance="100">
       <!-- 默认的下拉刷新层 -->    
       <div class="pull-to-refresh-layer">
+        <div class="preloader-tip">刷新成功</div>
         <div class="preloader"></div>
         <div class="pull-to-refresh-arrow"></div>
       </div>
-      <div class="wenwo-ul"></div>
+      <div class="wenwo-ul">
+      </div>
       <div class="infinite-scroll-preloader" >
         <div class="preloader"></div>
         <div class="ask-end" style="display:none">哥，这回真的没了</div>
@@ -342,7 +386,7 @@
       <a class="button button-link button-nav pull-left back" href="#">
         <span class="icon icon-left"></span>
       </a>
-      <h1 class="title">朕，查阅的</h1>
+      <h1 class="title">朕查阅的</h1>
     </header>
   <!-- 这里是购买的的信息列表 -->
     <div class="buy-content content pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="55" data-distance="100">
@@ -369,7 +413,7 @@
       <a class="button button-link button-nav pull-left back" href="#">
         <span class="icon icon-left"></span>
       </a>
-      <h1 class="title">朕，分享的</h1>
+      <h1 class="title">朕分享的</h1>
     </header>
   <!-- 这里是购买的的信息列表 -->
     <div class="share-content content pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="55" data-distance="100">
@@ -414,15 +458,15 @@
 
         <div class="list-content">
           <div class="list-li">
-            <label>4</label>
+            <label class="list-li-like-num">4</label>
             <label>想吃</label>
           </div>
           <div class="list-li">
-            <label>0</label>
+            <label class="list-li-like-share">0</label>
             <label>分享</label>
           </div>
           <div class="list-li">
-            <label>4</label>
+            <label class="list-li-like-total">4</label>
             <label>总收益</label>
           </div>
         </div>
@@ -434,7 +478,7 @@
               <div class="item-media"><i class="icon icon-f7"></i></div>
               <div class="item-inner">
                 <div class="item-title">朕查阅的</div>
-                <div class="item-after">20</div>
+                <div class="item-after itm-buy">20</div>
               </div>
             </li>
             <li class="item-content item-link" data-href="#share">
@@ -442,7 +486,7 @@
               <div class="item-media"><i class="icon icon-f7"></i></div>
               <div class="item-inner">
                 <div class="item-title">朕分享的</div>
-                <div class="item-after">10</div>
+                <div class="item-after item-share">10</div>
               </div>
             </li>
           </ul>
@@ -487,7 +531,7 @@
 
   <nav class="bar bar-tab">
     <a class="tab-item find active" data-type="find" href="#">
-      <span class="icon iconfont icon-faxian"></span>
+      <span class="icon iconfont icon-faxian-empty"></span>
       <span class="tab-label">发现</span>
     </a>
     <a class="tab-item edit" data-type="edit" href="#">
@@ -508,14 +552,33 @@
   //下拉刷新
   // 添加'refresh'监听器
   $(document).on('refresh', '.pull-to-refresh-content',function(e) {
-      // 模拟2s的加载过程
-      setTimeout(function() {
-          // 加载完毕需要重置
-          $.pullToRefreshDone('.pull-to-refresh-content');
-      }, 1000);
+      // 刷新主页
+      // 获取当前是所在页面
+      var id = $(this).parent()[0].id;
+      console.log(id);
+      switch(id){
+        case "find":
+          initFindListPage();
+          break;
+        case "like":
+          initLikeListPage();
+          break;
+        case "share":
+          initSharePage(UserName);
+          break;
+        case "buy":
+          initBuyPage(UserName);
+          break;
+        default:
+          setTimeout(function(){
+            $.pullToRefreshDone('.pull-to-refresh-content');
+          }, 1000);
+          break;
+      }
   });
+
   //下拉刷新初始化
-  // $.initPullToRefresh(".content");
+  $.initPullToRefresh(".content");
 </script>
 <script>
   // console.log("测试",$(".ask-reason").text().visualLength());
@@ -530,13 +593,43 @@
       }else{
         url = "find";
       }
-      if(url == "me"){
-        url = "find";
-      }
       console.log(url);
       // $.router.load(url);
       $(".tab-item").removeClass("active");
       $("."+url).addClass("active");
+      switch(url){
+        case "share":
+          initSharePage(UserName);
+          break;
+        case "buy":
+          initBuyPage(UserName);
+          break;
+        case "find":
+          // initSharePage(UserName);
+          // initBuyPage(UserName);
+          break;
+        case "me":
+          initSharePage(UserName);
+          initBuyPage(UserName);
+          break;
+      }
+  }
+
+  function updatePage(type){
+    switch(type){
+        case "#share":
+          initSharePage(UserName);
+          break;
+        case "#buy":
+          initBuyPage(UserName);
+          break;
+        case "#like":
+          initLikeListPage();
+          break;
+        case "#me":
+          initMePage(UserName);
+          break;
+      }
   }
 
   //获取美食信息
@@ -544,10 +637,11 @@
     var staus = staus ? staus : 1;
     var username = username ? username : '';
     var data = {
-      page     : page,
-      size     : size,
-      staus    : staus,
-      username : username
+      page         : page,
+      size         : size,
+      staus        : staus,
+      // position_geo : '104.065735,30.659462', 
+      username     : username
     }
     $.ajax({
       type : "GET",
@@ -615,7 +709,7 @@
             var data = result.data;
             if(data){
               for (var i = 0; i < data.length; i++) {
-                html += '<div class="wenwo-li" data-id='+data[i].objectId+'><div class="up-content"><img src="'+data[i].createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">'+formatTag(data[i].askTagStr)+'</div><div class="ask-reason">'+data[i].askReason+'</div></div></div><div class="down-content"><div class="down-like '+(data[i].liked ? "liked" : '')+'"><span class="icon iconfont icon-likeEat"></span><label class="like-num">'+data[i].likeNum+'</label></div><div class="down-time">'+formatDate("y.m.d",data[i].updatedAt)+'</div></div></div>';
+                html += '<div class="wenwo-li" data-id='+data[i].objectId+'><div class="up-content"><img src="'+data[i].createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">'+formatTag(data[i].askTagStr)+'</div><div class="ask-reason">'+data[i].askReason+'</div></div></div><div class="down-content"><div class="down-like '+(data[i].liked ? "liked" : '')+'"><span class="icon iconfont icon-likeEat"></span><label class="like-num">'+data[i].likeNum+'</label></div>'+(data[i].score > 10 ? '<div class="down-buy">'+data[i].askPrice+'元瞅瞅</div>' : '<div class="down-buy free">限时免费</div>')+'<div class="down-time">'+formatDate("y.m.d",data[i].updatedAt)+'</div></div></div>';
               }
               // 添加新条目
               $('#find .wenwo-ul').append(html);
@@ -694,30 +788,69 @@
   $.init();
   init();
 
-  //获取想吃列表
-  getLikeList(UserName,{
-    success:function(result){
-      if(result.code == 200){
+  //初始化主页列表
+  function initFindListPage(){
+    //初始化主页列表，获取前20条信息
+    getAskMe(0,20,'',UserName,{
+      success:function(result){
+        // 生成新条目的HTML
+        console.log(result);
         var html = '';
-        var data = result.askDetail;
-        if(!data.length){
-          $("#like .infinite-scroll-preloader").hide();
-          $("#like .want-content").show();
-        }
+        var data = result.data;
         if(data){
           for (var i = 0; i < data.length; i++) {
-            html += '<div class="wenwo-li" data-id='+data[i].objectId+'><div class="up-content"><img src="'+data[i].createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">'+formatTag(data[i].askTagStr)+'</div><div class="ask-reason">'+data[i].askReason+'</div></div></div><div class="down-content"><div class="down-like liked">想吃<label class="like-num">'+data[i].likeNum+'</label></div><div class="down-time">'+formatDate("y.m.d",data[i].updatedAt)+'</div></div></div>';
+            html += '<div class="wenwo-li" data-id='+data[i].objectId+'><div class="up-content"><img src="'+data[i].createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">'+formatTag(data[i].askTagStr)+'</div><div class="ask-reason">'+data[i].askReason+'</div></div></div><div class="down-content"><div class="down-like '+(data[i].liked ? "liked" : '')+'"><span class="icon iconfont icon-likeEat"></span><label class="like-num">'+data[i].likeNum+'</label></div>'+(data[i].score > 10 ? '<div class="down-buy">'+data[i].askPrice+'元瞅瞅</div>' : '<div class="down-buy free">限时免费</div>')+'<div class="down-time">'+formatDate("y.m.d",data[i].updatedAt)+'</div></div></div>';
           }
-        }
-        // 添加新条目
-        $('#like .wenwo-ul').append(html);
-        $("#like .infinite-scroll-preloader .preloader").hide();
-      }
-    },
-    error:function(error){
+          // 添加新条目
+          $.pullToRefreshDone('.pull-to-refresh-content');
+          $('#find .wenwo-ul').empty();
+          $('#find .wenwo-ul').append(html);
 
-    }
-  })
+          // $(".preloader").hide();
+          // $(".preloader-tip").text("刷新成功");
+          // $(".preloader-tip").show();
+        }
+      },  
+      error:function(error){
+        // $(".preloader").hide();
+        // $(".preloader-tip").text("刷新失败");
+        // $(".preloader-tip").show();
+        $.pullToRefreshDone('.pull-to-refresh-content');
+      }
+    })
+  }
+
+  //初始化想吃列表
+  function initLikeListPage(){
+    //获取想吃列表
+    getLikeList(UserName,{
+      success:function(result){
+        if(result.code == 200){
+          var html = '';
+          var data = result.askDetail;
+          if(!data.length){
+            $("#like .infinite-scroll-preloader").hide();
+            $("#like .want-content").show();
+          }
+          if(data){
+            for (var i = 0; i < data.length; i++) {
+              html += '<div class="wenwo-li" data-id='+data[i].objectId+'><div class="up-content"><img src="'+data[i].createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">'+formatTag(data[i].askTagStr)+'</div><div class="ask-reason">'+data[i].askReason+'</div></div></div><div class="down-content"><div class="down-like liked"><span class="icon iconfont icon-likeEat"></span><label class="like-num">'+data[i].likeNum+'</label></div><div class="down-time">'+formatDate("y.m.d",data[i].updatedAt)+'</div></div></div>';
+            }
+          }
+          // 添加新条目
+          //清空原来的数据
+          $.pullToRefreshDone('.pull-to-refresh-content');
+          $('#like .wenwo-ul').empty();
+          $('#like .wenwo-ul').append(html);
+          $("#like .infinite-scroll-preloader .preloader").hide();
+        }
+      },
+      error:function(error){
+        $.pullToRefreshDone('.pull-to-refresh-content');
+      }
+    })
+  }
+  initLikeListPage();
 
   $(".tab-item").on("click",function(){
     // console.log($());
@@ -732,8 +865,11 @@
     if(type == "like"){
       $.router.load("#like"); 
     }else if(type == "find"){
+      //缓存个人中心列表，想吃列表
+      updatePage("#me");
+      updatePage("#like");
+
       $.router.load("#find");
-      // $.router.back();
     }else if(type == "edit"){
       $.router.load("/edit");
     }
@@ -758,7 +894,7 @@
   $(".wenwo-ul").on("click",".down-like",function(){
     //获取点击后的id
     var askId = $(this).parent().parent().attr("data-id");
-    console.log(askId);
+    console.log($(this).parent(".page").id);
     var num = $(this).children(".like-num").text();
     //获取是否是已想吃
     console.log($(this).hasClass("liked"));
@@ -767,22 +903,22 @@
       num = parseInt(num)-1;
       $(this).children(".like-num").text(num);
       $(this).removeClass("liked");
-      cancelLike(UserName,askId,{
-        success:function(result){
+      cancelLike(UserName,askId,this,{
+        success:function(result,$_this){
           console.log(result);
           if(result.code == 200){
 
           }else{
             num++;
-            $(this).children(".like-num").text(num);
-            $(this).addClass("liked");
+            $($_this).children(".like-num").text(num);
+            $($_this).addClass("liked");
           }
         },
-        error:function(error){
+        error:function(error,$_this){
           console.log(error);
           num++;
-          $(this).children(".like-num").text(num);
-          $(this).addClass("liked");
+          $($_this).children(".like-num").text(num);
+          $($_this).addClass("liked");
         }
       });
     }else{
@@ -790,21 +926,21 @@
       num = parseInt(num)+1;
       $(this).children(".like-num").text(num);
       $(this).addClass("liked");
-      like(UserName,askId,{
-        success:function(result){
+      like(UserName,askId,this,{
+        success:function(result,$_this){
           console.log(result);
           if(result.code == 200){
           }else{
             num--;
-            $(this).children(".like-num").text(num);
-            $(this).removeClass("liked");
+            $($_this).children(".like-num").text(num);
+            $($_this).removeClass("liked");
           }
         },
-        error:function(error){
+        error:function(error,$_this){
           console.log(error);
           num--;
-          $(this).children(".like-num").text(num);
-          $(this).removeClass("liked");
+          $($_this).children(".like-num").text(num);
+          $($_this).removeClass("liked");
         }
       });
     }
@@ -817,8 +953,26 @@
     $.showPreloader("正在跳转");
     $.router.load("/detail?askid="+askId);
   })
+
+  $(".list-li-like-num").on("click",function(){
+    $(".tab-item").removeClass("active");
+    $(".like").addClass("active");
+    $.router.load("#like");
+  })
+  $(".list-li-like-share").on("click",function(){
+    $.router.load("#share");
+  })
+
   $(".icon-gerenzhongxin").on("click",function(){
+    //缓存findPage,buyPage,sharePage
+    updatePage("#buy");
+    updatePage("#share");
+
     $.router.load("#me");
+  })
+  $("#share .back,#buy .back").on("click",function(){
+    updatePage("#buy");
+    updatePage("#share");
   })
   // $(".edit").on("click",function(){
   //   $.router.load("/todos/send/test?username=573c1eb271cfe4006c18274f");
@@ -826,25 +980,45 @@
 
   //初始化个人中心页面
   function initMePage(username){
-    if(localStorage.userHead && localStorage.uName){
-      $(".pic-bg,.user-pic").attr("src",localStorage.userHead);
-      $(".user-name").text(localStorage.uName);
-    }else{
+      if(localStorage.userHead){
+        $("#me .pic-bg,#me .user-pic").attr("src",localStorage.userHead);
+        $("#me .user-name").text(localStorage.userShowName);
+        $("#me .list-li-like-num").text(localStorage.foodLikeListCount);
+        $("#me .list-li-like-share,#me .my-ask .item-share").text(localStorage.askListCount);
+        $("#me .list-li-like-total").text(localStorage.totalIncome);
+        $("#me .itm-buy").text(localStorage.buyListCount);
+      }
+
       var data = {
         username   : username
       }
       $.ajax({
-        type : "GET",
+        type : "POST",
         data: data,
         dataType: "json",
-        url : "/user/getuserinfo",
+        url : "/user/getInfo",
         success: function(result){
           console.log(result);
           if(result.code = 200){
             var userHead = result.data.userHead;
-            var uName = result.data.uName;
+            var userShowName = result.data.userShowName;
+            var askListCount = result.data.askListCount;
+            var buyListCount = result.data.buyListCount;
+            var totalIncome = result.data.totalIncome;
+            var foodLikeListCount = result.data.foodLikeListCount;
+            $("#me .pic-bg,#me .user-pic").attr("src",userHead);
+            $("#me .user-name").text(userShowName);
+            $("#me .list-li-like-num").text(foodLikeListCount);
+            $("#me .list-li-like-share,#me .my-ask .item-share").text(askListCount);
+            $("#me .list-li-like-total").text(totalIncome);
+            $("#me .itm-buy").text(buyListCount);
+
             localStorage["userHead"] = userHead;
-            localStorage["uName"] = uName;
+            localStorage["userShowName"] = userShowName;
+            localStorage["askListCount"] = askListCount;
+            localStorage["buyListCount"] = buyListCount;
+            localStorage["totalIncome"] = totalIncome;
+            localStorage["foodLikeListCount"] = foodLikeListCount;
           }
           
         },
@@ -852,7 +1026,6 @@
           console.log(error);
         },
       })
-    } 
   }
   initMePage(UserName);
 
@@ -881,15 +1054,19 @@
             }
             if(data){
               for (var i = 0; i < data.length; i++) {
-                html += '<div class="wenwo-li" data-id='+data[i].objectId+'><div class="up-content"><img src="'+data[i].createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">'+formatTag(data[i].askTagStr)+'</div><div class="ask-reason">'+data[i].askReason+'</div></div></div><div class="down-content"><div class="down-like liked">想吃<label class="like-num">'+data[i].likeNum+'</label></div><div class="down-time">'+formatDate("y.m.d",data[i].updatedAt)+'</div></div></div>';
+                html += '<div class="wenwo-li" data-id='+data[i].objectId+'><div class="up-content"><img src="'+data[i].createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">'+formatTag(data[i].askTagStr)+'</div><div class="ask-reason">'+data[i].askReason+'</div></div></div><div class="down-content"><div class="down-like liked"><span class="icon iconfont icon-likeEat"></span><label class="like-num">'+data[i].likeNum+'</label></div><div class="down-time">'+formatDate("y.m.d",data[i].updatedAt)+'</div></div></div>';
               }
             }
             // 添加新条目
+            // 清空列表
+            $.pullToRefreshDone('.pull-to-refresh-content');
+            $('#buy .wenwo-ul').empty();
             $('#buy .wenwo-ul').append(html);
             $("#buy .infinite-scroll-preloader .preloader").hide();
           }
         },
         error:function(error){
+          $.pullToRefreshDone('.pull-to-refresh-content');
           console.log(error);
         },
       })
@@ -921,17 +1098,21 @@
             }
             console.log(html);
             // 添加新条目
+            // 清空列表
+            $.pullToRefreshDone('.pull-to-refresh-content');
+            $('#share .wenwo-ul').empty();
             $('#share .wenwo-ul').append(html);
             $("#share .infinite-scroll-preloader .preloader").hide();
           }
         },
         error:function(error){
+          $.pullToRefreshDone('.pull-to-refresh-content');
           console.log(error);
         },
       })
   }
-  initSharePage(UserName);
-  initBuyPage(UserName);
+  // initSharePage(UserName);
+  // initBuyPage(UserName);
 
 
 

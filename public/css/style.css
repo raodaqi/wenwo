@@ -1,6 +1,7 @@
 body {
     padding: 50px;
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    font-family: PingFang-SC-Regular,sans-serif;
 }
 
 a {
@@ -162,5 +163,5 @@ a {
 }
 
 .liked {
-    color: #F88827;
+    color: #F88827 !important;
 }
