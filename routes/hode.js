@@ -529,7 +529,8 @@ router.post('/cancelfoodlike', function(req, res, next) {
 
                         var todo = AV.Object.createWithoutData('FoodLike', fooLikes[i].id);
                         todo.destroy().then(function (success) {
-                            ask.set('score', (parseInt(ask.get('score'))+1).toString());
+                            ask.set('score', (parseInt(ask.get('score'))-1).toString());
+                            ask.set('likeNum', (parseInt(ask.get('likeNum'))-1).toString());
                             ask.save().then(function (ask) {
 
                                 var result = {
