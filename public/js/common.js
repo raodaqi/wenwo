@@ -166,7 +166,7 @@ $.hidePreloader = function(){
 // $.showLoad();
 
 //想吃 接口
-  function like(username,askid,callback){
+  function like(username,askid,$_this,callback){
     var data = {
       username   : username,
       ask_id     : askid
@@ -177,16 +177,16 @@ $.hidePreloader = function(){
       dataType: "json",
       url : "/hode/foodlike",
       success: function(result){
-        callback.success(result);
+        callback.success(result,$_this);
       },
       error:function(error){
-        callback.error(error);
+        callback.error(error,$_this);
       },
     })
   }
 
   //取消想吃 接口
-  function cancelLike(username,askid,callback){
+  function cancelLike(username,askid,$_this,callback){
     var data = {
       username   : username,
       ask_id     : askid
@@ -197,10 +197,10 @@ $.hidePreloader = function(){
       dataType: "json",
       url : "/hode/cancelfoodlike",
       success: function(result){
-        callback.success(result);
+        callback.success(result,$_this);
       },
       error:function(error){
-        callback.error(error);
+        callback.error(error,$_this);
       },
     })
   }

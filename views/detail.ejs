@@ -90,7 +90,7 @@
       font-size: 0.7rem;
     }
     .bug{
-      background: #EE7E2E;
+      background: #1ccda6;
       padding:5px 10px;
       margin-left: 4.6rem;
       color: #FFF;
@@ -405,7 +405,7 @@
       num = parseInt(num)-1;
       $(".like-num").text(num);
       $(this).removeClass("liked");
-      cancelLike(UserName,askId,{
+      cancelLike(UserName,askId,'',{
         success:function(result){
           console.log(result);
           if(result.code == 200){
@@ -428,7 +428,7 @@
       num = parseInt(num)+1;
       $(".like-num").text(num);
       $(this).addClass("liked");
-      like(UserName,askId,{
+      like(UserName,askId,'',{
         success:function(result){
           console.log(result);
           if(result.code == 200){

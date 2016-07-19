@@ -81,8 +81,8 @@ app.get('/', function(req, res) {
   var lng = req.query.geox;
   var lat = req.query.geoy;
   var user = AV.User.current();
-
-console.log(user);
+  res.render('time');
+  console.log(user);
   //username = decodeURI(username);
   if (!user) {
     authorize(req, res);
