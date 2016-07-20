@@ -110,33 +110,34 @@ app.get('/wenwo', function(req, res) {
   res.render('index', { username: username, lng:"0", lat:"0"});
 });
 
-// app.get('/food', function(req, res) {
-//   var username =  req.query.username;
-//   var lng = req.query.geox;
-//   var lat = req.query.geoy;
-//   //username = decodeURI(username);
-//   if(!username){
-//     username = '573b0e3df38c8400673bb48d';
-//   }
-//   if(lng && lat){
-//     res.render('food', { username: username, lng:lng, lat:lat});
-//   }
-//   res.render('food', { username: username, lng:"0", lat:"0"});
-// });
 app.get('/food', function(req, res) {
   var username =  req.query.username;
   var lng = req.query.geox;
   var lat = req.query.geoy;
-  var user = AV.User.current();
-  if (!user) {
-    authorize(req, res);
-  }else{
-    var username = user.get('user');
-    console.log(username);
+  //username = decodeURI(username);
+  if(!username){
+    username = '573b0e3df38c8400673bb48d';
+  }
+  if(lng && lat){
     res.render('food', { username: username, lng:lng, lat:lat});
   }
   res.render('food', { username: username, lng:"0", lat:"0"});
 });
+
+// app.get('/food', function(req, res) {
+//   var username =  req.query.username;
+//   var lng = req.query.geox;
+//   var lat = req.query.geoy;
+//   var user = AV.User.current();
+//   if (!user) {
+//     authorize(req, res);
+//   }else{
+//     var username = user.get('user');
+//     console.log(username);
+//     res.render('food', { username: username, lng:lng, lat:lat});
+//   }
+//   res.render('food', { username: username, lng:"0", lat:"0"});
+// });
 app.get('/edit', function(req, res) {
   var username =  req.query.username;
   var type = req.query.type;
