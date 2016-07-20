@@ -260,7 +260,7 @@ router.get('/pay', function(req, res, next) {
                     wxpay.getBrandWCPayRequestParams({
                         openid: openid,
                         body: '问我-美食',
-                        detail: '来自'+ask.get('createByName'+'的美食推荐'),
+                        detail: '来自'+ask.get('createByName')+'的美食推荐',
                         out_trade_no: '20160331'+Math.random().toString().substr(2, 10),
                         total_fee: totalFee,
                         attach:attach,
