@@ -85,6 +85,7 @@ router.post('/haved', function(req, res, next) {
 
     var userName = req.body.username;
 
+    console.log(userName);
 
     var query = new AV.Query('UserInfo');
     query.get(userName).then(function (user) {
@@ -92,8 +93,7 @@ router.post('/haved', function(req, res, next) {
         var query = new AV.Query('Haved');
 
         query.equalTo("by", userName);
-        query.equalTo('type', 2);
-
+        query.equalTo('type', '2');
         query.include('ask');
         query.find().then(function (fooLikes) {
 
