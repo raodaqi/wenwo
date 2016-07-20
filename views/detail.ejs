@@ -67,7 +67,7 @@
       font-size: 1rem;
       color: white;
     }
-    .like,.bug{
+    .like,.buy{
       position: absolute;
       border-radius: 0.2rem;
       /*height: 1.5rem;*/
@@ -89,7 +89,7 @@
       font-weight: bold;
       font-size: 0.7rem;
     }
-    .bug{
+    .buy{
       background: #1ccda6;
       padding:5px 10px;
       margin-left: 4.6rem;
@@ -167,6 +167,9 @@
     .liked{
       padding:3.5px 0;
     }
+    .free {
+      background-color: #F88827;
+    }
   </style>
 <body>
   <!-- <header class="bar bar-nav">
@@ -199,7 +202,7 @@
             
           </div>
           <div class="like"><span class="icon iconfont icon-likeEat"></span><span class="like-num">2</span></div>
-          <div class="bug"><span class="price">2</span>元瞅瞅</div>
+          <div class="buy"><span class="price">2</span>元瞅瞅</div>
         </div>
 
         <div class="ask-detail">
@@ -214,7 +217,7 @@
           <div class="ask-detail-content ask-detail-li">
             <img src="/img/edit/detail-02.png" class="edit-li-img">
             <div class="detail-li-box">
-              <div class="detail-li-title">详情</div>
+              <div class="detail-li-title">美食详情</div>
               <div class="detail-content detail-li-content">
                 <div class="edit-detail"></div>
                 <div class="edit-detail-li-content">
@@ -323,6 +326,12 @@
             $(".like").addClass("liked");
           }else{
             //没有想吃过
+          }
+
+          //判断是否是限时免费
+          if(data.score <= 10){
+            $(".buy").text("限时免费");
+            $(".buy").addClass("free");
           }
 
           $(".price").text(data.askPrice);

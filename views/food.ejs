@@ -52,9 +52,10 @@
       display: block;
       width: 3.5rem;
       height: 3.5rem;
-      border-radius: 0.2rem;
+      border-radius: 0.4rem;
+      /*border-radius: 0 !important;*/
 
-      /*border:1px solid gray;*/
+      border:1px solid #f2f2f2;
     }
     .ask-content{
       padding-left: 4rem;
@@ -115,7 +116,7 @@
     .ask-reason{
      max-height: 36px;
      margin-top: 5px;
-     font-size: 13px;
+     font-size: .65rem;
      /*overflow: hidden;*/
      overflow : hidden;
      text-overflow: ellipsis;
@@ -153,14 +154,17 @@
       width: 3rem;
       left: 50%;
       transform: translateX(-50%);
-      top: 1rem;
+      top: 1.5rem;
     }
     .user-pic{
       display: block;
       width: 3rem;
       height: 3rem;
-      border-radius: 50%;
       margin-bottom: 0.3rem;
+    }
+    #me .user-pic{
+      border-radius: 50%;
+      border:0;
     }
     .user-name{
       width: 100%;
@@ -247,7 +251,7 @@
       padding: 10px 15px;
       width: 100%;
     }
-    .modal{
+    #me .modal{
       position: absolute;
       top: 0;
       left: 0;
@@ -268,9 +272,14 @@
       margin-top: 3px;
     }
     .icon-tixing{
+      display: block;
       color: #CCCCCC;
       font-weight: 100;
       margin-right: 5px;
+      position:absolute;
+      font-size: .6.5rem;
+      right:.5rem;
+      top:1rem;
     }
     /*提醒UI*/
     .tip-content{
@@ -331,6 +340,54 @@
       width: 0;
       height: 0;
     }
+    .wenwo-logo-content{
+      position: absolute;
+      bottom: .3rem;
+      width: 100%;
+      z-index: 10000;
+      text-align: center;
+    }
+    .wenwo-logo{
+      position: absolute;
+      bottom:0.05rem;
+      width: 22px;
+      height: 22px;
+    }
+    .wenwo-title{
+      font-size: 10px;
+      color: #F88827;
+      margin-left: 22px;
+      display: inline-block;
+    }
+    .dialog-buy .modal-overlay{
+      z-index: 30000;
+    }
+    .dialog-buy{
+      z-index: 50000;
+      display: none;
+      opacity: 1;
+    }
+    .dialog-buy .modal{
+      width: 12rem;
+      height: 8rem;
+      margin-left: -6rem;
+      margin-top: -4rem;
+      z-index: 30001;
+      display: block;
+      opacity: 1;
+    }
+    .dialog-buy .modal-button{
+      color: #F88827;
+    }
+    .dialog-buy .modal-text{
+      font-size: .6rem;
+    }
+    .buyed{
+      background-color: #C9C9C9 !important;
+    }
+    .pull-to-refresh-arrow{
+      display: none;
+    }
   </style>
 <body>
  <img src="/img/loading.png" alt="" class="hide-img">
@@ -373,6 +430,13 @@
         <img src="/img/food/want-empty.svg" class="empty-img" alt="">
         <div class="empty-title">没有想吃的美食？</div>
         <div class="empty-button" data-href="#find">去随便逛逛</div>
+
+        <div class="wenwo-logo-content">
+          <img src="/img/wenwo.svg" class="wenwo-logo" alt="">
+          <div class="wenwo-title">
+            让经验帮你赚钱
+          </div>
+        </div>
       </div>
       <div class="infinite-scroll-preloader" >
         <div class="preloader"></div>
@@ -400,6 +464,13 @@
         <img src="/img/food/want-empty.svg" class="empty-img" alt="">
         <div class="empty-title">皇上，您还没有查阅任何美食</div>
         <div class="empty-button" data-href="#find">去查阅美食</div>
+
+        <div class="wenwo-logo-content">
+          <img src="/img/wenwo.svg" class="wenwo-logo" alt="">
+          <div class="wenwo-title">
+            让经验帮你赚钱
+          </div>
+        </div>
       </div>
       <div class="infinite-scroll-preloader" >
         <div class="preloader"></div>
@@ -427,6 +498,13 @@
         <img src="/img/food/want-empty.svg" class="empty-img" alt="">
         <div class="empty-title">皇上，您还没有分享的美食</div>
         <div class="empty-button" data-href="edit">点臣妾去分享</div>
+
+        <div class="wenwo-logo-content">
+          <img src="/img/wenwo.svg" class="wenwo-logo" alt="">
+          <div class="wenwo-title">
+            让经验帮你赚钱
+          </div>
+        </div>
       </div>
       <div class="infinite-scroll-preloader" >
         <div class="preloader"></div>
@@ -442,9 +520,6 @@
         <span class="icon icon-left"></span>
       </a>
       <h1 class="title">个人中心</h1>
-      <a class="button button-link button-nav pull-right header-tip">
-        <span class="icon iconfont icon-tixing"></span>
-      </a>
     </header>
     <div class="content">
       <div class="detail-pic-bg">
@@ -468,6 +543,7 @@
           <div class="list-li">
             <label class="list-li-like-total">4</label>
             <label>总收益</label>
+            <span class="icon iconfont icon-tixing"></span>
           </div>
         </div>
 
@@ -527,6 +603,13 @@
         <div class="tip-content-get">朕知道了</div>
       </div>
     </div>
+
+    <div class="wenwo-logo-content">
+      <img src="/img/wenwo.svg" class="wenwo-logo" alt="">
+      <div class="wenwo-title">
+        让经验帮你赚钱
+      </div>
+    </div>
   </div>
 
   <nav class="bar bar-tab">
@@ -544,9 +627,24 @@
       <span class="tab-label">想吃</span>
     </a>
   </nav>
+  <div class="dialog-buy">
+    <div class="modal-overlay modal-overlay-visible"></div>
+    <div class="modal">
+      <div class="modal-inner">
+        <div class="modal-title">小问提醒</div>
+        <div class="modal-text">123</div>
+      </div>
+      <div class="modal-buttons ">
+        <span class="modal-button modal-button-cancel">取消</span>
+        <span class="modal-button modal-button-bold">确定</span>
+      </div>
+    </div>
+  </div>
+
 </body>
 <script type='text/javascript' src='/js/zepto.min.js' charset='utf-8'></script>
 <script type='text/javascript' src='/js/sm.min.js' charset='utf-8'></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script type='text/javascript' src='/js/common.js' charset='utf-8'></script>
 <script>
   //下拉刷新
@@ -709,7 +807,7 @@
             var data = result.data;
             if(data){
               for (var i = 0; i < data.length; i++) {
-                html += '<div class="wenwo-li" data-id='+data[i].objectId+'><div class="up-content"><img src="'+data[i].createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">'+formatTag(data[i].askTagStr)+'</div><div class="ask-reason">'+data[i].askReason+'</div></div></div><div class="down-content"><div class="down-like '+(data[i].liked ? "liked" : '')+'"><span class="icon iconfont icon-likeEat"></span><label class="like-num">'+data[i].likeNum+'</label></div>'+(data[i].score > 10 ? '<div class="down-buy">'+data[i].askPrice+'元瞅瞅</div>' : '<div class="down-buy free">限时免费</div>')+'<div class="down-time">'+formatDate("y.m.d",data[i].updatedAt)+'</div></div></div>';
+                html += '<div class="wenwo-li" data-id='+data[i].objectId+'><div class="up-content"><img src="'+data[i].createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">'+formatTag(data[i].askTagStr)+'</div><div class="ask-reason">'+data[i].askReason+'</div></div></div><div class="down-content"><div class="down-like '+(data[i].liked ? "liked" : '')+'"><span class="icon iconfont icon-likeEat"></span><label class="like-num">'+data[i].likeNum+'</label></div>'+(data[i].score > 10 ? '<div class="down-buy" data-id='+data[i].objectId+'>'+data[i].askPrice+'元瞅瞅</div>' : '<div class="down-buy free" data-id='+data[i].objectId+'>限时免费</div>')+'<div class="down-time">'+formatDate("y.m.d",data[i].updatedAt)+'</div></div></div>';
               }
               // 添加新条目
               $('#find .wenwo-ul').append(html);
@@ -799,7 +897,7 @@
         var data = result.data;
         if(data){
           for (var i = 0; i < data.length; i++) {
-            html += '<div class="wenwo-li" data-id='+data[i].objectId+'><div class="up-content"><img src="'+data[i].createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">'+formatTag(data[i].askTagStr)+'</div><div class="ask-reason">'+data[i].askReason+'</div></div></div><div class="down-content"><div class="down-like '+(data[i].liked ? "liked" : '')+'"><span class="icon iconfont icon-likeEat"></span><label class="like-num">'+data[i].likeNum+'</label></div>'+(data[i].score > 10 ? '<div class="down-buy">'+data[i].askPrice+'元瞅瞅</div>' : '<div class="down-buy free">限时免费</div>')+'<div class="down-time">'+formatDate("y.m.d",data[i].updatedAt)+'</div></div></div>';
+            html += '<div class="wenwo-li" data-id='+data[i].objectId+'><div class="up-content"><img src="'+data[i].createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">'+formatTag(data[i].askTagStr)+'</div><div class="ask-reason">'+data[i].askReason+'</div></div></div><div class="down-content"><div class="down-like '+(data[i].liked ? "liked" : '')+'"><span class="icon iconfont icon-likeEat"></span><label class="like-num">'+data[i].likeNum+'</label></div>'+(data[i].score > 10 ? '<div class="down-buy" data-id='+data[i].objectId+'>'+data[i].askPrice+'元瞅瞅</div>' : '<div class="down-buy free" data-id='+data[i].objectId+'>限时免费</div>')+'<div class="down-time">'+formatDate("y.m.d",data[i].updatedAt)+'</div></div></div>';
           }
           // 添加新条目
           $.pullToRefreshDone('.pull-to-refresh-content');
@@ -863,15 +961,24 @@
       return;
     }
     if(type == "like"){
-      $.router.load("#like"); 
+      $(".pull-to-refresh-arrow").hide();
+      $.router.load("#like");
+
+      setTimeout(function(){
+        $(".pull-to-refresh-arrow").show();
+      }, 500); 
     }else if(type == "find"){
       //缓存个人中心列表，想吃列表
+      $(".pull-to-refresh-arrow").hide();
       updatePage("#me");
       updatePage("#like");
-
       $.router.load("#find");
+
+      setTimeout(function(){
+        $(".pull-to-refresh-arrow").show();
+      }, 500); 
     }else if(type == "edit"){
-      $.router.load("/edit");
+      $.router.load("/edit?username=573b0e3df38c8400673bb48d");
     }
   })
   $(".empty-button").on("click",function(){
@@ -1044,9 +1151,9 @@
           if(result.code == 200){
             console.log(result);
             var html = '';
-            $("#buy .infinite-scroll-preloader").hide();
-            $("#buy .want-content").show();
-            return ;
+            // $("#buy .infinite-scroll-preloader").hide();
+            // $("#buy .want-content").show();
+            // return ;
             var data = result.askDetail;
             if(!data.length){
               $("#buy .infinite-scroll-preloader").hide();
@@ -1114,16 +1221,93 @@
   // initSharePage(UserName);
   // initBuyPage(UserName);
 
+  //购买逻辑
+  $(".wenwo-ul").on("click",".down-buy",function(){
+    var id = $(this).attr("data-id");
+    console.log(id);
+    var str = '你确定要'+$(this).text()+'吗?';
+    $(".modal-text").text(str);
+    $(".dialog-buy").show();
+
+    $(".modal-button-cancel").on("click",function(){
+      console.log(id);
+      $(".dialog-buy").hide();
+    })
+
+    $(".modal-button-bold").on("click",function(){
+      console.log(id);
+      $(".dialog-buy").hide();
+      var data = {
+        username : UserName,
+        ask_id    : id
+      }
+      $.showPreloader("正在瞅瞅");
+      $.ajax({
+        type : "GET",
+        data: data,
+        dataType: "json",
+        url : "/authorization/pay",
+        success : function(result){
+          console.log(result);
+          $.hidePreloader();
+          if(result.code == 100){
+            //限时免费购买
+            $.total("购买成功");
+          }else if(result.code == 200){
+            initPay(result.payargs);
+          }
+        },
+        error:function(error){
+           $.hidePreloader();
+           $.total("网络有问题");
+          console.log(error);
+        }
+      })
+    })
+  })
+
+function onBridgeReady(payargs){
+      WeixinJSBridge.invoke('getBrandWCPayRequest',{
+        "appId"     : payargs.appId,     //公众号名称，由商户传入     
+            "timeStamp" : payargs.timeStamp,         //时间戳，自1970年以来的秒数     
+            "nonceStr"  : payargs.nonceStr, //随机串     
+            "package"   : payargs.package,     
+            "signType"  : payargs.signType,         //微信签名方式：     
+            "paySign"   : payargs.paySign //微信签名 
+      },
+      function(res){
+          //console.log(res);
+          if(res.err_msg == "get_brand_wcpay_request：ok" ) {
+              // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
+              window.location.reload();
+          }
+          else {
+
+          }
+      });
+  }
+function initPay(payargs){
+  if (typeof WeixinJSBridge == "undefined"){
+        if( document.addEventListener ){
+            document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+        }else if (document.attachEvent){
+            document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+            document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+        }
+    }else{
+        onBridgeReady(payargs);
+    }
+}
 
 
   //邀请好友
   $(".item-share").on('click',function(){
-    $(".modal-overlay-visible").show();
-    $(".model-share").show();
+    $("#me .modal-overlay-visible").show();
+    $("#me .model-share").show();
   })
   $(".modal-in").on('click',function(){
-    $(".modal-overlay-visible").hide();
-    $(".modal-in").hide();
+    $("#me .modal-overlay-visible").hide();
+    $("#me .modal-in").hide();
   })
   $(".item-message").on("click",function(){
     $.showPreloader("正在跳转");
@@ -1131,9 +1315,9 @@
   })
 
   //个人中心提醒
-  $(".header-tip").on("click",function(){
-    $(".modal-overlay-visible").show();
-    $(".model-tip").show();
+  $(".icon-tixing").on("click",function(){
+    $("#me .modal-overlay-visible").show();
+    $("#me .model-tip").show();
   })
 </script>
 </html>

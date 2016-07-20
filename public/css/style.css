@@ -1,7 +1,9 @@
-body {
+body,html {
     padding: 50px;
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
     font-family: PingFang-SC-Regular,sans-serif;
+    width: 100%;
+    height: 100%;
 }
 
 a {

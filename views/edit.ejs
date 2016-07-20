@@ -18,6 +18,7 @@
     body{
       padding:0;
       margin:0;
+      overflow: auto;
     }
     .page{
       background: white !important;
@@ -30,36 +31,36 @@
       padding-left: 1.5rem;
     }
     .tag{
-      border-left: 2px solid #2B82FD;
+      border-left: .1rem solid #2B82FD;
     }
     .reason{
-      border-left: 2px solid #F13A01;
+      border-left: .1rem  solid #F13A01;
     }
     .detail{
-      border-left: 2px solid #F4BC1C;
+      border-left: .1rem  solid #F4BC1C;
     }
     .name{
-      border-left: 2px solid #5459CD;
+      border-left: .1rem  solid #5459CD;
     }
     .address{
-      border-left: 2px solid #42B93A;
+      border-left: .1rem  solid #42B93A;
     }
     .price{
 
     }
     .li-title{
-      font-size: 0.7rem;
+      font-size: 0.8rem;
       color: #333333;
     }
     .edit-content{
       padding:0.5rem 0;
       color: #CCCCCC;
-      font-size: 0.6rem;
+      font-size: 0.65rem;
       word-break:break-all;
     }
     .edit-li-img{
-      width: 30px;
-      height: 30px;
+      width: 1.5rem;
+      height: 1.5rem;
       float: left;
       margin-top: -0.25rem;
       margin-left:-2.25rem;
@@ -71,11 +72,11 @@
       width: 100%;
       position: absolute;
       bottom: 2rem;
-      height: 40px;
+      height: 2rem;
     }
     .pre-view{
       position: absolute;
-      left:30px;
+      left:1.5rem;
       background: #FFF url("/img/edit/left.png") no-repeat;
       background-size: 100%;
       width: 5rem;
@@ -84,7 +85,7 @@
       line-height: 2rem;
       color: #999999;
       padding-left: 1rem ;
-      font-size: 14px;
+      font-size: .7rem;
     }
     #router5 .pre-view{
       background: url("/img/edit/left-empty.png") no-repeat;
@@ -96,7 +97,7 @@
     }
     .next-view,.end-view{
       position: absolute;
-      right: 30px;
+      right: 1.5rem;
       background: #FFF url("/img/edit/right.png") no-repeat;
       background-size: 100%;
       width: 5rem;
@@ -105,12 +106,12 @@
       line-height: 2rem;
       color: #999999;
       padding-right: 1rem;
-      font-size: 14px;
+      font-size: .7rem;
     }
     .header-bar{
       position: absolute;
       width: 100%;
-      top:40px;
+      top:2rem;
     }
     .header-content{
       width: 84%;
@@ -118,14 +119,15 @@
     }
     .line{
       width: 100%;
-      border: 1px solid #D4D4D4;
+      border: 0.05rem solid #D4D4D4;
+      margin-top: 0.05rem;
     }
     .circle{
-      width: 8px;
-      height: 8px;
+      width: .4rem;
+      height: .4rem;
       border-radius: 50%;
       position: absolute;
-      margin-top: -4px;
+      margin-top: -.2rem;
     }
     .circle-index{
       margin-left: 0%;
@@ -156,16 +158,16 @@
       background-color: #F88827;
     }
     .circle-img{
-      width: 30px;
-      height: 30px;
-      margin-left: -10px;
-      margin-top: -10px;
+      width: 1.5rem;
+      height: 1.5rem;
+      margin-left: -.5rem;
+      margin-top: -.5rem;
       border-radius: 50%;
     }
     .icon-left{
       color:#F88827;
       font-weight: bolder;
-      margin-left: 5px;
+      margin-left: 0.25rem;
     }
     .send-button-a{
       display: block;
@@ -173,7 +175,7 @@
       height: 1.1rem !important;
       background-image: url("/img/edit/edit.svg");
       background-size: cover;
-      margin: 13px 5px 0 0 !important;
+      margin: 0.65rem 0.25rem 0 0 !important;
     }
     .circle-hide{
       width: 0;
@@ -186,10 +188,10 @@
     }
     .ww-typeHelper-input{
       border: 0 !important;
-      padding:10px 10px;
+      padding:0.5rem 0.5rem;
       text-align: center;
-      font-size: 15px !important;
-      border-bottom: 2px solid #999999 !important;
+      font-size: 0.75rem !important;
+      border-bottom: 0.1rem solid #999999 !important;
     }
     .techTags{
       padding: 1rem;
@@ -198,13 +200,13 @@
       text-align: center;
     }
     .type-item{
-      margin:5px 5px;
+      margin:0.25rem .25rem;
       display: inline-block;
       background: #EE7E2E;
       color:white;
-      padding:6px 16px;
-      font-size: 14px;
-      border-radius: 20px;
+      padding:.3rem .8rem;
+      font-size: .7rem;
+      border-radius: 1rem;
     }
     
     input:-ms-input-placeholder,
@@ -225,14 +227,14 @@
       width: 100%;
       height: 6rem;
       padding:.5rem;
-      font-size: 13px;
+      font-size: .75rem;
     }
     #name,#price{
       margin-top: .5rem;
       width: 100%;
-      height: 37px;
-      padding-left: 10px;
-      font-size: 14px;
+      height: 1.85rem;
+      padding-left: .5rem;
+      font-size: .7rem;
     }
     /*这里是设置输入框的点击效果*/
     #name:focus,#price:focus {
@@ -244,7 +246,7 @@
     .detail-li input{
       border: 0 !important;
       width: 100%;
-      padding: 0 10px;
+      padding: 0 .5rem;
     }
     .add-content,#container{
       width: 100%;
@@ -252,7 +254,7 @@
     }
     .add-header{
       background:rgba(255,255,255,0.7);
-      top:10px;
+      top:.5rem;
       width: 90%;
       /*height: 6rem;*/
       margin-left: 5%; 
@@ -263,12 +265,12 @@
     }
     #address{
       width: 90%;
-      border-radius: 6px;
+      border-radius: .3rem;
       border: 1px solid #EE7E2E;
       height: 1.5rem;
       margin:50px 5% 0;
-      padding-left: 28px;
-      font-size: 13px;
+      padding-left: 1.4rem;
+      font-size: .75rem;
     }
     #add-detail:-ms-input-placeholder{
       color: #AEAEAE;
@@ -279,39 +281,41 @@
     .icon-bianji{
       position: absolute;
       color: #EE7E2E;
-      font-size: 20px;
-      bottom: 38px;
-      margin-left: 23px;
+      font-size: 1rem;
+      bottom: 1.9rem;
+      margin-left: 1.15rem;
     }
     .tip{
-      margin-top: 10px;
+      margin-top: .5rem;
     }
     .tip-img{
       display: block;
       position: absolute;
-      width: 13px;
-      height: 13px;
-      margin-top:6.5px;
+      width: .65rem;
+      height: .65rem;
+      margin-top:0.325rem;
     }
     .tip-text{
-      font-size: 12px;
+      font-size: .6rem;
       color: #CCCCCC;
-      margin-left: 15px;
+      /*margin-left: .75rem;*/
+      display: block;
+      margin-top: .25rem;
     }
     .detail-li-content{
-      margin-top: 10px;
+      margin-top: .5rem;
     }
     .detail-li-title{
       background: url("/img/edit/detail-li.png") no-repeat; 
-      width: 60px;
-      height: 29px;
-      background-size: 100% 29px;
+      width: 3rem;
+      height: 1.45rem;
+      background-size: 100% 1.45rem;
       float: left;
     }
     .detail-label-title{
       display: block;
-      font-size: 14px;
-      line-height: 26px;
+      font-size: .7rem;
+      line-height: 1.3rem;
       color: #999999;
       width: 100%;
       text-align: center;
@@ -321,31 +325,31 @@
     }
     .detail-li-input{
       display: block;
-      font-size: 12px;
+      font-size: .6rem;
       float: left;
-      width: 190px;
-      height: 29px;
-      line-height: 29px;
-      padding-left: 5px;
+      width: 9.5rem;
+      height: 1.45rem;
+      line-height: 1.45rem;
+      padding-left: .25rem;
     }
     .detail-li-name{
-      margin:0 5px;
-      padding-left: 2px;
-      font-size: 12px;
+      margin:0 .25rem;
+      padding-left: .1rem;
+      font-size: .6rem;
       text-align: center;
-      width: 40px !important;
+      width: 2rem !important;
       padding:0 !important;
       color: #999999;
     }
     .detail-add{
       background: url("/img/edit/detail-add.png") no-repeat;
-      width: 60px;
-      height: 29px;
-      background-size: 100% 29px; 
+      width: 3rem;
+      height: 1.45rem;
+      background-size: 100% 1.45rem; 
     }
     .icon-add{
-      width: 20px;
-      font-size: 20px;
+      width: 1rem;
+      font-size: 1rem;
       margin:0 auto; 
     }
     .amap-sug-result{
@@ -394,7 +398,7 @@
     }
     .detail-li-all-content{
       height: 150px;
-      overflow-y: scroll;
+      overflow-y: auto;
     }
     .edit-detail-li{
       min-height: 20px;
@@ -416,6 +420,19 @@
     .edit-detail-li-content{
       word-break: break-all;
     }
+    .red{
+      color:red;
+    }
+    .circle-title{
+      display: block;
+      font-size: .5rem;
+      width: 3rem;
+      text-align: center;
+      margin-left: -1.25rem;
+    }
+    .page{
+      overflow: auto;
+    }
   }
   </style>
   <body>
@@ -424,7 +441,7 @@
         <a class="button button-link button-nav pull-left">
           <span class="icon icon-left"></span>
         </a>
-        <h1 class='title'>发布</h1>
+        <h1 class='title'>分享</h1>
         <a class="button button-link button-nav pull-right send-button-a"></a>
       </header>
       <div class="content">
@@ -510,6 +527,7 @@
           <div class="circle circle-index" data-href="#router"></div>
           <div class="circle circle-tag" data-href="#router1">
             <img src="/img/edit/tag-02.png" class="circle-img">
+            <label class="circle-title">美食类别</label>
           </div>
           <div class="circle circle-reason" data-href="#router2"></div>
           <div class="circle circle-detail" data-href="#router3"></div>
@@ -557,6 +575,7 @@
           <div class="circle circle-tag" data-href="#router1"></div>
           <div class="circle circle-reason" data-href="#router2">
             <img src="/img/edit/reason-02.png" class="circle-img">
+            <label class="circle-title">推荐理由</label>
           </div>
           <div class="circle circle-detail" data-href="#router3"></div>
           <div class="circle circle-name" data-href="#router4"></div>
@@ -599,6 +618,7 @@
           <div class="circle circle-reason" data-href="#router2"></div>
           <div class="circle circle-detail" data-href="#router3">
             <img src="/img/edit/detail-02.png" class="circle-img">
+            <label class="circle-title">美食详情</label>
           </div>
           <div class="circle circle-name" data-href="#router4"></div>
           <div class="circle circle-address" data-href="#router5"></div>
@@ -651,6 +671,7 @@
           <div class="circle circle-detail" data-href="#router3"></div>
           <div class="circle circle-name" data-href="#router4">
             <img src="/img/edit/name-02.png" class="circle-img">
+            <label class="circle-title">店名</label>
           </div>
           <div class="circle circle-address" data-href="#router5"></div>
           <div class="circle circle-price" data-href="#router6"></div>
@@ -687,6 +708,7 @@
           <div class="circle circle-name" data-href="#router4"></div>
           <div class="circle circle-address" data-href="#router5">
             <img src="/img/edit/address-02.png" class="circle-img">
+            <label class="circle-title">地址</label>
           </div>
           <div class="circle circle-price" data-href="#router6"></div>
         </div>
@@ -727,6 +749,7 @@
           <div class="circle circle-address" data-href="#router5"></div>
           <div class="circle circle-price circle-hide" data-href="#router6">
             <img src="/img/edit/price-02.png" class="circle-img">
+            <label class="circle-title">价格</label>
           </div>
         </div>
       </header>
@@ -738,8 +761,10 @@
             <input type="number" name="price" id="price" placeholder="">
           </div>
           <div class="tip">
-            <img src="/img/edit/tip.png" class="tip-img" alt="">
-            <label class="tip-text">您设置的价格在累积到10次查看后，开始付费查看</label>
+            <!-- <img src="/img/edit/tip.png" class="tip-img" alt=""> -->
+            <label class="tip-text">合理的设置查看价格，是获得最大收益的保障；</label>
+            <label class="tip-text">每条信息发布成功后，开始都是免费查看；</label>
+            <label class="tip-text">必须累积到10个<label class="red">想吃</label>或者<label class="red">查看</label>后，才能开始付费查看。</label>
           </div>
         </div>
       </div>
@@ -803,6 +828,71 @@
     $.hidePreloader();
   }
 
+  //得到焦点时隐藏导航按钮
+  $("input,textarea").focus(function(){
+    $(".footer-bar").hide();
+    $(".header-bar").hide();
+    $(".page-content").css("margin-top","1rem");
+  });
+  $("input,textarea").blur(function(){
+    $(".footer-bar").show();
+    $(".header-bar").show();
+    $(".page-content").css("margin-top","5rem");
+  });
+  //获取窗体高度
+  var height = $(document.body).height();
+  $(window).resize(function () {
+    if($(document.body).height() < height){
+      //输入框弹起
+      $(".footer-bar").hide();
+      $(".header-bar").hide();
+      $(".page-content").css("margin-top","1rem");
+    }else{
+      //输入框放下
+      $(".footer-bar").show();
+      $(".header-bar").show();
+      $(".page-content").css("margin-top","5rem");
+    }
+  })
+
+  //判断是不是安卓手机
+  var u = navigator.userAgent;
+  var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+  if(isAndroid){
+    $(".detail-li-name").focus(function(){
+      var top = $("#router3").scrollTop();
+      // alert(top);
+      $("#router3").scrollTop(80);
+    })
+  }
+  // if(isAndroid){
+  //   $(window).resize(function () {
+  //     if($(document.body).height() < height){
+  //       //输入框弹起
+  //       $(".footer-bar").hide();
+  //       $(".header-bar").hide();
+  //       $(".page-content").css("margin-top","1rem");
+  //     }else{
+  //       //输入框放下
+  //       $(".footer-bar").show();
+  //       $(".header-bar").show();
+  //       $(".page-content").css("margin-top","5rem");
+  //     }
+  //   })
+  // }else{
+  //   $(window).resize(function () {
+  //     if($(document.body).height() < height){
+  //       //输入框弹起
+  //       $(".footer-bar").hide();
+  //     }else{
+  //       //输入框放下
+  //       $(".footer-bar").show();
+  //     }
+  //   })
+  // }
+
+  //监听textarea获取焦点逻辑
+
   //初始化,异步获取标签
   function getTag(themeType){
 
@@ -826,8 +916,6 @@
             var exit = 0;
 
             $.each($(".ww-typeHelper .type-item"),function(j,v){
-              // console.log(result.data[i].tagName);
-              // console.log($(v).text());
               if(result.data[i].tagName == $(v).text()){
                 exit = 1;
               }
