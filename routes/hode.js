@@ -18,66 +18,101 @@ var RefundInfo = AV.Object.extend('RefundInfo');
 var FoodLike = AV.Object.extend('FoodLike');
 
 router.post('/haved', function(req, res, next) {
-    var userName = req.param('username');
-    var staus = req.param('staus');
+    //问我
+    // var userName = req.param('username');
+    // var staus = req.param('staus');
+    // var query = new AV.Query('UserInfo');
+    // query.equalTo('userName', userName);
+    // query.find().then(function (resultes) {
+    //     if (resultes == null || resultes == '') {
+    //         var result = {
+    //             code : 400,
+    //             data:'',
+    //             message : '没有该用户'
+    //         }
+    //         res.send(result);
+    //     }
+    //     var relation = resultes[0].relation('haved');
+    //     if (relation == null || relation == '') {
+    //         var result = {
+    //             code : 200,
+    //             data:'',
+    //             message : 'operation successed'
+    //         }
+    //         res.send(result);
+    //     }
+    //     //relation.include('ask');
+    //     // if (staus != '3') {
+    //     //     relation.equalTo('type', staus);
+    //     // }
+    //     relation.query().find().then(function (list) {
+    //         console.log(list);
+    //
+    //         // for (var i = 0; i < list.length; i++) {
+    //         //     var query = new AV.Query('AskMe');
+    //         //     query.get(list[i].attributes.ask.objectId).then(function (ask) {
+    //         //         list[i].attributes.ask.data = ask;
+    //         //     });
+    //         // }
+    //         if (staus == 3) {
+    //             var result = {
+    //                 code : 200,
+    //                 data:list,
+    //                 message : 'operation successed'
+    //             }
+    //             res.send(result);
+    //         }
+    //         var data = new Array();
+    //         var j = 0;
+    //         for (var i = 0; i <  list.length; i++) {
+    //             if (list[i].get('type') == staus) {
+    //                 data[j] = list[i];
+    //                 j++;
+    //             }
+    //         }
+    //
+    //         var result = {
+    //             code : 200,
+    //             data:data,
+    //             message : 'operation successed'
+    //         }
+    //         res.send(result);
+    //         return;
+    //     });
+    // });
+
+    //问我 - 美食
+
+    var userName = req.body.username;
+
+
     var query = new AV.Query('UserInfo');
-    query.equalTo('userName', userName);
-    query.find().then(function (resultes) {
-        if (resultes == null || resultes == '') {
-            var result = {
-                code : 400,
-                data:'',
-                message : '没有该用户'
-            }
-            res.send(result);
-        }
-        var relation = resultes[0].relation('haved');
-        if (relation == null || relation == '') {
-            var result = {
-                code : 200,
-                data:'',
-                message : 'operation successed'
-            }
-            res.send(result);
-        }
-        //relation.include('ask');
-        // if (staus != '3') {
-        //     relation.equalTo('type', staus);
-        // }
-        relation.query().find().then(function (list) {
-            console.log(list);
+    query.get(userName).then(function (user) {
 
-            // for (var i = 0; i < list.length; i++) {
-            //     var query = new AV.Query('AskMe');
-            //     query.get(list[i].attributes.ask.objectId).then(function (ask) {
-            //         list[i].attributes.ask.data = ask;
-            //     });
-            // }
-            if (staus == 3) {
-                var result = {
-                    code : 200,
-                    data:list,
-                    message : 'operation successed'
-                }
-                res.send(result);
-            }
-            var data = new Array();
-            var j = 0;
-            for (var i = 0; i <  list.length; i++) {
-                if (list[i].get('type') == staus) {
-                    data[j] = list[i];
-                    j++;
-                }
+        var query = new AV.Query('Haved');
+
+        query.equalTo("by", userName);
+        query.equalTo('type', 2);
+
+        query.include('ask');
+        query.find().then(function (fooLikes) {
+
+            var askDetail = new Array();
+
+            for (var i = 0; i < fooLikes.length; i++) {
+                askDetail[i] = fooLikes[i].get('ask');
             }
 
             var result = {
                 code : 200,
-                data:data,
-                message : 'operation successed'
-            }
+                data :fooLikes,
+                askDetail : askDetail,
+                message : '操作成功'
+            };
             res.send(result);
-            return;
+
         });
+
     });
 });
 
@@ -598,7 +633,7 @@ router.post('/foodlikelist', function(req, res, next) {
                     data :fooLikes,
                    askDetail : askDetail,
                     message : '操作成功'
-                }
+                };
                 res.send(result);
 
             });

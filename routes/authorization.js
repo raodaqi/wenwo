@@ -147,43 +147,140 @@ router.get('/test', function(req, res, next) {
 });
 
 router.get('/pay', function(req, res, next) {
-    var totalFee = req.query.totalFee;
-    var user = AV.User.current();
-    if (user == null || user == '') {
-        var result = {
-            code : 300,
-            message : '用户未登录'
+
+    //问我
+    // var totalFee = req.query.totalFee;
+    // var user = AV.User.current();
+    // if (user == null || user == '') {
+    //     var result = {
+    //         code : 300,
+    //         message : '用户未登录'
+    //     }
+    //     res.send(result);
+    //     return
+    // }
+    // else {
+    //     var authData = user.get('authData');
+    //     console.log(authData);
+    //     var openid = authData.weixin.openid;
+    //     var accessToken = authData.weixin.access_token;
+    //     var expiresIn = authData.weixin.expires_in;
+    //
+    //     var ip = req.ip;
+    //     ip = ip.substr(ip.lastIndexOf(':')+1, ip.length);
+    //     console.log(ip);
+    //     var notifyUrl = 'http://wenwo.leanapp.cn/notify';
+    //     //notifyUrl = encodeURIComponent(notifyUrl);
+    //
+    //     wxpay.getBrandWCPayRequestParams({
+    //         openid: openid,
+    //         body: '公众号支付测试',
+    //         detail: '公众号支付测试',
+    //         out_trade_no: '20150331'+Math.random().toString().substr(2, 10),
+    //         total_fee: totalFee,
+    //         attach:,
+    //         spbill_create_ip: ip,
+    //         notify_url:notifyUrl
+    //     }, function(err, result){
+    //         // in express
+    //         //console.log(result);
+    //         res.send({code:200,payargs:result});
+    //     });
+    //
+    // }
+
+
+    //问我 - 美食
+
+    //var totalFee = req.query.totalFee;
+
+    var askId = req.query.ask_id;
+    var userName = req.query.username;
+
+    var query = new AV.Query('AskMe');
+    query.get(askId).then( function (ask) {
+
+        var score = parseInt(ask.get('score'));
+
+        if (score < 10) {
+
+            var query = new AV.Query('UserInfo');
+            query.get(userName).then(function (user) {
+
+                var have = new Haved();
+                have.set('ask', ask);
+                have.set('type', '2');
+                have.set('by', userName);
+                have.set('askDate', ask.updatedAt);
+                have.set('price', ask.get('askPrice'));
+                have.set('byName', user.get('uName'));
+                have.set('byUrl', user.get('userHead'));
+                have.set('askOwn', ask.get('createBy'));
+                // have.set('income', incomeTotal);
+                ask.set('score', (parseInt(ask.get('score'))+1).toString());
+
+                have.save().then(function () {
+                    ask.save().then(function (ask) {
+                        res.send({code:100,data:ask ,message:'操作成功'});
+                    });
+                });
+
+            });
+
+
+        } else  {
+
+            var totalFee = parseFloat(ask.get('askPrice'))*100;
+            if (totalFee.isNaN()) {
+
+                var user = AV.User.current();
+                if (user == null || user == '') {
+                    res.send({code:300,message:'用户未登录'});
+                } else {
+
+                    var attach = {
+                        username:userName,
+                        ask_id:askId
+                    };
+
+                    var authData = user.get('authData');
+                    console.log(authData);
+                    var openid = authData.weixin.openid;
+                    var accessToken = authData.weixin.access_token;
+                    var expiresIn = authData.weixin.expires_in;
+
+                    var ip = req.ip;
+                    ip = ip.substr(ip.lastIndexOf(':')+1, ip.length);
+                    console.log(ip);
+                    var notifyUrl = 'http://wenwo.leanapp.cn/notify';
+                    //notifyUrl = encodeURIComponent(notifyUrl);
+
+                    wxpay.getBrandWCPayRequestParams({
+                        openid: openid,
+                        body: '问我-美食',
+                        detail: '来自'+ask.get('createByName'+'的美食推荐'),
+                        out_trade_no: '20160331'+Math.random().toString().substr(2, 10),
+                        total_fee: totalFee,
+                        attach:attach,
+                        spbill_create_ip: ip,
+                        notify_url:notifyUrl
+                    }, function(err, result){
+                        // in express
+                        //console.log(result);
+                        res.send({code:200,payargs:result});
+                    });
+
+                }
+
+            } else {
+
+                res.send({code:400,message:'数据有误'});
+
+            }
+
         }
-        res.send(result);
-        return
-    }
-    else {
-        var authData = user.get('authData');
-        console.log(authData);
-        var openid = authData.weixin.openid;
-        var accessToken = authData.weixin.access_token;
-        var expiresIn = authData.weixin.expires_in;
 
-        var ip = req.ip;
-        ip = ip.substr(ip.lastIndexOf(':')+1, ip.length);
-        console.log(ip);
-        var notifyUrl = 'http://wenwo.leanapp.cn/notify';
-        //notifyUrl = encodeURIComponent(notifyUrl);
-        wxpay.getBrandWCPayRequestParams({
-            openid: openid,
-            body: '公众号支付测试',
-            detail: '公众号支付测试',
-            out_trade_no: '20150331'+Math.random().toString().substr(2, 10),
-            total_fee: totalFee,
-            spbill_create_ip: ip,
-            notify_url:notifyUrl
-        }, function(err, result){
-            // in express
-            //console.log(result);
-            res.send({code:200,payargs:result});
-        });
-
-    }
+    });
 
 });
 

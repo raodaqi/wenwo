@@ -20,6 +20,7 @@ var wallet = require('./routes/wallet');
 var hode = require('./routes/hode');
 var authorization = require('./routes/authorization');
 var config = require('./config');
+var Haved = AV.Object.extend('Haved');
 
 var wxpay = WXPay({
   appid: config.appid,
@@ -81,8 +82,8 @@ app.get('/', function(req, res) {
   var lng = req.query.geox;
   var lat = req.query.geoy;
   var user = AV.User.current();
-  res.render('time');
-  console.log(user);
+
+console.log(user);
   //username = decodeURI(username);
   if (!user) {
     authorize(req, res);
@@ -157,104 +158,203 @@ app.post('/test', function(req, res) {
 });
 
 app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
+  //问我
   // 处理商户业务逻辑
-  console.log('notify');
-  var returnCode = req.query.return_code;
-  var returnMsg = req.query.return_msg;
-  //console.log("msg" + msg);
-  //console.log("code:" + returnCode);
-  //console.log("returnMsg:" + returnMsg);
-  if (returnMsg != null) {
-    console.log(returnMsg);
-    return;
-  }
-
-  var feeType = msg.fee_type;
-  var totalFee = msg.total_fee;
-  var transactionId = msg.transaction_id;
-  var tradeType = msg.trade_type;
-  var nonceStr = msg.nonce_str;
-  var sign = msg.nonce_str;
-  var bankType = msg.bank_type;
-  var outTradeNo = msg.out_trade_no;
-  var timeEnd = msg.time_end;
-  var openid = msg.openid;
-
-  var query = new AV.Query('Order');
-  query.equalTo('transactionId', transactionId);
-  query.find().then(function (resuletes) {
-    console.log(resuletes);
-    if (resuletes != '') {
-      console.log('已处理');
-      
-      return;
-    }
-    else {
-      console.log('未处理');
-      var order = new Order();
-      order.set('openid', openid);
-      order.set('feeType', feeType);
-      order.set('totalFee', totalFee);
-      order.set('transactionId', transactionId);
-      order.set('tradeType', tradeType);
-      order.set('nonceStr', nonceStr);
-      order.set('sign', sign);
-      order.set('bankType', bankType);
-      order.set('outTradeNo', outTradeNo);
-      order.set('timeEnd', timeEnd);
-      //order.set('userName', user.get('user'));
-      order.save().then(function (order) {
-        totalFee = parseFloat(totalFee);
-        totalFee = totalFee / 100;
-        console.log('totalFee:'+totalFee);
-
-        var query = new AV.Query('_User');
-        query.find().then(function (user) {
-          //console.log(user.get('authData'));
-          for (var i = 0; i < user.length; i++) {
-            console.log(user[i].get('authData').weixin.openid);
-            if (user[i].get('authData').weixin.openid == openid) {
-              var userMa = user[i];
-              console.log(userMa.get('wallet').id);
-              order.set('userName', userMa.get('user'));
-              order.save().then(function () {
-                var walletId = userMa.get('wallet').id;
-                var query = new AV.Query('Wallet');
-                query.get(walletId).then(function (wallet) {
-                  //console.log(wallet);
-                  //console.log(wallet.get('money'));
-                  var money = parseFloat(wallet.get('money'));
-                  money += totalFee;
-                  console.log('money:'+money);
-                  wallet.set('money', money);
-                  wallet.save().then(function () {
-                    res.success();
-                  }, function(error) {
-                    // 失败
-                    console.log('Error: ' + error.code + ' ' + error.message);
-                  });
-
-
-                });
-              });
-
-
-            }
-
-          }
-        });
-      }, function(error) {
-        // 失败
-        console.log('Error: ' + error.code + ' ' + error.message);
-      });
-
-
-    }
-  });
+  // console.log('notify');
+  // var returnCode = req.query.return_code;
+  // var returnMsg = req.query.return_msg;
+  // //console.log("msg" + msg);
+  // //console.log("code:" + returnCode);
+  // //console.log("returnMsg:" + returnMsg);
+  // if (returnMsg != null) {
+  //   console.log(returnMsg);
+  //   return;
+  // }
+  //
+  // var feeType = msg.fee_type;
+  // var totalFee = msg.total_fee;
+  // var transactionId = msg.transaction_id;
+  // var tradeType = msg.trade_type;
+  // var nonceStr = msg.nonce_str;
+  // var sign = msg.nonce_str;
+  // var bankType = msg.bank_type;
+  // var outTradeNo = msg.out_trade_no;
+  // var timeEnd = msg.time_end;
+  // var openid = msg.openid;
+  //
+  // var query = new AV.Query('Order');
+  // query.equalTo('transactionId', transactionId);
+  // query.find().then(function (resuletes) {
+  //   console.log(resuletes);
+  //   if (resuletes != '') {
+  //     console.log('已处理');
+  //
+  //     return;
+  //   }
+  //   else {
+  //     console.log('未处理');
+  //     var order = new Order();
+  //     order.set('openid', openid);
+  //     order.set('feeType', feeType);
+  //     order.set('totalFee', totalFee);
+  //     order.set('transactionId', transactionId);
+  //     order.set('tradeType', tradeType);
+  //     order.set('nonceStr', nonceStr);
+  //     order.set('sign', sign);
+  //     order.set('bankType', bankType);
+  //     order.set('outTradeNo', outTradeNo);
+  //     order.set('timeEnd', timeEnd);
+  //     //order.set('userName', user.get('user'));
+  //     order.save().then(function (order) {
+  //       totalFee = parseFloat(totalFee);
+  //       totalFee = totalFee / 100;
+  //       console.log('totalFee:'+totalFee);
+  //
+  //       var query = new AV.Query('_User');
+  //       query.find().then(function (user) {
+  //         //console.log(user.get('authData'));
+  //         for (var i = 0; i < user.length; i++) {
+  //           console.log(user[i].get('authData').weixin.openid);
+  //           if (user[i].get('authData').weixin.openid == openid) {
+  //             var userMa = user[i];
+  //             console.log(userMa.get('wallet').id);
+  //             order.set('userName', userMa.get('user'));
+  //             order.save().then(function () {
+  //               var walletId = userMa.get('wallet').id;
+  //               var query = new AV.Query('Wallet');
+  //               query.get(walletId).then(function (wallet) {
+  //                 //console.log(wallet);
+  //                 //console.log(wallet.get('money'));
+  //                 var money = parseFloat(wallet.get('money'));
+  //                 money += totalFee;
+  //                 console.log('money:'+money);
+  //                 wallet.set('money', money);
+  //                 wallet.save().then(function () {
+  //                   res.success();
+  //                 }, function(error) {
+  //                   // 失败
+  //                   console.log('Error: ' + error.code + ' ' + error.message);
+  //                 });
+  //
+  //
+  //               });
+  //             });
+  //
+  //
+  //           }
+  //
+  //         }
+  //       });
+  //     }, function(error) {
+  //       // 失败
+  //       console.log('Error: ' + error.code + ' ' + error.message);
+  //     });
+  //
+  //
+  //   }
+  // });
 
 
 
   // res.success() 向微信返回处理成功信息，res.fail()返回失败信息。
+
+
+  // 问我 - 美食
+  var returnCode = req.query.return_code;
+  var returnMsg = req.query.return_msg;
+  if (returnMsg != null) {
+    console.log(returnMsg);
+  } else  {
+    var feeType = msg.fee_type;
+    var totalFee = msg.total_fee;
+    var transactionId = msg.transaction_id;
+    var tradeType = msg.trade_type;
+    var nonceStr = msg.nonce_str;
+    var sign = msg.nonce_str;
+    var bankType = msg.bank_type;
+    var outTradeNo = msg.out_trade_no;
+    var timeEnd = msg.time_end;
+    var openid = msg.openid;
+    var attach = msg.attach;
+    var query = new AV.Query('Order');
+    query.equalTo('transactionId', transactionId);
+    query.find().then(function (resuletes) {
+
+      if (resuletes != '') {
+        console.log('已处理');
+      } else {
+        var order = new Order();
+        order.set('openid', openid);
+        order.set('feeType', feeType);
+        order.set('totalFee', totalFee);
+        order.set('transactionId', transactionId);
+        order.set('tradeType', tradeType);
+        order.set('nonceStr', nonceStr);
+        order.set('sign', sign);
+        order.set('bankType', bankType);
+        order.set('outTradeNo', outTradeNo);
+        order.set('timeEnd', timeEnd);
+        order.set('attach', attach);
+
+        var userName = attach.username;
+        var askId = attach.ask_id;
+
+        var price = parseFloat(totalFee) / 100.0;
+
+        var query = new AV.Query('UserInfo');
+        query.get(userName).then(function (user) {
+          var query = new AV.Query('AskMe');
+          query.get(askId).then(function (ask) {
+
+            var incomeUser = ask.get('createBy');
+            var incomeTotal = (price * 90 / 100).toFixed(2);
+
+            var have = new Haved();
+            have.set('ask', ask);
+            have.set('type', '2');
+            have.set('by', userName);
+            have.set('askDate', ask.updatedAt);
+            have.set('price', ask.get('askPrice'));
+            have.set('byName', user.get('uName'));
+            have.set('byUrl', user.get('userHead'));
+            have.set('askOwn', ask.get('createBy'));
+            have.set('income', incomeTotal);
+
+            ask.set('score', (parseInt(ask.get('score'))+1).toString());
+
+
+
+            have.set('income', incomeTotal);
+
+            var query = new AV.Query('UserInfo');
+            query.include('wallet');
+            query.get(incomeUser).then(function (incomeUser) {
+              incomeUser.get('wallet').set('money', incomeUser.get('wallet').get('money') + parseFloat(incomeTotal));
+              incomeUser.get('wallet').set('total', (parseFloat(incomeUser.get('total').get('money')) + parseFloat(incomeTotal)).toString());
+              incomeUser.get('wallet').save().then(function () {
+                incomeUser.save().then(function () {
+                  have.save().then(function () {
+                    order.save().then(function () {
+                      ask.save().then(function () {
+                        res.success();
+                      });
+
+                    });
+                  });
+                });
+              });
+
+            });
+
+
+          });
+        });
+
+
+      }
+    });
+  }
+
 
 }));
 
