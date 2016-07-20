@@ -232,7 +232,7 @@ router.get('/pay', function(req, res, next) {
         } else  {
 
             var totalFee = parseFloat(ask.get('askPrice'))*100;
-            if (totalFee.isNaN()) {
+            if (isNaN(totalFee)) {
 
                 var user = AV.User.current();
                 if (user == null || user == '') {
