@@ -19,6 +19,7 @@ var User = AV.Object.extend('_User');
 var Apply = AV.Object.extend('Apply');
 var Withdraw = AV.Object.extend('Withdraw');
 var config=require('../config');
+var Haved = AV.Object.extend('Haved');
 // `AV.Object.extend` 方法一定要放在全局变量，否则会造成堆栈溢出。
 // 详见： https://leancloud.cn/docs/js_guide.html#对象
 var resG;
