@@ -244,7 +244,9 @@ router.get('/pay', function(req, res, next) {
                         username:userName,
                         ask_id:askId
                     };
+                    attach = JSON.parse(attach);
 
+                    //JSON.stringify()
                     var authData = user.get('authData');
                     console.log(authData);
                     var openid = authData.weixin.openid;
