@@ -244,9 +244,9 @@ router.get('/pay', function(req, res, next) {
                         username:userName,
                         ask_id:askId
                     };
-                    attach = JSON.parse(attach);
+                    attach = JSON.stringify(attach);
 
-                    //JSON.stringify()
+                    //JSON.stringify();
                     var authData = user.get('authData');
                     console.log(authData);
                     var openid = authData.weixin.openid;
@@ -265,7 +265,7 @@ router.get('/pay', function(req, res, next) {
                         detail: '来自'+ask.get('createByName')+'的美食推荐',
                         out_trade_no: '20160331'+Math.random().toString().substr(2, 10),
                         total_fee: totalFee,
-                        // attach:attach,
+                        attach:attach,
                         spbill_create_ip: ip,
                         notify_url:notifyUrl
                     }, function(err, result){
