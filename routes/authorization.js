@@ -232,7 +232,8 @@ router.get('/pay', function(req, res, next) {
         } else  {
 
             var totalFee = parseFloat(ask.get('askPrice'))*100;
-            if (isNaN(totalFee)) {
+            console.log(totalFee);
+            if (parseInt(totalFee)) {
 
                 var user = AV.User.current();
                 if (user == null || user == '') {
