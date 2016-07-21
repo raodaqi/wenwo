@@ -18,6 +18,7 @@ var User = AV.Object.extend('UserInfo');
 var Ask =  AV.Object.extend('AskMe');
 var Tag =  AV.Object.extend('Tag');
 var Like = AV.Object.extend('Like');
+var Debase = AV.Object.extend('Debase');
 
 
 router.get('/allask', function(req, res, next) {
@@ -1850,6 +1851,65 @@ router.post('/edittag', function (req, res, next) {
     });
     
 });
+
+router.post('/debase', function (req, res, next) {
+
+    var userName = req.body.username;
+    var askId = req.body.ask_id;
+    var content = req.body.content;
+
+    var query = new AV.Query('Haved');
+
+    query.equalTo("by", userName);
+    query.equalTo('type', '2');
+    query.include('ask');
+    query.find().then(function (havedList) {
+
+        var havedListFlag = 0;
+
+        for (var i = 0; i < havedList.length; i++) {
+
+            if (havedList[i].get('ask').id == askId) {
+
+                havedListFlag++;
+
+            }
+
+        }
+
+        if (havedListFlag != 0) {
+
+            var debase = new Debase();
+            debase.set('userName', userName);
+            debase.set('askId', askId);
+            debase.set('content',content);
+            debase.save().then(function (debase) {
+                res.send({code:200,data:debase,message:'操作成功'});
+            });
+
+
+        } else {
+            res.send({code:400,message:'尚未购买消息'});
+        }
+
+    });
+
+});
+
+router.post('/debaselist', function (req, res, next) {
+
+    var askId = req.body.ask_id;
+
+    var query = new AV.Query('Debase');
+    query.equalTo('askId', askId);
+    query.find().then(function (debaseList) {
+
+        res.send({code:200,data:debaseList,message:'操作成功'});
+
+    });
+
+});
+
 
 function setTag(tag, type, callback) {
     var tagName = new Array();

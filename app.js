@@ -21,6 +21,7 @@ var hode = require('./routes/hode');
 var authorization = require('./routes/authorization');
 var config = require('./config');
 var Haved = AV.Object.extend('Haved');
+var Withdraw = AV.Object.extend('Withdraw');
 
 var wxpay = WXPay({
   appid: config.appid,
@@ -439,5 +440,85 @@ function authorize(req, res) {
 
   res.redirect(url);
 }
+
+function settleAccounts() {
+
+  var query = new AV.Query('_User');
+  query.include('wallet');
+  query.find().then(function (userList) {
+
+    oneAccounts(userList, 0);
+
+  });
+
+}
+
+function oneAccounts(userList, index) {
+
+  var user = userList[index];
+
+  if (inde >= userList.length) {
+    return;
+  } else {
+    if (parseInt(userList[index].get('wallet').get('money')) > 1) {
+
+      var reamount = parseInt(parseFloat(user.get('wallet').get('money')) * 100);
+
+      var authData = user.get('authData');
+      var openid = authData.weixin.openid;
+      var accessToken = authData.weixin.access_token;
+      var expiresIn = authData.weixin.expires_in;
+
+      var mchid = '1298230401';
+
+      var date = new Date();
+      date = moment(date).format("YYYYMMDDHHmmss");
+      var str = date + getNonceStr(10);
+      var partnerTradeNo = str;
+
+      var nonceStr = getNonceStr();
+
+      var checkName = 'NO_CHECK';
+      var desc = '提现';
+      var ip = req.ip;
+      ip = ip.substr(ip.lastIndexOf(':')+1, ip.length);
+
+      var data = {
+        mch_appid : config.appid,
+        mchid : mchid,
+        nonce_str : nonceStr,
+        partner_trade_no : partnerTradeNo,
+        openid : openid,
+        check_name : checkName,
+        amount : reamount,
+        desc : desc,
+        spbill_create_ip : ip
+      };
+
+    } else {
+      index++;
+      oneAccounts(userList, index);
+
+    }
+
+
+  }
+
+}
+
+function getNonceStr(length) {
+  var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var maxPos = chars.length;
+  var noceStr = "";
+  for (var i = 0; i < (length || 32); i++) {
+    noceStr += chars.charAt(Math.floor(Math.random() * maxPos));
+  }
+  return noceStr;
+}
+
+//云引擎定时函数
+exports.settleAccounts = function(){
+  settleAccounts();
+};
 
 module.exports = app;
