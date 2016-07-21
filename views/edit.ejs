@@ -1246,8 +1246,8 @@
           askContentHide  = data.askContentHide,//隐藏详情
           askContentShow  = data.askContentShow,//隐藏详情
           lnglatXY        = [data.GeoX,data.GeoY],//坐标
-          lng             = data.GeoX,
-          lat             = data.GeoY,
+          lat             = data.GeoX,
+          lng             = data.GeoY,
           price           = data.askPrice,//价格
           updatedAt       = data.updatedAt,//发布时间
           createBy        = data.createBy;//发布者
@@ -1543,8 +1543,8 @@
             reason,//推荐理由
             content_show = {},//详情显示部分
             shopName,//店名
-            lng,//经度
-            lat,//维度
+            lat,//经度
+            lng,//维度
             price = 0.00;//信息价格
 
         //获取填入美食的类别
@@ -1637,6 +1637,13 @@
         if(price == 0.0){
           price = 0;
         }
+
+        if(lat > 90){
+          var change = lat;
+          lat = lng;
+          lng = change;
+        }
+        
         var data = {
           username     : "<%= username %>",
           type         : 1,
