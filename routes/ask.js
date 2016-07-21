@@ -1166,7 +1166,7 @@ router.post('/sendask', function(req, res, next) {
         ask.set('askImage', images);
         ask.set('shopName', shopName);
 
-        var point = new AV.GeoPoint(geoX, geoY);
+        var point = new AV.GeoPoint(parseFloat(geoX), parseFloat(geoY));
         ask.set('positionGeo', point);
 
 

@@ -30,41 +30,41 @@
 //            },
 //            error : function(){}
 //        });
-//        var tag = new Array();
-//        tag[0] = {
-//            tag_name:'鱼火锅'
+        var tag = new Array();
+        tag[0] = {
+            tag_name:'鱼火锅'
+        }
+//        tag[1] = {
+//            tag_name:'222'
 //        }
-////        tag[1] = {
-////            tag_name:'222'
-////        }
-//
-//        tag = JSON.stringify(tag);
-//        var data = {
-//            username:'wenwo',
-//            type:1,
-//            isfree:0,
-//            geo_x:123,
-//            geo_y:123,
-//            position:'asd',
-//            reason:'asd',
-//            content_show:'asd',
-//            content_hide:'asd',
-//            price:0.1,
-//            tag:tag,
-//            remark:'asd'
-//
-//        }
-//        console.log(data);
-//        $.ajax({
-//            type: "post",
-//            url: 'ask/sendask',
-//            data: data,
-//            dataType: "json",
-//            success : function(result) {
-//                console.log(result);
-//            },
-//            error : function(){}
-//        });
+
+        tag = JSON.stringify(tag);
+        var data = {
+            username:'wenwo',
+            type:1,
+            isfree:0,
+            geo_x:13.2123,
+            geo_y:13.3415,
+            position:'asd',
+            reason:'asd',
+            content_show:'asd',
+            content_hide:'asd',
+            price:0.1,
+            tag:tag,
+            remark:'asd'
+
+        }
+        console.log(data);
+        $.ajax({
+            type: "post",
+            url: 'ask/sendask',
+            data: data,
+            dataType: "json",
+            success : function(result) {
+                console.log(result);
+            },
+            error : function(){}
+        });
 //
 //        $.ajax({
 //            type: "get",
@@ -197,16 +197,16 @@
 //            },
 //            error : function(){}
 //        });
-        $.ajax({
-            type: "post",
-            url: 'ask/askdetail',
-            data: {username:"573b0e3df38c8400673bb48d", ask_id:"578a93c1c4c971005ee2b1a1"},
-            dataType: "json",
-            success : function(result) {
-                console.log(result);
-            },
-            error : function(){}
-        });
+//        $.ajax({
+//            type: "post",
+//            url: 'ask/askdetail',
+//            data: {username:"573b0e3df38c8400673bb48d", ask_id:"578a93c1c4c971005ee2b1a1"},
+//            dataType: "json",
+//            success : function(result) {
+//                console.log(result);
+//            },
+//            error : function(){}
+//        });
     }
 </script>
 </body>
