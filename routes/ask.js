@@ -74,11 +74,15 @@ router.get('/allask', function(req, res, next) {
             for (var i = 0; i < results.length; i++) {
                 // results[i].attributes.askContentHide = '****';
                 if(results[i].attributes.askIsFree == "0" || results[i].attributes.askPrice !="0.00"){
-                    var length = results[i].get('askContentHide').length;
-                    results[i].attributes.askContentHide = '';
-                    for (var j = 0; j < length; j++) {
-                        results[i].attributes.askContentHide += '*';
-                    }
+                    // var length1 = results[i].get('askContentHide').length;
+                    // var length2 = results[i].get('askContentHide').length;
+                    // results[i].attributes.askContentHide = '';
+                    // for (var j = 0; j < length; j++) {
+                    //     results[i].attributes.askContentHide += '*';
+                    // }
+
+                    results[i].set('shopName', "请购买以后查看");
+                    results[i].set('askPosition', "请购买以后查看");
                 }
 
                 // var test = results[i].get('askTag');
@@ -187,136 +191,237 @@ router.get('/askhide', function(req, res, next) {
 
 });
 
-router.get('/askdetail', function(req, res, next) {
-    var askId = req.param('ask_id');
-    console.log(askId);
-    var userName = req.param('username');
+router.post('/askdetail', function(req, res, next) {
+    // 问我
+
+    // var askId = req.param('ask_id');
+    // console.log(askId);
+    // var userName = req.param('username');
+    // var query = new AV.Query('UserInfo');
+    // query.equalTo('userName', userName);
+    // query.find().then(function (resultes) {
+    //     //console.log(resultes[0]);
+    //     if (resultes != null && resultes !='') {
+    //         var query = new AV.Query('AskMe');
+    //         query.get(askId).then(function (ask) {
+    //             var askCreate = ask.get('createBy');
+    //             if (userName == askCreate) {
+    //                 var result = {
+    //                     code : 200,
+    //                     nobuy : '1',
+    //                     own: 1,
+    //                     data : ask,
+    //                     message : 'operation successed'
+    //                 }
+    //                 res.send(result);
+    //                 return;
+    //             }
+    //         });
+    //         var relation = resultes[0].relation('haved');
+    //         if (relation == null || relation == '') {
+    //             var query = new AV.Query('AskMe');
+    //             query.get(askId).then(function (post) {
+    //
+    //                 console.log(post.attributes.askIsFree);
+    //                 if((post.attributes.askIsFree == "0" && parseFloat(post.attributes.askPrice) != 0 )){
+    //                     var length = post.get('askContentHide').length;
+    //                     post.attributes.askContentHide = '';
+    //                     for (var i = 0; i < length ; i++) {
+    //                         post.attributes.askContentHide += '*';
+    //                     }
+    //                 }
+    //
+    //                 var result = {
+    //                     code : 200,
+    //                     nobuy : '1',
+    //                     own: 0,
+    //                     data : post,
+    //                     message : 'operation successed'
+    //                 }
+    //                 res.send(result);
+    //                 return;
+    //
+    //             });
+    //         }
+    //         relation.query().find().then(function (list) {
+    //             console.log(list);
+    //             var flag = 0;
+    //             for (var i = 0; i < list.length; i++) {
+    //                 //console.log(list[i].attributes.ask.id);
+    //                 //console.log(askId);
+    //                 if (list[i].attributes.ask.id == askId) {
+    //                     var query = new AV.Query('AskMe');
+    //                     //console.log('ask');
+    //                     query.get(askId).then(function (post) {
+    //                         //console.log('post');
+    //                         var result = {
+    //                             code : 200,
+    //                             data : post,
+    //                             own: 0,
+    //                             nobuy : '0',
+    //                             message : 'operation successed'
+    //                         }
+    //                         res.send(result);
+    //                         return;
+    //
+    //                     });
+    //                     flag++;
+    //                 }
+    //             }
+    //             if (flag == 0) {
+    //                 var query = new AV.Query('AskMe');
+    //                 query.get(askId).then(function (post) {
+    //                     // post.attributes.askContentHide = '****';
+    //                     if(post.attributes.askIsFree == "0" || post.attributes.askPrice!="0.00"){
+    //                         var length = post.get('askContentHide').length;
+    //
+    //                         post.attributes.askContentHide = '';
+    //                         for (var i = 0; i < length; i++) {
+    //                             post.attributes.askContentHide += '*';
+    //                         }
+    //
+    //
+    //                     }
+    //                     var result = {
+    //                         code : 200,
+    //                         nobuy : '1',
+    //                         own: 0,
+    //                         data : post,
+    //                         message : 'operation successed'
+    //                     }
+    //                     res.send(result);
+    //                     return;
+    //
+    //                 });
+    //
+    //             }
+    //
+    //         });
+    //     }
+    //     else {
+    //         var query = new AV.Query('AskMe');
+    //         query.get(askId).then(function (post) {
+    //             // post.attributes.askContentHide = '****';
+    //              if(post.attributes.askIsFree == "0" || post.attributes.askPrice!="0.00"){
+    //                  var length = post.get('askContentHide').length;
+    //                  post.attributes.askContentHide = '';
+    //                  for (var i = 0; i < length; i++) {
+    //                      post.attributes.askContentHide += '*';
+    //                  }
+    //             }
+    //             var result = {
+    //                 code : 200,
+    //                 nobuy : '1',
+    //                 own: 0,
+    //                 data : post,
+    //                 message : 'operation successed'
+    //             }
+    //             res.send(result);
+    //             return;
+    //
+    //         });
+    //     }
+    //
+    // });
+
+    // 问我 - 美食
+
+    var userName = req.body.username;
+    var askId = req.body.ask_id;
+
     var query = new AV.Query('UserInfo');
-    query.equalTo('userName', userName);
-    query.find().then(function (resultes) {
-        //console.log(resultes[0]);
-        if (resultes != null && resultes !='') {
+    query.include('wallet');
+    query.get(userName).then(function (user) {
+
+        if (!user || user == '') {
+
+            res.send({code:500,message:'用户未信息错误'});
+
+        } else  {
+
+
             var query = new AV.Query('AskMe');
             query.get(askId).then(function (ask) {
-                var askCreate = ask.get('createBy');
-                if (userName == askCreate) {
-                    var result = {
-                        code : 200,
-                        nobuy : '1',
-                        own: 1,
-                        data : ask,
-                        message : 'operation successed'
-                    }
-                    res.send(result);
-                    return;
-                }
-            });
-            var relation = resultes[0].relation('haved');
-            if (relation == null || relation == '') {
-                var query = new AV.Query('AskMe');
-                query.get(askId).then(function (post) {
 
-                    console.log(post.attributes.askIsFree);
-                    if((post.attributes.askIsFree == "0" && parseFloat(post.attributes.askPrice) != 0 )){
-                        var length = post.get('askContentHide').length;
-                        post.attributes.askContentHide = '';
-                        for (var i = 0; i < length ; i++) {
-                            post.attributes.askContentHide += '*';
+                var query = new AV.Query('Haved');
+
+                query.equalTo("by", userName);
+                query.equalTo('type', '2');
+                query.include('ask');
+                query.find().then(function (havedList) {
+
+
+                    var query = new AV.Query('FoodLike');
+
+                    query.equalTo("by", userName);
+
+
+                    query.include('ask');
+                    query.find().then(function (foodLikeList) {
+
+                        var havedFlag = 0;
+                        var foodLikeFlag = 0;
+                        var isOwnFlag = 0;
+                        //var showDetail = 0;
+
+                        console.log(ask.id);
+                        if (ask.get('createBy') == userName) {
+
+                            isOwnFlag++;
+
                         }
-                    }
-                    
-                    var result = {
-                        code : 200,
-                        nobuy : '1',
-                        own: 0,
-                        data : post,
-                        message : 'operation successed'
-                    }
-                    res.send(result);
-                    return;
 
-                });
-            }
-            relation.query().find().then(function (list) {
-                console.log(list);
-                var flag = 0;
-                for (var i = 0; i < list.length; i++) {
-                    //console.log(list[i].attributes.ask.id);
-                    //console.log(askId);
-                    if (list[i].attributes.ask.id == askId) {
-                        var query = new AV.Query('AskMe');
-                        //console.log('ask');
-                        query.get(askId).then(function (post) {
-                            //console.log('post');
-                            var result = {
-                                code : 200,
-                                data : post,
-                                own: 0,
-                                nobuy : '0',
-                                message : 'operation successed'
-                            }
-                            res.send(result);
-                            return;
+                        for (var i = 0; i < havedList.length; i++) {
 
-                        });
-                        flag++;
-                    }
-                }
-                if (flag == 0) {
-                    var query = new AV.Query('AskMe');
-                    query.get(askId).then(function (post) {
-                        // post.attributes.askContentHide = '****';
-                        if(post.attributes.askIsFree == "0" || post.attributes.askPrice!="0.00"){
-                            var length = post.get('askContentHide').length;
+                            if (havedList[i].get('ask').id == askId) {
 
-                            post.attributes.askContentHide = '';
-                            for (var i = 0; i < length; i++) {
-                                post.attributes.askContentHide += '*';
+                                havedFlag++;
+
                             }
 
 
                         }
-                        var result = {
-                            code : 200,
-                            nobuy : '1',
-                            own: 0,
-                            data : post,
-                            message : 'operation successed'
+
+                        for (var i = 0; i < foodLikeList.length; i++) {
+
+                            if (foodLikeList[i].get('ask').id == askId) {
+
+                                foodLikeFlag++;
+
+                            }
+
                         }
-                        res.send(result);
-                        return;
+
+                        if (isOwnFlag == 0 && foodLikeFlag == 0 && havedFlag == 0) {
+
+                            ask.set('shopName', "请购买以后查看");
+                            ask.set('askPosition', "请购买以后查看");
+
+                        }
+
+                        detailShow = {
+                            isOwnFlag:isOwnFlag,
+                            foodLikeFlag:foodLikeFlag,
+                            havedFlag:havedFlag
+                        };
+
+                        res.send({code:200,data:ask,show:detailShow,message:'操作成功'});
+
+
 
                     });
 
-                }
+
+                });
 
             });
-        }
-        else {
-            var query = new AV.Query('AskMe');
-            query.get(askId).then(function (post) {
-                // post.attributes.askContentHide = '****';
-                 if(post.attributes.askIsFree == "0" || post.attributes.askPrice!="0.00"){
-                     var length = post.get('askContentHide').length;
-                     post.attributes.askContentHide = '';
-                     for (var i = 0; i < length; i++) {
-                         post.attributes.askContentHide += '*';
-                     }
-                }
-                var result = {
-                    code : 200,
-                    nobuy : '1',
-                    own: 0,
-                    data : post,
-                    message : 'operation successed'
-                }
-                res.send(result);
-                return;
 
-            });
+
+
         }
 
-    });
+    })
+
 });
 
 router.get('/getask', function(req, res, next) {

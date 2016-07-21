@@ -311,6 +311,7 @@ app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
         order.set('timeEnd', timeEnd);
         order.set('attach', attach);
 
+        attach = JSON.parse(attach);
         var userName = attach.username;
         var askId = attach.ask_id;
 

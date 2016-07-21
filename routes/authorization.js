@@ -198,93 +198,125 @@ router.get('/pay', function(req, res, next) {
     var askId = req.query.ask_id;
     var userName = req.query.username;
 
-    var query = new AV.Query('AskMe');
-    query.get(askId).then( function (ask) {
+    var query = new AV.Query('Haved');
 
-        var score = parseInt(ask.get('score'));
+    query.equalTo("by", userName);
+    query.equalTo('type', '2');
+    query.include('ask');
+    query.find().then(function (havedList) {
 
-        if (score < 10) {
+        var havedListFlag = 0;
 
-            var query = new AV.Query('UserInfo');
-            query.get(userName).then(function (user) {
+        for (var i = 0; i < havedList.length; i++) {
 
-                var have = new Haved();
-                have.set('ask', ask);
-                have.set('type', '2');
-                have.set('by', userName);
-                have.set('askDate', ask.updatedAt);
-                have.set('price', ask.get('askPrice'));
-                have.set('byName', user.get('uName'));
-                have.set('byUrl', user.get('userHead'));
-                have.set('askOwn', ask.get('createBy'));
-                // have.set('income', incomeTotal);
-                ask.set('score', (parseInt(ask.get('score'))+1).toString());
+            if (havedList[i].get('ask').id == askId) {
 
-                have.save().then(function () {
-                    ask.save().then(function (ask) {
-                        res.send({code:100,data:ask ,message:'操作成功'});
+                havedListFlag++;
+
+            }
+
+
+        }
+
+        if (havedListFlag == 0) {
+
+            var query = new AV.Query('AskMe');
+            query.get(askId).then( function (ask) {
+
+                var score = parseInt(ask.get('score'));
+
+                if (score < 10) {
+
+                    var query = new AV.Query('UserInfo');
+                    query.get(userName).then(function (user) {
+
+                        var have = new Haved();
+                        have.set('ask', ask);
+                        have.set('type', '2');
+                        have.set('by', userName);
+                        have.set('askDate', ask.updatedAt);
+                        have.set('price', ask.get('askPrice'));
+                        have.set('byName', user.get('uName'));
+                        have.set('byUrl', user.get('userHead'));
+                        have.set('askOwn', ask.get('createBy'));
+                        // have.set('income', incomeTotal);
+                        ask.set('score', (parseInt(ask.get('score'))+1).toString());
+
+                        have.save().then(function () {
+                            ask.save().then(function (ask) {
+                                res.send({code:100,data:ask ,message:'操作成功'});
+                            });
+                        });
+
                     });
-                });
-
-            });
 
 
-        } else  {
+                } else  {
 
-            var totalFee = parseFloat(ask.get('askPrice'))*100;
-            console.log(totalFee);
-            if (parseInt(totalFee)) {
+                    var totalFee = parseFloat(ask.get('askPrice'))*100;
+                    console.log(totalFee);
+                    if (parseInt(totalFee)) {
 
-                var user = AV.User.current();
-                if (user == null || user == '') {
-                    res.send({code:300,message:'用户未登录'});
-                } else {
+                        var user = AV.User.current();
+                        if (user == null || user == '') {
+                            res.send({code:300,message:'用户未登录'});
+                        } else {
 
-                    var attach = {
-                        username:userName,
-                        ask_id:askId
-                    };
-                    attach = JSON.stringify(attach);
+                            var attach = {
+                                username:userName,
+                                ask_id:askId
+                            };
+                            attach = JSON.stringify(attach);
 
-                    //JSON.stringify();
-                    var authData = user.get('authData');
-                    console.log(authData);
-                    var openid = authData.weixin.openid;
-                    var accessToken = authData.weixin.access_token;
-                    var expiresIn = authData.weixin.expires_in;
+                            //JSON.stringify();
+                            var authData = user.get('authData');
+                            console.log(authData);
+                            var openid = authData.weixin.openid;
+                            var accessToken = authData.weixin.access_token;
+                            var expiresIn = authData.weixin.expires_in;
 
-                    var ip = req.ip;
-                    ip = ip.substr(ip.lastIndexOf(':')+1, ip.length);
-                    console.log(ip);
-                    var notifyUrl = 'http://wenwo.leanapp.cn/notify';
-                    //notifyUrl = encodeURIComponent(notifyUrl);
+                            var ip = req.ip;
+                            ip = ip.substr(ip.lastIndexOf(':')+1, ip.length);
+                            console.log(ip);
+                            var notifyUrl = 'http://wenwo.leanapp.cn/notify';
+                            //notifyUrl = encodeURIComponent(notifyUrl);
 
-                    wxpay.getBrandWCPayRequestParams({
-                        openid: openid,
-                        body: '问我-美食',
-                        detail: '来自'+ask.get('createByName')+'的美食推荐',
-                        out_trade_no: '20160331'+Math.random().toString().substr(2, 10),
-                        total_fee: totalFee,
-                        attach:attach,
-                        spbill_create_ip: ip,
-                        notify_url:notifyUrl
-                    }, function(err, result){
-                        // in express
-                        console.log(result);
-                        res.send({code:200,payargs:result});
-                    });
+                            wxpay.getBrandWCPayRequestParams({
+                                openid: openid,
+                                body: '问我-美食',
+                                detail: '来自'+ask.get('createByName')+'的美食推荐',
+                                out_trade_no: '20160331'+Math.random().toString().substr(2, 10),
+                                total_fee: totalFee,
+                                attach:attach,
+                                spbill_create_ip: ip,
+                                notify_url:notifyUrl
+                            }, function(err, result){
+                                // in express
+                                console.log(result);
+                                res.send({code:200,payargs:result});
+                            });
+
+                        }
+
+                    } else {
+
+                        res.send({code:400,message:'数据有误'});
+
+                    }
 
                 }
 
-            } else {
+            });
 
-                res.send({code:400,message:'数据有误'});
+        } else {
 
-            }
+            res.send({code:400,message:'重复购买'});
 
         }
 
     });
+
+
 
 });
 
