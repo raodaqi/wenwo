@@ -1,4 +1,9 @@
 function initLocation() {
+    var title = WX_SHARE_TITLE ? WX_SHARE_TITLE:'「问我」让经验帮你赚钱';
+    var link = WX_SHARE_LINK ? WX_SHARE_LINK :'http://wenwo.leanapp.cn';//链接按代换
+    var imgUrl　=　WX_SHARE_IMGURL ? WX_SHARE_IMGURL: 'http://wenwo.leanapp.cn/img/logo.jpg';//链接按代换
+    var desc =　WX_SHARE_DESC ? WX_SHARE_DESC:'任何人都可以分享自己的经验赚钱，不信，你试试！';
+    
     var data = {
         url: location.href.split('#')[0]
     }
@@ -10,6 +15,7 @@ function initLocation() {
         success: function(result) {
             $(".ui-loading-block").hide();
             console.log(result);
+            console.log(desc);
             wx.config({
                 debug: false,
                 appId: 'wx99f15635dd7d9e3c',
@@ -19,9 +25,6 @@ function initLocation() {
                 jsApiList: [
                     'onMenuShareTimeline',
                     'onMenuShareAppMessage',
-                    'onMenuShareQQ',
-                    'onMenuShareWeibo',
-                    'onMenuShareQZone',
                     'onMenuProfile',
                     'onMenuAddContact',
                     'hideMenuItems',
@@ -30,27 +33,15 @@ function initLocation() {
                 ]
             });
             wx.ready(function() {
-                if (IMGURL) {
-                    var shareData = {
-                        title: '问我——像个当地人一样去旅游',
-                        desc: '说走就走，我带着你，你带着钱。',
-                        link: IMGURL,
-                        imgUrl: 'http://wenwo.leanapp.cn/img/wx/share.jpg'
-                    };
-                } else {
-                    var shareData = {
-                        title: '问我——像个当地人一样去旅游',
-                        desc: '说走就走，我带着你，你带着钱。',
-                        link: result.url,
-                        imgUrl: 'http://wenwo.leanapp.cn/img/wx/share.jpg'
-                    };
-                }
+                var shareData = {
+                    title: title,
+                    desc:  desc,
+                    link:  link,
+                    imgUrl: imgUrl
+                };
 
                 wx.onMenuShareAppMessage(shareData);
                 wx.onMenuShareTimeline(shareData);
-                wx.onMenuShareQQ(shareData);
-                wx.onMenuShareWeibo(shareData);
-                wx.onMenuShareQZone(shareData);
 
                 wx.getLocation({
                     type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'

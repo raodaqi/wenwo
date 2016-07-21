@@ -1,5 +1,9 @@
 // $.showPreloader();
 
+var WX_SHARE_TITLE,
+    WX_SHARE_LINK,　
+    WX_SHARE_IMGURL,　
+    WX_SHARE_DESC;
 function formatDate(format, timestamp, full) {
     format = format.toLowerCase();
     if (!format) format = "y-m-d h:i:s";

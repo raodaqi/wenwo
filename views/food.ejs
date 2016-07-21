@@ -653,8 +653,10 @@
 <script type='text/javascript' src='/js/zepto.min.js' charset='utf-8'></script>
 <script type='text/javascript' src='/js/sm.min.js' charset='utf-8'></script>
 <script type='text/javascript' src='/js/common.js' charset='utf-8'></script>
+<script type='text/javascript' src='/js/wxlocation.js' charset='utf-8'></script>
 <script>
   //下拉刷新
+  initLocation();
   // 添加'refresh'监听器
   $(document).on('refresh', '.pull-to-refresh-content',function(e) {
       // 刷新主页
@@ -939,7 +941,7 @@
           }
           if(data){
             for (var i = 0; i < data.length; i++) {
-              html += '<div class="wenwo-li" data-id='+data[i].objectId+'><div class="up-content"><img src="'+data[i].createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">'+formatTag(data[i].askTagStr)+'</div><div class="ask-reason">'+data[i].askReason+'</div></div></div><div class="down-content"><div class="down-like liked"><span class="icon iconfont icon-likeEat"></span><label class="like-num">'+data[i].likeNum+'</label></div><div class="down-time">'+formatDate("y.m.d",data[i].updatedAt)+'</div></div></div>';
+              html += '<div class="wenwo-li" data-id='+data[i].objectId+'><div class="up-content"><img src="'+data[i].createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">'+formatTag(data[i].askTagStr)+'</div><div class="ask-reason">'+data[i].askReason+'</div></div></div><div class="down-content"><div class="down-like liked"><span class="icon iconfont icon-likeEat"></span><label class="like-num">'+data[i].likeNum+'</label></div>'+(data[i].score > 10 ? '<div class="down-buy" data-id='+data[i].objectId+'>'+data[i].askPrice+'元瞅瞅</div>' : '<div class="down-buy free" data-id='+data[i].objectId+'>限时免费</div>')+'<div class="down-time">'+formatDate("y.m.d",data[i].updatedAt)+'</div></div></div>';
             }
           }
           // 添加新条目
@@ -1168,7 +1170,7 @@
             }
             if(data){
               for (var i = 0; i < data.length; i++) {
-                html += '<div class="wenwo-li" data-id='+data[i].objectId+'><div class="up-content"><img src="'+data[i].createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">'+formatTag(data[i].askTagStr)+'</div><div class="ask-reason">'+data[i].askReason+'</div></div></div><div class="down-content"><div class="down-like liked"><span class="icon iconfont icon-likeEat"></span><label class="like-num">'+data[i].likeNum+'</label></div><div class="down-time">'+formatDate("y.m.d",data[i].updatedAt)+'</div></div></div>';
+                html += '<div class="wenwo-li" data-id='+data[i].objectId+'><div class="up-content"><img src="'+data[i].createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">'+formatTag(data[i].askTagStr)+'</div><div class="ask-reason">'+data[i].askReason+'</div></div></div><div class="down-content"><div class="down-like '+(data[i].liked ? "liked" : '')+'"><span class="icon iconfont icon-likeEat"></span><label class="like-num">'+data[i].likeNum+'</label></div>'+'<div class="down-buy" data-id='+data[i].objectId+'>朕已查阅</div>'+'<div class="down-time">'+formatDate("y.m.d",data[i].updatedAt)+'</div></div></div>';
               }
             }
             // 添加新条目
@@ -1207,7 +1209,7 @@
             }
             if(data){
               for (var i = 0; i < data.length; i++) {
-                html += '<div class="wenwo-li" data-id='+data[i].objectId+'><div class="up-content"><img src="'+data[i].createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">'+formatTag(data[i].askTagStr)+'</div><div class="ask-reason">'+data[i].askReason+'</div></div></div><div class="down-content"><div class="down-like liked">想吃<label class="like-num">'+data[i].likeNum+'</label></div><div class="down-time">'+formatDate("y.m.d",data[i].updatedAt)+'</div></div></div>';
+                html += '<div class="wenwo-li" data-id='+data[i].objectId+'><div class="up-content"><img src="'+data[i].createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">'+formatTag(data[i].askTagStr)+'</div><div class="ask-reason">'+data[i].askReason+'</div></div></div><div class="down-content"><div class="down-like '+(data[i].liked ? "liked" : '')+'"><span class="icon iconfont icon-likeEat"></span><label class="like-num">'+data[i].likeNum+'</label></div>'+'<div class="down-time">'+formatDate("y.m.d",data[i].updatedAt)+'</div></div></div>';
               }
             }
             console.log(html);

@@ -467,7 +467,7 @@
     .share-text-content{
       padding: .2rem 1rem;
       font-size: .5rem;
-      color: #999;
+      color: #aaa;
     }
     .share-btn{
       width: 80%;
@@ -479,6 +479,33 @@
       color: white;
       text-align: center;
       line-height: 2rem;
+    }
+    #success .pull-right{
+      margin-right: .2rem;
+      color: #333 !important;
+    }
+    .invite-img{
+      padding: 10px 15px;
+      width: 100%;
+    }
+    #success .modal{
+      position: absolute;
+      top: 0;
+      left: 0;
+      margin:0 !important;
+      padding: 0 !important; 
+      width: 100%;
+      height: 100%;
+    }
+    .modal-overlay, .popup-overlay, .preloader-indicator-overlay{
+      background: rgba(0,0,0,.7);
+    }
+    .preloader-modal{
+      z-index: 40000;
+    }
+    .geolocation-position{
+      width: 3rem;
+      height: 3rem;
     }
   }
   </style>
@@ -842,7 +869,7 @@
         </div>
         <div class="btn-content">
           <div class="success-btn again">再来一发</div>
-          <div class="success-btn find">继续逛逛</div>
+          <div class="success-btn find">微服私访</div>
         </div>
         <div class="share-text-content">
           启奏陛下，所有付费信息都需要累积到10个想吃或者查看后，才能开始计费呢，赶快邀请陛下的爱卿们前来点赞吧！
@@ -850,6 +877,10 @@
         <div class="share-btn">戳我分享>></div>
       </div>
 
+      <div class="modal-overlay modal-overlay-visible" style="display:none;"></div>
+      <div class="modal modal-in model-share" style="display: none; margin-top: -72px;">
+        <img class="invite-img" src="/img/invite.png">
+      </div>
     </div>
 
   </body>
@@ -869,6 +900,31 @@
       }else if(type == "find"){
         $.router.load("/food?username=573b0e3df38c8400673bb48d");
       }
+    })
+
+    //再来一发
+    $(".again").on("click",function(){
+      $.router.load("#router");
+    })
+    $("#success .find").on("click",function(){
+      $.showPreloader("正在出宫");
+      $.router.load("/");
+    })
+
+    //点击完成
+    $("#success .pull-right").on("click",function(){
+      $.showPreloader("正在跳转");
+      $.router.load("/");
+    })
+
+    //分享
+    $(".share-btn").on('click',function(){
+      $("#success .modal-overlay-visible").show();
+      $("#success .model-share").show();
+    })
+    $(".modal-in").on('click',function(){
+      $("#success .modal-overlay-visible").hide();
+      $("#success .modal-in").hide();
     })
 
     $("#router .icon-left").on("click",function(){
@@ -902,7 +958,12 @@
   }
 
   //得到焦点时隐藏导航按钮
+  var id = '';
   $("input,textarea").focus(function(){
+    id = this.id;
+    if(this.id == "address" || this.id == "add-detail"){
+      return;
+    }
     $(".footer-bar").hide();
     $(".header-bar").hide();
     $(".page-content").css("margin-top","1rem");
@@ -918,8 +979,11 @@
     if($(document.body).height() < height){
       //输入框弹起
       $(".footer-bar").hide();
-      $(".header-bar").hide();
-      $(".page-content").css("margin-top","1rem");
+      if(id != "address"){
+        $(".header-bar").hide();
+        $(".page-content").css("margin-top","1rem");
+      }
+      
     }else{
       //输入框放下
       $(".footer-bar").show();
@@ -1462,6 +1526,12 @@
       $(".price .edit-content").text("￥"+$(this).val());
     })
 
+    //监听手机是否返回
+    window.onpopstate = function(event) {  
+      $("#address").blur(); 
+      // $(".amap-sug-result").hide(); 
+    };  
+
 
     //提交所有信息
     $(".send-button-a").on("click",function(){
@@ -1594,9 +1664,7 @@
                 $.hidePreloader();
                 $.toast("提交成功");
                 localStorage.clear();
-                $.showPreloader("正在跳转");
-                // window.location.href="/more/information-presentation/test/"+sendAskId+"?username="+"<%=username%>";
-                window.location.href="/more/information-presentation/"+sendAskId;
+                $.router.load("#success");
               }else{
                 $.hidePreloader();
                 $.toast(result.message);
@@ -1604,7 +1672,7 @@
             },
             error: function(error){
               // alert(error);
-              $.alert(error);
+              $.toast("服务器异常");
             }
           });
         }else{
@@ -1620,10 +1688,8 @@
                 $.toast("提交成功");
                 localStorage.clear();
                 var askId = result.data.objectId;
-
                 $.showPreloader("正在跳转");
-                // window.location.href="/more/information-presentation/test/"+askId+"?username="+"<%=username%>";
-                window.location.href="/more/information-presentation/"+askId;
+                $.router.load("#success");
               }else{
                 $.hidePreloader();
                 $.toast(result.message);
@@ -1631,7 +1697,7 @@
             },
             error: function(error){
               // alert(error);
-              $.alert(error);
+              $.toast("服务器异常");
             }
           });
         }
