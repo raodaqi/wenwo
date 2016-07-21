@@ -1645,8 +1645,8 @@
           content_show : content_show,
           content_hide : 'no',
           position     : askPosition,
-          geo_x        : lng,
-          geo_y        : lat,
+          geo_x        : lat,
+          geo_y        : lng,
           shop_name    : shopName,
           price        : price
         }
@@ -1675,6 +1675,7 @@
             },
             error: function(error){
               // alert(error);
+              $.hidePreloader();
               $.toast("服务器异常");
             }
           });
@@ -1700,6 +1701,7 @@
             },
             error: function(error){
               // alert(error);
+              $.hidePreloader();
               $.toast("服务器异常");
             }
           });
