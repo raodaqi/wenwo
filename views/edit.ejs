@@ -1652,8 +1652,8 @@
         }
         console.log(data);
         //发送请求 url：/ask/sendask
+        
         $.showPreloader("正在提交");
-
         if(sendType == "edit"){
           data["ask_id"] = sendAskId;
            $.ajax({
