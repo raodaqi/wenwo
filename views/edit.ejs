@@ -838,7 +838,7 @@
           <div class="tip">
             <!-- <img src="/img/edit/tip.png" class="tip-img" alt=""> -->
             <label class="tip-text">合理的设置查看价格，是获得最大收益的保障；</label>
-            <label class="tip-text">每条信息发布成功后，开始都是免费查看；</label>
+            <label class="tip-text">每条信息分享成功后，开始都是免费查看；</label>
             <label class="tip-text">必须累积到10个<label class="red">想吃</label>或者<label class="red">查看</label>后，才能开始付费查看。</label>
           </div>
         </div>
@@ -1249,8 +1249,8 @@
           lat             = data.GeoX,
           lng             = data.GeoY,
           price           = data.askPrice,//价格
-          updatedAt       = data.updatedAt,//发布时间
-          createBy        = data.createBy;//发布者
+          updatedAt       = data.updatedAt,//分享时间
+          createBy        = data.createBy;//分享者
 
       //标签
       var tag = JSON.parse(askTagStr);
@@ -1366,7 +1366,7 @@
       $("#router .title").text("编辑");
       initEditData(sendAskId);
     }else{
-      $("#router .title").text("发布");
+      $("#router .title").text("分享");
       initLocationData();
     }
 
@@ -1660,7 +1660,7 @@
         console.log(data);
         //发送请求 url：/ask/sendask
         
-        $.showPreloader("正在提交");
+        $.showPreloader("正在分享");
         if(sendType == "edit"){
           data["ask_id"] = sendAskId;
            $.ajax({
@@ -1672,8 +1672,19 @@
               console.log(result);
               if(result.code){
                 $.hidePreloader();
-                $.toast("提交成功");
+                $.toast("分享成功");
                 localStorage.clear();
+
+                var data = result.data;
+                WX_SHARE_LINK   = "http://wenwo.leanapp.cn/detail?askid="+data.objectId;
+                WX_SHARE_IMGURL = data.createByUrl;
+                WX_SHARE_DESC   = data.askReason;
+                var askPosition      = data.askPosition;
+                askPosition = JSON.parse(askPosition);
+                detail = askPosition.detail;
+                WX_SHARE_TITLE  = "我分享了"+detail+"的美食,瞅瞅波？"
+                initShare();
+
                 $.router.load("#success");
               }else{
                 $.hidePreloader();
@@ -1700,6 +1711,17 @@
                 localStorage.clear();
                 var askId = result.data.objectId;
                 $.showPreloader("正在跳转");
+                
+                var data = result.data;
+                WX_SHARE_LINK   = "http://wenwo.leanapp.cn/detail?askid="+data.objectId;
+                WX_SHARE_IMGURL = data.createByUrl;
+                WX_SHARE_DESC   = data.askReason;
+                var askPosition      = data.askPosition;
+                askPosition = JSON.parse(askPosition);
+                detail = askPosition.detail;
+                WX_SHARE_TITLE  = "我分享了"+detail+"的美食,瞅瞅波？"
+                initShare();
+
                 $.router.load("#success");
               }else{
                 $.hidePreloader();
