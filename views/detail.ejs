@@ -117,6 +117,7 @@
       padding-left: 0.3rem;
       font-size: 0.7rem;
       word-break:break-all;
+      padding-right: 1rem;
     }
     .no-user{
       margin-top: 40px;
@@ -321,19 +322,49 @@
           $(".title").text(formatTag(data.askTagStr));
           $(".username").text(data.createByName);
           $(".like-num").text(data.likeNum);
-          //判断是否想吃过
-          if(data.liked){
-            //想吃过
-            $(".like").addClass("liked");
-          }else{
-            //没有想吃过
-          }
 
           //判断是否是限时免费
           if(data.score <= 10){
             $(".buy").text("限时免费");
             $(".buy").addClass("free");
           }
+
+          //判断是否想吃过
+          if(result.show.foodLikeFlag){
+            //想吃过
+            $(".like").addClass("liked");
+          }else{
+            //没有想吃过
+            $(".like").removeClass("liked");
+          }
+
+          //判断是否买过
+          if(result.show.havedFlag){
+            //买过
+            $(".buy").text("朕已查阅");
+            $(".buy").attr("data-buy","1");
+
+            //显示店名，地址
+            if(data.shopName){
+              $(".detail-rtname").text(data.shopName);
+            }else{
+              $(".detail-rtname").text("暂无");
+            }
+            if(data.askPosition){
+              var askPosition = JSON.parse(data.askPosition);
+              var address = '';
+              for(var key in askPosition){
+                console.log(askPosition[key]);
+                address+=askPosition[key];
+              }
+              $(".detail-address").text(address);
+              $(".detail-address").attr("data-GeoX",data.GeoX);
+              $(".detail-address").attr("data-GeoY",data.GeoY);
+            }
+            
+          }
+          
+
 
           $(".price").text(data.askPrice);
           $(".pic-bg").attr("src",data.createByUrl);
@@ -398,6 +429,8 @@
     }
   })
 
+  //点击地址跳转地图
+
   // $(".edit").on("click",function(){
   //   $.router.load("/todos/send/test?username=573c1eb271cfe4006c18274f");
   // })
@@ -458,9 +491,38 @@
     }
   })
 
+  function getHide(callback){
+    var data = {
+      username  : UserName,
+      ask_id    : AskId
+    }
+    $.ajax({
+      type : "POST",
+      data: data,
+      dataType: "json",
+      url : "/ask/askdetail",
+      success: function(result){
+        console.log(result);
+        if(result.code == 200){
+          callback.success(result);
+        }else{
+          callback.error(result);
+        }
+      },
+      error:function(error){
+        callback.error(error);
+      }
+    });
+  }
+
   //点击购买
   //购买逻辑
   $(".buy").on("click",function(){
+    var buyed = $(".buy").attr("data-buy");
+
+    if($(this).text() == "朕已查阅" && buyed){
+      return;
+    }
     var data = {
       username : UserName,
       ask_id   : AskId
@@ -478,6 +540,31 @@
         if(result.code == 100){
           //限时免费购买
           $.toast("购买成功");
+          $(".buy").attr("data-buy","1");
+          getHide({
+            success:function(result){
+              var data = result.data;
+              if(data.shopName){
+                $(".detail-rtname").text(data.shopName);
+              }else{
+                $(".detail-rtname").text("暂无");
+              }
+              if(data.askPosition){
+                var askPosition = JSON.parse(data.askPosition);
+                var address = '';
+                for(var key in askPosition){
+                  console.log(askPosition[key]);
+                  address+=askPosition[key];
+                }
+                $(".detail-address").text(address);
+                $(".detail-address").attr("data-GeoX",data.GeoX);
+                $(".detail-address").attr("data-GeoY",data.GeoY);
+              }
+            },
+            error:function(error){
+              location.reload();
+            }
+          })
         }else if(result.code == 200){
           initPay(result.payargs);
         }else{
