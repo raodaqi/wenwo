@@ -1,5 +1,5 @@
 var AV = require('leanengine');
-appJs = require('app.js');
+appJs = require('./app.js');
 /**
  * 一个简单的云代码方法
  */
