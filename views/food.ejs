@@ -987,9 +987,16 @@
         $(".pull-to-refresh-arrow").show();
       }, 500); 
     }else if(type == "edit"){
-      $.router.load("/edit?username=573b0e3df38c8400673bb48d");
+      // $.router.load("/edit");
+      $.showPreloader("正在跳转");
+      window.location.href="/edit";
     }
   })
+
+  // $(".edit").on("click",function(){
+  //   $.showPreloader("正在跳转");
+  //   window.location.href="/edit";
+  // })
   $(".empty-button").on("click",function(){
     var href = $(this).attr("data-href");
     if(href.split("#")[1]){
@@ -1067,7 +1074,8 @@
     console.log($(this).parent().attr("data-id"));
     var askId = $(this).parent().attr("data-id");
     $.showPreloader("正在跳转");
-    $.router.load("/detail?askid="+askId);
+    // $.router.load("/detail?askid="+askId);
+    window.location.href="/detail?askid="+askId;
   })
 
   $(".list-li-like-num").on("click",function(){

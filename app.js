@@ -155,9 +155,10 @@ app.get('/food', function(req, res) {
 });
 
 app.get('/edit', function(req, res) {
-  var username =  req.query.username;
   var type = req.query.type;
   var askid = req.query.askid;
+
+  // var username = "573b0e3df38c8400673bb48d";
   // if(username){
   //   res.render('edit', {username:username,type:type,askid:askid});
   // }
@@ -175,6 +176,9 @@ app.get('/edit', function(req, res) {
 app.get('/detail', function(req, res) {
   var askid =  req.query.askid;
   // var username = "573b0e3df38c8400673bb48d";
+  // if(username){
+  //   res.render('detail', {askid:askid,username:username});
+  // }
   var user = AV.User.current();
   if (!user) {
     authorize(req, res);
