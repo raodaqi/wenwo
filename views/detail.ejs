@@ -379,7 +379,8 @@
           var askTagStr = data.askTagStr;
           askTagStr = JSON.parse(askTagStr);
           tag = askTagStr[0].tag_name;
-          WX_SHARE_DESC  = data.createByName+"分享了「"+detail+"」美食,瞅瞅波？"
+          
+          WX_SHARE_DESC  = data.createByName+"分享了「"+tag+"」美食,瞅瞅波？"
           initShare();
 
           //判断是否是限时免费

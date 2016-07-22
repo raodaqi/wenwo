@@ -907,6 +907,7 @@
     getLikeList(UserName,{
       success:function(result){
         if(result.code == 200){
+          console.log(result);
           var html = '';
           var data = result.askDetail;
           if(!data.length){
