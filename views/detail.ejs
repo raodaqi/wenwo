@@ -204,6 +204,15 @@
       width: 100%;
       height: 100%;
   }
+  .buyed-img{
+    display: none;
+    width: 4rem;
+    height: 4rem;
+    position: absolute;
+    z-index: 2;
+    bottom:-2rem;
+    right: .8rem;
+  }
   </style>
 <body>
   <!-- <header class="bar bar-nav">
@@ -237,6 +246,8 @@
           </div>
           <div class="like"><span class="icon iconfont icon-likeEat"></span><span class="like-num">2</span></div>
           <div class="buy"><span class="price">2</span>元瞅瞅</div>
+
+          <img src="/img/common/buyed.png" class="buyed-img">
         </div>
 
         <div class="ask-detail">
@@ -398,12 +409,22 @@
             $(".like").removeClass("liked");
           }
 
+          //判断是否是自己的信息
+          if(result.show.isOwnFlag){
+            //是自己的
+            $(".buy").text("朕分享的");
+            $(".buy").attr("data-buy","1");
+          }
+
           //判断是否买过
           if(result.show.havedFlag){
             //买过
             $(".buy").text("朕已查阅");
             $(".buy").attr("data-buy","1");
+            $(".buyed-img").show();
+          }
 
+          if(result.show.havedFlag || result.show.isOwnFlag){
             //显示店名，地址
             if(data.shopName){
               $(".detail-rtname").text(data.shopName);
@@ -421,7 +442,6 @@
               $(".detail-address").attr("data-GeoX",data.GeoX);
               $(".detail-address").attr("data-GeoY",data.GeoY);
             }
-            
           }
           
           $(".price").text(data.askPrice);

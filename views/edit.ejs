@@ -727,7 +727,7 @@
         <div class="detail-content li-content">
           <div class="detail-title content-title">请告诉我们一些详细信息：</div>
           <div class="recommend-detail">
-            <textarea name="detail" id="detail" placeholder="详细的介绍会极大的提高大家付费查看的欲望，所以尽可能详细的描述你推荐的美食吧."></textarea>
+            <textarea name="detail" id="detail" placeholder="详细的介绍可能提高大家的付费意愿，比如美食的人均消费、环境、口味等，但千万别暴露了店名和地址，你懂得！"></textarea>
           </div>
 
           <div class="detail-li-all-content">
@@ -1881,6 +1881,7 @@
           console.log(address);
           $(".address .edit-content").attr("data-address",address);
           $(".address .edit-content").text(detail);
+          $("#address").val(detail);
         }
       });
 
