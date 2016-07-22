@@ -10,7 +10,7 @@
   <link rel="icon" type="image/x-icon" href="/img/logo.png" media="screen">
   <title>问我-让经验帮你赚钱</title>
   <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="http://at.alicdn.com/t/font_1462821367_1895313.css">
+  <link rel="stylesheet" href="http://at.alicdn.com/t/font_1468915240_5629373.css">
   <link rel="stylesheet" href="/css/sm.min.css">
   <script src="/js/jweixin-1.0.0.js"></script>
 </head>
@@ -24,6 +24,8 @@
     }
     html{
       font-size: 20px;
+      width: 100%;
+      height: 100%;
     }
     body{
       position: absolute;
@@ -32,6 +34,7 @@
       padding:0;
       margin:0;
       width: 100%;
+      height: 100%;
       overflow: hidden;
       background-color: #E8E8E8;
     }
@@ -108,7 +111,7 @@
       box-sizing: border-box;
       padding:0.3rem 0.5rem;
       border-radius: 0.2rem;
-      font-size: 0.7rem;
+      font-size: 0.8rem;
       color: #333333;
       margin-bottom: 0.3rem;
     }
@@ -129,7 +132,7 @@
       height: 25px;
       float: left;
       margin-left: 10px;
-      margin-top: 3px;
+      margin-top: 5px;
       background-color: white;
       border-radius: 50%;
       background-size: cover;
@@ -171,6 +174,36 @@
     .free {
       background-color: #F88827;
     }
+    .ask-detail-li-empty{
+      width: 100%;
+      height: .75rem;
+      background-color: #F8F8F8;
+    }
+    .detail-rtname,.detail-address{
+      color: #FFADAD;
+    }
+    .detail-content{
+      padding-bottom: .5rem;
+    }
+    .iconfont {
+      font-family: "iconfont" !important;
+    }
+    .icon-tixing{
+      display: block;
+      position: absolute;
+      right:.9rem;
+      color:#CFCFCF;
+      margin-top: -1.8rem;
+    }
+    .modal {
+      position: absolute;
+      top: 0;
+      left: 0;
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100%;
+      height: 100%;
+  }
   </style>
 <body>
   <!-- <header class="bar bar-nav">
@@ -187,7 +220,7 @@
 
     <div class="wenwo-content page page-current" id='detail' style="display:none">
       <header class="bar bar-nav">
-        <a class="button button-link button-nav pull-left" href="/food">
+        <a class="button button-link button-nav pull-left">
             <!-- <a class="button button-link button-nav pull-left"> -->
               <span class="icon icon-left"></span>
           </a>
@@ -227,12 +260,15 @@
             </div>
           </div>
 
+          <div class="ask-detail-li-empty"></div>
+
           <div class="ask-detail-rtname ask-detail-li">
             <img src="/img/edit/name-02.png" class="edit-li-img">
             <div class="detail-li-box">
               <div class="detail-li-title">店名</div>
+              <span class="icon iconfont icon-tixing"></span>
               <div class="detail-rtname detail-li-content">
-                请购买以查看
+                请付费后再来看吧!
               </div>
             </div>
           </div>
@@ -242,17 +278,30 @@
             <div class="detail-li-box">
               <div class="detail-li-title">地址</div>
               <div class="detail-address detail-li-content">
-                请购买以查看
+                一毛钱都不给我，就想知道？
               </div>
             </div>
           </div>
-
-          <!-- 
-           -->
-
         </div>
       </div>
     </div>
+    <div class="modal-overlay modal-overlay-visible" style="display:none;"></div>
+
+      <div class="modal modal-in model-tip" style="display: none; margin-top: -72px;">
+        <div class="tip-content">
+          <div class="tip-content-title">查看说明</div>
+          <div class="tip-content-li">
+            <div>1)&nbsp;&nbsp;&nbsp;当分享者设定信息的查看价格时，该条信息的关键内容会被隐藏，需要用户付费成功后才能查看。</div>
+          </div>
+          <div class="tip-content-li">
+            <div>2)&nbsp;&nbsp;&nbsp;交易完成后，信息查看费用归分享者所有。</div>
+          </div>
+          <div class="tip-content-li">
+            <div>3)&nbsp;&nbsp;&nbsp;快来分享你的经验，迎娶白富美，走向人生巅峰吧！</div>
+          </div>
+          <div class="tip-content-get">朕知道了</div>
+        </div>
+      </div>
   <% }else{ %>
     <div class="error-content content pull-to-refresh-content" data-ptr-distance="55">
       <div class="pull-to-refresh-layer">
@@ -268,6 +317,7 @@
 <script type='text/javascript' src='/js/sm.min.js' charset='utf-8'></script>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script type='text/javascript' src='/js/common.js' charset='utf-8'></script>
+<script type="text/javascript" src="/js/wxlocation.js"></script>
 <script>
   // //下拉刷新
   // // 添加'refresh'监听器
@@ -287,6 +337,7 @@
     console.log("<%=askid%>");
     var AskId = "<%=askid%>";
     var UserName = "<%=username%>";
+    var URL = "";
 
     console.log(UserName);
     if(AskId){
@@ -295,14 +346,9 @@
   // });
   function init(){
     var url = window.location.hash;
-      if(url){
-        url = url.split("#")[1];
-      }else{
-        url = "find";
+      if(url.split("#")[1]){
+        URL = "food";
       }
-      console.log(url);
-      $(".tab-item").removeClass("active");
-      $("."+url).addClass("active");
   }
   function getAskDetail(askid,username){
     var username = username ? username : '';
@@ -322,6 +368,17 @@
           $(".title").text(formatTag(data.askTagStr));
           $(".username").text(data.createByName);
           $(".like-num").text(data.likeNum);
+
+          //初始化分享
+          var data = result.data;
+          WX_SHARE_LINK   = "http://wenwo.leanapp.cn/detail?askid="+data.objectId;
+          WX_SHARE_IMGURL = data.createByUrl;
+          WX_SHARE_TITLE  = data.askReason;
+          var askTagStr = data.askTagStr;
+          askTagStr = JSON.parse(askTagStr);
+          tag = askTagStr[0].tag_name;
+          WX_SHARE_DESC  = data.createByName+"分享了「"+detail+"」美食,瞅瞅波？"
+          initShare();
 
           //判断是否是限时免费
           if(data.score <= 10){
@@ -397,15 +454,24 @@
               }
             }  
           }
+
+
           $(".preloader-modal").hide();
           $("#detail").show();
         }else{
-
+          $(".preloader-modal").hide();
+          $("body").empty();
+          var error = '<div class="error-content content pull-to-refresh-content" data-ptr-distance="55"><div class="pull-to-refresh-layer"><div class="preloader"></div><div class="pull-to-refresh-arrow"></div></div><div class="card-container no-user">'+result.message+'</div></div>';
+          $("body").append(error);
         }
         // callback.success(result);
       },
       error:function(error){
         console.log(error);
+        $(".preloader-modal").hide();
+        $("body").empty();
+        var error = '<div class="error-content content pull-to-refresh-content" data-ptr-distance="55"><div class="pull-to-refresh-layer"><div class="preloader"></div><div class="pull-to-refresh-arrow"></div></div><div class="card-container no-user">'+result.message+'</div></div>';
+        $("body").append(error);
         // callback.error(error);
       },
     })
@@ -426,6 +492,17 @@
       // $.router.back();
     }else if(type == "edit"){
       $.router.load("/edit?username=573c1eb271cfe4006c18274f");
+    }
+  })
+
+  //点击返回逻辑bug
+  $("#detail .icon-left").on("click",function(){
+    $.showPreloader("正在跳转");
+    // window.location.href="/edit";
+    if(URL == "food"){
+      window.history.go(-1);
+    }else{
+      window.location.href="/food";
     }
   })
 
@@ -514,6 +591,18 @@
       }
     });
   }
+
+  //查看说明
+  $(".modal-in").on('click',function(){
+    $(".modal-overlay-visible").hide();
+    $(".modal-in").hide();
+  })
+
+  //个人中心提醒
+  $(".icon-tixing").on("click",function(){
+    $(".modal-overlay-visible").show();
+    $(".model-tip").show();
+  })
 
   //点击购买
   //购买逻辑

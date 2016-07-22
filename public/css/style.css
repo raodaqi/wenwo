@@ -1,7 +1,8 @@
-body,html {
+body,
+html {
     padding: 50px;
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-    font-family: PingFang-SC-Regular,sans-serif;
+    font-family: PingFang-SC-Regular, sans-serif;
     width: 100%;
     height: 100%;
 }
@@ -167,3 +168,44 @@ a {
 .liked {
     color: #F88827 !important;
 }
+
+
+/*提醒UI*/
+.tip-content {
+    position: absolute;
+    width: 94%;
+    left: 3%;
+    top: 50%;
+    border-width: 1px;
+    transform: translateY(-50%);
+    border-style: solid;
+    border-color: rgba(153, 153, 153, 1);
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 1);
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    text-align: left;
+    color: #666666;
+}
+
+.tip-content-title {
+    text-align: center;
+    padding: 15px 0 10px 0;
+}
+
+.tip-content-li {
+    padding: 5px 10px;
+    font-size: 14px;
+}
+
+.tip-content-get {
+    border-top: 1px solid #DFDFDF;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 20px;
+    color: #EE7E2E;
+    font-size: 16px;
+}
+
+/*****************************************************************/

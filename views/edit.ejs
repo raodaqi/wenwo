@@ -621,11 +621,16 @@
           </div>
           <div role="tabpanel" class="techTags panel-default techTags-panel" data-tech="">
             <div class="tag-ul">
+              <span class="type-item">海鲜</span>
+              <span class="type-item">川菜</span>
+              <span class="type-item">西餐</span>
+              <span class="type-item">小吃快餐</span>
+              <span class="type-item">甜点饮品</span>
               <span class="type-item">火锅</span>
-              <span class="type-item">羊肉泡馍</span>
-              <span class="type-item">绝味</span>
-              <span class="type-item">羊肉泡馍</span>
-              <span class="type-item">羊肉泡馍</span>
+              <span class="type-item">烧烤烤肉</span>
+              <span class="type-item">自助餐</span>
+              <span class="type-item">香锅烤鱼</span>
+              <span class="type-item">串串香</span>
             </div>
             
           </div>
@@ -1537,8 +1542,12 @@
     };  
 
 
+    var sendClick = 0;
     //提交所有信息
     $(".send-button-a").on("click",function(){
+        if(sendClick){
+          return;
+        }
         var tag = new Array(),//二级标签
             reason,//推荐理由
             content_show = {},//详情显示部分
@@ -1661,6 +1670,9 @@
         //发送请求 url：/ask/sendask
         
         $.showPreloader("正在分享");
+        //屏蔽多次点击
+        sendClick = 1;
+
         if(sendType == "edit"){
           data["ask_id"] = sendAskId;
            $.ajax({
@@ -1670,6 +1682,9 @@
             url : "/ask/askedit",
             success : function(result){
               console.log(result);
+              //释放多次点击
+              sendClick = 0;
+              
               if(result.code){
                 $.hidePreloader();
                 $.toast("分享成功");
@@ -1687,6 +1702,7 @@
 
                 $.router.load("#success");
               }else{
+                $.toast("分享失败");
                 $.hidePreloader();
                 $.toast(result.message);
               }
@@ -1705,9 +1721,12 @@
             url : "/ask/sendask",
             success : function(result){
               console.log(result);
+              //释放多次点击
+              sendClick = 0;
               if(result.code == 200){
                 $.hidePreloader();
-                $.toast("提交成功");
+                $.toast("分享成功");
+                
                 localStorage.clear();
                 var askId = result.data.objectId;
                 $.showPreloader("正在跳转");
@@ -1724,12 +1743,14 @@
 
                 $.router.load("#success");
               }else{
+                $.toast("分享失败");
                 $.hidePreloader();
                 $.toast(result.message);
               }
             },
             error: function(error){
               // alert(error);
+              sendClick = 0;
               $.hidePreloader();
               $.toast("服务器异常");
             }

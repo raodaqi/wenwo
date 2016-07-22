@@ -159,10 +159,14 @@
     .user-pic-content{
       display: block;
       position: absolute;
-      width: 3rem;
+      width: 4rem;
       left: 50%;
       transform: translateX(-50%);
       top: 1.5rem;
+      text-align: center;
+    }
+    .user-pic-content .user-pic{
+      margin-left: .5rem;
     }
     .user-pic{
       display: block;
@@ -178,6 +182,9 @@
       width: 100%;
       text-align: center;
       color: white;
+      white-space:nowrap;
+      overflow: hidden;
+      text-overflow:ellipsis;
       font-family:"webfont" !important;
     }
     .list-content{
@@ -289,40 +296,7 @@
       right:.5rem;
       top:1rem;
     }
-    /*提醒UI*/
-    .tip-content{
-      position: absolute;
-      width: 94%;
-      left: 3%;
-      top: 50%;
-      border-width: 1px;
-      transform: translateY(-50%);
-      border-style: solid;
-      border-color: rgba(153, 153, 153, 1);
-      border-radius: 8px;
-      background-color: rgba(255, 255, 255, 1); 
-      -moz-box-shadow: none;
-      -webkit-box-shadow: none;
-      box-shadow: none;
-      text-align: left;
-      color: #666666;
-    }
-    .tip-content-title{
-      text-align: center;
-      padding: 15px 0 10px 0;
-    }
-    .tip-content-li{
-      padding:5px 10px;
-      font-size: 14px;
-    }
-    .tip-content-get{
-      border-top: 1px solid #DFDFDF;
-      text-align: center;
-      padding:10px 0;
-      margin-top: 20px;
-      color: #EE7E2E;
-      font-size: 16px;
-    }
+
     .ask-price{
       position: absolute;
       right:10px;
@@ -416,7 +390,7 @@
       </div>
       <div class="infinite-scroll-preloader" >
         <div class="preloader"></div>
-        <div class="ask-end" style="display:none">哥，这回真的没了</div>
+        <div class="ask-end" style="display:none">启禀陛下，您已经到底了。</div>
       </div>
     </div>
   </div>
@@ -448,7 +422,7 @@
       </div>
       <div class="infinite-scroll-preloader" >
         <div class="preloader"></div>
-        <div class="ask-end" style="display:none">哥，这回真的没了</div>
+        <div class="ask-end" style="display:none">启禀陛下，您已经到底了。</div>
       </div>
     </div>
   </div>
@@ -482,7 +456,7 @@
       </div>
       <div class="infinite-scroll-preloader" >
         <div class="preloader"></div>
-        <div class="ask-end" style="display:none"></div>
+        <div class="ask-end" style="display:none">启禀陛下，您已经到底了。</div>
       </div>
     </div>
   </div>
@@ -516,7 +490,7 @@
       </div>
       <div class="infinite-scroll-preloader" >
         <div class="preloader"></div>
-        <div class="ask-end" style="display:none"></div>
+        <div class="ask-end" style="display:none">启禀陛下，您已经到底了。</div>
       </div>
     </div>
   </div>
@@ -747,6 +721,7 @@
       page         : page,
       size         : size,
       staus        : staus,
+      // position_geo : "104.065617,30.660431",
       username     : username
     }
     $.ajax({
@@ -1074,7 +1049,7 @@
     var askId = $(this).parent().attr("data-id");
     $.showPreloader("正在跳转");
     // $.router.load("/detail?askid="+askId);
-    window.location.href="/detail?askid="+askId;
+    window.location.href="/detail?askid="+askId+"#food";
   })
 
   $(".list-li-like-num").on("click",function(){
