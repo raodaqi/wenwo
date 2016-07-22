@@ -940,10 +940,12 @@
       var url = window.location.hash;
       if(!url.split("#")[1]){
         $.showPreloader("正在跳转");
-        $.router.back();
+        // $.router.back();
+        window.history.go(-1);
       }else{
         $.showPreloader("正在跳转");
-        $.router.load("/food");
+        // $.router.load("/food");
+        window.location.href="/food";
       }
     })
 
@@ -970,10 +972,10 @@
   var id = '';
   $("input,textarea").focus(function(){
     id = this.id;
+    $(".footer-bar").hide();
     if(this.id == "address" || this.id == "add-detail"){
       return;
     }
-    $(".footer-bar").hide();
     $(".header-bar").hide();
     $(".page-content").css("margin-top","1rem");
   });
@@ -988,7 +990,7 @@
     if($(document.body).height() < height){
       //输入框弹起
       $(".footer-bar").hide();
-      if(id != "address"){
+      if(id != "address" && id != "add-detail"){
         $(".header-bar").hide();
         $(".page-content").css("margin-top","1rem");
       }
@@ -1684,7 +1686,7 @@
               console.log(result);
               //释放多次点击
               sendClick = 0;
-              
+
               if(result.code){
                 $.hidePreloader();
                 $.toast("分享成功");
