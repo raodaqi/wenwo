@@ -77,6 +77,57 @@ function initLocation() {
     });
 }
 
+function onlyInitShare(){
+    var title = WX_SHARE_TITLE ? WX_SHARE_TITLE:'「问我」 让经验帮你赚钱';
+    var link = WX_SHARE_LINK ? WX_SHARE_LINK :'http://wenwo.leanapp.cn';//链接按代换
+    var imgUrl　=　WX_SHARE_IMGURL ? WX_SHARE_IMGURL: 'http://wenwo.leanapp.cn/img/logo.jpg';//链接按代换
+    var desc =　WX_SHARE_DESC ? WX_SHARE_DESC:'任何人都可以分享自己的经验赚钱，不信，你试试！';
+    
+    var data = {
+        url: location.href.split('#')[0]
+    }
+    $.ajax({
+        type: "POST",
+        data: data,
+        dataType: "json",
+        url: "/todos/test/wx",
+        success: function(result) {
+            $(".ui-loading-block").hide();
+            console.log(result);
+            console.log(desc);
+            wx.config({
+                debug: false,
+                appId: 'wx99f15635dd7d9e3c',
+                timestamp: result.timestamp,
+                nonceStr: result.nonceStr,
+                signature: result.signature,
+                jsApiList: [
+                    'onMenuShareTimeline',
+                    'onMenuShareAppMessage',
+                    'onMenuProfile',
+                    'onMenuAddContact',
+                    'hideMenuItems',
+                    'showMenuItems'
+                ]
+            });
+            wx.ready(function() {
+                var shareData = {
+                    title: title,
+                    desc:  desc,
+                    link:  link,
+                    imgUrl: imgUrl
+                };
+
+                wx.onMenuShareAppMessage(shareData);
+                wx.onMenuShareTimeline(shareData);
+            });
+        },
+        error: function(error) {
+            console.log(error);
+            $(".ui-loading-block").hide();
+        }
+    });
+}
 function initShare(){
     var title = WX_SHARE_TITLE ? WX_SHARE_TITLE:'「问我」 让经验帮你赚钱';
     var link = WX_SHARE_LINK ? WX_SHARE_LINK :'http://wenwo.leanapp.cn';//链接按代换

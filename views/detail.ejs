@@ -332,6 +332,8 @@
   // $.initPullToRefresh(".content");
 </script>
 <script>
+  //初始化分享
+  onlyInitShare();
   //页面加载执行
   // $(function(){
     console.log("<%=askid%>");
@@ -370,10 +372,10 @@
           $(".like-num").text(data.likeNum);
 
           //初始化分享
-          var data = result.data;
           WX_SHARE_LINK   = "http://wenwo.leanapp.cn/detail?askid="+data.objectId;
           WX_SHARE_IMGURL = data.createByUrl;
           WX_SHARE_TITLE  = data.askReason;
+          console.log(WX_SHARE_TITLE);
           var askTagStr = data.askTagStr;
           askTagStr = JSON.parse(askTagStr);
           tag = askTagStr[0].tag_name;
@@ -421,8 +423,6 @@
             
           }
           
-
-
           $(".price").text(data.askPrice);
           $(".pic-bg").attr("src",data.createByUrl);
           $(".detail-reason").text(data.askReason);
@@ -470,7 +470,7 @@
         console.log(error);
         $(".preloader-modal").hide();
         $("body").empty();
-        var error = '<div class="error-content content pull-to-refresh-content" data-ptr-distance="55"><div class="pull-to-refresh-layer"><div class="preloader"></div><div class="pull-to-refresh-arrow"></div></div><div class="card-container no-user">'+result.message+'</div></div>';
+        var error = '<div class="error-content content pull-to-refresh-content" data-ptr-distance="55"><div class="pull-to-refresh-layer"><div class="preloader"></div><div class="pull-to-refresh-arrow"></div></div><div class="card-container no-user">服务器出错</div></div>';
         $("body").append(error);
         // callback.error(error);
       },
