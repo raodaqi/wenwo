@@ -4,12 +4,12 @@
   <meta charset='utf-8'>
     <!-- <meta name='viewport', content='width=device-width, initial-scale=1.0'> -->
     <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
-    <meta name='description', content='wenwo,问我,当地人,旅游,攻略,信息,分享'>
+    <meta name='description', content='wenwo,问我,当地人,旅游,攻略,信息,分享,经验,赚钱，美食，成都，好吃'>
     <meta name='author', content='raodqi'>
-    <link rel="icon" type="image/x-icon" href="/img/logo.png" media="screen">
+    <link rel="icon" type="image/x-icon" href="/img/logo.jpg" media="screen">
     <title>问我-让经验帮你赚钱</title>
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1468552463_9741392.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1468915240_5629373.css">
     <link rel="stylesheet" href="/css/sm.min.css">
     <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=cb84c659c88a7cc83b935a009b3a9cfd&plugin=AMap.Geocoder"></script>
     <script src="/js/jweixin-1.0.0.js"></script>
@@ -280,12 +280,16 @@
     #add-detail::-webkit-input-placeholder{
       color: #AEAEAE;
     }
-    .icon-bianji{
+    .icon-bianji,.icon-tixing{
+      display: block;
       position: absolute;
       color: #EE7E2E;
       font-size: 1rem;
       bottom: 2.4rem;
       margin-left: 1.15rem;
+    }
+    .icon-tixing{
+      right: .7rem;
     }
     .tip{
       margin-top: .5rem;
@@ -510,6 +514,18 @@
       width: 0rem;
       height: 0rem;
     }
+    .iconfont {
+      font-family: "iconfont" !important;
+    }
+    .model-tip{
+      position: absolute;
+      top: 0;
+      left: 0;
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100%;
+      height: 100%;
+  }
   }
   </style>
   <body>
@@ -797,6 +813,7 @@
         <div class="add-search">
           <input type="text" class="search-input" id="address" name="address" placeholder="请标注美食所在的精确位置">
           <div class="ww_typeHelper-input-left iconfont icon-bianji"></div>
+          <span class="icon iconfont icon-tixing"></span>
         </div>
 
         <div class="add-detail">
@@ -807,6 +824,27 @@
 
       <div class="add-content">
         <div id="container"></div>
+      </div>
+
+      <div class="modal-overlay modal-overlay-visible" style="display:none;"></div>
+
+      <div class="modal modal-in model-tip" style="display: none; margin-top: -72px;">
+        <div class="tip-content">
+          <div class="tip-content-title">标注的正确姿势</div>
+          <div class="tip-content-li">
+            <div>1)&nbsp;&nbsp;&nbsp;通过输入框确定需要标注地点的大概位置，</div>
+          </div>
+          <div class="tip-content-li">
+            <div>2)&nbsp;&nbsp;&nbsp;将地图层级放大到最大级别（街道级别），再进行标注，</div>
+          </div>
+          <div class="tip-content-li">
+            <div>3)&nbsp;&nbsp;&nbsp;拖动地图中的红点到你认为正确的位置，可以根据周边的地标性建筑或者道路进行标注</div>
+          </div>
+          <div class="tip-content-li">
+            <div>4)&nbsp;&nbsp;&nbsp;标注成功后，点击确认。如果位置不正确，可以重新标注</div>
+          </div>
+          <div class="tip-content-get">朕知道了</div>
+        </div>
       </div>
 
       <footer class="footer-bar">
@@ -959,6 +997,25 @@
         $.router.load("#"+href);
       }
       
+    })
+
+    //地址标注说明取消
+    $("#router5 .modal-in").on('click',function(){
+      $("#router5 .modal-overlay-visible").hide();
+      $("#router5 .modal-in").hide();
+      // $("#success .modal-overlay-visible").hide();
+      // $("#success .modal-in").hide();
+    })
+
+    //地址标注说明
+    $("#router5 .icon-tixing").on("click",function(){
+      // $("#router5 .modal-overlay-visible").show();
+      // $("#router5 .model-tip").show();
+      $("#router5 .modal-overlay").addClass("modal-overlay-visible");
+      $("#router5 .modal-overlay").show();
+      $("#router5 .modal").removeClass("modal-out");
+      $("#router5 .modal").addClass("modal-in");
+      $("#router5 .model-tip").show();
     })
   </script>
   <script>
