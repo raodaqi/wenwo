@@ -1859,40 +1859,61 @@ router.post('/debase', function (req, res, next) {
     var content = req.body.content;
 
     var query = new AV.Query('Haved');
+    query.equalTo('userName', userName);
+    query.equalTo('askId', askId);
+    query.find().then(function (askList) {
+        if (askList == null || askList == '') {
+            var query = new AV.Query('AskMe');
+            query.get(askId).then(function (ask) {
 
-    query.equalTo("by", userName);
-    query.equalTo('type', '2');
-    query.include('ask');
-    query.find().then(function (havedList) {
+                var query = new AV.Query('Haved');
 
-        var havedListFlag = 0;
+                query.equalTo("by", userName);
+                query.equalTo('type', '2');
+                query.include('ask');
+                query.find().then(function (havedList) {
 
-        for (var i = 0; i < havedList.length; i++) {
+                    var havedListFlag = 0;
 
-            if (havedList[i].get('ask').id == askId) {
+                    for (var i = 0; i < havedList.length; i++) {
 
-                havedListFlag++;
+                        if (havedList[i].get('ask').id == askId) {
 
-            }
+                            havedListFlag++;
 
-        }
+                        }
 
-        if (havedListFlag != 0) {
+                    }
 
-            var debase = new Debase();
-            debase.set('userName', userName);
-            debase.set('askId', askId);
-            debase.set('content',content);
-            debase.save().then(function (debase) {
-                res.send({code:200,data:debase,message:'操作成功'});
+                    if (havedListFlag != 0) {
+
+                        var debase = new Debase();
+                        debase.set('userName', userName);
+                        debase.set('askId', askId);
+                        debase.set('content',content);
+                        debase.save().then(function (debase) {
+                            ask.set('score', ((parseInt(ask.get('score'))) - 5).toString());
+                            res.send({code:200,data:debase,message:'操作成功'});
+                        });
+
+
+                    } else {
+                        res.send({code:400,message:'尚未购买消息'});
+                    }
+
+                });
+
             });
 
-
         } else {
-            res.send({code:400,message:'尚未购买消息'});
-        }
+            res.send({code:400,message:'重复操作'});
 
+        }
     });
+
+
+
+
 
 });
 
