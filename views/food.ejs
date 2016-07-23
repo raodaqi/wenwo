@@ -376,6 +376,13 @@
       padding:.25rem 0;
       text-align: center;
     }
+    #find .find-content{
+      -webkit-transition: all ease 500ms;
+      transition: all ease 500ms;
+      -webkit-transform: translateY(0);
+      transform: translateY(0);
+      /*scrollop:0;*/
+    }
   </style>
 <body>
  <img src="/img/loading.png" alt="" class="hide-img">
@@ -632,6 +639,7 @@
 
 </body>
 <script type='text/javascript' src='/js/zepto.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='/js/extend.js' charset='utf-8'></script>
 <script type='text/javascript' src='/js/sm.min.js' charset='utf-8'></script>
 <script type='text/javascript' src='/js/common.js' charset='utf-8'></script>
 <script type='text/javascript' src='/js/wxlocation.js' charset='utf-8'></script>
@@ -746,6 +754,24 @@
       },
     })
   }
+
+  var timer = '';
+  //双击头部返回头部
+  $(".bar").on("doubleTap",function(){
+   
+    timer = setInterval(function(){
+      var height =  $("#find .find-content").scrollTop();
+      if(height <= 0){
+        $("#find .find-content").scrollTop(0);
+        clearInterval(timer);
+      }else{
+        height = height - 10;
+        $("#find .find-content").scrollTop(height);
+        console.log(height);
+      }
+    }, 1);
+
+  })
 
   //获取用户想吃列表
   //获取美食信息
