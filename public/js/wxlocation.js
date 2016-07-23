@@ -1,4 +1,4 @@
-function initLocation() {
+function initLocation(callback) {
     var title = WX_SHARE_TITLE ? WX_SHARE_TITLE:'「问我」 让经验帮你赚钱';
     var link = WX_SHARE_LINK ? WX_SHARE_LINK :'http://wenwo.leanapp.cn';//链接按代换
     var imgUrl　=　WX_SHARE_IMGURL ? WX_SHARE_IMGURL: 'http://wenwo.leanapp.cn/img/logo.jpg';//链接按代换
@@ -63,8 +63,14 @@ function initLocation() {
                         map.setZoomAndCenter(14, [longitude, latitude]);
                         $("#container").attr("data-longitude", longitude);
                         $("#container").attr("data-latitude", latitude);
+                        if(callback){
+                            callback.success(longitude,latitude);
+                        }
                     },
                     error: function(error) {
+                        if(callback){
+                            callback.error(error);
+                        }
                         console.log(error);
                     }
                 });

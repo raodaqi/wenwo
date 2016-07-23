@@ -653,6 +653,13 @@
   })
 
   //点击地址跳转地图
+  $(".detail-address").on("click",function(){
+    var lat = $(this).attr("data-geox");
+    var lng = $(this).attr("data-geoy");
+    if(lat && lng){
+      window.location.href="/map?lat="+lat+"&lng="+lng;
+    }
+  })
 
   // $(".edit").on("click",function(){
   //   $.router.load("/todos/send/test?username=573c1eb271cfe4006c18274f");
