@@ -147,7 +147,9 @@
     .edit-detail-li-title {
       background: url("/img/edit/detail-li.png") no-repeat;
       min-width: 40px;
-      padding: 0 8px;
+      padding: 0 13px 0 8px;
+      /*padding-right: 7%;*/
+      /*padding:0 7% 0 4%;*/
       height: 20px;
       background-size: 100% 20px;
       text-align: center;
@@ -155,7 +157,7 @@
     }
     .edit-detail-li-input {
       min-height: 21px;
-      margin-left: 60px;
+      margin-left: 4rem;
     }
     .edit-detail-li {
       min-height: 20px;
@@ -195,7 +197,7 @@
       color:#CFCFCF;
       margin-top: -1.8rem;
     }
-    .model-tip{
+    .modal-tip,.modal-dislike,.modal-dislike-send{
       position: absolute;
       top: 0;
       left: 0;
@@ -212,6 +214,97 @@
     z-index: 2;
     bottom:-2rem;
     right: .8rem;
+  }
+  .dislike-content{
+    display: none;
+    height: 1.5rem;
+    margin-top: 1rem;
+  }
+  .dislike-img{
+    display: block;
+    position: absolute;
+    right: 3rem;
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+  .dislike-text{
+    position: absolute;
+    right: .7rem;
+    width: 2rem;
+    color: white;
+    text-align: center;
+    font-size: .7rem;
+    border-radius: .5rem;
+    background-color: #999;
+    padding:.05rem 0.1rem;
+  }
+  .dialog-dislike-content,.dialog-dislike-send-content{
+    position: absolute;
+    border-radius:.4rem;
+    width: 98%;
+    left:1%;
+    height: 5.03rem;
+    top:2rem;
+    background-color: white;
+  }
+  .dialog-dislike-content .left,.dialog-dislike-send-content .left{
+    float: left;
+    width: 43%;
+    height: 100%;
+  }
+  .dialog-dislike-content .right,.dialog-dislike-send-content .right{
+    float: left;
+    width: 55%;
+    height: 100%;
+  }
+  .dialog-dislike-send-content .left{
+    width: 20%;
+  }
+  .dialog-dislike-send-content .right{
+    width: 70%;
+    height: 2rem;
+    padding-left: .5rem;
+    font-size: .65rem;
+    margin-top: 1.5rem;
+  }
+  .dialog-dislike-content .right input{
+    background: inherit;
+    background-color: rgba(255, 255, 255, 0);
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(153, 153, 153, 1);
+    box-shadow: none;
+    height: 1.5rem;
+    border-radius: .3rem;
+    width: 100%;
+    padding-left:.2rem;
+    margin-top: .5rem;
+    font-size: .7rem;
+  }
+  .dialog-dislike-content .right .send{
+    position: absolute;
+    bottom: -1.7rem;
+    right: 1rem;
+    color: white;
+    font-size: .8rem;
+  }
+  .dislike-right-li{
+    text-align: left;
+    margin-top: .2rem;
+    font-size: .6rem;
+    color: #999999;
+  }
+  .dislike-left{
+    display: block;
+    /*float: left;*/
+    margin:0.2rem 0.5rem;
+    width: 4.3rem;
+    height: 4.6rem;
+  }
+  .dislike-send{
+    width: 3.4rem;
+    height: 3.4rem;
+    margin:.5rem .5rem;
   }
   </style>
 <body>
@@ -293,12 +386,17 @@
               </div>
             </div>
           </div>
+
+          <div class="dislike-content">
+            <img src="/img/dislike.png" alt="" class="dislike-img">
+            <div class="dislike-text">吐槽</div> 
+          </div>
         </div>
       </div>
     </div>
     <div class="modal-overlay modal-overlay-visible" style="display:none;"></div>
 
-      <div class="modal modal-in model-tip" style="display: none; margin-top: -72px;">
+      <div class="modal modal-in modal-tip" style="display: none; margin-top: -72px;">
         <div class="tip-content">
           <div class="tip-content-title">查看说明</div>
           <div class="tip-content-li">
@@ -311,6 +409,32 @@
             <div>3)&nbsp;&nbsp;&nbsp;快来分享你的经验，迎娶白富美，走向人生巅峰吧！</div>
           </div>
           <div class="tip-content-get">朕知道了</div>
+        </div>
+      </div>
+
+      <div class="modal modal-in modal-dislike">
+        <div class="dialog-dislike-content">
+        <div class="left">
+          <img src="/img/dislike-title.jpg" alt="" class="dislike-left">
+        </div>
+        <div class="right">
+          <input type="text" placeholder="吐槽是为了让我变得更好" name="" class="dislikeText">
+          <div class="dislike-right-li">☇ 骗子，一点儿都不好吃。</div>
+          <!-- <div class="dislike-right-li">☇ 不喜欢这个调调（口味）。</div> -->
+          <div class="dislike-right-li">☇ 敢不敢把地点标注准确一点。</div>
+          <!-- <div class="dislike-right-li">☇ 说的好像是真的一样……哥哥or姐姐，你是多久没去过这家店啦。</div> -->
+          <div class="send">发送</div>
+        </div>
+        </div>
+      </div>
+      <div class="modal modal-in modal-dislike-send">
+        <div class="dialog-dislike-send-content">
+        <div class="left">
+          <img src="/img/dislike-send.png" alt="" class="dislike-send">
+        </div>
+        <div class="right">
+          已收到陛下的吐槽<br/>小问会及时告知分享者滴!
+        </div>
         </div>
       </div>
   <% }else{ %>
@@ -422,6 +546,7 @@
             $(".buy").text("朕已查阅");
             $(".buy").attr("data-buy","1");
             $(".buyed-img").show();
+            $(".dislike-content").show();
           }
 
           if(result.show.havedFlag || result.show.isOwnFlag){
@@ -613,16 +738,85 @@
     });
   }
 
+  var dislike = 0;
+  $(".right").on("click",function(){
+    // return;
+    dislike = 1;
+  });
   //查看说明
   $(".modal-in").on('click',function(){
-    $(".modal-overlay-visible").hide();
-    $(".modal-in").hide();
+    if(dislike){
+      
+    }else{
+      $(".modal-overlay-visible").hide();
+      $(".modal-in").hide();
+      $(".modal-dislike").hide();
+    }
+    dislike = 0;
   })
 
   //查看说明
   $(".icon-tixing").on("click",function(){
     $(".modal-overlay-visible").show();
-    $(".model-tip").show();
+    $(".modal-tip").show();
+  })
+
+  // //吐槽关闭
+  // $(".modal-in").on('click',function(){
+  //   $(".modal-overlay-visible").hide();
+  //   $(".modal-dislike").hide();
+  // })
+
+  //吐槽
+  $(".dislike-img,.dislike-text").on("click",function(){
+    $(".modal-overlay-visible").show();
+    $(".modal-dislike").show();
+  })
+
+  $(".dislike-right-li").on("click",function(){
+    var text = $(this).text();
+    $(".dislikeText").val(text);
+  })
+
+  //发布吐槽信息
+  $(".dialog-dislike-content .send").on("click",function(){
+    var dislikeText = $(".dislikeText").val();
+    if(!dislikeText){
+      $.toast("你没有吐槽任何信息");
+      return;
+    }
+    var data = {
+      username  : UserName,
+      ask_id    : AskId,
+      content   : dislikeText
+    }
+    $.showPreloader("正在吐槽");
+    $.ajax({
+      type : "POST",
+      data: data,
+      dataType: "json",
+      url : "/ask/debase",
+      success: function(result){
+        $.hidePreloader();
+        console.log(result);
+        if(result.code == 200){
+          $.toast("吐槽成功");
+          $(".modal-dislike").hide();
+          $(".modal-overlay-visible").show();
+          $(".modal-dislike-send").show();
+          console.log(result);
+        }else{
+          // callback.error(result);
+          $.toast("吐槽失败");
+          console.log(result);
+        }
+      },
+      error:function(error){
+        $.hidePreloader();
+        // callback.error(error);
+        console.log(result);
+      }
+    });
   })
 
   //点击购买
@@ -630,7 +824,7 @@
   $(".buy").on("click",function(){
     var buyed = $(".buy").attr("data-buy");
 
-    if($(this).text() == "朕已查阅" && buyed){
+    if(($(this).text() == "朕已查阅" || $(this).text() == "朕分享的") && buyed){
       return;
     }
     var data = {

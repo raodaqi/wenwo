@@ -525,7 +525,11 @@
       padding: 0 !important;
       width: 100%;
       height: 100%;
-  }
+    }
+    .small-font{
+      font-size: .65rem;
+    }
+
   }
   </style>
   <body>
@@ -578,7 +582,7 @@
               <img src="/img/edit/name-01.png" class="edit-li-img">
 
               <div class="li-title">
-                店名
+              店名<label class="red small-font"> (用户购买后才显示)</label>
               </div>
               <div class="edit-content">
                 请填写店名
@@ -589,7 +593,7 @@
               <img src="/img/edit/address-01.png" class="edit-li-img">
 
               <div class="li-title">
-                地址
+                地址<label class="red small-font"> (用户购买后才显示)</label>
               </div>
               <div class="edit-content">
                 请填写美食地址并在地图上标注
@@ -684,7 +688,7 @@
 
       <div class="page-content">
         <div class="reason-content li-content">
-          <div class="reason-title content-title">给一个让大家相信你的理由吧：</div>
+        <div class="reason-title content-title">给一个让大家相信你的<label class="red">理由</label>吧：</div>
           <div class="recommend-reason">
             <textarea name="reason" id="reason" placeholder=""></textarea>
           </div>
@@ -725,7 +729,7 @@
       </header>
       <div class="page-content">
         <div class="detail-content li-content">
-          <div class="detail-title content-title">请告诉我们一些详细信息：</div>
+          <div class="detail-title content-title">请告诉我们一些<label class="red">详细信息</label>：</div>
           <div class="recommend-detail">
             <textarea name="detail" id="detail" placeholder="详细的介绍可能提高大家的付费意愿，比如美食的人均消费、环境、口味等，但千万别暴露了店名和地址，你懂得！"></textarea>
           </div>
@@ -778,7 +782,7 @@
 
       <div class="page-content">
         <div class="name-content li-content">
-          <div class="name-title content-title">请输入这家店的名字：</div>
+          <div class="name-title content-title">请输入这家<label class="red">店</label>的名字：</div>
           <div class="recommend-name">
             <input type="text" name="name" id="name" placeholder="这很重要，别写错啦">
           </div>
@@ -817,7 +821,7 @@
         </div>
 
         <div class="add-detail">
-          <div class="add-detail-text">地址附注：</div>
+          <div class="add-detail-text"><label class="red">地址附注：</label></div>
           <input type="text" class="add-detail-input" id="add-detail" name="adetail" placeholder="可详细描述美食的具体位置">
         </div>
       </header>
@@ -876,7 +880,7 @@
 
       <div class="page-content">
         <div class="price-content li-content">
-          <div class="price-title content-title">请填写这条信息的查看价格吧：</div>
+          <div class="price-title content-title">请填写这条信息的<label class="red">查看价格</label>吧：</div>
           <div class="recommend-price">
             <input type="number" name="price" id="price" placeholder="价格设置范围是0.0-5.0元">
           </div>
