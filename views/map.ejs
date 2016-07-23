@@ -1,0 +1,3235 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+  <meta charset='utf-8'>
+    <!-- <meta name='viewport', content='width=device-width, initial-scale=1.0'> -->
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name='description', content='wenwo,问我,当地人,旅游,攻略,信息,分享'>
+    <meta name='author', content='raodqi'>
+    <link rel="icon" type="image/x-icon" href="/img/logo.png" media="screen">
+    <title>问我——像个当地人一样去旅游</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- <link rel="stylesheet" href="http://at.alicdn.com/t/font_1462625195_2335773.css"> -->
+    <!-- <link rel="stylesheet" href="http://at.alicdn.com/t/font_1462279764_1285422.css"> -->
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1462821367_1895313.css">
+    <link rel="stylesheet" href="/css/sm.min.css">
+
+    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=cb84c659c88a7cc83b935a009b3a9cfd&plugin=AMap.Geocoder"></script>
+    <script src="/js/jweixin-1.0.0.js"></script>
+
+    <!--<script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script> -->
+  </head>
+  <style>
+    body{
+      position: absolute;
+      left: 0;
+      right: 0 !important;
+      padding:0;
+      margin:0;
+      width: 100%;
+      overflow: hidden;
+    }
+    body,html,#container{
+        height: 100%;
+        margin: 0px
+      }
+    /*.left-content,.right-content{*/
+    .left-content{
+      position: absolute;
+      z-index: 10500;
+      /*background: rgba(239, 197, 83,0.9);*/
+      background: #E7BF55 url("/img/sideBG-01.png") no-repeat;
+      background-size: 100%;
+      width: 80%;
+      height: 100%;
+      /*left: -50%;*/
+      /*border-right: 1px solid #FFC222;*/
+      -webkit-transition: all ease 500ms;
+      transition: all ease 500ms;
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+    }
+    .panel-wenwo{
+      background: #E7BF55 url("/img/sideBG-01.png") no-repeat;
+      background-size: 100%;
+    }
+    .left-content{
+      left: -80%;
+    }
+    .slide-content.active{
+      position: absolute;
+      z-index: 10500;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0,0.2);
+    }
+    .slide-content.active .right-content{
+      position: absolute;
+      height: 100%;
+      z-index: 10500;
+      width: 20%;
+      right:0;
+    }
+    .slide-content .user-info,#slide .user-info{
+      margin:20px auto;
+      text-align: center;
+    }
+    .slide-content .user-info .user-photo,#slide .user-info .user-photo{
+      display: block;
+      margin: 0 auto;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      /*border:1px solid gray;*/
+      border: 2px solid #EFC553;
+      background-size: cover;
+    }
+    .slide-content .user-info .user-name,#slide .user-info .user-name{
+      display: block;
+      margin: 5px auto;
+      font-weight: bold;
+    }
+    .slide-content .list-content,#slide .list-content{
+      position: absolute;
+      width: 100%;
+      top:34%;
+      color: white !important;
+    }
+    .slide-content .list-content .list-ul,#slide .list-content .list-ul{
+      padding-left: 10%;
+    }
+    .slide-content .list-content .list-li,#slide .list-content .list-li{
+      height: 35px;
+      margin:5px 0 0 0px;
+    }
+    .slide-content .list-content .list-li span,#slide .list-content .list-li span{
+       display: block;
+      float: left;
+    }
+    .slide-content .list-content .list-li label,#slide .list-content .list-li label{
+      display: block;
+      float: left;
+      height: 35px;
+      margin-left: 15px;
+      line-height: 35px;
+    }
+    .slide-content .list-content .list-li .iconfont,#slide .list-content .list-li .iconfont{
+      color: white;
+    }
+    .right-content{
+      /*right: -50%;
+      border:0;
+      border-left: 1px solid #FFC222;*/
+    }
+    .more,.cancel{
+      position: absolute;
+      top: 20px;
+      right: -50px;
+      width: 50px;
+      height: 40px;
+      border-top:1px solid #FFC222;
+      border-bottom:1px solid #FFC222;
+      border-right:1px solid #FFC222;
+      border-left:1px solid #FFF;
+      background: rgba(255,255,255,0.8);  
+      border-top-right-radius:40px;
+      border-bottom-right-radius:40px; 
+    }
+    .cancel{
+      line-height: 40px !important;
+    }
+    .suosuo{
+      font-size: 23px !important;
+      position: absolute;
+      top: 20px;
+      left: -50px;
+      width: 50px;
+      height: 40px;
+      border-top:1px solid #FFC222;
+      border-bottom:1px solid #FFC222;
+      border-left:1px solid #FFC222;
+      border-right:1px solid #FFF;
+      background: rgba(255,255,255,0.8);  
+      border-top-left-radius:40px;
+      border-bottom-left-radius:40px; 
+    }
+    .iconfont{
+        font-size: 20px;
+        color: #393e49;
+        text-align: center;
+        line-height: 40px;
+    }
+    .left-content .icon-x{
+        font-size: 24px;
+    }
+    .amap-touch-toolbar .amap-zoomcontrol{
+      position: fixed;
+      bottom:25px;
+      /*transform: translateY(50%);*/
+      right:10px;
+    }
+    .footer-label{
+      position: absolute;
+      z-index: 10000;
+      height: 5px;
+      bottom:0px;
+      width: 100%;
+      background-color: #efc553;
+    }
+    .bar{
+      position: absolute;
+      z-index: 10000;
+      height: 40px;
+      width: 100%;
+      background-color: #efc553;
+      top: 0;
+    }
+    /*.header-more{
+      font-size: 15px;
+      color: #393e49;
+      float:left;
+      line-height: 30px;
+      margin-left: 10px;
+    }*/
+    .header-theme{
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background-color: #efc553;
+      left: 50%;
+      margin-left: -25px;
+      text-align: center;
+    }
+    .header-sousuo{
+      font-size: 20px;
+      color: #393e49;
+      float:right;
+      line-height: 40px;
+      margin-right: 10px;
+    }
+    .add{
+      position: absolute;
+      width: 40px;
+      height: 60px;
+      /*right: 20px;*/
+      /*bottom:30px;*/
+      bottom:5px;
+      left: 50%;
+      margin-left: -20px;
+      z-index: 10401;
+      -webkit-transition: all ease 200ms;
+      transition: all ease 200ms;
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+    }
+    .add-img{
+      position: absolute;
+      width: 50px;
+      bottom: 0;
+
+    }
+    .icon-tianjia{
+      font-size: 30px;
+      line-height: 55px;
+    }
+    .popup-about{
+      background: rgba(100,100,100,0.8);
+    }
+    .theme-list{
+      text-align: center;
+      color: white;
+      width: 70px;
+    }
+    .theme-list label{
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .img-list{
+      display: block;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background-size: cover;
+    }
+    /*.search-content{
+      position: absolute;
+      top:20px;
+      height: 40px;
+    }
+    .searchbar .searchbar-cancel{
+      height: 40px;
+      line-height: 45px;
+      color: gray
+    }
+    .searchbar{
+      padding: 0;
+      line-height: 40px;
+    }
+    #search{
+      height: 40px;
+      border:1px solid #FFC222;
+      border-left: 0;
+      border-radius: 0;
+    }*/
+    .amap-sug-result{
+      /*left:50% !important;*/
+      position: absolute;
+      z-index: 10500;
+      top: 70px !important;
+      border:0 !important;
+    }
+    #container .amap-icon{
+      width: 40px !important;
+      height: 40px !important;
+      border-radius: 50%;
+      top: 5px;
+      left: 5px;
+      /*border-image:url("/img/blue.png");
+      border-image-slice: 10;
+      border-image-width:10px;
+      border-image-repeat:rounded;*/
+      
+    }
+    #container .amap-icon img{
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+    }
+    .amap-active{
+      margin-left: -100px;
+      background: #efc553;
+      width: 200px;
+      height: 50px;
+      border-radius: 50px;
+      z-index: 200 !important;
+      transform-origin:22px 22px;
+      /*-webkit-transform:rotate(90deg);*/
+       -webkit-transition: all ease 200ms;
+      transition: all ease 200ms;
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+    }
+    .amap-active-content{
+
+    }
+    .amap-active .amap-marker-list-content{
+      position: absolute;
+      padding-left: 50px;
+      color: #393e49;
+      font-size: 12px;
+    }
+    .amap-active .amap-marker-list-content{
+      display: block !important;
+    }
+    .amap-marker-list-content .up,.amap-marker-list-content .down{
+      height: 25px;
+      line-height: 25px;
+      width: 100%;
+      box-sizing: border-box;
+      width: 130px;
+      overflow-x:hidden !important;
+      white-space: nowrap;
+      text-overflow: ellipsis; 
+      font-size: 10px;
+    }
+    .amap-marker-list-content .up{
+      width: 90px;
+    }
+    .up-price-right{
+      position: absolute;
+      top: 0;
+      font-size: 10px;
+      right: -10px;
+      /*right:-150px;*/
+      /*color: white;*/
+    }
+    .modal-overlay, .popup-overlay, .preloader-indicator-overlay{
+      height: initial;
+    }
+    /*一半的效果*/
+    /*.ask-detail{
+      top:60%;
+      height: 40%;
+      z-index: 10402;
+      top: 50%;
+      height: 50%;
+      box-sizing: border-box;
+      margin-top: 19px;
+      background-color: #efc553;
+      padding-bottom: 30px;
+      padding-top: 10px;
+    }*/
+    .ask-detail{
+      height: 40%;
+      z-index: 10402;
+      height: 100%;
+      box-sizing: border-box;
+      background-color: #efc553;
+      padding-bottom: 50px;
+      padding-top: 10px;
+    }
+
+    .card-cover{
+      height:300px;
+    }
+    .container-hidden{
+      position: absolute;
+      z-index: 100;
+      height: 100%;
+      width: 100%;
+      top: 0px;
+      left: 0px;
+    }
+    .hidden-text {
+      color: red;
+    }
+    .theme-li{
+      width: 40px;
+      height: 40px;
+      font-size: 30px;
+      text-align: center;
+      border-radius: 50%;
+      background: #efc553;
+      top:20px;
+      left:10px;
+      /*background-size: cover;*/
+      position: absolute;
+      -webkit-transition: all ease 500ms;
+      transition: all ease 500ms;
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+    }
+    .theme-li img{
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      margin-top: 5px;
+      /*padding:10px;*/
+    }
+    .icon-left,.bar .button-link{
+      font-size: 15px;
+      color: #393e49;
+      text-align: center;
+      line-height: 40px;
+    }
+
+    .bar-nav~.content{
+      top:2rem;
+    }
+    .searchbar{
+      padding: 5px;
+    }
+    .search-input .iconfont,.hot-li .iconfont {
+      position: absolute;
+      font-size: .9rem;
+      color: #b4b4b4;
+      top: 40%;
+      left: .3rem;
+      -webkit-transform: translate3D(0,-50%,0);
+      transform: translate3D(0,-50%,0);
+    }
+    .hot-content{
+      position: absolute;
+      margin-top: 30px;
+      width: 100%;
+    }
+    .hot-li{
+      position: relative;
+      height: 40px;
+      width: 100%;
+      margin-bottom: 20px;
+      /*position: relative;*/
+    }
+    .hot-detail{
+      font-size: 10px;
+      padding-left: 1.8rem;
+    }
+    .hot-detail .big{
+      font-size: 13px;
+      font-weight: bold;
+    }
+    .hot-detail .small{
+      color:gray;
+    }
+    .page{
+      background-color: white;
+    }
+    #search{
+      background-color: #efefef;
+    }
+    .address-content{
+      position: absolute;
+      top:50px;
+      right:0;
+      width: 58px;
+      z-index: 10000;
+    }
+    .theme-show{
+      position: absolute;
+      top:50px;
+      left:15px;
+      width: 55px;
+      height: 25px;
+      font-size: 13px;
+      /*font-weight: bold;*/
+      background-color: #efc553;
+      text-align: center;
+      z-index: 10000;
+      line-height: 25px;
+      border-radius: 20px;
+    }
+    .address-info{
+      position: absolute;
+      top: 0;
+      height: 30px;
+      color: 
+    }
+    .address-icon{
+      position: absolute;
+      font-size: 15px;
+      left: 4px;
+      top: -4px;
+    }
+    .address-text{
+      position: absolute;
+      font-size: 12px;
+      line-height: 30px;
+      left:19px;
+      width:40px;
+      overflow-x:hidden !important;
+      white-space: nowrap;
+      text-overflow: ellipsis; 
+    }
+    .geolocation-position img{
+      /*width: 40px;*/
+      width: 2rem;
+    }
+    .card-header{
+      min-height:2rem;
+      font-weight: bold;
+      border-bottom: 1px solid #BBA05F;
+      padding:0rem .75rem;
+    }
+    .content-block{
+
+    }
+
+    /*重置缩放样式*/
+    .amap-zoom-touch-minus, .amap-zoom-touch-plus{
+      height: 35px;
+    }
+    .amap-zoom-touch-minus>div, .amap-zoom-touch-plus>div{
+      line-height: 35px;
+    }
+    .amap-touch-toolbar .amap-zoomcontrol:after{
+      top:40px;
+    }
+    .up{
+      margin-top: 3px;
+    }
+    .up .type-item{
+      padding:0px 4px;
+      font-size: 10px;
+    }
+
+    .card{
+      background-color: #f5d78c;
+    }
+    .card-header{
+      min-height:2rem;
+      font-weight: bold;
+      border-bottom: 1px solid #BBA05F;
+      padding:0rem .75rem;
+    }
+    .bar .button-link{
+      color:#393e49;
+    }
+    .bar-footer-nav{
+      bottom:0;
+    }
+    #theme1,#theme3,#theme5{
+      border-right: 0;
+    }
+    #theme1,#theme2,#theme3,#theme4{
+      border-bottom: 0;
+    }
+    .theme-li{
+      border:0;
+    }
+    .list-block .item-link .item-inner{
+      background-image: none;
+      display: block;
+      margin-left: 1.25rem;
+      overflow-x:hidden !important;
+      white-space: nowrap;
+      line-height: 29px;
+      text-overflow: ellipsis;
+    }
+    .item-left{
+      position: absolute;
+      margin-top: -2px;
+    }
+    .item-left .iconfont{
+      font-size: 20px;
+    }
+    .item-right{
+      position: absolute;
+      right:10px;
+    }
+    .list-block{
+      background-color: #F3D27B;
+    }
+    .send-button-a{
+      position: absolute;
+      right: 5px;
+    }
+    .autor-img{
+      display: block;
+      float: left;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+    .autor-content{
+      margin: .5rem;
+      position: relative;
+      border-radius: .1rem;
+      font-size: .7rem;
+      height: 2.5rem;
+    }
+    .autor-text{
+      float: left;
+      margin-left: 10px;
+    }
+    .autor-list-content{
+      font-weight: bold;
+      width: 190px;
+      overflow-x:hidden !important;
+      white-space: nowrap;
+      line-height: 29px;
+      text-overflow: ellipsis;
+    }
+    .autor-time{
+      font-size: 10px;
+      color:#8E8E8E;
+    }
+    .wenwo-get{
+      width: 60%;
+      margin: 0 auto;
+      height: 40px;
+      line-height: 40px;
+      background-color: #e8a621; 
+      border: 1px solid #e8a621;
+      color: #000;
+    }
+    .votebar{
+      position: absolute;
+      right: 20px;
+      text-align: center;
+      /*display: none;*/
+      z-index: 200;
+      /*top: 10px;*/
+    }
+    .votebar-like,.votebar-hate{
+      height: 20px;
+      line-height: 20px;
+      font-size: 20px;
+      margin:5px;
+      color: white;
+    }
+    .votebar .iconfont.liked{
+      color: #529AF9;
+      font-size: 23px;
+    }
+    .voteNum{
+      font-size: 10px;
+      line-height: 10px;
+    }
+    .ask-get{
+      position: absolute;
+      top:44px;
+      left: 60%;
+      font-size: 35px;
+      color: red;
+      z-index: 300;
+    }
+    .ask-get{
+      background:url(/img/common/buyed.png);
+      background-size: cover;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+    }
+    .ask-get,#address-content{
+      display: none;
+    }
+    /*.amap-marker-content{
+      width: 50px;
+      height: 50px;
+      text-align: center;
+      line-height: 50px;
+      background-color: #efc553;
+      border-radius: 50%;
+    }*/
+    .amap-marker-content div{
+      border-radius: 50%;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      color: black !important;
+      font-size: 20px !important;
+      font-weight: bold; 
+    }
+    .marker-num{
+      position: absolute;
+      bottom:0;
+      right: 0;
+      width: 10px;
+      height: 10px;
+      color: white;
+      background-color: #efc553;
+      border-radius: 50%;
+    }
+    /*.themes0{
+      transform:translate(-70px,20px);
+    }
+    .themes1{
+      transform:translate(-50px,50px);
+    }
+    .themes2{
+      transform:translate(-20px,70px);
+    }
+    .themes3{
+      transform:translate(20px,70px);
+    }
+    .themes4{
+      transform:translate(50px,50px);
+    }
+    .themes5{
+      transform:translate(70px,20px);
+    }*/
+  }
+  .bar .icon{
+    line-height: 2rem;
+  }
+  .theme-text{
+    position: absolute;
+    z-index: 1000;
+    width: 60px;
+    text-align: center;
+  }
+  .show-num{
+    position: absolute;
+    bottom: -3px;
+    right: 0px;
+    height: 20px !important;
+    width: 20px !important;
+    line-height: 20px;
+    font-size: 14px !important;
+    background-color: #efc553;
+    color: white !important;
+  }
+  .no-user{
+    margin-top: 40px;
+    text-align: center;
+    color: #A7A7A7;
+  }
+
+  .marker-content .item-media img {
+    width: 45px;
+    height: 45px;
+    background-size: cover;
+    border-radius: 50%;
+  }
+  .marker-content .list-block{
+    margin: 0;
+    margin-bottom: 50px;
+  }
+  .marker-content .item-subtitle{
+    overflow-x: hidden !important;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .marker-content .item-right{
+    position: absolute;
+    top:15px;
+    right: 5px;
+    font-size: 12px;
+    color: black;
+  }
+  .marker-content .up-price-right{
+    color: #efc553;
+    top:10px;
+    right: 20px;
+  }
+  .marker-content{
+    z-index: 10402;
+  }
+  .bar-tab{
+    position: absolute;
+    z-index: 20000;
+    height: 40px;
+    width: 100%;
+  }
+  .card-content-inner{
+    word-break: break-all;
+  }
+  #slide .content-block{
+    margin:0;
+    padding:0;
+  }
+  .bar-tab{
+    position: absolute;
+    background-color:#efc553; 
+    bottom:0;
+  }
+  /*#ask-detail-cancel{
+    display: block !important;
+  }*/
+  #address-content .iconfont,#price-content .iconfont{
+    line-height:30px;
+  }
+  .amap-scale-line div{
+    border: 0;
+  }
+
+  </style>
+  <body>
+  
+   <!-- <div class="preloader-modal">
+    <div class="modal-content">
+      <div class="modal-inner">
+        <i class="ui-loading-bright"></i>
+        <div class="modal-title">加载中</div>
+      </div>
+    </div>
+  </div> -->
+
+  <div class="page page-current" id='router'>
+    <div class="slide-content">
+      <div class="left-content">
+        <div class="user-info">
+          <img class="user-photo" src="/img/test.jpg" alt="">
+          <label class="user-name">范范</label>
+        </div>
+        <div class="list-content">
+          <div class="list-ul">
+            <div class="list-li" data-href="/more/moneyBox">
+              <span class="iconfont icon-qianbao"></span>
+              <label>我的钱包</label>
+            </div>
+            <div class="list-li" data-href="/more/order">
+              <span class="iconfont icon-gouwuche"></span>
+              <label>我的订单</label>
+            </div>
+            <div class="list-li" data-href="/more/share">
+              <span class="iconfont icon-paper-airplane"></span>
+              <label>我的分享</label>
+            </div>
+            <div class="list-li" data-href="/more/invite"> 
+              <span class="iconfont icon-jiahaoyou"></span>
+              <label>邀请好友</label>
+            </div>
+            <div class="list-li" data-href="/more/watch-us">
+              <span class="iconfont icon-guanzhu"></span>
+              <label>关注我们</label>
+            </div>
+            <div class="list-li" data-href="/more/contact-us">
+              <span class="iconfont icon-dianhua"></span>
+              <label>意见反馈</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="right-content">
+      </div>
+    </div>
+
+    <div class="header-label">
+      <div class="header-more iconfont icon-more"></div>
+      <div class="header-theme">
+        <!-- <div class="theme-text">游玩</div> -->
+
+        <div class="themes0 theme-li" data-type="1">
+          <img src="/img/themes-02.png">
+        </div>
+        <div class="themes1 theme-li" data-type="2">
+          <img src="/img/themes-03.png">
+        </div>
+        <div class="themes2 theme-li" data-type="3">
+          <img src="/img/themes-04.png">
+        </div>
+        <div class="themes3 theme-li" data-type="4">
+          <img src="/img/themes-05.png">
+        </div>
+        <div class="themes4 theme-li" data-type="5">
+          <img src="/img/themes-06.png">
+        </div>
+        <div class="themes5 theme-li" data-type="6">
+          <img src="/img/themes-07.png">
+        </div>
+        <div class="themes6 theme-li" data-type="0">
+          <img src="/img/themes-01.png">
+        </div>
+      </div>
+      <div class="header-sousuo iconfont icon-sousuo"></div>
+    </div>
+    
+    <div class="address-content">  
+      <img class="address-info" src="/img/location1.png">
+      <span class="address-icon iconfont icon-dingwei"></span>
+      <label class="address-text"></label> 
+    </div>
+
+    <div class="theme-show">
+      问我
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div id="container"></div>
+    <div class="footer-label"></div>
+
+    <div class="add">
+      <img src="/img/add.png" class="add-img">
+    </div>
+    <!-- <div class="add iconfont icon-tianjia open-about"></div> -->
+    <!-- About Popup -->
+    <div class="popup popup-about">
+      <div class="content-block">
+        <!-- <p><a href="#router3">内联的新页面</a></p>
+        <p><a href="#" class="close-popup">Close popup</a></p>
+        <p>Lorem ipsum dolor ...</p> -->
+        <div class="theme-list" data-type="live">
+          <img class="img-list" src="/img/home.jpg">
+          <!-- <label>住</label> -->
+        </div>
+      </div>
+    </div>
+
+    <div class="popup marker-content">
+      <header class="bar bar-nav">
+        <h1 class="title">问我</h1>
+      </header>
+      <div class="content">
+        <div class="list-block media-list">
+          <ul>
+            <!-- <li>
+              <div class="item-content">
+                <div class="item-media"><img src="/img/hotPot.jpg"></div>
+                <div class="item-inner">
+                  <div class="">
+                    <div class="type-item">火锅</div>
+                    <div class="type-item">火锅</div>
+                    <div class="type-item">火锅</div>
+                  </div>
+                  <div class="item-subtitle">这家火锅真的很好吃。</div>
+
+                  <div class="up-price-right">￥0 . 3 2</div>
+                  <div class="iconfont icon-youjiantou item-right"></div>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <div class="item-content">
+                <div class="item-media"><img src="/img/hotPot.jpg"></div>
+                <div class="item-inner">
+                  <div class="">
+                    <div class="type-item">火锅</div>
+                    <div class="type-item">火锅</div>
+                    <div class="type-item">火锅</div>
+                  </div>
+                  <div class="item-subtitle">这家火锅真的很好吃。</div>
+
+                  <div class="up-price-right">￥0 . 3 2</div>
+                  <div class="iconfont icon-youjiantou item-right"></div>
+                </div>
+              </div>
+            </li> -->
+          </ul>
+        </div>
+      </div>
+      
+      <nav class="bar-tab">
+        <div class="iconfont icon-x marker-content-cancel"></div>
+      </nav>
+
+    </div>
+
+    <div class="popup popup-services ask-detail">
+      <!-- <div class="content-block">
+        <div class="card" id="tag-content" data-href="router2">
+          <div class="card-header">标签</div>
+          <div class="card-content">
+            <div class="card-content-inner">
+              <span class="type-item">火锅</span>
+              <span class="type-item">冒菜</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" id="reason-content" data-href="router3">
+          <div class="card-header">推荐理由</div>
+          <div class="card-content">
+            <div class="card-content-inner">这个真的很不错，我经常去。</div>
+          </div>
+        </div>
+
+        <div class="card" id="detail-content" data-href="router4">
+          <div class="card-header">详情</div>
+          <div class="card-content">
+            <div class="card-content-inner">这个真的很不错，我经常去。</div>
+          </div>
+        </div>
+
+        <div class="content-block-title">地图标注</div>
+        <div class="card demo-card-header-pic" data-href="router5">
+          <div valign="bottom" class="card-header color-white no-border no-padding">
+            <div class="container-hidden"></div>
+            <div class='card-cover' id="container-show"></div>
+          </div>
+        </div>
+
+        <div class="card" id="price-content" data-href="router6">
+        <div class="card-header">价格</div>
+        <div class="card-content">
+          <div class="card-content-inner">￥0.2</div>
+        </div>
+        </div>
+      </div>
+    </div> -->
+    
+    <div class="votebar">
+      <div class="votebar-like iconfont icon-shangjiantou"></div>
+      <div class="voteNum">-</div>
+      <div class="votebar-hate iconfont icon-jiantouxia"></div>
+    </div>
+    
+    <!-- <div class="ask-get iconfont icon-buy">
+      
+    </div> -->
+    <div class="ask-get">
+      
+    </div>
+
+    <div class="autor-content-block">
+      <div class="autor-content">
+        <img class="autor-img" src="/img/test.jpg">
+        <div class="autor-text">
+          <div class="autor-list-content">
+          来自：<span class="autor-name"></span>
+          的<span class="autor-theme"></span>指南
+          </div>
+          <label class="autor-time">-.-.-</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="tag-content" data-href="router2">
+      <div class="card-header">标签</div>
+      <div class="card-content">
+        <div class="card-content-inner"></div>
+      </div>
+    </div>
+
+    <div class="card" id="reason-content" data-href="router3">
+      <div class="card-header">推荐理由</div>
+      <div class="card-content">
+        <div class="card-content-inner">请填写推荐理由</div>
+      </div>
+    </div>
+
+    <div class="card" id="detail-content" data-href="router4">
+      <div class="card-header">详情</div>
+      <div class="card-content">
+        <div class="card-content-inner">请描述详情</div>
+      </div>
+    </div>
+
+    <div class="card" id="address-content" data-href="router5">
+      <div class="card-content">
+        <div class="list-block">
+          <ul>
+            <li>
+              <a class="item-link item-content">
+                <div class="item-media item-left"> <i class="iconfont icon-dingwei"></i>
+                </div>
+                <div class="item-media item-right"> <i class="iconfont icon-youjiantou"></i>
+                </div>
+                <div class="item-inner">
+                  <div class="item-title"></div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="price-content" data-href="router6">
+      <div class="card-content">
+        <div class="list-block">
+          <ul>
+            <li>
+              <a class="item-link item-content">
+                <div class="item-media item-left">
+                  <i class="iconfont icon-qian"></i>
+                </div>
+                <!-- <div class="item-media item-right">
+                  <i class="iconfont icon-youjiantou"></i>
+                </div> -->
+                <div class="item-inner">
+                  <div class="item-title">0</div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="wenwo-get button">购买</div>
+  </div>
+  <nav class="bar-tab" id="ask-detail-cancel" style="display:none">
+    <div class="iconfont icon-x ask-detail-cancel"></div>
+  </nav>
+</div>
+
+    <!-- <div class="page page-current" id='router'>
+      <header class="bar bar-nav">
+        <h1 class='title'>路由</h1>
+      </header>
+      <div class="content">
+        <div class="content-block">
+          <ul>
+            <li><a href="/docs-demos/router2">ajax加载新页面</a></li>
+            <li><a href="#router3">内联的新页面</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="page" id='router3'>
+      <header class="bar bar-nav">
+        <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
+          <span class="icon icon-left"></span>
+          返回
+        </a>
+        <h1 class='title'>路由</h1>
+      </header>
+      <div class="content">
+        <div class="content-block">
+          这是内联编写的页面，点击左上角的 <a href="#" class='back'>返回</a> 按钮返回上一页。
+        </div>
+      </div>
+    </div> --> 
+
+    <!-- 标签填写 -->
+    <div class="page" id='router1'>
+      <header class="bar bar-nav">
+        <!-- <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
+          <span class="icon icon-left"></span>
+          返回
+        </a> -->
+        <a class="button button-link button-nav pull-left back" href="/docs-demos/router">
+          <span class="icon icon-left"></span>
+        </a>
+        <!-- <h1 class='title'>标签</h1> -->
+      </header>
+      <div class="content">
+        <div class="searchbar">
+          <div class="search-input">
+            <label class="iconfont icon-bianji" for="search"></label>
+            <input type="search" id='search' placeholder='搜索地点'/>
+          </div>
+          <div class="hot-content">
+           <div class="hot-li">
+              <label class="iconfont icon-dingwei"></label>
+              <div class="hot-detail">
+                <div class="big">成都信息工程大学航空港校区</div>
+                <div class="small">四川省成都市双流区</div>
+              </div>
+            </div>
+            <div class="hot-li">
+              <label class="iconfont icon-dingwei"></label>
+              <div class="hot-detail">
+                <div class="big">峨眉山</div>
+                <div class="small">四川省乐山市峨眉山市</div>
+              </div>
+            </div>
+            <div class="hot-li">
+              <label class="iconfont icon-dingwei"></label>
+              <div class="hot-detail">
+                <div class="big">宽窄巷子景区</div>
+                <div class="small">四川省成都市青羊区</div>
+              </div>
+            </div>
+            <div class="hot-li">
+              <label class="iconfont icon-dingwei"></label>
+              <div class="hot-detail">
+                <div class="big">黄龙溪</div>
+                <div class="small">四川省成都市双流县</div>
+              </div>
+            </div>
+            <div class="hot-li">
+              <label class="iconfont icon-dingwei"></label>
+              <div class="hot-detail">
+                <div class="big">锦里</div>
+                <div class="small">四川省成都市武侯区</div>
+              </div>
+            </div>
+            <div class="hot-li">
+              <label class="iconfont icon-dingwei"></label>
+              <div class="hot-detail">
+                <div class="big">牛背山</div>
+                <div class="small">四川省雅安市石棉县</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <div class="panel-overlay"></div>
+  <div class="panel panel-left panel-cover panel-wenwo" id='slide'>
+    <div class="content-block">
+      <!-- <p>我是从右边出现的</p>
+      <p>并且我是覆盖在页面上而不是推开页面</p>
+      <p></p> 
+      <p>
+        <a href="#" class="close-panel">关闭</a>
+      </p> -->
+      <!-- <div class="left-content"> -->
+        <div class="user-info">
+          <img class="user-photo" src="/img/test.jpg" alt="">
+          <label class="user-name">范范</label>
+        </div>
+        <div class="list-content">
+          <div class="list-ul">
+            <div class="list-li" data-href="/more/moneyBox">
+              <span class="iconfont icon-qianbao"></span>
+              <label>我的钱包</label>
+            </div>
+            <div class="list-li" data-href="/more/order">
+              <span class="iconfont icon-gouwuche"></span>
+              <label>我的订单</label>
+            </div>
+            <div class="list-li" data-href="/more/share">
+              <span class="iconfont icon-paper-airplane"></span>
+              <label>我的分享</label>
+            </div>
+            <div class="list-li" data-href="/more/invite">
+              <span class="iconfont icon-jiahaoyou"></span>
+              <label>邀请好友</label>
+            </div>
+            <div class="list-li" data-href="/more/watch-us">
+              <span class="iconfont icon-guanzhu"></span>
+              <label>关注我们</label>
+            </div>
+            <div class="list-li" data-href="/more/contact-us">
+              <span class="iconfont icon-dianhua"></span>
+              <label>意见反馈</label>
+            </div>
+          </div>
+        <!-- </div> -->
+    </div>
+  </div>
+
+ 
+
+  </body>
+  <script type='text/javascript' src='/js/zepto.min.js' charset='utf-8'></script>
+  <script type='text/javascript' src='/js/sm.min.js' charset='utf-8'></script>
+  <script type="text/javascript" src="/js/common.js"></script>
+  <script>
+  // $(document).on("click", function() {
+  //     $.openPanel("#slide");
+  //   });
+  </script>
+  
+  <script>
+    // var data = {
+    //   url   : location.href.split('#')[0]
+    // }
+    // $.ajax({
+    //   type : "POST",
+    //   data: data,
+    //   dataType: "json",
+    //   url : "/todos/test/wx",
+    //   success : function(result){
+    //     $(".ui-loading-block").hide();
+    //     console.log(result);
+    //     wx.config({
+    //       debug: false,
+    //       appId: 'wx99f15635dd7d9e3c',
+    //       timestamp: result.timestamp,
+    //       nonceStr: result.nonceStr,
+    //       signature: result.signature,
+    //       jsApiList: [
+    //           'onMenuShareTimeline',
+    //           'onMenuShareAppMessage',
+    //           'onMenuShareQQ',
+    //           'onMenuShareWeibo',
+    //           'onMenuShareQZone',
+    //           'onMenuProfile',
+    //           'onMenuAddContact',
+    //           'hideMenuItems',
+    //           'showMenuItems',
+    //           'getLocation'
+    //       ]
+    //     });
+    //     wx.ready(function(){
+    //       wx.getLocation({
+    //         type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+    //         success: function (res) {
+    //             var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+    //             var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+    //             var speed = res.speed; // 速度，以米/每秒计
+    //             var accuracy = res.accuracy; // 位置精度
+    //             console.log(res);
+    //             // var map = new AMap.Map('container', {
+    //             //   resizeEnable: true,
+    //             //   zoom:18,
+    //             //   center: [longitude, latitude] 
+    //             // });
+    //             map.setZoomAndCenter(20,[longitude,latitude]);
+    //         },
+    //         error: function(error){
+    //           console.log(error);
+    //         }
+    //       });
+    //     }); 
+    //   },
+    //   error:function(error){
+    //     console.log(error);
+    //     $(".ui-loading-block").hide();
+    //   }
+    // });
+
+  </script>
+  <script>
+    var data = {
+      username :"<%=username%>"
+    }
+    $.ajax({
+      type : "GET",
+      data: data,
+      dataType: "json",
+      url : "/user/getuserinfo",
+      success : function(result){
+        console.log(result);
+        // $.hidePreloader();
+        if(result.code == 200){
+          var photo = result.data.userHead;
+          var username = result.data.uName;
+          $(".user-photo").attr("src",photo);
+          $(".user-name").text(username);
+        }else if(result.code == 890){
+          $.alert("用户不存在");
+          // $("")
+          $("body").empty();
+          var refresh = '<div class="content pull-to-refresh-content" data-ptr-distance="55"><div class="pull-to-refresh-layer"><div class="preloader"></div><div class="pull-to-refresh-arrow"></div></div><div class="card-container no-user">用户不存在...</div></div></div>';
+          $("body").append(refresh);
+        }
+      },
+      error:function(error){
+        console.log(error);
+      }
+    });
+  </script>
+  <script>
+  // // 添加'refresh'监听器
+  // $(document).on('refresh', '.pull-to-refresh-content',function(e) {
+  //     // 模拟2s的加载过程
+  //     setTimeout(function() {
+  //         var cardNumber = $(e.target).find('.card').length + 1;
+  //         var cardHTML = '<div class="card">' +
+  //                           '<div class="card-header">card'+cardNumber+'</div>' +
+  //                           '<div class="card-content">' +
+  //                             '<div class="card-content-inner">' +
+  //                                 '这里是第' + cardNumber + '个card，下拉刷新会出现第' + (cardNumber + 1) + '个card。' +
+  //                             '</div>' +
+  //                           '</div>' +
+  //                       '</div>';
+
+  //         $(e.target).find('.card-container').prepend(cardHTML);
+  //         // 加载完毕需要重置
+  //         $.pullToRefreshDone('.pull-to-refresh-content');
+  //     }, 2000);
+  // });
+
+  // $.initPullToRefresh(ptrContent);
+  // </script>
+  <script type="text/javascript" src="/js/map.js"></script>
+  <script type="text/javascript" src="/js/wxlocation.js"></script>
+  <script> 
+
+    var CLICK = 0,
+        LIKENUM = 20,
+        LIKETYPE = 0;
+    var lng = "<%=lng%>";
+    var lat = "<%=lat%>";
+
+    if(lng == "0" || lat=="0"){
+      initLocation();
+    }else{
+      map.setZoomAndCenter(18, [lng, lat]);
+    }
+
+    //初始化隐藏区域
+    function initHide(){
+      $("#address-content").hide();
+    }
+
+    function setDetail(extData){
+      initHide();
+      console.log(extData);
+      var askId         = extData.askId,
+          askType       = extData.askType,//主题类型
+          tag           = extData.tagName,//二级标签
+          setAskTagStr  = extData.askTagStr,//二级标签
+          reason        = extData.askReason,//推荐理由
+          content_show  = extData.askContentShow,//详情显示部分
+          content_hide  = extData.askContentHide,//详情显示部分
+          lng           = extData.lng,//经度
+          lat           = extData.lat,//维度
+          isfree        = extData.askIsFree,//是否是免费信息
+          price         = extData.price,//信息价格
+          createBy      = extData.createBy,//发布者
+          likeNum       = extData.likeNum,//赞踩数量
+          uName         = extData.uName,
+          userHead      = extData.userHead,
+          updatedAt     = extData.updatedAt;//发布时间
+      //设置上传者名字
+      $(".autor-name").text(createBy);
+      $(".autor-name").text(uName);
+      //设置上传者的头像
+      if(userHead){
+        $(".autor-img").attr("src",userHead);
+      }else{
+        userHead = '/img/common/wenwo.png';
+        $(".autor-img").attr("src",userHead);
+      }
+      
+      //设置信息主题
+      askType =  askType.split(",");
+      var typeText = '';
+      console.log(askType);
+      for(var i = 0; i < askType.length; i++){
+        typeText = formatType(askType[i]);
+        if(i == 1){
+          typeText = formatType(askType[i-1]) +","+ formatType(askType[i]);
+        }
+      }
+
+      $(".autor-theme").text(typeText);
+      //设置信息上传时间
+      console.log(updatedAt);
+      $(".autor-time").text(formatDate("y.m.d",updatedAt));
+
+      //设置赞踩
+      $(".votebar .voteNum").text(likeNum);
+
+      //设置全局踩赞数量
+      LIKENUM = likeNum;
+      
+      // if()
+      // $(".votebar").data("askid",askId);
+      $(".votebar").attr("data-askid",askId);
+      
+      //设置标签
+      var setAskTagStr = JSON.parse(setAskTagStr);
+
+      console.log(setAskTagStr[0]);
+      var tagList = '';
+      for(var i = 0; i < setAskTagStr.length;i++){
+        tagList += '<div class="type-item">'+setAskTagStr[i].tag_name+'</div>' 
+      }
+
+      $("#tag-content .card-content-inner").empty();
+      $("#tag-content .card-content-inner").append(tagList);
+
+      //设置推荐理由
+      $("#reason-content .card-content-inner").text(reason);
+
+      //设置描述
+      var detail = content_show;
+      var hidden = '<span class="hidden-text">***</span>';
+      str = detail.split("##");
+      var detailContent = '';
+      for(var i = 0; i < str.length; i++){
+        if(i%2){
+          detailContent += str[i];
+        }else{
+          detailContent += str[i]+hidden;
+        }
+
+        if(str.length == 1){
+          detailContent = str[i];
+        }
+      }
+      if(str.length == 0){
+        detailContent = hidden;
+      }
+      console.log("price:"+price+"isfree:"+isfree);
+      if(price == "0.00" || isfree == "1"){ 
+      console.log("ko"); 
+        //解析详情
+        var show = content_show.split("##");
+        var hidden = content_hide.split("##");
+        detailContent = '';
+        for(var i = 0; i < hidden.length;i++){
+          detailContent += show[i] + hidden[i];
+        }
+        if(!hidden.length){
+          detailContent = show;
+        }
+      }
+
+
+      $("#detail-content  .card-content-inner").empty();
+      $("#detail-content  .card-content-inner").append(detailContent);
+
+      $(".wenwo-get").attr("data-askId",askId);
+      console.log(price.replace(/\s+/g,""));
+      if(isfree == "1" || price.replace(/\s+/g,"")=="0.00"){
+        $(".wenwo-get").text("收藏");
+        $(".votebar").show();
+        $("#address-content").show();
+      }else{
+        $(".wenwo-get").text("购买");
+      }
+
+
+      //先将点赞清空
+      $(".votebar .iconfont").removeClass("liked");
+      //判断是否点赞过
+        var data = {
+          ask_id   : askId,
+          username : "<%= username %>"
+        }
+        $.ajax({
+          type : "GET",
+          data: data,
+          dataType: "json",
+          url : "/ask/isliked",
+          success : function(result){
+            console.log(result);
+
+            if(result.code == 200){
+              var isliked = result.isliked;
+              //如果isliked=1点赞，2踩
+              if(isliked){
+                if(isliked == 1){
+                  //赞过
+                  LIKETYPE = 1;
+                  LIKENUM--;
+                  $(".votebar-like").addClass("liked");
+                }else{
+                  //踩过
+                  LIKETYPE = 2;
+                  LIKENUM++;
+                  $(".votebar-hate").addClass("liked");
+                }
+              }
+            }
+          },
+          error : function(error){
+            $.toast('网络异常');
+          }
+        });
+
+
+
+      if(!extData.geted){
+
+        var data = {
+          ask_id   : askId,
+          username : "<%= username %>"
+        }
+        //判断是否购买
+        $.ajax({
+          type : "GET",
+          data: data,
+          dataType: "json",
+          url : "/ask/askdetail",
+          success : function(result){
+
+            // $.hidePreloader();
+            console.log(result);
+            if(result.nobuy == "1"){
+              $(".ask-get, #address-content").hide();
+              $(".wenwo-get").show();
+              $(".votebar").show();
+            }else{
+              $(".ask-get, #address-content").show();
+              $(".wenwo-get").hide();
+              $(".votebar").show();
+
+              var show = result.data.askContentShow.split("##");
+              var hidden = result.data.askContentHide.split("##");
+              var reasonDetail = '';
+              for(var i = 0; i < hidden.length;i++){
+                reasonDetail += show[i] + hidden[i];
+              }
+              if(!hidden.length){
+                reasonDetail = show;
+              }
+
+              //解析详情
+              console.log("ceshi:"+reasonDetail);
+              $("#detail-content  .card-content-inner").empty();
+              $("#detail-content  .card-content-inner").append(reasonDetail);
+            }
+
+            if(result.own){
+              $("#address-content").show();
+              $(".wenwo-get").hide();
+              $(".votebar").show();
+
+              var show = result.data.askContentShow.split("##");
+              var hidden = result.data.askContentHide.split("##");
+              var reasonDetail = '';
+              for(var i = 0; i < hidden.length;i++){
+                reasonDetail += show[i] + hidden[i];
+              }
+              if(!hidden.length){
+                reasonDetail = show;
+              }
+              //解析详情
+              console.log("ceshi:"+reasonDetail);
+              $("#detail-content  .card-content-inner").empty();
+              $("#detail-content  .card-content-inner").append(reasonDetail);
+            }
+
+            if(result.data.askIsFree == "1" || result.data.askPrice == "0.00"){
+              $("#address-content").show();
+            }
+          },
+          error : function(error){
+            $.hidePreloader();
+            $.toast('网络异常');
+          }
+        });
+      }else{
+        //解析详情
+        var show = content_show.split("##");
+        var hidden = content_hide.split("##");
+        detailContent = '';
+        for(var i = 0; i < hidden.length;i++){
+          detailContent += show[i] + hidden[i];
+        }
+        if(!hidden.length){
+          detailContent = show;
+        }
+        $("#detail-content  .card-content-inner").empty();
+        $("#detail-content  .card-content-inner").append(detailContent);
+      }
+
+      //设置地点
+      var lnglatXY = [lng,lat];
+      $("#address-content").attr("data-lng",lng);
+      $("#address-content").attr("data-lat",lat);
+      getAddress(lnglatXY,{
+          success:function(address){
+            var detail = address.formattedAddress;
+            var address = {
+              province : address.addressComponent.province,
+              city     : address.addressComponent.city,
+              district : address.addressComponent.district,
+              township : address.addressComponent.township
+            }
+            var replace = ""+address.province+address.city+address.district+address.township+"";
+            detail = detail.replace(replace,"");
+            $("#address-content .item-title").text(detail);
+          }
+        });
+
+      //设置价格
+      $("#price-content .item-title").text(price);
+    }
+  </script>
+  <script>
+  window.onload = function(){
+    AMap.plugin(['AMap.ToolBar','AMap.Scale'],function(){
+        var toolBar = new AMap.ToolBar({
+            offset: new AMap.Pixel(60, 10)
+          });
+        var scale = new AMap.Scale({
+          offset: new AMap.Pixel(5, 5)
+        });
+        map.addControl(toolBar);
+        map.addControl(scale);
+    });
+
+    $.hidePreloader();
+  }
+
+
+  //关闭信息列表
+  $(".marker-content-cancel").on("click",function(){
+    $.closeModal('.marker-content');
+  })
+
+  $(".ask-detail-cancel").on("click",function(){
+    $(".amap-active").css("-webkit-transform", "rotate(0deg) !important;");
+    // $(".amap-marker-list-content").remove();
+    // $(".amap-active").removeClass("amap-active");
+    $.closeModal('.ask-detail');
+    $("#ask-detail-cancel").hide();
+  })
+
+      // var map = new AMap.Map('container',{
+      //       resizeEnable: true,
+      //       zoom: 10,
+      //       center: [116.39,39.9]
+      // });
+    //   AMap.plugin(['AMap.ToolBar','AMap.Scale'],function(){
+    //     var toolBar = new AMap.ToolBar();
+    //     var scale = new AMap.Scale();
+    //     map.addControl(toolBar);
+    //     map.addControl(scale);
+    // })
+    // $.popup('.ask-detail');
+    // $.popup('.marker-content');
+    markerExtData = {};
+
+    //点击搜索和定位，跳转到地址搜索页面
+    $(".header-sousuo,.address-content").on("click",function(){
+      $.router.load("#router1");
+    });
+
+    //点击地点地图定位到相应位置
+    $("#address-content").on("click",function(){
+      var lng = $(this).attr("data-lng");
+      var lat = $(this).attr("data-lat");
+      if($(".marker-content").hasClass("modal-in")){
+        if(lng && lat){
+          $.closeModal('.ask-detail');
+          $("#ask-detail-cancel").hide();
+          $.closeModal('.marker-content');
+          map.setZoomAndCenter(18, [lng, lat]);
+        }
+      }else{
+        $(".amap-active").css("-webkit-transform", "rotate(0deg) !important;");
+        $.closeModal('.ask-detail');
+        $("#ask-detail-cancel").hide();
+      }
+    })
+
+    $(".user-info .user-photo").on("click",function(){
+      window.location.href="/more/personalPage";
+    })
+
+    $(".hot-li").on("click",function(){
+      var li = $(this).children(".hot-detail").children(".big").text();
+      // var city = $(this).children(".hot-detail").children(".small").text().substring(3,6);
+      var city = $(this).children(".hot-detail").children(".small").text();
+      console.log(city);
+      var placeSearch = new AMap.PlaceSearch({
+            map:map
+      })
+      if(li == "牛背山"){
+        placeSearch.setCity(511824);
+        placeSearch.search(li);
+      }
+      placeSearch.search(li);
+      //这里是设置一个延时来判断是否标注加载完成
+         timeIv = setInterval(function(){
+          // console.log($(".amap-marker").length);
+          if($(".amap_lib_placeSearch_poi").length > 0){
+            // clearInterval(timeIv);
+            // map.clearMap();
+            $(".amap_lib_placeSearch_poi").remove();
+          }
+         }, 10);
+      $.router.load("#router");
+    })
+
+    var width = $(".left-content").width();
+    console.log(width);
+
+    $(".header-more").on("click",function(){
+      // $(".left-content").css("-webkit-transform", "matrix(1, 0, 0, 1, -"+width+", 0)");
+      // $(".left-content").css("-webkit-transform", "matrix(1, 0, 0, 1, "+width+", 0)");
+      // $(this).hide();
+      // $(".left-content .cancel").show();
+      // $(".slide-content").addClass("active");
+
+      $.openPanel("#slide");
+    })
+    $(".right-content").on("click",function(){
+      $(".slide-content").removeClass("active");
+      $(".left-content").css("-webkit-transform", "matrix(1, 0, 0, 1, 0, 0)");
+    })
+
+    $(".header-theme,.theme-show").on("click",function(){
+      if(!$(".header-theme").hasClass("clicked")){
+        $(".themes0").css("-webkit-transform", "translate(-81px,30px)");
+        $(".themes1").css("-webkit-transform", "translate(-55px,65px)");
+        $(".themes2").css("-webkit-transform", "translate(-22px,95px)");
+        $(".themes3").css("-webkit-transform", "translate(22px,95px)");
+        $(".themes4").css("-webkit-transform", "translate(55px,65px)");
+        $(".themes5").css("-webkit-transform", "translate(81px,30px)");
+        $(".header-theme").addClass("clicked");
+      }else{
+        $(".themes0,.themes1,.themes2,.themes3,.themes4,.themes5").css("-webkit-transform", "translate(0px,0px)");
+        $(".header-theme").removeClass("clicked");
+      }
+    })
+
+    // AMap.event.addListener(cluster,'click',function(e){
+    //   alert('aaa');
+    // });
+
+    $(".theme-li").on("click",function(){
+
+      $(".amap-marker-content").click();
+      console.log(cluster);
+
+      // $.each(cluster,function(){
+      //   console.log(this);
+      // })
+
+      var type1 = $(this).attr("data-type");
+      var type2 = $(".themes6").attr("data-type");
+      var src1 = $(this).children("img").attr("src");
+      var src2 = $(".themes6 img").attr("src");
+      $(".themes6 img").attr("src",src1);
+      $(this).children("img").attr("src",src2);
+      $(".themes6").attr("data-type",type1);
+      $(this).attr("data-type",type2);
+      console.log(type1);
+      $(".theme-show").text(formatType(type1));
+
+      var clicked = $(".header-theme").hasClass("clicked");
+
+      //主题筛选
+      $.each(markers,function(i,v){
+        var ifExit = this.getExtData().askType.indexOf(type1);
+        // console.log(ifExit);
+        if(clicked){
+          if(ifExit == "-1" && type1 != "0"){
+            // console.log($(this));
+            this.hide();
+          }else{
+            this.show();
+          }
+        }
+      })
+    })
+
+    //  $(".header-theme").on("click",function(){
+    //   $(".themes0,.themes1,.themes2,.themes3,.themes4,.themes5").css("-webkit-transform", "translate(0px,0px)");
+    // })
+
+    $(".list-li").on("click",function(){
+      var href = $(this).data("href");
+      window.location.href = href;
+    })
+    $(".cancel").on("click",function(){
+      // $(".left-content").css("-webkit-transform", "matrix(1, 0, 0, 1, -"+width+", 0)");
+      if($(this).parent().hasClass("left-content")){
+        $(".left-content").css("-webkit-transform", "matrix(1, 0, 0, 1, 0, 0)");
+        $(this).hide();
+        $(".more").show();
+      }else{
+        $(".right-content").css("-webkit-transform", "matrix(1, 0, 0, 1, 0, 0)");
+        $(this).hide();
+        $(".suosuo").show();
+      }
+      // $(".left-content").css("-webkit-transform", "matrix(1, 0, 0, 1, 0, 0)");
+      // $(this).hide();
+      // $(".more").show();
+    })
+
+    $(".suosuo").on("click",function(){
+      // $(".left-content").css("-webkit-transform", "matrix(1, 0, 0, 1, -"+width+", 0)");
+      // $(".right-content").css("-webkit-transform", "matrix(1, 0, 0, 1, -"+width+", 0)");
+      // $(this).hide();
+      // $(".right-content .cancel").show();
+      if(!$(this).hasClass("open")){
+        $(".right-content").css("-webkit-transform", "matrix(1, 0, 0, 1, -"+width+", 0)");
+        $(this).addClass("open");
+      }else{
+        $(".right-content").css("-webkit-transform", "matrix(1, 0, 0, 1, 0, 0)");
+        $(this).removeClass("open");
+      }
+    })
+
+    // $(".add").on("click",function(){
+    //   console.log("123");
+    //   if($(".add").hasClass("actived")){
+    //     $.closeModal('.popup-about');
+    //     $(".add").css("-webkit-transform", "rotate(0deg)");
+    //     $(".add").removeClass("actived");
+    //   }else{
+    //     $.popup('.popup-about');
+    //     $(".add").css("-webkit-transform", "rotate(45deg)");
+    //     $(".add").addClass("actived");
+    //   }
+    // })
+    $(".add").on("click",function(){
+      $.showPreloader("正在跳转");
+      window.location.href="/todos/send#router1";
+    })
+
+    $(".theme-list").on("click",function(){
+      var type = $(this).data("type");
+      window.location.href="/todos/send?type="+type;
+    });
+
+    $(".amap-sug-result").on("click",".auto-item",function(){
+      $(".right-content,.left-content").css("-webkit-transform", "matrix(1, 0, 0, 1, 0, 0)");
+    })
+
+    //绑定marker点击事件
+    $("#container").bind("touchend",".amap-icon",function(){
+      // $(this).addClass("amap-active");
+      // alert("123");
+      console.log("icon");
+      console.log(CLICK);
+      console.log(markerExtData);
+      // if(CLICK == 0){
+      //   console.log(markerExtData);
+      //   return;
+      // }
+      // CLICK = 0;
+
+      // return ;
+
+      $(".amap-active").css("-webkit-transform", "rotate(0deg) !important;");
+      $(".amap-marker-list-content").remove();
+      // var div = '<div class="amap-marker-list-content" style="display:none"><div class="up">火锅<div class="up-price-right">0.8元</div></div><div class="down">这个真的很好吃</div></div>';
+      // if(extData.askTagStr){
+      //   var askTagStr = JSON.parse(extData.askTagStr);
+      // }else{
+      //   var askTagStr = '';
+      // }
+      if(markerExtData){
+        var askTagStr = JSON.parse(markerExtData.askTagStr);
+        console.log(askTagStr[0]);
+        var tagList = '';
+        for(var i = 0; i < askTagStr.length;i++){
+          if(askTagStr[i].tag_name){
+            tagList += '<div class="type-item">'+askTagStr[i].tag_name+'</div>'
+          }  
+        }
+        var div = '<div class="amap-marker-list-content" style="display:none"><div class="up">'+tagList+'<div class="up-price-right">￥'+markerExtData.price+'</div></div><div class="down">'+markerExtData.askReason+'</div></div>';
+        $(this).after(div);
+        if($(this).parent().hasClass("amap-active")){
+          $(this).parent().removeClass("amap-active");
+        }else{
+          $(".amap-marker").removeClass("amap-active");
+          $(this).parent().addClass("amap-active");
+        }
+      }
+    })
+
+
+     // 添加点聚合
+    var cluster, markers = [];
+    // addCluster(0);
+    function addCluster(tag) {
+        if (cluster) {
+            cluster.setMap(null);
+        }
+        if (tag == 1) {
+            var sts = [{
+                url: "/img/BG-03.png",
+                size: new AMap.Size(40, 40),
+                offset: new AMap.Pixel(-16, -30)
+            }, {
+                url: "/img/BG-03.png",
+                size: new AMap.Size(40, 40),
+                offset: new AMap.Pixel(-16, -30)
+            }, {
+                url: "/img/BG-03.png",
+                size: new AMap.Size(40, 40),
+                offset: new AMap.Pixel(-16, -30)
+            }];
+            // map.plugin(["AMap.MarkerClusterer"], function() {
+            //     cluster = new AMap.MarkerClusterer(map, markers, {
+            //       maxZoom:10,
+            //       styles: sts
+            //     });
+            //     // cluster.setMaxZoom(20);
+            // });
+             map.plugin(["AMap.MarkerClusterer"], function() {
+                cluster = new AMap.MarkerClusterer(map, markers,{
+                  maxZoom:20,
+                  zoomOnClick:false,
+                  style:sts
+                });
+                console.log(cluster.getMarkers());
+
+                //聚合点击事件
+                cluster.on("click",function(clusterContent){
+                  console.log(clusterContent);
+                  console.log(map.getZoom());
+
+                })
+            });
+
+        } else {
+            // map.plugin(["AMap.MarkerClusterer"], function() {
+            //     cluster = new AMap.MarkerClusterer(map, markers,{
+            //       maxZoom:20,
+            //       styles: sts
+            //     });
+            // });
+            // var sts = [{
+            //     url: "/img/hotPot.jpg",
+            //     size: new AMap.Size(40, 40),
+            //     offset: new AMap.Pixel(-16, -30)
+            // }, {
+            //     url: "/img/hotPot.jpg",
+            //     size: new AMap.Size(40, 40),
+            //     offset: new AMap.Pixel(-16, -30)
+            // }, {
+            //     url: "/img/hotPot.jpg",
+            //     size: new AMap.Size(40, 40),
+            //     offset: new AMap.Pixel(-16, -30)
+            // }];
+             var sts = [{
+                url: "/img/BG-03.png",
+                size: new AMap.Size(40, 40),
+                offset: new AMap.Pixel(-16, -30)
+            }, {
+                url: "/img/BG-03.png",
+                size: new AMap.Size(40, 40),
+                offset: new AMap.Pixel(-16, -30)
+            }, {
+                url: "/img/BG-03.png",
+                size: new AMap.Size(40, 40),
+                offset: new AMap.Pixel(-16, -30)
+            }];
+
+                // cluster.setMaxZoom(20);
+            // });
+            map.plugin(["AMap.MarkerClusterer"], function() {
+                cluster = new AMap.MarkerClusterer(map, markers,{
+                  maxZoom:20,
+                  zoomOnClick:false,
+                  styles:sts
+                });
+                console.log(cluster.getMarkers());
+
+                //聚合点击事件
+                cluster.on("click",function(clusterContent){
+                  console.log(clusterContent);
+
+                  // if(map.getZoom() < 19){
+                  if(false){
+
+                    // $.each(this.getMarkers(),function(i,v){
+                    //   console.log(this);
+                    // })
+
+                    // map.on("click",function(e){
+                    //     console.log('您在[ '+e.lnglat.getLng()+','+e.lnglat.getLat()+' ]的位置点击了地图！');
+                    //     map.setCenter([e.lnglat.getLng(),e.lnglat.getLat()]);
+                    // })
+                    map.setCenter([clusterContent.lnglat.lng,clusterContent.lnglat.lat]);
+                    map.zoomIn();
+                    map.zoomIn();
+                  }else{
+                    console.log(clusterContent);
+                    // var li = '<li><div class="item-content"><div class="item-media"><img src="/img/hotPot.jpg"></div><div class="item-inner"><div class=""><div class="type-item">火锅</div><div class="type-item">火锅</div><div class="type-item">火锅</div></div><div class="item-subtitle">这家火锅真的很好吃。</div><div class="up-price-right">￥0 . 3 2</div><div class="iconfont icon-youjiantou item-right"></div></div></div></li>';
+                    var li = '';
+                    $.each(clusterContent.markers,function(i,v){
+                      var markerExtData =  this.getExtData();
+                      // var object = JSON.stringify(extData);
+                      // var object = {
+                      //   askId         : extData.askId,
+                      //   askType       : extData.askType,//主题类型
+                      //   askTagStr     : extData.askTagStr,//二级标签
+                      //   reason        : extData.askReason,//推荐理由
+                      //   content_show  : extData.askContentShow,//详情显示部分
+                      //   lng           : extData.lng,//经度
+                      //   lat           : extData.lat,//维度
+                      //   isfree        : extData.askIsFree,//是否是免费信息
+                      //   price         : extData.price,//信息价格
+                      //   createBy      : extData.createBy,//发布者
+                      //   updatedAt     : extData.updatedAt//发布时间
+                      // }
+                      // object = JSON.stringify(object);
+
+                      var askTagStr = JSON.parse(markerExtData.askTagStr);
+                      console.log(askTagStr[0]);
+                      var tagList = '';
+                      for(var i = 0; i < askTagStr.length;i++){
+                        tagList += '<div class="type-item">'+askTagStr[i].tag_name+'</div>' 
+                      }
+
+                      li += '<li data-askId='+markerExtData.askId+'><div class="item-content"><div class="item-media"><img src="'+markerExtData.img+'"></div><div class="item-inner"><div class="">'+tagList+'</div><div class="item-subtitle">'+markerExtData.askReason+'</div><div class="up-price-right">￥'+markerExtData.price+'</div><div class="iconfont icon-youjiantou item-right"></div></div></div></li>';
+                    })
+                    $(".marker-content ul").empty();
+                    $(".marker-content ul").append(li);
+                    $.popup('.marker-content');
+                  }
+                })
+            });
+        }
+
+    }
+
+    // $(document).on('click','.open-about', function () {
+    //   $.popup('.popup-about');
+    // });
+    // var data = {};
+    // $.ajax({
+    //   type : "POST",
+    //   data: data,
+    //   dataType: "json",
+    //   url : "/todos",
+    //   success : function(result){
+    //     console.log(result);
+    //     // var cluster, markers = [];
+    //     for(var i = 0; i < result.length;i++){
+    //       var icon = new AMap.Icon({
+    //           image : result[i].url,//24px*24px
+    //           size : new AMap.Size(50,50)
+    //       });
+    //       var marker = new AMap.Marker({
+    //         icon : icon,//24px*24px
+    //         map : map,
+    //         position: [result[i].lng,result[i].lat],
+    //         draggable: false,
+    //         clickable:true,
+    //         cursor: 'move',
+    //         raiseOnDrag: false
+    //       });
+    //       marker.setExtData({
+    //         id:result[i].id,
+    //         tagName:result[i].tagName,
+    //         askReason:result[i].askReason,
+    //         askContentShow:result[i].askContentShow,
+    //         price:result[i].price,
+    //         createBy:result[i].createBy,
+    //         createAt:result[i].createAt,
+    //         lng:result[i].lng,
+    //         lat:result[i].lat
+    //       })
+    //       markers.push(marker);
+
+    //       //监听marker点击事件
+    //       marker.on("click",function(){
+    //         console.log(this);
+    //         var lng = this.Ee.extData.lng;
+    //         var lat = this.Ee.extData.lat;
+
+    //         //设置地图中心位置为点击的marker上
+    //         map.setZoomAndCenter(20,[lng,lat]);
+    //       });
+
+    //       marker.setMap(map);
+    //     }
+    //     addCluster(0);
+    //   },
+    //   error: function(error){
+    //     alert(error);
+    //   }
+    // });
+
+    // $("#container").on("click",".amap-marker",function(){
+    //   // $(this).addClass("amap-active");
+    //   $(".amap-marker-list-content").remove();
+    //   var div = '<div class="amap-marker-list-content"><div class="up">火锅<div class="up-price-right">0.8元</div></div><div class="down">这个真的很好吃</div></div>';
+    //   $(this).children(".amap-icon").after(div);
+    //   if($(this).hasClass("amap-active")){
+    //     $(this).removeClass("amap-active");
+    //   }else{
+    //     $(".amap-marker").removeClass("amap-active");
+    //     $(this).addClass("amap-active");
+    //   }
+    // })
+    // var timeIv;
+    // var timeNum = 0;
+    // var firstLen = $(".amap-marker-content").length;
+    // map.on("zoomstart",function(){
+    //   firstLen = $(".amap-marker-content").length;
+    //   console.log(firstLen);
+    // })
+
+
+    // map.on("zoomend",function(){
+    //   console.log("123");
+    //   // console.log($(this).children("div").text());
+    //   setTimeout(function(){
+    //      $.each($(".amap-marker-content"),function(i,v){
+    //         var num = $(this).children("div").text();
+    //         console.log(num);
+    //         $(this).children("div").text(" ");
+    //         if(num > 1){
+    //           var showNum = "<div class='show-num'>"+num+"</div>";
+    //           $(this).children("div").empty();
+    //           $(this).children("div").append(showNum);
+    //         }
+            
+    //       })
+    //    }, 50);
+    // });
+
+
+       // $.each($(".amap-marker-content"),function(i,v){
+       //      var num = $(this).children("div").text();
+       //      console.log(num);
+       //    })
+      // firstLen = $(".amap-marker-content").length;
+      //这里是设置一个延时来判断是否标注加载完成
+      // timeIv = setInterval(function(){
+      // console.log($(".amap-marker-content").length);
+      // timeNum++;
+      // console.log(firstLen);
+      // if(($(".amap-marker-content").length != firstLen) || timeNum == 100){
+      //     console.log($(".amap-marker-content"));
+      //     timeNum = 0;
+      //     clearInterval(timeIv);
+      //     $.each($(".amap-marker-content"),function(i,v){
+      //       var num = $(this).children("div").text();
+      //       console.log(num);
+      //       $(this).children("div").text(" ");
+      //       var showNum = "<div class='show-num'>"+num+"</div>";
+      //       $(this).append(showNum);
+      //     })
+      //   }
+      // }, 10);
+    // });
+
+      // if($(".amap-marker-content").length > 1){}
+      // $.each($(".amap-marker-content"),function(i,v){
+      //   console.log($(this).children("div").text());
+      //   if($(this).children("div").text()){
+      //     // var numDiv = '<div class="marker-num">'+$(this).children("div").text()+'</div>';
+      //     // $(this).append(numDiv);
+      //     // console.log("success");
+      //     $(this).css("background","red");
+      //     // setTimeout(function(){
+      //     //   var numDiv = '<div class="marker-num">2</div>';
+      //     //   $(this).append(numDiv);
+      //     //   console.log("success");
+      //     // }, 1000);
+      //   }
+      // })
+    // })
+
+    // $("#container,#router").on("click",".amap-icon",function(){
+    //   // $(this).addClass("amap-active");
+    //   console.log("icon");
+    //   console.log("icon:"+$(this));
+
+    //   // return ;
+
+    //   $(".amap-active").css("-webkit-transform", "rotate(0deg) !important;");
+    //   $(".amap-marker-list-content").remove();
+    //   // var div = '<div class="amap-marker-list-content" style="display:none"><div class="up">火锅<div class="up-price-right">0.8元</div></div><div class="down">这个真的很好吃</div></div>';
+    //   var askTagStr = JSON.parse(extData.askTagStr);
+    //   console.log(askTagStr[0]);
+    //   var tagList = '';
+    //   for(var i = 0; i < askTagStr.length;i++){
+    //     tagList += '<div class="type-item">'+askTagStr[i]+'</div>' 
+    //   }
+    //   var div = '<div class="amap-marker-list-content" style="display:none"><div class="up">'+tagList+'<div class="up-price-right">￥'+extData.price+'</div></div><div class="down">'+extData.askReason+'</div></div>';
+    //   $(this).after(div);
+    //   if($(this).parent().hasClass("amap-active")){
+    //     $(this).parent().removeClass("amap-active");
+    //   }else{
+    //     $(".amap-marker").removeClass("amap-active");
+    //     $(this).parent().addClass("amap-active");
+    //   }
+    // })
+
+    $("#container").on("click",function(){
+      // $.closeModal(".ask-detail");
+    })
+    // var open = false;
+    $("#container").on("touchstart",function(e){
+      console.log("ok");
+      if($(".ask-detail").hasClass("modal-in")){
+
+         // $.closeModal(".ask-detail");
+
+         $("#ask-detail-cancel").hide();
+      }
+      $(".amap-active").css("-webkit-transform", "rotate(0deg) !important;");
+    })
+
+    $(".marker-content").on("touchstart",".bar",function(e){
+      console.log("ok");
+      if($(".ask-detail").hasClass("modal-in")){
+         // $.closeModal(".ask-detail");
+         
+         $("#ask-detail-cancel").hide();
+      }
+    })
+
+    $("#container").on("touchstart",".amap-marker-list-content",function(e){
+      // console.log($(this));
+      $.popup('.ask-detail');
+      $("#ask-detail-cancel").show();
+
+      console.log("test");
+      $(".amap-active").css("-webkit-transform", "rotate(90deg) !important;");
+    })
+
+    // var mapShow;
+    // getMap(103.985616,30.581207);
+    // var markerShow = new AMap.Marker({
+    //   map : mapShow,
+    //   position: [104.065262,30.65938]
+    // });
+    // var markerShow = new AMap.Marker({
+    //     map : mapShow,
+    //     position: [103.985616,30.581207],
+    //     draggable: true,
+    //     cursor: 'move',
+    //     raiseOnDrag: true,
+    //     clickable:true
+    //   });
+    // markerShow.setMap(mapShow);
+
+    //获取二级标签链接
+    function tagShow(type,tagStr,leave,resultData,callback){
+      var data = {
+        type   : type,
+        tag    : tagStr
+      };
+      $.ajax({
+        type : "GET",
+        data: data,
+        dataType: "json",
+        url : "/ask/tagshow",
+        success : function(result){
+          callback.success(result,type,leave,resultData);
+        },
+        error:function(error){
+          console.log(error);
+          callback.error(error);
+        }
+      });
+    }
+
+    function getMap(lng,lat){
+      //详情地点显示
+      var mapShow;
+      mapShow = new AMap.Map('container-show', {
+        resizeEnable: true,
+        zoom:15,
+        center: [lng,lat]
+      });
+      var markerShow = new AMap.Marker({
+        map : mapShow,
+        position: [lng,lat],
+        draggable: true,
+        cursor: 'move',
+        raiseOnDrag: true,
+        clickable:true
+      });
+      markerShow.setMap(mapShow);
+    }
+
+    getAllAsk();
+    //获取所有信息
+    function getAllAsk(){
+      var data = {
+        staus  : 1
+      };
+      $.ajax({
+        type : "GET",
+        data: data,
+        dataType: "json",
+        url : "/ask/allask",
+        success : function(result){
+          console.log(result);
+          // return;
+          // var cluster, markers = [];
+
+          $.hidePreloader();
+          if(result.code == 200){
+            for(var i = 0; i < result.data.length;i++){
+
+              // console.log(result.data[i]);
+              tagShow(result.data[i].askType,result.data[i].askTagStr,result.data[i].askLevel,result.data[i],{
+                success:function(result,type,leave,data){
+                  console.log(result);
+                  console.log(leave);
+                  var leave = parseInt(leave) + 1;
+                  console.log(data);
+                  var showType = type.split(",")[0];
+                  console.log(showType);
+                  var image = '/img/common/wenwo.png';
+                  if(result.code == 200){
+                    // leave
+                    if(result.url.tagUrl){
+                      if(leave == 1){
+                        image = result.url.tagUrl;
+                      }else if(leave == 2){
+                        image = result.url.tagUrl1;
+                      }else if(leave == 3){
+                        image = result.url.tagUrl2;
+                      }else if(leave == 4){
+                        image = result.url.tagUrl3;
+                      }
+                    }else{
+                      image = "/img/common/theme"+showType+"-"+leave+".png";
+                    }
+                    
+                  }else if(result.code == 400){
+                    image = "/img/common/theme"+showType+"-"+leave+".png";
+                  }
+                  //这里来判断内容
+                  var icon = new AMap.Icon({
+                      image : image,//24px*24px
+                      size : new AMap.Size(50,50)
+                  });
+                  marker = new AMap.Marker({
+                    icon : icon,//24px*24px
+                    map : map,
+                    position: [data.GeoX,data.GeoY],
+                    draggable: false,
+                    clickable:true,
+                    cursor: 'move',
+                    raiseOnDrag: false
+                  });
+                  marker.setExtData({
+                    img             : image,
+                    askType         : data.askType,
+                    askId           : data.objectId,
+                    tagName         : data.askTag,
+                    askReason       : data.askReason,
+                    askContentShow  : data.askContentShow,
+                    askContentHide  : data.askContentHide,
+                    price           : data.askPrice,
+                    createBy        : data.createBy,
+                    updatedAt       : data.updatedAt,
+                    lng             : data.GeoX,
+                    lat             : data.GeoY,
+                    askIsFree       : data.askIsFree,
+                    askTagStr       : data.askTagStr,
+                    userHead        : data.createByUrl,
+                    uName           : data.createByName,
+                    likeNum         : data.likeNum
+                  })
+                  markers.push(marker);
+
+                  //监听marker点击事件
+                  marker.on("click",function(){
+                    console.log("点击marker");
+                    markerExtData =  this.getExtData();
+                    console.log("点击前");
+                    // alert(extData.uName);
+                    // console.log(extData);
+                    var lng = markerExtData.lng;
+                    var lat = markerExtData.lat;
+                    // alert(markerExtData.askTagStr);
+                    // $("")
+                    $(".up").text();
+                    CLICK = 1;
+                    $(".down").text(markerExtData.askReason);
+                    console.log(markerExtData);
+                    map.setZoomAndCenter(map.getZoom(),[lng,lat]);
+
+                    // $(".ask-detail").text(markerExtData.askTagStr);
+                    setDetail(markerExtData);
+                    // $.popup(".ask-detail");
+                    // //设置地图中心位置为点击的marker上
+                    // map.setZoomAndCenter(map.getZoom(),[lng,lat]);
+                      //绑定marker点击事件
+                      // $("#container").bind("touchstart",".amap-icon",function(){
+                      //   // $(this).addClass("amap-active");
+                      //   // alert("123");
+                      //   console.log("icon");
+                      //   console.log($(this));
+                      //   if($(".amap-marker").hasClass("amap-active")){
+                      //     $(".amap-active").css("-webkit-transform", "rotate(0deg) !important;");
+                      //     $(".amap-marker-list-content").remove();
+                      //     $(".amap-marker").removeClass("amap-active");
+                      //     return;
+                      //   }
+
+                      //   // return ;
+
+                      //   $(".amap-active").css("-webkit-transform", "rotate(0deg) !important;");
+                      //   $(".amap-marker-list-content").remove();
+                      //   // var div = '<div class="amap-marker-list-content" style="display:none"><div class="up">火锅<div class="up-price-right">0.8元</div></div><div class="down">这个真的很好吃</div></div>';
+                      //   // if(extData.askTagStr){
+                      //   //   var askTagStr = JSON.parse(extData.askTagStr);
+                      //   // }else{
+                      //   //   var askTagStr = '';
+                      //   // }
+                      //   if(markerExtData && markerExtData!=0){
+                      //     var askTagStr = JSON.parse(markerExtData.askTagStr);
+                      //     console.log(askTagStr[0]);
+                      //     var tagList = '';
+                      //     for(var i = 0; i < askTagStr.length;i++){
+                      //       if(askTagStr[i].tag_name){
+                      //         tagList += '<div class="type-item">'+askTagStr[i].tag_name+'</div>'
+                      //       }  
+                      //     }
+                      //     var div = '<div class="amap-marker-list-content" style="display:none"><div class="up">'+tagList+'<div class="up-price-right">￥'+markerExtData.price+'</div></div><div class="down">'+markerExtData.askReason+'</div></div>';
+                      //     $(this).after(div);
+                      //     if($(this).parent().hasClass("amap-active")){
+                      //       $(this).parent().removeClass("amap-active");
+                      //     }else{
+                      //       $(".amap-marker").removeClass("amap-active");
+                      //       $(this).parent().addClass("amap-active");
+                      //     }
+                      //   }
+                      // })
+                    
+                  });
+
+                  marker.setMap(map);
+                  addCluster(0);
+
+                },
+                error:function(error){
+                  console.log(result);
+                }
+              });
+
+              // //这里来判断内容
+              // var icon = new AMap.Icon({
+              //     image : "/img/hotPot.jpg",//24px*24px
+              //     size : new AMap.Size(50,50)
+              // });
+              // var marker = new AMap.Marker({
+              //   icon : icon,//24px*24px
+              //   map : map,
+              //   position: [result.data[i].GeoX,result.data[i].GeoY],
+              //   draggable: false,
+              //   clickable:true,
+              //   cursor: 'move',
+              //   raiseOnDrag: false
+              // });
+              // marker.setExtData({
+              //   askType         : result.data[i].askType,
+              //   askId           : result.data[i].objectId,
+              //   tagName         : result.data[i].askTag,
+              //   askReason       : result.data[i].askReason,
+              //   askContentShow  : result.data[i].askContentShow,
+              //   price           : result.data[i].askPrice,
+              //   createBy        : result.data[i].createBy,
+              //   updatedAt       : result.data[i].updatedAt,
+              //   lng             : result.data[i].GeoX,
+              //   lat             : result.data[i].GeoY,
+              //   askIsFree       : result.data[i].askIsFree,
+              //   askTagStr       : result.data[i].askTagStr,
+              //   likeNum         : result.data[i].likeNum
+              // })
+              // markers.push(marker);
+
+              // //监听marker点击事件
+              // marker.on("click",function(){
+              //   console.log("点击marker");
+              //   extData =  this.getExtData();
+              //   console.log("点击前");
+              //   console.log(extData);
+              //   var lng = extData.lng;
+              //   var lat = extData.lat;
+              //   console.log(extData.askTagStr);
+              //   // $("")
+              //   $(".up").text();
+              //   $(".down").text(extData.askReason+"test");
+              //   console.log(extData);
+              //   setDetail(extData);
+              //   // //设置地图中心位置为点击的marker上
+              //   map.setZoomAndCenter(map.getZoom(),[lng,lat]);
+              // });
+
+              // marker.setMap(map);
+            }
+            addCluster(0);
+          }
+        },
+        error: function(error){
+          alert(error);
+        }
+      });
+    }
+
+    //监听marker点击事件
+                  // markers.on("click",function(){
+                  //   console.log("点击marker");
+                  //   extData =  this.getExtData();
+                  //   console.log("点击前");
+                  //   console.log(extData);
+                  //   var lng = extData.lng;
+                  //   var lat = extData.lat;
+                  //   console.log(extData.askTagStr);
+                  //   // $("")
+                  //   $(".up").text();
+                  //   $(".down").text(extData.askReason+"test");
+                  //   console.log(extData);
+                  //   setDetail(extData);
+                  //   // //设置地图中心位置为点击的marker上
+                  //   map.setZoomAndCenter(map.getZoom(),[lng,lat]);
+                  // });
+
+
+    // function setDetail(extData){
+    //   console.log(extData);
+    //   var askId         = extData.askId
+    //       askType       = extData.askType,//主题类型
+    //       tag           = extData.tagName,//二级标签
+    //       askTagStr     = extData.askTagStr,//二级标签
+    //       reason        = extData.askReason,//推荐理由
+    //       content_show  = extData.askContentShow,//详情显示部分
+    //       content_hide  = extData.askContentHide,//详情显示部分
+    //       lng           = extData.lng,//经度
+    //       lat           = extData.lat,//维度
+    //       isfree        = extData.askIsFree,//是否是免费信息
+    //       price         = extData.price,//信息价格
+    //       createBy      = extData.createBy,//发布者
+    //       likeNum       = extData.likeNum,//赞踩数量
+    //       uName         = extData.uName,
+    //       userHead      = extData.userHead,
+    //       updatedAt     = extData.updatedAt;//发布时间
+    //   askType =  askType.split(",");
+    //   var typeText = '';
+    //   console.log(askType);
+    //   for(var i = 0; i < askType.length; i++){
+    //     typeText = formatType(askType[i]);
+    //     if(i == 1){
+    //       typeText = formatType(askType[i-1]) +","+ formatType(askType[i]);
+    //     }
+    //   }
+    //   //设置上传者名字
+    //   $(".autor-name").text(createBy);
+    //   $(".autor-name").text(uName);
+    //   //设置上传者的头像
+    //   if(userHead){
+    //     $(".autor-img").attr("src",userHead);
+    //   }else{
+    //     userHead = '/img/common/wenwo.png';
+    //     $(".autor-img").attr("src",userHead);
+    //   }
+      
+    //   //设置信息主题
+    //   $(".autor-theme").text(typeText);
+    //   //设置信息上传时间
+    //   console.log(updatedAt);
+    //   $(".autor-time").text(formatDate("y.m.d",updatedAt));
+
+    //   //设置赞踩
+    //   $(".votebar .voteNum").text(likeNum);
+
+    //   // if()
+    //   $(".votebar").data("askid",askId);
+
+
+    //   //设置标签
+    //   var askTagStr = JSON.parse(askTagStr);
+    //   console.log(askTagStr[0]);
+    //   var tagList = '';
+    //   for(var i = 0; i < askTagStr.length;i++){
+    //     tagList += '<div class="type-item">'+askTagStr[i].tag_name+'</div>' 
+    //   }
+    //   $("#tag-content .card-content-inner").empty();
+    //   $("#tag-content .card-content-inner").append(tagList);
+
+    //   //设置推荐理由
+    //   $("#reason-content .card-content-inner").text(reason);
+
+    //   //设置描述
+    //   var detail = content_show;
+    //   var hidden = '<span class="hidden-text">***</span>';
+    //   str = detail.split("##");
+    //   var detailContent = '';
+    //   for(var i = 0; i < str.length; i++){
+    //     if(i%2){
+    //       detailContent += str[i];
+    //     }else{
+    //       detailContent += str[i]+hidden;
+    //     }
+    //   }
+    //   console.log("price:"+price+"isfree:"+isfree);
+    //   if(price == "0.00" || isfree == "1"){ 
+    //   console.log("ko"); 
+    //     //解析详情
+    //     var show = content_show.split("##");
+    //     var hidden = content_hide.split("##");
+    //     detailContent = '';
+    //     for(var i = 0; i < hidden.length;i++){
+    //       detailContent += show[i] + hidden[i];
+    //     }
+    //     if(!hidden.length){
+    //       detailContent = show;
+    //     }
+    //   }
+
+
+    //   $("#detail-content  .card-content-inner").empty();
+    //   $("#detail-content  .card-content-inner").append(detailContent);
+
+    //   $(".wenwo-get").attr("data-askId",askId);
+    //   console.log(price.replace(/\s+/g,""));
+    //   if(isfree == "1" || price.replace(/\s+/g,"")=="0.00"){
+    //     $(".wenwo-get").text("收藏");
+    //     $(".votebar").show();
+    //     $("#address-content").show();
+    //   }else{
+    //     $(".wenwo-get").text("购买");
+    //   }
+
+    //   //判断是否点赞过
+    //     var data = {
+    //       ask_id   : askId,
+    //       username : "<%= username %>"
+    //     }
+    //     $.ajax({
+    //       type : "GET",
+    //       data: data,
+    //       dataType: "json",
+    //       url : "/ask/isliked",
+    //       success : function(result){
+    //         console.log(result);
+    //         if(result.code == 200){
+    //           var isliked = result.isliked;
+    //           //如果isliked=1点赞，2踩
+    //           if(isliked){
+
+    //             $(".votebar .iconfont").removeClass("liked");
+    //             if(isliked == 1){
+    //               //赞过
+    //               $(".votebar-like").addClass("liked");
+    //             }else{
+    //               //踩过
+    //               $(".votebar-hate").addClass("liked");
+    //             }
+    //           }
+    //         }
+    //       },
+    //       error : function(error){
+    //         $.alert('网络异常');
+    //       }
+    //     });
+
+
+
+    //   if(!extData.geted){
+
+    //     // $.showPreloader("正在查询");
+
+    //     var data = {
+    //       ask_id   : askId,
+    //       username : "<%= username %>"
+    //     }
+    //     //判断是否购买
+    //     $.ajax({
+    //       type : "GET",
+    //       data: data,
+    //       dataType: "json",
+    //       url : "/ask/askdetail",
+    //       success : function(result){
+
+    //         // $.hidePreloader();
+    //         console.log(result);
+    //         if(result.nobuy == "1"){
+    //           $(".ask-get, #address-content").hide();
+    //           $(".wenwo-get").show();
+    //           $(".votebar").show();
+    //         }else{
+    //           $(".ask-get, #address-content").show();
+    //           $(".wenwo-get").hide();
+    //           $(".votebar").show();
+
+    //           var show = result.data.askContentShow.split("##");
+    //           var hidden = result.data.askContentHide.split("##");
+    //           var reasonDetail = '';
+    //           for(var i = 0; i < hidden.length;i++){
+    //             reasonDetail += show[i] + hidden[i];
+    //           }
+    //           if(!hidden.length){
+    //             reasonDetail = show;
+    //           }
+
+    //           //解析详情
+    //           console.log("ceshi:"+reasonDetail);
+
+
+    //           $("#detail-content  .card-content-inner").empty();
+    //           $("#detail-content  .card-content-inner").append(reasonDetail);
+    //         }
+
+    //         if(result.data.askIsFree == "1" || result.data.askPrice == "0.00"){
+    //           $("#address-content").show();
+    //         }
+    //       },
+    //       error : function(error){
+    //         $.hidePreloader();
+    //         $.alert('网络异常');
+    //       }
+    //     });
+    //   }else{
+    //     //解析详情
+    //     var show = content_show.split("##");
+    //     var hidden = content_hide.split("##");
+    //     detailContent = '';
+    //     for(var i = 0; i < hidden.length;i++){
+    //       detailContent += show[i] + hidden[i];
+    //     }
+    //     if(!hidden.length){
+    //       detailContent = show;
+    //     }
+    //     $("#detail-content  .card-content-inner").empty();
+    //     $("#detail-content  .card-content-inner").append(detailContent);
+    //   }
+    //   // var data = {
+    //   //   ask_id   : askId,
+    //   //   username : "<%= username %>"
+    //   // }
+    //   // //判断是否购买
+    //   // $.ajax({
+    //   //   type : "GET",
+    //   //   data: data,
+    //   //   dataType: "json",
+    //   //   url : "/ask/askdetail",
+    //   //   success : function(result){
+    //   //     console.log(result);
+    //   //     if(result.nobuy == "1"){
+    //   //       $(".ask-get, #address-content").hide();
+    //   //       $(".wenwo-get").show();
+    //   //     }else{
+    //   //       $(".ask-get, #address-content").show();
+    //   //       $(".wenwo-get").hide();
+    //   //     }
+    //   //   },
+    //   //   error : function(error){
+    //   //     $.alert('网络异常');
+    //   //   }
+    //   // });
+
+    //   // //绑定marker点击事件
+    //   // $("#container").on("touchstart",".amap-icon",function(){
+    //   //   // $(this).addClass("amap-active");
+    //   //   // alert("123");
+    //   //   console.log("点击后");
+    //   //   console.log(extData);
+
+    //   //   // return ;
+
+    //   //   $(".amap-active").css("-webkit-transform", "rotate(0deg) !important;");
+    //   //   $(".amap-marker-list-content").remove();
+    //   //   // var div = '<div class="amap-marker-list-content" style="display:none"><div class="up">火锅<div class="up-price-right">0.8元</div></div><div class="down">这个真的很好吃</div></div>';
+        
+    //   //   var askTagStr = JSON.parse(extData.askTagStr);
+    //   //   console.log(askTagStr[0]);
+    //   //   var tagList = '';
+    //   //   for(var i = 0; i < askTagStr.length;i++){
+    //   //     tagList += '<div class="type-item">'+askTagStr[i]+'</div>' 
+    //   //   }
+    //   //   var div = '<div class="amap-marker-list-content" style="display:none"><div class="up">'+tagList+'<div class="up-price-right">￥'+extData.price+'</div></div><div class="down">'+extData.askReason+'</div></div>';
+    //   //   $(this).after(div);
+    //   //   if($(this).parent().hasClass("amap-active")){
+    //   //     $(this).parent().removeClass("amap-active");
+    //   //   }else{
+    //   //     $(".amap-marker").removeClass("amap-active");
+    //   //     $(this).parent().addClass("amap-active");
+    //   //   }
+    //   // })
+
+
+    //   //设置地点
+    //   var lnglatXY = [lng,lat];
+    //   getAddress(lnglatXY,{
+    //       success:function(address){
+    //         var detail = address.formattedAddress;
+    //         var address = {
+    //           province : address.addressComponent.province,
+    //           city     : address.addressComponent.city,
+    //           district : address.addressComponent.district,
+    //           township : address.addressComponent.township
+    //         }
+    //         var replace = ""+address.province+address.city+address.district+address.township+"";
+    //         detail = detail.replace(replace,"");
+    //         $("#address-content .item-title").text(detail);
+    //       }
+    //     });
+
+    //   //设置价格
+    //   $("#price-content .item-title").text(price);
+
+    //   // $("#reason-content .card-content-inner").text(reason);
+    //   // $("#price-content  .card-content-inner").text("￥ "+price);
+    //   // var detail = content_show;
+    //   // var hidden = '<span class="hidden-text">***</span>';
+    //   // str = detail.split("##");
+    //   // var detailContent = '';
+    //   // for(var i = 0; i < str.length; i++){
+    //   //   if(i%2){
+    //   //     detailContent += str[i];
+    //   //   }else{
+    //   //     detailContent += str[i]+hidden;
+    //   //   }
+    //   // }
+    //   // $("#detail-content  .card-content-inner").empty();
+    //   // $("#detail-content  .card-content-inner").append(detailContent);
+    //   // getMap(lng,lat);
+    // }
+
+    //购买
+    $(".wenwo-get").on("touchstart",function(){
+      console.log($(".wenwo-get").attr("data-askId"));
+      var data = {
+        username : "<%= username %>",
+        ask_id   : $(".wenwo-get").attr("data-askId")
+      }
+      var str = '你确定要'+$(this).text()+'吗?';
+
+      $.confirm(str, '小问提醒',
+        function () {
+          $.showPreloader("正在"+str.split("你确定要")[1].split("吗?")[0]);
+          $.ajax({
+            type : "POST",
+            data: data,
+            dataType: "json",
+            url : "/hode/get",
+            success : function(result){
+              console.log(result);
+              if(result.code == 200){
+                $.hidePreloader();
+                $.toast('操作成功');
+                $(".ask-get, #address-content").show();
+                $(".wenwo-get").hide();
+
+
+                var show = result.data.askContentShow.split("##");
+                var hidden = result.data.askContentHide.split("##");
+                detailContent = '';
+                for(var i = 0; i < hidden.length;i++){
+                  detailContent += show[i] + hidden[i];
+                }
+                if(!hidden.length){
+                  detailContent = show;
+                }
+                $("#detail-content  .card-content-inner").empty();
+                $("#detail-content  .card-content-inner").append(detailContent);
+
+                // var show = result.content_show.split("##");
+                // var hidden = content_hide.split("##");
+                // detailContent = '';
+                // for(var i = 0; i < hidden.length;i++){
+                //   detailContent += show[i] + hidden[i];
+                // }
+                // if(!hidden.length){
+                //   detailContent = show;
+                // }
+                // $("#detail-content  .card-content-inner").empty();
+                // $("#detail-content  .card-content-inner").append(detailContent);
+
+              }else if(result.code == 600){
+
+                $.toast("余额不足");
+                setTimeout(function(){
+                  window.location.href="/more/recharge";
+                }, 1000);
+              }else{
+                $.alert(result.message);
+              }
+             
+            },
+            error : function(error){
+              $.alert('网络异常');
+            }
+          });
+        },
+        function () {
+          // $.alert('You clicked Cancel button');
+        }
+      ); 
+      // $.ajax({
+      //   type : "POST",
+      //   data: data,
+      //   dataType: "json",
+      //   url : "/hode/get",
+      //   success : function(result){
+      //     console.log(result);
+      //   },
+      //   error : function(error){
+      //   }
+      // });
+    })
+
+
+    //监听移动获取城市信息
+    map.getCity(function(data) {
+          console.log(data);
+            if (data['province'] && typeof data['province'] === 'string') {
+                $(".address-text").text(data['city']);
+            }
+        });
+    map.on('moveend', getCity);
+    function getCity() {
+        map.getCity(function(data) {
+          console.log(data);
+            if (data['province'] && typeof data['province'] === 'string') {
+                $(".address-text").text(data['city']);
+            }
+        });
+    }
+
+    // window.onload = function() {
+    //   map.plugin(["AMap.ToolBar"], function() {
+    //     map.addControl(new AMap.ToolBar());
+    //   });
+    // }
+
+    //点击列表弹出详情
+    // $(".popup.marker-content").bind("touchstart","li",function(){
+    $(".popup.marker-content").bind("click","li",function(){
+      var askId = $(this).attr("data-askid");
+
+      var data = {
+        ask_id   : askId,
+        username : "<%= username %>"
+      }
+
+      $.showPreloader("正在加载");
+
+      //判断是否购买
+      $.ajax({
+        type : "GET",
+        data: data,
+        dataType: "json",
+        url : "/ask/askdetail",
+        success : function(result){
+          console.log(result);
+          if(result.code == 200){
+
+            if(result.nobuy == "1"){
+              $(".ask-get, #address-content").hide();
+              $(".wenwo-get").show();
+            }else{
+              $(".ask-get, #address-content").show();
+              $(".wenwo-get").hide();
+
+              var show = result.data.askContentShow.split("##");
+              var hidden = result.data.askContentHide.split("##");
+              var reasonDetail = '';
+              for(var i = 0; i < hidden.length;i++){
+                reasonDetail += show[i] + hidden[i];
+              }
+              if(!hidden.length){
+                reasonDetail = show;
+              }
+
+              //解析详情
+              console.log("ceshi:"+reasonDetail);
+
+
+              $("#detail-content  .card-content-inner").empty();
+              $("#detail-content  .card-content-inner").append(reasonDetail);
+            }
+
+
+            if(result.data.askIsFree == "1" || result.data.askPrice == "0.00"){
+              $("#address-content").show();
+            }
+
+            var getExtData = {
+                askType         : result.data.askType,
+                askId           : result.data.objectId,
+                tagName         : result.data.askTag,
+                askReason       : result.data.askReason,
+                askContentShow  : result.data.askContentShow,
+                askContentHide  : result.data.askContentHide,
+                price           : result.data.askPrice,
+                createBy        : result.data.createBy,
+                updatedAt       : result.data.updatedAt,
+                lng             : result.data.GeoX,
+                lat             : result.data.GeoY,
+                askIsFree       : result.data.askIsFree,
+                askTagStr       : result.data.askTagStr,
+                likeNum         : result.data.likeNum,
+                userHead        : result.data.createByUrl,
+                uName           : result.data.createByName,
+                geted           : 1
+              }
+
+              $.hidePreloader();
+              setDetail(getExtData);
+              $.popup('.ask-detail');
+              $("#ask-detail-cancel").show();
+            // askType =  askType.split(",");
+            // var typeText = '';
+            // console.log(askType);
+            // for(var i = 0; i < askType.length; i++){
+            //   typeText = formatType(askType[i]);
+            //   if(i == 1){
+            //     typeText = formatType(askType[i-1]) +","+ formatType(askType[i]);
+            //   }
+            // }
+            // //设置上传者名字
+            // $(".autor-name").text(createBy);
+            // //设置信息主题
+            // $(".autor-theme").text(typeText);
+            // //设置信息上传时间
+            // console.log(updatedAt);
+            // $(".autor-time").text(formatDate("y.m.d",updatedAt));
+
+            // // if()
+
+            // //设置标签
+            // var askTagStr = JSON.parse(askTagStr);
+            // console.log(askTagStr[0]);
+            // var tagList = '';
+            // for(var i = 0; i < askTagStr.length;i++){
+            //   tagList += '<div class="type-item">'+askTagStr[i]+'</div>' 
+            // }
+            // $("#tag-content .card-content-inner").append(tagList);
+
+            // //设置推荐理由
+            // $("#reason-content .card-content-inner").text(reason);
+
+            // //设置描述
+            // var detail = content_show;
+            // var hidden = '<span class="hidden-text">***</span>';
+            // str = detail.split("##");
+            // var detailContent = '';
+            // for(var i = 0; i < str.length; i++){
+            //   if(i%2){
+            //     detailContent += str[i];
+            //   }else{
+            //     detailContent += str[i]+hidden;
+            //   }
+            // }
+            // $("#detail-content  .card-content-inner").empty();
+            // $("#detail-content  .card-content-inner").append(detailContent);
+
+            // $(".wenwo-get").attr("data-askId",askId);
+            // if(isfree == "1"){
+            //   $(".wenwo-get").text("我要收藏");
+            // }
+          }else{
+            $.alert('信息获取失败');
+          }
+  
+        },
+        error : function(error){
+          $.alert('网络异常');
+        }
+      });
+      // $.popup('.ask-detail');
+    })
+
+    function doLike(type,likedNum){
+      //判断之前是否点过赞
+      var likeNum = 0;//点赞基数
+      $(".votebar .iconfont").removeClass("liked");
+      var num = parseInt(LIKENUM);
+      console.log(num);
+      if(type == 1){
+        $(".voteNum").text(num+1);
+        // if(likedNum){
+        //   $(".voteNum").text(likedNum);
+        // }
+        $(".votebar-like").addClass("liked");
+      }else{
+        $(".voteNum").text(num-1);
+        // if(likedNum){
+        //   $(".voteNum").text(likedNum);
+        // }
+        $(".votebar-hate").addClass("liked");
+      }
+    }
+
+    var likeType = 1;
+    function askLike(askId,type){
+      var data = {
+          ask_id   : askId,
+          username : "<%= username %>",
+          type     : type
+        }
+        $.ajax({
+          type : "GET",
+          data: data,
+          dataType: "json",
+          url : "/ask/like",
+          success : function(result){
+            console.log(result);
+            if(result.code == 200){
+              // $(".votebar .iconfont").removeClass("liked");
+              // var num = parseInt($(".voteNum").text());
+              // console.log(num);
+              // if(type == 1){
+              //   num++;
+              //   $(".voteNum").text(num);
+              //   $(".votebar-like").addClass("liked");
+              // }else{
+              //   num--;
+              //   $(".voteNum").text(num);
+              //   $(".votebar-hate").addClass("liked");
+              // }
+              // doLike(type);
+            }else{
+              $.toast(result.message);
+              // $(".voteNum").text(num-1);
+              // if(likedNum){
+              //   $(".voteNum").text(likedNum);
+              // }
+              // $(".votebar-hate").addClass("liked");
+              var num = parseInt(LIKENUM);
+              if(LIKETYPE == 0){
+                $(".votebar .iconfont").removeClass("liked");
+                $(".voteNum").text(num);
+              }else if(LIKETYPE == 1){
+                $(".votebar .iconfont").removeClass("liked");
+                $(".voteNum").text(num+1);
+                $(".votebar-like").addClass("liked");
+              }else if(LIKETYPE == 2){
+                $(".votebar .iconfont").removeClass("liked");
+                $(".voteNum").text(num-1);
+                $(".votebar-hate").addClass("liked");
+              }
+            }
+          },
+          error : function(error){
+            $.toast('网络异常');
+          }
+        });
+    }
+    //赞
+      $(".votebar-like,.votebar-hate").on("click",function(){
+        // var askId = $(this).parent(".votebar").data("askid");
+        var askId = $(this).parent(".votebar").attr("data-askid");
+        var type = 0;
+        console.log(askId);
+        if($(this).hasClass("liked")){
+
+        }else{
+          if($(this).hasClass("votebar-like")){
+            //赞
+            type = 1;
+          }else{
+            //踩
+            type = 2;
+          }
+
+          likeType = type;
+          doLike(type);
+          askLike(askId,type);
+        }
+      })
+
+    //返回我的位置
+    $("#container").on("click",".geolocation-position",function(){
+      var longitude = $("#container").attr("data-longitude");
+      var latitude  = $("#container").attr("data-latitude");
+      if(longitude && latitude){
+        map.setZoomAndCenter(14,[longitude,latitude]);
+      }
+    })
+
+
+    // map.on("click",function(e){
+    //     console.log('您在[ '+e.lnglat.getLng()+','+e.lnglat.getLat()+' ]的位置点击了地图！');
+    //     map.setCenter([e.lnglat.getLng(),e.lnglat.getLat()]);
+    // })
+  </script>
+</html>
