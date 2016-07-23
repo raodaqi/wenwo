@@ -59,62 +59,73 @@ router.get('/regist', function(req, res, next) {
 });
 
 router.post('/login', function (req, res, next) {
-    var userName = req.param('username');
-    var password = req.param('password');
 
-    if (!userName) {
-        var result = {
-            code : 300,
-            message : 'miss parameter : username'
+    var openid = req.body.openid;
+    var accessToken = req.body.access_token;
+    var expiresIn = req.body.expires_in;
+
+
+    AV.User._logInWith('weixin', {
+        'authData': {
+            "openid": openid,
+            "access_token": accessToken,
+            "expires_in": expiresIn
         }
-        res.send(result);
-        return;
-    }
-    if (!password) {
-        var result = {
-            code : 300,
-            message : 'miss parameter : password'
+    }).then(function(user) {
+        //返回绑定后的用户
+        //console.log(user);
+        //console.log(user.get('user'));
+
+        if (user.get('user') != null) {
+            console.log('haved');
+            // var user = AV.User.current();
+            console.log(user);
+            //var url = 'http://wenwo.leanapp.cn/?username='+user.get('user');
+            // var url = urlReq + '?username='+user.get('user');
+            // resG.redirect(url);
+            res.send({code:200,data:{username:user.get('user')},message:'操作成功'});
+
+
         }
-        res.send(result);
-        return;
-    }
+        else {
+            console.log('no');
+            var post = new Post();
+            var wallet = new Wallet();
+            wallet.set('money', 0);
+            wallet.save().then(function (wallet) {
+                console.log(wallet);
+                //post.set('userName', post.id);
+                post.set('uName', username);
+                post.set('userHead', userhead);
+                post.set('wallet', wallet);
+                post.save().then(function (post) {
+                    post.set('userName', post.id);
+                    post.save().then(function (post) {
+                        user.set('userInfo', post);
+                        user.set('user', post.id);
+                        user.set('wallet', wallet);
+                        user.save().then(function (user) {
+                            // var user = AV.User.current();
+                            // console.log(user);
+                            //var url = 'http://wenwo.leanapp.cn/?username='+user.get('user');
+                            // var url = urlReq + '?username='+user.get('user');
+                            // resG.redirect(url);
 
-    AV.User.logIn(userName, password).then(function() {
-        var session_token = AV.User.current()._sessionToken;
-        var query = new AV.Query('UserInfo');
+                            res.send({code:200,data:{username:user.get('user')},message:'操作成功'});
+                        });
+                    });
 
-        query.equalTo('userName', userName);
-        query.find().then(function(results) {
-            //console.log(results[0]);
-            var user_id = results[0].id;
-            query.get(user_id).then(function(post) {
-
-                //console.log(post);
-                post.set('token', session_token);
-                post.save();
-            }, function(error) {
-                // 失败了
+                });
             });
-            var data = {
-                session_token : session_token,
-                user_id : user_id,
-                user_name : userName
-            }
-            var result = {
-                code : 200,
-                data : data,
-                message : 'operation succeeded'
-            }
-            res.send(result);
-        }, function(error) {
 
-        });
+        }
 
 
-
-    }, function() {
-        //console.log('登录失败');
+    }, function(error) {
+        console.log(error);
+        res.send({code:400,message:error});
     });
+
 });
 
 router.get('/getuserinfo', function(req, res, next) {
