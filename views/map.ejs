@@ -54,21 +54,21 @@
     window.history.back(-1);
   })
 
-  initLocation({
-    success:function(myLng,myLat){
-      if(myLng && myLat){
-        //步行导航
-        var walking = new AMap.Walking({
-            map: map,
-            panel: "panel"
-        }); 
-        walking.search([
-            {keyword: AMap.LngLat(myLng,myLat)},
-            {keyword: AMap.LngLat(lng,lat)}
-        ]);
-      }
-    }
-  });
+  // initLocation({
+  //   success:function(myLng,myLat){
+  //     if(myLng && myLat){
+  //       //步行导航
+  //       var walking = new AMap.Walking({
+  //           map: map,
+  //           panel: "panel"
+  //       }); 
+  //       walking.search([
+  //           {keyword: AMap.LngLat(myLng,myLat)},
+  //           {keyword: AMap.LngLat(lng,lat)}
+  //       ]);
+  //     }
+  //   }
+  // });
 
   var marker;
   var icon = new AMap.Icon({

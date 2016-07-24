@@ -966,6 +966,7 @@
     //再来一发
     $(".again").on("click",function(){
       $.router.load("#router");
+      window.location.reload();
     })
     $("#success .find").on("click",function(){
       $.showPreloader("正在出宫");
@@ -1977,7 +1978,7 @@
       marker.setMap(map);
     });
 
-    // if(marker){
+    if(marker){
       //拖动标注后回调的坐标
        marker.on("dragend",function(){
         console.log(this.getPosition());
@@ -2010,7 +2011,7 @@
           }
         });
       })
-    // }
+    }
     
   </script>
 </html>
