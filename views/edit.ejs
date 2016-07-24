@@ -1723,6 +1723,11 @@
           console.log(askPosition);
         }
 
+        if(!askPosition){
+           $.toast("你地图没有标注上");
+          return;
+        }
+
         //获取信息价格
         price = $("#price").val().replace(/\s+/g,"");
         var priceFloat = parseFloat(price);
@@ -1886,6 +1891,24 @@
          }else{
           lng = e.poi.location.lng;
           lat = e.poi.location.lat;
+          getAddress(lnglatXY,{
+            success:function(address){
+              var detail = address.formattedAddress;
+              var address = {
+                province : address.addressComponent.province,
+                city     : address.addressComponent.city,
+                district : address.addressComponent.district,
+                township : address.addressComponent.township
+              }
+
+              var replace = ""+address.province+address.city+address.district+address.township+"";
+              detail = detail.replace(replace,"");
+              address.detail = detail;
+              var address = JSON.stringify(address);
+
+              $(".address .edit-content").attr("data-address",address);
+            }
+          });
          }
          lnglatXY = [lng,lat]; //已知点坐标
          console.log(map.getCenter());
@@ -1954,7 +1977,7 @@
       marker.setMap(map);
     });
 
-    if(marker){
+    // if(marker){
       //拖动标注后回调的坐标
        marker.on("dragend",function(){
         console.log(this.getPosition());
@@ -1983,10 +2006,11 @@
 
             $(".address .edit-content").attr("data-address",address);
             $(".address .edit-content").text(detail);
+            $("#address").val(detail);
           }
         });
       })
-    }
+    // }
     
   </script>
 </html>
