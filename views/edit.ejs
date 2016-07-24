@@ -1876,14 +1876,25 @@
       AMap.event.addListener(autocomplete, "select", function(e){
          placeSearch.search(e.poi.name);
          console.log($(".amap-marker"));
-         lnglatXY = [e.poi.location.lng, e.poi.location.lat]; //已知点坐标
          console.log(e);
+         var lng,
+             lat;
+         if(!e.poi.location){
+          return;
+          lng = map.getCenter().lng;
+          lat = map.getCenter().lat;
+         }else{
+          lng = e.poi.location.lng;
+          lat = e.poi.location.lat;
+         }
+         lnglatXY = [lng,lat]; //已知点坐标
+         console.log(map.getCenter());
 
          //选择后存储坐标
-         localStorage["lng"] = e.poi.location.lng;
-         localStorage["lat"] = e.poi.location.lat;
-         $("#container").attr("data-lng",e.poi.location.lng);
-         $("#container").attr("data-lat",e.poi.location.lat);
+         localStorage["lng"] = lng;
+         localStorage["lat"] = lat;
+         $("#container").attr("data-lng",lng);
+         $("#container").attr("data-lat",lat);
 
          map.clearMap();
           marker = new AMap.Marker({
@@ -1895,7 +1906,7 @@
             raiseOnDrag: true,
             clickable:true
           });
-         
+         marker.setMap(map);
       });
     });
 

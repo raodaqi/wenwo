@@ -100,7 +100,7 @@ console.log(user);
 });*/
 
 
-var test = 1;
+var test = 0;
 
 app.get('/', function(req, res) {
   var username =  req.query.username;
