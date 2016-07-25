@@ -6,7 +6,7 @@
     //加载地图，调用浏览器定位服务
     map = new AMap.Map('container', {
         resizeEnable: true,
-        zoom:17
+        zoom:19
     });
     map.plugin('AMap.Geolocation', function() {
         geolocation = new AMap.Geolocation({
@@ -24,6 +24,8 @@
         AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
         AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
     });
+
+
     //解析定位结果
     function onComplete(data) {
         var str=['定位成功'];

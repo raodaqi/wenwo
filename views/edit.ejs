@@ -540,6 +540,9 @@
       font-size: 1rem;
       margin-top: .2rem;
     }
+    .amap-marker-content{
+      display: none;
+    }
 
   }
   </style>
@@ -1036,7 +1039,31 @@
     })
   </script>
   <script>
-  initLocation();
+  initLocation({
+    success:function(){
+
+    },
+    error:function(){
+      $.toast("定位失败");
+    }
+  });
+
+//   if(navigator.geolocation) { // 判断设备是否支持定位
+// 　　　　navigator.geolocation.getCurrentPosition(function(position) { 　　
+
+// 　　　　　　alert(position.coords.latitude); // 纬度
+
+// 　　　　　　alert(position.coords.longitude); // 经度
+
+// 　　　　}, function(error) {
+// 　　　　　　alert(error.message);
+// 　　　　}, {
+// 　　　　　　maximumAge: 0
+// 　　　　});
+// 　　}else {
+// 　　　　alert("不支持定位");
+// 　　}
+
   window.onload = function() {
     map.plugin(["AMap.ToolBar"], function() {
       map.addControl(new AMap.ToolBar());
@@ -1176,6 +1203,17 @@
     var icon = new AMap.Icon({
       image: "/img/edit/marker.png",
     });
+
+    //初始化marker
+    marker = new AMap.Marker({
+      icon : icon,//24px*24px
+      map : map,
+      draggable: true,
+      cursor: 'move',
+      raiseOnDrag: true,
+      clickable:true
+    });
+    marker.setMap(map);
     //获取地址
     function getAddress(lnglatXY,callback){
       var geocoder = new AMap.Geocoder({
@@ -1616,11 +1654,13 @@
     $("#price").on("input change",function(){
       var price = $(this).val();
       var priceFloat = parseFloat(price);
+      // alert(price.length);
       if(!price){
         price = 0;
+        $.toast("只能输入数字且不能为空");
         return;
       }
-      if(priceFloat != price){
+      if(priceFloat != price || isNaN(price)){
         $.toast("输入格式不对");
         return ;
       }
@@ -1884,14 +1924,69 @@
          console.log($(".amap-marker"));
          console.log(e);
          var lng,
-             lat;
+             lat,
+             timer;
          if(!e.poi.location){
-          return;
-          lng = map.getCenter().lng;
-          lat = map.getCenter().lat;
+
+          setTimeout(function(){
+            lng = map.getCenter().lng;
+            lat = map.getCenter().lat;
+            var lnglatXY = [lng,lat]; //已知点坐标
+            map.setZoomAndCenter(19, lnglatXY);
+            getAddress(lnglatXY,{
+              success:function(address){
+                var detail = address.formattedAddress;
+                var address = {
+                  province : address.addressComponent.province,
+                  city     : address.addressComponent.city,
+                  district : address.addressComponent.district,
+                  township : address.addressComponent.township
+                }
+
+                var replace = ""+address.province+address.city+address.district+address.township+"";
+                detail = detail.replace(replace,"");
+                address.detail = detail;
+                var address = JSON.stringify(address);
+              }
+            });
+           //选择后存储坐标
+           localStorage["lng"] = lng;
+           localStorage["lat"] = lat;
+           $("#container").attr("data-lng",lng);
+           $("#container").attr("data-lat",lat);
+
+            map.clearMap();
+            marker = new AMap.Marker({
+              icon : icon,//24px*24px
+              map : map,
+              position: lnglatXY,
+              draggable: true,
+              cursor: 'move',
+              raiseOnDrag: true,
+              clickable:true
+            });
+           marker.setMap(map);
+          }, 500);
+
+          return ;
+
          }else{
+
           lng = e.poi.location.lng;
           lat = e.poi.location.lat;
+          
+         }
+
+         lnglatXY = [lng,lat]; //已知点坐标
+         console.log(lnglatXY);
+         map.setZoomAndCenter(19, lnglatXY);
+        setTimeout(function(){
+          if(map.getZoom() != 19){
+            map.setZoomAndCenter(19, lnglatXY);
+          }
+          
+        }, 300);
+
           getAddress(lnglatXY,{
             success:function(address){
               var detail = address.formattedAddress;
@@ -1906,14 +2001,10 @@
               detail = detail.replace(replace,"");
               address.detail = detail;
               var address = JSON.stringify(address);
-
+              console.log(address);
               $(".address .edit-content").attr("data-address",address);
             }
           });
-         }
-         lnglatXY = [lng,lat]; //已知点坐标
-         console.log(map.getCenter());
-
          //选择后存储坐标
          localStorage["lng"] = lng;
          localStorage["lat"] = lat;
