@@ -22,6 +22,7 @@ var authorization = require('./routes/authorization');
 var config = require('./config');
 var Haved = AV.Object.extend('Haved');
 var Withdraw = AV.Object.extend('Withdraw');
+var config=require('./config');
 
 var wxpay = WXPay({
   appid: config.appid,
@@ -100,7 +101,7 @@ console.log(user);
 });*/
 
 
-var test = 0;
+var test = config.test;
 
 app.get('/', function(req, res) {
   var username =  req.query.username;
