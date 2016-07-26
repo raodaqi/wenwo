@@ -77,36 +77,41 @@
     .pre-view{
       position: absolute;
       left:1.5rem;
-      background: #FFF url("/img/edit/left.png") no-repeat;
+      background: url("/img/edit/left.png") no-repeat;
       background-size: 100%;
       width: 5rem;
       height: 2rem;
       text-align: center;
       line-height: 2rem;
-      color: #999999;
+      /*color: #999999;*/
+      color: white;
       padding-left: 1rem ;
       font-size: .7rem;
+      font-weight: bold;
     }
-    #router5 .pre-view{
+    /*#router5 .pre-view{
       background: url("/img/edit/left-empty.png") no-repeat;
       background-size: 100%;
     }
     #router5 .next-view{
       background: url("/img/edit/right-empty.png") no-repeat;
       background-size: 100%;
-    }
+    }*/
     .next-view,.end-view{
       position: absolute;
       right: 1.5rem;
-      background: #FFF url("/img/edit/right.png") no-repeat;
+      /*background: #FFF url("/img/edit/right.png") no-repeat;*/
+      background: url("/img/edit/right.png") no-repeat;
       background-size: 100%;
       width: 5rem;
       height: 2rem;
       text-align: center;
       line-height: 2rem;
-      color: #999999;
+      /*color: #999999;*/
+      color:white;
       padding-right: 1rem;
       font-size: .7rem;
+      font-weight: bold;
     }
     .header-bar{
       position: absolute;
@@ -188,8 +193,10 @@
     }
     .ww-typeHelper-input{
       border: 0 !important;
+      border-radius: 0 !important;
       padding:0.5rem 0.5rem;
       text-align: center;
+      width: 10rem;
       font-size: 0.75rem !important;
       border-bottom: 0.1rem solid #999999 !important;
     }
@@ -273,6 +280,9 @@
       margin:50px 5% 0;
       padding-left: 1.4rem;
       font-size: .75rem;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      box-sizing: border-box;
     }
     #add-detail:-ms-input-placeholder{
       color: #AEAEAE;
@@ -280,7 +290,7 @@
     #add-detail::-webkit-input-placeholder{
       color: #AEAEAE;
     }
-    .icon-bianji,.icon-tixing{
+    .icon-bianji,.icon-tixing,.search{
       display: block;
       position: absolute;
       color: #EE7E2E;
@@ -290,9 +300,25 @@
     }
     .icon-tixing{
       right: .7rem;
+      bottom: .6rem;
+    }
+    .search{
+      right: .1rem;
+      font-size: .6rem;
+      color: white;
+      background-color: #4eb9ff;
+      height: 1.5rem;
+      line-height: 1.5rem;
+      width: 14%;
+      text-align: center;
+      /*padding:0 .3rem;*/
+      border-radius: .3rem;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
     }
     .tip{
       margin-top: .5rem;
+
     }
     .tip-img{
       display: block;
@@ -542,6 +568,9 @@
     }
     .amap-marker-content{
       display: none;
+    }
+    .toast{
+      /*top:3rem;*/
     }
 
   }
@@ -832,12 +861,14 @@
         <div class="add-search">
           <input type="text" class="search-input" id="address" name="address" placeholder="请标注美食所在的精确位置">
           <div class="ww_typeHelper-input-left iconfont icon-bianji"></div>
-          <span class="icon iconfont icon-tixing"></span>
+          <!-- <span class="icon iconfont icon-tixing"></span> -->
+          <div class="search">搜素</div>
         </div>
 
         <div class="add-detail">
           <div class="add-detail-text"><label class="red">地址附注：</label></div>
           <input type="text" class="add-detail-input" id="add-detail" name="adetail" placeholder="可详细描述美食的具体位置">
+          <span class="icon iconfont icon-tixing"></span>
         </div>
       </header>
 
@@ -1077,12 +1108,14 @@
     id = this.id;
     $(".footer-bar").hide();
     if(this.id == "address" || this.id == "add-detail"){
+      $(".amap-zoomcontrol").hide();
       return;
     }
     $(".header-bar").hide();
     $(".page-content").css("margin-top","1rem");
   });
   $("input,textarea").blur(function(){
+    $(".amap-zoomcontrol").show();
     $(".footer-bar").show();
     $(".header-bar").show();
     $(".page-content").css("margin-top","5rem");
@@ -1093,17 +1126,24 @@
     if($(document.body).height() < height){
       //输入框弹起
       $(".footer-bar").hide();
+      $(".amap-zoomcontrol").hide();
       if(id != "address" && id != "add-detail"){
         $(".header-bar").hide();
         $(".page-content").css("margin-top","1rem");
       }
-      
     }else{
       //输入框放下
       $(".footer-bar").show();
       $(".header-bar").show();
+      $(".amap-zoomcontrol").show();
       $(".page-content").css("margin-top","5rem");
     }
+  })
+
+  //修复搜索列表bug
+  $("#container").on("click",function(){
+    // $("#address").focus();
+    // $("#address").blur();
   })
 
   //判断是不是安卓手机
@@ -1600,6 +1640,17 @@
       return detailLi;
     }
 
+    function initMap(lnglatXY){
+      map = new AMap.Map('container', {
+        resizeEnable: true,
+        zoom:19,
+        center: lnglatXY,
+        buttonOffset: new AMap.Pixel(60, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+        zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+        buttonPosition:'LB'
+      });
+    }
+
     $(".detail-li-all-content").on("input change","input",function(){
       var detailLi = getAllDetailLiV();
       if(detailLi.length){
@@ -1920,20 +1971,173 @@
             map:map
       })
       AMap.event.addListener(autocomplete, "select", function(e){
-         placeSearch.search(e.poi.name);
-         console.log($(".amap-marker"));
-         console.log(e);
-         var lng,
-             lat,
-             timer;
-         if(!e.poi.location){
-
-          setTimeout(function(){
-            lng = map.getCenter().lng;
-            lat = map.getCenter().lat;
-            var lnglatXY = [lng,lat]; //已知点坐标
+         placeSearch.setCity(e.poi.adcode);
+         placeSearch.search(e.poi.name,function(status,result){
+          console.log(result);
+          if(result.info == "OK"){
+            var lng = result.poiList.pois[0].location.lng;
+            var lat = result.poiList.pois[0].location.lat;
+            var lnglatXY = [lng,lat];
             map.setZoomAndCenter(19, lnglatXY);
             getAddress(lnglatXY,{
+              success:function(address){
+                var detail = address.formattedAddress;
+                var address = {
+                  province : address.addressComponent.province,
+                  city     : address.addressComponent.city,
+                  district : address.addressComponent.district,
+                  township : address.addressComponent.township
+                }
+                var replace = ""+address.province+address.city+address.district+address.township+"";
+                detail = detail.replace(replace,"");
+                address.detail = detail;
+                var address = JSON.stringify(address);
+                $(".address .edit-content").attr("data-address",address);
+                $(".address .edit-content").text(detail);
+              }
+            });
+           //选择后存储坐标
+           localStorage["lng"] = lng;
+           localStorage["lat"] = lat;
+           $("#container").attr("data-lng",lng);
+           $("#container").attr("data-lat",lat);
+            map.clearMap();
+            marker = new AMap.Marker({
+              icon : icon,//24px*24px
+              map : map,
+              position: lnglatXY,
+              draggable: true,
+              cursor: 'move',
+              raiseOnDrag: true,
+              clickable:true
+            });
+           marker.setMap(map);
+          }
+          return;
+         });
+        //  var lng,
+        //      lat,
+        //      timer;
+        //  if(!e.poi.location){
+        //     lng = map.getCenter().lng;
+        //     lat = map.getCenter().lat;
+        //     var lnglatXY = [lng,lat]; //已知点坐标
+        //     initMap(lnglatXY);
+        //     return;
+
+        //   setTimeout(function(){
+        //     lng = map.getCenter().lng;
+        //     lat = map.getCenter().lat;
+        //     var lnglatXY = [lng,lat]; //已知点坐标
+        //     map.setZoomAndCenter(19, lnglatXY);
+        //     getAddress(lnglatXY,{
+        //       success:function(address){
+        //         var detail = address.formattedAddress;
+        //         var address = {
+        //           province : address.addressComponent.province,
+        //           city     : address.addressComponent.city,
+        //           district : address.addressComponent.district,
+        //           township : address.addressComponent.township
+        //         }
+
+        //         var replace = ""+address.province+address.city+address.district+address.township+"";
+        //         detail = detail.replace(replace,"");
+        //         address.detail = detail;
+        //         var address = JSON.stringify(address);
+        //       }
+        //     });
+        //    //选择后存储坐标
+        //    localStorage["lng"] = lng;
+        //    localStorage["lat"] = lat;
+        //    $("#container").attr("data-lng",lng);
+        //    $("#container").attr("data-lat",lat);
+
+        //     map.clearMap();
+        //     marker = new AMap.Marker({
+        //       icon : icon,//24px*24px
+        //       map : map,
+        //       position: lnglatXY,
+        //       draggable: true,
+        //       cursor: 'move',
+        //       raiseOnDrag: true,
+        //       clickable:true
+        //     });
+        //    marker.setMap(map);
+        //   }, 500);
+
+        //   return ;
+
+        //  }else{
+
+        //   lng = e.poi.location.lng;
+        //   lat = e.poi.location.lat;
+          
+        //  }
+
+        //  lnglatXY = [lng,lat]; //已知点坐标
+        //  console.log(lnglatXY);
+        //  map.setZoomAndCenter(19, lnglatXY);
+        // setTimeout(function(){
+        //   if(map.getZoom() != 19){
+        //     map.setZoomAndCenter(19, lnglatXY);
+        //   }
+          
+        // }, 300);
+
+        //   getAddress(lnglatXY,{
+        //     success:function(address){
+        //       var detail = address.formattedAddress;
+        //       var address = {
+        //         province : address.addressComponent.province,
+        //         city     : address.addressComponent.city,
+        //         district : address.addressComponent.district,
+        //         township : address.addressComponent.township
+        //       }
+
+        //       var replace = ""+address.province+address.city+address.district+address.township+"";
+        //       detail = detail.replace(replace,"");
+        //       address.detail = detail;
+        //       var address = JSON.stringify(address);
+        //       console.log(address);
+        //       $(".address .edit-content").attr("data-address",address);
+        //     }
+        //   });
+        //  //选择后存储坐标
+        //  localStorage["lng"] = lng;
+        //  localStorage["lat"] = lat;
+        //  $("#container").attr("data-lng",lng);
+        //  $("#container").attr("data-lat",lat);
+
+        //  map.clearMap();
+        //   marker = new AMap.Marker({
+        //     icon : icon,//24px*24px
+        //     map : map,
+        //     position: lnglatXY,
+        //     draggable: true,
+        //     cursor: 'move',
+        //     raiseOnDrag: true,
+        //     clickable:true
+        //   });
+        //  marker.setMap(map);
+      });
+    });
+
+    //点击搜素按钮
+    $(".search").on("click",function(){
+      var text = $("#address").val();
+       AMap.service(["AMap.PlaceSearch"], function() {
+        var placeSearch = new AMap.PlaceSearch({ //构造地点查询类
+            map: map
+        });
+        //关键字查询
+        placeSearch.search(text,function(statu,result){
+          console.log(result);
+          if(result.info == "OK"){
+            var lng = result.poiList.pois[0].location.lng;
+            var lat = result.poiList.pois[0].location.lat;
+            var lnglatXY = [lng,lat];
+            map.setZoomAndCenter(19, lnglatXY);
+             getAddress(lnglatXY,{
               success:function(address){
                 var detail = address.formattedAddress;
                 var address = {
@@ -1947,6 +2151,8 @@
                 detail = detail.replace(replace,"");
                 address.detail = detail;
                 var address = JSON.stringify(address);
+                $(".address .edit-content").attr("data-address",address);
+                $(".address .edit-content").text(detail);
               }
             });
            //选择后存储坐标
@@ -1954,7 +2160,6 @@
            localStorage["lat"] = lat;
            $("#container").attr("data-lng",lng);
            $("#container").attr("data-lat",lat);
-
             map.clearMap();
             marker = new AMap.Marker({
               icon : icon,//24px*24px
@@ -1966,66 +2171,17 @@
               clickable:true
             });
            marker.setMap(map);
-          }, 500);
-
-          return ;
-
-         }else{
-
-          lng = e.poi.location.lng;
-          lat = e.poi.location.lat;
-          
-         }
-
-         lnglatXY = [lng,lat]; //已知点坐标
-         console.log(lnglatXY);
-         map.setZoomAndCenter(19, lnglatXY);
-        setTimeout(function(){
-          if(map.getZoom() != 19){
-            map.setZoomAndCenter(19, lnglatXY);
+          }else{
+            $.toast("未查找到结果，请尝试修改查询条件");
           }
-          
-        }, 300);
+        });
+        // placeSearch.on("complete",function(){
 
-          getAddress(lnglatXY,{
-            success:function(address){
-              var detail = address.formattedAddress;
-              var address = {
-                province : address.addressComponent.province,
-                city     : address.addressComponent.city,
-                district : address.addressComponent.district,
-                township : address.addressComponent.township
-              }
-
-              var replace = ""+address.province+address.city+address.district+address.township+"";
-              detail = detail.replace(replace,"");
-              address.detail = detail;
-              var address = JSON.stringify(address);
-              console.log(address);
-              $(".address .edit-content").attr("data-address",address);
-            }
-          });
-         //选择后存储坐标
-         localStorage["lng"] = lng;
-         localStorage["lat"] = lat;
-         $("#container").attr("data-lng",lng);
-         $("#container").attr("data-lat",lat);
-
-         map.clearMap();
-          marker = new AMap.Marker({
-            icon : icon,//24px*24px
-            map : map,
-            position: lnglatXY,
-            draggable: true,
-            cursor: 'move',
-            raiseOnDrag: true,
-            clickable:true
-          });
-         marker.setMap(map);
+        // })
       });
-    });
+    })
 
-
+    // $.toast("未查找到结果，请尝试修改查询条件");
     //点击标注
     map.on('click', function(e) {
       map.clearMap();
@@ -2072,6 +2228,7 @@
     if(marker){
       //拖动标注后回调的坐标
        marker.on("dragend",function(){
+        alert("123");
         console.log(this.getPosition());
         var lat = this.getPosition().lat;
         var lng = this.getPosition().lng;

@@ -114,7 +114,7 @@ app.get('/', function(req, res) {
     var username = user.get('user');
     // console.log(username);
     res.render('food', { username: username, lng:lng, lat:lat});
-
+    return ;
   }
   res.render('food', { username: username, lng:"0", lat:"0"});
 });
@@ -126,6 +126,7 @@ app.get('/wenwo', function(req, res) {
   //username = decodeURI(username);
   if(lng && lat){
     res.render('index', { username: username, lng:lng, lat:lat});
+    return ;
   }
   res.render('index', { username: username, lng:"0", lat:"0"});
 });
@@ -136,6 +137,7 @@ app.get('/map', function(req, res) {
   //username = decodeURI(username);
   if(lng && lat){
     res.render('map', {lng:lng, lat:lat});
+    return ;
   }
   res.render('map', {lng:"0", lat:"0"});
 });
@@ -163,6 +165,7 @@ app.get('/food', function(req, res) {
   var username = "573b0e3df38c8400673bb48d";
   if(username && test){
     res.render('food', { username: username, lng:lng, lat:lat});
+    return ;
   }
 
   if (!user) {
@@ -171,6 +174,7 @@ app.get('/food', function(req, res) {
     var username = user.get('user');
     // console.log(username);
     res.render('food', { username: username, lng:lng, lat:lat});
+    return ;
   }
   res.render('food', { username: username, lng:"0", lat:"0"});
 });
@@ -182,6 +186,7 @@ app.get('/edit', function(req, res) {
   var username = "573b0e3df38c8400673bb48d";
   if(username && test){
     res.render('edit', {username:username,type:type,askid:askid});
+    return ;
   }
 
   var user = AV.User.current();
