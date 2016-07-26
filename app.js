@@ -345,6 +345,9 @@ app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
       if (resuletes != '') {
         console.log('已处理');
       } else {
+
+        console.log('未处理');
+
         var order = new Order();
         order.set('openid', openid);
         order.set('feeType', feeType);
@@ -362,12 +365,17 @@ app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
         var userName = attach.username;
         var askId = attach.ask_id;
 
+        console.log(userName);
+        console.log(askId);
+
         var price = parseFloat(totalFee) / 100.0;
 
         var query = new AV.Query('UserInfo');
         query.get(userName).then(function (user) {
           var query = new AV.Query('AskMe');
           query.get(askId).then(function (ask) {
+
+            console.log(ask.get('createBy'));
 
             var incomeUser = ask.get('createBy');
             var incomeTotal = (price * 90 / 100).toFixed(2);
