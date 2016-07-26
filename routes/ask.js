@@ -337,6 +337,7 @@ router.post('/askdetail', function(req, res, next) {
         if (!user || user == '') {
 
             res.send({code:500,message:'用户未信息错误'});
+            return;
 
         } else  {
 
@@ -407,7 +408,7 @@ router.post('/askdetail', function(req, res, next) {
                         };
 
                         res.send({code:200,data:ask,show:detailShow,message:'操作成功'});
-
+                        return;
 
 
                     });
@@ -440,6 +441,7 @@ router.get('/getask', function(req, res, next) {
             message : 'Operation succeeded'
         }
         res.send(result);
+        return;
     });
 });
 
@@ -456,6 +458,7 @@ router.get('/askadmin', function(req, res, next) {
             message : 'Operation succeeded'
         }
         res.send(result);
+        return;
     });
 });
 
@@ -473,6 +476,7 @@ router.post('/admincancle', function (req, res, next) {
                 message: 'illegal operation'
             };
             res.send(result);
+            return;
         }
         else {
             ask.set('staus', '3');
@@ -484,6 +488,7 @@ router.post('/admincancle', function (req, res, next) {
                     message: 'Operation succeeded'
                 }
                 res.send(result);
+                return;
             }, function (err) {
                 var result = {
                     code: 800,
@@ -491,6 +496,7 @@ router.post('/admincancle', function (req, res, next) {
                     message: err.message
                 }
                 res.send(result);
+                return;
                 //console.log('Failed to create new object, with error message: ' + err.message);
             });
         }

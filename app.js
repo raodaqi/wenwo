@@ -401,7 +401,7 @@ app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
             query.include('wallet');
             query.get(incomeUser).then(function (incomeUser) {
               incomeUser.get('wallet').set('money', incomeUser.get('wallet').get('money') + parseFloat(incomeTotal));
-              incomeUser.get('wallet').set('total', (parseFloat(incomeUser.get('total').get('money')) + parseFloat(incomeTotal)).toString());
+              incomeUser.get('wallet').set('total', (parseFloat(incomeUser.get('total')) + parseFloat(incomeTotal)).toString());
               incomeUser.get('wallet').save().then(function () {
                 incomeUser.save().then(function () {
                   have.save().then(function () {
