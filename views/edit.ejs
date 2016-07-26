@@ -1079,6 +1079,39 @@
     }
   });
 
+  function initMarker(marker){
+       marker.on("dragend",function(){
+        console.log(this.getPosition());
+        var lat = this.getPosition().lat;
+        var lng = this.getPosition().lng;
+        $("#container").attr("data-lng",lng);
+        $("#container").attr("data-lat",lat);
+        localStorage["lng"] = lng;
+        localStorage["lat"] = lat;
+        var lnglatXY = [lng,lat];
+        getAddress(lnglatXY,{
+          success:function(address){
+            var detail = address.formattedAddress;
+            var address = {
+              province : address.addressComponent.province,
+              city     : address.addressComponent.city,
+              district : address.addressComponent.district,
+              township : address.addressComponent.township
+            }
+
+            var replace = ""+address.province+address.city+address.district+address.township+"";
+            detail = detail.replace(replace,"");
+            address.detail = detail;
+            var address = JSON.stringify(address);
+
+            $(".address .edit-content").attr("data-address",address);
+            $(".address .edit-content").text(detail);
+            $("#address").val(detail);
+          }
+        });
+      })
+    }
+
 //   if(navigator.geolocation) { // 判断设备是否支持定位
 // 　　　　navigator.geolocation.getCurrentPosition(function(position) { 　　
 
@@ -1141,9 +1174,10 @@
   })
 
   //修复搜索列表bug
-  $("#container").on("click",function(){
+  $("#router5").on("click",function(){
     // $("#address").focus();
     // $("#address").blur();
+    // $(".amap-sug-result").css("visibility","hidden");
   })
 
   //判断是不是安卓手机
@@ -1254,6 +1288,7 @@
       clickable:true
     });
     marker.setMap(map);
+    initMarker(marker);
     //获取地址
     function getAddress(lnglatXY,callback){
       var geocoder = new AMap.Geocoder({
@@ -1389,6 +1424,7 @@
         });
 
          marker.setMap(map);
+         initMarker(marker);
       }
 
       //初始化价格信息
@@ -1491,6 +1527,7 @@
         });
 
          marker.setMap(map);
+         initMarker(marker);
 
         //价格
         console.log(price);
@@ -2012,6 +2049,7 @@
               clickable:true
             });
            marker.setMap(map);
+           initMarker(marker);
           }
           return;
          });
@@ -2171,6 +2209,7 @@
               clickable:true
             });
            marker.setMap(map);
+           initMarker(marker);
           }else{
             $.toast("未查找到结果，请尝试修改查询条件");
           }
@@ -2184,6 +2223,9 @@
     // $.toast("未查找到结果，请尝试修改查询条件");
     //点击标注
     map.on('click', function(e) {
+      //隐藏列表
+      $(".amap-sug-result").css("visibility","hidden");
+
       map.clearMap();
       lnglatXY = [e.lnglat.getLng(), e.lnglat.getLat()]; //已知点坐标
       getAddress(lnglatXY,{
@@ -2223,43 +2265,44 @@
       $("#container").attr("data-lat",e.lnglat.getLat());
       // //拖动标注后回调的坐标
       marker.setMap(map);
+      initMarker(marker);
     });
 
-    if(marker){
-      //拖动标注后回调的坐标
-       marker.on("dragend",function(){
-        alert("123");
-        console.log(this.getPosition());
-        var lat = this.getPosition().lat;
-        var lng = this.getPosition().lng;
-        $("#container").attr("data-lng",lng);
-        $("#container").attr("data-lat",lat);
+    // if(marker){
+    //   //拖动标注后回调的坐标
+    //    marker.on("dragend",function(){
+    //     alert("123");
+    //     console.log(this.getPosition());
+    //     var lat = this.getPosition().lat;
+    //     var lng = this.getPosition().lng;
+    //     $("#container").attr("data-lng",lng);
+    //     $("#container").attr("data-lat",lat);
 
-        localStorage["lng"] = lng;
-        localStorage["lat"] = lat;
-        var lnglatXY = [lng,lat];
-        getAddress(lnglatXY,{
-          success:function(address){
-            var detail = address.formattedAddress;
-            var address = {
-              province : address.addressComponent.province,
-              city     : address.addressComponent.city,
-              district : address.addressComponent.district,
-              township : address.addressComponent.township
-            }
+    //     localStorage["lng"] = lng;
+    //     localStorage["lat"] = lat;
+    //     var lnglatXY = [lng,lat];
+    //     getAddress(lnglatXY,{
+    //       success:function(address){
+    //         var detail = address.formattedAddress;
+    //         var address = {
+    //           province : address.addressComponent.province,
+    //           city     : address.addressComponent.city,
+    //           district : address.addressComponent.district,
+    //           township : address.addressComponent.township
+    //         }
 
-            var replace = ""+address.province+address.city+address.district+address.township+"";
-            detail = detail.replace(replace,"");
-            address.detail = detail;
-            var address = JSON.stringify(address);
+    //         var replace = ""+address.province+address.city+address.district+address.township+"";
+    //         detail = detail.replace(replace,"");
+    //         address.detail = detail;
+    //         var address = JSON.stringify(address);
 
-            $(".address .edit-content").attr("data-address",address);
-            $(".address .edit-content").text(detail);
-            $("#address").val(detail);
-          }
-        });
-      })
-    }
-    
+    //         $(".address .edit-content").attr("data-address",address);
+    //         $(".address .edit-content").text(detail);
+    //         $("#address").val(detail);
+    //       }
+    //     });
+    //   })
+    // }
+
   </script>
 </html>
