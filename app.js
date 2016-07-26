@@ -114,6 +114,7 @@ app.get('/', function(req, res) {
     var username = user.get('user');
     // console.log(username);
     res.render('food', { username: username, lng:lng, lat:lat});
+
   }
   res.render('food', { username: username, lng:"0", lat:"0"});
 });

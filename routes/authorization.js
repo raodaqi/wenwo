@@ -582,7 +582,7 @@ router.get('/', function(req, res, next) {
                             //var url = 'http://wenwo.leanapp.cn/?username='+user.get('user');
                             var url = urlReq + '?username='+user.get('user');
                             resG.redirect(url);
-
+                            return;
 
                         }
                         else {
@@ -608,6 +608,7 @@ router.get('/', function(req, res, next) {
                                             //var url = 'http://wenwo.leanapp.cn/?username='+user.get('user');
                                             var url = urlReq + '?username='+user.get('user');
                                             resG.redirect(url);
+                                            return;
 
 
                                         });
