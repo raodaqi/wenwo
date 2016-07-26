@@ -31,7 +31,7 @@ router.get('/mywallet', function(req, res, next) {
     query.equalTo('userName', userName);
     query.find().then(function(results) {
         //console.log(results);
-        console.log(results[0].attributes.wallet);
+        // console.log(results[0].attributes.wallet);
         // if (!results[0].attributes.wallet) {
         //     var wallet = new Wallet();
         //     wallet.set('money', 0);

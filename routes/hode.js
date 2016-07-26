@@ -85,7 +85,7 @@ router.post('/haved', function(req, res, next) {
 
     var userName = req.body.username;
 
-    console.log(userName);
+    // console.log(userName);
 
     var query = new AV.Query('UserInfo');
     query.get(userName).then(function (user) {
@@ -110,7 +110,7 @@ router.post('/haved', function(req, res, next) {
                 message : '操作成功'
             };
             res.send(result);
-
+            return;
         });
 
     });
@@ -142,7 +142,7 @@ router.post('/get', function(req, res, next) {
             else {
                 var query = new AV.Query('AskMe');
                 query.get(askId).then(function (post) {
-                    console.log(post);
+                    // console.log(post);
                     // var num = post.get("buyNum");
                     // num = (parseInt(num) + 1).toString();
                     // post.set('buyNum', num);
@@ -165,7 +165,7 @@ router.post('/get', function(req, res, next) {
                                 have.set('byUrl', user.get('userHead'));
                                 have.set('askOwn', post.get('createBy'));
                                 have.save().then(function (result) {
-                                    console.log(result);
+                                    // console.log(result);
                                     relation.add(result);
                                     buyRelation.add(result);
                                     resultes[0].save().then(function () {
@@ -218,16 +218,16 @@ router.post('/get', function(req, res, next) {
                             var query = new AV.Query('UserInfo');
                             query.equalTo('userName', userName);
                             query.find().then(function (resultes) {
-                                console.log(resultes[0]);
+                                // console.log(resultes[0]);
                                 // var relation = resultes[0].relation('haved');
                                 // relation.query().find().then(function (list) {
                                 //     console.log(list);
                                 // });
-                                console.log(post.get('askPrice'));
+                                // console.log(post.get('askPrice'));
                                 var price = parseFloat(post.get('askPrice'));
                                 var query = new AV.Query('Wallet');
                                 query.get(resultes[0].attributes.wallet.id).then(function (wallet) {
-                                    console.log(wallet.get('money'));
+                                    // console.log(wallet.get('money'));
                                     var money = parseFloat(wallet.get('money'));
                                     //console.log(money-price);
                                     if ((money-price) < 0) {
@@ -239,7 +239,7 @@ router.post('/get', function(req, res, next) {
                                         return;
                                     }
                                     else {
-                                        console.log((money-price).toString());
+                                        // console.log((money-price).toString());
                                         wallet.set('money', parseFloat((money-price).toFixed(2)));
                                         wallet.save().then(function () {
                                             var relation = resultes[0].relation('haved');
@@ -253,7 +253,7 @@ router.post('/get', function(req, res, next) {
                                             have.set('byUrl', user.get('userHead'));
                                             have.set('askOwn', post.get('createBy'));
                                             have.save().then(function (result) {
-                                                console.log(result);
+                                                // console.log(result);
                                                 relation.add(result);
                                                 buyRelation.add(result);
                                                 resultes[0].save().then(function () {
@@ -268,7 +268,7 @@ router.post('/get', function(req, res, next) {
                                                                     var query = new AV.Query('Wallet');
                                                                     query.get(id).then(function (wallet) {
                                                                         //console.log(wallet);
-                                                                        console.log('money'+parseFloat((wallet.get('money')+price)).toFixed(2));
+                                                                        // console.log('money'+parseFloat((wallet.get('money')+price)).toFixed(2));
                                                                         wallet.set('money', parseFloat(parseFloat((wallet.get('money')+price)).toFixed(2)));
                                                                         wallet.save().then(function (re) {
                                                                             var relation = ask.relation('haved');
@@ -289,7 +289,7 @@ router.post('/get', function(req, res, next) {
                                                                             else {
                                                                                 relation.query().find().then(function (list) {
                                                                                     var num = list.length;
-                                                                                    console.log('num:'+num);
+                                                                                    // console.log('num:'+num);
                                                                                     ask.set('buyNum', num.toString());
                                                                                     ask.set('score', (parseInt(ask.get('score')) + 1).toString());
                                                                                     ask.save().then(function (ask) {
@@ -316,7 +316,7 @@ router.post('/get', function(req, res, next) {
                                                 });
                                             });
                                         },function (error) {
-                                            console.log('Error: ' + error.code + ' ' + error.message);
+                                            // console.log('Error: ' + error.code + ' ' + error.message);
                                         });
 
                                     }
@@ -326,7 +326,7 @@ router.post('/get', function(req, res, next) {
                         }
                     }, function(error) {
                         // 失败
-                        console.log('Error: ' + error.code + ' ' + error.message);
+                        // console.log('Error: ' + error.code + ' ' + error.message);
                     });
 
                 });
@@ -349,14 +349,14 @@ router.post('/del', function(req, res, next) {
         //console.log(resultes[0]);
         var relation = resultes[0].relation('haved');
         relation.query().find().then(function (list) {
-            console.log(list);
+            // console.log(list);
             var flag = 0;
             for (var i = 0; i < list.length; i++) {
                 //console.log(list[i].attributes.ask.id);
                 //console.log(askId);
                 if (list[i].attributes.ask.id == askId) {
                     //console.log('remove');
-                    console.log(list[i]);
+                    // console.log(list[i]);
                     relation.remove(list[i]);
                     list[i].destroy();
                     resultes[0].save().then(function () {
@@ -395,7 +395,7 @@ router.post('/refund', function(req, res, next) {
     var askId = req.param('ask_id');
     var userName = req.param('username');
     var refundInfos = req.param('refundInfo');
-    console.log(refundInfos);
+    // console.log(refundInfos);
 
     var query = new AV.Query('UserInfo');
     query.equalTo('userName', userName);
@@ -410,14 +410,14 @@ router.post('/refund', function(req, res, next) {
                 //console.log(askId);
                 if (list[i].attributes.ask.id == askId) {
                     //console.log('remove');
-                    console.log(list[i]);
+                    // console.log(list[i]);
                     relation.remove(list[i]);
                     list[i].destroy();
                     resultes[0].save().then(function () {
                         var query = new AV.Query('AskMe');
                         query.get(askId).then(function (post) {
                             var refundInfo = new RefundInfo();
-                            console.log(refundInfos);
+                            // console.log(refundInfos);
                             refundInfo.set('info', refundInfos);
                             refundInfo.set('userName', userName);
                             refundInfo.set('by', resultes[0].get('uName'));
@@ -432,9 +432,9 @@ router.post('/refund', function(req, res, next) {
                                     var price = parseFloat(post.get('askPrice'));
                                     var query = new AV.Query('Wallet');
                                     query.get(resultes[0].attributes.wallet.id).then(function (wallet) {
-                                        console.log(wallet.get('money'));
+                                        // console.log(wallet.get('money'));
                                         var money = parseFloat(wallet.get('money'));
-                                        console.log((money+price).toString());
+                                        // console.log((money+price).toString());
                                         wallet.set('money', (money+price).toFixed(2));
                                         wallet.save().then(function () {
                                             var result = {
@@ -444,7 +444,7 @@ router.post('/refund', function(req, res, next) {
                                             res.send(result);
                                             return;
                                         },function (error) {
-                                            console.log('Error: ' + error.code + ' ' + error.message);
+                                            // console.log('Error: ' + error.code + ' ' + error.message);
                                         });
 
                                     });
@@ -514,7 +514,7 @@ router.post('/foodlike', function(req, res, next) {
                                 message : '操作成功'
                             };
                             res.send(result);
-
+                            return;
 
                         });
 
@@ -530,7 +530,7 @@ router.post('/foodlike', function(req, res, next) {
                         message : '重复操作'
                     };
                     res.send(result);
-
+                    return;
 
 
                 }
@@ -560,7 +560,7 @@ router.post('/cancelfoodlike', function(req, res, next) {
                 for (var i = 0; i<fooLikes.length; i++) {
                     if (fooLikes[i].get('ask').id == askId) {
 
-                        console.log(fooLikes[i].id);
+                        // console.log(fooLikes[i].id);
 
                         var todo = AV.Object.createWithoutData('FoodLike', fooLikes[i].id);
                         todo.destroy().then(function (success) {
@@ -573,6 +573,7 @@ router.post('/cancelfoodlike', function(req, res, next) {
                                     message : '操作成功'
                                 };
                                 res.send(result);
+                                return;
 
                             });
 
@@ -582,6 +583,7 @@ router.post('/cancelfoodlike', function(req, res, next) {
                                 message : '操作失败'
                             };
                             res.send(result);
+                            return;
                         });
 
                         flag++;
@@ -596,6 +598,7 @@ router.post('/cancelfoodlike', function(req, res, next) {
                         message : '尚未评价'
                     };
                     res.send(result);
+                    return;
 
 
 
@@ -635,6 +638,7 @@ router.post('/foodlikelist', function(req, res, next) {
                     message : '操作成功'
                 };
                 res.send(result);
+                return;
 
             });
 

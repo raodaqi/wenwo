@@ -112,7 +112,7 @@ app.get('/', function(req, res) {
     authorize(req, res);
   }else{
     var username = user.get('user');
-    console.log(username);
+    // console.log(username);
     res.render('food', { username: username, lng:lng, lat:lat});
   }
   res.render('food', { username: username, lng:"0", lat:"0"});
@@ -168,7 +168,7 @@ app.get('/food', function(req, res) {
     authorize(req, res);
   }else{
     var username = user.get('user');
-    console.log(username);
+    // console.log(username);
     res.render('food', { username: username, lng:lng, lat:lat});
   }
   res.render('food', { username: username, lng:"0", lat:"0"});
@@ -188,7 +188,7 @@ app.get('/edit', function(req, res) {
     authorize(req, res);
   }else{
     var username = user.get('user');
-    console.log(username);
+    // console.log(username);
     res.render('edit', {username:username,type:type,askid:askid});
   }
 });
@@ -204,7 +204,7 @@ app.get('/detail', function(req, res) {
     authorize(req, res);
   }else{
     var username = user.get('user');
-    console.log(username);
+    // console.log(username);
     res.render('detail', {askid:askid,username:username});
   }
 });
@@ -325,7 +325,7 @@ app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
   var returnCode = req.query.return_code;
   var returnMsg = req.query.return_msg;
   if (returnMsg != null) {
-    console.log(returnMsg);
+    // console.log(returnMsg);
   } else  {
     var feeType = msg.fee_type;
     var totalFee = msg.total_fee;
@@ -343,10 +343,10 @@ app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
     query.find().then(function (resuletes) {
 
       if (resuletes != '') {
-        console.log('已处理');
+        // console.log('已处理');
       } else {
 
-        console.log('未处理');
+        // console.log('未处理');
 
         var order = new Order();
         order.set('openid', openid);
@@ -365,8 +365,8 @@ app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
         var userName = attach.username;
         var askId = attach.ask_id;
 
-        console.log(userName);
-        console.log(askId);
+        // console.log(userName);
+        // console.log(askId);
 
         var price = parseFloat(totalFee) / 100.0;
 
@@ -375,7 +375,7 @@ app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
           var query = new AV.Query('AskMe');
           query.get(askId).then(function (ask) {
 
-            console.log(ask.get('createBy'));
+            // console.log(ask.get('createBy'));
 
             var incomeUser = ask.get('createBy');
             var incomeTotal = (price * 90 / 100).toFixed(2);
@@ -480,7 +480,7 @@ function authorize(req, res) {
   var secret = config.appsecret;
 
   var url = req.originalUrl;
-  console.log(url);
+  // console.log(url);
   //url = 'http://wenwo.leanapp.cn' + url;
   //console.log(req.rawHeaders);
   //var url = req.rawHeaders[17];
@@ -488,7 +488,7 @@ function authorize(req, res) {
   //url = encodeURIComponent(url);
   //var urlApi = "http://wenwo.leanapp.cn/authorization/?url="+url;
   var urlApi = "http://" + req.headers.host + "/authorization/?url=" + url;
-  console.log(urlApi);
+  // console.log(urlApi);
   urlApi = encodeURIComponent(urlApi);
   var url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+urlApi+'&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect';
 

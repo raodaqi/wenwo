@@ -39,9 +39,9 @@ router.get('/wx', function(req, res, next) {
     // url = 'http://wenwo.leanapp.cn' + url;
     //var url = req.rawHeaders[15];
     var url = 'http://wenwo.leanapp.cn/';
-    console.log(url);
+    // console.log(url);
     url = encodeURIComponent(url);
-    console.log(url);
+    // console.log(url);
 
     //console.log(url);
     var urlApi = "http://wenwo.leanapp.cn/authorization/?url="+url;
@@ -52,12 +52,12 @@ router.get('/wx', function(req, res, next) {
 
 router.get('/pay_t', function(req, res, next) {
     var totalFee = req.param('totalFee');
-    console.log(totalFee);
+    // console.log(totalFee);
     //var totalFee = 3;
     totalFee = parseFloat(totalFee);
     // totalFee = totalFee / 100;
     // totalFee = totalFee * 100;
-    console.log(totalFee);
+    // console.log(totalFee);
     var secret = config.appsecret;
 
 
@@ -67,7 +67,7 @@ router.get('/pay_t', function(req, res, next) {
     // var total = 0.01;
      var ip = req.ip;
      ip = ip.substr(ip.lastIndexOf(':')+1, ip.length);
-     console.log(ip);
+     // console.log(ip);
     // unified(appid, mchid, body, notifyUrl, ip, total, secret, {
     //     success:function (result) {
     //         console.log(result);
@@ -76,7 +76,7 @@ router.get('/pay_t', function(req, res, next) {
     var code = req.query.code;
     if (code == null) {
         // totalFee = totalFee / 100;
-        console.log(totalFee);
+        // console.log(totalFee);
         var urlApi = "http://wenwo.leanapp.cn/authorization/pay_t?totalFee="+totalFee;
         //var urlApi = "/authorization/pay_t";
         authorizeNotInfo(res, urlApi);
@@ -254,7 +254,7 @@ router.get('/pay', function(req, res, next) {
                 } else  {
 
                     var totalFee = parseFloat(ask.get('askPrice'))*100;
-                    console.log(totalFee);
+                    // console.log(totalFee);
                     if (parseInt(totalFee)) {
 
                         var user = AV.User.current();
@@ -270,14 +270,14 @@ router.get('/pay', function(req, res, next) {
 
                             //JSON.stringify();
                             var authData = user.get('authData');
-                            console.log(authData);
+                            // console.log(authData);
                             var openid = authData.weixin.openid;
                             var accessToken = authData.weixin.access_token;
                             var expiresIn = authData.weixin.expires_in;
 
                             var ip = req.ip;
                             ip = ip.substr(ip.lastIndexOf(':')+1, ip.length);
-                            console.log(ip);
+                            // console.log(ip);
                             var notifyUrl = 'http://wenwo.leanapp.cn/notify';
                             //notifyUrl = encodeURIComponent(notifyUrl);
 
@@ -292,7 +292,7 @@ router.get('/pay', function(req, res, next) {
                                 notify_url:notifyUrl
                             }, function(err, result){
                                 // in express
-                                console.log(result);
+                                // console.log(result);
                                 res.send({code:200,payargs:result});
                             });
 
@@ -368,7 +368,7 @@ router.get('/withdraw', function(req, res, next) {
     var secret = '9157e84975386b6dee6a499cc639973e';
     var username = req.query.username;
     var amount = req.query.amount;
-    console.log(amount);
+    // console.log(amount);
     // if (code == null) {
     //     var urlApi = "http://wenwo.leanapp.cn/authorization/withdraw?amount="+amount+"&username="+username;
     //     //var urlApi = "/authorization/pay_t";
@@ -458,7 +458,7 @@ router.get('/withdraw', function(req, res, next) {
                             };
                             data.sign = getSign(data);
 
-                            console.log(data);
+                            // console.log(data);
                             //console.log(buildXML(data));
                             //return;
                             // getAccessToken(appid, secret, code, res, {
@@ -475,9 +475,9 @@ router.get('/withdraw', function(req, res, next) {
                             }, function(err, response, body){
                                 //console.log(err)
                                 //console.log(response);
-                                console.log(body);
+                                // console.log(body);
                                 parseXML(body, function (err, result) {
-                                    console.log(result);
+                                    // console.log(result);
                                     if (result.return_code == 'SUCCESS' && result.return_msg == '') {
                                         var withdraw = new Withdraw();
                                         withdraw.set('nonceStr', result.nonce_str);
@@ -531,15 +531,15 @@ router.get('/withdraw', function(req, res, next) {
 
 router.get('/', function(req, res, next) {
     //url = decodeURIComponent(url);
-    console.log(req.query.url);
+    // console.log(req.query.url);
     var urlReq = decodeURIComponent(req.query.url);
-    console.log(urlReq);
+    // console.log(urlReq);
     var appid = config.appid;
     var secret = config.appsecret;
 
     var code = req.query.code;
     resG = res;
-    console.log("code:" +code);
+    // console.log("code:" +code);
     
     getAccessToken(appid, secret, code, res,{
         success:function (result) {
@@ -576,9 +576,9 @@ router.get('/', function(req, res, next) {
                         //console.log(user.get('user'));
 
                         if (user.get('user') != null) {
-                            console.log('haved');
+                            // console.log('haved');
                             // var user = AV.User.current();
-                            console.log(user);
+                            // console.log(user);
                             //var url = 'http://wenwo.leanapp.cn/?username='+user.get('user');
                             var url = urlReq + '?username='+user.get('user');
                             resG.redirect(url);
@@ -586,12 +586,12 @@ router.get('/', function(req, res, next) {
 
                         }
                         else {
-                            console.log('no');
+                            // console.log('no');
                             var post = new Post();
                             var wallet = new Wallet();
                             wallet.set('money', 0);
                             wallet.save().then(function (wallet) {
-                                console.log(wallet);
+                                // console.log(wallet);
                                 //post.set('userName', post.id);
                                 post.set('uName', username);
                                 post.set('userHead', userhead);
@@ -620,7 +620,7 @@ router.get('/', function(req, res, next) {
 
 
                     }, function(error) {
-                        console.log(error);
+                        // console.log(error);
                     });
 
                     // var data = {

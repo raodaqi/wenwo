@@ -34,7 +34,7 @@ router.get('/', function(req, res, next) {
         res.redirect('manage/signin');
     }else{
         var username = user.get('username');
-        console.log(username);
+        // console.log(username);
         res.render('manage/index',{username:username});
     }
     // res.render('manage/index');
@@ -101,7 +101,7 @@ router.post('/regist', function(req, res, next) {
     //user.set('phone', '186-1234-0000');
     user.signUp().then(function(user) {
         // 注册成功，可以使用了
-        console.log(user);
+        // console.log(user);
         var result = {
             code : 200,
             user:user,
@@ -111,7 +111,7 @@ router.post('/regist', function(req, res, next) {
         return;
     }, function(error) {
         // 失败了
-        console.log('Error: ' + error.code + ' ' + error.message);
+        // console.log('Error: ' + error.code + ' ' + error.message);
         var result = {
             code : 400,
             message : error.message
@@ -181,7 +181,7 @@ router.post('/login', function (req, res, next) {
 router.get('/getviews', function(req, res, next) {
     var query = new AV.Query('Suggestion');
     query.find().then(function (list) {
-        console.log(list);
+        // console.log(list);
         var result = {
             code : 200,
             data:list,
@@ -243,8 +243,8 @@ router.get('/applyinfo', function(req, res, next) {
     //query.get(applyId).then(function (apply) {
         //var userName = apply.get('userName');
         //var amount = apply.get('amount');
-    console.log(userName);
-    console.log(amount);
+    // console.log(userName);
+    // console.log(amount);
 
 
         // var query = new AV.Query('AskMe');
@@ -356,7 +356,7 @@ router.get('/apply', function(req, res, next) {
                 var secret = '9157e84975386b6dee6a499cc639973e';
                 var username = apply.get('userName');
                 var amount = apply.get('amount');
-                console.log(amount);
+                // console.log(amount);
                 // if (code == null) {
                 //     var urlApi = "http://wenwo.leanapp.cn/authorization/withdraw?amount="+amount+"&username="+username;
                 //     //var urlApi = "/authorization/pay_t";
@@ -449,7 +449,7 @@ router.get('/apply', function(req, res, next) {
                                         };
                                         data.sign = getSign(data);
 
-                                        console.log(data);
+                                        // console.log(data);
                                         //console.log(buildXML(data));
                                         //return;
                                         // getAccessToken(appid, secret, code, res, {
@@ -466,9 +466,9 @@ router.get('/apply', function(req, res, next) {
                                         }, function(err, response, body){
                                             //console.log(err)
                                             //console.log(response);
-                                            console.log(body);
+                                            // console.log(body);
                                             parseXML(body, function (err, result) {
-                                                console.log(result);
+                                                // console.log(result);
                                                 if (result.return_code == 'SUCCESS' && result.return_msg == '') {
                                                     var withdraw = new Withdraw();
                                                     withdraw.set('nonceStr', result.nonce_str);

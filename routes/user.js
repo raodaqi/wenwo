@@ -77,9 +77,9 @@ router.post('/login', function (req, res, next) {
         //console.log(user.get('user'));
 
         if (user.get('user') != null) {
-            console.log('haved');
+            // console.log('haved');
             // var user = AV.User.current();
-            console.log(user);
+            // console.log(user);
             //var url = 'http://wenwo.leanapp.cn/?username='+user.get('user');
             // var url = urlReq + '?username='+user.get('user');
             // resG.redirect(url);
@@ -88,12 +88,12 @@ router.post('/login', function (req, res, next) {
 
         }
         else {
-            console.log('no');
+            // console.log('no');
             var post = new Post();
             var wallet = new Wallet();
             wallet.set('money', 0);
             wallet.save().then(function (wallet) {
-                console.log(wallet);
+                // console.log(wallet);
                 //post.set('userName', post.id);
                 post.set('uName', username);
                 post.set('userHead', userhead);
@@ -122,7 +122,7 @@ router.post('/login', function (req, res, next) {
 
 
     }, function(error) {
-        console.log(error);
+        // console.log(error);
         res.send({code:400,message:error});
     });
 
@@ -151,7 +151,7 @@ router.get('/getuserinfo', function(req, res, next) {
     var query = new AV.Query('_User');
     query.equalTo('user', userName);
     query.find().then(function(results) {
-        console.log(results);
+        // console.log(results);
         if(results == '') {
             var resulte = {
                 code : 890,
@@ -163,7 +163,7 @@ router.get('/getuserinfo', function(req, res, next) {
         var userId =  results[0].get('userInfo').id;
         var que = new AV.Query('UserInfo');
         que.get(userId).then(function(post) {
-            console.log(post.get('userHead'));
+            // console.log(post.get('userHead'));
             // var data = {
             //     user_id :userId,
             //     user_name : userName,
@@ -190,7 +190,7 @@ router.post('/suggestion', function (req, res, next) {
     suggestion.set('view', view);
     suggestion.set('contact', contact);
     suggestion.save().then(function (post) {
-        console.log(post);
+        // console.log(post);
         var result = {
             code : 200,
             message : 'operation succeeded'
@@ -254,7 +254,7 @@ router.post('/getInfo', function (req, res, next) {
 
                         };
 
-                        console.log(data);
+                        // console.log(data);
 
                         var result = {
                             code : 200,
