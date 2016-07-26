@@ -121,7 +121,7 @@ router.get('/allask', function(req, res, next) {
                 message : 'Operation succeeded'
             }
             res.send(result);
-
+            return;
 
         });
 
@@ -157,7 +157,7 @@ router.get('/askhide', function(req, res, next) {
         //console.log(resultes[0]);
         var relation = resultes[0].relation('haved');
         relation.query().find().then(function (list) {
-            console.log(list);
+            // console.log(list);
             var flag = 0;
             for (var i = 0; i < list.length; i++) {
                 //console.log(list[i].attributes.ask.id);
@@ -366,7 +366,7 @@ router.post('/askdetail', function(req, res, next) {
                         var isOwnFlag = 0;
                         //var showDetail = 0;
 
-                        console.log(ask.id);
+                        // console.log(ask.id);
                         if (ask.get('createBy') == userName) {
 
                             isOwnFlag++;
@@ -663,6 +663,7 @@ router.post('/adminedit', function(req, res, next) {
                 message : err.message
             }
             res.send(result);
+            return;
             //console.log('Failed to create new object, with error message: ' + err.message);
         });
     });
@@ -862,7 +863,7 @@ router.get('/getlike', function(req, res, next) {
         //console.log(ask);
         var relation = ask.relation('like');
         relation.query().find().then(function (list) {
-            console.log(list);
+            // console.log(list);
             var result = {
                 code : 200,
                 data : list,
@@ -931,6 +932,7 @@ router.get('/cancel', function(req, res, next) {
                 message: 'illegal operation'
             }
             res.send(result);
+            return;
         }
         else {
             ask.set('staus', '3');
@@ -941,6 +943,7 @@ router.get('/cancel', function(req, res, next) {
                     message: 'Operation succeeded'
                 }
                 res.send(result);
+                return;
             }, function (err) {
                 var result = {
                     code: 800,
@@ -948,6 +951,7 @@ router.get('/cancel', function(req, res, next) {
                     message: err.message
                 }
                 res.send(result);
+                return;
                 //console.log('Failed to create new object, with error message: ' + err.message);
             });
         }
@@ -968,6 +972,7 @@ router.get('/up', function(req, res, next) {
                 message: 'illegal operation'
             }
             res.send(result);
+            return;
         }
         else {
             ask.set('staus', 2);
@@ -978,6 +983,7 @@ router.get('/up', function(req, res, next) {
                     message: 'Operation succeeded'
                 }
                 res.send(result);
+                return;
             }, function (err) {
                 var result = {
                     code: 800,
@@ -985,6 +991,7 @@ router.get('/up', function(req, res, next) {
                     message: err.message
                 }
                 res.send(result);
+                return;
                 //console.log('Failed to create new object, with error message: ' + err.message);
             });
         }
@@ -1005,6 +1012,7 @@ router.get('/del', function(req, res, next) {
                 message: 'illegal operation'
             }
             res.send(result);
+            return;
         }
         else {
             ask.set('staus', 6);
@@ -1015,6 +1023,7 @@ router.get('/del', function(req, res, next) {
                     message: 'Operation succeeded'
                 }
                 res.send(result);
+                return;
             }, function (err) {
                 var result = {
                     code: 800,
@@ -1022,6 +1031,7 @@ router.get('/del', function(req, res, next) {
                     message: err.message
                 }
                 res.send(result);
+                return;
                 //console.log('Failed to create new object, with error message: ' + err.message);
             });
         }
@@ -1043,6 +1053,7 @@ router.post('/approval', function(req, res, next) {
                 message : 'Operation succeeded'
             }
             res.send(result);
+            return;
         });
     });
 });
@@ -1185,14 +1196,14 @@ router.post('/sendask', function(req, res, next) {
 
         setTag(tag, type, {
             success:function () {
-                console.log('add');
+                // console.log('add');
                 var query = new AV.Query('Tag');
                 query.equalTo('tagOrderby', type);
                 query.find().then(function(results) {
-                    console.log(results);
+                    // console.log(results);
                     var relation = ask.relation('askTag');
                     for (var i = 0; i < results.length; i++) {
-                        console.log(results[i].get('tagName'));
+                        // console.log(results[i].get('tagName'));
 
                         if (tag.length == 1) {
                             var temp = (results[i].get('tagName') == tag[0].tag_name);
@@ -1206,9 +1217,9 @@ router.post('/sendask', function(req, res, next) {
                             var temp = (results[i].get('tagName') == tag[0].tag_name) || (results[i].get('tagName') == tag[1].tag_name) || (results[i].get('tagName') == tag[2].tag_name);
 
                         }
-                        console.log(temp);
+                        // console.log(temp);
                         if (temp) {
-                            console.log(results[i]);
+                            // console.log(results[i]);
                             relation.add(results[i]);
                         }
 
@@ -1220,9 +1231,10 @@ router.post('/sendask', function(req, res, next) {
                             message : 'Operation succeeded'
                         }
                         res.send(result);
+                        return;
                     }, function(error) {
                         // 失败
-                        console.log('Error: ' + error.code + ' ' + error.message);
+                        // console.log('Error: ' + error.code + ' ' + error.message);
                     });
 
                 });
@@ -1244,7 +1256,7 @@ router.get('/tagshow', function (req, res, next) {
     var type = req.query.type;
     var tag = req.query.tag;
     tag = JSON.parse(tag);
-    console.log(tag);
+    // console.log(tag);
     //tag = tag.split(',');
     for (var i = 0; i < tag.length; i++) {
         tag[i] = tag[i].tag_name;
@@ -1713,7 +1725,7 @@ router.get('/gettag', function (req, res, next) {
 
 
     mainquery.find().then(function (list) {
-        console.log(list);
+        // console.log(list);
         var result = {
             code : 200,
             data : list,
@@ -1733,7 +1745,7 @@ router.get('/getalltag', function (req, res, next) {
     mainquery.addDescending('times');
 
     mainquery.find().then(function (list) {
-        console.log(list);
+        // console.log(list);
         var result = {
             code : 200,
             data : list,
@@ -1752,7 +1764,7 @@ router.get('/getbuy', function (req, res, next) {
         //console.log(ask);
         var relation = ask.relation('haved');
         relation.query().find().then(function (list) {
-            console.log(list);
+            // console.log(list);
             var result = {
                 code : 200,
                 data : list,
@@ -1773,7 +1785,7 @@ router.get('/getrefund', function (req, res, next) {
         //console.log(ask);
         var relation = ask.relation('refundInfo');
         relation.query().find().then(function (list) {
-            console.log(list);
+            // console.log(list);
             var result = {
                 code : 200,
                 data : list,
@@ -2195,9 +2207,9 @@ function setTag(tag, type, callback) {
 }
 
 function findUrl(type, tag, index, res) {
-    console.log(tag[index]);
+    // console.log(tag[index]);
     if (tag[index] == '' || tag[index] == null) {
-        console.log('ok');
+        // console.log('ok');
         var result = {
             code : 404,
             url : '',
