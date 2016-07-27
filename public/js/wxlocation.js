@@ -33,6 +33,14 @@ function initLocation(callback) {
                 ]
             });
             wx.ready(function() {
+
+                wx.showMenuItems({
+                    menuList: [
+                        'menuItem:profile',
+                        'menuItem:addContact'
+                    ] // 要显示的菜单项，所有menu项见附录3
+                });
+
                 var shareData = {
                     title: title,
                     desc:  desc,
@@ -60,9 +68,11 @@ function initLocation(callback) {
                         // if(!(localStorage.lng && localStorage.lat)){
                         //     map.setZoomAndCenter(14,[longitude,latitude]);
                         // }
-                        map.setZoomAndCenter(14, [longitude, latitude]);
-                        $("#container").attr("data-longitude", longitude);
-                        $("#container").attr("data-latitude", latitude);
+                        if(map){
+                            map.setZoomAndCenter(14, [longitude, latitude]);
+                            $("#container").attr("data-longitude", longitude);
+                            $("#container").attr("data-latitude", latitude);
+                        }
                         if(callback){
                             callback.success(longitude,latitude);
                         }
