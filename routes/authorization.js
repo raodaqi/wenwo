@@ -553,7 +553,7 @@ router.get('/', function(req, res, next) {
             //console.log("openid" + openid);
             getUserInfo(accessToken,openid, res,{
                 success:function (res) {
-                    //console.log(res.data);
+                    console.log(res.data);
                     var rdata = res.data;
                     rdata = JSON.parse(rdata);
                     var username = rdata.nickname;
