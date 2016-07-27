@@ -55,15 +55,14 @@ router.get('/allask', function(req, res, next) {
 
         var position = geo.split(",");
 
-        var point = new AV.GeoPoint(position[0], position[1]);
+        var point = new AV.GeoPoint(parseFloat(position[1]),parseFloat(position[0]));
         // query.descending('score');
-        query.withinKilometers('positionGeo', point, 1000.0);
+        query.withinKilometers('positionGeo', point, 3000.0);
 
     }
 
-
     query.find().then(function(results) {
-        //console.log(results);
+        console.log(results.length);
 
         var query = new AV.Query('FoodLike');
 
@@ -120,6 +119,7 @@ router.get('/allask', function(req, res, next) {
                 data : results,
                 message : 'Operation succeeded'
             }
+
             res.send(result);
             return;
 
