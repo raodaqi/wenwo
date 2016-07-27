@@ -204,6 +204,7 @@ app.get('/detail', function(req, res) {
   var username = "573b0e3df38c8400673bb48d";
   if(username && test){
     res.render('detail', {askid:askid,username:username});
+    return;
   }
   var user = AV.User.current();
   if (!user) {
