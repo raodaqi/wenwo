@@ -112,7 +112,7 @@ app.get('/', function(req, res) {
     authorize(req, res);
   }else{
     var username = user.get('user');
-    // console.log(username);
+    // console.log(user);
     res.render('food', { username: username, lng:lng, lat:lat});
     return ;
   }
@@ -173,6 +173,7 @@ app.get('/food', function(req, res) {
   }else{
     var username = user.get('user');
     // console.log(username);
+    console.log(user);
     res.render('food', { username: username, lng:lng, lat:lat});
     return ;
   }
