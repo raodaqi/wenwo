@@ -33,6 +33,16 @@
     .iconfont {
       font-family: "iconfont" !important;
     }
+    #panel {
+      position: fixed;
+      background-color: white;
+      max-height: 90%;
+      overflow-y: auto;
+      top: 10px;
+      right: 10px;
+      width: 280px;
+      display: none;
+    }
   </style>
 <body>
   <div class="wenwo-content page page-current" id='find'>
@@ -43,6 +53,7 @@
       <h1 class="title">地图</h1>
     </header>
     <div id="container"></div>
+    <div id="panel"></div>
   </div>
 </body>
   <script type='text/javascript' src='/js/zepto.min.js' charset='utf-8'></script>
@@ -54,22 +65,6 @@
     window.history.back(-1);
   })
 
-  // initLocation({
-  //   success:function(myLng,myLat){
-  //     if(myLng && myLat){
-  //       //步行导航
-  //       var walking = new AMap.Walking({
-  //           map: map,
-  //           panel: "panel"
-  //       }); 
-  //       walking.search([
-  //           {keyword: AMap.LngLat(myLng,myLat)},
-  //           {keyword: AMap.LngLat(lng,lat)}
-  //       ]);
-  //     }
-  //   }
-  // });
-
   var marker;
   var icon = new AMap.Icon({
     image: "/img/edit/marker.png",
@@ -80,31 +75,96 @@
     //详情地点显示
     map = new AMap.Map('container', {
       resizeEnable: true,
-      zoom:15,
-      center: [lng,lat],
-      buttonDom:'<div class="geolocation-position"><img src="/img/position.png"></div>',
-      buttonOffset: new AMap.Pixel(20, 25),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
-      zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
-      buttonPosition:'LB',
-      showCircle:false,
-      useNative:true
+      zoom:13,
+      center: [lng,lat]
+      // buttonDom:'<div class="geolocation-position"><img src="/img/position.png"></div>',
+      // buttonOffset: new AMap.Pixel(20, 25),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+      // zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+      // buttonPosition:'LB',
+      // showCircle:false,
+      // useNative:true
     });
 
     map.plugin(["AMap.ToolBar"], function() {
       map.addControl(new AMap.ToolBar());
     });
 
-    marker = new AMap.Marker({
-      map : map,
-      icon : icon,
-      position: [lng,lat],
-      draggable: false,
-      cursor: 'move',
-      raiseOnDrag: false,
-      clickable:false
-    });
-
-    marker.setMap(map);
+     // var walking = new AMap.Walking({
+     //    map: map,
+     //    panel: "panel"
+     //  }); 
+     //  walking.search([104.181371,30.817972],[lng,lat],function(status,result){
+     //    console.log(result);
+     //  });
   }
+
+  if(navigator.geolocation) { // 判断设备是否支持定位
+  　　navigator.geolocation.getCurrentPosition(function(position) { 　　
+        //步行导航
+        var myLng = position.coords.longitude;
+        var myLat = position.coords.latitude;
+        var walking = new AMap.Walking({
+            map: map,
+            panel: "panel"
+        }); 
+        walking.search([myLng,myLat],[lng,lat],function(status,result){
+          console.log(result);
+        });
+  　　}, function(error) {
+          initLocation({
+            success:function(myLng,myLat){
+              if(myLng && myLat){
+                //步行导航
+                var walking = new AMap.Walking({
+                    map: map,
+                    panel: "panel"
+                }); 
+                walking.search([myLng,myLat],[lng,lat],function(status,result){
+                  console.log(result);
+                });
+              }else{
+                marker = new AMap.Marker({
+                  map : map,
+                  icon : icon,
+                  position: [lng,lat],
+                  draggable: false,
+                  cursor: 'move',
+                  raiseOnDrag: false,
+                  clickable:false
+                });
+                marker.setMap(map);
+              }
+            }
+          });
+  　　}, {
+  　　　　maximumAge: 0
+  　　});
+　　}else {
+　　　　initLocation({
+          success:function(myLng,myLat){
+            if(myLng && myLat){
+              //步行导航
+              var walking = new AMap.Walking({
+                  map: map,
+                  panel: "panel"
+              }); 
+              walking.search([myLng,myLat],[lng,lat],function(status,result){
+                console.log(result);
+              });
+            }else{
+              marker = new AMap.Marker({
+                map : map,
+                icon : icon,
+                position: [lng,lat],
+                draggable: false,
+                cursor: 'move',
+                raiseOnDrag: false,
+                clickable:false
+              });
+              marker.setMap(map);
+            }
+          }
+        });
+　　}
   </script>
 </html>

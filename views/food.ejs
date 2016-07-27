@@ -729,7 +729,7 @@
       page         : page,
       size         : size,
       staus        : staus,
-      // position_geo : "104.065617,30.660431",
+      // position_geo : "104.181371,30.817972",
       username     : username
     }
     $.ajax({
@@ -824,11 +824,11 @@
               getAskLoad = 0;
               if (number > data.length) {
                 // 加载完毕，则注销无限加载事件，以防不必要的加载
-                $.detachInfiniteScroll($('.infinite-scroll'));
+                $.detachInfiniteScroll($('#find .infinite-scroll'));
                 // 删除加载提示符
                 // $('.infinite-scroll-preloader').remove();
-                $(".infinite-scroll-preloader .preloader").hide();
-                $(".ask-end").show();
+                $("#find .infinite-scroll-preloader .preloader").hide();
+                $("#find .ask-end").show();
                 // $('.infinite-scroll-preloader').append("")
                 getAskLoad = 1;
                 return;
@@ -919,11 +919,11 @@
 
           //初始化滚动加载逻辑
           // 加载完毕，则注销无限加载事件，以防不必要的加载
-          $.attachInfiniteScroll($('.infinite-scroll'));
+          $.attachInfiniteScroll($('#find .infinite-scroll'));
           // 删除加载提示符
           // $('.infinite-scroll-preloader').remove();
-          $(".ask-end").hide();
-          $(".infinite-scroll-preloader .preloader").css("display","inline-block");
+          $("#find .ask-end").hide();
+          $("#find .infinite-scroll-preloader .preloader").css("display","inline-block");
           getAskLoad = 0;
 
           // $(".preloader").hide();
@@ -964,6 +964,7 @@
           $('#like .wenwo-ul').empty();
           $('#like .wenwo-ul').append(html);
           $("#like .infinite-scroll-preloader .preloader").hide();
+          $("#like .ask-end").show();
         }
       },
       error:function(error){
@@ -1201,6 +1202,7 @@
             $('#buy .wenwo-ul').empty();
             $('#buy .wenwo-ul').append(html);
             $("#buy .infinite-scroll-preloader .preloader").hide();
+            $("#buy .ask-end").show();
           }
         },
         error:function(error){
@@ -1237,10 +1239,11 @@
             console.log(html);
             // 添加新条目
             // 清空列表
-            $.pullToRefreshDone('.pull-to-refresh-content');
+            $.pullToRefreshDone('#share .pull-to-refresh-content');
             $('#share .wenwo-ul').empty();
             $('#share .wenwo-ul').append(html);
             $("#share .infinite-scroll-preloader .preloader").hide();
+            $("#share .ask-end").show();
           }
         },
         error:function(error){
