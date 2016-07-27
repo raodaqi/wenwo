@@ -640,13 +640,31 @@
 <script type='text/javascript' src='/js/wxlocation.js' charset='utf-8'></script>
 <script>
   //下拉刷新
-  var map = '';
-  initLocation();
+  var map = '',
+      LAT,
+      LNG,
+      title1 = 1,
+      title2 = 1,
+      title3 = 1;
+  $.showPreloader("正在加载");
+  initLocation({
+    success:function(lng,lat){
+      LAT = lat;
+      LNG = lng;
+      addItems(itemsPerLoad, 0);
+    },
+    error:function(error){
+      console.log(error);
+    }
+  });
   // 添加'refresh'监听器
   $(document).on('refresh', '.pull-to-refresh-content',function(e) {
       // 刷新主页
       // 获取当前是所在页面
       var id = $(this).parent()[0].id;
+      title1 = 1;
+      title2 = 1;
+      title3 = 1;
       console.log(id);
       switch(id){
         case "find":
@@ -728,13 +746,23 @@
   function getAskMe(page,size,staus,username,callback){
     var staus = staus ? staus : 1;
     var username = username ? username : '';
-    var data = {
-      page         : page,
-      size         : size,
-      staus        : staus,
-      position_geo : "103.843603,30.690256",
-      username     : username
+    if(LAT){
+      var data = {
+        page         : page,
+        size         : size,
+        staus        : staus,
+        position_geo : LAT+","+LNG,
+        username     : username
+      }
+    }else{
+      var data = {
+        page         : page,
+        size         : size,
+        staus        : staus,
+        username     : username
+      }
     }
+    
     $.ajax({
       type : "GET",
       data: data,
@@ -742,6 +770,13 @@
       url : "/ask/allask",
       success: function(result){
         // console.log(result);
+        // var data = result.data;
+        // for(var i = 0; i < data.length; i++){
+        //   var lat1 = parseFloat(data[i].GeoX);
+        //   var lng1 = parseFloat(data[i].GeoY);
+        //   var long1  = getFlatternDistance(lat1,lng1,LAT,LNG);
+        //   console.log(long1);
+        // }
         callback.success(result);
       },
       error:function(error){
@@ -819,6 +854,32 @@
             var data = result.data;
             if(data){
               for (var i = 0; i < data.length; i++) {
+                var lat1 = data[i].GeoX;
+                var lng1 = data[i].GeoY;
+                var long  = getFlatternDistance(lat1,lng1,LAT,LNG);
+                if(long < 1000){
+
+                  // title = '<div class="distance">距离 < 1KM</div>';
+                  
+                  if(title1){
+                    html += '<div class="distance">距离 < 1KM</div>';
+                    title1 = 0;
+                  }
+
+                }else if(long >= 1000 && long <= 5000){
+
+                  if(title2){
+                    html += '<div class="distance">距离1KM - 5KM</div>';
+                    title2 = 0;
+                  }
+
+                }else{
+                  if(title3){
+                    html += '<div class="distance">距离 > 5KM</div>';
+                    title3 = 0;
+                  }
+                }
+
                 html += '<div class="wenwo-li" data-id='+data[i].objectId+'><div class="up-content"><img src="'+data[i].createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">'+formatTag(data[i].askTagStr)+'</div><div class="ask-reason">'+data[i].askReason+'</div></div></div><div class="down-content"><div class="down-like '+(data[i].liked ? "liked" : '')+'"><span class="icon iconfont icon-likeEat"></span><label class="like-num">'+data[i].likeNum+'</label></div>'+(data[i].score > 10 ? '<div class="down-buy" data-id='+data[i].objectId+'>'+data[i].askPrice+'元瞅瞅</div>' : '<div class="down-buy free" data-id='+data[i].objectId+'>限时免费</div>')+'<div class="down-time">'+formatDate("y.m.d",data[i].createdAt)+'</div></div></div>';
               }
               // 添加新条目
@@ -854,8 +915,10 @@
       getAskLoad = 1;
     }
     //预先加载20条
-    addItems(itemsPerLoad, 0);
-
+    if(LAT){
+      addItems(itemsPerLoad, 0);
+    }
+    
     // 上次加载的序号
 
     var lastIndex = 20;
@@ -910,8 +973,36 @@
         console.log(result);
         var html = '';
         var data = result.data;
+
         if(data){
           for (var i = 0; i < data.length; i++) {
+
+            var lat1 = data[i].GeoX;
+                var lng1 = data[i].GeoY;
+                var long  = getFlatternDistance(lat1,lng1,LAT,LNG);
+                if(long < 1000){
+
+                  // title = '<div class="distance">距离 < 1KM</div>';
+                  
+                  if(title1){
+                    html += '<div class="distance">距离 < 1KM</div>';
+                    title1 = 0;
+                  }
+
+                }else if(long >= 1000 && long <= 5000){
+
+                  if(title2){
+                    html += '<div class="distance">距离1KM - 5KM</div>';
+                    title2 = 0;
+                  }
+
+                }else{
+                  if(title3){
+                    html += '<div class="distance">距离 > 5KM</div>';
+                    title3 = 0;
+                  }
+                }
+
             html += '<div class="wenwo-li" data-id='+data[i].objectId+'><div class="up-content"><img src="'+data[i].createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">'+formatTag(data[i].askTagStr)+'</div><div class="ask-reason">'+data[i].askReason+'</div></div></div><div class="down-content"><div class="down-like '+(data[i].liked ? "liked" : '')+'"><span class="icon iconfont icon-likeEat"></span><label class="like-num">'+data[i].likeNum+'</label></div>'+(data[i].score > 10 ? '<div class="down-buy" data-id='+data[i].objectId+'>'+data[i].askPrice+'元瞅瞅</div>' : '<div class="down-buy free" data-id='+data[i].objectId+'>限时免费</div>')+'<div class="down-time">'+formatDate("y.m.d",data[i].createdAt)+'</div></div></div>';
           }
           // 添加新条目

@@ -55,7 +55,7 @@ router.get('/allask', function(req, res, next) {
 
         var position = geo.split(",");
 
-        var point = new AV.GeoPoint(parseFloat(position[1]),parseFloat(position[0]));
+        var point = new AV.GeoPoint(parseFloat(position[0]),parseFloat(position[1]));
         // query.descending('score');
         query.withinKilometers('positionGeo', point, 3000.0);
 

@@ -223,8 +223,19 @@ $.hidePreloader = function(){
      * @param {Object} lng2
 
      */
+    var EARTH_RADIUS = 6378137.0; //单位M 
+    var PI = Math.PI; 
+
+    function getRad(d){ 
+      return d*PI/180.0; 
+    } 
 
     function getFlatternDistance(lat1,lng1,lat2,lng2){
+        lat1 = parseFloat(lat1);
+        lng1 = parseFloat(lng1);
+        lat2 = parseFloat(lat2);
+        lng2 = parseFloat(lng2);
+
         var f = getRad((lat1 + lat2)/2);
 
         var g = getRad((lat1 - lat2)/2);
