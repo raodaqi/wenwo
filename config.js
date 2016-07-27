@@ -2,6 +2,10 @@
  * Created by HanQi on 16/6/13.
  */
 module.exports = {
+
+    //key
+    "key" : 'myworldwenwo20151016myworldwenwo',
+    
     //正式版
     "appid" : "wx99f15635dd7d9e3c",
     "appsecret" : "9157e84975386b6dee6a499cc639973e",
