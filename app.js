@@ -112,10 +112,10 @@ app.get('/', function(req, res) {
     authorize(req, res);
   }else{
     var username = user.get('user');
-    var authData = user.get('authData');
-    console.log(authData);
-    authData = JSON.parse(authData);
-    res.render('food', {authData:authData, username: username, lng:lng, lat:lat});
+    // var authData = user.get('authData');
+    // console.log(authData);
+    // authData = JSON.parse(authData);
+    res.render('food', {username: username, lng:lng, lat:lat});
     return ;
   }
   res.render('food', { username: username, lng:"0", lat:"0"});
@@ -175,10 +175,10 @@ app.get('/food', function(req, res) {
   }else{
     var username = user.get('user');
     // console.log(username);
-    console.log(user);
-    var authData = user.get('authData');
-    authData = JSON.parse(authData);
-    res.render('food', {authData:authData,user:user, username: username, lng:lng, lat:lat});
+    // console.log(user);
+    // var authData = user.get('authData');
+    // authData = JSON.parse(authData);
+    res.render('food', {user:user, username: username, lng:lng, lat:lat});
     return ;
   }
   res.render('food', { username: username, lng:"0", lat:"0"});
