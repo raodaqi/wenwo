@@ -838,7 +838,7 @@
       username : UserName,
       ask_id   : AskId
     }
-    $(".buy").text("朕已查阅");
+    buyed = 1;
     $.showPreloader("正在瞅瞅");
     $.ajax({
       type : "GET",
@@ -851,6 +851,7 @@
         if(result.code == 100){
           //限时免费购买
           $.toast("购买成功");
+          $(".buy").text("朕已查阅");
           $(".buy").attr("data-buy","1");
           getHide({
             success:function(result){
@@ -878,8 +879,10 @@
           })
         }else if(result.code == 200){
           initPay(result.payargs);
+          buyed = 0;
         }else{
           $.toast("购买失败");
+          buyed = 0;
         }
       },
       error:function(error){
@@ -905,7 +908,8 @@ function onBridgeReady(payargs){
       },
       function(res){
           //console.log(res);
-          if(res.err_msg == "get_brand_wcpay_request：ok" ) {
+          
+          if(res.err_msg == "get_brand_wcpay_request：ok") {
               // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
               window.location.reload();
           }

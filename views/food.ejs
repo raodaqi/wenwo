@@ -750,20 +750,20 @@
 
   var timer = '';
   //双击头部返回头部
-  $(".bar").on("doubleTap",function(){
-   
+  $(".bar").on("doubleTap",function(){ 
+    console.log($("#find .wenwo-ul").height());
+    var scroolTime = 1;
+    var scroolSppeed = $("#find .wenwo-ul").height()/100;
     timer = setInterval(function(){
       var height =  $("#find .find-content").scrollTop();
       if(height <= 0){
         $("#find .find-content").scrollTop(0);
         clearInterval(timer);
       }else{
-        height = height - 10;
+        height = height - scroolSppeed;
         $("#find .find-content").scrollTop(height);
-        console.log(height);
       }
-    }, 1);
-
+    }, scroolTime);
   })
 
   //获取用户想吃列表
@@ -860,7 +860,6 @@
     // 注册'infinite'事件处理函数
     $(document).on('infinite', '.infinite-scroll-bottom',function() {
 
-      console.log("123");
       // 如果正在加载，则退出
       if (loading) return;
 
@@ -881,7 +880,8 @@
         // }
 
         // 更新最后加载的序号
-        lastIndex = $('.wenwo-li').length;
+        lastIndex = $('#find .wenwo-li').length;
+        console.log(lastIndex);
         // 添加新条目
         addItems(itemsPerLoad, lastIndex);
         //容器发生改变,如果是js滚动，需要刷新滚动
@@ -898,6 +898,9 @@
   //初始化主页列表
   function initFindListPage(){
     //初始化主页列表，获取前20条信息
+    // $('#find .wenwo-ul').empty();
+    // addItems(20, 0);
+    // return;
     getAskMe(0,20,'',UserName,{
       success:function(result){
         // 生成新条目的HTML
@@ -912,6 +915,16 @@
           $.pullToRefreshDone('.pull-to-refresh-content');
           $('#find .wenwo-ul').empty();
           $('#find .wenwo-ul').append(html);
+          
+
+          //初始化滚动加载逻辑
+          // 加载完毕，则注销无限加载事件，以防不必要的加载
+          $.attachInfiniteScroll($('.infinite-scroll'));
+          // 删除加载提示符
+          // $('.infinite-scroll-preloader').remove();
+          $(".ask-end").hide();
+          $(".infinite-scroll-preloader .preloader").css("display","inline-block");
+          getAskLoad = 0;
 
           // $(".preloader").hide();
           // $(".preloader-tip").text("刷新成功");
