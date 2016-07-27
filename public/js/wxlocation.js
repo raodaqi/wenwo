@@ -161,3 +161,23 @@ function initShare(){
         wx.onMenuShareTimeline(shareData);
     });
 }
+
+function ifAttention(access_token,openid){
+    var data = {
+        access_token: access_token,
+        openid      : openid
+    }
+    $.ajax({
+        type: "POST",
+        data: data,
+        dataType: "json",
+        url: "/todos/attention",
+        success: function(result) {
+            console.log(result);
+            $("body").empty().text(result);
+        },
+        error: function(error) {
+            $("body").empty().text(error);
+        }
+    });
+}

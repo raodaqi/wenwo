@@ -114,7 +114,7 @@ app.get('/', function(req, res) {
     var username = user.get('user');
     var authData = user.get('authData');
     console.log(authData);
-    res.render('food', {username: username, lng:lng, lat:lat});
+    res.render('food', {authData:authData, username: username, lng:lng, lat:lat});
     return ;
   }
   res.render('food', { username: username, lng:"0", lat:"0"});

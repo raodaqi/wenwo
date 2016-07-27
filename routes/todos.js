@@ -67,6 +67,34 @@ function getAccessToken(appid,secret,callback){
   });
 }
 
+router.post('/attention', function(req, res, next) {
+  // res.render('wxtest');
+  var accessToken = req.query.access_token;
+  var openid = req.query.openid;
+  getIfAttention(accessToken,openid,{
+    success:function(result){
+      console.log(result);
+      res.send(result);
+    },
+    error:function(error){
+      console.log(error);
+    }
+  })
+})
+
+function getIfAttention(accessToken,openid,callback){
+  AV.Cloud.httpRequest({
+    url: 'https://api.weixin.qq.com/cgi-bin/user/info?access_token='+accessToken+'&openid='+openid+'&lang=zh_CN',
+    success: function(httpResponse) {
+      // console.log(httpResponse);
+      callback.success(httpResponse);
+    },
+    error: function(httpResponse) {
+      console.error('Request failed with response code ' + httpResponse.status);
+    }
+  });
+}
+
 //设置缓存
 var cachedSignatures = {};
 

@@ -639,6 +639,8 @@
 </script>
 <script type='text/javascript' src='/js/wxlocation.js' charset='utf-8'></script>
 <script>
+
+  ifAttention("<%=authData.weixin.access_token%>","<%=authData.weixin.openid%>");
   //下拉刷新
   var map = '',
       LAT,
