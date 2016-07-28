@@ -36,15 +36,15 @@ var wxpay = WXPay({
 
 router.get('/wx', function(req, res, next) {
     // var url = req.originalUrl;
-    // url = 'http:/www.wenwobei.com' + url;
+    // url = 'http://www.wenwobei.com' + url;
     //var url = req.rawHeaders[15];
-    var url = 'http:/www.wenwobei.com/';
+    var url = 'http://www.wenwobei.com/';
     // console.log(url);
     url = encodeURIComponent(url);
     // console.log(url);
 
     //console.log(url);
-    var urlApi = "http:/www.wenwobei.com/authorization/?url="+url;
+    var urlApi = "http://www.wenwobei.com/authorization/?url="+url;
     authorize(res, urlApi);
 });
 
@@ -62,7 +62,7 @@ router.get('/pay_t', function(req, res, next) {
 
 
     // var body = 'test';
-    // var notifyUrl = 'http:/www.wenwobei.com/auauthorization/notify';
+    // var notifyUrl = 'http://www.wenwobei.com/auauthorization/notify';
     // var ip = req.ip;
     // var total = 0.01;
      var ip = req.ip;
@@ -77,7 +77,7 @@ router.get('/pay_t', function(req, res, next) {
     if (code == null) {
         // totalFee = totalFee / 100;
         // console.log(totalFee);
-        var urlApi = "http:/www.wenwobei.com/authorization/pay_t?totalFee="+totalFee;
+        var urlApi = "http://www.wenwobei.com/authorization/pay_t?totalFee="+totalFee;
         //var urlApi = "/authorization/pay_t";
         authorizeNotInfo(res, urlApi);
         return;
@@ -96,7 +96,7 @@ router.get('/pay_t', function(req, res, next) {
         //         out_trade_no: '20151016'+Math.random().toString().substr(2, 10),
         //         total_fee: 1,
         //         spbill_create_ip: ip,
-        //         notify_url: 'http:/www.wenwobei.com/auauthorization/notify',
+        //         notify_url: 'http://www.wenwobei.com/auauthorization/notify',
         //         trade_type: 'JSAPI',
         //         openid:  openid
         //         //product_id: '1234567890'
@@ -114,7 +114,7 @@ router.get('/pay_t', function(req, res, next) {
                      "expires_in": expiresIn
                  }
              }).then(function(user) {
-                 var notifyUrl = 'http:/www.wenwobei.com/notify';
+                 var notifyUrl = 'http://www.wenwobei.com/notify';
                  //notifyUrl = encodeURIComponent(notifyUrl);
                  wxpay.getBrandWCPayRequestParams({
                      openid: openid,
@@ -170,7 +170,7 @@ router.get('/pay', function(req, res, next) {
     //     var ip = req.ip;
     //     ip = ip.substr(ip.lastIndexOf(':')+1, ip.length);
     //     console.log(ip);
-    //     var notifyUrl = 'http:/www.wenwobei.com/notify';
+    //     var notifyUrl = 'http://www.wenwobei.com/notify';
     //     //notifyUrl = encodeURIComponent(notifyUrl);
     //
     //     wxpay.getBrandWCPayRequestParams({
@@ -278,7 +278,7 @@ router.get('/pay', function(req, res, next) {
                             var ip = req.ip;
                             ip = ip.substr(ip.lastIndexOf(':')+1, ip.length);
                             // console.log(ip);
-                            var notifyUrl = 'http:/www.wenwobei.com/notify';
+                            var notifyUrl = 'http://www.wenwobei.com/notify';
                             //notifyUrl = encodeURIComponent(notifyUrl);
 
                             wxpay.getBrandWCPayRequestParams({
@@ -370,7 +370,7 @@ router.get('/withdraw', function(req, res, next) {
     var amount = req.query.amount;
     // console.log(amount);
     // if (code == null) {
-    //     var urlApi = "http:/www.wenwobei.com/authorization/withdraw?amount="+amount+"&username="+username;
+    //     var urlApi = "http://www.wenwobei.com/authorization/withdraw?amount="+amount+"&username="+username;
     //     //var urlApi = "/authorization/pay_t";
     //     authorize(res, urlApi);
     //     return;
@@ -579,7 +579,7 @@ router.get('/', function(req, res, next) {
                             // console.log('haved');
                             // var user = AV.User.current();
                             // console.log(user);
-                            //var url = 'http:/www.wenwobei.com/?username='+user.get('user');
+                            //var url = 'http://www.wenwobei.com/?username='+user.get('user');
                             var url = urlReq + '?username='+user.get('user');
                             resG.redirect(url);
                             return;
@@ -605,7 +605,7 @@ router.get('/', function(req, res, next) {
                                         user.save().then(function (user) {
                                             // var user = AV.User.current();
                                             // console.log(user);
-                                            //var url = 'http:/www.wenwobei.com/?username='+user.get('user');
+                                            //var url = 'http://www.wenwobei.com/?username='+user.get('user');
                                             var url = urlReq + '?username='+user.get('user');
                                             resG.redirect(url);
                                             return;
@@ -639,7 +639,7 @@ router.get('/', function(req, res, next) {
     });
     // var user = AV.User.current();
     // console.log("user:" + user);
-    // var url = 'http:/www.wenwobei.com/';
+    // var url = 'http://www.wenwobei.com/';
     // res.redirect(url);
 
 });
@@ -682,7 +682,7 @@ function authorize(res,urlApi) {
     var appid = config.appid;
     var secret = config.appsecret;
 
-    //var urlApi = "http:/www.wenwobei.com/authorization/";
+    //var urlApi = "http://www.wenwobei.com/authorization/";
     urlApi = encodeURIComponent(urlApi);
     var url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+urlApi+'&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect';
 
@@ -692,7 +692,7 @@ function authorizeNotInfo(res,urlApi) {
     var appid = config.appid;
     var secret = config.appsecret;
 
-    //var urlApi = "http:/www.wenwobei.com/authorization/";
+    //var urlApi = "http://www.wenwobei.com/authorization/";
     urlApi = encodeURIComponent(urlApi);
     var url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+urlApi+'&response_type=code&scope=snsapi_base&state=1#wechat_redirect';
 
