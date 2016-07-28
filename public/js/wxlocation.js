@@ -1,7 +1,7 @@
 function initLocation(callback) {
     var title = WX_SHARE_TITLE ? WX_SHARE_TITLE:'「问我」 让经验帮你赚钱';
-    var link = WX_SHARE_LINK ? WX_SHARE_LINK :'http://wenwo.leanapp.cn';//链接按代换
-    var imgUrl　=　WX_SHARE_IMGURL ? WX_SHARE_IMGURL: 'http://wenwo.leanapp.cn/img/logo.jpg';//链接按代换
+    var link = WX_SHARE_LINK ? WX_SHARE_LINK :'http://www.wenwobei.com';//链接按代换
+    var imgUrl　=　WX_SHARE_IMGURL ? WX_SHARE_IMGURL: 'http://www.wenwobei.com/img/logo.jpg';//链接按代换
     var desc =　WX_SHARE_DESC ? WX_SHARE_DESC:'任何人都可以分享自己的经验赚钱，不信，你试试！';
     
     var data = {
@@ -95,8 +95,8 @@ function initLocation(callback) {
 
 function onlyInitShare(){
     var title = WX_SHARE_TITLE ? WX_SHARE_TITLE:'「问我」 让经验帮你赚钱';
-    var link = WX_SHARE_LINK ? WX_SHARE_LINK :'http://wenwo.leanapp.cn';//链接按代换
-    var imgUrl　=　WX_SHARE_IMGURL ? WX_SHARE_IMGURL: 'http://wenwo.leanapp.cn/img/logo.jpg';//链接按代换
+    var link = WX_SHARE_LINK ? WX_SHARE_LINK :'http://www.wenwobei.com';//链接按代换
+    var imgUrl　=　WX_SHARE_IMGURL ? WX_SHARE_IMGURL: 'http://www.wenwobei.com/img/logo.jpg';//链接按代换
     var desc =　WX_SHARE_DESC ? WX_SHARE_DESC:'任何人都可以分享自己的经验赚钱，不信，你试试！';
     
     var data = {
@@ -146,8 +146,8 @@ function onlyInitShare(){
 }
 function initShare(){
     var title = WX_SHARE_TITLE ? WX_SHARE_TITLE:'「问我」 让经验帮你赚钱';
-    var link = WX_SHARE_LINK ? WX_SHARE_LINK :'http://wenwo.leanapp.cn';//链接按代换
-    var imgUrl　=　WX_SHARE_IMGURL ? WX_SHARE_IMGURL: 'http://wenwo.leanapp.cn/img/logo.jpg';//链接按代换
+    var link = WX_SHARE_LINK ? WX_SHARE_LINK :'http://www.wenwobei.com';//链接按代换
+    var imgUrl　=　WX_SHARE_IMGURL ? WX_SHARE_IMGURL: 'http://www.wenwobei.com/img/logo.jpg';//链接按代换
     var desc =　WX_SHARE_DESC ? WX_SHARE_DESC:'任何人都可以分享自己的经验赚钱，不信，你试试！';
 
     wx.ready(function() {
