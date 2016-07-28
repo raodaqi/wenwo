@@ -879,8 +879,8 @@
             }
           })
         }else if(result.code == 200){
-          // initPay(result.payargs);
-          initWXPay(result.payargs);
+          initPay(result.payargs);
+          // initWXPay(result.payargs);
           buyed = 0;
         }else{
           $.toast("购买失败");
