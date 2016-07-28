@@ -669,7 +669,7 @@
       title1 = 1,
       title2 = 1,
       title3 = 1;
-  // //测试
+  //测试
   // LAT = 30.580596;
   // LNG = 103.982984;
 
@@ -1295,7 +1295,7 @@
         $("#me .user-name").text(localStorage.userShowName);
         $("#me .list-li-like-num").text(localStorage.foodLikeListCount);
         $("#me .list-li-like-share,#me .my-ask .item-share").text(localStorage.askListCount);
-        $("#me .list-li-like-total").text(localStorage.totalIncome);
+        $("#me .list-li-like-total").text(leaveTwoPoint(localStorage.totalIncome));
         $("#me .itm-buy").text(localStorage.buyListCount);
       }
 
@@ -1314,7 +1314,7 @@
             var userShowName = result.data.userShowName;
             var askListCount = result.data.askListCount;
             var buyListCount = result.data.buyListCount;
-            var totalIncome = result.data.totalIncome;
+            var totalIncome = leaveTwoPoint(result.data.totalIncome);
             var foodLikeListCount = result.data.foodLikeListCount;
             $("#me .pic-bg,#me .user-pic").attr("src",userHead);
             $("#me .user-name").text(userShowName);

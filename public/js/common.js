@@ -209,6 +209,14 @@ $.hidePreloader = function(){
     })
   }
 
+  //保留两位小数
+  function leaveTwoPoint(str){
+    if(!str || str == 0){
+      return str;
+    }
+    return parseFloat(str).toFixed(2);
+  }
+
   //经纬度之间的距离
   /**
 
