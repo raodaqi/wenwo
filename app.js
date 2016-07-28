@@ -550,7 +550,7 @@ function oneAccounts(userList, index) {
           oneAccounts(userList, index);
 
         } else  {
-          console.log(users);
+          // console.log(users);
           if (users[0].get('wallet') != null && users[0].get('wallet') != '') {
 
             var wallet = userList[index].get('wallet');
@@ -614,24 +614,30 @@ function oneAccounts(userList, index) {
 
 
                 if (result.return_code == 'SUCCESS' && result.return_msg == '') {
+                  console.log(result);
                   var withdraw = new Withdraw();
                   withdraw.set('nonceStr', result.nonce_str);
                   withdraw.set('partnerTradeNo', result.partner_trade_no);
                   withdraw.set('paymentNo', result.payment_no);
                   withdraw.set('paymentTime', result.payment_time);
-                  withdraw.set('userName', username);
-                  withdraw.set('amount', amount);
+                  withdraw.set('userName', user.id);
+                  withdraw.set('amount', reamount.toString());
                   withdraw.save().then(function (withdraw) {
+                    console.log(withdraw);
                     wallet.set('money', 0);
                     wallet.save().then(function (wallet) {
-
+                      console.log(wallet);
                       console.log('发放成功');
                       index++;
                       oneAccounts(userList, index);
 
+                    }, function (error) {
+                      console.log(error);
                     });
 
 
+                  }, function (error) {
+                    console.log(error);
                   });
                 }
                 else {
