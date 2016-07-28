@@ -22,7 +22,11 @@ var authorization = require('./routes/authorization');
 var config = require('./config');
 var Haved = AV.Object.extend('Haved');
 var Withdraw = AV.Object.extend('Withdraw');
-var config=require('./config');
+var moment = require("moment");
+var md5 = require('MD5');
+var request = require('request');
+var xml2js = require('xml2js');
+
 
 var wxpay = WXPay({
   appid: config.appid,
@@ -227,8 +231,9 @@ app.get('/test', function(req, res) {
 app.get('/wxpay/test', function(req, res) {
   res.render("wxpay/jsapi");
 });
-app.post('/test', function(req, res) {
-  res.send("hello");
+app.get('/test_by_hq', function(req, res) {
+
+  settleAccounts();
 });
 
 app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
@@ -509,10 +514,11 @@ function authorize(req, res) {
 
 function settleAccounts() {
 
-  var query = new AV.Query('_User');
+  var query = new AV.Query('UserInfo');
   query.include('wallet');
+  query.limit(999);
   query.find().then(function (userList) {
-
+    // console.log(userList[0]);
     oneAccounts(userList, 0);
 
   });
@@ -520,46 +526,141 @@ function settleAccounts() {
 }
 
 function oneAccounts(userList, index) {
+  console.log("index:"+index);
 
-  var user = userList[index];
-
-  if (inde >= userList.length) {
+  if (index >= userList.length) {
     return;
   } else {
-    if (parseInt(userList[index].get('wallet').get('money')) > 1) {
+    // console.log(userList[index].get('wallet'));
+    if (parseInt(userList[index].get('wallet').get('money')) >= 1) {
 
-      var reamount = parseInt(parseFloat(user.get('wallet').get('money')) * 100);
+       console.log(userList[index].id);
+      var userId = userList[index].id;
 
-      var authData = user.get('authData');
-      var openid = authData.weixin.openid;
-      var accessToken = authData.weixin.access_token;
-      var expiresIn = authData.weixin.expires_in;
+      var query = new AV.Query('_User');
+      query.equalTo('user', userId);
+      query.include('wallet');
+      query.find().then(function (users) {
+        if (users == null || users == '') {
+          console.log('No User');
+          index++;
+          oneAccounts(userList, index);
 
-      var mchid = '1298230401';
+        } else  {
+          console.log(users);
+          if (users[0].get('wallet') != null && users[0].get('wallet') != '') {
 
-      var date = new Date();
-      date = moment(date).format("YYYYMMDDHHmmss");
-      var str = date + getNonceStr(10);
-      var partnerTradeNo = str;
+            var wallet = userList[index].get('wallet');
 
-      var nonceStr = getNonceStr();
+            var user = users[0];
 
-      var checkName = 'NO_CHECK';
-      var desc = '提现';
-      var ip = req.ip;
-      ip = ip.substr(ip.lastIndexOf(':')+1, ip.length);
+            var reamount = parseInt(parseFloat(wallet.get('money')) * 100);
 
-      var data = {
-        mch_appid : config.appid,
-        mchid : mchid,
-        nonce_str : nonceStr,
-        partner_trade_no : partnerTradeNo,
-        openid : openid,
-        check_name : checkName,
-        amount : reamount,
-        desc : desc,
-        spbill_create_ip : ip
-      };
+            var authData = user.get('authData');
+            var openid = authData.weixin.openid;
+            var accessToken = authData.weixin.access_token;
+            var expiresIn = authData.weixin.expires_in;
+
+            console.log(openid);
+
+            var mchid = '1298230401';
+
+            var date = new Date();
+            date = moment(date).format("YYYYMMDDHHmmss");
+            var str = date + getNonceStr(10);
+            var partnerTradeNo = str;
+
+            var nonceStr = getNonceStr();
+
+            var checkName = 'NO_CHECK';
+            var desc = '提现';
+
+            var ip = '192.168.1.1';
+            // var ip = req.ip;
+            // ip = ip.substr(ip.lastIndexOf(':')+1, ip.length);
+
+            var data = {
+              mch_appid : config.appid,
+              mchid : mchid,
+              nonce_str : nonceStr,
+              partner_trade_no : partnerTradeNo,
+              openid : openid,
+              check_name : checkName,
+              amount : reamount,
+              desc : desc,
+              spbill_create_ip : ip
+            };
+
+            data.sign = getSign(data);
+
+            request({
+              url: "https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers",
+              method: 'POST',
+              body: buildXML(data),
+              agentOptions: {
+                pfx: fs.readFileSync('./routes/certificate/apiclient_cert.p12'),
+                passphrase: mchid
+              }
+            }, function(err, response, body) {
+              // console.log(err);
+              // console.log(response);
+              // console.log(body);
+
+
+              parseXML(body, function (err, result) {
+
+
+                if (result.return_code == 'SUCCESS' && result.return_msg == '') {
+                  var withdraw = new Withdraw();
+                  withdraw.set('nonceStr', result.nonce_str);
+                  withdraw.set('partnerTradeNo', result.partner_trade_no);
+                  withdraw.set('paymentNo', result.payment_no);
+                  withdraw.set('paymentTime', result.payment_time);
+                  withdraw.set('userName', username);
+                  withdraw.set('amount', amount);
+                  withdraw.save().then(function (withdraw) {
+                    wallet.set('money', 0);
+                    wallet.save().then(function (wallet) {
+
+                      console.log('发放成功');
+                      index++;
+                      oneAccounts(userList, index);
+
+                    });
+
+
+                  });
+                }
+                else {
+                  console.log('发放失败');
+                  console.log(result);
+                  // var re = {
+                  //   code : 400,
+                  //   message : result.return_msg
+                  // };
+                  // res.send(re);
+                }
+              });
+            });
+
+          } else {
+            console('用户资料缺失');
+
+            index++;
+            oneAccounts(userList, index);
+
+
+          }
+
+
+        }
+
+      });
+
+
+
+
+
 
     } else {
       index++;
@@ -572,6 +673,18 @@ function oneAccounts(userList, index) {
 
 }
 
+function getSign(param){
+
+  var querystring = Object.keys(param).filter(function(key){
+        return param[key] !== undefined && param[key] !== '' && ['pfx', 'partner_key', 'sign', 'key'].indexOf(key)<0;
+      }).sort().map(function(key){
+        return key + '=' + param[key];
+      }).join("&") + "&key=" + config.key;
+
+  return md5(querystring).toUpperCase();
+}
+
+
 function getNonceStr(length) {
   var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   var maxPos = chars.length;
@@ -580,6 +693,16 @@ function getNonceStr(length) {
     noceStr += chars.charAt(Math.floor(Math.random() * maxPos));
   }
   return noceStr;
+}
+
+function buildXML(json){
+  var builder = new xml2js.Builder();
+  return builder.buildObject(json);
+}
+
+function parseXML(xml, fn){
+  var parser = new xml2js.Parser({ trim:true, explicitArray:false, explicitRoot:false });
+  parser.parseString(xml, fn||function(err, result){});
 }
 
 //云引擎定时函数
