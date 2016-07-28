@@ -168,7 +168,9 @@ app.get('/food', function(req, res) {
   var lat = req.query.geoy;
   var user = AV.User.current();
 
-  var username = "573b0e3df38c8400673bb48d";
+  if(!username){
+    var username = "573b0e3df38c8400673bb48d";
+  }
   if(username && test){
     res.render('food', { username: username, lng:lng, lat:lat});
     return ;
@@ -418,7 +420,7 @@ app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
             query.include('wallet');
             query.get(incomeUser).then(function (incomeUser) {
               incomeUser.get('wallet').set('money', incomeUser.get('wallet').get('money') + parseFloat(incomeTotal));
-              incomeUser.get('wallet').set('total', ((parseFloat(incomeUser.get('total')) + parseFloat(incomeTotal))).toString());
+              incomeUser.get('wallet').set('total', ((parseFloat(incomeUser.get('wallet').get('total')) + parseFloat(incomeTotal))).toString());
               incomeUser.get('wallet').save().then(function () {
                 incomeUser.save().then(function () {
                   have.save().then(function () {
