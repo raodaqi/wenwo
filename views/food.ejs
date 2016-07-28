@@ -29,7 +29,7 @@
       margin:0;
       width: 100%;
       overflow: hidden;
-      background-color: #E8E8E8;
+      background-color: #f8fafa;
     }
     .title{
       /*font-weight: bold;*/
@@ -371,10 +371,23 @@
       display: none;
     }
     .distance{
+      position: relative;
       font-size: .5rem;
-      color:#AAA;
+      color:#889399;
       padding:.25rem 0;
       text-align: center;
+    }
+    .distance-fixed{
+      display: none;
+      position: fixed;
+      top:2.2rem;
+      z-index: 2;
+      color: #889399;
+      width: 100%;
+      background-color: #f8fafa; 
+    }
+    .page, .page-group{
+      background-color: #f8fafa; 
     }
   </style>
 <body>
@@ -384,6 +397,7 @@
       <div class="header-me iconfont icon-gerenzhongxin"></div>
       <h1 class="title">问我-美食</h1>
     </header>
+    <div class="distance distance-fixed">距离1KM</div>
     <!-- 这里是所有的信息列表 -->
     <div class="find-content content pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="55" data-distance="100">
       <!-- 默认的下拉刷新层 -->    
@@ -392,8 +406,8 @@
         <div class="preloader"></div>
         <div class="pull-to-refresh-arrow"></div>
       </div>
+      
       <div class="wenwo-ul">
-        <!-- <div class="distance">距离1KM</div> -->
       </div>
       <div class="infinite-scroll-preloader" >
         <div class="preloader"></div>
@@ -647,6 +661,10 @@
       title1 = 1,
       title2 = 1,
       title3 = 1;
+  //测试
+  LAT = 30.580596;
+  LNG = 103.982984;
+
   $.showPreloader("正在加载");
   initLocation({
     success:function(lng,lat){
@@ -805,6 +823,56 @@
     }, scroolTime);
   })
 
+  // function initDistance(){
+  //   var title1Top = $(".title1").length ? $(".title1").offset().top : 10000;
+  //   var title2Top = $(".title2").length ? $(".title2").offset().top : 10000;
+  //   var title3Top = $(".title3").length ? $(".title3").offset().top : 10000;
+
+  //   $(".distance-fixed").show();
+
+  //   if(title1Top != 10000){
+  //     $(".distance-fixed").text($(".title1").text());
+  //     return;
+  //   }
+
+  //   if(title2Top != 10000){
+  //     $(".distance-fixed").text($(".title2").text());
+  //     return;
+  //   }
+
+  //   if(title3Top != 10000){
+  //     $(".distance-fixed").text($(".title3").text());
+  //     return;
+  //   }
+  // }
+
+  $("#find .find-content").scroll(function(){
+    //判断是否存在这个标签
+    var title1Top = $(".title1").length ? $(".title1").offset().top : 10000;
+    var title2Top = $(".title2").length ? $(".title2").offset().top : 10000;
+    var title3Top = $(".title3").length ? $(".title3").offset().top : 10000;
+    var top = $("#find .find-content").scrollTop();
+
+    //初始化固定
+
+    if(title1Top < 50){
+      $(".distance-fixed").text($(".title1").text());
+    }
+
+    if(title2Top<50){
+      $(".distance-fixed").text($(".title2").text());
+    }
+
+    if(title3Top<50){
+      $(".distance-fixed").text($(".title3").text());
+    }
+    $(".distance-fixed").show();
+
+    if(top < 1){
+      $(".distance-fixed").hide();
+    }
+  })
+
   //获取用户想吃列表
   //获取美食信息
   function getLikeList(username,callback){
@@ -863,20 +931,20 @@
                   // title = '<div class="distance">距离 < 1KM</div>';
                   
                   if(title1){
-                    html += '<div class="distance">距离 < 1KM</div>';
+                    html += '<div class="title1 distance">距离 < 1KM</div>';
                     title1 = 0;
                   }
 
                 }else if(long >= 1000 && long <= 5000){
 
                   if(title2){
-                    html += '<div class="distance">距离1KM - 5KM</div>';
+                    html += '<div class="title2 distance">距离1KM - 5KM</div>';
                     title2 = 0;
                   }
 
                 }else{
                   if(title3){
-                    html += '<div class="distance">距离 > 5KM</div>';
+                    html += '<div class="title3 distance">距离 > 5KM</div>';
                     title3 = 0;
                   }
                 }
@@ -986,20 +1054,20 @@
                   // title = '<div class="distance">距离 < 1KM</div>';
                   
                   if(title1){
-                    html += '<div class="distance">距离 < 1KM</div>';
+                    html += '<div class="title1 distance">距离 < 1KM</div>';
                     title1 = 0;
                   }
 
                 }else if(long >= 1000 && long <= 5000){
 
                   if(title2){
-                    html += '<div class="distance">距离1KM - 5KM</div>';
+                    html += '<div class="title2 distance">距离1KM - 5KM</div>';
                     title2 = 0;
                   }
 
                 }else{
                   if(title3){
-                    html += '<div class="distance">距离 > 5KM</div>';
+                    html += '<div class="title3 distance">距离 > 5KM</div>';
                     title3 = 0;
                   }
                 }
@@ -1007,13 +1075,13 @@
             html += '<div class="wenwo-li" data-id='+data[i].objectId+'><div class="up-content"><img src="'+data[i].createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">'+formatTag(data[i].askTagStr)+'</div><div class="ask-reason">'+data[i].askReason+'</div></div></div><div class="down-content"><div class="down-like '+(data[i].liked ? "liked" : '')+'"><span class="icon iconfont icon-likeEat"></span><label class="like-num">'+data[i].likeNum+'</label></div>'+(data[i].score > 10 ? '<div class="down-buy" data-id='+data[i].objectId+'>'+data[i].askPrice+'元瞅瞅</div>' : '<div class="down-buy free" data-id='+data[i].objectId+'>限时免费</div>')+'<div class="down-time">'+formatDate("y.m.d",data[i].createdAt)+'</div></div></div>';
           }
           // 添加新条目
+          // $(".distance-fixed").hide();
           $.pullToRefreshDone('.pull-to-refresh-content');
           $('#find .wenwo-ul').empty();
           $('#find .wenwo-ul').append(html);
           
 
           //初始化滚动加载逻辑
-          // 加载完毕，则注销无限加载事件，以防不必要的加载
           $.attachInfiniteScroll($('#find .infinite-scroll'));
           // 删除加载提示符
           // $('.infinite-scroll-preloader').remove();
