@@ -1931,7 +1931,12 @@
                 var askPosition      = data.askPosition;
                 askPosition = JSON.parse(askPosition);
                 detail = askPosition.detail;
-                WX_SHARE_TITLE  = "我分享了"+detail+"的美食,瞅瞅波？"
+                if(detail.length <= 8){
+                  detail = detail;
+                }else{
+                  detail = deatil.substr(0,8) + "...";
+                }
+                WX_SHARE_TITLE  = "我分享了「"+detail+"」附近的美食,瞅瞅波？";
                 initShare();
 
                 $.router.load("#success");
