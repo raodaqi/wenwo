@@ -422,7 +422,7 @@ app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
             query.get(incomeUser).then(function (incomeUser) {
               console.log(incomeUser);
               incomeUser.get('wallet').set('money', incomeUser.get('wallet').get('money') + parseFloat(incomeTotal));
-              // incomeUser.get('wallet').set('total', ((parseFloat(incomeUser.get('wallet').get('total')) + parseFloat(incomeTotal))).toString());
+              incomeUser.get('wallet').set('total', ((parseFloat(incomeUser.get('wallet').get('total')) + parseFloat(incomeTotal))).toString());
               console.log(parseFloat(incomeUser.get('wallet').get('total')));
               // console.log(incomeUser);
               // incomeUser.get('wallet').set('total', parseFloat(incomeUser.get('wallet').get('total')) + parseFloat(incomeTotal));
