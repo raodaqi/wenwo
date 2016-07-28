@@ -95,6 +95,7 @@ router.post('/haved', function(req, res, next) {
         query.equalTo("by", userName);
         query.equalTo('type', '2');
         query.include('ask');
+        query.descending('createdAt');
         query.find().then(function (fooLikes) {
 
             var askDetail = new Array();
@@ -623,6 +624,7 @@ router.post('/foodlikelist', function(req, res, next) {
 
 
             query.include('ask');
+            query.descending('createdAt');
             query.find().then(function (fooLikes) {
 
                 var askDetail = new Array();

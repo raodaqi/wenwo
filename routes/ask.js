@@ -394,7 +394,7 @@ router.post('/askdetail', function(req, res, next) {
 
                         }
 
-                        if (isOwnFlag == 0 && foodLikeFlag == 0 && havedFlag == 0) {
+                        if (isOwnFlag == 0 && havedFlag == 0) {
 
                             ask.set('shopName', "请购买以后查看");
                             ask.set('askPosition', "请购买以后查看");
@@ -903,7 +903,8 @@ router.get('/myask', function(req, res, next) {
     if(staus != '4') {
         query.equalTo('staus', staus);
     }
-    query.equalTo('createBy', userName)
+    query.equalTo('createBy', userName);
+    query.descending('createdAt');
     query.limit(size);
     query.skip(page);
     query.find().then(function(results) {
