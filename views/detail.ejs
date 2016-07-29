@@ -922,6 +922,7 @@ function onBridgeReady(payargs){
               $.showPreloader("正在瞅瞅");
               getHide({
                 success:function(result){
+                  $.hidePreloader();
                   var data = result.data;
                   if(data.shopName){
                     $(".detail-rtname").text(data.shopName);
@@ -941,6 +942,7 @@ function onBridgeReady(payargs){
                   }
                 },
                 error:function(error){
+                  $.hidePreloader();
                   location.reload();
                 }
               })
