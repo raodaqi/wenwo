@@ -616,16 +616,16 @@ router.get('/', function(req, res, next) {
 
                         isFocus(openid, accessToken, {
 
-                            success:function (result) {
+                            success:function (focusResult) {
 
-                                console.log(result);
+                                console.log(focusResult);
 
                                 if (user.get('user') != null) {
                                     // console.log('haved');
                                     // var user = AV.User.current();
                                     // console.log(user);
                                     //var url = 'http://www.wenwobei.com/?username='+user.get('user');
-                                    var url = urlReq + '?username='+user.get('user')+'&isfocus='+result.subscribe;
+                                    var url = urlReq + '?username='+user.get('user')+'&isfocus='+focusResult.subscribe;
                                     resG.redirect(url);
                                     return;
 
@@ -651,7 +651,7 @@ router.get('/', function(req, res, next) {
                                                     // var user = AV.User.current();
                                                     // console.log(user);
                                                     //var url = 'http://www.wenwobei.com/?username='+user.get('user');
-                                                    var url = urlReq + '?username='+user.get('user')+'&isfocus='+result.subscribe;
+                                                    var url = urlReq + '?username='+user.get('user')+'&isfocus='+focusResult.subscribe;
                                                     resG.redirect(url);
                                                     return;
 
@@ -756,7 +756,7 @@ function getAccessToken(appid, secret, code, res, callback) {
     AV.Cloud.httpRequest({
         url: 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='+appid+'&secret='+secret+'&code='+code+'&grant_type=authorization_code ',
         success: function(httpResponse) {
-            console.log(httpResponse);
+            // console.log(httpResponse);
             callback.success(httpResponse);
         },
         error: function(httpResponse) {
