@@ -721,9 +721,9 @@ exports.settleAccounts = function(){
 };
 
 //定时打款
-// 初始化并设置定时任务的时间 每天早上10点打款
+// 初始化并设置定时任务的时间 每天早上9点打款
 var rule = new schedule.RecurrenceRule();
-rule.hour = 10;rule.minute = 10;rule.second = 0;
+rule.hour = 9;rule.minute = 0;rule.second = 0;
 
 //处理要做的事情
  var j = schedule.scheduleJob(rule, function(){
