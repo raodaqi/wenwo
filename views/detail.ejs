@@ -920,57 +920,28 @@ function onBridgeReady(payargs){
               }
               buyed = 1;
               $.showPreloader("正在瞅瞅");
-              $.ajax({
-                type : "GET",
-                data: data,
-                dataType: "json",
-                url : "/authorization/pay",
-                success : function(result){
-                  console.log(result);
-                  $.hidePreloader();
-                  if(result.code == 100){
-                    //限时免费购买
-                    $.toast("购买成功");
-                    $(".buy").text("朕已查阅");
-                    $(".buy").attr("data-buy","1");
-                    $(".buyed-img").show();
-                    getHide({
-                      success:function(result){
-                        var data = result.data;
-                        if(data.shopName){
-                          $(".detail-rtname").text(data.shopName);
-                        }else{
-                          $(".detail-rtname").text("暂无");
-                        }
-                        if(data.askPosition){
-                          var askPosition = JSON.parse(data.askPosition);
-                          var address = '';
-                          for(var key in askPosition){
-                            console.log(askPosition[key]);
-                            address+=askPosition[key];
-                          }
-                          $(".detail-address").text(address);
-                          $(".detail-address").attr("data-GeoX",data.GeoX);
-                          $(".detail-address").attr("data-GeoY",data.GeoY);
-                        }
-                      },
-                      error:function(error){
-                        location.reload();
-                      }
-                    })
-                  }else if(result.code == 200){
-                    initPay(result.payargs);
-                    // initWXPay(result.payargs);
-                    buyed = 0;
+              getHide({
+                success:function(result){
+                  var data = result.data;
+                  if(data.shopName){
+                    $(".detail-rtname").text(data.shopName);
                   }else{
-                    $.toast("购买失败");
-                    buyed = 0;
+                    $(".detail-rtname").text("暂无");
+                  }
+                  if(data.askPosition){
+                    var askPosition = JSON.parse(data.askPosition);
+                    var address = '';
+                    for(var key in askPosition){
+                      console.log(askPosition[key]);
+                      address+=askPosition[key];
+                    }
+                    $(".detail-address").text(address);
+                    $(".detail-address").attr("data-GeoX",data.GeoX);
+                    $(".detail-address").attr("data-GeoY",data.GeoY);
                   }
                 },
                 error:function(error){
-                  $.hidePreloader();
-                  $.total("网络有问题");
-                  console.log(error);
+                  location.reload();
                 }
               })
           }
