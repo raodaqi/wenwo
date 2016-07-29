@@ -62,24 +62,39 @@ router.post('/isfocus', function(req, res, next) {
         console.log(user.get('authData').weixin.openid);
 
         var openId = user.get('authData').weixin.openid;
-        var token = user.get('authData').weixin.access_token;
+        // var token = user.get('authData').weixin.access_token;
+
 
         AV.Cloud.httpRequest({
-            url: 'https://api.weixin.qq.com/cgi-bin/user/info?access_token='+token+'&openid='+openId+'&lang=zh_CN ',
+            url: 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='+config.appid+'&secret='+config.appsecret,
             success: function(httpResponse) {
-                console.log(httpResponse);
+                // console.log(httpResponse);
+                console.log(httpResponse.data.access_token);
+                var token = httpResponse.data.access_token;
 
-                // if() {
-                //
-                //
-                //
-                // }
-                // res.send({code:400,message:'尚未购买消息'});
+
+                AV.Cloud.httpRequest({
+                    url: 'https://api.weixin.qq.com/cgi-bin/user/info?access_token='+token+'&openid='+openId+'&lang=zh_CN ',
+                    success: function(httpResponse) {
+                        console.log(httpResponse.data.subscribe);
+
+                        res.send({code:200,isfocus:httpResponse.data.subscribe,message:'操作成功'});
+
+                    },
+                    error: function(httpResponse) {
+                        console.error('Request failed with response code ' + httpResponse.status);
+                    }
+                });
+
             },
             error: function(httpResponse) {
                 console.error('Request failed with response code ' + httpResponse.status);
             }
         });
+
+
+
+
 
     });
 
@@ -599,18 +614,15 @@ router.get('/', function(req, res, next) {
                         userhead += '/';
                     }
 
-                    console.log('focus');
-                    console.log("accessToken"+accessToken);
-                    console.log("openid" + openid);
-
-                    isFocus(openid, accessToken, {
-
-                        success:function (focusResult) {
-                            console.log(focusResult.data);
-
-                            console.log(username);
-                            console.log(userhead);
-                            console.log(openid);
+                    // console.log('focus');
+                    // console.log("accessToken"+accessToken);
+                    // console.log("openid" + openid);
+                    //
+                    //         console.log(focusResult.data);
+                    //
+                    //         console.log(username);
+                    //         console.log(userhead);
+                    //         console.log(openid);
                             AV.User._logInWith('weixin', {
                                 'authData': {
                                     "openid": openid,
@@ -628,7 +640,7 @@ router.get('/', function(req, res, next) {
                                     // var user = AV.User.current();
                                     // console.log(user);
                                     //var url = 'http://www.wenwobei.com/?username='+user.get('user');
-                                    var url = urlReq + '?username='+user.get('user')+'&isfocus='+focusResult.subscribe;
+                                    var url = urlReq + '?username='+user.get('user');
                                     resG.redirect(url);
                                     return;
 
@@ -654,7 +666,7 @@ router.get('/', function(req, res, next) {
                                                     // var user = AV.User.current();
                                                     // console.log(user);
                                                     //var url = 'http://www.wenwobei.com/?username='+user.get('user');
-                                                    var url = urlReq + '?username='+user.get('user')+'&isfocus='+focusResult.subscribe;
+                                                    var url = urlReq + '?username='+user.get('user');
                                                     resG.redirect(url);
                                                     return;
 
@@ -674,15 +686,6 @@ router.get('/', function(req, res, next) {
 
 
 
-
-
-
-
-
-                        }
-
-
-                    });
 
 
 
