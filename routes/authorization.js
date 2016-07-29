@@ -574,7 +574,7 @@ router.get('/', function(req, res, next) {
 
     var code = req.query.code;
     resG = res;
-    console.log("code:" +code);
+    // console.log("code:" +code);
     
     getAccessToken(appid, secret, code, res,{
         success:function (result) {
@@ -594,8 +594,12 @@ router.get('/', function(req, res, next) {
                     var username = rdata.nickname;
                     var userhead = rdata.headimgurl;
                     var openid = rdata.openid;
-                    userhead = userhead.substr(0, userhead.lastIndexOf('/'));
-                    userhead += '/';
+                    if (userhead != null) {
+
+                        userhead = userhead.substr(0, userhead.lastIndexOf('/'));
+                        userhead += '/';
+                    }
+
                     //console.log(username);
                     //console.log(userhead);
                     //console.log(openid);
