@@ -68,6 +68,13 @@ router.post('/isfocus', function(req, res, next) {
             url: 'https://api.weixin.qq.com/cgi-bin/user/info?access_token='+token+'&openid='+openId+'&lang=zh_CN ',
             success: function(httpResponse) {
                 console.log(httpResponse);
+
+                // if() {
+                //
+                //
+                //
+                // }
+                // res.send({code:400,message:'尚未购买消息'});
             },
             error: function(httpResponse) {
                 console.error('Request failed with response code ' + httpResponse.status);
@@ -603,51 +610,57 @@ router.get('/', function(req, res, next) {
                         //console.log(user);
                         //console.log(user.get('user'));
 
-                        isFocus(openid, accessToken, function (result) {
+                        isFocus(openid, accessToken, {
 
-                            if (user.get('user') != null) {
-                                // console.log('haved');
-                                // var user = AV.User.current();
-                                // console.log(user);
-                                //var url = 'http://www.wenwobei.com/?username='+user.get('user');
-                                var url = urlReq + '?username='+user.get('user')+'&isfocus='+result.subscribe;
-                                resG.redirect(url);
-                                return;
+                            success:function (result) {
 
-                            }
-                            else {
-                                // console.log('no');
-                                var post = new Post();
-                                var wallet = new Wallet();
-                                wallet.set('money', 0);
-                                wallet.save().then(function (wallet) {
-                                    // console.log(wallet);
-                                    //post.set('userName', post.id);
-                                    post.set('uName', username);
-                                    post.set('userHead', userhead);
-                                    post.set('wallet', wallet);
-                                    post.save().then(function (post) {
-                                        post.set('userName', post.id);
+                                if (user.get('user') != null) {
+                                    // console.log('haved');
+                                    // var user = AV.User.current();
+                                    // console.log(user);
+                                    //var url = 'http://www.wenwobei.com/?username='+user.get('user');
+                                    var url = urlReq + '?username='+user.get('user')+'&isfocus='+result.subscribe;
+                                    resG.redirect(url);
+                                    return;
+
+                                }
+                                else {
+                                    // console.log('no');
+                                    var post = new Post();
+                                    var wallet = new Wallet();
+                                    wallet.set('money', 0);
+                                    wallet.save().then(function (wallet) {
+                                        // console.log(wallet);
+                                        //post.set('userName', post.id);
+                                        post.set('uName', username);
+                                        post.set('userHead', userhead);
+                                        post.set('wallet', wallet);
                                         post.save().then(function (post) {
-                                            user.set('userInfo', post);
-                                            user.set('user', post.id);
-                                            user.set('wallet', wallet);
-                                            user.save().then(function (user) {
-                                                // var user = AV.User.current();
-                                                // console.log(user);
-                                                //var url = 'http://www.wenwobei.com/?username='+user.get('user');
-                                                var url = urlReq + '?username='+user.get('user')+'&isfocus='+result.subscribe;
-                                                resG.redirect(url);
-                                                return;
+                                            post.set('userName', post.id);
+                                            post.save().then(function (post) {
+                                                user.set('userInfo', post);
+                                                user.set('user', post.id);
+                                                user.set('wallet', wallet);
+                                                user.save().then(function (user) {
+                                                    // var user = AV.User.current();
+                                                    // console.log(user);
+                                                    //var url = 'http://www.wenwobei.com/?username='+user.get('user');
+                                                    var url = urlReq + '?username='+user.get('user')+'&isfocus='+result.subscribe;
+                                                    resG.redirect(url);
+                                                    return;
 
 
+                                                });
                                             });
-                                        });
 
+                                        });
                                     });
-                                });
+
+                                }
+
 
                             }
+
 
                         });
 
