@@ -191,6 +191,27 @@ app.get('/food', function(req, res) {
   res.render('food', { username: username, lng:"0", lat:"0"});
 });
 
+app.get('/testedit', function(req, res) {
+  var type = req.query.type;
+  var askid = req.query.askid;
+  var username =  req.query.username;
+
+  if(username){
+    res.render('edit', {username:username,type:type,askid:askid});
+    return ;
+  }
+
+  var user = AV.User.current();
+  if (!user) {
+    authorize(req, res);
+  }else{
+    var username = user.get('user');
+    // console.log(username);
+    res.render('edit', {username:username,type:type,askid:askid});
+  }
+});
+
+
 app.get('/edit', function(req, res) {
   var type = req.query.type;
   var askid = req.query.askid;
