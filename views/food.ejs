@@ -2,8 +2,6 @@
 <html>
 <head>
   <meta charset='utf-8'>
-  <!-- <meta name='viewport', content='width=device-width, initial-scale=1.0'>
-  -->
   <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
   <meta name='description', content='wenwo,问我,当地人,旅游,攻略,信息,分享,经验,赚钱，美食，成都，好吃'>
   <meta name='author', content='raodqi'>
@@ -11,8 +9,6 @@
   <title>问我-让经验帮你赚钱</title>
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="http://at.alicdn.com/t/font_1468915240_5629373.css">
-  <!-- <link href='http://api.youziku.com/webfont/CSS/578f409af629e200d8cdd2e6' rel='stylesheet' type='text/css' /> -->
-  <!-- <link href='http://api.youziku.com/webfont/CSS/578f4282f629e300d8f428ef' rel='stylesheet' type='text/css' /> -->
   <link href='http://api.youziku.com/webfont/CSS/578f43dcf629e300d8f428f5' rel='stylesheet' type='text/css' />
   <link rel="stylesheet" href="/css/sm.min.css">
   <script src="/js/jweixin-1.0.0.js"></script>
@@ -698,6 +694,7 @@
           initFindListPage();
           break;
         case "like":
+          $(".want-content").hide();
           initLikeListPage();
           break;
         case "share":
@@ -721,6 +718,32 @@
   // console.log("测试",$(".ask-reason").text().visualLength());
   //用户名
   var UserName = "<%= username %>";
+
+  //判断是否关注过
+  function getIfAttention(username){
+    var data = {
+      username : username
+    }
+    $.ajax({
+      type : "POST",
+      data: data,
+      dataType: "json",
+      url : "/authorization/isfocus",
+      success: function(result){
+        console.log(result);
+        if(result.code == 200){
+          alert(result.isfocus);
+        }else{
+          alert(result.isfocus);
+        }
+      },
+      error:function(error){
+        $.toast("服务器异常");
+      },
+    })
+  }
+
+  getIfAttention(UserName);
 
   //初始化主页链接
   function init(){
