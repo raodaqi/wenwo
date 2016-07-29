@@ -70,7 +70,7 @@
                   if (!result.isfocus) {
                       //用户未关注公众号
                       // $()
-                      var focus = '<div class="isfocus-content"><div class="isfocus-title">关注「问我」才能查看总收益、接收结算通知<br/>长按二维码识别，公众号：wenwolo</div><img src="/img/qr.gif" class="isfocus-img" alt=""></div>';
+                      var focus = '<div class="isfocus-content"><div class="isfocus-title">关注「问我」才能查看总收益、接收结算通知<br/>长按二维码识别，公众号：wenwolo</div><img src="/img/qr.JPG" class="isfocus-img" alt=""></div>';
                       $(".detail-pic-content").empty().append(focus);
                       $(".detail-pic-content").show();
                       $("#me .list-content").hide();

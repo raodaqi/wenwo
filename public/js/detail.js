@@ -89,7 +89,13 @@
                           var address = '';
                           for (var key in askPosition) {
                               console.log(askPosition[key]);
+                              if(key == "adetail"){
+                                address += "（";
+                              }
                               address += askPosition[key];
+                              if(key == "adetail"){
+                                address += "）";
+                              }
                           }
                           $(".detail-address").text(address);
                           $(".detail-address").attr("data-GeoX", data.GeoX);
@@ -396,7 +402,14 @@
                                   var address = '';
                                   for (var key in askPosition) {
                                       console.log(askPosition[key]);
+                                      // address += askPosition[key];
+                                      if(key == "adetail"){
+                                        address += "（";
+                                      }
                                       address += askPosition[key];
+                                      if(key == "adetail"){
+                                        address += "）";
+                                      }
                                   }
                                   $(".detail-address").text(address);
                                   $(".detail-address").attr("data-GeoX", data.GeoX);

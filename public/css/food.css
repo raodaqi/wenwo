@@ -462,12 +462,13 @@ html {
 .isfocus-img {
     display: block;
     width: 7rem;
-    margin: 0 auto;
+    margin: 0.3rem auto;
 }
 
 .isfocus-content {
     position: absolute;
     width: 100%;
+    background: white;
 }
 
 #me .ui-loading-bright {
