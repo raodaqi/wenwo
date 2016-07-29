@@ -250,12 +250,12 @@
   }
   .dialog-dislike-content .left,.dialog-dislike-send-content .left{
     float: left;
-    width: 43%;
+    width: 38%;
     height: 100%;
   }
   .dialog-dislike-content .right,.dialog-dislike-send-content .right{
     float: left;
-    width: 55%;
+    width: 60%;
     height: 100%;
   }
   .dialog-dislike-send-content .left{
@@ -854,7 +854,9 @@
           $.toast("购买成功");
           $(".buy").text("朕已查阅");
           $(".buy").attr("data-buy","1");
+
           $(".buyed-img").show();
+          $(".dislike-content").show();
           getHide({
             success:function(result){
               var data = result.data;
@@ -922,6 +924,8 @@ function onBridgeReady(payargs){
               $.showPreloader("正在瞅瞅");
               getHide({
                 success:function(result){
+                  $(".buyed-img").show();
+                  $(".dislike-content").show();
                   $.hidePreloader();
                   var data = result.data;
                   if(data.shopName){
