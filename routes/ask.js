@@ -1913,10 +1913,6 @@ router.post('/debase', function (req, res, next) {
 
                             if (debases == null || debases == '') {
 
-                                res.send({code:300,message:'重复操作'});
-
-                            } else {
-
                                 var debase = new Debase();
                                 debase.set('userName', userName);
                                 debase.set('askId', askId);
@@ -1928,6 +1924,12 @@ router.post('/debase', function (req, res, next) {
                                     });
 
                                 });
+
+
+
+                            } else {
+
+                                res.send({code:300,message:'重复操作'});
 
                             }
 
