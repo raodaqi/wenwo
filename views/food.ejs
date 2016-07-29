@@ -393,6 +393,28 @@
       margin:0 !important;
       overflow-y: hidden !important;
     }
+    .isfocus-title{
+      display: block;
+      text-align: center;
+      font-size: .6rem;
+      color: #999999;
+      margin-top: .8rem;
+    }
+    .isfocus-img{
+      display: block;
+      width: 7rem;
+      margin: 0 auto;
+    }
+    .isfocus-content{
+      position: absolute;
+      width: 100%;
+    }
+    #me .ui-loading-bright{
+      position: absolute;
+      margin-top: 4rem;
+      left:50%;
+      margin-left: -37px;
+    }
   </style>
 <body>
  <img src="/img/loading.png" alt="" class="hide-img">
@@ -530,15 +552,20 @@
     </header>
     <div class="content">
       <div class="detail-pic-bg">
-        <img src="http://wx.qlogo.cn/mmopen/zngt7mjBQUdFiaKIVGQbhF3jRURfqibW3EtNPALJewxicdPAyGfyMpZkeHZIW1UXUmjEia3QicdYqickSiaywQcKBUS6GMWSEw67Rry/" alt="" class="pic-bg">
-        <div class="bg-mask"></div>
 
-        <div class="user-pic-content">
-          <img src="http://wx.qlogo.cn/mmopen/zngt7mjBQUdFiaKIVGQbhF3jRURfqibW3EtNPALJewxicdPAyGfyMpZkeHZIW1UXUmjEia3QicdYqickSiaywQcKBUS6GMWSEw67Rry/" alt="" class="user-pic">
-          <div class="user-name">饶大奇</div>
+        <i class="ui-loading-bright"></i>
+
+        <div class="detail-pic-content" style="display:none">
+          <img src="http://wx.qlogo.cn/mmopen/zngt7mjBQUdFiaKIVGQbhF3jRURfqibW3EtNPALJewxicdPAyGfyMpZkeHZIW1UXUmjEia3QicdYqickSiaywQcKBUS6GMWSEw67Rry/" alt="" class="pic-bg">
+          <div class="bg-mask"></div>
+
+          <div class="user-pic-content">
+            <img src="http://wx.qlogo.cn/mmopen/zngt7mjBQUdFiaKIVGQbhF3jRURfqibW3EtNPALJewxicdPAyGfyMpZkeHZIW1UXUmjEia3QicdYqickSiaywQcKBUS6GMWSEw67Rry/" alt="" class="user-pic">
+            <div class="user-name">饶大奇</div>
+          </div>
         </div>
 
-        <div class="list-content">
+        <div class="list-content" style="display:none">
           <div class="list-li">
             <label class="list-li-like-num">22</label>
             <label>想吃</label>
@@ -605,7 +632,7 @@
           <div>1)&nbsp;&nbsp;&nbsp;收益来源于你分享的内容，你可以设定每条信息的查看价格，其他人查看，需要付费。</div>
         </div>
         <div class="tip-content-li">
-          <div>2)&nbsp;&nbsp;&nbsp;收入扣除10%为收益，每天晚10点自动入库微信钱包，但低于1元不入库。</div>
+          <div>2)&nbsp;&nbsp;&nbsp;收入扣除10%为收益，每天早9点自动入库微信钱包，但低于1元不入库。</div>
         </div>
         <div class="tip-content-get">朕知道了</div>
       </div>
@@ -666,8 +693,8 @@
       title2 = 1,
       title3 = 1;
   //测试
-  // LAT = 30.580596;
-  // LNG = 103.982984;
+  LAT = 30.580596;
+  LNG = 103.982984;
 
   $.showPreloader("正在加载");
   initLocation({
@@ -732,17 +759,29 @@
       success: function(result){
         console.log(result);
         if(result.code == 200){
-          alert(result.isfocus);
+          if(!result.isfocus){
+            //用户未关注公众号
+            // $()
+            var focus = '<div class="isfocus-content"><div class="isfocus-title">关注「问我」才能查看总收益、接收结算通知<br/>长按二维码识别，公众号：wenwolo</div><img src="/img/qr.gif" class="isfocus-img" alt=""></div>';
+            $(".detail-pic-content").empty().append(focus);
+            $(".detail-pic-content").show();
+            $("#me .list-content").hide();
+          }else{
+            $(".detail-pic-content").show();
+            $("#me .list-content").show();
+          }
         }else{
-          alert(result.isfocus);
+          $(".detail-pic-content").show();
+          $("#me .list-content").show();
         }
       },
       error:function(error){
         $.toast("服务器异常");
+        $(".detail-pic-content").show();
+        $("#me .list-content").show();
       },
     })
   }
-
   getIfAttention(UserName);
 
   //初始化主页链接
