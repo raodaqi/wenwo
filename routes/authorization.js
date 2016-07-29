@@ -584,8 +584,7 @@ router.get('/', function(req, res, next) {
             var accessToken = codeData.access_token;
             var openid = codeData.openid;
             var expiresIn = codeData.expires_in;
-            console.log("accessToken"+accessToken);
-            console.log("openid" + openid);
+
             getUserInfo(accessToken,openid, res,{
                 success:function (res) {
                     console.log(res.data);
@@ -600,88 +599,90 @@ router.get('/', function(req, res, next) {
                         userhead += '/';
                     }
 
-
                     console.log('focus');
-                        isFocus(openid, accessToken, {
+                    console.log("accessToken"+accessToken);
+                    console.log("openid" + openid);
 
-                            success:function (focusResult) {
-                                console.log(focusResult.data);
+                    isFocus(openid, accessToken, {
 
-                                console.log(username);
-                                console.log(userhead);
-                                console.log(openid);
-                                AV.User._logInWith('weixin', {
-                                    'authData': {
-                                        "openid": openid,
-                                        "access_token": accessToken,
-                                        "expires_in": expiresIn
-                                    }
-                                }).then(function(user) {
-                                    //返回绑定后的用户
-                                    console.log('登录成功');
-                                    //console.log(user.get('user'));
+                        success:function (focusResult) {
+                            console.log(focusResult.data);
+
+                            console.log(username);
+                            console.log(userhead);
+                            console.log(openid);
+                            AV.User._logInWith('weixin', {
+                                'authData': {
+                                    "openid": openid,
+                                    "access_token": accessToken,
+                                    "expires_in": expiresIn
+                                }
+                            }).then(function(user) {
+                                //返回绑定后的用户
+                                console.log('登录成功');
+                                //console.log(user.get('user'));
 
 
-                                    if (user.get('user') != null) {
-                                        // console.log('haved');
-                                        // var user = AV.User.current();
-                                        // console.log(user);
-                                        //var url = 'http://www.wenwobei.com/?username='+user.get('user');
-                                        var url = urlReq + '?username='+user.get('user')+'&isfocus='+focusResult.subscribe;
-                                        resG.redirect(url);
-                                        return;
+                                if (user.get('user') != null) {
+                                    // console.log('haved');
+                                    // var user = AV.User.current();
+                                    // console.log(user);
+                                    //var url = 'http://www.wenwobei.com/?username='+user.get('user');
+                                    var url = urlReq + '?username='+user.get('user')+'&isfocus='+focusResult.subscribe;
+                                    resG.redirect(url);
+                                    return;
 
-                                    }
-                                    else {
-                                        // console.log('no');
-                                        var post = new Post();
-                                        var wallet = new Wallet();
-                                        wallet.set('money', 0);
-                                        wallet.save().then(function (wallet) {
-                                            // console.log(wallet);
-                                            //post.set('userName', post.id);
-                                            post.set('uName', username);
-                                            post.set('userHead', userhead);
-                                            post.set('wallet', wallet);
+                                }
+                                else {
+                                    // console.log('no');
+                                    var post = new Post();
+                                    var wallet = new Wallet();
+                                    wallet.set('money', 0);
+                                    wallet.save().then(function (wallet) {
+                                        // console.log(wallet);
+                                        //post.set('userName', post.id);
+                                        post.set('uName', username);
+                                        post.set('userHead', userhead);
+                                        post.set('wallet', wallet);
+                                        post.save().then(function (post) {
+                                            post.set('userName', post.id);
                                             post.save().then(function (post) {
-                                                post.set('userName', post.id);
-                                                post.save().then(function (post) {
-                                                    user.set('userInfo', post);
-                                                    user.set('user', post.id);
-                                                    user.set('wallet', wallet);
-                                                    user.save().then(function (user) {
-                                                        // var user = AV.User.current();
-                                                        // console.log(user);
-                                                        //var url = 'http://www.wenwobei.com/?username='+user.get('user');
-                                                        var url = urlReq + '?username='+user.get('user')+'&isfocus='+focusResult.subscribe;
-                                                        resG.redirect(url);
-                                                        return;
+                                                user.set('userInfo', post);
+                                                user.set('user', post.id);
+                                                user.set('wallet', wallet);
+                                                user.save().then(function (user) {
+                                                    // var user = AV.User.current();
+                                                    // console.log(user);
+                                                    //var url = 'http://www.wenwobei.com/?username='+user.get('user');
+                                                    var url = urlReq + '?username='+user.get('user')+'&isfocus='+focusResult.subscribe;
+                                                    resG.redirect(url);
+                                                    return;
 
 
-                                                    });
                                                 });
-
                                             });
+
                                         });
+                                    });
 
-                                    }
-
-
-                                }, function(error) {
-                                    console.log(error);
-                                });
+                                }
 
 
-
+                            }, function(error) {
+                                console.log(error);
+                            });
 
 
 
 
 
-                            }
 
 
-                        });
+
+                        }
+
+
+                    });
 
 
 
