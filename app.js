@@ -577,7 +577,7 @@ function oneAccounts(userList, index) {
             var nonceStr = getNonceStr();
 
             var checkName = 'NO_CHECK';
-            var desc = '提现';
+            var desc = '躺着赚钱';
 
             var ip = '192.168.1.1';
             // var ip = req.ip;
