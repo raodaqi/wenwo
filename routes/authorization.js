@@ -614,6 +614,8 @@ router.get('/', function(req, res, next) {
 
                             success:function (result) {
 
+                                console.log(result);
+
                                 if (user.get('user') != null) {
                                     // console.log('haved');
                                     // var user = AV.User.current();
@@ -750,7 +752,7 @@ function getAccessToken(appid, secret, code, res, callback) {
     AV.Cloud.httpRequest({
         url: 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='+appid+'&secret='+secret+'&code='+code+'&grant_type=authorization_code ',
         success: function(httpResponse) {
-            // console.log(httpResponse);
+            console.log(httpResponse);
             callback.success(httpResponse);
         },
         error: function(httpResponse) {
@@ -764,7 +766,7 @@ function isFocus(openId, token, callback) {
     AV.Cloud.httpRequest({
         url: 'https://api.weixin.qq.com/cgi-bin/user/info?access_token='+token+'&openid='+openId+'&lang=zh_CN ',
         success: function(httpResponse) {
-            callback.success(httpResponse);
+            // callback.success(httpResponse);
         },
         error: function(httpResponse) {
             console.error('Request failed with response code ' + httpResponse.status);
