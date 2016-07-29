@@ -312,6 +312,7 @@ router.post('/test/wx', function(req, res, next) {
           console.error('Request failed with response code ' + httpResponse.status);
         }
       });
+      console.log("------------------------test----------------------");
       console.log(result.data);
     }
   })
