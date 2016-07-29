@@ -770,7 +770,7 @@ function isFocus(openId, token, callback) {
     AV.Cloud.httpRequest({
         url: 'https://api.weixin.qq.com/cgi-bin/user/info?access_token='+token+'&openid='+openId+'&lang=zh_CN ',
         success: function(httpResponse) {
-            // callback.success(httpResponse);
+            callback.success(httpResponse);
         },
         error: function(httpResponse) {
             console.error('Request failed with response code ' + httpResponse.status);
