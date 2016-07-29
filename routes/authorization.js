@@ -584,8 +584,8 @@ router.get('/', function(req, res, next) {
             var accessToken = codeData.access_token;
             var openid = codeData.openid;
             var expiresIn = codeData.expires_in;
-            //console.log("accessToken"+accessToken);
-            //console.log("openid" + openid);
+            console.log("accessToken"+accessToken);
+            console.log("openid" + openid);
             getUserInfo(accessToken,openid, res,{
                 success:function (res) {
                     console.log(res.data);
@@ -601,7 +601,7 @@ router.get('/', function(req, res, next) {
                     }
 
 
-
+                    console.log('focus');
                         isFocus(openid, accessToken, {
 
                             success:function (focusResult) {
@@ -668,7 +668,7 @@ router.get('/', function(req, res, next) {
 
 
                                 }, function(error) {
-                                    // console.log(error);
+                                    console.log(error);
                                 });
 
 
