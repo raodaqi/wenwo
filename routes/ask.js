@@ -1906,14 +1906,37 @@ router.post('/debase', function (req, res, next) {
 
                     if (havedListFlag != 0) {
 
-                        var debase = new Debase();
-                        debase.set('userName', userName);
-                        debase.set('askId', askId);
-                        debase.set('content',content);
-                        debase.save().then(function (debase) {
-                            ask.set('score', ((parseInt(ask.get('score'))) - 5).toString());
-                            res.send({code:200,data:debase,message:'操作成功'});
+                        var query = new AV.Query('Debase');
+                        query.equelTo('userName', userName);
+                        query.equelTo('askId', askId);
+                        query.find().then(function (debases) {
+
+                            if (debases == null || debases == '') {
+
+                                var debase = new Debase();
+                                debase.set('userName', userName);
+                                debase.set('askId', askId);
+                                debase.set('content',content);
+                                debase.save().then(function (debase) {
+                                    ask.set('score', ((parseInt(ask.get('score'))) - 5).toString());
+                                    ask.save().then(function (ask) {
+                                        res.send({code:200,data:debase,message:'操作成功'});
+                                    });
+
+                                });
+
+
+
+                            } else {
+
+                                res.send({code:300,message:'重复操作'});
+
+                            }
+
                         });
+
+
+
 
 
                     } else {
