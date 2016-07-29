@@ -600,9 +600,9 @@ router.get('/', function(req, res, next) {
                         userhead += '/';
                     }
 
-                    //console.log(username);
-                    //console.log(userhead);
-                    //console.log(openid);
+                    console.log(username);
+                    console.log(userhead);
+                    console.log(openid);
                     AV.User._logInWith('weixin', {
                         'authData': {
                             "openid": openid,
@@ -611,7 +611,7 @@ router.get('/', function(req, res, next) {
                         }
                     }).then(function(user) {
                         //返回绑定后的用户
-                        //console.log(user);
+                        console.log('登录成功');
                         //console.log(user.get('user'));
 
                         isFocus(openid, accessToken, {
