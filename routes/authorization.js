@@ -578,7 +578,7 @@ router.get('/', function(req, res, next) {
     
     getAccessToken(appid, secret, code, res,{
         success:function (result) {
-            //console.log("result" + result.data);
+            console.log("result" + result.data);
             var codeData = result.data;
             codeData = JSON.parse(codeData);
             var accessToken = codeData.access_token;
