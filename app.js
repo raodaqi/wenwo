@@ -26,6 +26,7 @@ var moment = require("moment");
 var md5 = require('MD5');
 var request = require('request');
 var xml2js = require('xml2js');
+var schedule = require("node-schedule");
 
 
 var wxpay = WXPay({
@@ -718,5 +719,16 @@ function parseXML(xml, fn){
 exports.settleAccounts = function(){
   settleAccounts();
 };
+
+//定时打款
+// 初始化并设置定时任务的时间 每天早上10点打款
+var rule = new schedule.RecurrenceRule();
+rule.hour = 10;rule.minute = 0;rule.second = 0;
+
+//处理要做的事情
+ var j = schedule.scheduleJob(rule, function(){
+    console.log("定时打款");
+    settleAccounts();
+ });
 
 module.exports = app;
