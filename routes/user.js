@@ -110,6 +110,7 @@ router.post('/login', function (req, res, next) {
                     wallet.save().then(function (wallet) {
                         // console.log(wallet);
                         //post.set('userName', post.id);
+                        console.log("测试："+username);
                         post.set('uName', username);
                         post.set('userHead', userhead);
                         post.set('wallet', wallet);
