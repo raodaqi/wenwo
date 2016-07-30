@@ -170,7 +170,7 @@
         <div class="list-block">
           <ul class="my-ask">
             <li class="item-content item-link" data-href="#buy">
-              <div class="before-media"><i class="iconfont icon-gouwuche"></i></div>
+              <div class="before-media"><i class="iconfont icon-shoppingcart"></i></div>
               <div class="item-media"><i class="icon icon-f7"></i></div>
               <div class="item-inner">
                 <div class="item-title">朕查阅的</div>
@@ -178,7 +178,7 @@
               </div>
             </li>
             <li class="item-content item-link" data-href="#share">
-              <div class="before-media"><i class="iconfont icon-paper-airplane"></i></div>
+              <div class="before-media"><i class="iconfont icon-myshare"></i></div>
               <div class="item-media"><i class="icon icon-f7"></i></div>
               <div class="item-inner">
                 <div class="item-title">朕分享的</div>
@@ -189,14 +189,14 @@
 
           <ul class="">
             <li class="item-content item-link item-share">
-              <div class="before-media"><i class="iconfont icon-fenxiang"></i></div>
+              <div class="before-media"><i class="iconfont icon-invite"></i></div>
               <div class="item-media"><i class="icon icon-f7"></i></div>
               <div class="item-inner">
                 <div class="item-title">邀请爱卿使用</div>
               </div>
             </li>
             <li class="item-content item-link item-message" data-href="http://form.mikecrm.com/Qg7fK7">
-              <div class="before-media"><i class="iconfont icon-mes"></i></div>
+              <div class="before-media"><i class="iconfont icon-feedback"></i></div>
               <div class="item-media"><i class="icon icon-f7"></i></div>
               <div class="item-inner">
                 <div class="item-title">给小问子提意见</div>
@@ -267,6 +267,28 @@
 <script>
   //用户名
   var UserName = "<%= username %>";
+  function initTop(){
+    // var topNum = localStorage.top;
+    // if(topNum){
+    //   $("#"+typ+" .find-content").scrollTop(topNum);
+    // }
+    var findTop = localStorage.findTop;
+    var likeTop = localStorage.likeTop;
+    var shareTop = localStorage.shareTop;
+    var buyTop = localStorage.buyTop;
+    if(findTop){
+      $("#find .find-content").scrollTop(findTop);
+    }
+    if(likeTop){
+      $("#like .like-content").scrollTop(likeTop);
+    }
+    if(shareTop){
+      $("#share .share-content").scrollTop(shareTop);
+    }
+    if(buyTop){
+      $("#buy .buy-content").scrollTop(buyTop);
+    }
+  }
 </script>
 <script type='text/javascript' src='/js/food.js' charset='utf-8'></script>
 </html>

@@ -32,7 +32,8 @@
                   var data = result.data;
                   $(".title").text(formatTag(data.askTagStr));
                   $(".username").text(data.createByName);
-                  $(".like-num").text(data.likeNum);
+                  likeNum = data.likeNum < 0 ? 0 : data.likeNum;
+                  $(".like-num").text(likeNum);
 
                   //初始化分享
                   WX_SHARE_LINK = "http://www.wenwobei.com/detail?askid=" + data.objectId;
@@ -180,7 +181,7 @@
       $.showPreloader("正在跳转");
       // window.location.href="/edit";
       if (URL == "food") {
-          window.history.go(-1);
+          history.back();
       } else {
           window.location.href = "/food";
       }
