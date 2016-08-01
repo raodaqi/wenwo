@@ -44,7 +44,7 @@
       transform: translateX(-50%);*/
       width: 100%;
       height: 100%;
-      background-size: cover;
+      background-origin: center center;
     }
     .username-content{
       position: absolute;

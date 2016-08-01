@@ -82,7 +82,7 @@ router.get('/allask', function(req, res, next) {
                     // }
 
                     results[i].set('shopName', "请购买以后查看");
-                    results[i].set('askPosition', "请购买以后查看");
+                    // results[i].set('askPosition', "请购买以后查看");
                 }
 
                 // var test = results[i].get('askTag');

@@ -217,6 +217,16 @@ $.hidePreloader = function(){
     return parseFloat(str).toFixed(2);
   }
 
+  //解析json字符串
+  function formatJSON(str){
+    //判断是否是标准json字符串
+    if(str.indexOf("{") == -1 || str.indexOf("}") == -1){
+      return '';
+    }else{
+      return JSON.parse(str);
+    }
+  }
+
   //经纬度之间的距离
   /**
 

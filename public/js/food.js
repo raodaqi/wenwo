@@ -4,7 +4,8 @@
       LNG,
       title1 = 1,
       title2 = 1,
-      title3 = 1;
+      title3 = 1,
+      title4 = 1;
   //测试
   LAT = 30.580596;
   LNG = 103.982984;
@@ -28,6 +29,7 @@
       title1 = 1;
       title2 = 1;
       title3 = 1;
+      title4 = 1;
       console.log(id);
       switch (id) {
           case "find":
@@ -167,13 +169,13 @@
           url: "/ask/allask",
           success: function(result) {
               // console.log(result);
-              // var data = result.data;
-              // for(var i = 0; i < data.length; i++){
-              //   var lat1 = parseFloat(data[i].GeoX);
-              //   var lng1 = parseFloat(data[i].GeoY);
-              //   var long1  = getFlatternDistance(lat1,lng1,LAT,LNG);
-              //   console.log(long1);
-              // }
+              var data = result.data;
+              for(var i = 0; i < data.length; i++){
+                var lat1 = parseFloat(data[i].GeoX);
+                var lng1 = parseFloat(data[i].GeoY);
+                var long1  = getFlatternDistance(lat1,lng1,LAT,LNG);
+                console.log(long1);
+              }
               callback.success(result);
           },
           error: function(error) {
@@ -242,6 +244,7 @@
       var title1Top = $(".title1").length ? $(".title1").offset().top : 10000;
       var title2Top = $(".title2").length ? $(".title2").offset().top : 10000;
       var title3Top = $(".title3").length ? $(".title3").offset().top : 10000;
+      var title4Top = $(".title4").length ? $(".title4").offset().top : 10000;
       var top = $("#find .find-content").scrollTop();
 
       // localStorage["top"] = top;
@@ -258,6 +261,9 @@
 
       if (title3Top < 50) {
           $(".distance-fixed").text($(".title3").text());
+      }
+      if (title4Top < 50) {
+          $(".distance-fixed").text($(".title4").text());
       }
       $(".distance-fixed").show();
 
@@ -319,30 +325,37 @@
                           var lat1 = data[i].GeoX;
                           var lng1 = data[i].GeoY;
                           var long = getFlatternDistance(lat1, lng1, LAT, LNG);
-                          if (long < 1000) {
+                          if (long < 500) {
 
                               // title = '<div class="distance">距离 < 1KM</div>';
 
                               if (title1) {
-                                  html += '<div class="title1 distance">距离 < 1KM</div>';
+                                  html += '<div class="title1 distance">距离 < 500M</div>';
                                   title1 = 0;
                               }
 
-                          } else if (long >= 1000 && long <= 5000) {
+                          } else if (long >= 500 && long <= 2000) {
 
                               if (title2) {
-                                  html += '<div class="title2 distance">距离1KM - 5KM</div>';
+                                  html += '<div class="title2 distance">距离500M - 2KM</div>';
                                   title2 = 0;
                               }
 
-                          } else {
+                          }else if (long >= 2000 && long <= 10000) {
+
                               if (title3) {
-                                  html += '<div class="title3 distance">距离 > 5KM</div>';
+                                  html += '<div class="title3 distance">距离2KM - 10KM</div>';
                                   title3 = 0;
+                              }
+
+                          } else {
+                              if (title4) {
+                                  html += '<div class="title4 distance">距离 > 10KM</div>';
+                                  title4 = 0;
                               }
                           }
 
-                          html += '<div class="wenwo-li" data-id=' + data[i].objectId + '><div class="up-content"><img src="' + data[i].createByUrl + '" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">' + formatTag(data[i].askTagStr) + '</div><div class="ask-reason">' + data[i].askReason + '</div></div></div><div class="down-content"><div class="down-like ' + (data[i].liked ? "liked" : '') + '"><span class="icon iconfont icon-likeEat"></span><label class="like-num">' + (data[i].likeNum < 0 ? 0 : data[i].likeNum) + '</label></div>' + (data[i].score > 9 ? '<div class="down-buy" data-id=' + data[i].objectId + '>' + data[i].askPrice + '元瞅瞅</div>' : '<div class="down-buy free" data-id=' + data[i].objectId + '>限时免费</div>') + '<div class="down-time">' + formatDate("y.m.d", data[i].createdAt) + '</div></div></div>';
+                          html += '<div class="wenwo-li" data-id=' + data[i].objectId + '><div class="up-content"><img src="' + data[i].createByUrl + '" alt="" class="user-pic"><div class="ask-content"><div class="ask-add">'+( formatJSON(data[i].askPosition) ? (long > 10000 ? (formatJSON(data[i].askPosition).city +" "+ formatJSON(data[i].askPosition).district) : formatJSON(data[i].askPosition).district) : "" )+'</div><div class="ask-tag">' + formatTag(data[i].askTagStr) + '</div><div class="ask-reason">' + data[i].askReason + '</div></div></div><div class="down-content"><div class="down-like ' + (data[i].liked ? "liked" : '') + '"><span class="icon iconfont icon-likeEat"></span><label class="like-num">' + (data[i].likeNum < 0 ? 0 : data[i].likeNum) + '</label></div>' + (data[i].score > 9 ? '<div class="down-buy" data-id=' + data[i].objectId + '>' + data[i].askPrice + '元瞅瞅</div>' : '<div class="down-buy free" data-id=' + data[i].objectId + '>限时免费</div>') + '<div class="down-time">' + formatDate("y.m.d", data[i].createdAt) + '</div></div></div>';
                       }
                       // 添加新条目
                       $('#find .wenwo-ul').append(html);
@@ -380,6 +393,15 @@
                           getAskLoad = 1;
                           return;
                       }
+                  }else{
+                    $.detachInfiniteScroll($('#find .infinite-scroll'));
+                    // 删除加载提示符
+                    // $('.infinite-scroll-preloader').remove();
+                    $("#find .infinite-scroll-preloader .preloader").hide();
+                    $("#find .ask-end").show();
+                    // $('.infinite-scroll-preloader').append("")
+                    getAskLoad = 1;
+                    return;
                   }
 
               },
@@ -467,30 +489,35 @@
                       var lat1 = data[i].GeoX;
                       var lng1 = data[i].GeoY;
                       var long = getFlatternDistance(lat1, lng1, LAT, LNG);
-                      if (long < 1000) {
+                       if (long < 500) {
 
-                          // title = '<div class="distance">距离 < 1KM</div>';
+                              if (title1) {
+                                  html += '<div class="title1 distance">距离 < 500M</div>';
+                                  title1 = 0;
+                              }
 
-                          if (title1) {
-                              html += '<div class="title1 distance">距离 < 1KM</div>';
-                              title1 = 0;
+                          } else if (long >= 500 && long <= 2000) {
+
+                              if (title2) {
+                                  html += '<div class="title2 distance">距离500M - 2KM</div>';
+                                  title2 = 0;
+                              }
+
+                          }else if (long >= 500 && long <= 2000) {
+
+                              if (title3) {
+                                  html += '<div class="title3 distance">距离2KM - 10KM</div>';
+                                  title3 = 0;
+                              }
+
+                          } else {
+                              if (title4) {
+                                  html += '<div class="title4 distance">距离 > 10KM</div>';
+                                  title4 = 0;
+                              }
                           }
 
-                      } else if (long >= 1000 && long <= 5000) {
-
-                          if (title2) {
-                              html += '<div class="title2 distance">距离1KM - 5KM</div>';
-                              title2 = 0;
-                          }
-
-                      } else {
-                          if (title3) {
-                              html += '<div class="title3 distance">距离 > 5KM</div>';
-                              title3 = 0;
-                          }
-                      }
-
-                      html += '<div class="wenwo-li" data-id=' + data[i].objectId + '><div class="up-content"><img src="' + data[i].createByUrl + '" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">' + formatTag(data[i].askTagStr) + '</div><div class="ask-reason">' + data[i].askReason + '</div></div></div><div class="down-content"><div class="down-like ' + (data[i].liked ? "liked" : '') + '"><span class="icon iconfont icon-likeEat"></span><label class="like-num">' + (data[i].likeNum < 0 ? 0 : data[i].likeNum) + '</label></div>' + (data[i].score > 9 ? '<div class="down-buy" data-id=' + data[i].objectId + '>' + data[i].askPrice + '元瞅瞅</div>' : '<div class="down-buy free" data-id=' + data[i].objectId + '>限时免费</div>') + '<div class="down-time">' + formatDate("y.m.d", data[i].createdAt) + '</div></div></div>';
+                          html += '<div class="wenwo-li" data-id=' + data[i].objectId + '><div class="up-content"><img src="' + data[i].createByUrl + '" alt="" class="user-pic"><div class="ask-content"><div class="ask-add">'+( formatJSON(data[i].askPosition) ? (long > 10000 ? (formatJSON(data[i].askPosition).city +" "+ formatJSON(data[i].askPosition).district) : formatJSON(data[i].askPosition).district) : "" )+'</div><div class="ask-tag">' + formatTag(data[i].askTagStr) + '</div><div class="ask-reason">' + data[i].askReason + '</div></div></div><div class="down-content"><div class="down-like ' + (data[i].liked ? "liked" : '') + '"><span class="icon iconfont icon-likeEat"></span><label class="like-num">' + (data[i].likeNum < 0 ? 0 : data[i].likeNum) + '</label></div>' + (data[i].score > 9 ? '<div class="down-buy" data-id=' + data[i].objectId + '>' + data[i].askPrice + '元瞅瞅</div>' : '<div class="down-buy free" data-id=' + data[i].objectId + '>限时免费</div>') + '<div class="down-time">' + formatDate("y.m.d", data[i].createdAt) + '</div></div></div>';
                   }
                   // 添加新条目
                   // $(".distance-fixed").hide();
@@ -703,7 +730,10 @@
   //初始化个人中心页面
   function initMePage(username) {
       if (localStorage.userHead) {
-          $("#me .pic-bg,#me .user-pic").attr("src", localStorage.userHead);
+          // $("#me .pic-bg,#me .user-pic").attr("src", localStorage.userHead);
+          $("#me .user-pic").attr("src", localStorage.userHead);
+          $("#me .pic-bg").css("background", 'url("'+localStorage.userHead+'") center center / cover no-repeat');
+
           $("#me .user-name").text(localStorage.userShowName);
           $("#me .list-li-like-num").text(localStorage.foodLikeListCount);
           $("#me .list-li-like-share,#me .my-ask .item-share").text(localStorage.askListCount);
@@ -728,7 +758,9 @@
                   var buyListCount = result.data.buyListCount;
                   var totalIncome = leaveTwoPoint(result.data.totalIncome);
                   var foodLikeListCount = result.data.foodLikeListCount;
-                  $("#me .pic-bg,#me .user-pic").attr("src", userHead);
+                  // $("#me .pic-bg,#me .user-pic").attr("src", userHead);
+                  $("#me .user-pic").attr("src", localStorage.userHead);
+                  $("#me .pic-bg").css("background", 'url("'+localStorage.userHead+'") center center / cover no-repeat');
                   $("#me .user-name").text(userShowName);
                   $("#me .list-li-like-num").text(foodLikeListCount);
                   $("#me .list-li-like-share,#me .my-ask .item-share").text(askListCount);
