@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+  <meta name='description', content='wenwo,问我,当地人,旅游,攻略,信息,分享,经验,赚钱，美食，成都，好吃'>
+  <meta name='author', content='raodqi'>
+  <link rel="icon" type="image/x-icon" href="/img/logo.jpg" media="screen">
+  <title>问我-让经验帮你赚钱</title>
+<script src="/js/jquery.min.js"></script>
+<style>
+  body{
+    overflow-y: auto !important;
+  }
+  .send-content{
+
+  }
+  /*#edui1,.send-content{
+    display: block;
+    width: 90%;
+    margin: .5rem auto;
+    height: 20rem;
+    padding: .5rem;
+    font-size: .75rem;
+  }*/
+  .send{
+    width: 6rem;
+    height: 2rem;
+    line-height: 2rem;
+    text-align: center;
+    border-radius: .5rem;
+    color: white;
+    border: 1px solid #f2f2f2;
+    background-color: #f88827;
+    cursor: pointer;
+    position: relative;
+    float: right;
+    margin: 2rem;
+    margin-right: 5%;
+  }
+  .send-success{
+    display: none;
+  }
+  .send-success{
+    text-align: center;
+  }
+  .send-url{
+    display: inline-block;
+    width: 26rem;
+    height: 40px;
+    padding: 6px 12px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin: 1rem auto;
+  }
+  .copy{
+    display: inline-block;
+    width: 3rem;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 6px 12px;
+    margin-left: .3rem;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+</body>
+<% include footer.ejs %>
+<script>
+function escape2Html(str) {
+ var arrEntities={'lt':'<','gt':'>','nbsp':' ','amp':'&','quot':"'",'#34':'"'};
+ return str.replace(/&(lt|gt|nbsp|amp|quot|#34);/ig,function(all,t){return arrEntities[t];});
+}
+var str = "<%= detail %>";
+console.log(str);
+$("body").append(escape2Html(str));
+</script>
+</html>

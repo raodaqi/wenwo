@@ -347,11 +347,13 @@ router.post('/askdetail', function(req, res, next) {
 
                 var query = new AV.Query('Haved');
 
-                query.equalTo("by", userName);
+                var askPoint = AV.Object.createWithoutData('AskMe', askId);
+                console.log(askId);
+                // query.equalTo("by", userName);
+                query.equalTo("ask", askPoint);
                 query.equalTo('type', '2');
                 query.include('ask');
                 query.find().then(function (havedList) {
-
 
                     var query = new AV.Query('FoodLike');
 
@@ -364,6 +366,7 @@ router.post('/askdetail', function(req, res, next) {
                         var havedFlag = 0;
                         var foodLikeFlag = 0;
                         var isOwnFlag = 0;
+                        var havedNum = 0;
                         //var showDetail = 0;
 
                         // console.log(ask.id);
@@ -371,6 +374,10 @@ router.post('/askdetail', function(req, res, next) {
 
                             isOwnFlag++;
 
+                        }
+
+                        if(havedList.length){
+                            havedNum = havedList.length;
                         }
 
                         for (var i = 0; i < havedList.length; i++) {
@@ -404,7 +411,8 @@ router.post('/askdetail', function(req, res, next) {
                         detailShow = {
                             isOwnFlag:isOwnFlag,
                             foodLikeFlag:foodLikeFlag,
-                            havedFlag:havedFlag
+                            havedFlag:havedFlag,
+                            havedNum :havedNum
                         };
 
                         res.send({code:200,data:ask,show:detailShow,message:'操作成功'});

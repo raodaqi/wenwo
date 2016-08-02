@@ -522,4 +522,40 @@ router.get('/apply', function(req, res, next) {
     })
 });
 
+router.post('/edit', function (req, res, next) {
+    var detail = req.body.detail;
+    if(!detail){
+        var result = {
+            code : 400,
+            message : '操作失败',
+            detail  : '内容为空'
+        };
+        res.send(result);
+    }else{
+      // 声明类型
+      var Share = AV.Object.extend('Share');
+      // 新建对象
+      var share = new Share();
+      // 设置名称
+      share.set('detail',detail);
+      console.log(detail.length);
+      share.save().then(function (todo) {
+        var result = {
+            code : 200,
+            data : todo,
+            message : '保存成功'
+        };
+        res.send(result);
+      }, function (error) {
+        console.log(error);
+        var result = {
+            code : 400,
+            error : error,
+            message : '保存失败'
+        };
+        res.send(result);
+      });
+    }  
+});
+
 module.exports = router;
