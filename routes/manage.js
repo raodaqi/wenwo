@@ -28,6 +28,27 @@ router.get('/token', function(req, res) {
     }
 });
 
+router.get('/version', function(req, res) {
+    var query = new AV.Query('ApkVersion');
+    query.descending('versionCode');
+    query.first().then(function (resultes) {
+        var result = {
+            code : 200,
+            message : 'success',
+            data:resultes
+        }
+        res.send(result);
+    },function(error){
+        var result = {
+            code : 500,
+            message : 'error',
+            data:''
+        }
+        res.send(result);
+    });
+
+});
+
 router.get('/', function(req, res, next) {
     var user = AV.User.current();
     if(!user){

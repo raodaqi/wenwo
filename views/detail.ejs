@@ -17,11 +17,29 @@
     <div class="wenwo-content page page-current" id='detail' style="display:none">
       <header class="bar bar-nav">
         <a class="button button-link button-nav pull-left">
-            <!-- <a class="button button-link button-nav pull-left"> -->
-              <span class="icon icon-left"></span>
-          </a>
+          <!-- <a class="button button-link button-nav pull-left"> -->
+            <span class="icon icon-left"></span>
+        </a>
+        <a class="button button-link button-nav pull-right">
+            <span class="iconfont icon-more"></span>
+        </a>
         <h1 class="title">鱼火锅</h1>
       </header>
+      
+      <div class="more-dialog" style="display:none">
+        <div class="modal-overlay modal-overlay-visible"></div>
+        <div class="more-content">
+          <div class="more-list">
+            <label class="iconfont icon-bianji"></label>
+            <label class="list-text">重新编辑</label>
+          </div>
+          <div class="more-list">
+            <label class="iconfont icon-shanchu"></label>
+            <label class="list-text">删除下架</label>
+          </div>
+        </div>
+      </div>
+
       <!-- 这里是所有的信息列表 -->
       <div class="content">
         <div class="detail-pic-bg">
@@ -33,7 +51,11 @@
           </div>
           <div class="like"><span class="icon iconfont icon-likeEat"></span><span class="like-num">2</span></div>
           <div class="buy"><span class="price">2</span>元瞅瞅</div>
-
+          
+          <div class="sale-content">
+            <span class="iconfont icon-sold"></span>
+            <label class="sale-num">0</label>
+          </div>
           <img src="/img/common/buyed.png" class="buyed-img">
         </div>
 

@@ -628,9 +628,10 @@ textarea {
 }
 
 .icon-jian {
-    position: absolute;
+    /*position: absolute;*/
+    position: relative;
     line-height: 1rem;
-    right: 10%;
+    right: -.9rem;
     color: red;
     height: 1rem;
     width: 1rem;

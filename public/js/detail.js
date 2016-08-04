@@ -62,6 +62,12 @@
                       $(".like").removeClass("liked");
                   }
 
+                  //显示已售数量
+                  if(result.show.havedNum){
+                    $(".sale-num").text(result.show.havedNum);
+                  }
+                  
+
                   //判断是否是自己的信息
                   if (result.show.isOwnFlag) {
                       //是自己的
@@ -174,6 +180,11 @@
       } else if (type == "edit") {
           $.router.load("/edit?username=573c1eb271cfe4006c18274f");
       }
+  })
+
+  //点击更多的逻辑
+  $(".icon-more").on("click",function(){
+    $(".more-dialog").show();
   })
 
   //点击返回逻辑bug
@@ -388,6 +399,10 @@
                       $(".buy").text("朕已查阅");
                       $(".buy").attr("data-buy", "1");
 
+                      var havedNum = parseInt($(".sale-num").text());
+                      havedNum++;
+                      $(".sale-num").text(havedNum);
+
                       $(".buyed-img").show();
                       $(".dislike-content").show();
                       getHide({
@@ -461,6 +476,9 @@
                       ask_id: AskId
                   }
                   buyed = 1;
+                  var havedNum = parseInt($(".sale-num").text());
+                  havedNum++;
+                  $(".sale-num").text(havedNum);
                   $.showPreloader("正在瞅瞅");
                   getHide({
                       success: function(result) {

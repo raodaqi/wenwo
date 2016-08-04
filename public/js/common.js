@@ -217,6 +217,25 @@ $.hidePreloader = function(){
     return parseFloat(str).toFixed(2);
   }
 
+  //保留两位小数
+  function formatDis(askPosition,long){
+    if(!askPosition){
+      return "";
+    }else{
+      if(long < 10000){
+        return askPosition.district;
+      }else{
+        if(askPosition.city){
+          return askPosition.city +" "+ askPosition.district;
+        }else{
+          return askPosition.province +" "+ askPosition.district;
+        }
+      }
+    }
+    // formatDis(formatJSON(data[i].askPosition),long);
+    // formatJSON(data[i].askPosition) ? (long > 10000 ? (formatJSON(data[i].askPosition).city +" "+ formatJSON(data[i].askPosition).district) : formatJSON(data[i].askPosition).district);
+  }
+
   //解析json字符串
   function formatJSON(str){
     //判断是否是标准json字符串

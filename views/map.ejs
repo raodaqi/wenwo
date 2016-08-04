@@ -1,16 +1,5 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-  <meta charset='utf-8'>
-  <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
-  <meta name='description', content='wenwo,问我,当地人,旅游,攻略,信息,分享,经验,赚钱，美食，成都，好吃'>
-  <meta name='author', content='raodqi'>
-  <link rel="icon" type="image/x-icon" href="/img/logo.jpg" media="screen">
-  <title>问我-让经验帮你赚钱</title>
-  <link rel="stylesheet" href="/css/sm.min.css">
-  <link rel="stylesheet" href="http://at.alicdn.com/t/font_1468915240_5629373.css">
-  <link rel="stylesheet" href="/css/style.css">
-  <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=cb84c659c88a7cc83b935a009b3a9cfd&plugin=AMap.Walking"></script>
+<% include header.ejs %>
+<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=cb84c659c88a7cc83b935a009b3a9cfd&plugin=AMap.Walking,AMap.Driving"></script>
 </head>
   <style>
     html{
@@ -34,43 +23,87 @@
       font-family: "iconfont" !important;
     }
     #panel {
-      position: fixed;
       background-color: white;
-      max-height: 90%;
       overflow-y: auto;
-      top: 10px;
-      right: 10px;
-      width: 280px;
-      display: none;
+      width: 100%;
+      height: 100%;
+      padding-top: 2.2rem;
+      /*display: none;*/
+    }
+    .bar{
+      z-index: 1000;
+    }
+    .icon-daohang{
+      color: #ee7e2e!important
     }
   </style>
 <body>
-  <div class="wenwo-content page page-current" id='find'>
+  <div class="wenwo-content page page-current" id='map'>
+    <header class="bar bar-nav">
+      <a class="button button-link button-nav pull-left backDetail">
+        <span class="icon iconfont icon-zuo"></span>
+      </a>
+      <span class="icon iconfont icon-daohang pull-right"></span>
+      <h1 class="title">地图</h1>
+    </header>
+    <div id="container"></div>
+  </div>
+  <div class="wenwo-content page" id="panelcontent">
     <header class="bar bar-nav">
       <a class="button button-link button-nav pull-left back">
         <span class="icon iconfont icon-zuo"></span>
       </a>
-      <h1 class="title">地图</h1>
+      <h1 class="title">路线</h1>
     </header>
-    <div id="container"></div>
-    <div id="panel"></div>
+    <div id="panel">
   </div>
 </body>
-  <script type='text/javascript' src='/js/zepto.min.js' charset='utf-8'></script>
-  <script type="text/javascript" src="/js/common.js"></script>
-  <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-  <script type="text/javascript" src="/js/wxlocation.js"></script>
+<% include footer.ejs %>
+<script type="text/javascript" src="/js/wxlocation.js"></script>
   <script>
-  $(".back").on("click",function(){
+  $(".backDetail").on("click",function(){
     window.history.back(-1);
   })
   $.showPreloader("正在加载");
+
+  function initRoad(myLng,myLat,lng,lat){
+    var walking = new AMap.Walking({
+      map: map,
+      panel: "panel"
+    }); 
+    walking.search([myLng,myLat],[lng,lat],function(status,result){
+      console.log(result);
+      console.log(status);
+      if(status == "error"){
+        $.hidePreloader();
+        $("#panelcontent .title").text("驾车导航");
+        var driving = new AMap.Driving({
+          map: map,
+          panel: "panel"
+        }); 
+        driving.search([myLng,myLat],[lng,lat],function(status,result){
+          console.log(result);
+          console.log(status);
+        });
+      }else{
+        $("#panelcontent .title").text("步行导航");
+        $.hidePreloader();
+      }
+    });
+  }
+
+  $(".icon-daohang").on("click",function(){
+    $.router.load("#panelcontent");
+  })
+
   var marker;
   var icon = new AMap.Icon({
     image: "/img/edit/marker.png",
   });
   var lat = "<%= lat %>";
   var lng = "<%= lng %>";
+  // myLat = 30.580596;
+  // myLng = 103.982984;
   if(lat && lng){
     //详情地点显示
     map = new AMap.Map('container', {
@@ -93,9 +126,20 @@
      //    map: map,
      //    panel: "panel"
      //  }); 
-     //  walking.search([104.181371,30.817972],[lng,lat],function(status,result){
+     //  walking.search([myLng,myLat],[lng,lat],function(status,result){
      //    console.log(result);
+     //    console.log(status);
      //  });
+     // $.hidePreloader();
+     // var driving = new AMap.Driving({
+     //    map: map,
+     //    panel: "panel"
+     //  }); 
+     //  driving.search([myLng,myLat],[lng,lat],function(status,result){
+     //    console.log(result);
+     //    console.log(status);
+     //  });
+     // initRoad(myLng,myLat,lng,lat);
   }
 
   if(navigator.geolocation) { // 判断设备是否支持定位
@@ -103,27 +147,32 @@
         //步行导航
         var myLng = position.coords.longitude;
         var myLat = position.coords.latitude;
-        var walking = new AMap.Walking({
-            map: map,
-            panel: "panel"
-        }); 
-        $.hidePreloader();
-        walking.search([myLng,myLat],[lng,lat],function(status,result){
-          console.log(result);
-        });
+        // var walking = new AMap.Walking({
+        //     map: map,
+        //     panel: "panel"
+        // }); 
+        // $.hidePreloader();
+        // walking.search([myLng,myLat],[lng,lat],function(status,result){
+        //   console.log(result);
+        // });
+        initRoad(myLng,myLat,lng,lat);
   　　}, function(error) {
+          myLat = 30.580596;
+          myLng = 103.982984;
+          initRoad(myLng,myLat,lng,lat);
           initLocation({
             success:function(myLng,myLat){
               $.hidePreloader();
               if(myLng && myLat){
                 //步行导航
-                var walking = new AMap.Walking({
-                    map: map,
-                    panel: "panel"
-                }); 
-                walking.search([myLng,myLat],[lng,lat],function(status,result){
-                  console.log(result);
-                });
+                // var walking = new AMap.Walking({
+                //     map: map,
+                //     panel: "panel"
+                // }); 
+                // walking.search([myLng,myLat],[lng,lat],function(status,result){
+                //   console.log(result);
+                // });
+                initRoad(myLng,myLat,lng,lat);
               }else{
                 marker = new AMap.Marker({
                   map : map,
@@ -136,6 +185,10 @@
                 });
                 marker.setMap(map);
               }
+            },
+            error:function(error){
+              $.hidePreloader();
+              console.log(error);
             }
           });
   　　}, {
@@ -147,13 +200,14 @@
             $.hidePreloader();
             if(myLng && myLat){
               //步行导航
-              var walking = new AMap.Walking({
+              /*var walking = new AMap.Walking({
                   map: map,
                   panel: "panel"
               }); 
               walking.search([myLng,myLat],[lng,lat],function(status,result){
                 console.log(result);
-              });
+              });*/
+              initRoad(myLng,myLat,lng,lat);
             }else{
               marker = new AMap.Marker({
                 map : map,
@@ -166,6 +220,9 @@
               });
               marker.setMap(map);
             }
+          },
+          error:function(error){
+            console.log(error);
           }
         });
 　　}

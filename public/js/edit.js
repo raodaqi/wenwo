@@ -942,7 +942,9 @@
                           } else {
                               detail = deatil.substr(0, 8) + "...";
                           }
-                          WX_SHARE_TITLE = "我分享了「" + detail + "」附近的美食,瞅瞅波？";
+                          // WX_SHARE_TITLE = "我分享了「" + detail + "」附近的美食,瞅瞅波？";
+                          WX_SHARE_TITLE = data.askReason;
+                          WX_SHARE_DESC = "我 : 分享了「" + tag + "」美食,瞅瞅波？";
                           initShare();
 
                           $.router.load("#success");
@@ -979,11 +981,20 @@
                           var data = result.data;
                           WX_SHARE_LINK = "http://www.wenwobei.com/detail?askid=" + data.objectId;
                           WX_SHARE_IMGURL = data.createByUrl;
-                          WX_SHARE_DESC = data.askReason;
+                          // WX_SHARE_DESC = data.askReason;
                           var askPosition = data.askPosition;
                           askPosition = JSON.parse(askPosition);
+                          // detail = askPosition.detail;
+                          // WX_SHARE_TITLE = "我分享了" + detail + "的美食,瞅瞅波？"
                           detail = askPosition.detail;
-                          WX_SHARE_TITLE = "我分享了" + detail + "的美食,瞅瞅波？"
+                          if (detail.length <= 8) {
+                              detail = detail;
+                          } else {
+                              detail = deatil.substr(0, 8) + "...";
+                          }
+                          // WX_SHARE_TITLE = "我分享了「" + detail + "」附近的美食,瞅瞅波？";
+                          WX_SHARE_TITLE = data.askReason;
+                          WX_SHARE_DESC = "我 : 分享了「" + tag + "」美食,瞅瞅波？";
                           initShare();
 
                           $.router.load("#success");

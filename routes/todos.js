@@ -233,11 +233,11 @@ router.post('/test/wx', function(req, res, next) {
   // 如果缓存中已存在签名，则直接返回签名
     if(signatureObj && signatureObj.timestamp){
       var t = createTimeStamp() - signatureObj.timestamp;
-      console.log(signatureObj.url, url);
+      // console.log(signatureObj.url, url);
       // 未过期，并且访问的是同一个地址
       // 判断地址是因为微信分享出去后会额外添加一些参数，地址就变了不符合签名规则，需重新生成签名
       if(t < expireTime && signatureObj.url == url){
-        console.log('======== result from cache ========');
+        // console.log('======== result from cache ========');
         // var results = {
         //     noncestr: signatureObj.noncestr,
         //     timestamp: signatureObj.timestamp,
@@ -257,6 +257,8 @@ router.post('/test/wx', function(req, res, next) {
           signature: signatureObj.signature,
           url: signatureObj.url
         });
+        
+        return ;
         // var data = {
         //   noncestr: signatureObj.noncestr
         //   ,timestamp: signatureObj.timestamp
@@ -312,8 +314,8 @@ router.post('/test/wx', function(req, res, next) {
           console.error('Request failed with response code ' + httpResponse.status);
         }
       });
-      console.log("------------------------test----------------------");
-      console.log(result.data);
+      // console.log("------------------------test----------------------");
+      // console.log(result.data);
     }
   })
   // res.render('wxtest');
