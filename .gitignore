@@ -7,3 +7,4 @@ start.sh
 .avoscloud/
 npm-debug.log
 .gitignore
+/config.js

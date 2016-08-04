@@ -186,6 +186,13 @@
   $(".icon-more").on("click",function(){
     $(".more-dialog").show();
   })
+  $(".more-dialog .modal-overlay").on("click",function(){
+    $(".more-dialog").hide();
+  })
+  $(".more-edit").on("click",function(){
+    $.showPreloader("正在加载");
+    window.location.href = "/edit?type=edit&askid="+AskId;
+  })
 
   //点击返回逻辑bug
   $("#detail .icon-left").on("click", function() {

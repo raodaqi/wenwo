@@ -83,7 +83,7 @@
       })
       initLocation({
           success: function() {
-
+            
           },
           error: function() {
               $.toast("定位失败");
@@ -447,123 +447,164 @@
       }
 
       function formatDetail(data) {
-          console.log(data);
           var staus = data.staus, //状态
               askTagStr = data.askTagStr, //标签
               reason = data.askReason, //理由
-              askContentHide = data.askContentHide, //隐藏详情
               askContentShow = data.askContentShow, //隐藏详情
               lnglatXY = [data.GeoX, data.GeoY], //坐标
               lat = data.GeoX,
               lng = data.GeoY,
+              name = data.shopName,
+              askPosition = data.askPosition,
               price = data.askPrice, //价格
               updatedAt = data.updatedAt, //分享时间
               createBy = data.createBy; //分享者
 
           //标签
           var tag = JSON.parse(askTagStr);
-          console.log(tag);
-          var spanContent = '';
-          for (var i in tag) {
-              console.log(tag[i]);
-              var spanContent = spanContent + '<span class="type-item">' + tag[i].tag_name + '</span>';
+          if (!tag[0]) {
+            $(".tag .edit-content").empty().text("请填写标签");
+          } else {
+            $(".ww-typeHelper-input").val(tag[0].tag_name);
+            $(".tag .edit-li-img").attr("src", "/img/edit/tag-02.png");
+            var span = '<span class="type-item">' + tag[0].tag_name + '</span>';
+            $(".tag .edit-content").empty().append(span);
           }
-          // $("#tag-content .card-content-inner").append(spanContent);
-          $(".ww-typeHelper-left").before(spanContent);
-          $("#tag-content .card-content-inner").append(spanContent);
 
           //推荐理由
-          $("#reason").val(reason);
-          $("#reason-content .card-content-inner").text(reason);
+          if (reason) {
+              $(".reason .edit-li-img").attr("src", "/img/edit/reason-02.png");
+              $("#reason").val(reason);
+              $(".reason .edit-content").text(reason);
+          }
 
           //解析详情
-          var show = askContentShow.split("##");
-          var hidden = askContentHide.split("##");
-          var reasonDetail = '';
-          console.log("len:" + hidden.length);
-          for (var i = 0; i < hidden.length; i++) {
-              if (hidden[i]) {
-                  reasonDetail += show[i] + "##" + hidden[i] + "##";
-              }
+          var askContentShow = JSON.parse(askContentShow);
+          var detail = askContentShow.detail;
+          var detailLi = askContentShow.detailLi;
+          if (detail) {
+              $("#detail").val(detail);
+              $(".edit-detail").text(detail);
           }
-          if (!hidden.length) {
-              reasonDetail = show;
-          }
+          //初始化信息详情列表
+          if (detailLi) {
+              detailLi = JSON.parse(detailLi);
+              if (detailLi.length) {
+                  $(".detail-li-content").empty();
+                  $(".edit-detail-li-content").empty();
+                  for (var i = 0; i < detailLi.length; i++) {
+                      var li = '<div class="detail-li"><div class="detail-li-title"><input type="text" name="detailName' + i + '" class="detail-li-name" placeholder="填写" value="' + detailLi[i].name + '"></div><div class="detail-li-input"><input type="text" name="detailVal' + i + '" class="detail-li-val" placeholder="可以在此进行补充描述哦" value="' + detailLi[i].val + '"></div><div class="icon iconfont icon-jian"></div></div>';
+                      $(".detail-li-content").append(li);
+                      $(".detail-li-all-content").scrollTop(1000);
 
-          $("#detail-content .card-content-inner").text(reasonDetail);
-          $("#detail").val(reasonDetail);
-          deShow(reasonDetail);
-
-          //解析地址
-          getAddress(lnglatXY, {
-              success: function(address) {
-                  var detail = address.formattedAddress;
-                  var address = {
-                      province: address.addressComponent.province,
-                      city: address.addressComponent.city,
-                      district: address.addressComponent.district,
-                      township: address.addressComponent.township
+                      //初始化显示界面
+                      var li = '<div class="edit-detail-li"><div class="edit-detail-li-title">' + detailLi[i].name + '</div><div class="edit-detail-li-input">' + detailLi[i].val + '</div></div>';
+                      $(".edit-detail-li-content").append(li);
                   }
-                  var replace = "" + address.province + address.city + address.district + address.township + "";
-                  detail = detail.replace(replace, "");
-                  address.detail = detail;
-                  address = JSON.stringify(address);
-                  console.log(address);
-                  $("#address-content .item-inner").attr("data-address", address);
-                  $("#address-content .item-inner").text(detail);
               }
-          });
+          }
 
-          $("#container").attr("data-lng", lng);
-          $("#container").attr("data-lat", lat);
 
-          //详情地点显示
-          map = new AMap.Map('container', {
-              resizeEnable: true,
-              zoom: 15,
-              center: [lng, lat],
-              buttonOffset: new AMap.Pixel(60, 20), //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
-              zoomToAccuracy: true, //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
-              buttonPosition: 'LB'
-          });
+          //解析地址详情
+          var adetail = JSON.parse(askPosition).adetail;
+          if (adetail) {
+              $("#add-detail").val(adetail);
+          }
 
-          marker = new AMap.Marker({
-              map: map,
-              icon: icon,
-              position: [lng, lat],
-              draggable: true,
-              cursor: 'move',
-              raiseOnDrag: true,
-              clickable: true
-          });
+          //解析店名
+          if (name) {
+              $(".name .edit-li-img").attr("src", "/img/edit/name-02.png");
+              $("#name").val(name);
+              $(".name .edit-content").text(name);
+          }
 
-          marker.setMap(map);
-          initMarker(marker);
+          //初始化坐标信息
+          console.log(lng);
+          console.log(lat);
+          var lnglatXY = [lng, lat];
+
+          if (lng && lat) {
+
+              // address.formattedAddress
+              getAddress(lnglatXY, {
+                  success: function(address) {
+                      var detail = address.formattedAddress;
+                      var address = {
+                          province: address.addressComponent.province,
+                          city: address.addressComponent.city,
+                          district: address.addressComponent.district,
+                          township: address.addressComponent.township
+                      }
+                      var replace = "" + address.province + address.city + address.district + address.township + "";
+                      detail = detail.replace(replace, "");
+                      address.detail = detail;
+                      address = JSON.stringify(address);
+                      $(".address .edit-content").attr("data-address", address);
+                      $(".address .edit-content").text(detail);
+                      $("#address").val(detail);
+                  }
+              });
+
+              $("#container").attr("data-lng", lng);
+              $("#container").attr("data-lat", lat);
+
+              //解析地址
+              map = new AMap.Map('container', {
+                  resizeEnable: true,
+                  zoom: 15,
+                  center: [lng, lat],
+                  buttonOffset: new AMap.Pixel(60, 20), //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+                  zoomToAccuracy: true, //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+                  buttonPosition: 'LB'
+              });
+
+              marker = new AMap.Marker({
+                  map: map,
+                  icon: icon,
+                  position: [lng, lat],
+                  draggable: true,
+                  cursor: 'move',
+                  raiseOnDrag: true,
+                  clickable: true
+              });
+
+              marker.setMap(map);
+              initMarker(marker);
+          }
 
           //价格
           console.log(price);
           if (price) {
-              $("#price-picker").val(price);
-              // $("#price-content .card-content-inner").text("￥ "+localStorage.price);
-              $("#price-content .item-inner").text(price);
+              $("#price").val(price);
+              $(".price .edit-li-img").attr("src", "/img/edit/price-02.png");
+              $(".price .edit-content").text("￥" + price);
           }
 
       }
 
       function initEditData(sendAskId) {
+          $.showPreloader("正在加载数据");
           $.ajax({
-              type: "get",
+              type: "POST",
               url: '/ask/askdetail',
               data: { ask_id: sendAskId, username: UserName },
               dataType: "json",
               success: function(result) {
                   console.log(result);
+                  $.hidePreloader();
                   if (result.code == 200) {
+                    if(result.show.isOwnFlag){
                       formatDetail(result.data);
+                    }else{
+                      $.toast("不能更改其他用户信息");
+                      var error = '<div class="error-content content pull-to-refresh-content" data-ptr-distance="55"><div class="pull-to-refresh-layer"><div class="preloader"></div><div class="pull-to-refresh-arrow"></div></div><div class="card-container no-user">非法操作...</div></div>';
+                      $("body").empty().append(error);
+                    }
                   }
               },
               error: function(error) {
-                  $.alert("网络异常");
+                $.hidePreloader();
+                $.alert("网络异常");
               }
           })
       }

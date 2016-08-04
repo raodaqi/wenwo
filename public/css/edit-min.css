@@ -642,3 +642,9 @@ textarea {
 .amap-marker-content {
     display: none
 }
+
+.no-user {
+    margin-top: 40px;
+    text-align: center;
+    color: #a7a7a7
+}
