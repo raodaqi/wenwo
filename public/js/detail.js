@@ -73,6 +73,7 @@
                       //是自己的
                       $(".buy").text("朕分享的");
                       $(".buy").attr("data-buy", "1");
+                      $(".pull-right").show();
                   }
 
                   //判断是否买过
