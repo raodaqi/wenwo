@@ -1041,6 +1041,7 @@ router.get('/up', function(req, res, next) {
 
 router.get('/del', function(req, res, next) {
 
+    var reason = req.param('reason');
     var askId = req.param('ask_id');
     //var staus = req.param('staus');
     var userName = req.param('username');
@@ -1057,6 +1058,7 @@ router.get('/del', function(req, res, next) {
         }
         else {
             ask.set('staus', 6);
+            ask.set('askDefault', reason);
             ask.save().then(function () {
                 var result = {
                     code: 200,
