@@ -194,7 +194,22 @@ router.get('/pay_t', function(req, res, next) {
 });
 
 router.get('/test', function(req, res, next) {
-    console.log(config);
+
+    AV.Cloud.httpRequest({
+        method: 'POST',
+        url: 'https://api.weixin.qq.com/cgi-bin/template/api_set_industry?access_token='+,
+        body: {
+            title: 'Vote for Pedro',
+            body: 'If you vote for Pedro, your wildest dreams will come true'
+        },
+        success: function(httpResponse) {
+            console.log(httpResponse.text);
+        },
+        error: function(httpResponse) {
+            console.error('Request failed with response code ' + httpResponse.status);
+        }
+    });
+
 });
 
 router.get('/pay', function(req, res, next) {
@@ -334,7 +349,7 @@ router.get('/pay', function(req, res, next) {
                             wxpay.getBrandWCPayRequestParams({
                                 openid: openid,
                                 body: '问我-美食',
-                                detail: '来自'+ask.get('createByName')+'的美食推荐',
+                                detail: '美食推荐',
                                 out_trade_no: '20160331'+Math.random().toString().substr(2, 10),
                                 total_fee: totalFee,
                                 attach:attach,
@@ -778,6 +793,22 @@ function getAccessToken(appid, secret, code, res, callback) {
             console.error('Request failed with response code ' + httpResponse.status);
         }
     });
+}
+
+function getNormalAccessToken(appid, secret, callback) {
+
+    AV.Cloud.httpRequest({
+        url: 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='+config.appid+'&secret='+config.appsecret,
+        success: function(httpResponse) {
+
+            callback.success(httpResponse);
+
+        },
+        error: function(httpResponse) {
+            console.error('Request failed with response code ' + httpResponse.status);
+        }
+    });
+
 }
 
 function isFocus(openId, token, callback) {
