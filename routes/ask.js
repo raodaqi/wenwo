@@ -613,7 +613,7 @@ router.post('/askedit', function(req, res, next) {
 
         }
 
-        ask.set('staus', '2');
+        ask.set('staus', '1');
         ask.save().then(function (ask) {
             var result = {
                 code : 200,
