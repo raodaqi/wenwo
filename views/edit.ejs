@@ -47,6 +47,7 @@
                 </div>
               </div>
             </div>
+            
             <!-- 店名 -->
             <div class="edit-li name" data-href="#router4">
               <img src="/img/edit/name-01.png" class="edit-li-img">
@@ -412,6 +413,10 @@
     var UserName = "<%= username %>";
     var sendType = "<%= type %>";
     var sendAskId = "<%= askid %>";
+
+    if(sendType == "edit"){
+      $(".share-success,.success-text").text("编辑成功");
+    }
   </script>
   <script type="text/javascript" src="/js/edit.js"></script>
 </html>

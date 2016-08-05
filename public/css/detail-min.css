@@ -7,7 +7,8 @@
 html {
     font-size: 20px;
     width: 100%;
-    height: 100%
+    height: 100%;
+
 }
 
 body {
@@ -19,7 +20,7 @@ body {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background-color: #e8e8e8
+    background-color: #e8e8e8;
 }
 
 .title {
@@ -213,12 +214,13 @@ body {
 	background: rgba(0,0,0,.2);
 }
 .more-content{
+    font-family: PingFangSC-Light,'helvetica neue','hiragino sans gb',tahoma,'microsoft yahei ui','microsoft yahei',simsun,sans-serif !important;
 	position: absolute;
 	top: 2rem;
 	right: .2rem;
 	border-radius: .3rem;
 	padding:.2rem .5rem;
-	font-size: .7rem;
+	font-size: .67rem;
 	background: white;
 	z-index: 10700;
 }

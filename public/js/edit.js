@@ -344,6 +344,10 @@
           console.log(localStorage.reason);
           if (localStorage.reason) {
               $(".reason .edit-li-img").attr("src", "/img/edit/reason-02.png");
+
+              //加入full
+              $(".reason .edit-content").addClass("full");
+
               $("#reason").val(localStorage.reason);
               $(".reason .edit-content").text(localStorage.reason);
           }
@@ -351,8 +355,15 @@
           //初始化信息详情
           console.log(localStorage.detail);
           if (localStorage.detail) {
-              $("#detail").val(localStorage.detail);
-              $(".edit-detail").text(localStorage.detail);
+            //加入full
+            $(".detail .edit-content").addClass("full");
+
+            $("#detail").val(localStorage.detail);
+            $(".edit-detail").text(localStorage.detail);
+            
+            $(".detail .edit-li-img").attr("src", "/img/edit/detail-02.png");
+            //加入full
+            $(".detail .edit-content").addClass("full");
           }
 
           //初始化信息详情列表
@@ -370,19 +381,28 @@
                       var li = '<div class="edit-detail-li"><div class="edit-detail-li-title">' + detailLi[i].name + '</div><div class="edit-detail-li-input">' + detailLi[i].val + '</div></div>';
                       $(".edit-detail-li-content").append(li);
                   }
+                $(".detail .edit-li-img").attr("src", "/img/edit/detail-02.png");
+                //加入full
+                $(".detail .edit-content").addClass("full");
               }
           }
 
           //初始化地址详情
           if (localStorage.adetail) {
-              $("#add-detail").val(localStorage.adetail);
+            //加入full
+            $(".address .edit-content").addClass("full");
+
+            $("#add-detail").val(localStorage.adetail);
           }
 
           //初始化店名
           if (localStorage.name) {
-              $(".name .edit-li-img").attr("src", "/img/edit/name-02.png");
-              $("#name").val(localStorage.name);
-              $(".name .edit-content").text(localStorage.name);
+            //加入full
+            $(".name .edit-content").addClass("full");
+
+            $(".name .edit-li-img").attr("src", "/img/edit/name-02.png");
+            $("#name").val(localStorage.name);
+            $(".name .edit-content").text(localStorage.name);
           }
 
           //初始化坐标信息
@@ -408,6 +428,10 @@
                       address = JSON.stringify(address);
                       $(".address .edit-content").attr("data-address", address);
                       $(".address .edit-content").text(detail);
+                      $("#address").val(detail);
+                      //加入full
+                      $(".address .edit-li-img").attr("src", "/img/edit/address-02.png");
+                      $(".address .edit-content").addClass("full");
                   }
               });
 
@@ -440,9 +464,13 @@
 
           //初始化价格信息
           if (localStorage.price) {
-              $("#price").val(localStorage.price);
-              $(".price .edit-li-img").attr("src", "/img/edit/price-02.png");
-              $(".price .edit-content").text("￥" + localStorage.price);
+
+            //加入full
+            $(".price .edit-content").addClass("full");
+
+            $("#price").val(localStorage.price);
+            $(".price .edit-li-img").attr("src", "/img/edit/price-02.png");
+            $(".price .edit-content").text("￥" + localStorage.price);
           }
       }
 
@@ -473,9 +501,12 @@
 
           //推荐理由
           if (reason) {
-              $(".reason .edit-li-img").attr("src", "/img/edit/reason-02.png");
-              $("#reason").val(reason);
-              $(".reason .edit-content").text(reason);
+            //加入full
+            $(".reason .edit-content").addClass("full");
+
+            $(".reason .edit-li-img").attr("src", "/img/edit/reason-02.png");
+            $("#reason").val(reason);
+            $(".reason .edit-content").text(reason);
           }
 
           //解析详情
@@ -483,8 +514,12 @@
           var detail = askContentShow.detail;
           var detailLi = askContentShow.detailLi;
           if (detail) {
-              $("#detail").val(detail);
-              $(".edit-detail").text(detail);
+            //加入full
+            $(".detail .edit-content").addClass("full");
+            $(".detail .edit-li-img").attr("src", "/img/edit/detail-02.png");
+
+            $("#detail").val(detail);
+            $(".edit-detail").text(detail);
           }
           //初始化信息详情列表
           if (detailLi) {
@@ -508,14 +543,17 @@
           //解析地址详情
           var adetail = JSON.parse(askPosition).adetail;
           if (adetail) {
-              $("#add-detail").val(adetail);
+            $("#add-detail").val(adetail);
           }
 
           //解析店名
           if (name) {
-              $(".name .edit-li-img").attr("src", "/img/edit/name-02.png");
-              $("#name").val(name);
-              $(".name .edit-content").text(name);
+            //加入full
+            $(".name .edit-content").addClass("full");
+
+            $(".name .edit-li-img").attr("src", "/img/edit/name-02.png");
+            $("#name").val(name);
+            $(".name .edit-content").text(name);
           }
 
           //初始化坐标信息
@@ -542,11 +580,16 @@
                       $(".address .edit-content").attr("data-address", address);
                       $(".address .edit-content").text(detail);
                       $("#address").val(detail);
+                      //加入full
+                      $(".address .edit-li-img").attr("src", "/img/edit/address-02.png");
+
+                      $(".address .edit-content").addClass("full");
                   }
               });
 
               $("#container").attr("data-lng", lng);
               $("#container").attr("data-lat", lat);
+
 
               //解析地址
               map = new AMap.Map('container', {
@@ -575,9 +618,12 @@
           //价格
           console.log(price);
           if (price) {
-              $("#price").val(price);
-              $(".price .edit-li-img").attr("src", "/img/edit/price-02.png");
-              $(".price .edit-content").text("￥" + price);
+            //加入full
+            $(".price .edit-content").addClass("full");
+
+            $("#price").val(price);
+            $(".price .edit-li-img").attr("src", "/img/edit/price-02.png");
+            $(".price .edit-content").text("￥" + price);
           }
 
       }
@@ -674,8 +720,12 @@
           setlocalStorageTag();
           var span = '<span class="type-item">' + text + '</span>';
           $(".tag .edit-content").empty().append(span);
+
+          $(".tag .edit-li-img").attr("src", "/img/edit/tag-02.png");
+
           if (text.length <= 0) {
-              $(".tag .edit-content").empty().text("请填写标签");
+            $(".tag .edit-li-img").attr("src", "/img/edit/tag-01.png");
+            $(".tag .edit-content").empty().text("请填写标签");
           }
       })
 
@@ -684,17 +734,45 @@
           console.log($(".tag-content .ww-typeHelper .type-item").length);
           var text = $(this).text();
           $(".ww-typeHelper-input").val(text);
+
+          $(".tag .edit-li-img").attr("src", "/img/edit/tag-02.png");
           //获取填写的tag
           setlocalStorageTag();
           var span = '<span class="type-item">' + text + '</span>';
           $(".tag .edit-content").empty().append(span);
       })
 
+      //设置内容填充函数
+      function setFull(type,judge){
+        $("."+type+" .edit-li-img").attr("src", "/img/edit/"+type+"-02.png");
+        //加入full
+        $("."+type+" .edit-content").addClass("full");
+        if (judge) {
+          $("."+type+" .edit-li-img").attr("src", "/img/edit/"+type+"-01.png");
+          //移除full
+          $("."+type+" .edit-content").removeClass("full");
+        }
+      }
+
       //推荐理由输入后显示到主页
       $("#reason").on("input change", function() {
           $("#reason").text($(this).val());
           localStorage["reason"] = $(this).val();
           $(".reason .edit-content").text($(this).val());
+
+          // $(".reason .edit-li-img").attr("src", "/img/edit/reason-02.png");
+          // //加入full
+          // $(".reason .edit-content").addClass("full");
+          // if ($(this).val().length <= 0) {
+          //   $(".reason .edit-li-img").attr("src", "/img/edit/reason-01.png");
+          //   //移除full
+          //   $(".reason .edit-content").addClass("full");
+          // }
+          var judge = $(this).val().length <= 0;
+          setFull("reason",judge);
+          if (judge) {
+            $(".reason .edit-content").empty().text("请填写推荐理由");
+          }
       })
 
       $(".detail-add").on("click", function() {
@@ -702,7 +780,7 @@
           console.log(len);
           var li = '<div class="detail-li"><div class="detail-li-title"><input type="text" name="detailName' + len + '" class="detail-li-name" placeholder="填写"></div><div class="detail-li-input"><input type="text" name="detailVal' + len + '" class="detail-li-val" placeholder="请在此对卡片内容进行描述"></div><div class="icon iconfont icon-jian"></div></div>';
           $(".detail-li-content").append(li);
-          $(".detail-li-all-content").scrollTop(1000);
+          $(".detail-li-all-content").scrollTop(1200);
       })
 
       function getAllDetailLiV() {
@@ -744,8 +822,16 @@
                   var li = '<div class="edit-detail-li"><div class="edit-detail-li-title">' + detailLi[i].name + '</div><div class="edit-detail-li-input">' + detailLi[i].val + '</div></div>';
                   $(".edit-detail-li-content").append(li);
               }
+              $(".detail .edit-li-img").attr("src", "/img/edit/detail-02.png");
+              //加入full
+              $(".detail .edit-content").addClass("full");
           } else {
               $(".edit-detail-li-content").empty();
+              if($(".detail .edit-detail").text().length <= 0){
+                $(".detail .edit-li-img").attr("src", "/img/edit/detail-01.png");
+                //加入full
+                $(".detail .edit-content").removeClass("full");
+              }
           }
           //保存到本地数据
           detailLi = JSON.stringify(detailLi);
@@ -762,6 +848,10 @@
           $(".reason .edit-content").text(text);
           //保存到本地数据
           localStorage["reason"] = text;
+
+          $(".reason .edit-li-img").attr("src", "/img/edit/reason-02.png");
+          //加入full
+          $(".reason .edit-content").addClass("full");
       })
 
       //地址详情
@@ -776,6 +866,23 @@
           //显示到主页
           $(".edit-detail").text(text);
           localStorage["detail"] = $("#detail").val();
+
+          $(".detail .edit-li-img").attr("src", "/img/edit/detail-02.png");
+          //加入full
+          $(".detail .edit-content").addClass("full");
+          if($(this).val().length <= 0 && $(".edit-detail-li").text().length <= 0){
+            $(".detail .edit-li-img").attr("src", "/img/edit/detail-01.png");
+            //加入full
+            $(".detail .edit-content").removeClass("full");
+          }
+          if($(this).val().length <= 0){
+            $(".detail .edit-detail").text("请填写美食详情");
+          }
+        // if (judge) {
+        //   $("."+type+" .edit-li-img").attr("src", "/img/edit/"+type+"-01.png");
+        //   //移除full
+        //   $("."+type+" .edit-content").removeClass("full");
+        // }
       })
 
       //更改店名时候调用
@@ -783,6 +890,12 @@
           $("#name").text($(this).val());
           localStorage["name"] = $(this).val();
           $(".name .edit-content").text($(this).val());
+
+          var judge = $(this).val().length <= 0;
+          setFull("name",judge);
+          if (judge) {
+            $(".name .edit-content").empty().text("请填写店名");
+          }
       })
 
       //更换价格的时候调用
@@ -807,6 +920,9 @@
               $.toast("输入价格不能小于0元");
               return;
           }
+          var judge = $(this).val().length <= 0;
+          setFull("price",judge);
+
           localStorage["price"] = $(this).val();
           $(".price .edit-content").text("￥" + $(this).val());
       })
@@ -950,11 +1066,13 @@
           console.log(data);
           //发送请求 url：/ask/sendask
 
-          $.showPreloader("正在分享");
+          
           //屏蔽多次点击
           sendClick = 1;
 
           if (sendType == "edit") {
+              $.showPreloader("正在编辑");
+
               data["ask_id"] = sendAskId;
               $.ajax({
                   type: "POST",
@@ -966,9 +1084,9 @@
                       //释放多次点击
                       sendClick = 0;
 
-                      if (result.code) {
+                      if (result.code == 200) {
                           $.hidePreloader();
-                          $.toast("分享成功");
+                          $.toast("编辑成功");
                           localStorage.clear();
 
                           var data = result.data;
@@ -987,10 +1105,11 @@
                           WX_SHARE_TITLE = data.askReason;
                           WX_SHARE_DESC = "我 : 分享了「" + tag + "」美食,瞅瞅波？";
                           initShare();
+                          $(".share-success,.success-text").text("编辑成功");
 
                           $.router.load("#success");
                       } else {
-                          $.toast("分享失败");
+                          $.toast("编辑失败");
                           $.hidePreloader();
                           $.toast(result.message);
                       }
@@ -1002,6 +1121,8 @@
                   }
               });
           } else {
+            $.showPreloader("正在分享");
+
               $.ajax({
                   type: "POST",
                   data: data,

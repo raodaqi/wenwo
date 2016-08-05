@@ -392,7 +392,7 @@ textarea {
     display: block;
     font-size: .6rem;
     float: left;
-    width: 9.5rem;
+    width: 8.8rem;
     height: 1.45rem;
     line-height: 1.45rem;
     padding-left: .25rem
@@ -631,12 +631,12 @@ textarea {
     /*position: absolute;*/
     position: relative;
     line-height: 1rem;
-    right: -.9rem;
+    /*right: -.9rem;*/
     color: red;
     height: 1rem;
     width: 1rem;
     font-size: 1rem;
-    margin-top: .2rem
+    margin-top: -.15rem
 }
 
 .amap-marker-content {
@@ -648,3 +648,8 @@ textarea {
     text-align: center;
     color: #a7a7a7
 }
+
+.full{
+      color:#999;
+      font-size: .75rem;
+    }
