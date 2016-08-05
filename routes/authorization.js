@@ -197,7 +197,7 @@ router.get('/test', function(req, res, next) {
 
     AV.Cloud.httpRequest({
         method: 'POST',
-        url: 'https://api.weixin.qq.com/cgi-bin/template/api_set_industry?access_token='+,
+        url: 'https://api.weixin.qq.com/cgi-bin/template/api_set_industry?access_token=',
         body: {
             title: 'Vote for Pedro',
             body: 'If you vote for Pedro, your wildest dreams will come true'
@@ -624,10 +624,14 @@ router.get('/', function(req, res, next) {
                     var username = rdata.nickname;
                     var userhead = rdata.headimgurl;
                     var openid = rdata.openid;
-                    if (userhead != null) {
+                    if (userhead != null && userhead != '' && userhead) {
 
                         userhead = userhead.substr(0, userhead.lastIndexOf('/'));
                         userhead += '/';
+                    } else {
+
+                        userhead = 'http://www.wenwobei.com/img/logo.jpg';
+
                     }
 
                     // console.log('focus');
