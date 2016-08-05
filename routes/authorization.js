@@ -624,7 +624,7 @@ router.get('/', function(req, res, next) {
                     var username = rdata.nickname;
                     var userhead = rdata.headimgurl;
                     var openid = rdata.openid;
-                    if (userhead != null && userhead != '' && userhead) {
+                    if (userhead != null && userhead != '') {
 
                         userhead = userhead.substr(0, userhead.lastIndexOf('/'));
                         userhead += '/';
