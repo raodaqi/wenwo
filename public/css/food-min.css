@@ -491,3 +491,7 @@ html {
     left: 50%;
     margin-left: -37px
 }
+.swiper-container{
+    display: none;
+    height: 8.5rem;
+}

@@ -1,5 +1,6 @@
 <% include header.ejs %>
 <link href='http://api.youziku.com/webfont/CSS/578f43dcf629e300d8f428f5' rel='stylesheet' type='text/css' />
+<link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
 <link rel="stylesheet" href="/css/food-min.css">
 </head>
 <body>
@@ -17,6 +18,16 @@
         <div class="preloader-tip">刷新成功</div>
         <div class="preloader"></div>
         <div class="pull-to-refresh-arrow"></div>
+      </div>
+
+      <!-- Slider -->
+      <div class="swiper-container" data-space-between='10' data-loop='true' data-autoplay='3000' data-autoplay-disable-on-interaction='false'>
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="//gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i1/TB1n3rZHFXXXXX9XFXXXXXXXXXX_!!0-item_pic.jpg_320x320q60.jpg" alt=""></div>
+          <div class="swiper-slide"><img src="//gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i4/TB10rkPGVXXXXXGapXXXXXXXXXX_!!0-item_pic.jpg_320x320q60.jpg" alt=""></div>
+          <div class="swiper-slide"><img src="//gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i1/TB1kQI3HpXXXXbSXFXXXXXXXXXX_!!0-item_pic.jpg_320x320q60.jpg" alt=""></div>
+        </div>
+        <div class="swiper-pagination"></div>
       </div>
       
       <div class="wenwo-ul">
@@ -265,7 +276,18 @@
 </body>
 <% include footer.ejs %>
 <script type='text/javascript' src='/js/extend.js' charset='utf-8'></script>
+<script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script>
 <script>
+  //初始化幻灯片
+  // $(function() {
+  //   $(".swiper-container").swiper({
+  //     speed: 400,
+  //     autoplay: 3000,
+  //     loop:true,
+  //     autoplayDisableOnInteraction:false
+  //   });
+  // });
+
   //用户名
   var UserName = "<%= username %>";
   function initTop(){

@@ -884,6 +884,23 @@ router.get('/getlike', function(req, res, next) {
 
 });
 
+// function getBuyNum(askId,callback){
+//   // var askMe = AV.Object.createWithoutData('AskMe', objectId);
+//   // var relation = askMe.relation('haved');
+//   var query = new AV.Query('Haved');
+//   var askPoint = AV.Object.createWithoutData('AskMe', askId);
+//   query.equalTo("ask", askPoint);
+//   query.find().then(function (results) {
+//   // results 是一个 AV.Object 的数组
+//   // results 指的就是所有包含当前 tag 的 TodoFolder
+//     console.log(results.length);
+//     callback.success(results);
+//   }, function (error) {
+//     // console.log(error);
+//     callback.error(error);
+//   });
+// }
+
 router.get('/myask', function(req, res, next) {
     var sessionToken = req.param('session_token');
     var userName = req.param('username');
@@ -915,8 +932,22 @@ router.get('/myask', function(req, res, next) {
     query.descending('createdAt');
     query.limit(size);
     query.skip(page);
+
     query.find().then(function(results) {
-        //console.log(results);
+        console.log(results);
+
+        // for(var i = 0; i < results.length;i++){
+        //     console.log(results[i].id);
+        //     getBuyNum(results[i].id,{
+        //         success:function(result){
+        //             console.log(result.length);
+        //         },
+        //         error:function(error){
+        //             console.log(error);
+        //         }
+        //     })
+        // }
+
         var result = {
             code : 200,
             data : results,

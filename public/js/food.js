@@ -169,13 +169,13 @@
           url: "/ask/allask",
           success: function(result) {
               // console.log(result);
-              var data = result.data;
-              for(var i = 0; i < data.length; i++){
-                var lat1 = parseFloat(data[i].GeoX);
-                var lng1 = parseFloat(data[i].GeoY);
-                var long1  = getFlatternDistance(lat1,lng1,LAT,LNG);
-                console.log(long1);
-              }
+              // var data = result.data;
+              // for(var i = 0; i < data.length; i++){
+              //   var lat1 = parseFloat(data[i].GeoX);
+              //   var lng1 = parseFloat(data[i].GeoY);
+              //   var long1  = getFlatternDistance(lat1,lng1,LAT,LNG);
+              //   console.log(long1);
+              // }
               callback.success(result);
           },
           error: function(error) {
