@@ -369,3 +369,11 @@ body {
     height: 3.4rem;
     margin: .5rem .5rem
 }
+
+.triangle{
+	display: block;
+	position: absolute;
+	width: 1rem;
+	top:-.5rem;
+	right: .3rem;
+}

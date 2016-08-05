@@ -433,7 +433,7 @@
   var lastIndex = 20;
 
   // 注册'infinite'事件处理函数
-  $(document).on('infinite', '.infinite-scroll-bottom', function() {
+  $(document).on('infinite', '#find .infinite-scroll-bottom', function() {
 
       // 如果正在加载，则退出
       if (loading) return;
