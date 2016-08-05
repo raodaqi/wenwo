@@ -661,9 +661,38 @@ router.get('/', function(req, res, next) {
                                     // var user = AV.User.current();
                                     // console.log(user);
                                     //var url = 'http://www.wenwobei.com/?username='+user.get('user');
-                                    var url = urlReq + '?username='+user.get('user');
-                                    resG.redirect(url);
-                                    return;
+                                    var userId = user.get('user');
+
+                                    var query = new AV.Query('UserInfo');
+                                    query.get(userId).then(function (userInfo) {
+
+                                        var flag = 0;
+                                        if (username != userInfo.get('uName')) {
+                                            userInfo.set('uName', username);
+                                            flag++;
+                                        }
+                                        if (userhead != userInfo.get('userHead')) {
+                                            userInfo.set('userHead', userhead);
+                                            flag++;
+                                        }
+                                        if (flag != 0) {
+                                            
+                                            userInfo.save().then(function (userInfo) {
+                                                var url = urlReq + '?username='+user.get('user');
+                                                resG.redirect(url);
+                                                return;
+                                            });
+                                            
+                                        } else {
+                                            var url = urlReq + '?username='+user.get('user');
+                                            resG.redirect(url);
+                                            return;
+                                        }
+
+
+                                    });
+                                    
+
 
                                 }
                                 else {
