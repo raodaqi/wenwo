@@ -1039,7 +1039,7 @@ router.get('/up', function(req, res, next) {
     });
 });
 
-router.get('/del', function(req, res, next) {
+router.post('/del', function(req, res, next) {
 
     var reason = req.param('reason');
     var askId = req.param('ask_id');
