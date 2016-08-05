@@ -1050,7 +1050,7 @@ router.get('/del', function(req, res, next) {
         if (ask.get('creatBy') != userName) {
             var result = {
                 code: 800,
-                data: results,
+
                 message: 'illegal operation'
             }
             res.send(result);
