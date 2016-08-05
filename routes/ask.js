@@ -525,6 +525,10 @@ router.post('/askedit', function(req, res, next) {
     var tag = req.param('tag') != null ? req.param('tag') : null;
     var remark = req.param('remark') != null ? req.param('remark') : null;
 
+    var images = req.param('images') != null ? req.param('images') : null;
+    var shopName = req.param('shop_name') != null ? req.param('shop_name') : null;
+
+
     var query = new AV.Query('AskMe');
     query.get(askId).then(function (ask) {
         var askOwner = ask.get('createBy');
@@ -548,12 +552,37 @@ router.post('/askedit', function(req, res, next) {
                 ask.set('askIsFree', '0');
             }
         }
-        if (geoX != null) {
-            ask.set('GeoX', geoX);
+        if (geoX != null || geoY != null) {
+
+
+            var point = null;
+
+            if (geoX != null && geoY == null) {
+
+                point = new AV.GeoPoint(parseFloat(geoX), parseFloat(ask.get('GeoY')));
+                ask.set('GeoX', geoX);
+
+            } else if (geoX == null && geoY != null) {
+
+                point = new AV.GeoPoint(parseFloat(ask.get('GeoX')), parseFloat(geoY));
+                ask.set('GeoY', geoY);
+
+            } else {
+
+                point = new AV.GeoPoint(parseFloat(geoX), parseFloat(geoY));
+                ask.set('GeoX', geoX);
+                ask.set('GeoY', geoY);
+
+            }
+
+            if (point != null) {
+
+                ask.set('positionGeo', point);
+
+            }
+
         }
-        if (geoY != null) {
-            ask.set('GeoY', geoY);
-        }
+
         if (position != null) {
             ask.set('askPosition', position);
         }
@@ -571,6 +600,17 @@ router.post('/askedit', function(req, res, next) {
         }
         if (tag != null) {
             ask.set('askTagStr', tag);
+        }
+
+        if (images != null) {
+
+            ask.set('askImage', images);
+
+        }
+        if (shopName != null) {
+
+            ask.set('shopName', shopName);
+
         }
 
         ask.set('staus', '2');
