@@ -936,6 +936,7 @@ router.get('/myask', function(req, res, next) {
     query.find().then(function(results) {
         console.log(results);
 
+
         // for(var i = 0; i < results.length;i++){
         //     console.log(results[i].id);
         //     getBuyNum(results[i].id,{
