@@ -306,6 +306,7 @@ router.get('/pay', function(req, res, next) {
                         have.set('askOwn', ask.get('createBy'));
                         // have.set('income', incomeTotal);
                         ask.set('score', (parseInt(ask.get('score'))+1).toString());
+                        ask.set('buyNum', (parseInt(ask.get('buyNum'))+1).toString());
 
                         have.save().then(function () {
                             ask.save().then(function (ask) {

@@ -503,7 +503,7 @@ app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
             have.set('income', incomeTotal);
 
             ask.set('score', (parseInt(ask.get('score'))+1).toString());
-
+            ask.set('buyNum', (parseInt(ask.get('buyNum'))+1).toString());
 
 
             have.set('income', incomeTotal);
