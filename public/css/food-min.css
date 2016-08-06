@@ -76,6 +76,8 @@ body {
 }
 
 .down-like,
+.down-like-num,
+.down-buy-num,
 .down-buy {
     border-radius: 15px;
     border: 1px solid #e2e2e2;
@@ -84,6 +86,25 @@ body {
     color: #666;
     font-size: .7rem
 }
+.down-like-num,
+.down-buy-num{
+    font-size: .67rem;
+}
+.down-buy-num{
+    margin-left: .3rem;
+    background-color: #18CDA4;
+    color: white;
+}
+.down-like-num .like-num,.down-buy-num .buy-num{
+    color:#ff6699;
+    padding:0;
+    font-size: .72rem;
+    padding: 0 .1rem;
+}
+.down-buy-num .buy-num{
+    color:yellow;
+}
+
 .ask-reason{
 	/*width: */
 }

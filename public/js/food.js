@@ -853,6 +853,7 @@
                   console.log(result);
                   var html = '';
                   var data = result.data;
+                  var buyNum = result.buyNum;
 
                   if (!data.length) {
                       $("#share .infinite-scroll-preloader").hide();
@@ -860,7 +861,7 @@
                   }
                   if (data) {
                       for (var i = 0; i < data.length; i++) {
-                          html += '<div class="wenwo-li" data-id=' + data[i].objectId + '><div class="up-content"><img src="' + data[i].createByUrl + '" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">' + formatTag(data[i].askTagStr) + '</div><div class="ask-reason">' + data[i].askReason + '</div></div></div><div class="down-content"><div class="down-like ' + (data[i].liked ? "liked" : '') + '"><span class="icon iconfont icon-likeEat"></span><label class="like-num">' + (data[i].likeNum < 0 ? 0 : data[i].likeNum) + '</label></div>' + '<div class="down-time">' + formatDate("y.m.d", data[i].createdAt) + '</div></div></div>';
+                          html += '<div class="wenwo-li" data-id=' + data[i].objectId + '><div class="up-content"><img src="' + data[i].createByUrl + '" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">' + formatTag(data[i].askTagStr) + '</div><div class="ask-reason">' + data[i].askReason + '</div></div></div><div class="down-content"><div class="down-like-num">有<label class="like-num">'+ data[i].likeNum +'</label>人想吃</div><div class="down-buy-num">有<label class="buy-num">'+buyNum[i].buyNum+'</label>人购买</div><div class="down-time">' + formatDate("y.m.d", data[i].createdAt) + '</div></div></div>';
                       }
                   }
                   console.log(html);

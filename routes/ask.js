@@ -946,6 +946,33 @@ router.get('/getlike', function(req, res, next) {
 //     callback.error(error);
 //   });
 // }
+function getBuyNum(ask,show,i,callback){
+  var askId =  ask[i].id;
+  var askLength = ask.length;
+  var query = new AV.Query('Haved');
+  var askPoint = AV.Object.createWithoutData('AskMe', askId);
+  query.equalTo("ask", askPoint);
+  query.find().then(function (results) {
+  // results 是一个 AV.Object 的数组
+  // results 指的就是所有包含当前 tag 的 TodoFolder
+    // console.log(results.length);
+    var data = {
+        askId : askId,
+        buyNum : results.length
+    }
+    // show[askId] = results.length;
+    show[i] = data;
+    i++;
+    if(i < askLength){
+        getBuyNum(ask,show,i,callback);
+    }else{
+        callback.success(show);
+    }
+  }, function (error) {
+    // console.log(error);
+    callback.error(error);
+  });
+}
 
 router.get('/myask', function(req, res, next) {
     var sessionToken = req.param('session_token');
@@ -979,9 +1006,32 @@ router.get('/myask', function(req, res, next) {
     query.limit(size);
     query.skip(page);
 
-    query.find().then(function(results) {
-        console.log(results);
+    query.find().then(function(ask) {
+        // console.log(ask);
 
+        var show = {};
+        var i = 0;
+        getBuyNum(ask,show,i,{
+            success:function(buyNum){
+                console.log(result);
+                var result = {
+                    code : 200,
+                    data : ask,
+                    buyNum : buyNum,
+                    message : 'Operation succeeded'
+                }
+                res.send(result);
+            },
+            error:function(error){
+                console.log(error);
+                var result = {
+                    code : 200,
+                    data : ask,
+                    message : 'Operation succeeded'
+                }
+                res.send(result);
+            }
+        })
 
         // for(var i = 0; i < results.length;i++){
         //     console.log(results[i].id);
@@ -995,12 +1045,12 @@ router.get('/myask', function(req, res, next) {
         //     })
         // }
 
-        var result = {
-            code : 200,
-            data : results,
-            message : 'Operation succeeded'
-        }
-        res.send(result);
+        // var result = {
+        //     code : 200,
+        //     data : results,
+        //     message : 'Operation succeeded'
+        // }
+        // res.send(result);
 
     });
 });
