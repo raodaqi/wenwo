@@ -251,6 +251,14 @@
           $.hidePreloader();
           if(result.code == 200){
             $.toast("下架成功");
+            var reason = $("#delete #reason").val();
+            $(".like").hide();
+            $(".buy").hide();
+            $(".username-content").css("bottom","1rem");
+            $(".askDefault").text("该商品已下架，下架原因："+reason);
+            $(".askDefault").show();
+            $(".pull-right").hide();
+            $.router.back();
           }else if(result.code == 700){
             $.toast("重复下架");
           }else if(result.code == 800){
