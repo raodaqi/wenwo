@@ -68,9 +68,18 @@
     window.history.back(-1);
   })
   $.showPreloader("正在加载");
+  var walking,
+      driving;
 
   function initRoad(myLng,myLat,lng,lat){
-    var walking = new AMap.Walking({
+    if(driving){
+      driving.clear();
+    }
+    if(walking){
+      walking.clear();
+    }
+    
+    walking = new AMap.Walking({
       map: map,
       panel: "panel"
     }); 
@@ -80,7 +89,7 @@
       if(status == "error"){
         $.hidePreloader();
         $("#panelcontent .title").text("驾车导航");
-        var driving = new AMap.Driving({
+        driving = new AMap.Driving({
           map: map,
           panel: "panel"
         }); 
@@ -98,6 +107,7 @@
   $(".icon-daohang").on("click",function(){
     $.router.load("#panelcontent");
   })
+
 
   var marker;
   var icon = new AMap.Icon({
