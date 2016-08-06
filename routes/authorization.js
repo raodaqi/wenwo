@@ -290,8 +290,8 @@ router.get('/pay', function(req, res, next) {
 
                 var score = parseInt(ask.get('score'));
 
-
-                if (score < 10 || ask.get('askPrice') == 0) {
+                console.log(ask.get('askPrice'));
+                if (score < 10 || parseFloat(ask.get('askPrice')) == 0) {
 
                     var query = new AV.Query('UserInfo');
                     query.get(userName).then(function (user) {
