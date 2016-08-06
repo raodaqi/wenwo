@@ -76,6 +76,7 @@
 </head>
 <body>
 </body>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <% include footer.ejs %>
 <script>
 function escape2Html(str) {
@@ -83,7 +84,6 @@ function escape2Html(str) {
  return str.replace(/&(lt|gt|nbsp|amp|quot|#34);/ig,function(all,t){return arrEntities[t];});
 }
 var str = "<%= detail %>";
-console.log(str);
 $("body").append(escape2Html(str));
 initShare();
 </script>

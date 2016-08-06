@@ -407,9 +407,12 @@ body {
 
 .wenwo-logo {
     position: absolute;
-    bottom: .05rem;
-    width: 22px;
-    height: 22px
+    bottom: .12rem;
+    margin-right: .3rem;
+    /*width: 22px;
+    height: 22px;*/
+    width: .8rem;
+    height: .8rem;
 }
 
 .wenwo-title {
