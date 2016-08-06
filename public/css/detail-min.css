@@ -256,7 +256,7 @@ body {
 .sale-content{
     position: absolute;
     z-index: 2;
-    bottom: 20px;
+    bottom: 1rem;
     right: 10px;
     color: white;
 }
@@ -411,4 +411,18 @@ body {
 #delete .title{
     font-weight: 200;
     color: #555;
+}
+.focus .content{
+    background: #ffffcf !important;
+}
+.askDefault{
+    display: none;
+    width: 100%;
+    background-color: #b3b3b3;
+    /*padding-left: 1rem;*/
+    text-align: center;
+    color: white;
+    padding:.2rem 0;
+    font-size: .72rem;
+    margin-top: -.35rem;
 }

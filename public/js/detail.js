@@ -15,6 +15,14 @@
       }
   }
 
+  $("#delete #reason").focus(function(){
+    $("#delete").addClass("focus");
+  })
+
+  $("#delete #reason").blur(function(){
+    $("#delete").removeClass("focus");
+  })
+
   function getAskDetail(askid, username) {
       var username = username ? username : '';
       var data = {
@@ -88,6 +96,18 @@
                       $(".buy").attr("data-buy", "1");
                       $(".buyed-img").show();
                       $(".dislike-content").show();
+                  }
+
+                  //判断是否被用户删除
+                  var staus = data.staus;
+                  console.log(staus);
+                  if(staus == "6"){
+                    $(".like").hide();
+                    $(".buy").hide();
+                    $(".username-content").css("bottom","1rem");
+                    $(".askDefault").text("该商品已下架，下架原因："+data.askDefault);
+                    $(".askDefault").show();
+                    $(".pull-right").hide();
                   }
 
                   if (result.show.havedFlag || result.show.isOwnFlag) {
