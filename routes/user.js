@@ -9,6 +9,7 @@ var AV = require('leanengine');
 var Post = AV.Object.extend('UserInfo');
 var Wallet = AV.Object.extend('Wallet');
 var Suggestion = AV.Object.extend('Suggestion');
+var resGl;
 
 
 router.get('/regist', function(req, res, next) {
@@ -64,6 +65,7 @@ router.post('/login', function (req, res, next) {
     var accessToken = req.body.access_token;
     var expiresIn = req.body.expires_in;
 
+    resGl = res;
 
     getUserInfo(accessToken,openid, res,{
         success:function (res) {
@@ -98,7 +100,11 @@ router.post('/login', function (req, res, next) {
                     //var url = 'http://wenwo.leanapp.cn/?username='+user.get('user');
                     // var url = urlReq + '?username='+user.get('user');
                     // resG.redirect(url);
-                    res.send({code:200,data:{username:user.get('user')},message:'操作成功'});
+
+
+
+
+                    resGl.send({code:200,data:{username:user.get('user')},message:'操作成功'});
 
 
                 }
@@ -127,7 +133,7 @@ router.post('/login', function (req, res, next) {
                                     // var url = urlReq + '?username='+user.get('user');
                                     // resG.redirect(url);
 
-                                    res.send({code:200,data:{username:user.get('user')},message:'操作成功'});
+                                    resGl.send({code:200,data:{username:user.get('user')},message:'操作成功'});
                                 });
                             });
 
