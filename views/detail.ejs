@@ -34,7 +34,7 @@
             <label class="iconfont icon-bianji"></label>
             <label class="list-text">重新编辑</label>
           </div>
-          <div class="more-list">
+          <div class="more-list more-delete">
             <label class="iconfont icon-shanchu"></label>
             <label class="list-text">删除下架</label>
           </div>
@@ -111,6 +111,25 @@
         </div>
       </div>
     </div>
+    
+    <div class="wenwo-content page" id='delete'>
+      <header class="bar bar-nav">
+        <a class="button button-link button-nav pull-left back">
+            <span class="icon icon-left"></span>
+        </a>
+        <h1 class="title">删除下架</h1>
+      </header>
+
+      <!-- 这里是所有的信息列表 -->
+      <div class="content">
+        <div class="reason-content">
+          <div class="delete-reason">下架理由：</div>
+          <textarea name="reason" id="reason" placeholder="请写下您的下架理由，比如：店铺不存在了"></textarea>
+          <div class="delete-btn">确认下架</div>
+        </div>
+      </div>
+    </div>
+
     <div class="modal-overlay modal-overlay-visible" style="display:none;"></div>
 
       <div class="modal modal-in modal-tip" style="display: none; margin-top: -72px;">

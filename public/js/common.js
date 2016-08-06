@@ -246,6 +246,18 @@ $.hidePreloader = function(){
     }
   }
 
+  //解析价格
+  function formatPrice(price){
+    //判断是否是标准json字符串
+    var priceFloat = parseFloat(price);
+    if(priceFloat == 0 || priceFloat == "0.0"){
+      $(".buy").text("免费瞅瞅");
+      return "免费瞅瞅";
+    }else{
+      return price + "元瞅瞅";
+    }
+  }
+
   //经纬度之间的距离
   /**
 

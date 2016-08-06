@@ -1099,7 +1099,7 @@
                           if (detail.length <= 8) {
                               detail = detail;
                           } else {
-                              detail = deatil.substr(0, 8) + "...";
+                              detail = detail.substr(0, 8) + "...";
                           }
                           // WX_SHARE_TITLE = "我分享了「" + detail + "」附近的美食,瞅瞅波？";
                           WX_SHARE_TITLE = data.askReason;
@@ -1152,7 +1152,7 @@
                           if (detail.length <= 8) {
                               detail = detail;
                           } else {
-                              detail = deatil.substr(0, 8) + "...";
+                              detail = detail.substr(0, 8) + "...";
                           }
                           // WX_SHARE_TITLE = "我分享了「" + detail + "」附近的美食,瞅瞅波？";
                           WX_SHARE_TITLE = data.askReason;
@@ -1307,6 +1307,10 @@
       map.on('click', function(e) {
           //隐藏列表
           $(".amap-sug-result").css("visibility", "hidden");
+
+          $(".address .edit-li-img").attr("src", "/img/edit/address-02.png");
+          //加入full
+          $(".address .edit-content").addClass("full");
 
           map.clearMap();
           lnglatXY = [e.lnglat.getLng(), e.lnglat.getLat()]; //已知点坐标

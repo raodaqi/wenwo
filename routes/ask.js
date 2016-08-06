@@ -354,6 +354,7 @@ router.post('/askdetail', function(req, res, next) {
                 query.equalTo('type', '2');
                 query.include('ask');
                 query.find().then(function (havedList) {
+                    console.log(havedList);
 
                     var query = new AV.Query('FoodLike');
 
@@ -382,7 +383,12 @@ router.post('/askdetail', function(req, res, next) {
 
                         for (var i = 0; i < havedList.length; i++) {
 
-                            if (havedList[i].get('ask').id == askId) {
+                            // if (havedList[i].get('ask').id == askId) {
+
+                            //     havedFlag++;
+
+                            // }
+                            if (havedList[i].get('by') == userName) {
 
                                 havedFlag++;
 
@@ -1087,7 +1093,16 @@ router.post('/del', function(req, res, next) {
     var userName = req.param('username');
     var query = new AV.Query('AskMe');
     query.get(askId).then(function (ask) {
-        if (ask.get('creatBy') != userName) {
+        console.log(ask.get('createBy'));
+        if (ask.get('staus') == "6") {
+            var result = {
+                code: 700,
+                message: 'Repeat delete'
+            }
+            res.send(result);
+            return;
+        }
+        if (ask.get('createBy') != userName) {
             var result = {
                 code: 800,
 
@@ -1097,9 +1112,10 @@ router.post('/del', function(req, res, next) {
             return;
         }
         else {
-            ask.set('staus', 6);
+            ask.set('staus', "6");
             ask.set('askDefault', reason);
-            ask.save().then(function () {
+            ask.save().then(function (results) {
+                console.log(results);
                 var result = {
                     code: 200,
                     data: results,
@@ -1108,9 +1124,10 @@ router.post('/del', function(req, res, next) {
                 res.send(result);
                 return;
             }, function (err) {
+                console.log(err);
                 var result = {
-                    code: 800,
-                    data: results,
+                    code: 400,
+                    data: '',
                     message: err.message
                 }
                 res.send(result);

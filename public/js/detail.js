@@ -30,7 +30,7 @@
               console.log(result);
               if (result.code == 200) {
                   var data = result.data;
-                  $(".title").text(formatTag(data.askTagStr));
+                  $("#detail .title").text(formatTag(data.askTagStr));
                   $(".username").text(data.createByName);
                   likeNum = data.likeNum < 0 ? 0 : data.likeNum;
                   $(".like-num").text(likeNum);
@@ -51,6 +51,11 @@
                   if (data.score < 10) {
                       $(".buy").text("限时免费");
                       $(".buy").addClass("free");
+                  }
+
+                  var price = parseFloat(data.askPrice);
+                  if(price == 0 || price == "0.0"){
+                    $(".buy").text("免费瞅瞅");
                   }
 
                   //判断是否想吃过
@@ -193,6 +198,54 @@
   $(".more-edit").on("click",function(){
     $.showPreloader("正在加载");
     window.location.href = "/edit?type=edit&askid="+AskId;
+  })
+  //点击删除下架
+  $(".more-delete").on("click",function(){
+    $(".more-dialog").hide();
+    $.router.load("#delete");
+  })
+  //点击确认下架
+  $("#delete .delete-btn").on("click",function(){
+    var reason = $("#delete #reason").val();
+    if(!reason || reason == " "){
+      $.toast("下架理由不能为空");
+      return;
+    }else{
+      if(!AskId || !UserName){
+        $.toast("下架失败");
+        return;
+      }
+      $.showPreloader("正在下架");
+      var data = {
+          username: UserName,
+          ask_id: AskId,
+          reason: reason
+      }
+      $.ajax({
+        type: "POST",
+        data: data,
+        dataType: "json",
+        url: "/ask/del",
+        success: function(result) {
+          console.log(result);
+          $.hidePreloader();
+          if(result.code == 200){
+            $.toast("下架成功");
+          }else if(result.code == 700){
+            $.toast("重复下架");
+          }else if(result.code == 800){
+            $.toast("不是您的信息");
+          }else{
+            $.toast("下架失败");
+          }
+        },
+        error:function(error){
+          $.toast("服务器异常");
+          $.hidePreloader();
+          console.log(error);
+        }
+      })
+    }
   })
 
   //点击返回逻辑bug

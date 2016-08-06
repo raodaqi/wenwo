@@ -379,3 +379,36 @@ body {
 	top:-.5rem;
 	right: .3rem;
 }
+
+.reason-content{
+    padding:1rem;
+}
+.delete-reason{
+    margin:.5rem 0;
+}
+#reason{
+    width: 100%;
+    border-radius: .7rem;
+    height: 8rem;
+    resize: none;
+    font-size: .67rem;
+    padding:.5rem .7rem;
+}
+
+.delete-btn{
+    position: absolute;
+    width: 80%;
+    background-color: #ee7e2e !important;
+    color: white;
+    border-radius: .23rem;
+    text-align: center;
+    height: 2.2rem;
+    line-height: 2.2rem;
+    left:10%;
+    bottom:3rem;
+}
+
+#delete .title{
+    font-weight: 200;
+    color: #555;
+}
