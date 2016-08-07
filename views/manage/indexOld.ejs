@@ -278,26 +278,6 @@
     .modal-button{
         background: rgba(0,0,0,.8);
     }
-    .send-img{
-        height: 80px;
-        line-height: 80px;
-        margin-bottom: 10px;
-    }
-    .send-img img{
-        margin-left: 10px;
-    }
-    .send-img label{
-        display: block;
-        float: left;
-        height: 80px;
-    }
-    .send-num{
-        margin:20px 0 10px 0;
-    }
-    .send-content-li{
-        padding-bottom: 30px;
-        border-bottom: 1px solid #ccc;
-    }
 </style>
 <body>
     <div class="wrap">
@@ -307,7 +287,7 @@
         <div>
             <div class="list side-bar">
                 <ul>
-                    <li class="send-bar side-bar-backcheck">轮播图管理</li>
+                    <li class="send-bar side-bar-backcheck">发布信息</li>
                     <li class="check-bar">审核信息</li>
                     <li class="manage-bar">管理消息</li>
                     <li class="tag-bar">标签管理</li>
@@ -317,30 +297,55 @@
             </div>
             <div class="list manage-content">
                 <div class="content-title send" style="display: block">
-                    <div class="send-content-ul">
-                        <div class="send-content-li" data-num="1">
-                            <div class="send-num" data-num="1">第1张图：</div>
-                            <div class="send-img">
-                             <label> 轮播图:</label><img class="tag-img" data-type="0" src="/img/add.jpg" alt="">
-                            </div>
-                            <div class="send-url">
-                                链接：<input type="text">
-                            </div>
-                        </div>
+                    <div class="check-box">
+                        <span>主题:</span>
+                        <input type="checkbox" value="1" id="checkbox-1" name="" defaultChecked="false"/>
+                        <label for="checkbox-1">美食</label>
+                        <input type="checkbox" value="2" id="checkbox-2" name="" defaultChecked="false"/>
+                        <label for="checkbox-2">住宿</label>
+                        <input type="checkbox" value="3" id="checkbox-3" name="" defaultChecked="false"/>
+                        <label for="checkbox-3">交通</label>
+                        <input type="checkbox" value="4" id="checkbox-4" name="" defaultChecked="false"/>
+                        <label for="checkbox-4">购物</label>
+                        <input type="checkbox" value="5" id="checkbox-5" name="" defaultChecked="false"/>
+                        <label for="checkbox-5">游玩</label>
+                        <input type="checkbox" value="6" id="checkbox-6" name="" defaultChecked="false"/>
+                        <label for="checkbox-6">防坑</label>
+                    </div>
+                    <div class="address-content">
+                        <span>地图标注:</span><input type="text" id="search" placeholder="请输入你要标注的地址">
+                        <div class="place"></div>
+                         <div class="container-show" id="container"></div>
+                    </div>
+                    <div class="tag-content">
+                        <!-- <span class="type-item">火锅</span> -->
+                    </div>
+                    <div class="div-tag">
+                        <span>标签:</span>
+                        <input class="input-edit input-tag" type="text" placeholder="每个标签以;结束">
+                    </div>
+                    <div class="div-reason">
+                        <span>推荐理由:</span>
+                        <textarea class="edit-reason" placeholder="说说为什么？"></textarea>
+                    </div>
+                    <div class="div-tag">
+                        <span>详情:</span>
+                        <div class="button-start">隐藏</div>
+                        <textarea class="edit-detail" id="detail" placeholder="隐藏内容以“##隐藏内容##”方式隐藏"></textarea>
+                        <div class="de-show"></div>
+                    </div>
 
-                        <div class="send-content-li" data-num="2">
-                            <div class="send-num" data-num="1">第2张图：</div>
-                            <div class="send-img">
-                             <label> 轮播图:</label><img class="tag-img" data-type="0" src="/img/add.jpg" alt="">
-                            </div>
-                            <div class="send-url">
-                                链接：<input type="text">
-                            </div>
-                        </div>
+                    <!-- <div class="address-content">
+                        <span>地图标注:</span><input type="text" id="search" placeholder="请输入你要标注的地址">
+                        <div class="place"></div>
+                         <div class="container-show" id="container"></div>
+                    </div> -->
+                    <div>
+                        <span>价格:</span>
+                        <input class="input-edit input-price" type="number" value="">
                     </div>
                     <button class='btn_send'>发布</button>
                 </div>
-
                 <div class="content-title check" style="display: none">
                     <ul>
                         <!--<li>234567893456789</li>-->
