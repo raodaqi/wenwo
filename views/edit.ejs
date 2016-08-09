@@ -15,6 +15,22 @@
         <div class="theme-content-block">        
           <div class="edit-ul">
             <!-- 标签 -->
+            <div class="edit-li-photo photo">
+              <img src="/img/edit/photo-01.png" class="edit-li-img">
+              <div class="li-title">
+                图片
+              </div>
+              <div class="edit-content" id="photo">
+                <img src="/img/edit/photo-empty.png" data-percent="-1" data-href=""  class="photo-content" alt="">
+                <div class="preloader-content">
+                  <div class="preloader"></div>
+                </div>
+                
+                <span class="photo-edit-icon iconfont icon-bianji"></span>
+                <!-- <input id="multiple" class="hidden" type="file" id="upload" multiple> -->
+              </div>
+            </div>
+
             <div class="edit-li tag" data-href="#router1">
               <img src="/img/edit/tag-01.png" class="edit-li-img">
               <div class="li-title">
@@ -132,10 +148,12 @@
 
       <footer class="footer-bar">
         <div class="pre-view" data-href="#router">
-          预览
+          <img src="/img/edit/preview.svg" class="preview-img" alt="">
+          <label>预览</label>
         </div>
         <div class="next-view" data-href="#router2">
-          下一步
+          <label>下一步<label>
+          <img src="/img/edit/next.png" class="next-img" alt="">
         </div>
       </footer>
     </div>
@@ -174,10 +192,12 @@
 
       <footer class="footer-bar">
         <div class="pre-view" data-href="#router">
-          预览
+          <img src="/img/edit/preview.svg" class="preview-img" alt="">
+          <label>预览</label>
         </div>
         <div class="next-view" data-href="#router3">
-          下一步
+          <label>下一步<label>
+          <img src="/img/edit/next.png" class="next-img" alt="">
         </div>
       </footer>
     </div>
@@ -227,10 +247,12 @@
 
       <footer class="footer-bar">
         <div class="pre-view" data-href="#router">
-          预览
+          <img src="/img/edit/preview.svg" class="preview-img" alt="">
+          <label>预览</label>
         </div>
         <div class="next-view" data-href="#router4">
-          下一步
+          <label>下一步<label>
+          <img src="/img/edit/next.png" class="next-img" alt="">
         </div>
       </footer>
     </div>
@@ -263,10 +285,12 @@
 
       <footer class="footer-bar">
         <div class="pre-view" data-href="#router">
-          预览
+          <img src="/img/edit/preview.svg" class="preview-img" alt="">
+          <label>预览</label>
         </div>
         <div class="next-view" data-href="#router5">
-          下一步
+          <label>下一步<label>
+          <img src="/img/edit/next.png" class="next-img" alt="">
         </div>
       </footer>
     </div>
@@ -327,10 +351,12 @@
 
       <footer class="footer-bar">
         <div class="pre-view" data-href="#router">
-          预览
+          <img src="/img/edit/preview.svg" class="preview-img" alt="">
+          <label>预览</label>
         </div>
         <div class="next-view" data-href="#router6">
-          下一步
+          <label>下一步<label>
+          <img src="/img/edit/next.png" class="next-img" alt="">
         </div>
       </footer>
     </div>
@@ -369,10 +395,12 @@
 
       <footer class="footer-bar">
         <div class="pre-view" data-href="#router">
-          预览
+          <img src="/img/edit/preview.svg" class="preview-img" alt="">
+          <label>预览</label>
         </div>
         <div class="next-view" data-href="#router">
-          完成
+          <label>完成<label>
+          <img src="/img/edit/next.png" class="next-img" alt="">
         </div>
       </footer>
     </div>
@@ -405,18 +433,161 @@
         <div class="share-btn">戳我分享>></div>
       </div>
     </div>
-
   </body>
   <% include footer.ejs %>
   <script type="text/javascript" src="/js/map.js"></script>
+  <script type='text/javascript' src='/js/extend.js' charset='utf-8'></script>
+  <script type="text/javascript" src="/js/plupload.full.min.js"></script>
+  <script type="text/javascript" src="/js/qiniu.min.js"></script>
   <script> 
     var UserName = "<%= username %>";
     var sendType = "<%= type %>";
     var sendAskId = "<%= askid %>";
+    var timer;
+    var timerNumber = 0;
+    var uploader;
 
     if(sendType == "edit"){
       $(".share-success,.success-text").text("编辑成功");
     }
+
+    $(".page").swipeLeft(function(){
+      var id = this.id;
+      var num = id.replace(/[^0-9]/ig,"");
+      if(!num){
+        num = 0;
+      }
+      num++;
+      if(num == 6){
+        return;
+      }
+      if(num == 7){
+        $.router.load("#router");
+      }else{
+        $.router.load("#router"+num);
+      }
+      
+    })
   </script>
+
+  <script>
+        uploader = Qiniu.uploader({
+            runtimes: 'html5,flash,html4',    //上传模式,依次退化
+            browse_button: 'photo',       //上传选择的点选按钮，**必需**
+            uptoken_url: '/manage/token',
+            domain: 'http://qiniu-plupload.qiniudn.com/',
+                //bucket 域名，下载资源时用到，**必需**
+            max_file_size: '2048mb',           //最大文件体积限制
+            filters: {
+              max_file_size : '10mb',
+              mime_types : [ //只允许上传图片和zip文件
+                { title : "Image files", extensions : "JPEG,jpg,gif,png" }
+              ]
+            },
+            resize: {
+              quality: 70,
+              preserve_headers: false
+            }, 
+            multi_selection: false,
+            flash_swf_url: 'js/plupload/Moxie.swf',  //引入flash,相对路径
+            max_retries: 3,                   //上传失败最大重试次数
+            chunk_size: '4mb',                //分块上传时，每片的体积
+            auto_start: false,                 //选择文件后自动上传，若关闭需要自己绑定事件触发上传
+            init: {
+                'FilesAdded': function(up, files) {
+
+                  $(".preloader-content").show();
+                    plupload.each(files, function(file) {
+                       var myDate=new Date();
+                       time = myDate.getTime();
+                       fileName = files[0].name;
+                       var name = files[0].name;
+
+                       fileName = "wenwo/"+time+"/"+fileName;
+
+                       if(up.files.length > 1){
+                        for(var i = 0; i < up.files.length - 1;i++){
+                          up.removeFile(up.files[i].id);
+                        }
+                       }
+                       previewImage(files[0],function(imgsrc){
+                            $(".photo-content").attr("src",imgsrc);
+                            $(".photo-content").attr("data-href","");
+                            $(".photo-content").attr("data-percent","-1");
+                            $(".preloader-content").hide();
+                            uploader.start();
+                              // $(".app-logo-loading").hide();
+                        })
+                    });
+                },
+                'BeforeUpload': function(up, file) {
+                       // 每个文件上传前,处理相关的事情
+                       console.log(file);
+                       console.log(up);
+                },
+                'UploadProgress': function(up, file) {
+                       // 每个文件上传时,处理相关的事情
+                       // $(".squre").text(file.percent+"%");
+                       // $.showPreloader("正在提交");
+                       console.log(file.percent);   
+                       $(".title").text(file.percent);
+                      $(".photo-content").attr("data-percent",file.percent);
+                       // console.log(up);
+                },
+                'FileUploaded': function(up, file, info) {
+                      var res = JSON.parse(info);
+                      console.log(info);
+                      var key = res.key;
+                      var sourceLink = "http://o83np3eq2.bkt.clouddn.com/" + key; //
+                      $(".photo-content").attr("data-href",sourceLink);
+                },
+                'Error': function(up, err, errTip) {
+                       //上传出错时,处理相关的事情
+                       console.log(errTip);
+                       // $.toast("上传失败");
+                },
+                'UploadComplete': function() {
+                       //队列文件处理完毕后,处理相关的事情
+                },
+                'Key': function(up, file) {
+                    // 若想在前端对每个文件的key进行个性化处理，可以配置该函数
+                    // 该配置必须要在 unique_names: false , save_key: false 时才生效
+                    var key = "";
+                    key = fileName;
+                    // do something with key here
+                    return key
+                }
+              }
+          });
+
+      //plupload中为我们提供了mOxie对象
+      //有关mOxie的介绍和说明请看：https://github.com/moxiecode/moxie/wiki/API
+      //如果你不想了解那么多的话，那就照抄本示例的代码来得到预览的图片吧
+      function previewImage(file,callback){//file为plupload事件监听函数参数中的file对象,callback为预览图片准备完成的回调函数
+        console.log("jjjj");
+        if(!file || !/image\//.test(file.type)) return; //确保文件是图片
+        if(file.type=='image/gif'){//gif使用FileReader进行预览,因为mOxie.Image只支持jpg和png
+          var fr = new mOxie.FileReader();
+          fr.onload = function(){
+            callback(fr.result);
+            fr.destroy();
+            fr = null;
+          }
+          fr.readAsDataURL(file.getSource());
+        }else{
+          var preloader = new mOxie.Image();
+          preloader.onload = function() {
+            // preloader.downsize( 300, 300 );//先压缩一下要预览的图片,宽300，高300
+            // preloader.downsize( 93, 93 );//先压缩一下要预览的图片,宽300，高300
+            var imgsrc = preloader.type=='image/jpeg' ? preloader.getAsDataURL('image/jpeg',80) : preloader.getAsDataURL(); //得到图片src,实质为一个base64编码的数据
+            callback && callback(imgsrc); //callback传入的参数为预览图片的url
+            preloader.destroy();
+            preloader = null;
+          };
+          preloader.load( file.getSource() );
+        }
+      }
+</script>
+
   <script type="text/javascript" src="/js/edit.js"></script>
 </html>
