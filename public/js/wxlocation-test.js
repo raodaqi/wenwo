@@ -70,8 +70,8 @@ function initLocation(callback) {
                                 alert(JSON.stringify(res));
                                 localId = res.localIds;
                                 var serverId = res.serverId; // 返回图片的服务器端ID
-                                $(".photo-content").attr("scr",serverId);
-                                $(".photo-content").attr("scr",localId);
+                                // $(".photo-content").attr("scr",serverId);
+                                // $(".photo-content").attr("scr",localId);
                                 $.ajax({
                                   type: "POST",
                                   url: '/todos/file_save',

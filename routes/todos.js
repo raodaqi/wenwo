@@ -2,6 +2,11 @@ var router = require('express').Router();
 var AV = require('leanengine');
 var jsSHA = require('jssha');
 var sha1 = require('sha1');
+var qiniu = require("qiniu");
+
+//需要填写你的 Access Key 和 Secret Key
+qiniu.conf.ACCESS_KEY = 'DU0ZyfvC06whs4kFM65I4uGlnDkCeyLMV6ct4NPF';
+qiniu.conf.SECRET_KEY = 'wvt3V7LrhJi6sPefoL1mRB3PsRV_KUUucd3QNmAz';
 
 // `AV.Object.extend` 方法一定要放在全局变量，否则会造成堆栈溢出。
 // 详见： https://leancloud.cn/docs/js_guide.html#对象
@@ -334,6 +339,43 @@ router.post('/file_save', function(req, res, next) {
         url: 'http://file.api.weixin.qq.com/cgi-bin/media/get?access_token='+access_token+'&media_id='+media_id,
         success: function(httpResponse) {
           console.log(httpResponse);
+
+          //要上传的空间
+          bucket = 'wenwo';
+
+          //上传到七牛后保存的文件名
+          key = 'my-nodejs-logo.png';
+
+          //构建上传策略函数
+          function uptoken(bucket, key) {
+            var putPolicy = new qiniu.rs.PutPolicy(bucket+":"+key);
+            return putPolicy.token();
+          }
+
+          //生成上传 Token
+          token = uptoken(bucket, key);
+
+          //要上传文件的本地路径
+          // filePath = './ruby-logo.png'
+          filePath = httpResponse.data;
+
+          //构造上传函数
+          function uploadFile(uptoken, key, localFile) {
+            var extra = new qiniu.io.PutExtra();
+              qiniu.io.putFile(uptoken, key, localFile, extra, function(err, ret) {
+                if(!err) {
+                  // 上传成功， 处理返回值
+                  console.log("上传成功");
+                  console.log(ret.hash, ret.key, ret.persistentId);       
+                } else {
+                  // 上传失败， 处理返回代码
+                  console.log(err);
+                }
+            });
+          }
+
+          //调用uploadFile上传
+          uploadFile(token, key, filePath);
         },
         error: function(httpResponse) {
           console.error('Request failed with response code ' + httpResponse.status);
