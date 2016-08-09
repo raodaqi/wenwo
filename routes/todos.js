@@ -338,17 +338,18 @@ router.post('/file_save', function(req, res, next) {
       AV.Cloud.httpRequest({
         url: 'http://file.api.weixin.qq.com/cgi-bin/media/get?access_token='+access_token+'&media_id='+media_id,
         success: function(httpResponse) {
-          console.log(httpResponse);
+          // console.log(httpResponse);
 
           //要上传的空间
           bucket = 'wenwo';
 
           var myDate=new Date();
           time = myDate.getTime();
-          var fileName = httpResponse.headers["content-dispostion"].split("=")[1];
+          console.log(httpResponse.headers["content-dispostion"]);
+          //var fileName = httpResponse.headers["content-dispostion"].split("=")[1];
           //上传到七牛后保存的文件名
           // key = 'my-nodejs-logo.png';
-          key = "wenwo/"+time+"/"+fileName;
+          key = "wenwo/"+time+"/"+media_id;
 
           //构建上传策略函数
           function uptoken(bucket, key) {
