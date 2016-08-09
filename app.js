@@ -303,6 +303,29 @@ app.get('/edit', function(req, res) {
   }
 });
 
+app.get('/edit_test', function(req, res) {
+  var type = req.query.type;
+  var askid = req.query.askid;
+  var username =  req.query.username;
+
+  if(!username){
+    var username = "573b0e3df38c8400673bb48d";
+  }
+  if(username && test){
+    res.render('editTest', {username:username,type:type,askid:askid});
+    return ;
+  }
+
+  var user = AV.User.current();
+  if (!user) {
+    authorize(req, res);
+  }else{
+    var username = user.get('user');
+    // console.log(username);
+    res.render('editTest', {username:username,type:type,askid:askid});
+  }
+});
+
 app.get('/detail', function(req, res) {
   var askid =  req.query.askid;
   var username = "573b0e3df38c8400673bb48d";

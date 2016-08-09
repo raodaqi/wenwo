@@ -15,7 +15,7 @@
         <div class="theme-content-block">        
           <div class="edit-ul">
             <!-- 标签 -->
-            <!-- <div class="edit-li-photo photo">
+            <div class="edit-li-photo photo">
               <img src="/img/edit/photo-01.png" class="edit-li-img">
               <div class="li-title">
                 图片
@@ -27,9 +27,9 @@
                 </div>
                 
                 <span class="photo-edit-icon iconfont icon-bianji"></span>
+                <!-- <input id="multiple" class="hidden" type="file" id="upload" multiple> -->
               </div>
-            </div> -->
-            <div class="edit-content" id="photo" style="display:none"></div>
+            </div>
 
             <div class="edit-li tag" data-href="#router1">
               <img src="/img/edit/tag-01.png" class="edit-li-img">
@@ -439,6 +439,7 @@
   <script type='text/javascript' src='/js/extend.js' charset='utf-8'></script>
   <script type="text/javascript" src="/js/plupload.full.min.js"></script>
   <script type="text/javascript" src="/js/qiniu.min.js"></script>
+  <script type='text/javascript' src='/js/wxlocation-test.js' charset='utf-8'></script>
   <script> 
     var UserName = "<%= username %>";
     var sendType = "<%= type %>";
