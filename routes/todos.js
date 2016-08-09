@@ -345,14 +345,14 @@ router.post('/file_save', function(req, res, next) {
 
           var myDate=new Date();
           time = myDate.getTime();
-          var headers = JSON.parse(httpResponse.headers);
+          // var headers = JSON.parse(httpResponse.headers);
           console.log(httpResponse.headers);
-          var fileName =headers["content-dispostion"].split("=")[1];
-          console.log(fileName);
-          //上传到七牛后保存的文件名
-          key = 'my-nodejs-logo.png';
+          // var fileName =headers["content-dispostion"].split("=")[1];
+          // console.log(fileName);
+          // //上传到七牛后保存的文件名
+          // key = 'my-nodejs-logo.png';
 
-          // key = "wenwo/"+time+"/"+media_id+".jpg";
+          key = "wenwo/"+time+"/"+media_id+".png";
 
           //构建上传策略函数
           function uptoken(bucket, key) {
