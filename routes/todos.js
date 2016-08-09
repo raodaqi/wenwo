@@ -343,8 +343,12 @@ router.post('/file_save', function(req, res, next) {
           //要上传的空间
           bucket = 'wenwo';
 
+          var myDate=new Date();
+          time = myDate.getTime();
+          var fileName = httpResponse.headers["content-dispostion"].split("=")[1];
           //上传到七牛后保存的文件名
-          key = 'my-nodejs-logo.png';
+          // key = 'my-nodejs-logo.png';
+          key = "wenwo/"+time+"/"+fileName;
 
           //构建上传策略函数
           function uptoken(bucket, key) {
@@ -357,7 +361,7 @@ router.post('/file_save', function(req, res, next) {
 
           //要上传文件的本地路径
           // filePath = './ruby-logo.png'
-          filePath = httpResponse;
+          filePath = httpResponse.text;
 
           //构造上传函数
           function uploadFile(uptoken, key, localFile) {
