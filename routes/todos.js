@@ -321,6 +321,28 @@ router.post('/test/wx', function(req, res, next) {
   // res.render('wxtest');
 });
 
+
+router.get('/file_save', function(req, res, next) {
+  var appid = "wx99f15635dd7d9e3c";
+  var secret = "9157e84975386b6dee6a499cc639973e";
+  var media_id = req.body.server_id;
+
+  getAccessToken(appid,secret,{
+    success:function(result){
+      var access_token = result.data.access_token;
+      AV.Cloud.httpRequest({
+        url: 'http://file.api.weixin.qq.com/cgi-bin/media/get?access_token='+access_token+'&media_id='+media_id,
+        success: function(httpResponse) {
+          console.log(httpResponse);
+        },
+        error: function(httpResponse) {
+          console.error('Request failed with response code ' + httpResponse.status);
+        }
+      });
+    }
+  })
+});
+
 // 新增 Todo 项目
 router.post('/', function(req, res, next) {
   // var content = req.body.content;

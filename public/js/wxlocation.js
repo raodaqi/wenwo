@@ -72,6 +72,19 @@ function initLocation(callback) {
                                 alert(JSON.stringify(res));
                                 var serverId = res.serverId; // 返回图片的服务器端ID
                                 $(".photo-content").attr("scr",serverId);
+                                $.ajax({
+                                  type: "POST",
+                                  url: '/todos/file_save',
+                                  data: { server_id: serverId},
+                                  dataType: "json",
+                                  success: function(result) {
+                                      console.log(result);
+                                  },
+                                  error: function(error) {
+                                    $.hidePreloader();
+                                    $.alert("网络异常");
+                                  }
+                              })
                             }
                         });
                       }
