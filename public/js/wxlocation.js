@@ -17,7 +17,7 @@ function initLocation(callback) {
             console.log(result);
             console.log(desc);
             wx.config({
-                debug: false,
+                debug: true,
                 appId: 'wx99f15635dd7d9e3c',
                 timestamp: result.timestamp,
                 nonceStr: result.nonceStr,
@@ -30,7 +30,8 @@ function initLocation(callback) {
                     'hideMenuItems',
                     'showMenuItems',
                     'getLocation',
-                    'chooseImage'
+                    'chooseImage',
+                    'uploadImage'
                 ]
             });
             wx.ready(function() {
@@ -54,12 +55,25 @@ function initLocation(callback) {
                     localId: [],
                     serverId: []
                   };
-                  document.querySelector('.title').onclick = function () {
+                  var localId = '';
+                  document.querySelector('#photo').onclick = function () {
                     wx.chooseImage({
+                      count: 1, // 默认9
                       success: function (res) {
-                        images.localId = res.localIds;
+                        localId = res.localIds;
                         // alert('已选择 ' + res.localIds.length + ' 张图片');
                         console.log(res);
+                        alert(JSON.stringify(res));
+                        $(".photo-content").attr("scr",localId);
+                        wx.uploadImage({
+                            localId: localId, // 需要上传的图片的本地ID，由chooseImage接口获得
+                            isShowProgressTips: 1, // 默认为1，显示进度提示
+                            success: function (res) {
+                                alert(JSON.stringify(res));
+                                var serverId = res.serverId; // 返回图片的服务器端ID
+                                $(".photo-content").attr("scr",serverId);
+                            }
+                        });
                       }
                     });
                   };
