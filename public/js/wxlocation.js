@@ -29,7 +29,8 @@ function initLocation(callback) {
                     'onMenuAddContact',
                     'hideMenuItems',
                     'showMenuItems',
-                    'getLocation'
+                    'getLocation',
+                    'chooseImage'
                 ]
             });
             wx.ready(function() {
@@ -47,6 +48,21 @@ function initLocation(callback) {
                     link:  link,
                     imgUrl: imgUrl
                 };
+
+                // 5.1 拍照、本地选图
+                  var images = {
+                    localId: [],
+                    serverId: []
+                  };
+                  document.querySelector('.title').onclick = function () {
+                    wx.chooseImage({
+                      success: function (res) {
+                        images.localId = res.localIds;
+                        // alert('已选择 ' + res.localIds.length + ' 张图片');
+                        console.log(res);
+                      }
+                    });
+                  };
 
                 wx.onMenuShareAppMessage(shareData);
                 wx.onMenuShareTimeline(shareData);
@@ -180,4 +196,8 @@ function ifAttention(access_token,openid){
             $("body").empty().text(error);
         }
     });
+}
+
+function initChooseImage(){
+
 }

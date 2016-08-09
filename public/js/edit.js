@@ -1050,11 +1050,25 @@
               lng = change;
           }
 
+      timer = setInterval(function(){
+        var percent = $(".photo-content").attr("data-percent");
+        if(percent == "-1" || percent == "100" || percent == -1 || percent == 100){
+          clearInterval(timer);
+          var askImage = {};
+          if($(".photo-content").attr("data-href")){
+            askImage[0] = $(".photo-content").attr("data-href");
+            askImage = JSON.stringify(askImage);
+          }
+          timerNumber++;
+          if(timerNumber > 1){
+            clearInterval(timer);
+          }
           var data = {
               username: UserName,
               type: 1,
               tag: tag,
               reason: reason,
+              images:askImage,
               content_show: content_show,
               content_hide: 'no',
               position: askPosition,
@@ -1173,7 +1187,9 @@
                       $.toast("服务器异常");
                   }
               });
+            }
           }
+        }, 10);
       })
 
       //输入框填写的地址内容

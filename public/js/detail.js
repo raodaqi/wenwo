@@ -137,7 +137,17 @@
                   }
 
                   $(".price").text(data.askPrice);
-                  $(".pic-bg").attr("src", data.createByUrl);
+                  // $(".pic-bg").attr("src", data.createByUrl);
+                  $(".pic-bg").css("background", 'url("'+data.createByUrl+'") center center / cover no-repeat');
+
+                  var askImage = data.askImage;
+                  if(askImage){
+                    askImage = JSON.parse(askImage);
+                    if(askImage[0]){
+                      $(".pic-bg").css("background", 'url("'+askImage["0"]+'") center center / cover no-repeat');
+                    }
+                  }
+
                   $(".detail-reason").text(data.askReason);
                   // $(".detail-rtname").text(data.shopName);
                   //解析美食详情

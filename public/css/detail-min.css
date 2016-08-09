@@ -422,7 +422,7 @@ body {
     /*padding-left: 1rem;*/
     text-align: center;
     color: white;
-    padding:.2rem 0;
+    padding:.2rem .3rem;
     font-size: .72rem;
     margin-top: -.35rem;
 }

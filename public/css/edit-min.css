@@ -13,8 +13,35 @@ body {
     margin-top: 2rem
 }
 
-.edit-li {
+.edit-li,.edit-li-photo {
     padding-left: 1.5rem
+}
+
+.photo-content{
+    height: 3rem;
+}
+
+.photo {
+    border-left: .05rem solid #3ebde5
+}
+
+.hidden{
+    display: none;
+}
+.preloader-content{
+    display: none;
+    position: absolute;
+    height: 3rem;
+    height: 3rem;
+    margin-top:-45px;
+    margin-left: 20px;
+}
+
+.photo-edit-icon{
+    position: absolute;
+    font-size: 1rem;
+    color: #333333;
+    margin:1.75rem 0 0 .4rem;
 }
 
 .tag {
@@ -70,33 +97,61 @@ body {
 .pre-view {
     position: absolute;
     left: 1.5rem;
-    background: url("/img/edit/left.png") no-repeat;
-    background-size: 100%;
+    /*background: url("/img/edit/left.png") no-repeat;
+    background-size: 100%;*/
     width: 5rem;
-    height: 2rem;
+    height: 1.6rem;
     text-align: center;
-    line-height: 2rem;
+    line-height: 1.6rem;
     color: white;
     padding-left: 1rem;
     font-size: .7rem;
-    font-weight: bold
+    /*font-weight: bold;*/
+    height: 1.6rem;
+    line-height: 1.6rem;
+    background-color: rgba(238, 126, 46, 1);
+    border-radius:1.6rem;
 }
 
 .next-view,
 .end-view {
     position: absolute;
     right: 1.5rem;
-    background: url("/img/edit/right.png") no-repeat;
-    background-size: 100%;
+    /*background: url("/img/edit/right.png") no-repeat;
+    background-size: 100%;*/
     width: 5rem;
     height: 2rem;
     text-align: center;
     line-height: 2rem;
     color: white;
-    padding-right: 1rem;
+    padding-right: .8rem;
     font-size: .7rem;
-    font-weight: bold
+    font-weight: bold;
+    height: 1.6rem;
+    line-height: 1.6rem;
+    background-color: rgba(238, 126, 46, 1);
+    border-radius:1.6rem;
 }
+
+.pre-view img{
+    display: block;
+    position: absolute;
+    width: 1.05rem;
+    height: 0.75rem;
+    top:.45rem;
+}
+.pre-view label{
+    padding-left: .3rem;
+}
+.next-view img{
+    display: block;
+    position: absolute;
+    width: 0.8rem;
+    height: 0.7rem;
+    transform: rotate(90deg);
+    top:.45rem;
+    right:.8rem;
+} 
 
 .header-bar {
     position: absolute;
@@ -214,11 +269,13 @@ body {
 .type-item {
     margin: .25rem .25rem;
     display: inline-block;
-    background: #ee7e2e;
+    /*background: #ee7e2e;*/
     color: white;
     padding: .2rem .8rem;
     font-size: .7rem;
-    border-radius: 1rem
+    border-radius: 1rem;
+    border:1px solid #ee7e2e;
+    color: #ee7e2e;
 }
 
 input:-ms-input-placeholder,
@@ -314,7 +371,7 @@ textarea {
     color: #aeaeae
 }
 
-.icon-bianji,
+#router5 .icon-bianji,
 .icon-tixing,
 .search {
     display: block;
