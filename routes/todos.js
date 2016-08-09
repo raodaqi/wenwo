@@ -349,6 +349,7 @@ router.post('/file_save', function(req, res, next) {
           //var fileName = httpResponse.headers["content-dispostion"].split("=")[1];
           //上传到七牛后保存的文件名
           // key = 'my-nodejs-logo.png';
+          
           key = "wenwo/"+time+"/"+media_id;
 
           //构建上传策略函数
