@@ -357,12 +357,12 @@ router.post('/file_save', function(req, res, next) {
 
           //要上传文件的本地路径
           // filePath = './ruby-logo.png'
-          filePath = httpResponse.data;
+          filePath = httpResponse;
 
           //构造上传函数
           function uploadFile(uptoken, key, localFile) {
             var extra = new qiniu.io.PutExtra();
-              qiniu.io.putFile(uptoken, key, localFile, extra, function(err, ret) {
+              qiniu.io.put(uptoken, key, localFile, extra, function(err, ret) {
                 if(!err) {
                   // 上传成功， 处理返回值
                   console.log("上传成功");
