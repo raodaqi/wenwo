@@ -322,7 +322,7 @@ router.post('/test/wx', function(req, res, next) {
 });
 
 
-router.get('/file_save', function(req, res, next) {
+router.post('/file_save', function(req, res, next) {
   var appid = "wx99f15635dd7d9e3c";
   var secret = "9157e84975386b6dee6a499cc639973e";
   var media_id = req.body.server_id;
