@@ -345,12 +345,14 @@ router.post('/file_save', function(req, res, next) {
 
           var myDate=new Date();
           time = myDate.getTime();
+          var headers = JSON.parse(httpResponse.headers);
           console.log(httpResponse.headers);
-          //var fileName = httpResponse.headers["content-dispostion"].split("=")[1];
+          var fileName =headers["content-dispostion"].split("=")[1];
+          console.log(fileName);
           //上传到七牛后保存的文件名
-          // key = 'my-nodejs-logo.png';
+          key = 'my-nodejs-logo.png';
 
-          key = "wenwo/"+time+"/"+media_id+".jpg";
+          // key = "wenwo/"+time+"/"+media_id+".jpg";
 
           //构建上传策略函数
           function uptoken(bucket, key) {
@@ -363,7 +365,7 @@ router.post('/file_save', function(req, res, next) {
 
           //要上传文件的本地路径
           // filePath = './ruby-logo.png'
-          filePath = httpResponse.text;
+          filePath = httpResponse.data;
 
           //构造上传函数
           function uploadFile(uptoken, key, localFile) {
