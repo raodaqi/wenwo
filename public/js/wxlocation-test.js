@@ -17,7 +17,7 @@ function initLocation(callback) {
             console.log(result);
             console.log(desc);
             wx.config({
-                debug: true,
+                debug: false,
                 appId: 'wx99f15635dd7d9e3c',
                 timestamp: result.timestamp,
                 nonceStr: result.nonceStr,
