@@ -11,7 +11,7 @@
   LNG = 103.982984;
 
   $.showPreloader("正在加载");
-  initLocation({
+  initLocation("food",{
       success: function(lng, lat) {
           LAT = lat;
           LNG = lng;

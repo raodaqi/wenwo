@@ -1,4 +1,4 @@
-function initLocation(callback) {
+function initLocation(type,callback) {
     var title = WX_SHARE_TITLE ? WX_SHARE_TITLE:'「问我」 让经验帮你赚钱';
     var link = WX_SHARE_LINK ? WX_SHARE_LINK :'http://www.wenwobei.com';//链接按代换
     var imgUrl　=　(WX_SHARE_IMGURL && WX_SHARE_IMGURL != "/") ? WX_SHARE_IMGURL: 'http://www.wenwobei.com/img/logo.jpg';//链接按代换
@@ -51,27 +51,29 @@ function initLocation(callback) {
                 };
 
                 // 5.1 拍照、本地选图
-                  var images = {
-                    localId: [],
-                    serverId: []
-                  };
+                if(type == "edit"){
                   var localId = '';
+                  var localIds = [];
                   document.querySelector('#photo').onclick = function () {
                     wx.chooseImage({
                       count: 1, // 默认9
                       success: function (res) {
-                        localId = res.localIds;
+                        localIds = res.localIds;
+                        localId = localIds[0];
                         // alert('已选择 ' + res.localIds.length + ' 张图片');
                         console.log(res);
-                        alert(JSON.stringify(res));
-                        $(".photo-content").attr("scr",localId);
+                        $(".photo-content").attr("src",localId);
+
+                        $(".photo-content").attr("data-percent","50");
+
                         wx.uploadImage({
                             localId: localId, // 需要上传的图片的本地ID，由chooseImage接口获得
                             isShowProgressTips: 1, // 默认为1，显示进度提示
                             success: function (res) {
-                                alert(JSON.stringify(res));
+                                localId = res.localIds;
                                 var serverId = res.serverId; // 返回图片的服务器端ID
-                                $(".photo-content").attr("scr",serverId);
+                                // $(".photo-content").attr("scr",serverId);
+                                // $(".photo-content").attr("scr",localId);
                                 $.ajax({
                                   type: "POST",
                                   url: '/todos/file_save',
@@ -79,10 +81,17 @@ function initLocation(callback) {
                                   dataType: "json",
                                   success: function(result) {
                                       console.log(result);
+                                      if(result.code == 200){
+                                        $(".photo-content").attr("data-href",result.data);
+                                        $(".photo-content").attr("data-percent","100");
+                                      }else{
+                                        $.toast("图片上传失败");
+                                        $(".photo-content").attr("data-percent","-1");
+                                      }   
                                   },
                                   error: function(error) {
-                                    $.hidePreloader();
-                                    $.alert("网络异常");
+                                    $.toast("网络异常");
+                                    $(".photo-content").attr("data-percent","-1");
                                   }
                               })
                             }
@@ -90,6 +99,7 @@ function initLocation(callback) {
                       }
                     });
                   };
+                }
 
                 wx.onMenuShareAppMessage(shareData);
                 wx.onMenuShareTimeline(shareData);

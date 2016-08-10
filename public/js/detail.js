@@ -143,8 +143,8 @@
                   var askImage = data.askImage;
                   if(askImage){
                     askImage = JSON.parse(askImage);
-                    if(askImage[0]){
-                      $(".pic-bg").css("background", 'url("'+askImage["0"]+'") center center / cover no-repeat');
+                    if(askImage[0].image){
+                      $(".pic-bg").css("background", 'url("'+askImage["0"].image+'") center center / cover no-repeat');
                     }
                   }
 

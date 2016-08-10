@@ -81,7 +81,7 @@
           $("#router5 .modal").addClass("modal-in");
           $("#router5 .model-tip").show();
       })
-      initLocation({
+      initLocation("edit",{
           success: function() {
             
           },

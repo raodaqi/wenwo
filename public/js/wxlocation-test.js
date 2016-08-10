@@ -1,4 +1,4 @@
-function initLocation(callback) {
+function initLocation(type,callback) {
     var title = WX_SHARE_TITLE ? WX_SHARE_TITLE:'「问我」 让经验帮你赚钱';
     var link = WX_SHARE_LINK ? WX_SHARE_LINK :'http://www.wenwobei.com';//链接按代换
     var imgUrl　=　(WX_SHARE_IMGURL && WX_SHARE_IMGURL != "/") ? WX_SHARE_IMGURL: 'http://www.wenwobei.com/img/logo.jpg';//链接按代换
@@ -51,6 +51,7 @@ function initLocation(callback) {
                 };
 
                 // 5.1 拍照、本地选图
+                if(type == "edit"){
                   var localId = '';
                   var localIds = [];
                   document.querySelector('#photo').onclick = function () {
@@ -99,6 +100,7 @@ function initLocation(callback) {
                       }
                     });
                   };
+                }
 
                 wx.onMenuShareAppMessage(shareData);
                 wx.onMenuShareTimeline(shareData);
