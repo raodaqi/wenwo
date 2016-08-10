@@ -347,8 +347,8 @@ router.post('/file_save', function(req, res, next) {
           time = myDate.getTime();
           // var headers = JSON.parse(httpResponse.headers);
           console.log(httpResponse.headers);
-          // var fileName =headers["content-dispostion"].split("=")[1];
-          // console.log(fileName);
+          var fileName =headers["content-disposition"].split("=")[1];
+          console.log(fileName);
           // //上传到七牛后保存的文件名
           // key = 'my-nodejs-logo.png';
 
@@ -374,10 +374,20 @@ router.post('/file_save', function(req, res, next) {
                 if(!err) {
                   // 上传成功， 处理返回值
                   console.log("上传成功");
-                  console.log(ret.hash, ret.key, ret.persistentId);       
+                  console.log(ret.hash, ret.key, ret.persistentId);   
+                  var result = {
+                    code : 200,
+                    data : ret,
+                    message : "success"
+                  }    
                 } else {
                   // 上传失败， 处理返回代码
                   console.log(err);
+                  var result = {
+                    code : 400,
+                    err  : err, 
+                    message : "error"
+                  } 
                 }
             });
           }

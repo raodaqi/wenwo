@@ -62,7 +62,7 @@ function initLocation(callback) {
                         // alert('已选择 ' + res.localIds.length + ' 张图片');
                         console.log(res);
                         alert(JSON.stringify(res));
-                        $(".photo-content").attr("scr",localId);
+                        $(".photo-content").attr("src",localId);
                         wx.uploadImage({
                             localId: localId, // 需要上传的图片的本地ID，由chooseImage接口获得
                             isShowProgressTips: 1, // 默认为1，显示进度提示
@@ -79,6 +79,10 @@ function initLocation(callback) {
                                   dataType: "json",
                                   success: function(result) {
                                       console.log(result);
+                                      if(result.code == 200){
+                                        alert(JSON.parse(result.data));
+                                      }
+                                      
                                   },
                                   error: function(error) {
                                     $.hidePreloader();
