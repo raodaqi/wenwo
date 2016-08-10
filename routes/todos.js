@@ -390,6 +390,7 @@ router.post('/file_save', function(req, res, next) {
                     message : "error"
                   } 
                 }
+                res.send(result);
             });
           }
 

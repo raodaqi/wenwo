@@ -1084,14 +1084,11 @@
               };
               askImage[0] = image;
               data.images = JSON.stringify(askImage);
-              alert(JSON.stringify(askImage));
-              alert(data.images);
             }
             timerNumber++;
             if(timerNumber >= 1){
               clearInterval(timer);
             }
-
           if (sendType == "edit") {
               data["ask_id"] = sendAskId;
               $.ajax({
