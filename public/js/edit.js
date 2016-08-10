@@ -1049,26 +1049,11 @@
               lat = lng;
               lng = change;
           }
-
-      timer = setInterval(function(){
-        var percent = $(".photo-content").attr("data-percent");
-        if(percent == "-1" || percent == "100" || percent == -1 || percent == 100){
-          clearInterval(timer);
-          var askImage = {};
-          if($(".photo-content").attr("data-href")){
-            askImage[0] = $(".photo-content").attr("data-href");
-            askImage = JSON.stringify(askImage);
-          }
-          timerNumber++;
-          if(timerNumber > 1){
-            clearInterval(timer);
-          }
           var data = {
               username: UserName,
               type: 1,
               tag: tag,
               reason: reason,
-              images:askImage,
               content_show: content_show,
               content_hide: 'no',
               position: askPosition,
@@ -1083,10 +1068,29 @@
           
           //屏蔽多次点击
           sendClick = 1;
+        if (sendType == "edit") {
+          $.showPreloader("正在编辑");
+        }else{
+          $.showPreloader("正在分享");
+        }
+        timer = setInterval(function(){
+          var percent = $(".photo-content").attr("data-percent");
+          if(percent == "-1" || percent == "100" || percent == -1 || percent == 100){
+            clearInterval(timer);
+            var askImage = [];
+            if($(".photo-content").attr("data-href")){
+              var image = {
+                image : $(".photo-content").attr("data-href")
+              };
+              askImage[0] = image;
+              data.images = JSON.stringify(askImage);
+            }
+            timerNumber++;
+            if(timerNumber >= 1){
+              clearInterval(timer);
+            }
 
           if (sendType == "edit") {
-              $.showPreloader("正在编辑");
-
               data["ask_id"] = sendAskId;
               $.ajax({
                   type: "POST",
@@ -1135,8 +1139,6 @@
                   }
               });
           } else {
-            $.showPreloader("正在分享");
-
               $.ajax({
                   type: "POST",
                   data: data,
