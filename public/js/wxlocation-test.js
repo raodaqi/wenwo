@@ -63,6 +63,9 @@ function initLocation(callback) {
                         console.log(res);
                         alert(JSON.stringify(res));
                         $(".photo-content").attr("src",localId);
+
+                        $(".photo-content").attr("data-percent","50");
+
                         wx.uploadImage({
                             localId: localId, // 需要上传的图片的本地ID，由chooseImage接口获得
                             isShowProgressTips: 1, // 默认为1，显示进度提示
@@ -80,13 +83,16 @@ function initLocation(callback) {
                                   success: function(result) {
                                       console.log(result);
                                       if(result.code == 200){
-                                        alert(JSON.parse(result.data));
-                                      }
-                                      
+                                        $(".photo-content").attr("data-href",result.data);
+                                        $(".photo-content").attr("data-percent","100");
+                                      }else{
+                                        $.toast("图片上传失败");
+                                        $(".photo-content").attr("data-percent","-1");
+                                      }   
                                   },
                                   error: function(error) {
-                                    $.hidePreloader();
-                                    $.alert("网络异常");
+                                    $.toast("网络异常");
+                                    $(".photo-content").attr("data-percent","-1");
                                   }
                               })
                             }

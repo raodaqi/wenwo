@@ -374,10 +374,11 @@ router.post('/file_save', function(req, res, next) {
                 if(!err) {
                   // 上传成功， 处理返回值
                   console.log("上传成功");
-                  console.log(ret.hash, ret.key, ret.persistentId);   
+                  // console.log(ret.hash, ret.key, ret.persistentId); 
+                  var url =  "http://o83np3eq2.bkt.clouddn.com/"+ret.key;
                   var result = {
                     code : 200,
-                    data : ret,
+                    data : url,
                     message : "success"
                   }    
                 } else {
