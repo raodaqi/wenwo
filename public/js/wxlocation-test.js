@@ -81,6 +81,7 @@ function initLocation(callback) {
                                   success: function(result) {
                                       console.log(result);
                                       if(result.code == 200){
+                                        alert(result.data);
                                         $(".photo-content").attr("data-href",result.data);
                                         $(".photo-content").attr("data-percent","100");
                                       }else{

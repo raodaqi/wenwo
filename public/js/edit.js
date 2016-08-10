@@ -1084,6 +1084,8 @@
               };
               askImage[0] = image;
               data.images = JSON.stringify(askImage);
+              console.log(JSON.stringify(askImage));
+              console.log(data.images);
             }
             timerNumber++;
             if(timerNumber >= 1){
