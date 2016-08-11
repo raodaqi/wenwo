@@ -769,8 +769,8 @@
                   var totalIncome = leaveTwoPoint(result.data.totalIncome);
                   var foodLikeListCount = result.data.foodLikeListCount;
                   // $("#me .pic-bg,#me .user-pic").attr("src", userHead);
-                  $("#me .user-pic").attr("src", localStorage.userHead);
-                  $("#me .pic-bg").css("background", 'url("'+localStorage.userHead+'") center center / cover no-repeat');
+                  $("#me .user-pic").attr("src", userHead);
+                  $("#me .pic-bg").css("background", 'url("'+userHead+'") center center / cover no-repeat');
                   $("#me .user-name").text(userShowName);
                   $("#me .list-li-like-num").text(foodLikeListCount);
                   $("#me .list-li-like-share,#me .my-ask .item-share").text(askListCount);
