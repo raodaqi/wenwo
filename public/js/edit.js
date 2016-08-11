@@ -329,6 +329,7 @@
           if (localStorage.editImage) {
             $(".photo-content").attr("data-href",localStorage.editImage);
             $(".photo-content").attr("data-percent","100");
+            $(".photo-content").attr("src",localStorage.editImage);
           }
 
           //初始化标签
@@ -502,6 +503,7 @@
             if(askImage[0].image){
               $(".photo-content").attr("data-href",askImage[0].image);
               $(".photo-content").attr("data-percent","100");
+              $(".photo-content").attr("src",askImage[0].image);
             }
           }
 
