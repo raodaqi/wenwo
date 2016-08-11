@@ -55,6 +55,7 @@ function initLocation(type,callback) {
                   var localId = '';
                   var localIds = [];
                   document.querySelector('#photo').onclick = function () {
+                    $(".photo-content").attr("data-percent","-1");
                     wx.chooseImage({
                       count: 1, // 默认9
                       success: function (res) {
@@ -84,6 +85,7 @@ function initLocation(type,callback) {
                                       if(result.code == 200){
                                         $(".photo-content").attr("data-href",result.data);
                                         $(".photo-content").attr("data-percent","100");
+                                        localStorage["editImage"] = result.data;
                                       }else{
                                         $.toast("图片上传失败");
                                         $(".photo-content").attr("data-percent","-1");

@@ -145,6 +145,7 @@
                     askImage = JSON.parse(askImage);
                     if(askImage[0].image){
                       $(".pic-bg").css("background", 'url("'+askImage["0"].image+'") center center / cover no-repeat');
+                      $(".bg-mask").hide();
                     }
                   }
 

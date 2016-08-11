@@ -325,6 +325,12 @@
       //初始化localStorage数据
       function initLocationData() {
 
+          //初始化image
+          if (localStorage.editImage) {
+            $(".photo-content").attr("data-href",localStorage.editImage);
+            $(".photo-content").attr("data-percent","100");
+          }
+
           //初始化标签
           console.log(localStorage.tag);
           if (localStorage.tag) {
@@ -486,7 +492,18 @@
               askPosition = data.askPosition,
               price = data.askPrice, //价格
               updatedAt = data.updatedAt, //分享时间
+              askImage  = data.askImage,  //分享图片
               createBy = data.createBy; //分享者
+
+
+          //初始化上传图片
+          if(askImage){
+            askImage = JSON.parse(askImage);
+            if(askImage[0].image){
+              $(".photo-content").attr("data-href",askImage[0].image);
+              $(".photo-content").attr("data-percent","100");
+            }
+          }
 
           //标签
           var tag = JSON.parse(askTagStr);
