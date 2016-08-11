@@ -966,7 +966,7 @@
   })
 
   //滚动图链接点击效果
-  $(".swiper-slide").on("click",function(){
+  $(".swiper-container").on("click",".swiper-slide",function(){
     var href =  $(this).attr("data-href");
     console.log(href);
     window.location.href = href;
