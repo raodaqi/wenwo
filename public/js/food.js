@@ -54,27 +54,28 @@
         }
     })
   }
-  getCarouselInfo({
-    success:function(result){
-        console.log(result);
-        var data = result.data;
-        var li = '';
-        for(var i = 0 ; i < data.length; i++){
-            li += '<div class="swiper-slide" data-href="'+data[i].carouselClickURL+'"><img src="'+data[i].carouselImage+'" alt=""></div>';
-        }
-        $(".swiper-wrapper").empty().append(li);
+  // getCarouselInfo({
+  //   success:function(result){
+  //       console.log(result);
+  //       var data = result.data;
+  //       var li = '';
+  //       for(var i = 0 ; i < data.length; i++){
+  //           li += '<div class="swiper-slide" data-href="'+data[i].carouselClickURL+'"><img src="'+data[i].carouselImage+'" alt=""></div>';
+  //       }
+  //       $(".swiper-wrapper").empty().append(li);
 
-        var config = {
-          loop                          : true,
-          autoplay                      : 7000,
-          autoplayDisableOnInteraction  : false
-        }
-        $(".swiper-container").swiper(config);
-    },
-    error:function(error){
-        console.log(error);
-    }
-  })
+  //       var config = {
+  //         spaceBetween                  : 10,
+  //         loop                          : true,
+  //         autoplay                      : 7000,
+  //         autoplayDisableOnInteraction  : false
+  //       }
+  //       $(".swiper-container").swiper(config);
+  //   },
+  //   error:function(error){
+  //       console.log(error);
+  //   }
+  // })
 
   // 添加'refresh'监听器
   $(document).on('refresh', '.pull-to-refresh-content', function(e) {
