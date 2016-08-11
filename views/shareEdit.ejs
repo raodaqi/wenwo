@@ -60,12 +60,42 @@
     margin-left: .3rem;
     cursor: pointer;
   }
+  .send-title,.desc{
+    margin:.5rem 0;
+  }
+  .send-title{
+    margin-top: 1rem;
+  }
+  .send-title-content,.desc-content{
+    padding:.3rem .4rem;
+    font-size: .6rem;
+    margin-left: .3rem;
+    width: 20rem;
+  }
+  .send-again{
+    background-color: #008be7;
+    width: 10rem;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    margin: 0 auto;
+    color: white;
+    border-radius: .5rem;
+    cursor: pointer;
+  }
 </style>
 </head>
 <body>
   <div class="send-content">
     <div>
         <script id="editor" type="text/plain" style="width:100%;height:25rem;"></script>
+    </div>
+    <div class="send-title">
+      <label>标题:</label>
+      <input class="send-title-content" type="text" value="">
+    </div>
+    <div class="desc">
+      <label>详情:</label>
+      <input class="desc-content" type="text" value="">
     </div>
     <div class="send">
       发布
@@ -74,7 +104,7 @@
   <div class="send-success">
     <div>发布成功</div>
     <div class="send-url"></div>
-    <!-- <div class="copy">复制</div> -->
+    <div class="send-again">再发一篇</div>
   </div>
 </body>
 <% include footer.ejs %>
@@ -85,16 +115,37 @@
     // window.clipboardData.setData("Text", $(".send-url").val());  
     // alert('复制成功！'); 
     copyToClipboard($(".send-url").text());
-  });  
+  }); 
+
+  $(".send-again").on("click",function(){
+    window.location.reload();
+  }) 
 
   $(".send").on("click",function(){
     var detail = UE.getEditor('editor').getContent();
+    var title = $(".send-title-content").val();
+    var desc  = $(".desc-content").val();
+
     console.log(detail.length);
     if(detail == '' || !detail){
       $.toast("内容不能为空");
-    }else{
+      return;
+    }
+    if(title == '' || !title){
+      $.toast("标题不能为空");
+      return;
+    }
+
+    if(desc == '' || !desc){
+      $.toast("详情不能为空");
+      return;
+    }
+
+    $.showPreloader("正在发布");
       var data = {
-        detail: detail
+        detail: detail,
+        title : title,
+        desc  : desc
       }
       $.ajax({
         type: "POST",
@@ -102,6 +153,7 @@
         dataType: "json",
         url: "/manage/edit",
         success: function(result) {
+          $.hidePreloader();
           if(result.code == 200){
             $.toast("发布成功");
             $(".send-content").hide();
@@ -112,11 +164,11 @@
           }
         },
         error:function(error){
+          $.hidePreloader();
           console.log(error);
           $.toast("服务器出错");
         }
       })
-    }
   })
 </script>
 </html>

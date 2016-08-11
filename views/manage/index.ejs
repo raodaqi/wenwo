@@ -342,6 +342,11 @@
     .red{
         color: #f74b46;
     }
+    .share-edit{
+        height: 36rem;
+        width: 100%;
+        border:0;
+    }
 </style>
 <body>
     <div class="wrap">
@@ -351,12 +356,12 @@
         <div>
             <div class="list side-bar">
                 <ul>
-                    <li class="send-bar side-bar-backcheck">轮播图管理</li>
-                    <li class="check-bar">审核信息</li>
-                    <li class="manage-bar">管理消息</li>
-                    <li class="tag-bar">标签管理</li>
-                    <li class="total-bar">提现管理</li>
-                    <li class="account-bar">帐号管理</li>
+                    <li class="send-bar side-bar-backcheck" id="send">轮播图管理</li>
+                    <li class="check-bar" id="check">图文发布管理</li>
+                    <li class="manage-bar" id="manage">管理消息</li>
+                    <li class="tag-bar" id="tag">标签管理</li>
+                    <li class="total-bar" id="total">提现管理</li>
+                    <li class="account-bar" id="account">帐号管理</li>
                 </ul>
             </div>
             <div class="list manage-content">
@@ -368,11 +373,7 @@
                 </div>
 
                 <div class="content-title check" style="display: none">
-                    <ul>
-                        <!--<li>234567893456789</li>-->
-                        <!--<li>234567893456789</li>-->
-                        <!--<li>234567893456789</li>-->
-                    </ul>
+                    <iframe src="/share/edit" class="share-edit" frameborder="0"></iframe>
                 </div>
                 <div class="content-title check-detail" style="display: none">
                     <div>
@@ -428,19 +429,11 @@
 
                 <div class="content-title total" style="display: none">
                     <ul>
-                        <!-- <li><span class="ask-id">456789adf</span><span class="del">X</span><span class="staus">已上架</span></li> -->
-                        <!--<li><span class="ask-id">456789adf</span><span class="del">X</span><span class="staus">已上架</span></li>-->
-                        <!--<li><span class="ask-id">456789adf</span><span class="del">X</span><span class="staus">已上架</span></li>-->
-                        <!--<li><span class="ask-id">456789adf</span><span class="del">X</span><span class="staus">已上架</span></li>-->
 
                     </ul>
                 </div>
                 <div class="content-title manage" style="display: none">
                     <ul>
-                        <!--<li><span class="ask-id">456789adf</span><span class="del">X</span><span class="staus">已上架</span></li>-->
-                        <!--<li><span class="ask-id">456789adf</span><span class="del">X</span><span class="staus">已上架</span></li>-->
-                        <!--<li><span class="ask-id">456789adf</span><span class="del">X</span><span class="staus">已上架</span></li>-->
-                        <!--<li><span class="ask-id">456789adf</span><span class="del">X</span><span class="staus">已上架</span></li>-->
 
                     </ul>
                 </div>
@@ -457,47 +450,6 @@
                         <div class="tag-list-content">
                             
                         </div>
-                        <!-- <li>
-                            <div class="tag-li-list">
-                                <div class="tag-tag">火锅</div>
-                            </div>
-                            <div class="tag-li-list">
-                                <div class="tag-type">美食,出行</div>
-                            </div>
-                            <div class="tag-li-list list-img img1">
-                                <img class="tag-img" src="/img/test.jpg" alt="">
-                            </div>
-                            <div class="tag-li-list list-img img2">
-                                <img class="tag-img" src="/img/test.jpg" alt="">
-                            </div>
-                            <div class="tag-li-list list-img img3">
-                                <img class="tag-img" src="/img/test.jpg" alt="">
-                            </div>
-                            <div class="tag-li-list list-img img4">
-                                <img class="tag-img" src="/img/test.jpg" alt="">
-                            </div>
-                        </li>
-
-                        <li>
-                            <div class="tag-li-list">
-                                <div class="tag-tag">火锅</div>
-                            </div>
-                            <div class="tag-li-list">
-                                <div class="tag-type">美食,出行</div>
-                            </div>
-                            <div class="tag-li-list list-img img1">
-                                <img class="tag-img" src="/img/test.jpg" alt="">
-                            </div>
-                            <div class="tag-li-list list-img img2">
-                                <img class="tag-img" src="/img/test.jpg" alt="">
-                            </div>
-                            <div class="tag-li-list list-img img3">
-                                <img class="tag-img" src="/img/test.jpg" alt="">
-                            </div>
-                            <div class="tag-li-list list-img img4">
-                                <img class="tag-img" src="/img/test.jpg" alt="">
-                            </div>
-                        </li> -->
                     </ul>
                 </div>
                 <div class="content-title account" style="display: none">
@@ -523,6 +475,15 @@
      <script type="text/javascript" src="/js/qiniu.min.js"></script>
     
     <script>
+        $(".list li").on("click",function(){
+            var  id = this.id;
+            console.log(id);
+            $(".content-title").hide();
+            $("."+id).show();
+            $(".list li").removeClass("side-bar-backcheck");
+            $(this).addClass("side-bar-backcheck");
+        })
+
         //初始化轮播图功能
         function sendCarouseQuest(url,type,data,callback){
             $.ajax({

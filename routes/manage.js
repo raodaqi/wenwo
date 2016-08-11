@@ -545,11 +545,34 @@ router.get('/apply', function(req, res, next) {
 
 router.post('/edit', function (req, res, next) {
     var detail = req.body.detail;
+    var title = req.body.title;
+    var desc = req.body.desc;
+
+    if(!title){
+        var result = {
+            code : 400,
+            message : '操作失败',
+            detail  : '标题不能为空'
+        };
+        res.send(result);
+        return;
+    }
+
+    if(!desc){
+        var result = {
+            code : 400,
+            message : '操作失败',
+            detail  : '详情不能为空'
+        };
+        res.send(result);
+        return ;
+    }
+
     if(!detail){
         var result = {
             code : 400,
             message : '操作失败',
-            detail  : '内容为空'
+            detail  : '内容不能为空'
         };
         res.send(result);
     }else{
@@ -559,7 +582,8 @@ router.post('/edit', function (req, res, next) {
       var share = new Share();
       // 设置名称
       share.set('detail',detail);
-      console.log(detail.length);
+      share.set('title',title);
+      share.set('desc',desc);
       share.save().then(function (todo) {
         var result = {
             code : 200,
