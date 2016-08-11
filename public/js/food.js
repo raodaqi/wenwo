@@ -21,6 +21,61 @@
           console.log(error);
       }
   });
+  //初始化轮播图功能
+  function sendCarouseQuest(url,type,data,callback){
+    $.ajax({
+      type: type,
+      url: url,
+      data: data,
+      dataType: "json",
+      success:function(result){
+        if(result.code == 200){
+          callback.success(result);
+        }else{
+          callback.error(result);
+        }
+      },
+      error:function(error){
+        $.toast("服务器出错");
+        callback.error(error);
+      }
+    })
+  }
+  function getCarouselInfo(callback){
+    var url = "/carousel/getcarouselinfo",
+        type = "GET",
+        data = {};
+    sendCarouseQuest(url,type,data,{
+        success:function(result){
+            callback.success(result);
+        },
+        error:function(error){
+            callback.error(error);
+        }
+    })
+  }
+  getCarouselInfo({
+    success:function(result){
+        console.log(result);
+        var data = result.data;
+        var li = '';
+        for(var i = 0 ; i < data.length; i++){
+            li += '<div class="swiper-slide" data-href="'+data[i].carouselClickURL+'"><img src="'+data[i].carouselImage+'" alt=""></div>';
+        }
+        $(".swiper-wrapper").empty().append(li);
+
+        var config = {
+          loop                          : true,
+          autoplay                      : 7000,
+          autoplayDisableOnInteraction  : false
+        }
+        $(".swiper-container").swiper(config);
+    },
+    error:function(error){
+        console.log(error);
+    }
+  })
+
   // 添加'refresh'监听器
   $(document).on('refresh', '.pull-to-refresh-content', function(e) {
       // 刷新主页

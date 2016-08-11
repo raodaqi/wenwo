@@ -108,7 +108,7 @@
         background: #f8bd38 !important;
         color: white;
     }
-    .btn_pass, .btn_not, .btn_send,.btn_down,.btn_edit {
+    .btn_pass, .btn_not, .btn_send,.btn_down,.btn_edit,.btn_add,.btn_save,.btn_delete{
         margin: 0;
         margin-top: 20px;
         font-size: 16px;
@@ -119,6 +119,17 @@
         height: 40px;
         background: #f8bd38;
         border: none;
+    }
+    .btn_add{
+        background: #6ed56c;
+        margin-right: .5rem; 
+    }
+    .btn_save{
+        background-color: #008be7;
+    }
+    .btn_delete{
+        background-color: #f74b46;
+        margin-left: .5rem; 
     }
     textarea {
         display: block;
@@ -251,9 +262,10 @@
         font-size: 18px;
 
     }
-    .tag-img,.tag-tag,.tag-type{
+    .tag-img,.tag-tag,.tag-type,.add-img{
         width: 80px;
         height: 80px;
+        cursor: pointer;
     }
     .tag-tag,.tag-type{
         width: 200px;
@@ -295,14 +307,46 @@
         margin:20px 0 10px 0;
     }
     .send-content-li{
-        padding-bottom: 30px;
+        padding-bottom: 1.5rem;
         border-bottom: 1px solid #ccc;
+        margin-top: 1rem;
+    }
+    .send-url input{
+        width: 25rem;
+    }
+    .carouse-num{
+        width: 2.5rem;
+        text-align: center;
+    }
+    .carousel-content-tip{
+        color: #008be7;
+        background: #f4faff;
+        /*border-color: #4eb9ff;*/
+        padding:.6rem;
+        border-left: .5rem solid #4eb9ff;
+        font-size: .72rem;
+    }
+    .carouse-show{
+        margin-left: .5rem;
+        margin-right: .3rem;
+        color: #000000;
+        font-size: .82rem;
+    }
+    .send-name{
+        margin: .3rem 0;
+    }
+    .preloader-modal{
+        position: fixed;
+        bottom:0;
+    }
+    .red{
+        color: #f74b46;
     }
 </style>
 <body>
     <div class="wrap">
         <div class="title-bar">
-            <div class="logo">WenWo</div>
+            <div class="logo" id="logo">WenWo</div>
         </div>
         <div>
             <div class="list side-bar">
@@ -317,28 +361,10 @@
             </div>
             <div class="list manage-content">
                 <div class="content-title send" style="display: block">
+                <div class="carousel-content-tip">图片，是否显示按钮点击后不会自动保存，需要点击保存才会保存，图片最好先压缩下才上传。<a target="_black" href="https://tinypng.com" class="red">图片压缩网站</a></div>
                     <div class="send-content-ul">
-                        <div class="send-content-li" data-num="1">
-                            <div class="send-num" data-num="1">第1张图：</div>
-                            <div class="send-img">
-                             <label> 轮播图:</label><img class="tag-img" data-type="0" src="/img/add.jpg" alt="">
-                            </div>
-                            <div class="send-url">
-                                链接：<input type="text">
-                            </div>
-                        </div>
-
-                        <div class="send-content-li" data-num="2">
-                            <div class="send-num" data-num="1">第2张图：</div>
-                            <div class="send-img">
-                             <label> 轮播图:</label><img class="tag-img" data-type="0" src="/img/add.jpg" alt="">
-                            </div>
-                            <div class="send-url">
-                                链接：<input type="text">
-                            </div>
-                        </div>
                     </div>
-                    <button class='btn_send'>发布</button>
+                    <button class='btn_add'>添加</button>
                 </div>
 
                 <div class="content-title check" style="display: none">
@@ -493,10 +519,145 @@
 
      <script type="text/javascript" src="/js/sm.min.js"></script>
      <script type="text/javascript" src="/js/common.js"></script>
-
      <script type="text/javascript" src="/js/plupload.full.min.js"></script>
      <script type="text/javascript" src="/js/qiniu.min.js"></script>
+    
+    <script>
+        //初始化轮播图功能
+        function sendCarouseQuest(url,type,data,callback){
+            $.ajax({
+              type: type,
+              url: url,
+              data: data,
+              dataType: "json",
+              success:function(result){
+                if(result.code == 200){
+                    callback.success(result);
+                }else{
+                    callback.error(result);
+                }
+              },
+              error:function(error){
+                $.toast("服务器出错");
+                callback.error(error);
+              }
+          })
+        }
+        function getCarouselInfo(callback){
+            var url = "/carousel/getcarouselinfo",
+                type = "GET",
+                data = {
+                    type : "all"
+                };
+            sendCarouseQuest(url,type,data,{
+                success:function(result){
+                    callback.success(result);
+                },
+                error:function(error){
+                    callback.error(error);
+                }
+            })
+        }
 
+        function deleteCarouselInfo(id,callback){
+            var url = "/carousel/delcarouselinfo",
+                type = "POST",
+                data = {
+                    carousel_id : id
+                };
+            sendCarouseQuest(url,type,data,{
+                success:function(result){
+                    callback.success(result);
+                },
+                error:function(error){
+                    callback.error(error);
+                }
+            })
+        }
+
+        function addCarouselInfo(data,callback){
+            var url = "/carousel/addcarouselinfo",
+                type = "POST",
+                data = data;
+            sendCarouseQuest(url,type,data,{
+                success:function(result){
+                    callback.success(result);
+                },
+                error:function(error){
+                    callback.error(error);
+                }
+            })
+        }
+
+        function editCarouselInfo(data,callback){
+            var url = "/carousel/editcarouselinfo",
+                type = "POST",
+                data = data;
+            sendCarouseQuest(url,type,data,{
+                success:function(result){
+                    callback.success(result);
+                },
+                error:function(error){
+                    callback.error(error);
+                }
+            })
+        }
+
+        getCarouselInfo({
+            success:function(result){
+                console.log(result);
+                var data = result.data;
+                var li = '';
+                for(var i = 0 ; i < data.length; i++){
+                    li += '<div class="send-content-li" data-num="1" data-id="'+data[i].objectId+'" id="'+data[i].objectId+'"><div class="send-img"><label> 轮播图:</label><img class="tag-img" data-type="0" src="'+data[i].carouselImage+'" alt=""></div><div class="send-name">名字：<input class="name" type="text" value="'+(data[i].carouselName?data[i].carouselName:"")+'"></div><div class="send-url">链接：<input type="text" value="'+data[i].carouselClickURL+'"></div><button class="btn_save">保存</button><button class="btn_delete">删除</button><label class="carouse-show">是否显示</label><label class="label-switch"><input type="checkbox" '+(data[i].show ? "checked='true'" : "")+'><div class="checkbox"></div></label></div>';
+                }
+                $(".send-content-ul").empty().append(li);
+            },
+            error:function(error){
+                console.log(error);
+            }
+        })
+
+        $(".btn_add").on("click",function(){
+            var length = $(".send-content-li").length;
+            li = '<div class="send-content-li" data-num="1" data-type="add"><div class="send-img"><label> 轮播图:</label><img class="tag-img" data-type="0" src="/img/add.jpg" alt=""></div><div class="send-name">名字：<input class="name" type="text" value=""></div><div class="send-url">链接：<input type="text" value=""></div><button class="btn_save">保存</button><button class="btn_delete">删除</button><label class="carouse-show">是否显示</label><label class="label-switch"><input type="checkbox" checked="true"><div class="checkbox"></div></label></div>';
+            $(".send-content-ul").append(li);
+        })
+
+        $(".send-content-ul").on("click",".btn_delete",function(){
+            var id = $(this).parent().attr("data-id");
+            var $parent = $(this).parent();
+            console.log(id);
+            if(!id){
+                $parent.remove();
+            }else{
+                //发起删除请求
+                $.confirm('你确定要删除这条数据吗?', '温馨提示',
+                    function () {
+                      $.showPreloader("正在删除数据");
+                      deleteCarouselInfo(id,{
+                        success: function(result){
+                            $.hidePreloader();
+                            if(result.code == 200){
+                                $.toast("删除成功");
+                                $parent.remove();
+                            }else{
+                                $.toast("删除失败");
+                            }
+                        },
+                        error:function(error){
+                            $.toast("服务器出错");
+                        }
+                      })
+                    },
+                    function () {
+
+                    }
+                );
+            }
+        })
+
+    </script>
 
      <script>
         var TAGID = '',
@@ -509,20 +670,22 @@
             runtimes: 'html5,flash,html4',    //上传模式,依次退化
             browse_button: 'dropbox',       //上传选择的点选按钮，**必需**
             uptoken_url: '/manage/token',
-
+            filters: {
+              max_file_size : '10mb',
+              mime_types : [ //只允许上传图片和zip文件
+                { title : "Image files", extensions : "JPEG,jpg,gif,png" }
+              ]
+            },
             domain: 'http://qiniu-plupload.qiniudn.com/',
                 //bucket 域名，下载资源时用到，**必需**
-            container: 'multiple',           //上传区域DOM ID，默认是browser_button的父元素，
             max_file_size: '2048mb',           //最大文件体积限制
             flash_swf_url: 'js/plupload/Moxie.swf',  //引入flash,相对路径
             max_retries: 3,                   //上传失败最大重试次数
-            dragdrop: true,                   //开启可拖曳上传
-            drop_element: 'create-list-logo',        //拖曳上传区域元素的ID，拖曳文件或文件夹后可触发上传
             chunk_size: '4mb',                //分块上传时，每片的体积
-            auto_start: false,                 //选择文件后自动上传，若关闭需要自己绑定事件触发上传
+            auto_start: true,                 //选择文件后自动上传，若关闭需要自己绑定事件触发上传
             init: {
                 'FilesAdded': function(up, files) {
-                    $(".app-logo-loading").show();
+                    $.showPreloader("正在上传");
                     plupload.each(files, function(file) {
                        var myDate=new Date();
                        time = myDate.getTime();
@@ -537,11 +700,9 @@
                         }
                        }
                        console.log($TAG);
-                       previewImage(files[0],function(imgsrc){
-                            $TAG.attr("src",imgsrc);
-                            uploader.start();
-                              // $(".app-logo-loading").hide();
-                        })
+                       // previewImage(files[0],function(imgsrc){
+                       //      $TAG.attr("src",imgsrc);
+                       //  })
                     });
                 },
                 'BeforeUpload': function(up, file) {
@@ -550,43 +711,17 @@
                 'UploadProgress': function(up, file) {
                        // 每个文件上传时,处理相关的事情
                        // $(".squre").text(file.percent+"%");
-                       $.showPreloader("正在提交");
+                       $(".modal-title").text("已上传"+file.percent+"%");
                        console.log(file.percent);
                        // console.log(up);
                 },
                 'FileUploaded': function(up, file, info) {
                        console.log(info);
                        var res = JSON.parse(info);
-                       var sourceLink = "http://o83np3eq2.bkt.clouddn.com/" + res.key; //获取上传成功后的文件的Url
+                       var sourceLink = "http://o83np3eq2.bkt.clouddn.com/" + res.key; //
                        console.log(sourceLink);
-                       var data = {
-                          type      : TAGLEAVE,
-                          level     : TAGTYPE,
-                          tag_name  : TAGNAME,
-                          url       : sourceLink
-                       }
-                       $.ajax({
-                          type : "POST",
-                          data: data,
-                          dataType: "json",
-                          url : "ask/edittag",
-                          success : function(result){
-                            $.hidePreloader();
-                            if(result.code == 200){
-                                $.toast("操作成功");
-                                console.log(result);
-                            }else{
-                                $.toast(result.message);
-                            }
-                            
-                          },
-                          error:function(error){
-                            $.hidePreloader();
-                            $.toast("网络出错");
-                            console.log(error);
-                          }
-                      });
-
+                       $.hidePreloader();
+                       $TAG.attr("src",sourceLink);
                 },
                 'Error': function(up, err, errTip) {
                        //上传出错时,处理相关的事情
@@ -605,6 +740,179 @@
                 }
               }
           });
+
+        $(".send-content-ul").on("click",".tag-img",function(){
+            $TAG = $(this);
+            $("#multiple,#dropbox").click();
+            // uploader.start();
+        })
+
+        $(".send-content-ul").on("click",".btn_save",function(){
+            //判断是否上传了图片
+            var img = $(this).parent().find(".tag-img").attr("src");
+            var url = $(this).parent().find(".send-url input").val();
+            var name = $(this).parent().find(".send-name input").val();
+            var ifAdd = $(this).parent().attr("data-type");
+            var show = $(this).parent().find(".label-switch input").prop("checked") ? 1 : 0;
+            var id = $(this).parent().attr("data-id");
+            show  = parseInt(show);
+            if(img == "/img/add.jpg"){
+                $.toast("图片不能为空");
+                return ;
+            }
+            if(!url){
+                $.toast("链接不能为空");
+                return ;
+            }
+            if(ifAdd == "add"){
+                $.showPreloader("正在添加");
+            }else{
+                $.showPreloader("正在更改");
+            }
+            //新添加
+            var data = {
+                name     : name,
+                clickURL : url,
+                image    : img,
+                show     : show
+            }
+            if(ifAdd == "add"){
+                addCarouselInfo(data,{
+                    success:function(result){
+                        $.hidePreloader();
+                        if(result.code == 200){
+                            $.toast("添加成功");
+                            console.log(result);
+                        }else{
+                            $.toast("添加失败");
+                        }
+                    },
+                    error:function(error){
+                        $.hidePreloader();
+                        $.toast("服务器出错");
+                    }
+                })
+            }else{
+                //编辑
+                data.id = id
+                editCarouselInfo(data,{
+                    success:function(result){
+                        $.hidePreloader();
+                        if(result.code == 200){
+                            $.toast("更改成功");
+                        }else{
+                            $.toast("更改失败");
+                        }
+                    },
+                    error:function(error){
+                        $.toast("服务器出错");
+                    }
+                })
+            }
+
+        })
+
+
+        // var uploader = Qiniu.uploader({
+        //     runtimes: 'html5,flash,html4',    //上传模式,依次退化
+        //     browse_button: 'dropbox',       //上传选择的点选按钮，**必需**
+        //     uptoken_url: '/manage/token',
+
+        //     domain: 'http://qiniu-plupload.qiniudn.com/',
+        //         //bucket 域名，下载资源时用到，**必需**
+        //     container: 'multiple',           //上传区域DOM ID，默认是browser_button的父元素，
+        //     max_file_size: '2048mb',           //最大文件体积限制
+        //     flash_swf_url: 'js/plupload/Moxie.swf',  //引入flash,相对路径
+        //     max_retries: 3,                   //上传失败最大重试次数
+        //     dragdrop: true,                   //开启可拖曳上传
+        //     drop_element: 'create-list-logo',        //拖曳上传区域元素的ID，拖曳文件或文件夹后可触发上传
+        //     chunk_size: '4mb',                //分块上传时，每片的体积
+        //     auto_start: false,                 //选择文件后自动上传，若关闭需要自己绑定事件触发上传
+        //     init: {
+        //         'FilesAdded': function(up, files) {
+        //             $(".app-logo-loading").show();
+        //             plupload.each(files, function(file) {
+        //                var myDate=new Date();
+        //                time = myDate.getTime();
+        //                fileName = files[0].name;
+        //                var name = files[0].name;
+
+        //                fileName = "wenwo/"+time+"/"+fileName;
+
+        //                if(up.files.length > 1){
+        //                 for(var i = 0; i < up.files.length - 1;i++){
+        //                   up.removeFile(up.files[i].id);
+        //                 }
+        //                }
+        //                console.log($TAG);
+        //                previewImage(files[0],function(imgsrc){
+        //                     $TAG.attr("src",imgsrc);
+        //                     uploader.start();
+        //                       // $(".app-logo-loading").hide();
+        //                 })
+        //             });
+        //         },
+        //         'BeforeUpload': function(up, file) {
+        //                // 每个文件上传前,处理相关的事情
+        //         },
+        //         'UploadProgress': function(up, file) {
+        //                // 每个文件上传时,处理相关的事情
+        //                // $(".squre").text(file.percent+"%");
+        //                $.showPreloader("正在提交");
+        //                console.log(file.percent);
+        //                // console.log(up);
+        //         },
+        //         'FileUploaded': function(up, file, info) {
+        //                console.log(info);
+        //                var res = JSON.parse(info);
+        //                var sourceLink = "http://o83np3eq2.bkt.clouddn.com/" + res.key; //获取上传成功后的文件的Url
+        //                console.log(sourceLink);
+        //                var data = {
+        //                   type      : TAGLEAVE,
+        //                   level     : TAGTYPE,
+        //                   tag_name  : TAGNAME,
+        //                   url       : sourceLink
+        //                }
+        //                $.ajax({
+        //                   type : "POST",
+        //                   data: data,
+        //                   dataType: "json",
+        //                   url : "ask/edittag",
+        //                   success : function(result){
+        //                     $.hidePreloader();
+        //                     if(result.code == 200){
+        //                         $.toast("操作成功");
+        //                         console.log(result);
+        //                     }else{
+        //                         $.toast(result.message);
+        //                     }
+                            
+        //                   },
+        //                   error:function(error){
+        //                     $.hidePreloader();
+        //                     $.toast("网络出错");
+        //                     console.log(error);
+        //                   }
+        //               });
+
+        //         },
+        //         'Error': function(up, err, errTip) {
+        //                //上传出错时,处理相关的事情
+        //                console.log(err);
+        //         },
+        //         'UploadComplete': function() {
+        //                //队列文件处理完毕后,处理相关的事情
+        //         },
+        //         'Key': function(up, file) {
+        //             // 若想在前端对每个文件的key进行个性化处理，可以配置该函数
+        //             // 该配置必须要在 unique_names: false , save_key: false 时才生效
+        //             var key = "";
+        //             key = fileName;
+        //             // do something with key here
+        //             return key
+        //         }
+        //       }
+        //   });
 
       //plupload中为我们提供了mOxie对象
       //有关mOxie的介绍和说明请看：https://github.com/moxiecode/moxie/wiki/API
@@ -726,696 +1034,6 @@
         })(Zepto);
      </script>
     <script>
-    window.onload = function(){
-        AMap.plugin(['AMap.ToolBar','AMap.Scale'],function(){
-            var toolBar = new AMap.ToolBar({
-                offset: new AMap.Pixel(10, 10)
-              });
-            var scale = new AMap.Scale({
-              offset: new AMap.Pixel(-5, 7)
-            });
-            map.addControl(toolBar);
-            map.addControl(scale);
-        });
-
-        $.hidePreloader();
-    }
-
-
-  //加载二级标签
-  function showTag(){
-    var data = {
-
-    };
-     $.ajax({
-        type: "get",
-        url: '/ask/getalltag',
-        data: data,
-        dataType: "json",
-        success:function(taglist){
-            console.log(taglist);
-            var str = '<li><div class="tag-li-list"><div class="tag-tag">火锅</div></div><div class="tag-li-list"><div class="tag-type">美食,出行</div></div><div class="tag-li-list list-img img1"><img class="tag-img" src="/img/test.jpg" alt=""></div><div class="tag-li-list list-img img2"><img class="tag-img" src="/img/test.jpg" alt=""></div><div class="tag-li-list list-img img3"><img class="tag-img" src="/img/test.jpg" alt=""></div><div class="tag-li-list list-img img4"><img class="tag-img" src="/img/test.jpg" alt=""></div></li>';
-            if(taglist.code == 200){
-                var list = '';
-                for(var i = 0; i < taglist.data.length; i++){
-                    var tagUrl = taglist.data[i].tagUrl ? taglist.data[i].tagUrl : "/img/add.jpg";
-                    var tagUrl1 = taglist.data[i].tagUrl1 ? taglist.data[i].tagUrl1 : "/img/add.jpg";
-                    var tagUrl2 = taglist.data[i].tagUrl2 ? taglist.data[i].tagUrl2 : "/img/add.jpg";
-                    var tagUrl3 = taglist.data[i].tagUrl3 ? taglist.data[i].tagUrl3 : "/img/add.jpg";
-                    // if(!taglist.data[i].tagUrl){
-                    //     tagUrl
-                    // }
-                    var type = taglist.data[i].tagOrderby;
-                    var tagType = type;
-                    console.log(type);
-                    type = type.split(",")
-                    var typeName = '';
-                    if(type.length == 1){
-                        typeName = formatType(type[0]);
-                    }else{
-                        typeName = formatType(type[0]) + ','+ formatType(type[1]);
-                    }
-                    list += '<li data-id="'+taglist.data[i].objectId+'" id="id'+taglist.data[i].objectId+'"><div class="tag-li-list"><div class="tag-tag">'+taglist.data[i].tagName+'</div></div><div class="tag-li-list"><div class="tag-type" data-type="'+tagType+'">'+typeName+'</div></div><div class="tag-li-list list-img img1"><img class="tag-img" data-type="0" src="'+tagUrl+'" alt=""></div><div class="tag-li-list list-img img2"><img class="tag-img" data-type="1" src="'+tagUrl1+'" alt=""></div><div class="tag-li-list list-img img3"><img class="tag-img" data-type="2" src="'+tagUrl2+'" alt=""></div><div class="tag-li-list list-img img4"><img class="tag-img" data-type="3" src="'+tagUrl3+'" alt=""></div></li>';
-                }
-                $(".tag-list-content").append(list);
-            }
-            
-        },
-        error:function(error){
-            console.log(error);
-        },
-    });
-  }
-    showTag();
-
-    //上传更改图片
-    $(".tag-list-content").on("click",".tag-img",function(){
-        var id = $(this).parent().parent("li").attr("data-id");
-        var type = $(this).attr("data-type");
-        var name = $("#id"+id+" .tag-tag").text();
-        $TAG = $(this);
-        TAGID = id;
-        TAGTYPE = type;
-        TAGLEAVE = $("#id"+id+" .tag-type").attr("data-type");
-        TAGNAME = name;
-        console.log(id);
-        console.log(name);
-        $("#multiple,#dropbox").click();
-        uploader.start();
-
-    })
-
-  //在输入框内添加标签
-    $(".input-edit").on("input change",function(){
-      console.log($(this).val());
-      var text = $(this).val();
-      if(text.indexOf(";")!=-1 || text.indexOf("；")!=-1 || text.indexOf(",")!=-1 || text.indexOf("，")!=-1){
-        var text = text.substr(0,text.length-1);
-        $(".ww-typeHelper-input").val(text);
-        
-        var len = GetLength(text);
-        console.log(len);
-        if(len > 10){
-          $.toast("标签字数过多");
-          return;
-        }
-        var tagNum = $(".tag-content .type-item").length;
-        if(tagNum >= 3){
-          $.toast("最多只能选择三个二级标签");
-          return;
-        }
-
-        console.log(text);
-        var span = '<span class="type-item">'+text+'</span>';
-        // $("this").before(span);
-        $(".ww-typeHelper-left").before(span);
-        $(this).val('');
-        $(".tag-content").append(span);
-      }
-    })
-
-    //点击二级标签删除主页二级标签
-    $(".tag-content").on("click",".type-item",function(){
-
-      $(this).remove();
-      var $_this = $(this);
-      var span = '<span class="type-item">'+ $(this).text()+'</span>';
-      $(".tag-li").append(span);
-      $.each($("#tag-content .type-item"),function(i,v){
-        console.log($(v).text());
-        if($(v).text() == $_this.text()){
-          $(v).remove();
-        }
-      })
-
-    })
-
-  //详情内容隐藏
-    function deShow(text){
-      var str = {};
-      str = text.split("##");
-      var show = '';
-      var hidden = '';
-      var detail = ''
-      for(var i = 0; i < str.length; i++){
-        if(i%2){
-          var starLen = ''
-          for(var j = 0; j < str[i].length; j++){
-            starLen += '*';
-          }
-          detail += '<span class="hidden-text">'+starLen+'</span>';
-        }else{
-          detail += str[i];
-        }
-      }
-      $(".de-show").empty();
-      $(".de-show").append(detail);
-    }
-
-  //详情输入后显示到主页
-    $("#dedit-detail").on("input change",function(){
-      var text = $("#detail").val();
-
-      //显示到主页
-      $("#detail-content .card-content-inner").text(text);
-      deShow(text);
-    })
-
-    $(".button-start,.button-end").on("click",function(){
-      // var text = $("#detail").val();
-      // $("#detail").val(text+"##");
-      // $("#detail-content .card-content-inner").text($("#detail").val());
-      // localStorage["detail"] = $("#detail").val();
-      $("#detail").insertAtCousor("##");
-      var text = $("#detail").val();
-      $("#detail-content .card-content-inner").text(text);
-      deShow(text);
-    })
-
-    // reason();
-    // function reason(){
-    //   var  detail = $("#hidden-content").val();
-    //     console.log(detail);
-
-    //   //设置描述
-    //   var hidden = '<span class="hidden-text">***</span>';
-    //   str = detail.split("##");
-    //   var detailContent = '';
-    //   for(var i = 0; i < str.length; i++){
-    //     if(i%2){
-    //       detailContent += str[i];
-    //     }else{
-    //       detailContent += str[i]+hidden;
-    //     }
-    //   }
-    //   $("#hidden-content").empty();
-    //   $("#show-content").append(detailContent);
-
-      // console.log(localStorage.detail);
-      // if(localStorage.detail){
-      //   $("#detail").val(localStorage.detail);
-
-      //   var str = {};
-      //   str = localStorage.detail.split("##");
-      //   var show = '';
-      //   var hidden = '';
-      //   var detail = ''
-      //   for(var i = 0; i < str.length; i++){
-      //     if(i%2){
-      //       var starLen = ''
-      //       for(var j = 0; j < str[i].length; j++){
-      //         starLen += '*';
-      //       }
-      //       detail += '<span class="hidden-text">'+starLen+'</span>';
-      //     }else{
-      //       detail += str[i];
-      //     }
-      //   }
-      //   $(".de-show").empty();
-      //   $(".de-show").append(detail);
-
-      //   $("#detail-content .card-content-inner").text(localStorage.detail);
-      // }
-
-
-
-    //    function getHideText(){
-    //   var text = $("#detail").val();
-    //   // console.log(text.indexOf("##"));
-    //   var str = {};
-    //   str = text.split("##");
-    //   var show = '';
-    //   var hidden = '';
-    //   for(var i = 0; i < str.length; i++){
-    //     if(i%2){
-    //       hidden += str[i]+"##";
-    //     }else{
-    //       if( i == str.length-1){
-    //         show += str[i];
-    //       }else{
-    //         show += str[i]+"##";
-    //       }
-          
-    //     }
-    //   }
-    //   var textDetail = {
-    //     show:show,
-    //     hidden:hidden
-    //   }
-    //   return(textDetail);
-    // }
-
-    //详情输入后显示到主页
-    $("#detail").on("input change",function(){
-      var strs = $("#detail").val();
-      var str =  strs.split("##");
-      var show = '';
-        var hidden = '';
-        var detail = ''
-        for(var i = 0; i < str.length; i++){
-          if(i%2){
-            var starLen = ''
-            for(var j = 0; j < str[i].length; j++){
-              starLen += '*';
-            }
-            detail += '<span class="hidden-text">'+starLen+'</span>';
-          }else{
-            detail += str[i];
-          }
-        }
-        $(".de-show").empty();
-        $(".de-show").append(detail);
-      // console.log("aax1");
-      // var str = getHideText().show;
-      // console.log(str);
-      // $(".de-show").append(str);
-})
-
-
-
-    var marker;
-    var map, geolocation;
-    //加载地图，调用浏览器定位服务
-    map = new AMap.Map('container', {
-        resizeEnable: true,
-        zoom:17
-    });
-    map.plugin('AMap.Geolocation', function() {
-        geolocation = new AMap.Geolocation({
-            enableHighAccuracy: true,//是否使用高精度定位，默认:true
-            timeout: 10000,          //超过10秒后停止定位，默认：无穷大
-            buttonDom:'<div class="geolocation-position"><img src="/img/position.png"></div>',
-            buttonOffset: new AMap.Pixel(20, 25),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
-            zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
-            buttonPosition:'LB'
-        });
-        map.addControl(geolocation);
-        geolocation.getCurrentPosition();
-        AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
-        AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
-    });
-    //解析定位结果
-    function onComplete(data) {
-        var str=['定位成功'];
-        str.push('经度：' + data.position.getLng());
-        str.push('纬度：' + data.position.getLat());
-
-        // marker = new AMap.Marker({
-        //     map : map,
-        //     position: [data.position.getLng(),data.position.getLat()],
-        //     draggable: true,
-        //     cursor: 'move',
-        //     raiseOnDrag: true,
-        //     clickable:true
-        // });
-        // marker.setMap(map);
-
-        str.push('精度：' + data.accuracy + ' 米');
-        str.push('是否经过偏移：' + (data.isConverted ? '是' : '否'));
-        console.log("定位成功");
-    }
-    //解析定位错误信息
-    function onError(data) {
-        
-    }
-    //点击标注
-    map.on('click', function(e) {
-
-      //clear all markers
-      map.clearMap();
-      // mapShow.clearMap();
-      lnglatXY = [e.lnglat.getLng(), e.lnglat.getLat()]; //已知点坐标
-      getAddress(lnglatXY,{
-        success:function(address){
-          var detail = address.formattedAddress;
-          // var address = {
-          //   province : address.addressComponent.province,
-          //   city     : address.addressComponent.city,
-          //   district : address.addressComponent.district
-          // }
-          var address = {
-              province : address.addressComponent.province,
-              city     : address.addressComponent.city,
-              district : address.addressComponent.district,
-              township : address.addressComponent.township
-            }
-          // var address = JSON.stringify(address);
-          console.log(address);
-          var strs = address.province+"-"+address.city+"-"+address.district+"-"+address.township;
-          console.log(strs);
-
-          // $(".place").empty();
-          // $(".place").append(strs);
-
-          // detail = detail.replace(address[0]+address[1]+address[2]+address[3],"");
-          var replace = ""+address.province+address.city+address.district+address.township+"";
-          detail = detail.replace(replace,"");
-          address.detail = detail;
-          $(".place").empty();
-          $(".place").append(replace+detail);
-
-          var address = JSON.stringify(address);
-          // $("#address-content .item-inner").attr("data-address",address);
-          // $("#address-content .item-inner").text(detail);
-          $(".address-content").attr("data-address",address);
-        }
-      });
-
-      console.log('您在[ '+e.lnglat.getLng()+','+e.lnglat.getLat()+' ]的位置点击了地图！');
-        // alert('您在[ '+e.lnglat.getLng()+','+e.lnglat.getLat()+' ]的位置点击了地图！');
-      var icon = new AMap.Icon({
-          // image : 'http://vdata.amap.com/icons/b18/1/2.png',//24px*24px
-          //icon可缺省，缺省时为默认的蓝色水滴图标，
-          // size : new AMap.Size(24,24)
-      });
-      marker = new AMap.Marker({
-        icon : icon,//24px*24px
-        map : map,
-        position: [e.lnglat.getLng(),e.lnglat.getLat()],
-        draggable: true,
-        cursor: 'move',
-        raiseOnDrag: true,
-        clickable:true
-      });
-      localStorage["lng"] = e.lnglat.getLng();
-      localStorage["lat"] = e.lnglat.getLat();
-
-      $("#container").attr("data-lng",e.lnglat.getLng());
-      $("#container").attr("data-lat",e.lnglat.getLat());
-      marker.setMap(map);
-      // markerShow.setMap(mapShow);
-    // });
-
-    if(marker){
-      //拖动标注后回调的坐标
-      console.log("1234578");
-       marker.on("dragend",function(){
-        console.log(this.getPosition());
-        var lat = this.getPosition().lat;
-        var lng = this.getPosition().lng;
-        $("#container").attr("data-lng",lng);
-        $("#container").attr("data-lat",lat);
-
-        localStorage["lng"] = lng;
-        localStorage["lat"] = lat;
-
-        // mapShow.clearMap();
-        // var markerShow = new AMap.Marker({
-        //   icon : icon,//24px*24px
-        //   map : mapShow,
-        //   position: [lng,lat],
-        //   draggable: true,
-        //   cursor: 'move',
-        //   raiseOnDrag: true,
-        //   clickable:true
-        // });
-        var lnglatXY = [lng,lat];
-        console.log(lnglatXY);
-        getAddress(lnglatXY,{
-          success:function(address){
-            var detail = address.formattedAddress;
-            // var address = {
-            //   province : address.addressComponent.province,
-            //   city     : address.addressComponent.city,
-            //   district : address.addressComponent.district
-            // }
-            var address = {
-              province : address.addressComponent.province,
-              city     : address.addressComponent.city,
-              district : address.addressComponent.district,
-              township : address.addressComponent.township
-            }
-            // $(".place").empty();
-            var place = ""+address.province+"-"+address.city+"-"+address.district+"-"+address.township+"";
-            // console.log(place);
-            // $(".place").append(place);
-            // var address = JSON.stringify(address);
-            console.log(address);
-            var replace = ""+address.province+address.city+address.district+address.township+"";
-            detail = detail.replace(replace,"");
-            address.detail = detail;
-
-            $(".place").empty();
-             $(".place").append(replace+detail);
-
-            console.log(detail);
-            var address = JSON.stringify(address);
-            console.log(address);
-            $(".address-content").attr("data-address",address);
-            // $(".address-content").text(detail);
-          },
-          error:function(error){
-            console.log(error);
-          }
-        });
-      })
-    }
-});
-
-     //设置地点
-      // var lnglatXY = [lng,lat];
-      // getAddress(lnglatXY,{
-      //     success:function(address){
-      //       var detail = address.formattedAddress;
-      //       var address = {
-      //         province : address.addressComponent.province,
-      //         city     : address.addressComponent.city,
-      //         district : address.addressComponent.district,
-      //         township : address.addressComponent.township
-      //       }
-      //       var replace = ""+address.province+address.city+address.district+address.township+"";
-      //       detail = detail.replace(replace,"");
-      //       $("#address-content .item-title").text(detail);
-      //     }
-      //   });
-
-
-      function getHideText(){
-          var text = $("#detail").val();
-          // console.log(text.indexOf("##"));
-          var str = {};
-          str = text.split("##");
-          var show = '';
-          var hidden = '';
-          for(var i = 0; i < str.length; i++){
-            if(i%2){
-              hidden += str[i]+"##";
-            }else{
-              if( i == str.length-1){
-                show += str[i];
-              }else{
-                show += str[i]+"##";
-              }
-              
-            }
-          }
-          var textDetail = {
-            show:show,
-            hidden:hidden
-          }
-          return(textDetail);
-        }
-
-
-
-
-
-
-        $('.btn_send').on('click', function () {
-            //console.log($('.check-box').find('input')[0].checked);
-            var type = "";
-            for (var i = 0; i < $('.check-box').find('input').length; i++) {
-                if ($('.check-box').find('input')[i].checked == true) {
-                    type += i+1;
-                }
-            }
-            if (type.length == 0) {
-                $.toast("主题不能为空");
-                return;
-            }
-            if (type.length > 2) {
-                $.toast("主题不能多于两个");
-                return;
-            }
-            if (type.length == 2) {
-                type = insert_flg(type, ',', 1);
-                type=type.substring(0,type.length-1);
-            }
-            console.log(type);
-
-            // var temp = $('.input-tag').val();
-            // temp = temp.replace('；', ';');
-            // temp = temp.split(";");
-            // var tag = new Array();
-            // for (var i = 0; i < temp.length; i++) {
-            //     tag[i] = {
-            //         tag_name:temp[i]
-            //     }
-            // }
-            // if (tag[0].tag_name == "") {
-            //     return;
-            // }
-            //获取填写的tag
-            var tag = new Array();
-            var $_tag = $(".tag-content .type-item");
-            if(!$_tag.length){
-              $.toast("你还没有填写标签");
-               return;
-            }else{
-              $.each($_tag,function(i,v){
-                tag[i] = {
-                  tag_name: $(this).text()
-                }
-                // $(this).text();
-              })
-              tag = JSON.stringify(tag);
-            }
-            // tag = JSON.stringify(tag);
-            console.log(tag);
-            var reason = $('.edit-reason').val();
-            // var detail = $('.de-show').text();
-            var price = $('.input-price').val();
-            //获取详情
-            var detail = $("#detail").val();
-            var content_show = '',
-                content_hide = '';
-            if(!detail){
-              $.toast("你还没有填写信息详情");
-              return;
-            }else{
-              var detailContent = getHideText();
-              console.log(detailContent);
-              content_show = detailContent.show;
-              content_hide = detailContent.hidden;
-            }
-
-            console.log(reason);
-            console.log(detail);
-            console.log(price);
-
-
-            if(!price){
-              isfree = 1;
-              price  = 0.00;
-            }else{
-              isfree = 0;
-            }
-            if(price == "0 . 0 0" || price == "0.00"){
-              isfree = 1;
-            }else{
-              isfree = 0;
-            }
-
-            //获取标注位置的经纬度
-            lng = $("#container").attr("data-lng");
-            lat = $("#container").attr("data-lat");
-            if(!lng || !lat){
-              $.toast("你还没有添加地图标注");
-              return;
-            }
-
-            var position = $(".address-content").attr("data-address");
-            $.showPreloader("正在提交");
-
-            var askId = $(".btn_send").attr("data-askId");
-            if(askId){
-                var ask_id = askId;
-                var data = {
-                    ask_id       : ask_id,
-                    username     : '<%= username %>',
-                    type         : type,
-                    geo_x        : lng,
-                    geo_y        : lat,
-                    position     : position,
-                    reason       : reason,
-                    content_show : content_show,
-                    content_hide : content_hide,
-                    isfree       : isfree,
-                    price        : price,
-                    tag          : tag
-
-                }
-                console.log(data);
-                // return ;
-                $.ajax({
-                    type: "post",
-                    url: '/ask/adminedit',
-                    data: data,
-                    dataType: "json",
-                    success : function(result) {
-                        console.log(result);
-                        $.hidePreloader();
-                        if (result.code == 200) {
-                            $.toast("编辑成功");
-                            for (var i = 0; i < $('.check-box').find('input').length; i++) {
-                                $('.check-box').find('input')[i].checked = false;
-                            }
-                            $('.input-tag').val("");
-                            $('.edit-reason').val("");
-                            $('.de-show').val("");
-                            $('.input-price').val("0.00");
-                            $(".btn_send").attr("data-askId","");
-                            window.location.reload();
-                        }else{
-                            $.toast(result.message);
-                        }
-                    },
-                    error : function(error){
-                        $(".btn_send").attr("data-askId","");
-                        $.hidePreloader();
-                        $.toast("服务器异常");
-                        console.log('err');
-                    }
-                });
-            }else{
-            var data = {
-                    username     : '<%= username %>',
-                    type         : type,
-                    geo_x        : lng,
-                    geo_y        : lat,
-                    position     : position,
-                    reason       : reason,
-                    content_show : content_show,
-                    content_hide : content_hide,
-                    isfree       : isfree,
-                    price        : price,
-                    tag          : tag
-
-                }
-                console.log(data);
-                // return ;
-                $.ajax({
-                    type: "post",
-                    url: '/ask/sendask',
-                    data: data,
-                    dataType: "json",
-                    success : function(result) {
-                        console.log(result);
-                        $.hidePreloader();
-                        if (result.code == 200) {
-                            $.toast("发布成功");
-                            for (var i = 0; i < $('.check-box').find('input').length; i++) {
-                                $('.check-box').find('input')[i].checked = false;
-                            }
-                            $('.input-tag').val("");
-                            $('.edit-reason').val("");
-                            $('.de-show').val("");
-                            $('.input-price').val("0.00");
-                            window.location.reload();
-                        }else{
-                            $.toast(result.message);
-                        }
-                    },
-                    error : function(error){
-                        $.hidePreloader();
-                        $.toast("服务器异常");
-                        console.log('err');
-                    }
-                });
-            }
-
-        });
-
         //点击下架
         $('.check-detail').on('click', ".btn_down", function () {
             //console.log('pass click');
@@ -1451,854 +1069,6 @@
                 }
             });
         });
-
-        //点击编辑
-        $('.check-detail').on('click', ".btn_edit", function () {
-            
-            var createBy = $(".detail-createBy").text();
-            console.log(createBy);
-            if(createBy != "wenwo"){
-                $.toast("目前不能更改其他用户信息");
-                return ;
-            }
-            var askId = $('.detail-id').text();
-            $(".btn_send").attr("data-askId",askId);
-            var reason = $(".detail-reason").text();
-            var price = $(".detail-price").text();
-            var addDetail = $(".add-detail").text();
-            var position = $(".add-detail").attr("data-position");
-            $(".address-content").attr("data-address",position);
-
-            var type = $(".detail-subject").attr("data-type");
-            var information = $(".detail-information").text();
-            var lng = $("#show2").attr("data-lng");
-            var lat = $("#show2").attr("data-lat");
-
-            //主题
-            var strs = type.split(",");
-            console.log(strs);
-            if(strs.length == 1){
-                console.log(strs[0]);
-                $("#checkbox-"+strs[0]).attr("checked","true");
-            }else{
-                $("#checkbox-"+strs[0]).attr("checked","true");
-                $("#checkbox-"+strs[1]).attr("checked","true");
-            }
-            //地址详情
-            $(".place").text(addDetail);
-            //地址
-            console.log(lng);
-            var icon = new AMap.Icon({
-                  // image : 'http://vdata.amap.com/icons/b18/1/2.png',//24px*24px
-                  //icon可缺省，缺省时为默认的蓝色水滴图标，
-                  // size : new AMap.Size(24,24)
-            });
-            marker = new AMap.Marker({
-                icon : icon,//24px*24px
-                map : map,
-                position: [lng,lat],
-                draggable: true,
-                cursor: 'move',
-                raiseOnDrag: true,
-                clickable:true
-            });
-            localStorage["lng"] = lng;
-            localStorage["lat"] = lat;
-
-            $("#container").attr("data-lng",lng);
-            $("#container").attr("data-lat",lat);
-            marker.setMap(map);
-            map.setZoomAndCenter(18, [lng, lat]);
-            map.setCenter([lng, lat]);
-
-
-            var tagList = '';
-            $.each($(".detail-label .type-item"),function(){
-                tagList += '<span class="type-item">'+$(this).text()+'</span>';
-            })
-            $(".tag-content").append(tagList);
-
-            //推荐理由
-            $(".edit-reason").text(reason);
-            //详情
-            $("#detail").text(information);
-            //价格
-            $(".input-price").val(price);
-
-            $('.check-detail').hide();
-            $(".send").show();
-            $('.side-bar li').removeClass('side-bar-backcheck');
-            $('.send-bar').addClass('side-bar-backcheck');  
-
-        });
-
-        $('.check-detail').on('click', ".btn_pass", function () {
-            //console.log('pass click');
-            $.showPreloader("正在提交");
-            var askId = $('.detail-id').text();
-            console.log(askId);
-            $.ajax({
-                type: "POST",
-                url: '/ask/approval',
-                data: {ask_id:askId,staus:1},
-                dataType: "json",
-                success : function(result) {
-                    $.hidePreloader();
-                    console.log(result);
-                    if (result.code == 200) {
-                        $.toast("提交成功");
-                        $('.check-detail').hide();
-                        checkAsk();
-                        $('.check').show();
-                    }else{
-                        $.toast(result.message);
-                    }
-                },
-                error : function(){
-                    $.hidePreloader();
-                    $.toast("服务器异常");
-                    console.log('err');
-                }
-            });
-        });
-
-        //点击不通过
-         $(document).on('click','.btn_not', function () {
-              $.prompt('输入不通过理由',
-                function (value) {
-                  // $.alert('Your name is "' + value + '". You clicked Ok button');
-
-                  //点击确定后提交不通过理由
-                    var askId = $('.detail-id').text();
-                    var reason = $(".modal-text-input").val();
-                    console.log(askId);
-                    var data = {
-                        ask_id : askId,
-                        staus  : 5,
-                        reason : reason
-                    }
-                    $.showPreloader("正在提交");
-                    $.ajax({
-                        type: "POST",
-                        url: '/ask/approval',
-                        data: data,
-                        dataType: "json",
-                        success : function(result) {
-                            console.log(result);
-                            $.hidePreloader();
-                            if (result.code == 200) {
-                                $.toast("提交成功");
-                                $(".modal-text-input").val('');
-                                $('.check-detail').hide();
-                                checkAsk();
-                                $('.check').show();
-                            }
-                        },
-                        error : function(){
-                            $.hidePreloader();
-                            console.log('err');
-                        }
-                    });
-                },
-                function (value) {
-                  
-                }
-              );
-          });
-        // $('.check-detail').on('click', ".btn_not", function () {
-        //     //console.log('pass click');
-        //     var askId = $('.detail-id').text();
-        //     console.log(askId);
-        //     $.ajax({
-        //         type: "get",
-        //         url: '../../ask/approval',
-        //         data: {ask_id:askId,staus:5},
-        //         dataType: "json",
-        //         success : function(result) {
-        //             console.log(result);
-        //             if (result.code == 200) {
-        //                 $('.check-detail').hide();
-        //                 checkAsk();
-        //                 $('.check').show();
-        //             }
-        //         },
-        //         error : function(){
-        //             console.log('err');
-        //         }
-        //     });
-        // });
-
-
-        $('.side-bar').on('click', 'ul li', function () {
-            $('.side-bar li').removeClass('side-bar-back');
-            $('.side-bar li').removeClass('side-bar-backcheck');
-            $('.side-bar li').addClass('side-bar-back');
-            $(this).addClass('side-bar-backcheck');
-            $('.content-title').hide();
-            if ($(this).hasClass('send-bar')) {
-                $('.send').show();
-                //   map = new AMap.Map('show1', {
-                //   resizeEnable: true,
-                //   zoom:15,
-                //   center: [localStorage.lng,localStorage.lat],
-                //   buttonOffset: new AMap.Pixel(60, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
-                //   zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
-                //   buttonPosition:'LB'
-                // });
-                //   getMap(103.98767,30.580837);
-                   // function getMap(lng,lat){
-                   //    //详情地点显示
-                   //    var mapShow;
-                   //    mapShow = new AMap.Map('container-show', {
-                   //      resizeEnable: true,
-                   //      zoom:15,
-                   //      center: [lng,lat]
-                   //    });
-                   //    var markerShow = new AMap.Marker({
-                   //      map : mapShow,
-                   //      position: [lng,lat],
-                   //      draggable: true,
-                   //      cursor: 'move',
-                   //      raiseOnDrag: true,
-                   //      clickable:true
-                   //    });
-                   //    markerShow.setMap(mapShow);
-                   //  }
-            }
-            else if ($(this).hasClass('check-bar')) {
-                checkAsk();
-                $('.check').show();
-                 //详情地点显示
-                    // map = new AMap.Map('show2', {
-                    //   resizeEnable: true,
-                    //   zoom:15,
-                    //   center: [localStorage.lng,localStorage.lat],
-                    //   buttonOffset: new AMap.Pixel(60, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
-                    //   zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
-                    //   buttonPosition:'LB'
-                    // });
-                  // function getMap(lng,lat){
-                  //     //详情地点显示
-                  //     var mapShow;
-                  //     mapShow = new AMap.Map('container-show', {
-                  //       resizeEnable: true,
-                  //       zoom:15,
-                  //       center: [lng,lat]
-                  //     });
-                  //     var markerShow = new AMap.Marker({
-                  //       map : mapShow,
-                  //       position: [lng,lat],
-                  //       draggable: true,
-                  //       cursor: 'move',
-                  //       raiseOnDrag: true,
-                  //       clickable:true
-                  //     });
-                  //     markerShow.setMap(mapShow);
-                  //   }
-            }
-            else if ($(this).hasClass('manage-bar')) {
-                manageAsk();
-                $('.manage').show();
-            }
-            else if ($(this).hasClass('total-bar')) {
-                $('.total').show();
-            }
-            else if ($(this).hasClass('account-bar')) {
-                $('.account').show();
-            }else if($(this).hasClass('tag-bar')){
-                $('.tag').show();
-            }
-        });
-        $('.check ul').on('click', "li", function () {
-            $(".down").hide();
-            $(".check-button").show();
-            
-            $('.content-title').hide();
-            var askId = $(this).text();
-            console.log($(this).text());
-            $('.check-detail').show();
-            var askId = $(this).text();
-            $.showPreloader("正在加载");
-            $.ajax({
-                type: "get",
-                url: '/ask/askadmin',
-                data: {ask_id:askId},
-                dataType: "json",
-                success : function(result) {
-                    if (result.code == 200 && result.data != null) {
-                        console.log(result);
-                        var type = result.data.askType;
-                        //console.log(type);
-                        var strs = type.split(",")
-                        console.log(strs);
-                        if (result.data.askTagStr != null) {
-                            var tag = result.data.askTagStr;
-                            var temp = JSON.parse(tag);
-                            console.log(temp);
-                        }
-                        $('.detail-id').empty();
-                        //获取上传者
-                        $('.detail-createBy').text(result.data.createBy);
-                        var data = {
-                          username : result.data.createBy
-                        }
-                        $.hidePreloader();
-                        $.ajax({
-                          type : "GET",
-                          data: data,
-                          dataType: "json",
-                          url : "/user/getuserinfo",
-                          success : function(result){
-                            console.log(result);
-                            // $.hidePreloader();
-                            if(result.code == 200){
-                              var photo = result.data.userHead;
-                              var username = result.data.uName;
-                              $('.detail-createBy').text(username);
-                            }else if(result.code == 890){
-                              
-                            }
-                          },
-                          error:function(error){
-                            $.toast("服务器异常");
-                          }
-                        });
-
-
-                        $('.detail-time').empty();
-                        $('.detail-status').empty();
-                        $('.detail-subject').empty();
-                        $('.detail-reason').empty();
-                        $('.detail-information').empty();
-                        $('.detail-price').empty();
-                        $('.detail-label').empty();
-                        $(".detail-id").append(result.data.objectId);
-                        $('.detail-time').text(formatDate("y.m.d",result.data.updatedAt));
-
-                        $(".detail-status").append(getStaus(result.data.staus));
-
-                        // $(".detail-status").removeClass("pass");
-                        // $(".detail-status").removeClass("notpass");
-                        // $(".detail-status").removeClass("hidden-text");
-                        // if(result.data.staus == 1){
-                        //     $(".detail-status").addClass("pass");
-                        // }else if(result.data.staus == 5){
-                        //     $(".detail-status").addClass("notpass");
-                        // }else if(result.data.staus == 2){
-                        //     $(".detail-status").addClass("hidden-text");
-                        // }
-                        $(".detail-status").removeClass("pass");
-                        $(".detail-status").removeClass("notpass");
-                        $(".detail-status").removeClass("hidden-text");
-                        // $(".down").text("下架");
-                        if(result.data.staus == 1){
-                            $(".detail-status").addClass("pass");
-                        }else if(result.data.staus == 5){
-                            $(".detail-status").addClass("notpass");
-                            $(".down").hide();
-                        }else if(result.data.staus == 2){
-                            $(".detail-status").addClass("hidden-text");
-                        }else if(result.data.staus == 3){
-                            // $(".down").text("上架");
-                        }
-
-                        // if(result.data.staus == 5){
-                        //     $(".detail-status").addClass("hidden-text");
-                        // }
-                        if(strs.length == 1){
-                            var subject = getTitle(strs[0]);
-                        }else{
-                            var subject = getTitle(strs[0])+","+getTitle(strs[1]);
-                        }
-                        $(".detail-subject").attr("data-type",type);
-                        $(".detail-subject").append(subject);
-                        var label = '';
-                        if (result.data.askTagStr != null) {
-                            for (var i = 0; i < temp.length; i++) {
-                                // label += temp[i].tag_name + "&nbsp&nbsp";
-                                if(temp[i].tag_name){
-                                    label += '<span class="type-item">'+temp[i].tag_name+'</span>';
-                                }
-                                // label += '<span class="type-item">'+temp[i].tag_name+'</span>';
-                            }
-                        }
-                        console.log(label);
-                        $(".detail-label").append(label);
-                        $(".detail-reason").append(result.data.askReason);
-                        // var detail = result.data.askContentShow + result.data.askContentHide;
-                        // $(".detail-information").append(detail);
-                        //解析详情
-                        var show = result.data.askContentShow.split("##");
-                        var hidden = result.data.askContentHide.split("##");
-                        var reasonDetail = '';
-                        console.log("len:"+hidden.length);
-                        for(var i = 0; i < hidden.length;i++){
-                          if(hidden[i]){
-                            reasonDetail += show[i] + "<span class='hidden-text'>"+ hidden[i] + "</span>";
-                          }else{
-                            if(show[i]){
-                                reasonDetail+=show[i];
-                            }
-                          }
-                        }
-                        if(!hidden.length){
-                          reasonDetail = show;
-                        }
-
-                        $(".detail-information").append(reasonDetail);
-                        var askPosition = JSON.parse(result.data.askPosition);
-                        $(".add-detail").text(askPosition.province+"-"+askPosition.city+"-"+askPosition.district+"-"+askPosition.township+"-"+askPosition.detail);
-
-                        $(".add-detail").attr("data-position",result.data.askPosition);
-                        $(".detail-price").append(result.data.askPrice);
-                        //详情地点显示
-                        $("#show2").attr("data-lng",result.data.GeoX);
-                        $("#show2").attr("data-lat",result.data.GeoY);
-
-                        var map2 = new AMap.Map('show2', {
-                          resizeEnable: true,
-                          zoom:18,
-                          center: [result.data.GeoX,result.data.GeoY],
-                          buttonOffset: new AMap.Pixel(60, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
-                          zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
-                          buttonPosition:'LB'
-                        });
-                        marker = new AMap.Marker({
-                          map : map2,
-                          position: [result.data.GeoX,result.data.GeoY],
-                          draggable: true,
-                          cursor: 'move',
-                          raiseOnDrag: true,
-                          clickable:true
-                        });
-                         marker.setMap(map2);
-
-                    }
-                },
-                error : function(){}
-            });
-        });
-
-        $('.manage ul').on('click', ".ask-id", function () {
-            $(".check-button").hide();
-            $(".down").show();
-            $('.content-title').hide();
-            var askId = $(this).text();
-            console.log($(this).text());
-            $('.check-detail').show();
-            var askId = $(this).text();
-            $.showPreloader("正在加载");
-            $.ajax({
-                type: "get",
-                url: '/ask/askadmin',
-                data: {ask_id:askId},
-                dataType: "json",
-                success : function(result) {
-                    if (result.code == 200 && result.data != null) {
-                        console.log(result);
-                        var type = result.data.askType;
-                        //console.log(type);
-                        var strs = type.split(",")
-                        console.log(strs);
-                        if (result.data.askTagStr != null) {
-                            var tag = result.data.askTagStr;
-                            var temp = JSON.parse(tag);
-                            console.log(temp);
-                        }
-                        $('.detail-id').empty();
-                        //获取上传者
-                        $('.detail-createBy').text(result.data.createBy);
-                        var data = {
-                          username : result.data.createBy
-                        }
-                        $.hidePreloader();
-                        $.ajax({
-                          type : "GET",
-                          data: data,
-                          dataType: "json",
-                          url : "/user/getuserinfo",
-                          success : function(result){
-                            console.log(result);
-                            // $.hidePreloader();
-                            if(result.code == 200){
-                              var photo = result.data.userHead;
-                              var username = result.data.uName;
-                              $('.detail-createBy').text(username);
-                            }else if(result.code == 890){
-                              
-                            }
-                          },
-                          error:function(error){
-                            $.toast("服务器异常");
-                          }
-                        });
-
-
-                        $('.detail-time').empty();
-                        $('.detail-status').empty();
-                        $('.detail-subject').empty();
-                        $('.detail-reason').empty();
-                        $('.detail-information').empty();
-                        $('.detail-price').empty();
-                        $('.detail-label').empty();
-                        $(".detail-id").append(result.data.objectId);
-                        $('.detail-time').text(formatDate("y.m.d",result.data.updatedAt));
-
-                        $(".detail-status").append(getStaus(result.data.staus));
-
-                        $(".detail-status").removeClass("pass");
-                        $(".detail-status").removeClass("notpass");
-                        $(".detail-status").removeClass("hidden-text");
-                        // $(".down").text("下架");
-                        if(result.data.staus == 1){
-                            $(".detail-status").addClass("pass");
-                        }else if(result.data.staus == 5){
-                            $(".detail-status").addClass("notpass");
-                            $(".down").hide();
-                        }else if(result.data.staus == 2){
-                            $(".detail-status").addClass("hidden-text");
-                        }else if(result.data.staus == 3){
-                            // $(".down").text("上架");
-
-                        }
-                        // if(result.data.staus == 5){
-                        //     $(".detail-status").addClass("hidden-text");
-                        // }
-                        var subject = getTitle(strs[0])+"&nbsp&nbsp"+getTitle(strs[1]);
-                        $(".detail-subject").attr("data-type",type);
-                        $(".detail-subject").append(subject);
-                        var label = '';
-                        if (result.data.askTagStr != null) {
-                            for (var i = 0; i < temp.length; i++) {
-                                // label += temp[i].tag_name + "&nbsp&nbsp";
-                                if(temp[i].tag_name){
-                                    label += '<span class="type-item">'+temp[i].tag_name+'</span>';
-                                }
-                                // label += '<span class="type-item">'+temp[i].tag_name+'</span>';
-                            }
-                        }
-                        console.log(label);
-                        $(".detail-label").append(label);
-                        $(".detail-reason").append(result.data.askReason);
-                        // var detail = result.data.askContentShow + result.data.askContentHide;
-                        // $(".detail-information").append(detail);
-                        //解析详情
-                        var show = result.data.askContentShow.split("##");
-                        var hidden = result.data.askContentHide.split("##");
-                        var reasonDetail = '';
-                        console.log("len:"+hidden.length);
-                        for(var i = 0; i < hidden.length;i++){
-                          if(hidden[i]){
-                            reasonDetail += show[i] + "<span class='hidden-text'>"+ hidden[i] + "</span>";
-                          }else{
-                            if(show[i]){
-                                reasonDetail+=show[i];
-                            }
-                          }
-                        }
-                        if(!hidden.length){
-                          reasonDetail = show;
-                        }
-
-                        $(".detail-information").append(reasonDetail);
-                        var askPosition = JSON.parse(result.data.askPosition);
-                        $(".add-detail").text(askPosition.province+"-"+askPosition.city+"-"+askPosition.district+"-"+askPosition.township+"-"+askPosition.detail);
-
-                        $(".add-detail").attr("data-position",result.data.askPosition);
-                        $(".detail-price").append(result.data.askPrice);
-
-                        //详情地点显示
-                        $("#show2").attr("data-lng",result.data.GeoX);
-                        $("#show2").attr("data-lat",result.data.GeoY);
-
-                        var map2 = new AMap.Map('show2', {
-                          resizeEnable: true,
-                          zoom:18,
-                          center: [result.data.GeoX,result.data.GeoY],
-                          buttonOffset: new AMap.Pixel(60, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
-                          zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
-                          buttonPosition:'LB'
-                        });
-                        marker = new AMap.Marker({
-                          map : map2,
-                          position: [result.data.GeoX,result.data.GeoY],
-                          draggable: true,
-                          cursor: 'move',
-                          raiseOnDrag: true,
-                          clickable:true
-                        });
-                         marker.setMap(map2);
-
-                    }
-                },
-                error : function(){}
-            });
-        });
-
-        function checkAsk() {
-            $.showPreloader("正在加载");
-            $.ajax({
-                type: "get",
-                url: '/ask/allask',
-                data: {staus:2},
-                dataType: "json",
-                success : function(result) {
-                    $.hidePreloader();
-                    console.log(result);
-                    if (result.code == 200) {
-                        var list = "";
-                        for (var i = 0; i < result.data.length; i++) {
-                            list += '<li>'+result.data[i].objectId+'</li>';
-                        }
-                    }
-                    $('.check ul').empty();
-                    $('.check ul').append(list);
-                },
-                error : function(){
-                    $.hidePreloader();
-                }
-            });
-        }
-        function manageAsk() {
-            $.showPreloader("正在加载");
-            $.ajax({
-                type: "get",
-                url: '/ask/allask',
-                data: {staus:4},
-                dataType: "json",
-                success : function(result) {
-                    $.hidePreloader();
-                    console.log(result);
-                    if (result.code == 200) {
-                        var list = "";
-                        for (var i = 0; i < result.data.length; i++) {
-                            if(result.data[i].staus == 2){
-                                // $(".detail-status").addClass("hidden-text");
-                                list += '<li><span class="ask-id">'+result.data[i].objectId+'</span><span class="del">X</span><span class="staus hidden-text">'+getStaus(result.data[i].staus)+'</span></li>';
-                            }else if(result.data[i].staus == 5){
-                                list += '<li><span class="ask-id">'+result.data[i].objectId+'</span><span class="del">X</span><span class="staus notpass">'+getStaus(result.data[i].staus)+'</span></li>';
-                            }else if(result.data[i].staus == 1){
-                                list += '<li><span class="ask-id">'+result.data[i].objectId+'</span><span class="del">X</span><span class="staus pass">'+getStaus(result.data[i].staus)+'</span></li>';
-                            }else{
-                                list += '<li><span class="ask-id">'+result.data[i].objectId+'</span><span class="del">X</span><span class="staus">'+getStaus(result.data[i].staus)+'</span></li>';
-                            }
-                            // list += '<li><span class="ask-id">'+result.data[i].objectId+'</span><span class="del">X</span><span class="staus">'+getStaus(result.data[i].staus)+'</span></li>';
-                        }
-                        $('.manage ul').empty();
-                        $('.manage ul').append(list);
-                    }
-                },
-                error : function(){
-                    $.hidePreloader();
-                }
-            });
-        }
-        function getStaus(staus) {
-            var temp = "";
-            switch (staus) {
-                case "1": temp = "已上架";break;
-                case "2": temp = "审批中";break;
-                case "3": temp = "未上架";break;
-//                case "4": temp = "";break;
-                case "5": temp = "审批未通过";break;
-            }
-            return temp;
-        }
-        function getTitle(type) {
-            var temp = "";
-            switch (type) {
-                case "1": temp = "美食";break;
-                case "2": temp = "住宿";break;
-                case "3": temp = "交通";break;
-                case "4": temp = "购物";break;
-                case "5": temp = "游玩";break;
-                case "6": temp = "防坑";break;
-            }
-            return temp;
-        }
-        function insert_flg(str,flg,sn){
-            var newstr="";
-            for(var i=0;i<str.length;i+=sn){
-                var tmp=str.substring(i, i+sn);
-                newstr+=tmp+flg;
-            }
-            return newstr;
-        }
-        var timeIv;
-    AMap.plugin(['AMap.Autocomplete','AMap.PlaceSearch'],function(){
-      var autoOptions = {
-        input: "search"//使用联想输入的input的id
-      };
-      autocomplete= new AMap.Autocomplete(autoOptions);
-      var placeSearch = new AMap.PlaceSearch({
-            map:map
-      })
-      AMap.event.addListener(autocomplete, "select", function(e){
-         //TODO 针对选中的poi实现自己的功能
-         console.log("123");
-         console.log(e.poi);
-         placeSearch.setCity(e.poi.adcode);
-         placeSearch.search(e.poi.name);
-         //这里是设置一个延时来判断是否标注加载完成
-         timeIv = setInterval(function(){
-          console.log($(".amap-marker").length);
-          if($(".amap-marker").length > 5){
-            clearInterval(timeIv);
-            map.clearMap();
-          }
-         }, 10);
-      });
-    });
-
-  //       window.onload = function(){
-  //   AMap.plugin(['AMap.ToolBar','AMap.Scale'],function(){
-  //       var toolBar = new AMap.ToolBar({
-  //           offset: new AMap.Pixel(60, 10)
-  //         });
-  //       var scale = new AMap.Scale({
-  //         offset: new AMap.Pixel(-5, 7)
-  //       });
-  //       map.addControl(toolBar);
-  //       map.addControl(scale);
-  //   });
-
-  //   $.hidePreloader();
-  // }
-  //   $("#search").on("click",function(){
-  //       var li = $(".search").val();
-  //       console.log(li);
-      // var li = $(this).children(".hot-detail").children(".big").text();
-      // var city = $(this).children(".hot-detail").children(".small").text().substring(3,6);
-      // var placeSearch = new AMap.PlaceSearch({
-      //       map:map
-      // })
-      // if(li == "牛背山"){
-      //   placeSearch.setCity(511824);
-      //   placeSearch.search(li);
-      // }
-      // placeSearch.search(li);
-      //这里是设置一个延时来判断是否标注加载完成
-      //    timeIv = setInterval(function(){
-      //     // console.log($(".amap-marker").length);
-      //     if($(".amap_lib_placeSearch_poi").length > 0){
-      //       // clearInterval(timeIv);
-      //       // map.clearMap();
-      //       $(".amap_lib_placeSearch_poi").remove();
-      //     }
-      //    }, 10);
-      // $.router.load("#router");
-    // })
-    // map.getCity(function(data) {
-    //       console.log(data);
-    //         if (data['province'] && typeof data['province'] === 'string') {
-    //             $(".address-text").text(data['city']);
-    //         }
-    //     });
-    // map.on('moveend', getCity);
-    // function getCity() {
-    //     map.getCity(function(data) {
-    //       console.log(data);
-    //         if (data['province'] && typeof data['province'] === 'string') {
-    //             $(".address-text").text(data['city']);
-    //         }
-    //     });
-    // }
-    // var lnglatXY = [lng,lat];
-    //   getAddress(lnglatXY,{
-    //       success:function(address){
-    //         var detail = address.formattedAddress;
-    //         var address = {
-    //           province : address.addressComponent.province,
-    //           city     : address.addressComponent.city,
-    //           district : address.addressComponent.district,
-    //           township : address.addressComponent.township
-    //         }
-    //         var replace = ""+address.province+address.city+address.district+address.township+"";
-    //         detail = detail.replace(replace,"");
-    //         $("#address-content .item-title").text(detail);
-    //       }
-    //     });
-    //   getMap(103.98767,30.580837);
-    //   function getMap(lng,lat){
-    //   //详情地点显示
-    //   var mapShow;
-    //   mapShow = new AMap.Map('container-show', {
-    //     resizeEnable: true,
-    //     zoom:15,
-    //     center: [lng,lat]
-    //   });
-    //   var markerShow = new AMap.Marker({
-    //     map : mapShow,
-    //     position: [lng,lat],
-    //     draggable: true,
-    //     cursor: 'move',
-    //     raiseOnDrag: true,
-    //     clickable:true
-    //   });
-    //   markerShow.setMap(mapShow);
-    // }
-    //     map.getCity(function(data) {
-    //       console.log(data);
-    //         if (data['province'] && typeof data['province'] === 'string') {
-    //             $(".address-text").text(data['city']);
-    //         }
-    //     });
-    // map.on('moveend', getCity);
-    // function getCity() {
-    //     map.getCity(function(data) {
-    //       console.log(data);
-    //         if (data['province'] && typeof data['province'] === 'string') {
-    //             $(".address-text").text(data['city']);
-    //         }
-    //     });
-    // }
-    // getMap(103.985616,30.581207);
-    // function getMap(lng,lat){
-    //   //详情地点显示
-    //   var map;
-    //   map = new AMap.Map('show2', {
-    //     resizeEnable: true,
-    //     zoom:20,
-    //     center: [lng,lat]
-    //   });
-    //   var map = new AMap.Marker({
-    //     map : map,
-    //     position: [lng,lat],
-    //     draggable: true,
-    //     cursor: 'move',
-    //     raiseOnDrag: true,
-    //     clickable:true
-    //   });
-    //   map.setMap(map);
-    // }
-    // map1 = new AMap.Map('show2', {
-    //       resizeEnable: true,
-    //       zoom:15,
-    //       center: [localStorage.lng,localStorage.lat],
-    //       buttonOffset: new AMap.Pixel(60, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
-    //       zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
-    //       buttonPosition:'LB'
-    //     });
-    // getMap(103.985616,30.581207);
-    // function getMap(lng,lat){
-    //   //详情地点显示
-    //   var map;
-    //   map = new AMap.Map('show1', {
-    //     resizeEnable: true,
-    //     zoom:20,
-    //     center: [lng,lat]
-    //   });
-    //   var map = new AMap.Marker({
-    //     map : map,
-    //     position: [lng,lat],
-    //     draggable: true,
-    //     cursor: 'move',
-    //     raiseOnDrag: true,
-    //     clickable:true
-    //   });
-    //   map.setMap(map);
-    // }
     </script>
-
 </body>
 </html>

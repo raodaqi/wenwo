@@ -9,33 +9,41 @@ var Carousel = AV.Object.extend('Carousel');
 
 router.get('/getcarouselinfo', function(req, res, next) {
 
-    var query = new AV.Query('Config');
+    // var query = new AV.Query('Config');
 
-    var configID = '57a71f565bbb5000642dd0a9';
-    
-    query.get(configID).then(function (config) {
+    // var configID = '57a71f565bbb5000642dd0a9';
 
-        if (config.get('name') == 'carouselSize') {
+    // query.ascending('updatedAt');
+    // query.get(configID).then(function (config) {
 
-            var carouselSize = parseInt(config.get('value'));
-            var query = new AV.Query('Carousel');
-            query.limit(carouselSize);
-            query.descending('createdAt');
-            query.find().then(function (carouselList) {
+    //     if (config.get('name') == 'carouselSize') {
 
-                res.send({code:200, data:carouselList, message:'操作成功'});
+    //         var carouselSize = parseInt(config.get('value'));
+    //         var query = new AV.Query('Carousel');
+    //         query.limit(carouselSize);
+    //         query.descending('createdAt');
+    //         query.find().then(function (carouselList) {
+
+    //             res.send({code:200, data:carouselList, message:'操作成功'});
                 
-            });
+    //         });
 
-        } else {
-
-            //配置信息有误
-            res.send({code:400,message:'配置信息有误'});
-
-        }
-
-
-
+    //     } else {
+    //         //配置信息有误
+    //         res.send({code:400,message:'配置信息有误'});
+    //     }
+    // });
+    var reqType = req.query.type; 
+    var query = new AV.Query('Carousel');
+    query.ascending('updatedAt');
+    if(reqType != "all"){
+        query.equalTo('show', 1);
+    }
+    
+    query.find().then(function (carouselList) {
+        res.send({code:200, data:carouselList, message:'操作成功'});
+    },function (carouselList) {
+        res.send({code:400, message:'请求失败'});
     });
 
 
@@ -46,6 +54,8 @@ router.post('/addcarouselinfo', function(req, res, next) {
     var carouselName = req.body.name;
     var carouselClickURL = req.body.clickURL;
     var carouselImage = req.body.image;
+    var show  = req.body.show;
+    show  = parseInt(show);
 
     var query = new AV.Query('Config');
 
@@ -61,10 +71,14 @@ router.post('/addcarouselinfo', function(req, res, next) {
             carousel.set('carouselName', carouselName);
             carousel.set('carouselClickURL', carouselClickURL);
             carousel.set('carouselImage', carouselImage);
+            carousel.set('show', show);
             carousel.save().then(function (carousel) {
 
                 res.send({code:200,  data:carousel, message:'操作成功'});
 
+            },function(error){
+                res.send({code:400,  message:'操作失败'});
+                console.log(error);
             });
 
 
@@ -80,6 +94,32 @@ router.post('/addcarouselinfo', function(req, res, next) {
     });
 
 
+});
+
+router.post('/editcarouselinfo', function(req, res, next) {
+
+    var carouselName = req.body.name;
+    var carouselId = req.body.id;
+    var carouselClickURL = req.body.clickURL;
+    var carouselImage = req.body.image;
+    var show  = req.body.show;
+    show  = parseInt(show);
+
+    var query = new AV.Query('Carousel');
+
+    query.get(carouselId).then(function (carousel) {
+        carousel.set('carouselName', carouselName);
+        carousel.set('carouselClickURL', carouselClickURL);
+        carousel.set('carouselImage', carouselImage);
+        carousel.set('show', show);
+        carousel.save().then(function (carousel) {
+            res.send({code:200,  data:carousel, message:'操作成功'});
+
+        },function(error){
+            res.send({code:400,  message:'操作失败'});
+            console.log(error);
+        });
+    });
 });
 
 router.post('/delcarouselinfo', function(req, res, next) {
