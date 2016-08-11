@@ -182,15 +182,17 @@ app.get('/share/id/:id', function(req, res) {
     // data 就是 id 为 57328ca079bc44005c2472d0 的 Todo 对象实例
     if(data.attributes.detail){
       var detail = data.attributes.detail;
-      res.render('share',{detail:detail});
+      var desc = data.attributes.desc;
+      var title = data.attributes.title;
+      res.render('share',{detail:detail,desc:desc,title:title});
       // res.send(detail)
     }else{
-      res.render('share',{detail:""});
+      res.render('share',{detail:"",desc:"",title:""});
     }
   }, function (error) {
     // 失败了
     console.log(error);
-    res.render('share',{detail:""});
+    res.render('share',{detail:"",desc:"",title:""});
   });
 });
 

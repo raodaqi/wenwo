@@ -85,6 +85,15 @@ function escape2Html(str) {
 }
 var str = "<%= detail %>";
 $("body").append(escape2Html(str));
-// onlyInitShare();
+
+var url = $("img").attr("src");
+WX_SHARE_IMGURL = url;
+WX_SHARE_LINK = window.location.href;
+WX_SHARE_DESC = "<%= desc %>";
+WX_SHARE_TITLE = "<%= title %>";
+if(WX_SHARE_TITLE && WX_SHARE_DESC){
+  onlyInitShare();
+}
+
 </script>
 </html>
