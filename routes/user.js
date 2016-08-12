@@ -278,6 +278,7 @@ router.post('/getInfo', function (req, res, next) {
                 var foodLikeListCount = foodLikeList.length;
 
                 var query = new AV.Query('AskMe');
+                query.equalTo('staus', "1");
                 query.equalTo('createBy', userName);
                 query.find().then(function (askList) {
 
