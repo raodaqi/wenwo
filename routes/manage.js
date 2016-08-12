@@ -267,6 +267,7 @@ router.get('/getdata', function(req, res, next) {
                             deleteNum : deleteNum
                         }
 
+
                         var result = {
                             code : 200,
                             data : data,
