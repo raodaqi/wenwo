@@ -422,7 +422,8 @@ router.get('/pay', function(req, res, next) {
                                         total_fee: totalFee,
                                         attach:attach,
                                         spbill_create_ip: ip,
-                                        notify_url:notifyUrl
+                                        notify_url:notifyUrl,
+                                        trade_type:'APP'
                                     }, function(err, result){
                                         // in express
                                         console.log(err);
