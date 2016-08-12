@@ -263,6 +263,8 @@ router.get('/pay', function(req, res, next) {
     var askId = req.query.ask_id;
     var userName = req.query.username;
 
+    var port = req.query.port;
+
     var query = new AV.Query('Haved');
 
     query.equalTo("by", userName);
@@ -324,46 +326,113 @@ router.get('/pay', function(req, res, next) {
                     // console.log(totalFee);
                     if (parseInt(totalFee)) {
 
-                        var user = AV.User.current();
-                        if (user == null || user == '') {
-                            res.send({code:300,message:'用户未登录'});
-                        } else {
+                        if (port == null || port == '') {
 
-                            var attach = {
-                                username:userName,
-                                ask_id:askId
-                            };
-                            attach = JSON.stringify(attach);
+                            var user = AV.User.current();
 
-                            //JSON.stringify();
-                            var authData = user.get('authData');
-                            // console.log(authData);
-                            var openid = authData.weixin.openid;
-                            var accessToken = authData.weixin.access_token;
-                            var expiresIn = authData.weixin.expires_in;
+                            if (user == null || user == '') {
+                                res.send({code:300,message:'用户未登录'});
+                            } else {
 
-                            var ip = req.ip;
-                            ip = ip.substr(ip.lastIndexOf(':')+1, ip.length);
-                            // console.log(ip);
-                            var notifyUrl = 'http://www.wenwobei.com/notify';
-                            //notifyUrl = encodeURIComponent(notifyUrl);
+                                var attach = {
+                                    username:userName,
+                                    ask_id:askId
+                                };
+                                attach = JSON.stringify(attach);
 
-                            wxpay.getBrandWCPayRequestParams({
-                                openid: openid,
-                                body: '问我-美食',
-                                detail: '美食推荐',
-                                out_trade_no: '20160331'+Math.random().toString().substr(2, 10),
-                                total_fee: totalFee,
-                                attach:attach,
-                                spbill_create_ip: ip,
-                                notify_url:notifyUrl
-                            }, function(err, result){
-                                // in express
-                                // console.log(result);
-                                res.send({code:200,payargs:result});
+                                //JSON.stringify();
+                                var authData = user.get('authData');
+                                // console.log(authData);
+                                var openid = authData.weixin.openid;
+                                var accessToken = authData.weixin.access_token;
+                                var expiresIn = authData.weixin.expires_in;
+
+                                var ip = req.ip;
+                                ip = ip.substr(ip.lastIndexOf(':')+1, ip.length);
+                                // console.log(ip);
+                                var notifyUrl = 'http://www.wenwobei.com/notify';
+                                //notifyUrl = encodeURIComponent(notifyUrl);
+
+                                wxpay.getBrandWCPayRequestParams({
+                                    openid: openid,
+                                    body: '问我-美食',
+                                    detail: '美食推荐',
+                                    out_trade_no: '20160331'+Math.random().toString().substr(2, 10),
+                                    total_fee: totalFee,
+                                    attach:attach,
+                                    spbill_create_ip: ip,
+                                    notify_url:notifyUrl
+                                }, function(err, result){
+                                    // in express
+                                    // console.log(result);
+                                    res.send({code:200,payargs:result});
+                                });
+
+                            }
+
+                        } else if (port == 'app') {
+
+                            var openid = req.body.openid;
+                            var accessToken = req.body.access_token;
+                            var expiresIn = req.body.expires_in;
+
+                            AV.User._logInWith('weixin', {
+                                'authData': {
+                                    "openid": openid,
+                                    "access_token": accessToken,
+                                    "expires_in": expiresIn
+                                }
+                            }).then(function(user) {
+
+                                if (user == null || user == '') {
+                                    res.send({code:300,message:'用户未登录'});
+                                } else {
+
+                                    var attach = {
+                                        username:userName,
+                                        ask_id:askId
+                                    };
+                                    attach = JSON.stringify(attach);
+
+                                    //JSON.stringify();
+                                    var authData = user.get('authData');
+                                    // console.log(authData);
+                                    var openid = authData.weixin.openid;
+                                    var accessToken = authData.weixin.access_token;
+                                    var expiresIn = authData.weixin.expires_in;
+
+                                    var ip = req.ip;
+                                    ip = ip.substr(ip.lastIndexOf(':')+1, ip.length);
+                                    // console.log(ip);
+                                    var notifyUrl = 'http://www.wenwobei.com/notify';
+                                    //notifyUrl = encodeURIComponent(notifyUrl);
+
+                                    wxpay.getBrandWCPayRequestParams({
+                                        openid: openid,
+                                        body: '问我-美食',
+                                        detail: '美食推荐',
+                                        out_trade_no: '20160331'+Math.random().toString().substr(2, 10),
+                                        total_fee: totalFee,
+                                        attach:attach,
+                                        spbill_create_ip: ip,
+                                        notify_url:notifyUrl
+                                    }, function(err, result){
+                                        // in express
+                                        // console.log(result);
+                                        res.send({code:200,payargs:result});
+                                    });
+
+                                }
+
+
+
                             });
 
+
                         }
+
+
+
 
                     } else {
 
