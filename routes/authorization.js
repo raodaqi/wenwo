@@ -760,13 +760,15 @@ router.get('/', function(req, res, next) {
                                         if (flag != 0) {
                                             
                                             userInfo.save().then(function (userInfo) {
-                                                var url = urlReq + '?username='+user.get('user');
+                                                // var url = urlReq + '?username='+user.get('user');
+                                                var url = urlReq;
                                                 resG.redirect(url);
                                                 return;
                                             });
                                             
                                         } else {
-                                            var url = urlReq + '?username='+user.get('user');
+                                            // var url = urlReq + '?username='+user.get('user');
+                                            var url = urlReq;
                                             resG.redirect(url);
                                             return;
                                         }
@@ -799,7 +801,8 @@ router.get('/', function(req, res, next) {
                                                     // var user = AV.User.current();
                                                     // console.log(user);
                                                     //var url = 'http://www.wenwobei.com/?username='+user.get('user');
-                                                    var url = urlReq + '?username='+user.get('user');
+                                                    // var url = urlReq + '?username='+user.get('user');
+                                                    var url = urlReq;
                                                     resG.redirect(url);
                                                     return;
 
