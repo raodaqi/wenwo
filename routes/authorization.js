@@ -372,9 +372,9 @@ router.get('/pay', function(req, res, next) {
 
                         } else if (port == 'app') {
 
-                            var openid = req.body.openid;
-                            var accessToken = req.body.access_token;
-                            var expiresIn = req.body.expires_in;
+                            var openid = req.query.openid;
+                            var accessToken = req.query.access_token;
+                            var expiresIn = req.query.expires_in;
 
                             AV.User._logInWith('weixin', {
                                 'authData': {
