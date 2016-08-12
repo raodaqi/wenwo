@@ -625,6 +625,9 @@ router.get('/', function(req, res, next) {
                     var username = rdata.nickname;
                     var userhead = rdata.headimgurl;
                     var openid = rdata.openid;
+
+                    var unionid = rdata.unionid;
+
                     if (userhead != null && userhead != '') {
 
                         userhead = userhead.substr(0, userhead.lastIndexOf('/'));
@@ -675,6 +678,12 @@ router.get('/', function(req, res, next) {
                                             userInfo.set('userHead', userhead);
                                             flag++;
                                         }
+                                        if (userInfo.get('unionid') == null || userInfo.get('unionid') == '') {
+
+                                            userInfo.set('unionid', unionid);
+                                            flag++;
+
+                                        }
                                         if (flag != 0) {
                                             
                                             userInfo.save().then(function (userInfo) {
@@ -705,6 +714,7 @@ router.get('/', function(req, res, next) {
                                         //post.set('userName', post.id);
                                         post.set('uName', username);
                                         post.set('userHead', userhead);
+                                        post.set('unionid', unionid);
                                         post.set('wallet', wallet);
                                         post.save().then(function (post) {
                                             post.set('userName', post.id);
