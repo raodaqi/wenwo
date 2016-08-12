@@ -414,7 +414,22 @@ router.get('/pay', function(req, res, next) {
                                     var notifyUrl = 'http://www.wenwobei.com/notify';
                                     //notifyUrl = encodeURIComponent(notifyUrl);
 
-                                    android_wxpay.getBrandWCPayRequestParams({
+                                    // android_wxpay.getBrandWCPayRequestParams({
+                                    //     openid: openid,
+                                    //     body: '问我-美食',
+                                    //     detail: '美食推荐',
+                                    //     out_trade_no: '20160331'+Math.random().toString().substr(2, 10),
+                                    //     total_fee: totalFee,
+                                    //     attach:attach,
+                                    //     spbill_create_ip: ip,
+                                    //     notify_url:notifyUrl
+                                    // }, function(err, result){
+                                    //     // in express
+                                    //     console.log(err);
+                                    //     res.send({code:200,payargs:result});
+                                    // });
+
+                                    android_wxpay.createUnifiedOrder({
                                         openid: openid,
                                         body: '问我-美食',
                                         detail: '美食推荐',
@@ -423,11 +438,21 @@ router.get('/pay', function(req, res, next) {
                                         attach:attach,
                                         spbill_create_ip: ip,
                                         notify_url:notifyUrl,
-                                        trade_type:'APP'
-                                    }, function(err, result){
-                                        // in express
+                                        trade_type : "APP"
+                                    } ,function(err, data){
+                                        var reqparam = {
+                                            appId: config.androidAppid,
+                                            timeStamp: Math.floor(Date.now()/1000)+"",
+                                            nonceStr: data.nonce_str,
+                                            package: "prepay_id="+data.prepay_id,
+                                            signType: "MD5"
+                                        };
+                                        reqparam.paySign = android_wxpay.sign(reqparam);
+
+
                                         console.log(err);
-                                        res.send({code:200,payargs:result});
+                                        res.send({code:200,payargs:reqparam});
+
                                     });
 
                                 }
