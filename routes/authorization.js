@@ -33,6 +33,13 @@ var wxpay = WXPay({
     pfx: fs.readFileSync('./routes/certificate/apiclient_cert.p12'), //微信商户平台证书
 });
 
+var android_wxpay = WXPay({
+    appid: config.androidAppid,
+    mch_id: config.androidMchid,
+    partner_key: key, //微信商户平台API密钥
+    pfx: fs.readFileSync('./routes/certificate/android_apiclient_cert.p12'), //微信商户平台证书
+});
+
 
 router.get('/wx', function(req, res, next) {
     // var url = req.originalUrl;
@@ -407,7 +414,7 @@ router.get('/pay', function(req, res, next) {
                                     var notifyUrl = 'http://www.wenwobei.com/notify';
                                     //notifyUrl = encodeURIComponent(notifyUrl);
 
-                                    wxpay.getBrandWCPayRequestParams({
+                                    android_wxpay.getBrandWCPayRequestParams({
                                         openid: openid,
                                         body: '问我-美食',
                                         detail: '美食推荐',
