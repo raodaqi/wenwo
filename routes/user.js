@@ -75,6 +75,9 @@ router.post('/login', function (req, res, next) {
             var username = rdata.nickname;
             var userhead = rdata.headimgurl;
             var openid = rdata.openid;
+
+            var unionid = rdata.unionid;
+
             if (userhead != null) {
 
                 userhead = userhead.substr(0, userhead.lastIndexOf('/'));
@@ -109,36 +112,59 @@ router.post('/login', function (req, res, next) {
 
                 }
                 else {
-                    // console.log('no');
-                    var post = new Post();
-                    var wallet = new Wallet();
-                    wallet.set('money', 0);
-                    wallet.save().then(function (wallet) {
-                        // console.log(wallet);
-                        //post.set('userName', post.id);
-                        console.log("测试："+username);
-                        post.set('uName', username);
-                        post.set('userHead', userhead);
-                        post.set('wallet', wallet);
-                        post.save().then(function (post) {
-                            post.set('userName', post.id);
-                            post.save().then(function (post) {
-                                user.set('userInfo', post);
-                                user.set('user', post.id);
-                                user.set('wallet', wallet);
-                                user.save().then(function (user) {
-                                    // var user = AV.User.current();
-                                    // console.log(user);
-                                    //var url = 'http://wenwo.leanapp.cn/?username='+user.get('user');
-                                    // var url = urlReq + '?username='+user.get('user');
-                                    // resG.redirect(url);
+                    var query = new AV.Query('UserInfo');
+                    query.equalTo('unionid', unionid);
+                    query.find().then(function (userInfoList) {
+                       if (userInfoList == null || userInfoList == '') {
 
-                                    resGl.send({code:200,data:{username:user.get('user')},message:'操作成功'});
-                                });
-                            });
+                           // console.log('no');
+                           var post = new Post();
+                           var wallet = new Wallet();
+                           wallet.set('money', 0);
+                           wallet.save().then(function (wallet) {
+                               // console.log(wallet);
+                               //post.set('userName', post.id);
+                               console.log("测试："+username);
+                               post.set('uName', username);
+                               post.set('userHead', userhead);
+                               post.set('unionid', unionid);
+                               post.set('wallet', wallet);
+                               post.save().then(function (post) {
+                                   post.set('userName', post.id);
+                                   post.save().then(function (post) {
+                                       user.set('userInfo', post);
+                                       user.set('user', post.id);
+                                       user.set('wallet', wallet);
+                                       user.save().then(function (user) {
+                                           // var user = AV.User.current();
+                                           // console.log(user);
+                                           //var url = 'http://wenwo.leanapp.cn/?username='+user.get('user');
+                                           // var url = urlReq + '?username='+user.get('user');
+                                           // resG.redirect(url);
 
-                        });
+                                           resGl.send({code:200,data:{username:user.get('user')},message:'操作成功'});
+                                       });
+                                   });
+
+                               });
+                           });
+
+
+                       } else {
+
+                           user.set('user', userInfoList[0].id);
+                           user.save().then(function (user) {
+
+                               resGl.send({code:200,data:{username:user.get('user')},message:'操作成功'});
+
+                           });
+
+
+                       }
+
                     });
+
+
 
                 }
 
