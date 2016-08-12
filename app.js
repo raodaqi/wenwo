@@ -184,15 +184,16 @@ app.get('/share/id/:id', function(req, res) {
       var detail = data.attributes.detail;
       var desc = data.attributes.desc;
       var title = data.attributes.title;
-      res.render('share',{detail:detail,desc:desc,title:title});
+      var pageTitle = data.attributes.pageTitle;
+      res.render('share',{detail:detail,desc:desc,title:title,pageTitle:pageTitle});
       // res.send(detail)
     }else{
-      res.render('share',{detail:"",desc:"",title:""});
+      res.render('share',{detail:"",desc:"",title:"",pageTitle:""});
     }
   }, function (error) {
     // 失败了
     console.log(error);
-    res.render('share',{detail:"",desc:"",title:""});
+    res.render('share',{detail:"",desc:"",title:"",pageTitle:""});
   });
 });
 

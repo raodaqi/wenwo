@@ -547,6 +547,7 @@ router.post('/edit', function (req, res, next) {
     var detail = req.body.detail;
     var title = req.body.title;
     var desc = req.body.desc;
+    var pageTitle = req.body.page_title;
 
     if(!title){
         var result = {
@@ -584,6 +585,7 @@ router.post('/edit', function (req, res, next) {
       share.set('detail',detail);
       share.set('title',title);
       share.set('desc',desc);
+      share.set('pageTitle',pageTitle);
       share.save().then(function (todo) {
         var result = {
             code : 200,

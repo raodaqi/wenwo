@@ -63,10 +63,10 @@
   .send-title,.desc{
     margin:.5rem 0;
   }
-  .send-title{
+  .page-title{
     margin-top: 1rem;
   }
-  .send-title-content,.desc-content{
+  .send-title-content,.desc-content,.send-page-title-content{
     padding:.3rem .4rem;
     font-size: .6rem;
     margin-left: .3rem;
@@ -89,12 +89,16 @@
     <div>
         <script id="editor" type="text/plain" style="width:100%;height:25rem;"></script>
     </div>
+    <div class="page-title">
+      <label>页面标题:</label>
+      <input class="send-page-title-content" type="text" value="">
+    </div>
     <div class="send-title">
-      <label>标题:</label>
+      <label>分享标题:</label>
       <input class="send-title-content" type="text" value="">
     </div>
     <div class="desc">
-      <label>详情:</label>
+      <label>分享详情:</label>
       <input class="desc-content" type="text" value="">
     </div>
     <div class="send">
@@ -124,6 +128,7 @@
   $(".send").on("click",function(){
     var detail = UE.getEditor('editor').getContent();
     var title = $(".send-title-content").val();
+    var pageTitle = $(".send-page-title-content").val();
     var desc  = $(".desc-content").val();
 
     console.log(detail.length);
@@ -145,7 +150,8 @@
       var data = {
         detail: detail,
         title : title,
-        desc  : desc
+        desc  : desc,
+        page_title : pageTitle
       }
       $.ajax({
         type: "POST",

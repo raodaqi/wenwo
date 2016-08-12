@@ -6,12 +6,12 @@
   <meta name='description', content='wenwo,问我,当地人,旅游,攻略,信息,分享,经验,赚钱，美食，成都，好吃'>
   <meta name='author', content='raodqi'>
   <link rel="icon" type="image/x-icon" href="/img/logo.jpg" media="screen">
+  <link rel="stylesheet" href="http://at.alicdn.com/t/font_1470297657_090099.css">
   <title>问我-让经验帮你赚钱</title>
-<script src="/js/jquery.min.js"></script>
 <style>
   body,html{
     box-sizing: border-box;
-    /*margin:0;*/
+    margin:0;
     /*padding:0;*/
     overflow-y: auto !important;
     overflow-x: hidden !important;
@@ -20,61 +20,96 @@
     right: 0;
   }
   section{
-    /*width: 100% !important;*/
     max-width: 100%;
   }
-  /*#edui1,.send-content{
+  .bar {
+    position: fixed;
+    right: 0;
+    left: 0;
+    top:0;
+    z-index: 10;
+    height: 2.7rem !important;
+    padding-right: .5rem;
+    padding-left: .5rem;
+    background-color: #f7f7f8;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+  .bar:after{
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: auto;
+    top: auto;
+    height: 1px;
+    width: 100%;
+    background-color: #e7e7e7;
     display: block;
-    width: 90%;
-    margin: .5rem auto;
-    height: 20rem;
-    padding: .5rem;
-    font-size: .75rem;
-  }*/
-  .send{
-    width: 6rem;
-    height: 2rem;
-    line-height: 2rem;
+    z-index: 15;
+    -webkit-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
+  }
+  .bar .button{
+    position: absolute;
+  }
+  .bar .button-link {
+    position:absolute;
+    top: 0;
+    padding: 0;
+    font-size: .8rem;
+    line-height: 2.7rem;
+    height: 2.7rem;
+    color: #0894ec;
+    border: 0;
+    z-index: 20;
+    margin-top: 0;
+    color: #ee7e2e!important;
+    font-weight: bolder!important;
+  }
+  .title {
+    position: absolute;
+    display: block;
+    width: 14rem;
+    overflow-x: hidden;
     text-align: center;
-    border-radius: .5rem;
-    color: white;
-    border: 1px solid #f2f2f2;
-    background-color: #f88827;
-    cursor: pointer;
-    position: relative;
-    float: right;
-    margin: 2rem;
-    margin-right: 5%;
-  }
-  .send-success{
-    display: none;
-  }
-  .send-success{
+    padding: 0;
+    left:50%;
+    transform: translateX(-50%);
+    margin:0;
+    font-size: 1.02rem;
+    font-weight: 500;
+    line-height: 2.7rem;
+    color: #3d4145;
+    text-overflow: ellipsis;
     text-align: center;
+    white-space: nowrap;
   }
-  .send-url{
-    display: inline-block;
-    width: 26rem;
-    height: 40px;
-    padding: 6px 12px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin: 1rem auto;
+  .content{
+    margin:8px;
+    margin-top:2.7rem;
   }
-  .copy{
-    display: inline-block;
-    width: 3rem;
-    height: 40px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 6px 12px;
-    margin-left: .3rem;
-    cursor: pointer;
+  .icon-zuo{
+    font-size: 1.3rem;
   }
 </style>
 </head>
 <body>
+<header class="bar bar-nav">
+  <a class="button button-link button-nav pull-left">
+    <span class="iconfont icon-zuo"></span>
+  </a>
+  <h1 class='title'>
+    <% if(pageTitle){ %>
+      <%= pageTitle %>
+    <% }else{ %>
+      <%= "问我美食" %>
+    <% } %>
+  </h1>
+</header>
+  <div class="content">
+    
+  </div>
 </body>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <% include footer.ejs %>
@@ -84,9 +119,20 @@ function escape2Html(str) {
  return str.replace(/&(lt|gt|nbsp|amp|quot|#34);/ig,function(all,t){return arrEntities[t];});
 }
 var str = "<%= detail %>";
-$("body").append(escape2Html(str));
+$(".content").append(escape2Html(str));
+
+$(".pull-left").on("click",function(){
+   var url = window.location.hash;
+  if (!url.split("#")[1]) {
+    window.history.go(-1);
+  } else {
+    window.location.href = "/food";
+  }
+})
+
 
 var url = $("img").attr("src");
+url = url.split("#")[0];
 WX_SHARE_IMGURL = url;
 WX_SHARE_LINK = window.location.href;
 WX_SHARE_DESC = "<%= desc %>";
