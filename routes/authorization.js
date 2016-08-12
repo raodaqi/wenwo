@@ -429,7 +429,7 @@ router.get('/pay', function(req, res, next) {
                                     //     res.send({code:200,payargs:result});
                                     // });
 
-                                    var data = {
+                                    var datareq = {
                                         openid: openid,
                                         body: '问我-美食',
                                         detail: '美食推荐',
@@ -440,7 +440,7 @@ router.get('/pay', function(req, res, next) {
                                         notify_url:notifyUrl,
                                         trade_type : "APP"
                                     };
-                                    data.sign = getSign(data);
+                                    datareq.sign = getSign(data);
 
 
                                     android_wxpay.createUnifiedOrder({
@@ -453,7 +453,7 @@ router.get('/pay', function(req, res, next) {
                                         spbill_create_ip: ip,
                                         notify_url:notifyUrl,
                                         trade_type : "APP",
-                                        sign : data.sign
+                                        sign : datareq.sign
 
                                     } ,function(err, data){
                                         var reqparam = {
@@ -464,7 +464,7 @@ router.get('/pay', function(req, res, next) {
                                             signType: "MD5"
                                         };
                                         // reqparam.paySign = android_wxpay.sign(reqparam);
-                                        reqparam.paySign = data.sign;
+                                        reqparam.paySign = datareq.sign;
 
 
                                         console.log(err);
