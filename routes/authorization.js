@@ -429,18 +429,18 @@ router.get('/pay', function(req, res, next) {
                                     //     res.send({code:200,payargs:result});
                                     // });
 
-                                    var datareq = {
-                                        openid: openid,
-                                        body: '问我-美食',
-                                        detail: '美食推荐',
-                                        out_trade_no: '20160331'+Math.random().toString().substr(2, 10),
-                                        total_fee: totalFee,
-                                        attach:attach,
-                                        spbill_create_ip: ip,
-                                        notify_url:notifyUrl,
-                                        trade_type : "APP"
-                                    };
-                                    datareq.sign = getSign(datareq);
+                                    // var datareq = {
+                                    //     openid: openid,
+                                    //     body: '问我-美食',
+                                    //     detail: '美食推荐',
+                                    //     out_trade_no: '20160331'+Math.random().toString().substr(2, 10),
+                                    //     total_fee: totalFee,
+                                    //     attach:attach,
+                                    //     spbill_create_ip: ip,
+                                    //     notify_url:notifyUrl,
+                                    //     trade_type : "APP"
+                                    // };
+                                    // datareq.sign = getSign(datareq);
 
 
                                     android_wxpay.createUnifiedOrder({
@@ -452,8 +452,8 @@ router.get('/pay', function(req, res, next) {
                                         attach:attach,
                                         spbill_create_ip: ip,
                                         notify_url:notifyUrl,
-                                        trade_type : "APP",
-                                        sign : datareq.sign
+                                        trade_type : "APP"
+                                        // sign : datareq.sign
 
                                     } ,function(err, data){
                                         var reqparam = {
@@ -463,8 +463,8 @@ router.get('/pay', function(req, res, next) {
                                             package: "prepay_id="+data.prepay_id,
                                             signType: "MD5"
                                         };
-                                        // reqparam.paySign = android_wxpay.sign(reqparam);
-                                        reqparam.paySign = datareq.sign;
+                                        reqparam.paySign = android_wxpay.sign(reqparam);
+                                        // reqparam.paySign = datareq.sign;
 
 
                                         console.log(err);
