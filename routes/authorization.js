@@ -425,7 +425,7 @@ router.get('/pay', function(req, res, next) {
                                         notify_url:notifyUrl
                                     }, function(err, result){
                                         // in express
-                                        // console.log(result);
+                                        console.log(err);
                                         res.send({code:200,payargs:result});
                                     });
 
