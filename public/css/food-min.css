@@ -75,6 +75,10 @@ body {
     color: #999999
 }
 
+#share .share-content,#buy .buy-content{
+    padding-bottom: 0px;
+}
+
 .down-like,
 .down-like-num,
 .down-buy-num,

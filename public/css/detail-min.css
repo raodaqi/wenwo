@@ -292,6 +292,10 @@ body {
     padding: .05rem .1rem
 }
 
+.modal-overlay, .popup-overlay, .preloader-indicator-overlay{
+    background: rgba(0,0,0,.7);
+}
+
 .dialog-dislike-content,
 .dialog-dislike-send-content {
     position: absolute;
@@ -299,7 +303,7 @@ body {
     width: 98%;
     left: 1%;
     height: 5.03rem;
-    top: 2rem;
+    top: 5rem;
     background-color: white
 }
 

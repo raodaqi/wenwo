@@ -225,6 +225,61 @@ router.get('/getapply', function(req, res, next) {
     });
 });
 
+router.get('/getdata', function(req, res, next) {
+    var userNum,
+        askNum,
+        havedNum,
+        buyNum,
+        deleteNum;
+    var query = new AV.Query('UserInfo');
+    query.count().then(function (count) {
+        console.log(count);
+        //保存用户数量
+        userNum = count;
+
+        var query = new AV.Query('AskMe');
+        query.count().then(function (count) {
+            console.log(count);
+            //ask的数量
+            askNum = count;
+            var query = new AV.Query('Haved');
+            query.count().then(function (count) {
+                console.log(count);
+                //ask的数量
+                havedNum = count;
+                var query = new AV.Query('Haved');
+                query.exists('income');
+                query.count().then(function (count) {
+                    console.log(count);
+                    //ask的数量
+                    buyNum = count;
+                    var query = new AV.Query('AskMe');
+                    query.equalTo('staus', "6");
+                    query.count().then(function (count) {
+                        console.log(count);
+                        //ask的数量
+                        deleteNum = count;
+                        var data = {
+                            userNum   : userNum,
+                            askNum    : askNum,
+                            havedNum  : havedNum,
+                            buyNum    : buyNum,
+                            deleteNum : deleteNum
+                        }
+
+                        var result = {
+                            code : 200,
+                            data : data,
+                            message : "success"
+                        }
+                        res.send(result);
+                    });
+                });
+            });
+        });
+    });
+});
+
 router.get('/applyinfo', function(req, res, next) {
     // var user = AV.User.current();
     // if (user == null || user == '') {

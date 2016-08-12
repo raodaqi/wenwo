@@ -330,6 +330,7 @@
             $(".photo-content").attr("data-href",localStorage.editImage);
             $(".photo-content").attr("data-percent","100");
             $(".photo-content").attr("src",localStorage.editImage);
+            $(".photo .edit-li-img").attr("src", "/img/edit/photo-02.png");
           }
 
           //初始化标签
@@ -504,6 +505,7 @@
               $(".photo-content").attr("data-href",askImage[0].image);
               $(".photo-content").attr("data-percent","100");
               $(".photo-content").attr("src",askImage[0].image);
+              $(".photo .edit-li-img").attr("src", "/img/edit/photo-02.png");
             }
           }
 

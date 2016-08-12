@@ -64,7 +64,7 @@ function initLocation(type,callback) {
                         // alert('已选择 ' + res.localIds.length + ' 张图片');
                         console.log(res);
                         $(".photo-content").attr("src",localId);
-
+                        $(".photo .edit-li-img").attr("src", "/img/edit/photo-02.png");
                         $(".photo-content").attr("data-percent","50");
 
                         wx.uploadImage({
