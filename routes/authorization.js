@@ -440,7 +440,7 @@ router.get('/pay', function(req, res, next) {
                                         notify_url:notifyUrl,
                                         trade_type : "APP"
                                     };
-                                    datareq.sign = getSign(data);
+                                    datareq.sign = getSign(datareq);
 
 
                                     android_wxpay.createUnifiedOrder({
