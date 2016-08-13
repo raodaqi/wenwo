@@ -459,6 +459,38 @@ router.get('/getask', function(req, res, next) {
     });
 });
 
+router.post('/addLook', function(req, res, next) {
+    var user = AV.User.current();
+    var askId = req.body.ask_id;
+    if(user){
+        var query = new AV.Query('AskMe');
+        query.get(askId).then(function (ask) {
+            ask.increment('lookNum', 1);
+            ask.save().then(function (data) {
+              // 因为使用了 fetchWhenSave 选项，save 调用之后，如果成功的话，对象的计数器字段是当前系统最新值。
+                var result = {
+                    code : 200,
+                    data : data,
+                    message : 'success'
+                }
+                res.send(result);
+            }, function (error) {
+              var result = {
+                    code : 400,
+                    message : 'error'
+                }
+                res.send(result);
+            });
+        });
+    }else{
+        var result = {
+            code : 800,
+            message : 'no user'
+        }
+        res.send(result);
+    }  
+});
+
 router.get('/askadmin', function(req, res, next) {
     var askId = req.param('ask_id');
     var query = new AV.Query('AskMe');
