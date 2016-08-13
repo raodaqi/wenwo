@@ -332,7 +332,7 @@ app.get('/edit_test', function(req, res) {
 app.get('/detail', function(req, res) {
   var askid =  req.query.askid;
   var username = "573b0e3df38c8400673bb48d";
-  console.log(askid);
+  // console.log(askid);
   if(username && test){
     res.render('detail', {askid:askid,username:username});
     return;
