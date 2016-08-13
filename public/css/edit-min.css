@@ -218,7 +218,8 @@ body {
     height: 1.5rem;
     margin-left: -.5rem;
     margin-top: -.5rem;
-    border-radius: 50%
+    border-radius: 50%;
+    background-color: white;
 }
 
 .icon-left {

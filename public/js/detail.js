@@ -4,11 +4,11 @@
   // $(function(){
 
   //浏览人数添加
-  function addLook(callback){
+  function addLook(AskId,callback){
     $.ajax({
-      type: "GET",
-      url: "/manage/addLook",
-      data: {},
+      type: "POST",
+      url: "/ask/addLook",
+      data: {ask_id:AskId},
       dataType: "json",
       success:function(result){
         if(result.code == 200){
@@ -27,6 +27,14 @@
   console.log(UserName);
   if (AskId) {
       getAskDetail(AskId, UserName);
+      addLook(AskId,{
+        success:function(result){
+          console.log(result);
+        },
+        error:function(error){
+          console.log(error);
+        }
+      });
   }
   // });
   function init() {

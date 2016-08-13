@@ -1,4 +1,4 @@
-浏览人数添加接口：
+<!-- 浏览人数添加接口：
 
 ```
 URL      /ask/addLook
@@ -12,7 +12,21 @@ return   {
 
 ```
 
-关联应用：
+信息吐槽接口：
+
+```
+URL      /ask/debase
+TYPE     POST
+method   ask_id
+return   {
+            code : 200,
+            data : data,
+            message : 'success'
+        }
+
+``` -->
+
+<!-- 关联应用：
 
 ```
 avoscloud add <origin> <appId>
@@ -47,4 +61,4 @@ avoscloud publish
 * [JavaScript 指南](https://leancloud.cn/docs/js_guide.html)
 * [JavaScript SDK API](https://leancloud.cn/api-docs/javascript/index.html)
 * [命令行工具详解](https://leancloud.cn/docs/cloud_code_commandline.html)
-* [LeanEngine FAQ](https://leancloud.cn/docs/cloud_code_faq.html)
+* [LeanEngine FAQ](https://leancloud.cn/docs/cloud_code_faq.html) -->

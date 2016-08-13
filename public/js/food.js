@@ -10,6 +10,11 @@
   LAT = 30.580596;
   LNG = 103.982984;
 
+  window.onpopstate = function(event) {
+    alert($(".page-current").id);
+    // $(".amap-sug-result").hide(); 
+  };
+
   $.showPreloader("正在加载");
   initLocation("food",{
       success: function(lng, lat) {
