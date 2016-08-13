@@ -89,24 +89,32 @@
     margin:8px;
     margin-top:2.7rem;
   }
+  <% if(type == "app"){ %>
+    .content{
+      margin:8px;
+      margin-top:.7rem;
+    }
+  <% } %>
   .icon-zuo{
     font-size: 1.3rem;
   }
 </style>
 </head>
 <body>
-<header class="bar bar-nav">
-  <a class="button button-link button-nav pull-left">
-    <span class="iconfont icon-zuo"></span>
-  </a>
-  <h1 class='title'>
-    <% if(pageTitle){ %>
-      <%= pageTitle %>
-    <% }else{ %>
-      <%= "问我美食" %>
-    <% } %>
-  </h1>
-</header>
+<% if(type != "app"){ %>
+  <header class="bar bar-nav">
+    <a class="button button-link button-nav pull-left">
+      <span class="iconfont icon-zuo"></span>
+    </a>
+    <h1 class='title'>
+      <% if(pageTitle){ %>
+        <%= pageTitle %>
+      <% }else{ %>
+        <%= "问我美食" %>
+      <% } %>
+    </h1>
+  </header>
+<% } %>
   <div class="content">
     
   </div>
@@ -133,6 +141,7 @@ $(".pull-left").on("click",function(){
 
 var url = $("img").attr("src");
 url = url.split("#")[0];
+
 WX_SHARE_IMGURL = url;
 WX_SHARE_LINK = window.location.href;
 WX_SHARE_DESC = "<%= desc %>";

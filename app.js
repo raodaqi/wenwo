@@ -176,6 +176,8 @@ app.get('/share/edit', function(req, res) {
 });
 app.get('/share/id/:id', function(req, res) {
   var id = req.params.id;
+  var type = req.query.type;
+
   var query = new AV.Query('Share');
   query.get(id).then(function (data) {
     // 成功获得实例
@@ -185,15 +187,15 @@ app.get('/share/id/:id', function(req, res) {
       var desc = data.attributes.desc;
       var title = data.attributes.title;
       var pageTitle = data.attributes.pageTitle;
-      res.render('share',{detail:detail,desc:desc,title:title,pageTitle:pageTitle});
+      res.render('share',{detail:detail,desc:desc,title:title,pageTitle:pageTitle,type:type});
       // res.send(detail)
     }else{
-      res.render('share',{detail:"",desc:"",title:"",pageTitle:""});
+      res.render('share',{detail:"",desc:"",title:"",pageTitle:"",type:type});
     }
   }, function (error) {
     // 失败了
     console.log(error);
-    res.render('share',{detail:"",desc:"",title:"",pageTitle:""});
+    res.render('share',{detail:"",desc:"",title:"",pageTitle:"",type:type});
   });
 });
 

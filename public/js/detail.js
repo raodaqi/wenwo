@@ -3,6 +3,10 @@
   //页面加载执行
   // $(function(){
 
+  // function addLook(){
+    
+  // }
+
   console.log(UserName);
   if (AskId) {
       getAskDetail(AskId, UserName);
