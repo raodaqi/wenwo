@@ -156,7 +156,7 @@ body {
 .header-bar {
     position: absolute;
     width: 100%;
-    top: 2rem
+    top: 2.3rem
 }
 
 .header-content {
@@ -166,7 +166,7 @@ body {
 
 .line {
     width: 100%;
-    border: .05rem solid #d4d4d4;
+    border-bottom: 1px solid #d4d4d4;
     margin-top: .05rem
 }
 
@@ -566,10 +566,11 @@ textarea {
 
 .circle-title {
     display: block;
-    font-size: .5rem;
+    font-size: .67rem;
     width: 3rem;
     text-align: center;
-    margin-left: -1.25rem
+    margin-left: -1.25rem;
+    margin-top: -2.9rem;
 }
 
 .page {
@@ -711,3 +712,6 @@ textarea {
       color:#999;
       font-size: .75rem;
     }
+.add-header .header-content{
+    margin-top: 1.8rem
+}

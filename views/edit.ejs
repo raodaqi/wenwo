@@ -460,7 +460,18 @@
       }else{
         $.router.load("#router"+num);
       }
-      
+    })
+    $(".page").swipeRight(function(){
+      // window.history.go(-1);
+      var id = this.id;
+      var num = id.replace(/[^0-9]/ig,"");
+      if(!num){
+        num = 0;
+      }
+      if(num == 5){
+        return;
+      }
+      window.history.go(-1);
     })
   </script>
 

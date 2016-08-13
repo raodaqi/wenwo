@@ -53,7 +53,7 @@
           }
       })
 
-      $(".edit-li,.next-view,.pre-view,.circle").on("click", function() {
+      $(".edit-li,.next-view,.pre-view,.circle").on("touchstart", function() {
           var href = $(this).attr("data-href");
           if (href.split("#")[1]) {
               $.router.load(href);
