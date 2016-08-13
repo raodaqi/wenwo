@@ -3,9 +3,26 @@
   //页面加载执行
   // $(function(){
 
-  // function addLook(){
-    
-  // }
+  //浏览人数添加
+  function addLook(callback){
+    $.ajax({
+      type: "GET",
+      url: "/manage/addLook",
+      data: {},
+      dataType: "json",
+      success:function(result){
+        if(result.code == 200){
+          callback.success(result);
+        }else{
+          callback.error(result);
+        }
+      },
+      error:function(error){
+        $.toast("服务器出错");
+        callback.error(error);
+      }
+    })
+  }
 
   console.log(UserName);
   if (AskId) {

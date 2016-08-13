@@ -1,21 +1,15 @@
-# node-js-getting-started
-
-一个简单的使用 Express 4 的 Node.js 应用。
-可以运行在 LeanEngine Node.js 运行时环境。
-
-## 本地运行
-
-首先确认本机已经安装 [Node.js](http://nodejs.org/) 运行环境和 [LeanCloud 命令行工具](https://leancloud.cn/docs/cloud_code_commandline.html)，然后执行下列指令：
+浏览人数添加接口：
 
 ```
-$ git clone git@github.com:leancloud/node-js-getting-started.git
-$ cd node-js-getting-started
-```
+URL      /ask/addLook
+TYPE     POST
+method   ask_id
+return   {
+            code : 200,
+            data : data,
+            message : 'success'
+        }
 
-安装依赖：
-
-```
-npm install
 ```
 
 关联应用：
