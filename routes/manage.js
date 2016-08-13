@@ -5,6 +5,7 @@
 var router = require('express').Router();
 var AV = require('leanengine');
 var Admin = AV.Object.extend('AdminAccount');
+var schedule = require("node-schedule");
 
 var qiniu = require("qiniu");
 
@@ -225,12 +226,36 @@ router.get('/getapply', function(req, res, next) {
     });
 });
 
-router.get('/getdata', function(req, res, next) {
+function formatDate(format, timestamp, full) {
+    format = format.toLowerCase();
+    if (!format) format = "y-m-d h:i:s";
+
+    function zeroFull(str) {
+        // console.log(full);
+        // return full ? (str >= 10 ? str : ('0' + str)) : str;
+        return (str >= 10 ? str : ('0' + str));
+    }
+    var time = new Date(timestamp),
+        o = {
+            y: time.getFullYear(),
+            m: zeroFull(time.getMonth() + 1),
+            d: zeroFull(time.getDate()),
+            h: zeroFull(time.getHours()),
+            i: zeroFull(time.getMinutes()),
+            s: zeroFull(time.getSeconds())
+        };
+    return format.replace(/([a-z])(\1)*/ig, function(m) {
+        return o[m];
+    });
+};   
+
+function getManageData(callback){
     var userNum,
         askNum,
         havedNum,
         buyNum,
         deleteNum;
+
     var query = new AV.Query('UserInfo');
     query.count().then(function (count) {
         console.log(count);
@@ -266,14 +291,105 @@ router.get('/getdata', function(req, res, next) {
                             buyNum    : buyNum,
                             deleteNum : deleteNum
                         }
+                        callback.success(data);
+                        // var result = {
+                        //     code : 200,
+                        //     data : data,
+                        //     message : "success"
+                        // }
+                        // res.send(result);
+                    });
+                });
+            });
+        });
+    });
+}
 
+function saveToday(callback){
+    getManageData({
+        success:function(data){
+            var date = new Date();
+            date = formatDate("y-m-d",date);
+            console.log(date);
+            var query = new AV.Query('ManageData');
+            query.equalTo('today', date);
+            query.first().then(function (result) {
+                // data 就是符合条件的第一个 AV.Object
+                console.log(result);
+                if(!result){
+                    var ManageData = AV.Object.extend('ManageData');
+                    var manageData = new ManageData();
+                      // 设置名称
+                        manageData.set('userNum',data.userNum);
+                        manageData.set('askNum',data.askNum);
+                        manageData.set('havedNum',data.havedNum);
+                        manageData.set('buyNum',data.buyNum);
+                        manageData.set('deleteNum',data.deleteNum);
+                        manageData.set('today',date);
+                        manageData.save().then(function (manageData) {
+                            // console.log('objectId is ' + todo.id);
+                            console.log(manageData);
+                        }, function (error) {
+                            console.log(error);
+                        });
+                }
+              }, function (error) {
+            });
+        }
+    })
+}
 
-                        var result = {
-                            code : 200,
-                            data : data,
-                            message : "success"
+router.get('/getdata', function(req, res, next) {
+    var userNum,
+        askNum,
+        havedNum,
+        buyNum,
+        deleteNum;
+
+    var query = new AV.Query('UserInfo');
+    query.count().then(function (count) {
+        //保存用户数量
+        userNum = count;
+
+        var query = new AV.Query('AskMe');
+        query.count().then(function (count) {
+            //ask的数量
+            askNum = count;
+            var query = new AV.Query('Haved');
+            query.count().then(function (count) {
+                console.log(count);
+                //ask的数量
+                havedNum = count;
+                var query = new AV.Query('Haved');
+                query.exists('income');
+                query.count().then(function (count) {
+                    //ask的数量
+                    buyNum = count;
+                    var query = new AV.Query('AskMe');
+                    query.equalTo('staus', "6");
+                    query.count().then(function (count) {
+                        //ask的数量
+                        deleteNum = count;
+                        var data = {
+                            userNum   : userNum,
+                            askNum    : askNum,
+                            havedNum  : havedNum,
+                            buyNum    : buyNum,
+                            deleteNum : deleteNum
                         }
-                        res.send(result);
+                        // saveToday(data);
+                        var query = new AV.Query('ManageData');
+                        query.descending('createdAt');
+                        query.limit(2);// 最多返回 2 条结果
+                        query.find().then(function (results) {
+                            var result = {
+                                code : 200,
+                                data : data,
+                                dayData :  results,
+                                message : "success"
+                            }
+                            res.send(result);
+                        })
                     });
                 });
             });
@@ -660,5 +776,15 @@ router.post('/edit', function (req, res, next) {
       });
     }  
 });
+
+//定时计算数据
+// 初始化并设置定时任务的时间 每天早上0：00: 10点计算
+var rule = new schedule.RecurrenceRule();
+rule.hour = 0;rule.minute = 0;rule.second = 10;
+
+//处理要做的事情
+ var j = schedule.scheduleJob(rule, function(){
+    saveToday();
+ });
 
 module.exports = router;

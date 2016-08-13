@@ -31,6 +31,7 @@
         height: 60px;
         background: #f8bd38;
         border-radius: 5px;
+        margin-bottom: 3rem;
     }
     .logo {
         color: #fff;
@@ -347,11 +348,92 @@
         width: 100%;
         border:0;
     }
+    .manageData{
+        top:3.2rem;
+        position: absolute;
+        /*margin-top:1rem;*/
+        text-align: center;
+        width: 900px;
+        left:50%;
+        transform: translateX(-50%);
+        margin-left: 3rem;
+    }
+    .data-li{
+        float: left;
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+        border:1px solid #4cd964;
+        margin:0  2rem;
+    }
+    .li-title{
+        font-size: .4rem;
+        color:#b0b0b0;
+    }
+    .li-num{
+        margin-top: .5rem;
+    }
+    .yestoday,.today{
+        position: absolute;
+        font-size: .5rem;
+        border:1px solid #ccc;
+        border-radius: 5px;
+        margin-left: 3.2rem;
+        padding:.05rem .2rem;
+    }
+    .yestoday{
+        bottom:.2rem;
+    }
+    .today{
+        top:.2rem;
+    }
+    .yestoday .color{
+        color:red;
+        font-size: .65rem;
+        margin-left: .1rem;
+    }
+    .today .color{
+        color:#008be7;
+        font-size: .65rem;
+        margin-left: .1rem;
+    }
 </style>
 <body>
     <div class="wrap">
         <div class="title-bar">
             <div class="logo" id="logo">WenWo</div>
+        </div>
+        <div class="manageData">
+            <div class="userNum data-li">
+                <div class="li-num">--</div>
+                <div class="li-title">用户数量</div>
+                <div class="yestoday">昨<label class="color">--</label></div>
+                <div class="today">今<label class="color">--</label></div>
+            </div>
+            <div class="askNum data-li">
+                <div class="li-num">--</div>
+                <div class="li-title">信息数量</div>
+                <div class="yestoday">昨<label class="color">--</label></div>
+                <div class="today">今<label class="color">--</label></div>
+            </div>
+            <div class="havedNum data-li">
+                <div class="li-num">--</div>
+                <div class="li-title">购买数量</div>
+                <div class="yestoday">昨<label class="color">--</label></div>
+                <div class="today">今<label class="color">--</label></div>
+            </div>
+            <div class="buyNum data-li">
+                <div class="li-num">--</div>
+                <div class="li-title">付费数量</div>
+                <div class="yestoday">昨<label class="color">--</label></div>
+                <div class="today">今<label class="color">--</label></div>
+            </div>
+            <div class="deleteNum data-li">
+                <div class="li-num">--</div>
+                <div class="li-title">删除数量</div>
+                <div class="yestoday">昨<label class="color">--</label></div>
+                <div class="today">今<label class="color">--</label></div>
+            </div>
         </div>
         <div>
             <div class="list side-bar">
@@ -482,6 +564,57 @@
             $("."+id).show();
             $(".list li").removeClass("side-bar-backcheck");
             $(this).addClass("side-bar-backcheck");
+        })
+
+        //初始化后台数据
+        function getManageData(callback){
+            $.ajax({
+              type: "GET",
+              url: "/manage/getdata",
+              data: {},
+              dataType: "json",
+              success:function(result){
+                if(result.code == 200){
+                    callback.success(result);
+                }else{
+                    callback.error(result);
+                }
+              },
+              error:function(error){
+                $.toast("服务器出错");
+                callback.error(error);
+              }
+          })
+        }
+        getManageData({
+            success:function(result){
+                console.log(result);
+                if(result.code == 200){
+                    var data = result.data;
+                    var dayData = result.dayData;
+                    $(".userNum .li-num").text(data.userNum);
+                    $(".buyNum .li-num").text(data.buyNum);
+                    $(".havedNum .li-num").text(data.havedNum);
+                    $(".deleteNum .li-num").text(data.deleteNum);
+                    $(".askNum .li-num").text(data.askNum);
+
+                    //计算昨日新增。今日新增
+                    $(".userNum .yestoday .color").text(dayData[0].userNum - dayData[1].userNum);
+                    $(".buyNum .yestoday .color").text(dayData[0].buyNum - dayData[1].buyNum);
+                    $(".havedNum .yestoday .color").text(dayData[0].havedNum - dayData[1].havedNum);
+                    $(".deleteNum .yestoday .color").text(dayData[0].deleteNum - dayData[1].deleteNum);
+                    $(".askNum .yestoday .color").text(dayData[0].askNum - dayData[1].askNum);
+
+                    $(".userNum .today .color").text(data.userNum - dayData[0].userNum);
+                    $(".buyNum .today .color").text(data.buyNum - dayData[0].buyNum);
+                    $(".havedNum .today .color").text(data.havedNum - dayData[0].havedNum);
+                    $(".deleteNum .today .color").text(data.deleteNum - dayData[0].deleteNum);
+                    $(".askNum .today .color").text(data.askNum - dayData[0].askNum);
+                }
+            },
+            error:function(error){
+                $.toast("请求失败");
+            }
         })
 
         //初始化轮播图功能
