@@ -264,6 +264,34 @@ app.get('/food', function(req, res) {
   res.render('food', { username: username, lng:"0", lat:"0"});
 });
 
+app.get('/newfood', function(req, res) {
+  var username =  req.query.username;
+  var lng = req.query.geox;
+  var lat = req.query.geoy;
+  var user = AV.User.current();
+
+  if(!username){
+    var username = "573b0e3df38c8400673bb48d";
+  }
+  if(username && test){
+    res.render('newfood', { username: username, lng:lng, lat:lat});
+    return ;
+  }
+
+  if (!user) {
+    authorize(req, res);
+  }else{
+    var username = user.get('user');
+    // console.log(username);
+    // console.log(user);
+    // var authData = user.get('authData');
+    // authData = JSON.parse(authData);
+    res.render('newfood', {user:user, username: username, lng:lng, lat:lat});
+    return ;
+  }
+  res.render('newfood', { username: username, lng:"0", lat:"0"});
+});
+
 app.get('/testedit', function(req, res) {
   var type = req.query.type;
   var askid = req.query.askid;

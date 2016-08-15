@@ -1,0 +1,344 @@
+<% include header.ejs %>
+<link href='http://api.youziku.com/webfont/CSS/578f43dcf629e300d8f428f5' rel='stylesheet' type='text/css' />
+<link rel="stylesheet" href="/css/sm-extend.min.css">
+<link rel="stylesheet" href="/css/food-min.css">
+</head>
+<body>
+ <img src="/img/loading.png" alt="" class="hide-img">
+  <div class="wenwo-content page page-current" id='find'>
+    <header class="bar bar-nav">
+      <div class="header-me iconfont icon-gerenzhongxin"></div>
+      <h1 class="title">问我-美食</h1>
+    </header>
+    <div class="distance distance-fixed">距离1KM</div>
+    <!-- 这里是所有的信息列表 -->
+    <div class="find-content content pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="55" data-distance="100">
+      <!-- 默认的下拉刷新层 -->    
+      <div class="pull-to-refresh-layer">
+        <div class="preloader-tip">刷新成功</div>
+        <div class="preloader"></div>
+        <div class="pull-to-refresh-arrow"></div>
+      </div>
+
+      <!-- Slider -->
+      <div class="swiper-container" data-space-between='10' data-loop='true' data-autoplay='7000' data-autoplay-disable-on-interaction='false'>
+        <div class="swiper-wrapper">
+          <!-- <div class="swiper-slide" data-href="/share/id/57a84fba1532bc0060d62179"><img src="/img/scroll/page2.jpg" alt=""></div>
+          <div class="swiper-slide" data-href="/share/id/57a84f52165abd00616471d9"><img src="/img/scroll/page1.jpg" alt=""></div> -->
+        </div>
+        <div class="swiper-pagination"></div>
+        <!-- <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div> -->
+      </div>
+      
+      <div class="wenwo-ul">
+      </div>
+      <div class="infinite-scroll-preloader" >
+        <div class="preloader"></div>
+        <div class="ask-end" style="display:none">启禀陛下，您已经到底了。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 这里是所有的信息列表 -->
+  <div class="wenwo-content page" id="like">
+    <header class="bar bar-nav">
+      <h1 class="title">想吃</h1>
+    </header>
+    <!-- 这里是想吃的信息列表 -->
+    <div class="like-content content pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="55" data-distance="100">
+      <!-- 默认的下拉刷新层 -->    
+      <div class="pull-to-refresh-layer">
+        <div class="preloader"></div>
+        <div class="pull-to-refresh-arrow"></div>
+      </div>
+      <div class="wenwo-ul"></div>
+      <div class="want-content">
+        <img src="/img/food/want-empty.svg" class="empty-img" alt="">
+        <div class="empty-title">没有想吃的美食？</div>
+        <div class="empty-button" data-href="#find">去随便逛逛</div>
+
+        <div class="wenwo-logo-content">
+          <img src="/img/wenwo.svg" class="wenwo-logo" alt="">
+          <div class="wenwo-title">
+            让经验帮你赚钱
+          </div>
+        </div>
+      </div>
+      <div class="infinite-scroll-preloader" >
+        <div class="preloader"></div>
+        <div class="ask-end" style="display:none">启禀陛下，您已经到底了。</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="wenwo-content page" id="buy">
+    <header class="bar bar-nav">
+      <a class="button button-link button-nav pull-left back" href="#">
+        <span class="icon icon-left"></span>
+      </a>
+      <h1 class="title">朕查阅的</h1>
+    </header>
+  <!-- 这里是购买的的信息列表 -->
+    <div class="buy-content content pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="55" data-distance="100">
+      <!-- 默认的下拉刷新层 -->    
+      <div class="pull-to-refresh-layer">
+        <div class="preloader"></div>
+        <div class="pull-to-refresh-arrow"></div>
+      </div>
+      <div class="wenwo-ul"></div>
+      <div class="want-content">
+        <img src="/img/food/want-empty.svg" class="empty-img" alt="">
+        <div class="empty-title">皇上，您还没有查阅任何美食</div>
+        <div class="empty-button" data-href="#find">去查阅美食</div>
+
+        <div class="wenwo-logo-content">
+          <img src="/img/wenwo.svg" class="wenwo-logo" alt="">
+          <div class="wenwo-title">
+            让经验帮你赚钱
+          </div>
+        </div>
+      </div>
+      <div class="infinite-scroll-preloader" >
+        <div class="preloader"></div>
+        <div class="ask-end" style="display:none">启禀陛下，您已经到底了。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wenwo-content page" id="share">
+    <header class="bar bar-nav">
+      <a class="button button-link button-nav pull-left back" href="#">
+        <span class="icon icon-left"></span>
+      </a>
+      <h1 class="title">朕分享的</h1>
+    </header>
+  <!-- 这里是购买的的信息列表 -->
+    <div class="share-content content pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="55" data-distance="100">
+      <!-- 默认的下拉刷新层 -->    
+      <div class="pull-to-refresh-layer">
+        <div class="preloader"></div>
+        <div class="pull-to-refresh-arrow"></div>
+      </div>
+      <div class="wenwo-ul">
+      </div>
+      <div class="want-content">
+        <img src="/img/food/want-empty.svg" class="empty-img" alt="">
+        <div class="empty-title">皇上，您还没有分享的美食</div>
+        <div class="empty-button" data-href="edit">点臣妾去分享</div>
+
+        <div class="wenwo-logo-content">
+          <img src="/img/wenwo.svg" class="wenwo-logo" alt="">
+          <div class="wenwo-title">
+            让经验帮你赚钱
+          </div>
+        </div>
+      </div>
+      <div class="infinite-scroll-preloader" >
+        <div class="preloader"></div>
+        <div class="ask-end" style="display:none">启禀陛下，您已经到底了。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 这里是所有的信息列表 -->
+  <div class="wenwo-content page" id="me">
+    <header class="bar bar-nav">
+      <a class="button button-link button-nav pull-left back" href="#">
+        <span class="icon icon-left"></span>
+      </a>
+      <h1 class="title">个人中心</h1>
+    </header>
+    <div class="content">
+      <div class="detail-pic-bg">
+
+        <i class="ui-loading-bright"></i>
+
+        <div class="detail-pic-content" style="display:none">
+          <!-- <img src="http://wx.qlogo.cn/mmopen/zngt7mjBQUdFiaKIVGQbhF3jRURfqibW3EtNPALJewxicdPAyGfyMpZkeHZIW1UXUmjEia3QicdYqickSiaywQcKBUS6GMWSEw67Rry/" alt="" class="pic-bg"> -->
+          <div class="pic-bg" style='background: url("/img/head.png") center center / cover no-repeat'></div>
+          <div class="bg-mask"></div>
+
+          <div class="user-pic-content">
+            <img src="/img/head.png" alt="" class="user-pic">
+            <div class="user-name">饶大奇</div>
+          </div>
+        </div>
+
+        <div class="list-content" style="display:none">
+          <div class="list-li">
+            <label class="list-li-like-num">22</label>
+            <label>想吃</label>
+          </div>
+          <div class="list-li">
+            <label class="list-li-like-share">27</label>
+            <label>分享</label>
+          </div>
+          <div class="list-li">
+            <label class="list-li-like-total">253.86</label>
+            <label>总收益</label>
+            <span class="icon iconfont icon-tixing"></span>
+          </div>
+        </div>
+
+        <div class="list-block">
+          <ul class="my-ask">
+            <li class="item-content item-link" data-href="#buy">
+              <div class="before-media"><i class="iconfont icon-shoppingcart"></i></div>
+              <div class="item-media"><i class="icon icon-f7"></i></div>
+              <div class="item-inner">
+                <div class="item-title">朕查阅的</div>
+                <div class="item-after itm-buy">30</div>
+              </div>
+            </li>
+            <li class="item-content item-link" data-href="#share">
+              <div class="before-media"><i class="iconfont icon-myshare"></i></div>
+              <div class="item-media"><i class="icon icon-f7"></i></div>
+              <div class="item-inner">
+                <div class="item-title">朕分享的</div>
+                <div class="item-after item-share">0</div>
+              </div>
+            </li>
+          </ul>
+
+          <ul class="">
+            <li class="item-content item-link item-share">
+              <div class="before-media"><i class="iconfont icon-invite"></i></div>
+              <div class="item-media"><i class="icon icon-f7"></i></div>
+              <div class="item-inner">
+                <div class="item-title">邀请爱卿使用</div>
+              </div>
+            </li>
+            <li class="item-content item-link item-message" data-href="http://form.mikecrm.com/Qg7fK7">
+              <div class="before-media"><i class="iconfont icon-feedback"></i></div>
+              <div class="item-media"><i class="icon icon-f7"></i></div>
+              <div class="item-inner">
+                <div class="item-title">给小问子提意见</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="modal-overlay modal-overlay-visible" style="display:none;"></div>
+    <div class="modal modal-in model-share" style="display: none; margin-top: -72px;">
+      <img class="invite-img" src="/img/invite.png">
+    </div>
+
+    <div class="modal modal-in model-tip" style="display: none; margin-top: -72px;">
+      <div class="tip-content">
+        <div class="tip-content-title">计费说明</div>
+        <div class="tip-content-li">
+          <div>1)&nbsp;&nbsp;&nbsp;收益来源于你分享的内容，你可以设定每条信息的查看价格，其他人查看，需要付费。</div>
+        </div>
+        <div class="tip-content-li">
+          <div>2)&nbsp;&nbsp;&nbsp;收入扣除10%为收益，每天早9点自动入库微信钱包，但低于1元不入库。</div>
+        </div>
+        <div class="tip-content-get">朕知道了</div>
+      </div>
+    </div>
+
+    <div class="wenwo-logo-content">
+      <img src="/img/wenwo.svg" class="wenwo-logo" alt="">
+      <div class="wenwo-title">
+        让经验帮你赚钱
+      </div>
+    </div>
+  </div>
+
+  <nav class="bar bar-tab">
+    <a class="tab-item find active" data-type="find" href="#">
+      <span class="icon iconfont icon-faxian-empty"></span>
+      <span class="tab-label">发现</span>
+    </a>
+    <a class="tab-item edit" data-type="edit" href="#">
+      <!-- <span class="icon iconfont icon-bianji"></span>
+      <span class="tab-label">发布</span> -->
+      <img src="/img/food/send.svg" alt="" class="send-button">
+    </a>
+    <a class="tab-item like" data-type="like" href="#">
+      <span class="icon icon-likeEat"></span>
+      <span class="tab-label">想吃</span>
+    </a>
+  </nav>
+  <div class="dialog-buy">
+    <div class="modal-overlay modal-overlay-visible"></div>
+    <div class="modal">
+      <div class="modal-inner">
+        <div class="modal-title">小问提醒</div>
+        <div class="modal-text">123</div>
+      </div>
+      <div class="modal-buttons ">
+        <span class="modal-button modal-button-cancel">取消</span>
+        <span class="modal-button modal-button-bold">确定</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 这里是所有的最新美食列表 -->
+  <div class="wenwo-content page page-current" id='new'>
+    <header class="bar bar-nav">
+      <a class="button button-link button-nav pull-left back" href="#">
+        <span class="icon icon-left"></span>
+      </a>
+      <h1 class="title">最新美食</h1>
+    </header>
+    <!-- 这里是所有的信息列表 -->
+    <div class="find-content content pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="55" data-distance="100">
+      <!-- 默认的下拉刷新层 -->    
+      <div class="pull-to-refresh-layer">
+        <div class="preloader-tip">刷新成功</div>
+        <div class="preloader"></div>
+        <div class="pull-to-refresh-arrow"></div>
+      </div>
+      <div class="wenwo-ul">
+      </div>
+      <div class="infinite-scroll-preloader" >
+        <div class="preloader"></div>
+        <div class="ask-end" style="display:none">启禀陛下，您已经到底了。</div>
+      </div>
+    </div>
+  </div>
+
+</body>
+<% include footer.ejs %>
+<script type='text/javascript' src='/js/extend.js' charset='utf-8'></script>
+<script type='text/javascript' src='/js/sm-extend.min.js' charset='utf-8'></script>
+<script>
+  //初始化幻灯片
+  // $(function() {
+  //   $(".swiper-container").swiper({
+  //     speed: 400,
+  //     autoplay: 3000,
+  //     loop:true,
+  //     autoplayDisableOnInteraction:false
+  //   });
+  // });
+
+  //用户名
+  var UserName = "<%= username %>";
+  function initTop(){
+    // var topNum = localStorage.top;
+    // if(topNum){
+    //   $("#"+typ+" .find-content").scrollTop(topNum);
+    // }
+    var findTop = localStorage.findTop;
+    var likeTop = localStorage.likeTop;
+    var shareTop = localStorage.shareTop;
+    var buyTop = localStorage.buyTop;
+    if(findTop){
+      $("#find .find-content").scrollTop(findTop);
+    }
+    if(likeTop){
+      $("#like .like-content").scrollTop(likeTop);
+    }
+    if(shareTop){
+      $("#share .share-content").scrollTop(shareTop);
+    }
+    if(buyTop){
+      $("#buy .buy-content").scrollTop(buyTop);
+    }
+  }
+</script>
+<script type='text/javascript' src='/js/food.js' charset='utf-8'></script>
+</html>

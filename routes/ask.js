@@ -29,6 +29,8 @@ router.get('/allask', function(req, res, next) {
     var staus = req.param('staus') != null ? req.param('staus') : '1';
     var type = req.param('type') != null ? req.param('type') : null;
     var geo = req.param('position_geo') != null ? req.param('position_geo') : null;
+    var range = req.param('range') != null ? req.param('range') : null;
+
     //console.log(staus);
     var query = new AV.Query('AskMe');
     // query.include('askTag');
@@ -58,7 +60,11 @@ router.get('/allask', function(req, res, next) {
         var point = new AV.GeoPoint(parseFloat(position[0]),parseFloat(position[1]));
         // query.descending('score');
         query.withinKilometers('positionGeo', point, 3000.0);
+    }
 
+    if(range){
+        query.withinKilometers('positionGeo', point, range/1000);
+        query.ascending('score');
     }
 
     query.find().then(function(results) {
@@ -1932,6 +1938,12 @@ router.get('/getalltag', function (req, res, next) {
             code : 200,
             data : list,
             message : 'Operation succeeded'
+        }
+        res.send(result);
+    },function (error) {
+        var result = {
+            code : 400,
+            message : 'error'
         }
         res.send(result);
     });

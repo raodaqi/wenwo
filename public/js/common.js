@@ -236,6 +236,17 @@ $.hidePreloader = function(){
     // formatJSON(data[i].askPosition) ? (long > 10000 ? (formatJSON(data[i].askPosition).city +" "+ formatJSON(data[i].askPosition).district) : formatJSON(data[i].askPosition).district);
   }
 
+  //格式化距离
+  function formatRange(long){
+    var range = '';
+    if(long >= 1000){
+      range = parseFloat(long/1000).toFixed(1) + "km";
+    }else{
+      range = parseInt(long) + "m";
+    }
+    return range;
+  }
+
   //解析json字符串
   function formatJSON(str){
     //判断是否是标准json字符串

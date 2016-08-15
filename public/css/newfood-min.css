@@ -1,0 +1,546 @@
+html {
+    font-size: 20px
+}
+
+body {
+    position: absolute;
+    left: 0;
+    right: 0!important;
+    padding: 0;
+    margin: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #f8fafa
+}
+
+.title {
+    font-size: 20px
+}
+
+#find .title {
+    font-size: 1rem;
+    color: #f88827;
+    font-family: 'GJJZhiYi-M12S4acca5d8b2bf4';
+    font-weight: 600
+}
+
+.wenwo-li {
+    background-color: white;
+    height: 6.4rem;
+    padding:.7rem .5rem;
+    margin-bottom: 2px;
+    margin-top: .2rem
+}
+
+.up-content {
+    height: 3.65rem
+}
+
+.user-pic {
+    float: left;
+    display: block;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: .4rem;
+    border: 1px solid #f2f2f2
+}
+
+.ask-content {
+    padding-left: 4rem
+}
+
+.ask-tag {
+    font-weight: bold;
+    font-size: .8rem;
+    color: #000;
+    width: 7rem;
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.ask-add{
+	/*float: right;*/
+	right:.5rem;
+	position: absolute;
+	margin-top: -.3rem;
+    font-size: .6rem;
+    color: #999999;
+    line-height: 1.5rem;
+}
+
+.ask-content {
+    font-size: .6rem;
+    color: #999999
+}
+
+#share .share-content,#buy .buy-content{
+    padding-bottom: 0px;
+}
+
+.down-like,
+.down-like-num,
+.down-buy-num,
+.down-buy {
+    border-radius: 15px;
+    border: 1px solid #e2e2e2;
+    padding: .1rem .6rem;
+    display: inline-block;
+    color: #666;
+    font-size: .7rem
+}
+.down-like-num,
+.down-buy-num{
+    font-size: .67rem;
+}
+.down-buy-num{
+    margin-left: .3rem;
+    background-color: #18CDA4;
+    color: white;
+}
+.down-like-num .like-num,.down-buy-num .buy-num{
+    color:#ff6699;
+    padding:0;
+    font-size: .72rem;
+    padding: 0 .1rem;
+}
+.down-buy-num .buy-num{
+    color:yellow;
+}
+
+.ask-reason{
+	/*width: */
+}
+
+.down-buy {
+    border: 0;
+    background-color: #1ccda6;
+    color: white;
+    padding: .1rem .8rem;
+    font-size: 14px;
+    margin-left: 7px
+}
+
+.free {
+    background-color: #f88827
+}
+
+.like-num {
+    padding-left: .25rem
+}
+
+.down-time {
+    float: right;
+    font-size: .6rem;
+    color: #cccccc;
+    line-height: 1.5rem
+}
+
+.header-me {
+    position: absolute;
+    float: left;
+    line-height: 2rem;
+    font-size: 1rem;
+    font-weight: bold;
+    z-index: 2;
+    color: #f88827;
+    margin-left: 5px
+}
+
+#me,
+#buy,
+#share,
+#new {
+    z-index: 20002
+}
+
+#buy,
+#share,
+#new {
+    z-index: 40000
+}
+
+.infinite-scroll-preloader {
+    margin-top: 10px
+}
+
+.ask-reason {
+    max-height: 1.8rem;
+    margin-top: 5px;
+    font-size: .67rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical
+}
+
+.content {
+    padding-bottom: 50px
+}
+
+.new-content{
+    padding-bottom: 0px
+}
+
+.detail-pic-bg,
+.bg-mask {
+    height: 10rem;
+    width: 100%;
+    position: absolute
+}
+
+.bg-mask {
+    background: rgba(0, 0, 0, 0.8)
+}
+
+.pic-bg {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    /*background-size: cover;*/
+    /*background-position: center center;*/
+	/*margin-top: -*/
+}
+
+.user-pic-content {
+    display: block;
+    position: absolute;
+    width: 4rem;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 1.5rem;
+    text-align: center
+}
+
+.user-pic-content .user-pic {
+    margin-left: .5rem
+}
+
+.user-pic {
+    display: block;
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: .3rem
+}
+
+#me .user-pic {
+    width: 3.5rem;
+    height: 3.5rem;
+    /*margin: 0 auto;*/
+    margin-left:.25rem;
+    border-radius: 50%;
+    border: 2px solid #999999;
+}
+
+.user-name {
+    width: 100%;
+    text-align: center;
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: "webfont"!important
+}
+
+.list-content {
+    position: absolute;
+    top: 7.2rem;
+    width: 100%;
+    color: white;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: .7rem
+}
+
+.list-li {
+    width: 13.33%;
+    margin: 0 10%;
+    float: left;
+    text-align: center
+}
+
+.list-li label {
+    display: block;
+    width: 100%;
+    text-align: center
+}
+
+.list-block {
+    margin-top: 10.5rem;
+    color: #6a6a6a
+}
+
+.list-block .iconfont {
+    color: #f88827
+}
+
+.item-title {
+    padding-left: .5rem
+}
+
+.before-media {
+    position: absolute;
+    line-height: 2rem;
+    font-size: 1rem
+}
+.before-media i{
+	font-size: 1rem;
+	margin-left: -.2rem;
+}
+
+.my-ask {
+    margin-bottom: 1rem!important
+}
+
+.ask-end {
+    font-size: .7rem;
+    color: #a7a7a7
+}
+
+.iconfont {
+    font-family: "iconfont"!important
+}
+
+.bar-tab .tab-item.active,
+.bar-tab .tab-item:active {
+    color: #f88827
+}
+
+.want-content {
+    display: none;
+    width: 100%;
+    text-align: center;
+    padding-top: 70px
+}
+
+.empty-img {
+    display: block;
+    width: 100px;
+    height: 100%;
+    margin: 0 auto
+}
+
+.empty-title {
+    margin-top: 20px;
+    color: #666
+}
+
+.empty-button {
+    width: 180px;
+    height: 35px;
+    margin: 40px auto;
+    line-height: 35px;
+    background-color: #f88827;
+    font-size: 16px;
+    color: white;
+    border-radius: 5px
+}
+
+.invite-img {
+    padding: 10px 15px;
+    width: 100%
+}
+
+#me .modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0!important;
+    padding: 0!important;
+    width: 100%;
+    height: 100%
+}
+
+.modal-overlay,
+.popup-overlay,
+.preloader-indicator-overlay {
+    background: rgba(0, 0, 0, .7)
+}
+
+.preloader-modal {
+    z-index: 40000
+}
+
+.send-button {
+    width: 54px;
+    height: 45px;
+    margin-top: 3px
+}
+
+.icon-tixing {
+    display: block;
+    color: #ccc;
+    font-weight: 100;
+    margin-right: 5px;
+    position: absolute;
+    font-size: .6.5rem;
+    right: .5rem;
+    top: 1rem
+}
+
+.ask-price {
+    position: absolute;
+    right: 10px;
+    margin-top: -23px
+}
+
+.preloader-tip {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 15px;
+    display: none
+}
+
+.icon-faxian-empty {
+    color: #f88827
+}
+
+.icon-faxian-empty:before {
+    content: "\e61e"
+}
+
+.active .icon-faxian-empty:before {
+    content: "\e61c"!important
+}
+
+.hide-img {
+    width: 0;
+    height: 0
+}
+
+.wenwo-logo-content {
+    position: absolute;
+    bottom: .3rem;
+    width: 100%;
+    z-index: 10000;
+    text-align: center
+}
+
+.wenwo-logo {
+    position: absolute;
+    bottom: .12rem;
+    margin-right: .3rem;
+    /*width: 22px;
+    height: 22px;*/
+    width: .8rem;
+    height: .8rem;
+}
+
+.wenwo-title {
+    font-size: 10px;
+    color: #f88827;
+    margin-left: 22px;
+    display: inline-block
+}
+
+.dialog-buy .modal-overlay {
+    z-index: 30000
+}
+
+.dialog-buy {
+    z-index: 50000;
+    display: none;
+    opacity: 1
+}
+
+.dialog-buy .modal {
+    width: 12rem;
+    height: 8rem;
+    margin-left: -6rem;
+    margin-top: -4rem;
+    z-index: 30001;
+    display: block;
+    opacity: 1
+}
+
+.dialog-buy .modal-button {
+    color: #f88827
+}
+
+.dialog-buy .modal-text {
+    font-size: .6rem
+}
+
+.buyed {
+    background-color: #c9c9c9!important
+}
+
+.pull-to-refresh-arrow {
+    display: none
+}
+
+.distance {
+    position: relative;
+    font-size: .65rem;
+    color: #f88827;
+    padding: .2rem 0;
+    text-align: right;
+    padding-right:.5rem !important;
+}
+
+.distance-fixed {
+    display: none;
+    position: fixed;
+    top: 2.2rem;
+    z-index: 2;
+    color: #f88827;
+    width: 100%;
+    background-color: #f8fafa
+}
+
+.page {
+    background-color: #f8fafa
+}
+
+body,
+html {
+    height: 100%!important;
+    padding: 0!important;
+    margin: 0!important;
+    overflow-y: hidden!important
+}
+
+.isfocus-title {
+    display: block;
+    text-align: center;
+    font-size: .6rem;
+    color: #999;
+    margin-top: .8rem
+}
+
+.isfocus-img {
+    display: block;
+    width: 7rem;
+    margin: .3rem auto
+}
+
+.isfocus-content {
+    position: absolute;
+    width: 100%;
+    background: white
+}
+
+#me .ui-loading-bright {
+    position: absolute;
+    margin-top: 4rem;
+    left: 50%;
+    margin-left: -37px
+}
+.swiper-container{
+    /*display: none;*/
+    height: 8.5rem;
+    /*height: 32%;
+    max-height: 10rem;*/
+}
+.swiper-slide img{
+    width: 100%;
+    /*height: 100%;*/
+}
+
+.icon-new:before{
+    content:"\e62a";
+}
