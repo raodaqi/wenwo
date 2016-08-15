@@ -152,6 +152,12 @@ body {
 #buy,
 #share,
 #new {
+    z-index: 20002
+}
+
+#buy,
+#share,
+#new {
     z-index: 40000
 }
 
