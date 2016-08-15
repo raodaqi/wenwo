@@ -64,7 +64,7 @@ router.get('/allask', function(req, res, next) {
 
     if(range){
         query.withinKilometers('positionGeo', point, range/1000);
-        query.descending("score");
+        query.descending("likeNum");
     }
 
     query.find().then(function(results) {
@@ -133,6 +133,34 @@ router.get('/allask', function(req, res, next) {
 
 
 
+    });
+
+});
+
+
+router.get('/sbask', function(req, res, next) {
+    var query = new AV.Query('AskMe');
+    query.descending('createdAt');
+    query.find().then(function(results) {
+        for(var i = 0; i < results.length; i++){
+            var askResult = results[i];
+            query.get(results[i].id).then(function (ask) {
+                // console.log(ask);
+                // 成功获得实例
+                // data 就是 id 为 57328ca079bc44005c2472d0 的 Todo 对象实例
+                // if(ask.attributes.score != parseInt(ask.attributes.testScore)){
+                //     ask.set("score",parseInt(ask.attributes.testScore));
+                //     ask.save().then(function (todo) {
+                //         console.log('objectId is ' + todo.id);
+                //       }, function (error) {
+                //         console.log(error);
+                //       });
+                // }
+                
+            }, function (error) {
+                // 失败了
+            });
+        }
     });
 
 });

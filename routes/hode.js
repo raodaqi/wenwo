@@ -177,7 +177,7 @@ router.post('/get', function(req, res, next) {
                                                 if (relation == '' || relation == null) {
                                                     var num = 0;
                                                     ask.set('buyNum', num.toString());
-                                                    ask.set('score', (parseInt(ask.get('score')) + 1).toString());
+                                                    ask.set('score', (parseInt(ask.get('score')) + 1));
                                                     ask.save().then(function (ask) {
                                                         var result = {
                                                             code : 200,
@@ -192,7 +192,7 @@ router.post('/get', function(req, res, next) {
                                                     relation.query().find().then(function (list) {
                                                         var num = list.length;
                                                         ask.set('buyNum', num.toString());
-                                                        ask.set('score', (parseInt(ask.get('score')) + 1).toString());
+                                                        ask.set('score', (parseInt(ask.get('score')) + 1));
                                                         ask.save().then(function (ask) {
                                                             var result = {
                                                                 code : 200,
@@ -276,7 +276,7 @@ router.post('/get', function(req, res, next) {
                                                                             if (relation == '' || relation == null) {
                                                                                 var num = 0;
                                                                                 ask.set('buyNum', num.toString());
-                                                                                ask.set('score', (parseInt(ask.get('score')) + 1).toString());
+                                                                                ask.set('score', (parseInt(ask.get('score')) + 1));
                                                                                 ask.save().then(function (ask) {
                                                                                     var result = {
                                                                                         code : 200,
@@ -292,7 +292,7 @@ router.post('/get', function(req, res, next) {
                                                                                     var num = list.length;
                                                                                     // console.log('num:'+num);
                                                                                     ask.set('buyNum', num.toString());
-                                                                                    ask.set('score', (parseInt(ask.get('score')) + 1).toString());
+                                                                                    ask.set('score', (parseInt(ask.get('score')) + 1));
                                                                                     ask.save().then(function (ask) {
                                                                                         var result = {
                                                                                             code : 200,
@@ -507,7 +507,7 @@ router.post('/foodlike', function(req, res, next) {
                     ask.set('likeNum', (parseInt(ask.get('likeNum'))+1).toString());
                     foodLike.save().then(function (re) {
 
-                        ask.set('score', (parseInt(ask.get('score')) + 1).toString());
+                        ask.set('score', ask.get('score') + 1);
                         ask.save().then(function () {
                             var result = {
                                 code : 200,
@@ -565,7 +565,7 @@ router.post('/cancelfoodlike', function(req, res, next) {
 
                         var todo = AV.Object.createWithoutData('FoodLike', fooLikes[i].id);
                         todo.destroy().then(function (success) {
-                            ask.set('score', (parseInt(ask.get('score'))-1).toString());
+                            ask.set('score', ask.get('score')-1);
                             ask.set('likeNum', (parseInt(ask.get('likeNum'))-1).toString());
                             ask.save().then(function (ask) {
 

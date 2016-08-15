@@ -560,7 +560,7 @@ app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
             have.set('askOwn', ask.get('createBy'));
             have.set('income', incomeTotal);
 
-            ask.set('score', (parseInt(ask.get('score'))+1).toString());
+            ask.set('score', ask.get('score')+1);
             ask.set('buyNum', (parseInt(ask.get('buyNum'))+1).toString());
 
 
