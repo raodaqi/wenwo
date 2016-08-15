@@ -150,7 +150,8 @@ body {
 
 #me,
 #buy,
-#share {
+#share,
+#new {
     z-index: 40000
 }
 
@@ -171,6 +172,10 @@ body {
 
 .content {
     padding-bottom: 50px
+}
+
+.new-content{
+    padding-bottom: 0px
 }
 
 .detail-pic-bg,
@@ -528,4 +533,8 @@ html {
 .swiper-slide img{
     width: 100%;
     /*height: 100%;*/
+}
+
+.icon-new:before{
+    content:"\e62a";
 }

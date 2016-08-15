@@ -470,7 +470,7 @@ router.post('/addLook', function(req, res, next) {
               // 因为使用了 fetchWhenSave 选项，save 调用之后，如果成功的话，对象的计数器字段是当前系统最新值。
                 var result = {
                     code : 200,
-                    data : data,
+                    // data : data,
                     message : 'success'
                 }
                 res.send(result);
