@@ -53,14 +53,22 @@
           }
       })
 
-      $(".edit-li,.next-view,.pre-view,.circle").on("touchstart", function() {
+      $(".edit-li,.next-view,.pre-view").on("click", function() {
           var href = $(this).attr("data-href");
           if (href.split("#")[1]) {
               $.router.load(href);
           } else {
               $.router.load("#" + href);
           }
+      })
 
+      $(".circle").on("touchstart", function() {
+          var href = $(this).attr("data-href");
+          if (href.split("#")[1]) {
+              $.router.load(href);
+          } else {
+              $.router.load("#" + href);
+          }
       })
 
       //地址标注说明取消
@@ -950,6 +958,11 @@
 
       //监听手机是否返回
       window.onpopstate = function(event) {
+          // alert($(".page-current")[0].id);
+          var id = $(".page-current")[0].id;
+          if(id == "success"){
+            window.location.href="/food";
+          }
           $("#address").blur();
           // $(".amap-sug-result").hide(); 
       };
