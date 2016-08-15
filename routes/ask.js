@@ -64,7 +64,7 @@ router.get('/allask', function(req, res, next) {
 
     if(range){
         query.withinKilometers('positionGeo', point, range/1000);
-        query.ascending('score');
+        query.descending("score");
     }
 
     query.find().then(function(results) {
