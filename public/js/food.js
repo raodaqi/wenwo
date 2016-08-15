@@ -181,7 +181,6 @@
               initNewListPage(0,20);
               break;
           case "new":
-              console.log("newsss");
               var findTop = localStorage.findTop;
               if(findTop > 2077){
                 addItems(40, 0,"new");
@@ -259,7 +258,6 @@
   var timer = '';
   //双击头部返回头部
   $(".bar").on("doubleTap", function() {
-      console.log($("#find .wenwo-ul").height());
       var scroolTime = 1;
       var scroolSppeed = $("#find .wenwo-ul").height() / 100;
       timer = setInterval(function() {
@@ -317,7 +315,6 @@
       var title3Top = $(".title3").length ? $(".title3").offset().top : 10000;
       var title4Top = $(".title4").length ? $(".title4").offset().top : 10000;
       var top = $("#find .find-content").scrollTop();
-      console.log(title1Top);
 
       // localStorage["top"] = top;
 
@@ -405,7 +402,6 @@
           getAskMe(page, number, '', UserName,'', {
               success: function(result) {
                   // 生成新条目的HTML
-                  console.log(result);
                   var html = '';
                   var data = result.data;
                   if (data) {
@@ -499,7 +495,6 @@
   // 注册'infinite'事件处理函数
   $(document).on('infinite', '#find .infinite-scroll-bottom', function() {
 
-      console.log($(this).parent()[0].id);
       var type = $(this).parent()[0].id;
       // 如果正在加载，则退出
       if (loading) return;
@@ -514,7 +509,6 @@
 
       // 更新最后加载的序号
       lastIndex = $('#'+type+' .wenwo-li').length;
-      console.log(lastIndex);
       // 添加新条目
       addItems(itemsPerLoad, lastIndex,type);
       //容器发生改变,如果是js滚动，需要刷新滚动
@@ -527,10 +521,8 @@
     var height = $(this).height();
     var ulHeight = $("#new .wenwo-ul").height();
     var scroll = $(this).scrollTop();
-    console.log(height+"jh:"+scroll+"jkh:"+ulHeight);
     if(scroll + height > ulHeight - 50){
       lastIndex = $('#new .wenwo-li').length;
-      console.log(lastIndex);
       // 添加新条目
       addItems(itemsPerLoad, lastIndex,"new");
       //容器发生改变,如果是js滚动，需要刷新滚动
@@ -554,7 +546,6 @@
       getAskMe(0, 20, '', UserName,'', {
           success: function(result) {
               // 生成新条目的HTML
-              console.log(result);
               var html = '';
               var data = result.data;
 
@@ -630,7 +621,6 @@
       getAskMe(page, number, '', UserName,'new', {
           success: function(result) {
               // 生成新条目的HTML
-              console.log(result);
               var html = '';
               var data = result.data;
               if (data) {
@@ -689,7 +679,6 @@
                   if (number > data.length) {
                     // 加载完毕，则注销无限加载事件，以防不必要的加载
                     $.detachInfiniteScroll($('#new .infinite-scroll'));
-                    console.log("over");
                     // 删除加载提示符
                     // $('.infinite-scroll-preloader').remove();
                     $("#new .infinite-scroll-preloader .preloader").hide();
@@ -721,7 +710,6 @@
       getLikeList(UserName, {
           success: function(result) {
               if (result.code == 200) {
-                  console.log(result);
                   var html = '';
                   var data = result.askDetail;
                   if (!data.length) {
@@ -755,7 +743,6 @@
       // console.log($());
       var type = $(this).attr("data-type");
       var active = $(".active").attr("data-type");
-      console.log(type);
       $(".tab-item").removeClass("active");
       $(this).addClass("active");
       if (type == active) {
@@ -809,10 +796,8 @@
   $(".wenwo-ul").on("click", ".down-like", function() {
       //获取点击后的id
       var askId = $(this).parent().parent().attr("data-id");
-      console.log($(this).parent(".page").id);
       var num = $(this).children(".like-num").text();
       //获取是否是已想吃
-      console.log($(this).hasClass("liked"));
       if ($(this).hasClass("liked")) {
           //已经是想吃的    取消想吃
           num = parseInt(num) - 1;
@@ -820,7 +805,6 @@
           $(this).removeClass("liked");
           cancelLike(UserName, askId, this, {
               success: function(result, $_this) {
-                  console.log(result);
                   if (result.code == 200) {
 
                   } else {
@@ -830,7 +814,6 @@
                   }
               },
               error: function(error, $_this) {
-                  console.log(error);
                   num++;
                   $($_this).children(".like-num").text(num);
                   $($_this).addClass("liked");
