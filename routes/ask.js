@@ -64,7 +64,7 @@ router.get('/allask', function(req, res, next) {
 
     if(range){
         query.withinKilometers('positionGeo', point, range/1000);
-        query.descending("likeNum");
+        query.descending("score");
     }
 
     query.find().then(function(results) {
@@ -821,11 +821,11 @@ router.get('/like', function(req, res, next) {
                             list[i].save().then(function (lk) {
                                 if (type == 1 || type == '1') {
                                     ask.set('likeNum', (parseInt(ask.get('likeNum'))+2).toString());
-                                    ask.set('score', (parseInt(ask.get('score')) + 1).toString());
+                                    ask.set('score', ask.get('score') + 1);
                                 }
                                 else {
                                     ask.set('likeNum', (parseInt(ask.get('likeNum'))-2).toString());
-                                    ask.set('score', (parseInt(ask.get('score')) - 5).toString());
+                                    ask.set('score', ask.get('score') - 5);
                                 }
                                 ask.save().then(function (ask) {
                                     // var relation = ask.relation('like');
@@ -867,11 +867,11 @@ router.get('/like', function(req, res, next) {
                         relation.add(like);
                         if(type == 1) {
                             ask.set('likeNum', (parseInt(ask.get('likeNum'))+1).toString());
-                            ask.set('score', (parseInt(ask.get('score')) + 1).toString());
+                            ask.set('score', ask.get('score') + 1);
                         }
                         else {
                             ask.set('likeNum', (parseInt(ask.get('likeNum'))-1).toString());
-                            ask.set('score', (parseInt(ask.get('score')) - 5).toString());
+                            ask.set('score', ask.get('score') - 5);
                         }
                         ask.save().then(function (ask) {
                             var num = parseInt(ask.get('likeNum'));
@@ -2139,7 +2139,7 @@ router.post('/debase', function (req, res, next) {
                                 debase.set('askId', askId);
                                 debase.set('content',content);
                                 debase.save().then(function (debase) {
-                                    ask.set('score', ((parseInt(ask.get('score'))) - 5).toString());
+                                    ask.set('score', ask.get('score') - 5);
                                     ask.save().then(function (ask) {
                                         res.send({code:200,data:debase,message:'操作成功'});
                                     });
