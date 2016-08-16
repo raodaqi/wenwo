@@ -576,6 +576,20 @@ textarea {
 .page {
     overflow: auto
 }
+#success{
+    /*background: rgba(0,0,0,0.8) !important;*/
+    background: #1b1b1b !important;
+    opacity: 0.8;
+}
+
+.success-content{
+    padding:1rem;
+}
+
+.success-img{
+    width: 100%;
+    margin-top: 25%;
+}
 
 .share-success {
     font-weight: bold
@@ -586,12 +600,6 @@ textarea {
     height: 7rem
 }
 
-.success-img {
-    display: block;
-    width: 5rem;
-    height: 5rem;
-    margin: .5rem auto
-}
 
 .success-text {
     text-align: center;
@@ -600,32 +608,42 @@ textarea {
 
 .btn-content {
     text-align: center;
-    border-bottom: 1px solid #eee
+    margin-top: 2rem;
 }
 
 .success-btn {
-    width: 5rem;
+    width: 4.7rem;
     height: 1.5rem;
-    border-radius: .3rem;
-    border: 1px solid #f98128;
+    border-bottom: 1px solid #ccc;
     display: inline-block;
-    color: #f98128;
+    color: white;
     line-height: 1.5rem;
     margin: 1rem
 }
 
 .share-text-content {
+    position: absolute;
+    bottom:.5rem;
     padding: .2rem 1rem;
+    padding-left:1.5rem;
     font-size: .5rem;
-    color: #aaa
+    color: #fff
+}
+
+.share-text-content .icon-tixing{
+    position: absolute;
+    font-size: .7rem;
+    color: #fff;
+    left:-.5rem;
+    top:.25rem;
 }
 
 .share-btn {
-    width: 80%;
+    width: 70%;
     height: 2rem;
-    background-color: #f94a28;
+    background-color: #f98128;
     border-radius: .3rem;
-    margin: 1.5rem auto;
+    margin: 2rem auto;
     margin-bottom: 0;
     color: white;
     text-align: center;
@@ -655,7 +673,7 @@ textarea {
 .modal-overlay,
 .popup-overlay,
 .preloader-indicator-overlay {
-    background: rgba(0, 0, 0, .7)
+    background: rgba(0, 0, 0, .9)
 }
 
 .preloader-modal {

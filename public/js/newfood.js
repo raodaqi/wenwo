@@ -702,7 +702,7 @@
           $(".pull-to-refresh-arrow").hide();
           updatePage("#me");
           updatePage("#like");
-          $.router.load("#find");
+          $.router.load("#find",false,"left");
 
           setTimeout(function() {
               $(".pull-to-refresh-arrow").show();

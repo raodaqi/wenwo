@@ -7189,16 +7189,16 @@ Device/OS Detection
      * @param {String} url url
      * @param {Boolean=} ignoreCache 是否强制请求不使用缓存，对 document 生效，默认是 false
      */
-    Router.prototype.load = function(url, ignoreCache) {
+    Router.prototype.load = function(url, ignoreCache,type) {
         if (ignoreCache === undefined) {
             ignoreCache = false;
         }
 
         if (this._isTheSameDocument(location.href, url)) {
-            this._switchToSection(Util.getUrlFragment(url));
+            this._switchToSection(Util.getUrlFragment(url),type);
         } else {
             this._saveDocumentIntoCache($(document), location.href);
-            this._switchToDocument(url, ignoreCache);
+            this._switchToDocument(url, ignoreCache);            
         }
     };
 
@@ -7233,7 +7233,7 @@ Device/OS Detection
      * @param {String} sectionId 待切换显示的块的 id
      * @private
      */
-    Router.prototype._switchToSection = function(sectionId) {
+    Router.prototype._switchToSection = function(sectionId,type) {
         if (!sectionId) {
             return;
         }
@@ -7241,12 +7241,20 @@ Device/OS Detection
         var $curPage = this._getCurrentSection(),
             $newPage = $('#' + sectionId);
 
+        console.log($newPage);
+
         // 如果已经是当前页，不做任何处理
         if ($curPage === $newPage) {
             return;
         }
-
-        this._animateSection($curPage, $newPage, DIRECTION.rightToLeft);
+        if(type == "left"){
+            console.log(type);
+            this._animateSection($curPage, $newPage, DIRECTION.leftToRight);
+        }else{
+            this._animateSection($curPage, $newPage, DIRECTION.rightToLeft);
+        }
+        
+        // this._animateSection($curPage, $newPage, DIRECTION.rightToLeft);
         this._pushNewState('#' + sectionId, sectionId);
     };
 
