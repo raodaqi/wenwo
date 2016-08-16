@@ -75,7 +75,7 @@ body {
     color: #999999
 }
 
-#share .share-content,#buy .buy-content{
+#share .share-content,#buy .buy-content,#tag .tag-content{
     padding-bottom: 0px;
 }
 
@@ -157,7 +157,8 @@ body {
 
 #buy,
 #share,
-#new {
+#new,
+#tag {
     z-index: 40000
 }
 
@@ -543,4 +544,39 @@ html {
 
 .icon-new:before{
     content:"\e62a";
+}
+
+.nav-list-content{
+    width: 94%;
+    margin:.7rem auto;
+    height: 4rem;
+}
+.nav-list{
+    float: left;
+    width: 33.33%;
+    height: 100%;
+    box-sizing: border-box;
+    text-align: center;
+}
+.nav-list .nav-icon{
+    width: 2.6rem;
+    height: 2.6rem;
+    border: 1px solid #f88827;
+    border-radius: 50%;
+    margin:.3rem auto;
+    line-height: 2.6rem;
+    font-size: 1.1rem;
+    color: #f88827;
+}
+.icon-gonglve{
+    font-size: 1.4rem;
+    line-height: 2.3rem;
+}
+.icon-c-classification{
+    font-size: 1.1rem;
+    line-height: 2.3rem;
+}
+.nav-list .nav-title{
+    font-size: .67rem;
+    color: #666;
 }

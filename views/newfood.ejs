@@ -33,7 +33,28 @@
         <!-- <div class="swiper-button-next"></div>
         <div class="swiper-button-prev"></div> -->
       </div>
-      
+        
+      <div class="nav-list-content">
+        <div class="nav-list">
+          <div class="nav-icon">
+            <label class="iconfont icon-c-classification"></label>
+          </div>
+          <div class="nav-title">分类查找</div>
+        </div>
+        <div class="nav-list nav-list-day">
+          <div class="nav-icon">
+            <label>16</label>
+          </div>
+          <div class="nav-title">精选美食卡片</div>
+        </div>
+        <div class="nav-list">
+          <div class="nav-icon">
+            <label class="iconfont icon-gonglve"></label>
+          </div>
+          <div class="nav-title">美食攻略</div>
+        </div>
+      </div>
+
       <div class="wenwo-ul">
       </div>
       <div class="infinite-scroll-preloader" >
@@ -310,6 +331,56 @@
     </div>
   </div>
 
+  <!-- 这里是所有的最新美食列表 -->
+  <div class="wenwo-content page" id='tag'>
+    <header class="bar bar-nav">
+      <a class="button button-link button-nav pull-left back" href="#">
+        <span class="icon icon-left"></span>
+      </a>
+      <h1 class="title"></h1>
+    </header>
+    <!-- 这里是所有的信息列表 -->
+    <div class="tag-content content pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="55" data-distance="100">
+      <!-- 默认的下拉刷新层 -->    
+      <div class="pull-to-refresh-layer">
+        <div class="preloader-tip">刷新成功</div>
+        <div class="preloader"></div>
+        <div class="pull-to-refresh-arrow"></div>
+      </div>
+      <div class="wenwo-ul">
+      </div>
+      <div class="infinite-scroll-preloader" >
+        <div class="preloader"></div>
+        <div class="ask-end" style="display:none">启禀陛下，您已经到底了。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 这里是所有的没事攻略列表 -->
+  <div class="wenwo-content page" id='strategy'>
+    <header class="bar bar-nav">
+      <a class="button button-link button-nav pull-left back" href="#">
+        <span class="icon icon-left"></span>
+      </a>
+      <h1 class="title"></h1>
+    </header>
+    <!-- 这里是所有的信息列表 -->
+    <div class="strategy-content content pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="55" data-distance="100">
+      <!-- 默认的下拉刷新层 -->    
+      <div class="pull-to-refresh-layer">
+        <div class="preloader-tip">刷新成功</div>
+        <div class="preloader"></div>
+        <div class="pull-to-refresh-arrow"></div>
+      </div>
+      <div class="wenwo-ul">
+      </div>
+      <div class="infinite-scroll-preloader" >
+        <div class="preloader"></div>
+        <div class="ask-end" style="display:none">启禀陛下，您已经到底了。</div>
+      </div>
+    </div>
+  </div>
+
 </body>
 <% include footer.ejs %>
 <script type='text/javascript' src='/js/extend.js' charset='utf-8'></script>
@@ -350,6 +421,8 @@
       $("#buy .buy-content").scrollTop(buyTop);
     }
   }
+  var date = new Date();
+  $(".nav-list-day .nav-icon label").text(formatDate("d",date));
 </script>
 <script type='text/javascript' src='/js/newfood.js' charset='utf-8'></script>
 </html>

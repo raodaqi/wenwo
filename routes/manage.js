@@ -339,6 +339,37 @@ function saveToday(callback){
     })
 }
 
+router.get('/deletedata', function(req, res, next) {
+    var priorityQuery = new AV.Query('Haved');
+    priorityQuery.equalTo('byName', "彭勇");
+
+    var statusQuery = new AV.Query('Haved');
+    statusQuery.equalTo('byName', "天凉好个秋");
+
+    query = AV.Query.or(priorityQuery, statusQuery);
+    query.find().then(function (results) {
+        AV.Object.destroyAll(results).then(function (avobjs) {
+          var result = {
+            code : 200,
+            message:"success"
+          }
+          res.send(result);
+        }, function (error) {
+          var result = {
+            code : 400,
+            message:"error"
+          }
+          res.send(result);
+        });
+    }, function (error) {
+        var result = {
+            code : 400,
+            message:"error"
+          }
+        res.send(result);
+    });
+})
+
 router.get('/getdata', function(req, res, next) {
     var userNum,
         askNum,

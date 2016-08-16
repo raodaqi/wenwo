@@ -138,6 +138,103 @@ router.get('/allask', function(req, res, next) {
 });
 
 
+router.get('/gettagask', function(req, res, next) {
+    //page      size
+    var userName = req.param('username');
+    var page = req.param('page') != null ? req.param('page') : 0;
+    var size = req.param('size') != null ? req.param('size') : 1000;
+    var staus = req.param('staus') != null ? req.param('staus') : '1';
+    var type = req.param('type') != null ? req.param('type') : null;
+    var tag = req.param('tag') != null ? req.param('tag') : null;
+
+    var query = new AV.Query('AskMe');
+    if(staus != '4') {
+        query.equalTo('staus', staus);
+    }
+
+    if (type != null) {
+        query.contains("askType", type);
+    }
+    if (size != null) {
+        query.limit(size);
+    }
+    if (tag != null) {
+        query.contains('askTagStr',tag);
+    }
+    
+    query.skip(page*size);
+    query.descending("score");
+
+    query.find().then(function(results) {
+        console.log(results.length);
+
+        var query = new AV.Query('FoodLike');
+
+        query.equalTo("by", userName);
+
+        query.find().then(function (likeList) {
+
+
+            for (var i = 0; i < results.length; i++) {
+                // results[i].attributes.askContentHide = '****';
+                if(results[i].attributes.askIsFree == "0" || results[i].attributes.askPrice !="0.00"){
+                    // var length1 = results[i].get('askContentHide').length;
+                    // var length2 = results[i].get('askContentHide').length;
+                    // results[i].attributes.askContentHide = '';
+                    // for (var j = 0; j < length; j++) {
+                    //     results[i].attributes.askContentHide += '*';
+                    // }
+
+                    results[i].set('shopName', "请购买以后查看");
+                    // results[i].set('askPosition', "请购买以后查看");
+                }
+
+                // var test = results[i].get('askTag');
+                // console.log(test);
+                // var relation = results[i].relation('askTag');
+                // relation.query().find().then(function (list) {
+                //     console.log(list);
+                //
+                // });
+
+                var flag = 0;
+                for ( var k = 0; k < likeList.length; k++) {
+
+                    if (likeList[k].get('ask').id == results[i].id) {
+                        flag ++;
+                        results[i].set('liked', 1);
+
+                        break;
+                    }
+
+                }
+                if (flag == 0) {
+
+                    results[i].set('liked', 0);
+
+
+                }
+
+
+            }
+
+            var result = {
+                code : 200,
+                data : results,
+                message : 'Operation succeeded'
+            }
+
+            res.send(result);
+            return;
+
+        });
+
+
+
+    });
+
+});
+
 router.get('/sbask', function(req, res, next) {
     var query = new AV.Query('AskMe');
     query.descending('createdAt');
