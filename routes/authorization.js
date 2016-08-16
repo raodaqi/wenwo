@@ -297,7 +297,8 @@ router.get('/pay', function(req, res, next) {
             var query = new AV.Query('AskMe');
             query.get(askId).then( function (ask) {
 
-                var score = parseInt(ask.get('score'));
+                var score = ask.get('score');
+                console.log(score);
 
                 console.log(ask.get('askPrice'));
                 if (score < 10 || parseFloat(ask.get('askPrice')) == 0) {
@@ -315,7 +316,7 @@ router.get('/pay', function(req, res, next) {
                         have.set('byUrl', user.get('userHead'));
                         have.set('askOwn', ask.get('createBy'));
                         // have.set('income', incomeTotal);
-                        ask.set('score', (parseInt(ask.get('score'))+1).toString());
+                        ask.set('score', ask.get('score')+1);
                         ask.set('buyNum', (parseInt(ask.get('buyNum'))+1).toString());
 
                         have.save().then(function () {
