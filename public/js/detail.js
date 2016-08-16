@@ -486,16 +486,19 @@
                   $(".modal-overlay-visible").show();
                   $(".modal-dislike-send").show();
                   console.log(result);
-              } else {
+              } else if(result.code == 300) {
                   // callback.error(result);
-                  $.toast("吐槽失败");
+                  $.toast("您已经吐槽过了");
                   console.log(result);
+              }else{
+                $.toast(result.message);
+                console.log(result);
               }
           },
           error: function(error) {
               $.hidePreloader();
               // callback.error(error);
-              console.log(result);
+              console.log(error);
           }
       });
   })

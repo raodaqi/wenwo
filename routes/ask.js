@@ -2128,8 +2128,8 @@ router.post('/debase', function (req, res, next) {
                     if (havedListFlag != 0) {
 
                         var query = new AV.Query('Debase');
-                        query.equelTo('userName', userName);
-                        query.equelTo('askId', askId);
+                        query.equalTo('userName', userName);
+                        query.equalTo('askId', askId);
                         query.find().then(function (debases) {
 
                             if (debases == null || debases == '') {
