@@ -266,7 +266,7 @@ router.get('/pay', function(req, res, next) {
     //问我 - 美食
 
     //var totalFee = req.query.totalFee;
-
+    console.log("ceshi:"+username);
     var askId = req.query.ask_id;
     var userName = req.query.username;
 
