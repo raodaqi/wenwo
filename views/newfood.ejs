@@ -35,19 +35,20 @@
       </div>
         
       <div class="nav-list-content">
-        <div class="nav-list">
+
+        <div class="nav-list" data-href="#tagfind">
           <div class="nav-icon">
             <label class="iconfont icon-c-classification"></label>
           </div>
           <div class="nav-title">分类查找</div>
         </div>
-        <div class="nav-list nav-list-day">
+        <div class="nav-list nav-list-day" data-href="#card">
           <div class="nav-icon">
-            <label>16</label>
+            <label>-</label>
           </div>
           <div class="nav-title">精选美食卡片</div>
         </div>
-        <div class="nav-list">
+        <div class="nav-list" data-href="#strategy">
           <div class="nav-icon">
             <label class="iconfont icon-gonglve"></label>
           </div>
@@ -356,16 +357,102 @@
     </div>
   </div>
 
-  <!-- 这里是所有的没事攻略列表 -->
+  <!-- 这里是所有的美食攻略列表 -->
   <div class="wenwo-content page" id='strategy'>
     <header class="bar bar-nav">
       <a class="button button-link button-nav pull-left back" href="#">
         <span class="icon icon-left"></span>
       </a>
-      <h1 class="title"></h1>
+      <h1 class="title">美食攻略</h1>
     </header>
     <!-- 这里是所有的信息列表 -->
     <div class="strategy-content content pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="55" data-distance="100">
+      <!-- 默认的下拉刷新层 -->    
+      <div class="pull-to-refresh-layer">
+        <div class="preloader-tip">刷新成功</div>
+        <div class="preloader"></div>
+        <div class="pull-to-refresh-arrow"></div>
+      </div>
+      <div class="wenwo-ul strategy-ul">
+      </div>
+      <div class="infinite-scroll-preloader" >
+        <div class="preloader"></div>
+        <div class="ask-end" style="display:none">启禀陛下，您已经到底了。</div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 这里是所有的精选美食卡片 -->
+  <div class="wenwo-content page" id='card'>
+    <header class="bar bar-nav">
+      <a class="button button-link button-nav pull-left back" href="#">
+        <span class="icon icon-left"></span>
+      </a>
+      <h1 class="title">精选美食卡片</h1>
+    </header>
+    <!-- 这里是所有的信息列表 -->
+    <div class="card-content content pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="55" data-distance="100">
+      <!-- 默认的下拉刷新层 -->    
+      <div class="pull-to-refresh-layer">
+        <div class="preloader-tip">刷新成功</div>
+        <div class="preloader"></div>
+        <div class="pull-to-refresh-arrow"></div>
+      </div>
+      
+      <!-- Slider -->
+        <div class="swiper-container" data-space-between='10' data-autoplay-disable-on-interaction='false'>
+          <div class="swiper-wrapper">
+            <div class="swiper-slide swiper-slide-active">
+              <div class="card-li">
+                <div style="background: url(http://o83np3eq2.bkt.clouddn.com/wenwo/1470880794219/MFLdM1uiaoKUaCjXrrQ9lHdCHDrZgHkStCE0H87JTkKbIuAch9wuBznt7ex-slpx.png) center center / cover no-repeat;" class="card-img" alt=""></div>
+                <div class="card-detail">
+                  鱼肉特别嫩煮法比较特别主要用鹅卵石的热度煮鱼特别好吃要相信一个爱吃鱼的人
+                </div>
+                <div class="card-by">— 发疯的小橙橙</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-li-footer">
+          <div class="card-footer-li left">
+            <!-- <label class="iconfont icon-likeEat"></label> -->
+            <label class="card-look-food">查看美食</label>
+          </div>
+          <div class="card-footer-li right card-share">
+            <label class="iconfont icon-fenxiang"></label>
+            <div class="card-share-num">-</div>
+          </div>
+          <div class="card-footer-li right card-like">
+            <label class="iconfont icon-guanzhu"></label>
+            <div class="card-like-num">-</div>
+          </div>
+        </div>
+
+      <div class="wenwo-ul card-ul">
+
+        <img src="http://o83np3eq2.bkt.clouddn.com/wenwo/1471255801394/苍蝇馆子.jpg" alt="" class="myImage" style="display:none">
+
+        <!-- <canvas class="card-li" id="myCanvas">
+        </canvas> -->
+      </div>
+      <div class="infinite-scroll-preloader" >
+        <div class="preloader"></div>
+        <div class="ask-end" style="display:none">启禀陛下，您已经到底了。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 这里是所有的分类查找列表 -->
+  <div class="wenwo-content page" id='tagfind'>
+    <header class="bar bar-nav">
+      <a class="button button-link button-nav pull-left back" href="#">
+        <span class="icon icon-left"></span>
+      </a>
+      <h1 class="title">分类查找</h1>
+    </header>
+    <!-- 这里是所有的信息列表 -->
+    <div class="tagfind-content content pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="55" data-distance="100">
       <!-- 默认的下拉刷新层 -->    
       <div class="pull-to-refresh-layer">
         <div class="preloader-tip">刷新成功</div>
@@ -376,11 +463,10 @@
       </div>
       <div class="infinite-scroll-preloader" >
         <div class="preloader"></div>
-        <div class="ask-end" style="display:none">启禀陛下，您已经到底了。</div>
+        <div class="ask-end" style="display:none"></div>
       </div>
     </div>
   </div>
-
 </body>
 <% include footer.ejs %>
 <script type='text/javascript' src='/js/extend.js' charset='utf-8'></script>
@@ -396,6 +482,7 @@
   //     autoplayDisableOnInteraction:false
   //   });
   // });
+
 
   //用户名
   var UserName = "<%= username %>";
@@ -423,6 +510,31 @@
   }
   var date = new Date();
   $(".nav-list-day .nav-icon label").text(formatDate("d",date));
+
+
+  // var c = document.getElementById("myCanvas");
+  // var ctx = c.getContext("2d");
+  // // var img = $(".myImage")[0];
+  // var img = new Image();
+  // // img.setAttribute('crossOrigin', 'anonymous');
+  // img.crossOrigin = "Anonymous";
+  // img.src = 'http://o83np3eq2.bkt.clouddn.com/wenwo/1471255801394/苍蝇馆子.jpg';
+  
+  // var cwidth = c.width;
+  // var cheight = c.height;
+  // ctx.fillText("Hello World!",10,50);
+  // // ctx.drawImage(img, 0, 0,cwidth,cheight/2);
+  // img.onload = function() {
+  //   ctx.drawImage(img, 0, 0,cwidth,cheight/2);
+  // };
+
+  $("#card .title").on("click",function(){
+    var image = new Image();
+    var c = document.getElementById("myCanvas");
+    // image.src = c.toDataURL("image/png");
+    window.location.href = c.toDataURL();
+  })
+
 </script>
 <script type='text/javascript' src='/js/newfood.js' charset='utf-8'></script>
 </html>

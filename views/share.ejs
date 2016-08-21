@@ -131,7 +131,7 @@ $(".content").append(escape2Html(str));
 
 $(".pull-left").on("click",function(){
    var url = window.location.hash;
-  if (!url.split("#")[1]) {
+  if (url.split("#")[1] == "food") {
     window.history.go(-1);
   } else {
     window.location.href = "/food";

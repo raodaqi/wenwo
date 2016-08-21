@@ -2059,9 +2059,64 @@ router.get('/getalltag', function (req, res, next) {
 
     mainquery.find().then(function (list) {
         // console.log(list);
+        var hot      = [],
+            hotPot   = [],
+            barbecue = [],
+            Noodle   = [],
+            cc       = [],
+            other    = [],
+            cai      = [];
+        for(var i = 0 ; i < list.length; i ++){
+            var code = 0;
+
+            if(list[i].attributes.tagName.indexOf("火锅") >= 0){
+                hotPot.push(list[i]);
+                code = 1;
+            }
+
+            if(list[i].attributes.tagName.indexOf("菜") >= 0){
+                cai.push(list[i]);
+                code = 1;
+            }
+
+            if(list[i].attributes.tagName.indexOf("串串") >= 0){
+                cc.push(list[i]);
+                code = 1;
+            }
+
+            if(list[i].attributes.tagName.indexOf("烧烤") >= 0){
+                barbecue.push(list[i]);
+                code = 1;
+            }
+
+            if(list[i].attributes.tagName.indexOf("面") >= 0 && list[i].attributes.tagName.indexOf("面包") < 0){
+                Noodle.push(list[i]);
+                code = 1;
+            }
+
+            if(i < 10){
+                hot.push(list[i]);
+                code = 1;
+            }
+
+            if(!code){
+                other.push(list[i]);
+            }
+        }
+        var type = {
+            "热门" : hot,
+            "火锅" : hotPot,
+            "烧烤" : barbecue,
+            "面食" : Noodle,
+            "串串" : cc,
+            "菜类" : cai,
+            "其他" : other
+        }
+
         var result = {
             code : 200,
             data : list,
+            type : type,
             message : 'Operation succeeded'
         }
         res.send(result);

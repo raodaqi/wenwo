@@ -27,7 +27,7 @@
       }
   });
   //初始化轮播图功能
-  function sendCarouseQuest(url,type,data,callback){
+  function sendQuest(url,type,data,callback){
     $.ajax({
       type: type,
       url: url,
@@ -50,7 +50,7 @@
     var url = "/carousel/getcarouselinfo",
         type = "GET",
         data = data;
-    sendCarouseQuest(url,type,data,{
+    sendQuest(url,type,data,{
         success:function(result){
             callback.success(result);
         },
@@ -59,6 +59,37 @@
         }
     })
   }
+  //获取分类信息
+  function getTag(data,callback){
+    var url = "/ask/getalltag",
+        type = "GET",
+        data = data;
+    sendQuest(url,type,data,{
+        success:function(result){
+            callback.success(result);
+        },
+        error:function(error){
+            callback.error(error);
+        }
+    })
+  }
+
+  //获取卡片信息
+  function getCardList(data,callback){
+    var url = "/card/getcardlist",
+        type = "GET",
+        data = data;
+    sendQuest(url,type,data,{
+        success:function(result){
+            callback.success(result);
+        },
+        error:function(error){
+            callback.error(error);
+        }
+    })
+  }
+
+
   getCarouselInfo({},{
     success:function(result){
         console.log(result);
@@ -67,7 +98,7 @@
         for(var i = 0 ; i < data.length; i++){
             li += '<div class="swiper-slide" data-href="'+data[i].carouselClickURL+'"><img src="'+data[i].carouselImage+'" alt=""></div>';
         }
-        $(".swiper-wrapper").empty().append(li);
+        $("#find .swiper-wrapper").empty().append(li);
         //调用系统的init方法
         sw.init();
     },
@@ -106,6 +137,12 @@
           case "tag":
               var tag = $("#tag .title").text();
               initTagListPage(0,20,tag);
+              break;
+          case "strategy":
+            initStrategyListPage();
+            break;
+          case "tagfind":
+              initTagPage();
               break;
           default:
               setTimeout(function() {
@@ -178,6 +215,7 @@
           case "find":
               // initSharePage(UserName);
               // initBuyPage(UserName);
+              initStrategyListPage();
               break;
           case "me":
               initSharePage(UserName);
@@ -191,6 +229,12 @@
               }else{
                 addItems(20, 0,"new");
               }
+              break;
+          case "strategy":
+            initStrategyListPage();
+            break;
+          case "tagfind":
+              initTagPage();
               break;
           case "tag":
             addItems(40, 0,"tag");
@@ -215,6 +259,12 @@
           case "#new":
               initNewListPage(0,20);
               break;
+          case "tagfind":
+              initTagPage();
+              break;
+          case "#strategy":
+            initStrategyListPage();
+            break;
       }
   }
 
@@ -575,6 +625,8 @@
   $.init();
   init();
 
+  // $("#card .swiper-container").swiper();
+
   //初始化主页列表
   function initFindListPage() {
       //初始化主页列表，获取前20条信息
@@ -812,14 +864,22 @@
   }
   initLikeListPage();
 
-  //初始化没事攻略列表
+  //初始化美食攻略列表
   function initStrategyListPage() {
     //获取想吃列表
     getCarouselInfo({type:"all"},{
           success: function(result) {
               if (result.code == 200) {
-                console.log(result);
-                return;
+                var li = '';
+                var data = result.data;
+                for(var i = 0; i < data.length; i++){
+                  li += '<div class="strategy-li" data-href="'+data[i].carouselClickURL+'" style="background: url('+data[i].carouselImage+') center center / cover no-repeat;"><div class="strategy-name">'+data[i].carouselName+'</div></div>';
+                }
+                console.log(li);
+                $.pullToRefreshDone('.pull-to-refresh-content');
+                $(".strategy-ul").empty().append(li);
+                $("#strategy .infinite-scroll-preloader .preloader").hide();
+                $("#strategy .ask-end").empty().show();
               }
           },
           error: function(error) {
@@ -828,8 +888,73 @@
       })
   }
 
-  initStrategyListPage();
+  //初始化分类查找页面
+  function initTagPage() {
+    //获取想吃列表
+    getTag({},{
+          success: function(result) {
+              if (result.code == 200) {
+                console.log(result);
+                // var data = result.data;
+                var type = result.type;
+                console.log(type);
+                var ul = '';
+                var j = 0;
+                var lastKey = '';
+                var topNum = 44;
+                for(var key in type){
+                  if(j != 0){
+                    var length = 0;
+                    if(type[lastKey].length <= 6){
+                      length = 2;
+                    }else{
+                      length = 2 + Math.ceil((type[lastKey].length - 6) / 4);
+                    }
 
+                    topNum += length * 30 + 10;
+                    console.log(top);
+                  }
+                  lastKey = key;
+                  j++;
+                  ul += '<div class="tagfind-ul" style="top:'+topNum+'px"><div class="type">'+key+'</div>';
+                  var data = type[key];
+                  var li = '';
+                  for(var i = 0; i < data.length; i++){
+                    if(i < 3){
+                      li += '<div class="tagfind-li no-left-border no-bottom-border">'+data[i].tagName+'</div>';
+                    }else if(i < 6){
+                      li += '<div class="tagfind-li no-left-border">'+data[i].tagName+'</div>';
+                    }else if( i < data.length - 1){
+                      li += '<div class="tagfind-li no-right-border no-top-border">'+data[i].tagName+'</div>';
+                    }else{
+                      li += '<div class="tagfind-li no-top-border">'+data[i].tagName+'</div>';
+                    }
+                  }
+                  for(var i = 0; i < 6 - data.length; i++){
+                    if(6 - data.length - i > 3){
+                      li += '<div class="tagfind-li no-left-border no-bottom-border"></div>';
+                    }else{
+                      li += '<div class="tagfind-li no-left-border"></div>';
+                    }
+                    
+                  }
+
+                  ul += li + '</div>';
+                }
+                
+                $.pullToRefreshDone('.pull-to-refresh-content');
+                $("#tagfind .wenwo-ul").empty().append(ul);
+                $("#tagfind .infinite-scroll-preloader .preloader").hide();
+                $("#tagfind .ask-end").empty().show();
+              }
+          },
+          error: function(error) {
+              $.pullToRefreshDone('.pull-to-refresh-content');
+          }
+      })
+  }
+
+  initTagPage();
 
   $(".tab-item").on("click", function() {
       // console.log($());
@@ -852,6 +977,8 @@
           $(".pull-to-refresh-arrow").hide();
           updatePage("#me");
           updatePage("#like");
+          updatePage("#strategy");
+          updatePage("#tagfind");
           $.router.load("#find",false,"left");
 
           setTimeout(function() {
@@ -868,7 +995,7 @@
   //   $.showPreloader("正在跳转");
   //   window.location.href="/edit";
   // })
-  $(".empty-button").on("click", function() {
+  $(".empty-button,.nav-list").on("click", function() {
       var href = $(this).attr("data-href");
       if (href.split("#")[1]) {
           $(".tab-item").removeClass("active");
@@ -878,10 +1005,23 @@
           $.showPreloader("正在跳转");
           $.router.load(href);
       }
+      if(href.split("#")[1] == "strategy" && !$(".strategy-li").length){
+        initStrategyListPage();
+      }
+
+      if(href.split("#")[1] == "tagfind" && !$(".tagfind-ul").length){
+        initTagPage();
+      }
   });
   $(".my-ask .item-link").on("click", function() {
-      var href = $(this).attr("data-href");
-      $.router.load(href);
+    var href = $(this).attr("data-href");
+    $.router.load(href);
+  })
+
+  $(".strategy-ul").on("click",".strategy-li",function() {
+    $.showPreloader("正在跳转");
+    var href = $(this).attr("data-href");
+    window.location.href = href + "#food";
   })
 
   //点击想吃逻辑
@@ -1155,6 +1295,7 @@
           },
       })
   }
+
   // initSharePage(UserName);
   // initBuyPage(UserName);
 
@@ -1186,7 +1327,8 @@
   })
 
   //滚动图链接点击效果
-  $(".swiper-container").on("click",".swiper-slide",function(){
+  $(".swiper-container").on("click","#find .swiper-slide",function(){
+    $.showPreloader("");
     var href =  $(this).attr("data-href");
     console.log(href);
     window.location.href = href+"#food";
@@ -1206,4 +1348,53 @@
     clickedTimer = setTimeout(function(){
       clicked = 0;
     }, 500);
+  })
+
+  //点击分类跳转
+  $("#tagfind").on("click",".tagfind-li",function(){
+    var tag = $(this).text();
+    if(tag){
+      initTagListPage(0,20,tag);
+      $("#tag .title").text(tag);
+      $.router.load("#tag");
+    }
+  })
+
+  //初始化卡片界面
+  getCardList({size:10},{
+    success:function(result){
+        console.log(result);
+        var data = result.data;
+        var li = '<div class="swiper-hidden">为您精选最美美食</div>';
+        for(var i = 0 ; i < data.length; i++){
+          if(i == 0){
+            $(".card-like-num").text(data[i].likeNum);
+            $(".card-share-num").text(data[i].likeNum);
+          }
+          li += '<div class="swiper-slide" data-askid="'+data[i].askId+'" data-likeNum="'+data[i].likeNum+'"><div class="card-li"><div style="background: url('+data[i].cardImg+') center center / cover no-repeat;" class="card-img" alt=""></div><div class="card-detail">'+data[i].detail+'</div><div class="card-by">— '+data[i].byName+'</div></div></div>';
+        }
+        $("#card .swiper-wrapper").empty().append(li);
+        //调用系统的init方法
+        $("#card .swiper-container").swiper();
+        $("#card .infinite-scroll-preloader .preloader").hide();
+        // $("#card .ask-end").show();
+    },
+    error:function(error){
+        console.log(error);
+    }
+  })
+
+  $(".card-look-food").on("click",function(){
+    var askid = $("#card .swiper-slide-active").attr("data-askid");
+    if(askid){
+      window.location.href = "/detail?askid="+askid+"#food";
+    }
+  })
+
+  $(".card-like").on("click",function(){
+    if($(this).hasClass("card-liked")){
+      $(this).removeClass("card-liked");
+    }else{
+      $(this).addClass("card-liked");
+    }
   })
