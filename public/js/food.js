@@ -33,6 +33,7 @@
           console.log(error);
       }
   });
+  
   //初始化轮播图功能
   function sendCarouseQuest(url,type,data,callback){
     $.ajax({
