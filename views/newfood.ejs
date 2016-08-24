@@ -402,15 +402,6 @@
       <!-- Slider -->
         <div class="swiper-container" data-space-between='10' data-autoplay-disable-on-interaction='false'>
           <div class="swiper-wrapper">
-            <div class="swiper-slide swiper-slide-active">
-              <div class="card-li">
-                <div style="background: url(http://o83np3eq2.bkt.clouddn.com/wenwo/1470880794219/MFLdM1uiaoKUaCjXrrQ9lHdCHDrZgHkStCE0H87JTkKbIuAch9wuBznt7ex-slpx.png) center center / cover no-repeat;" class="card-img" alt=""></div>
-                <div class="card-detail">
-                  鱼肉特别嫩煮法比较特别主要用鹅卵石的热度煮鱼特别好吃要相信一个爱吃鱼的人
-                </div>
-                <div class="card-by">— 发疯的小橙橙</div>
-              </div>
-            </div>
           </div>
         </div>
 
@@ -419,9 +410,9 @@
             <!-- <label class="iconfont icon-likeEat"></label> -->
             <label class="card-look-food">查看美食</label>
           </div>
-          <div class="card-footer-li right card-share">
-            <label class="iconfont icon-fenxiang"></label>
-            <div class="card-share-num">-</div>
+          <div class="card-footer-li right card-down">
+            <label class="iconfont icon-xiazai"></label>
+            <div class="card-down-num">-</div>
           </div>
           <div class="card-footer-li right card-like">
             <label class="iconfont icon-guanzhu"></label>
@@ -467,6 +458,8 @@
       </div>
     </div>
   </div>
+
+  <canvas id="downImg" width="300" height="400" style="display:none"></canvas>
 </body>
 <% include footer.ejs %>
 <script type='text/javascript' src='/js/extend.js' charset='utf-8'></script>
@@ -486,6 +479,7 @@
 
   //用户名
   var UserName = "<%= username %>";
+  var CARDSWIPER;
   function initTop(){
     // var topNum = localStorage.top;
     // if(topNum){
@@ -528,11 +522,247 @@
   //   ctx.drawImage(img, 0, 0,cwidth,cheight/2);
   // };
 
-  $("#card .title").on("click",function(){
-    var image = new Image();
-    var c = document.getElementById("myCanvas");
-    // image.src = c.toDataURL("image/png");
-    window.location.href = c.toDataURL();
+  $(".icon-xiazai").on("click",function(){
+    var id = $("#card .swiper-slide-active").attr("data-id");
+    var cardImg = $("#card .swiper-slide-active .card-img").attr("data-url");
+    var detail = $("#card .swiper-slide-active .card-detail").text();
+    var cardBy = $("#card .swiper-slide-active .card-by").text();
+
+    console.log(detail);
+    var c = document.getElementById("downImg");
+    var ctx = c.getContext("2d");
+    ctx.fillStyle="#ffffff";
+    ctx.fillRect(0,0,300,400);
+
+    var img = new Image();
+    img.crossOrigin = "Anonymous";
+    img.src = cardImg;
+
+    var cwidth = c.width;
+    var cheight = c.height;
+
+    ctx.textAlign="left";
+    ctx.font=".74rem Arial";
+    // ctx.fillText(detail,16,220);
+
+    var black=ctx.createLinearGradient(0,0,c.width,0);
+    black.addColorStop("0","black");
+    black.addColorStop("0.5","black");
+    black.addColorStop("1.0","black");
+    // 用渐变填色
+    ctx.fillStyle=black;
+
+    console.log(ctx.measureText(detail).width);
+
+    var lineheight = 22;
+     function getTrueLength(str){//获取字符串的真实长度（字节长度）
+            var len = str.length, truelen = 0;
+            for(var x = 0; x < len; x++){
+                if(str.charCodeAt(x) > 128){
+                    truelen += 2;
+                }else{
+                    truelen += 1;
+                }
+            }
+            return truelen;
+        }
+        function cutString(str, leng){//按字节长度截取字符串，返回substr截取位置
+            var len = str.length, tlen = len, nlen = 0;
+            for(var x = 0; x < len; x++){
+                if(str.charCodeAt(x) > 128){
+                    if(nlen + 2 < leng){
+                        nlen += 2;
+                    }else{
+                        tlen = x;
+                        break;
+                    }
+                }else{
+                    if(nlen + 1 < leng){
+                        nlen += 1;
+                    }else{
+                        tlen = x;
+                        break;
+                    }
+                }
+            }
+            return tlen;
+        }
+    for(var i = 1; getTrueLength(detail) > 0; i++){
+      var tl = cutString(detail, 37);
+      ctx.fillText(detail.substr(0, tl).replace(/^\s+|\s+$/, ""), 16, i * lineheight + 220);
+      detail = detail.substr(tl);
+    }
+    if(getTrueLength(detail) <= 0){
+      ctx.fillText(cardBy, 300-16-ctx.measureText(cardBy).width, (i+1) * lineheight + 230);
+    }
+
+    //设置logo
+    // var logo = new Image();
+    // logo.src = $(".wenwo-logo").attr("src");
+    // ctx.drawImage(logo,20,370,10,10);
+    ctx.font="10px Arial";
+    var gradient=ctx.createLinearGradient(0,0,c.width,0);
+    gradient.addColorStop("0","#aaa");
+    gradient.addColorStop("1.0","#ccc");
+    // 用渐变填色
+    ctx.fillStyle=gradient;
+    ctx.fillText("来自问我—让经验帮你赚钱",20,385);
+
+    img.onload = function() {
+
+      //图片居中算法
+      var imgHeight = img.naturalHeight;
+      var imgWidth = img.naturalWidth;
+      console.log(imgWidth + "----"+imgHeight);
+      var canvasHeight = 200;
+      var canvasWidth = 300;
+
+      var sx = 0,
+          sy = (imgHeight - imgWidth * (canvasHeight / canvasWidth))/2,
+          swidth = imgWidth,
+          sheight = imgWidth * (canvasHeight / canvasWidth),
+          x = 0,
+          y = 0,
+          width = canvasWidth,
+          height = canvasHeight;
+
+      ctx.drawImage(img,0,sy,swidth,sheight,x,y,300,200);
+      // window.location.href = c.toDataURL("image/png");
+      // window.location.href = c.toDataURL("image/png").replace("image/png", "image/octet-stream");
+      var timestamp = new Date().getTime();
+      downloadFile("wenwo"+timestamp+'.png', c.toDataURL("image/png"));
+
+      //将人数加1
+      var downNum = parseInt($(".card-down-num").text());
+      downNum++;
+      $(".card-down-num").text(downNum);
+      var cardId = $("#card .swiper-slide-active").attr("data-id");
+      addDownNum(cardId,{
+        success:function(){
+          console.log("success");
+        },
+        error:function(){
+
+        }
+      })
+    };
+    
+  })
+
+  //浏览人数添加
+  function addDownNum(cardId,callback){
+    $.ajax({
+      type: "POST",
+      url: "/card/addDownNum",
+      data: {card_id:cardId},
+      dataType: "json",
+      success:function(result){
+        if(result.code == 200){
+          callback.success(result);
+        }else{
+          callback.error(result);
+        }
+      },
+      error:function(error){
+        $.toast("服务器出错");
+        callback.error(error);
+      }
+    })
+  }
+
+  function base64Img2Blob(code){
+    var parts = code.split(';base64,');
+    var contentType = parts[0].split(':')[1];
+    var raw = window.atob(parts[1]);
+    var rawLength = raw.length;
+
+    var uInt8Array = new Uint8Array(rawLength);
+
+    for (var i = 0; i < rawLength; ++i) {
+      uInt8Array[i] = raw.charCodeAt(i);
+    }
+
+    return new Blob([uInt8Array], {type: contentType}); 
+  }
+
+  function downloadFile(fileName, content){            
+    var aLink = document.createElement('a');
+    var blob = base64Img2Blob(content); //new Blob([content]);
+                
+    var evt = document.createEvent("HTMLEvents");
+    evt.initEvent("click", false, false);//initEvent 不加后两个参数在FF下会报错
+    aLink.download = fileName;
+    aLink.href = URL.createObjectURL(blob);
+           
+    aLink.dispatchEvent(evt);
+  }
+
+  $("#card .swiper-wrapper").bind("touchend",function(){
+    setTimeout(function(){
+      var cardId = $("#card .swiper-slide-active").attr("data-id");
+      var likeNum = $("#card .swiper-slide-active").attr("data-like-num");
+      var downNum = $("#card .swiper-slide-active").attr("data-down-num");
+      var liked = $("#card .swiper-slide-active").attr("data-liked");
+      $(".card-li-footer").attr("data-cardId",cardId);
+      $(".card-down-num").text(downNum);
+      $(".card-like-num").text(likeNum);
+      if(liked == "1"){
+        $(".card-like").addClass("card-liked");
+      }else{
+        $(".card-like").removeClass("card-liked");
+      }
+    }, 100);
+  })
+
+  //卡片点击想吃逻辑
+  $(".card-like").on("click", function() {
+      //获取点击后的id
+      var askId = $("#card .swiper-slide-active").attr("data-askid");
+      var num = $(".card-like-num").text();
+      //获取是否是已想吃
+      if ($(this).hasClass("card-liked")) {
+          //已经是想吃的    取消想吃
+          num = parseInt(num) - 1;
+          $(".card-like-num").text(num);
+          $(".card-like").removeClass("card-liked");
+          cancelLike(UserName, askId, this, {
+              success: function(result, $_this) {
+                  if (result.code == 200) {
+
+                  } else {
+                      num++;
+                      $(".card-like-num").text(num);
+                      $(".card-like").addClass("card-liked");
+                  }
+              },
+              error: function(error, $_this) {
+                  num++;
+                  $(".card-like-num").text(num);
+                  $(".card-like").addClass("card-liked");
+              }
+          });
+      } else {
+          //想吃
+          num = parseInt(num) + 1;
+          $(".card-like-num").text(num);
+          $(".card-like").addClass("card-liked");
+          like(UserName, askId, this, {
+              success: function(result, $_this) {
+                  console.log(result);
+                  if (result.code == 200) {} else {
+                      num--;
+                      $(".card-like-num").text(num);
+                      $(".card-like").removeClass("card-liked");
+                  }
+              },
+              error: function(error, $_this) {
+                  console.log(error);
+                  num--;
+                   $(".card-like-num").text(num);
+                  $(".card-like").removeClass("card-liked");
+              }
+          });
+      }
   })
 
 </script>

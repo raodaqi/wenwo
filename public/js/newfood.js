@@ -1361,7 +1361,7 @@
   })
 
   //初始化卡片界面
-  getCardList({size:10},{
+  getCardList({size:10,username:UserName},{
     success:function(result){
         console.log(result);
         var data = result.data;
@@ -1369,15 +1369,36 @@
         for(var i = 0 ; i < data.length; i++){
           if(i == 0){
             $(".card-like-num").text(data[i].likeNum);
-            $(".card-share-num").text(data[i].likeNum);
+            $(".card-down-num").text(data[i].downNum);
           }
-          li += '<div class="swiper-slide" data-askid="'+data[i].askId+'" data-likeNum="'+data[i].likeNum+'"><div class="card-li"><div style="background: url('+data[i].cardImg+') center center / cover no-repeat;" class="card-img" alt=""></div><div class="card-detail">'+data[i].detail+'</div><div class="card-by">— '+data[i].byName+'</div></div></div>';
+          li += '<div class="swiper-slide" data-id="'+data[i].objectId+'" data-askid="'+data[i].askId+'" data-like-num="'+data[i].likeNum+'" data-down-num="'+data[i].downNum+'" data-liked="'+data[i].liked+'"><div class="card-li"><div data-url="'+data[i].cardImg+'" style="background: url('+data[i].cardImg+') center center / cover no-repeat;" class="card-img" alt=""></div><div class="card-detail">'+data[i].detail+'</div><div class="card-by">— '+data[i].byName+'</div></div></div>';
         }
         $("#card .swiper-wrapper").empty().append(li);
         //调用系统的init方法
-        $("#card .swiper-container").swiper();
+        // $("#card .swiper-container").swiper();
         $("#card .infinite-scroll-preloader .preloader").hide();
         // $("#card .ask-end").show();
+        // $.reinitSwiper("#card");
+        var url = window.location.hash;
+        if (url.split("#")[1] == "card") {
+          $("#card .swiper-container").swiper();
+        } else {
+          $.reinitSwiper("#card");
+        }
+
+        //初始化卡片数据
+        var cardId = $("#card .swiper-slide-active").attr("data-id");
+        var likeNum = $("#card .swiper-slide-active").attr("data-like-num");
+        var downNum = $("#card .swiper-slide-active").attr("data-down-num");
+        var liked = $("#card .swiper-slide-active").attr("data-liked");
+        $(".card-li-footer").attr("data-cardId",cardId);
+        $(".card-down-num").text(downNum);
+        $(".card-like-num").text(likeNum);
+        if(liked == "1"){
+          $(".card-like").addClass("card-liked");
+        }else{
+          $(".card-like").removeClass("card-liked");
+        }
     },
     error:function(error){
         console.log(error);
@@ -1391,10 +1412,3 @@
     }
   })
 
-  $(".card-like").on("click",function(){
-    if($(this).hasClass("card-liked")){
-      $(this).removeClass("card-liked");
-    }else{
-      $(this).addClass("card-liked");
-    }
-  })

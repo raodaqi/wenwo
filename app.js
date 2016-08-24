@@ -61,6 +61,12 @@ app.use(bodyParser.urlencoded({limit:'50mb',extended:true}));
 // 加载云代码方法
 app.use(cloud);
 
+//compression 中间件压缩和处理静态内容
+var compression = require('compression');
+ 
+app.use(compression()); //use compression 
+
+
 // 使用 LeanEngine 中间件
 // （如果没有加载云代码方法请使用此方法，否则会导致部署失败，详细请阅读 LeanEngine 文档。）
 // app.use(AV.Cloud);

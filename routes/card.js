@@ -1,14 +1,51 @@
 /**
- * Created by HanQi on 16/8/7.
+ * Created by Ducky on 16/8/24.
  */
 
+var async = require("async");
 var router = require('express').Router();
 var AV = require('leanengine');
 
 var Card = AV.Object.extend('Card');
 
+//获取卡片信息
+function getCard(size,callback){
+    var query = new AV.Query('Card');
+    query.ascending('createdAt');
+
+    if(size){
+        query.limit(size);
+    }
+
+    query.find().then(function (cardList) {
+        callback(null,cardList);
+    },function (cardList) {
+        callback(null,error);
+    });
+}
+
+// router.get('/getcardlist', function(req, res, next) {
+//     var size = req.query.size;
+
+//     async.parallel([
+//        function(callback) {
+//             getCard(size,callback)
+//         },
+//     ], function (err, results) {
+//         console.log(results);
+//     });
+// });
+
+function ifLiked(askid,username){
+    var query = new AV.Query('FoodLike');
+    query.equalTo("by", username);
+
+}
+
 router.get('/getcardlist', function(req, res, next) {
     var size = req.query.size;
+    var username = req.query.username;
+
     var query = new AV.Query('Card');
     query.ascending('createdAt');
 
@@ -16,11 +53,109 @@ router.get('/getcardlist', function(req, res, next) {
         query.limit('size');
     }
 
+    query.include('ask');
+    query.include('ask.likeNum');
     query.find().then(function (cardList) {
-        res.send({code:200, data:cardList, message:'操作成功'});
+        var card = [];
+        for(var i = 0 ; i < cardList.length; i++){
+            
+            var ask,
+                askLikeNum;
+            if(cardList[i].get('ask')){
+                ask = cardList[i].get('ask');
+                askLikeNum = ask.get('likeNum');
+            }
+
+            var likeNum = 0;
+            if(askLikeNum){
+                likeNum = askLikeNum;
+            }else{
+                likeNum = cardList[i].get("likeNum");
+            }
+
+            card[i] = {
+                objectId:cardList[i].id,
+                askId:cardList[i].get("askId"),
+                byName:cardList[i].get("byName"),
+                cardImg:cardList[i].get("cardImg"),
+                detail:cardList[i].get("detail"),
+                downNum:cardList[i].get("downNum"),
+                likeNum:likeNum,
+                liked : 0
+            }
+        }
+
+        if(username){
+            var query = new AV.Query('FoodLike');
+            query.equalTo("by", username);
+            query.find().then(function (likeList) {
+                for(var i = 0 ; i < cardList.length; i++){
+                    for ( var k = 0; k < likeList.length; k++) {
+                        if (likeList[k].get('ask').id == cardList[i].get("askId")) {
+                            card[i].liked = 1;
+                            break;
+                        }else{
+                            card[i].liked = 0;
+                        }
+                    }
+                }
+                res.send({code:200, data:card, message:'操作成功'});
+            });
+        }else{
+            res.send({code:200, data:card, message:'操作成功'});
+        }
+        
     },function (cardList) {
         res.send({code:400, message:'请求失败'});
     });
+});
+
+// router.get('/getcardlist', function(req, res, next) {
+//     var size = req.query.size;
+//     var query = new AV.Query('Card');
+//     query.ascending('createdAt');
+
+//     if(size){
+//         query.limit('size');
+//     }
+
+//     query.find().then(function (cardList) {
+//         res.send({code:200, data:cardList, message:'操作成功'});
+//     },function (cardList) {
+//         res.send({code:400, message:'请求失败'});
+//     });
+// });
+
+router.post('/addDownNum', function(req, res, next) {
+    var user = AV.User.current();
+    var cardId = req.body.card_id;
+    if(true){
+        var query = new AV.Query('Card');
+        query.get(cardId).then(function (card) {
+            card.increment('downNum', 1);
+            card.save().then(function (data) {
+              // 因为使用了 fetchWhenSave 选项，save 调用之后，如果成功的话，对象的计数器字段是当前系统最新值。
+                var result = {
+                    code : 200,
+                    // data : data,
+                    message : 'success'
+                }
+                res.send(result);
+            }, function (error) {
+              var result = {
+                    code : 400,
+                    message : 'error'
+                }
+                res.send(result);
+            });
+        });
+    }else{
+        var result = {
+            code : 800,
+            message : 'no user'
+        }
+        res.send(result);
+    }  
 });
 
 router.post('/addcard', function(req, res, next) {
@@ -91,6 +226,7 @@ router.get('/addcardbyask', function(req, res, next) {
             var cardImg = ask.attributes.createByUrl;
         }
         var detail = ask.attributes.askReason;
+        var likeNum = parseInt(ask.attributes.likeNum);
 
         var data = {
             byName  : byName,
@@ -105,6 +241,10 @@ router.get('/addcardbyask', function(req, res, next) {
                     card.set('cardImg', cardImg);
                     card.set('detail', detail);
                     card.set('askId', askId);
+                    card.set('likeNum', likeNum);
+                    var ask = AV.Object.createWithoutData('AskMe', askId);
+                    card.set('ask', ask);
+
                     card.save().then(function (cardList) {
                         res.send({code:200,  data:cardList, message:'操作成功'});
                     },function(error){

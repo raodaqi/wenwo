@@ -681,7 +681,7 @@ html {
 }
 
 #card .swiper-container{
-    height: 75%;
+    height: 80%;
 }
 
 .card-img{
@@ -764,7 +764,19 @@ html {
     content:"\e62c";
 }
 
-.card-like-num,.card-share-num{
+.card-like-num,.card-down-num{
     font-size: .57rem;
     margin-top: -.3rem;
+}
+
+.card-down-num{
+    margin-top: -.25rem;
+}
+
+.icon-xiazai{
+    font-size: 1.1rem !important;
+}
+
+.card-down{
+    margin-top: -.2rem;
 }
