@@ -16,11 +16,18 @@
   // };
 
   $.showPreloader("正在加载");
+
   initLocation("food",{
       success: function(lng, lat) {
           LAT = lat;
           LNG = lng;
-          addItems(itemsPerLoad, 0,"find");
+          // addItems(itemsPerLoad, 0,"find");
+          var findTop = localStorage.findTop;
+          if(findTop > 2077){
+            addItems(40, 0,"find");
+          }else{
+            addItems(itemsPerLoad, 0,"find");
+          }
       },
       error: function(error) {
           console.log(error);
@@ -479,14 +486,14 @@
 
 
   //预先加载20条
-  if (LAT) {
-    var findTop = localStorage.findTop;
-    if(findTop > 2077){
-      addItems(40, 0,"find");
-    }else{
-      addItems(itemsPerLoad, 0,"find");
-    }
-  }
+  // if (LAT) {
+  //   var findTop = localStorage.findTop;
+  //   if(findTop > 2077){
+  //     addItems(40, 0,"find");
+  //   }else{
+  //     addItems(itemsPerLoad, 0,"find");
+  //   }
+  // }
 
   // 上次加载的序号
 
