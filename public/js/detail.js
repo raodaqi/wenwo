@@ -358,6 +358,8 @@
                   console.log(result);
                   if (result.code == 200) {
 
+                  }else if(result.code == 400){
+
                   } else {
                       num++;
                       $(".like-num").text(num);
@@ -379,7 +381,9 @@
           like(UserName, askId, '', {
               success: function(result) {
                   console.log(result);
-                  if (result.code == 200) {} else {
+                  if (result.code == 200) {}else if(result.code == 400){
+
+                  } else {
                       num--;
                       $(".like-num").text(num);
                       $(".like").removeClass("liked");

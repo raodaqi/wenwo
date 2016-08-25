@@ -749,8 +749,12 @@
     }, 100);
   })
 
+  var likeTimer;
+
   //卡片点击想吃逻辑
   $(".card-like").on("click", function() {
+
+      clearTimeout(likeTimer);
       //获取点击后的id
       var askId = $("#card .swiper-slide-active").attr("data-askid");
       var num = $(".card-like-num").text();
@@ -760,9 +764,13 @@
           num = parseInt(num) - 1;
           $(".card-like-num").text(num);
           $(".card-like").removeClass("card-liked");
+
+        likeTimer = setTimeout(function(){
           cancelLike(UserName, askId, this, {
               success: function(result, $_this) {
                   if (result.code == 200) {
+
+                  } else if(result.code == 400){
 
                   } else {
                       num++;
@@ -776,15 +784,20 @@
                   $(".card-like").addClass("card-liked");
               }
           });
+        }, 500);
       } else {
           //想吃
           num = parseInt(num) + 1;
           $(".card-like-num").text(num);
           $(".card-like").addClass("card-liked");
+
+        likeTimer = setTimeout(function(){
           like(UserName, askId, this, {
               success: function(result, $_this) {
                   console.log(result);
-                  if (result.code == 200) {} else {
+                  if (result.code == 200) {} else if(result.code == 400){
+
+                  } else {
                       num--;
                       $(".card-like-num").text(num);
                       $(".card-like").removeClass("card-liked");
@@ -797,6 +810,7 @@
                   $(".card-like").removeClass("card-liked");
               }
           });
+        }, 500);
       }
   })
 

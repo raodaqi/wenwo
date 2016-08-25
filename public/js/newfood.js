@@ -1048,6 +1048,8 @@
               success: function(result, $_this) {
                   if (result.code == 200) {
 
+                  }else if(result.code == 400){
+
                   } else {
                       num++;
                       $($_this).children(".like-num").text(num);
@@ -1068,7 +1070,9 @@
           like(UserName, askId, this, {
               success: function(result, $_this) {
                   console.log(result);
-                  if (result.code == 200) {} else {
+                  if (result.code == 200) {}else if(result.code == 400){
+
+                  } else {
                       num--;
                       $($_this).children(".like-num").text(num);
                       $($_this).removeClass("liked");
