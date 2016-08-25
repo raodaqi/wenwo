@@ -15,15 +15,35 @@
   //   // $(".amap-sug-result").hide(); 
   // };
 
+  //预先加载20条
+  if (LAT) {
+    var findTop = localStorage.findTop;
+    if(findTop > 2077){
+      addItems(40, 0,"find");
+    }else{
+      addItems(itemsPerLoad, 0,"find");
+    }
+  }
+
+  //初始化下载图片
+  if(localStorage.downImg){
+     $(".down-img").attr("src",localStorage.downImg);
+  }
+
   $.showPreloader("正在加载");
   initLocation("food",{
       success: function(lng, lat) {
           LAT = lat;
           LNG = lng;
-          addItems(itemsPerLoad, 0,"find");
+          var findTop = localStorage.findTop;
+          if(findTop > 2077){
+            addItems(40, 0,"find");
+          }else{
+            addItems(itemsPerLoad, 0,"find");
+          }
       },
       error: function(error) {
-          console.log(error);
+          console.log("error");
       }
   });
   //初始化轮播图功能
@@ -549,17 +569,6 @@
           })
         }
       }
-  }
-
-
-  //预先加载20条
-  if (LAT) {
-    var findTop = localStorage.findTop;
-    if(findTop > 2077){
-      addItems(40, 0,"find");
-    }else{
-      addItems(itemsPerLoad, 0,"find");
-    }
   }
 
   // 上次加载的序号
@@ -1371,7 +1380,7 @@
             $(".card-like-num").text(data[i].likeNum);
             $(".card-down-num").text(data[i].downNum);
           }
-          li += '<div class="swiper-slide" data-id="'+data[i].objectId+'" data-askid="'+data[i].askId+'" data-like-num="'+data[i].likeNum+'" data-down-num="'+data[i].downNum+'" data-liked="'+data[i].liked+'"><div class="card-li"><div data-url="'+data[i].cardImg+'" style="background: url('+data[i].cardImg+') center center / cover no-repeat;" class="card-img" alt=""></div><div class="card-detail">'+data[i].detail+'</div><div class="card-by">— '+data[i].byName+'</div></div></div>';
+          li += '<div class="swiper-slide" data-id="'+data[i].objectId+'" data-askid="'+data[i].askId+'" data-like-num="'+data[i].likeNum+'" data-down-num="'+data[i].downNum+'" data-liked="'+data[i].liked+'"><div class="card-li"><div data-url="'+data[i].cardImg+'" style="background: url('+data[i].cardImg+') center center / cover no-repeat;" class="card-img" alt=""></div><div class="card-detail">'+data[i].detail+'</div><div class="card-by">— —'+data[i].byName+'</div></div></div>';
         }
         $("#card .swiper-wrapper").empty().append(li);
         //调用系统的init方法
@@ -1387,14 +1396,14 @@
         }
 
         //初始化卡片数据
-        var cardId = $("#card .swiper-slide-active").attr("data-id");
-        var likeNum = $("#card .swiper-slide-active").attr("data-like-num");
-        var downNum = $("#card .swiper-slide-active").attr("data-down-num");
-        var liked = $("#card .swiper-slide-active").attr("data-liked");
-        $(".card-li-footer").attr("data-cardId",cardId);
-        $(".card-down-num").text(downNum);
-        $(".card-like-num").text(likeNum);
-        if(liked == "1"){
+        // var cardId = $("#card .swiper-slide-active").attr("data-id");
+        // var likeNum = $("#card .swiper-slide-active").attr("data-like-num");
+        // var downNum = $("#card .swiper-slide-active").attr("data-down-num");
+        // var liked = $("#card .swiper-slide-active").attr("data-liked");
+        $(".card-li-footer").attr("data-cardId",data[0].cardId);
+        $(".card-down-num").text(data[0].downNum);
+        $(".card-like-num").text(data[0].likeNum);
+        if(data[0].liked == "1"){
           $(".card-like").addClass("card-liked");
         }else{
           $(".card-like").removeClass("card-liked");

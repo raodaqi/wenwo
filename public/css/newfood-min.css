@@ -169,7 +169,8 @@ body {
 #new,
 #tag,
 #strategy,
-#card {
+#card,
+#down {
     z-index: 40000
 }
 
@@ -685,7 +686,7 @@ html {
 }
 
 .card-img{
-    height: 50%;
+    height: 61.8%;
     border-radius: .3rem;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
@@ -695,6 +696,11 @@ html {
     font-size: .74rem;
     padding: 0 .8rem;
     margin-top: .5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 .card-by{
     text-align: right;
@@ -779,4 +785,24 @@ html {
 
 .card-down{
     margin-top: -.2rem;
+}
+
+.downImg{
+    position: absolute;
+    top:0;
+    bottom:0;
+    width: 100%;
+    height: 100%;
+    left:0;
+    right: 0;
+    background: black;
+    z-index: 50000;
+}
+
+.down-img{
+    display: block;
+    position: absolute;
+    width: 100%;
+    top:50%;
+    transform: translateY(-50%);
 }

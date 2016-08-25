@@ -422,10 +422,9 @@
 
       <div class="wenwo-ul card-ul">
 
-        <img src="http://o83np3eq2.bkt.clouddn.com/wenwo/1471255801394/苍蝇馆子.jpg" alt="" class="myImage" style="display:none">
+        <img src="/img/logo-canvas.png" alt="" class="myImage" style="display:none">
 
-        <!-- <canvas class="card-li" id="myCanvas">
-        </canvas> -->
+         
       </div>
       <div class="infinite-scroll-preloader" >
         <div class="preloader"></div>
@@ -459,7 +458,15 @@
     </div>
   </div>
 
-  <canvas id="downImg" width="300" height="400" style="display:none"></canvas>
+  <canvas id="downImg" width="600" height="800" style="display:none"></canvas>
+
+  <!-- 这里是所有的分类查找列表 -->
+  <div class="wenwo-content page" id='down'>
+    <div class="content downImg">
+      <img class="down-img" src="">
+    </div>
+  </div>
+
 </body>
 <% include footer.ejs %>
 <script type='text/javascript' src='/js/extend.js' charset='utf-8'></script>
@@ -523,6 +530,8 @@
   // };
 
   $(".icon-xiazai").on("click",function(){
+
+
     var id = $("#card .swiper-slide-active").attr("data-id");
     var cardImg = $("#card .swiper-slide-active .card-img").attr("data-url");
     var detail = $("#card .swiper-slide-active .card-detail").text();
@@ -531,30 +540,31 @@
     console.log(detail);
     var c = document.getElementById("downImg");
     var ctx = c.getContext("2d");
-    ctx.fillStyle="#ffffff";
-    ctx.fillRect(0,0,300,400);
+    var cwidth = c.width;
+    var cheight = c.height;
+
+    ctx.fillStyle="#fffcfa";
+    ctx.fillRect(0,0,cwidth,cheight);
 
     var img = new Image();
     img.crossOrigin = "Anonymous";
     img.src = cardImg;
 
-    var cwidth = c.width;
-    var cheight = c.height;
+    
 
     ctx.textAlign="left";
-    ctx.font=".74rem Arial";
+    ctx.font="lighter 26px Apple LiSung Light";
+    fontSize = 26;
     // ctx.fillText(detail,16,220);
 
     var black=ctx.createLinearGradient(0,0,c.width,0);
-    black.addColorStop("0","black");
-    black.addColorStop("0.5","black");
-    black.addColorStop("1.0","black");
+    black.addColorStop("0","#333");
     // 用渐变填色
     ctx.fillStyle=black;
 
     console.log(ctx.measureText(detail).width);
 
-    var lineheight = 22;
+    var lineheight = 36;
      function getTrueLength(str){//获取字符串的真实长度（字节长度）
             var len = str.length, truelen = 0;
             for(var x = 0; x < len; x++){
@@ -566,7 +576,7 @@
             }
             return truelen;
         }
-        function cutString(str, leng){//按字节长度截取字符串，返回substr截取位置
+        function cutString(str, leng, cow){//按字节长度截取字符串，返回substr截取位置
             var len = str.length, tlen = len, nlen = 0;
             for(var x = 0; x < len; x++){
                 if(str.charCodeAt(x) > 128){
@@ -585,52 +595,78 @@
                     }
                 }
             }
+            
             return tlen;
         }
+    var  cow = 0;
     for(var i = 1; getTrueLength(detail) > 0; i++){
-      var tl = cutString(detail, 37);
-      ctx.fillText(detail.substr(0, tl).replace(/^\s+|\s+$/, ""), 16, i * lineheight + 220);
+      if(i > 2){
+        break;
+      }
+      cow++;
+      var tl = cutString(detail, 40);
+      if(i == 2){
+        var tl = cutString(detail, 40) - 1;
+        ctx.fillText(detail.substr(0, tl).replace(/^\s+|\s+$/, "") + '...', 50, i * lineheight + cheight * 0.618 + 40);
+        break;
+      }
+      ctx.fillText(detail.substr(0, tl).replace(/^\s+|\s+$/, ""), 50, i * lineheight + cheight * 0.618 + 40);
       detail = detail.substr(tl);
     }
-    if(getTrueLength(detail) <= 0){
-      ctx.fillText(cardBy, 300-16-ctx.measureText(cardBy).width, (i+1) * lineheight + 230);
-    }
+
+    ctx.fillText(cardBy, cwidth-60-ctx.measureText(cardBy).width, (cow + 2) * lineheight + cheight * 0.618 + 30);
 
     //设置logo
     // var logo = new Image();
-    // logo.src = $(".wenwo-logo").attr("src");
-    // ctx.drawImage(logo,20,370,10,10);
-    ctx.font="10px Arial";
+    // logo.src = $(".myImage").attr("src");
+    // ctx.drawImage(logo,36,cheight-37,25,20);
+    ctx.font="lighter 21px Apple LiSung Light";
     var gradient=ctx.createLinearGradient(0,0,c.width,0);
-    gradient.addColorStop("0","#aaa");
-    gradient.addColorStop("1.0","#ccc");
+    gradient.addColorStop("0","#ccc");
+    gradient.addColorStop("1.0","#eee");
     // 用渐变填色
     ctx.fillStyle=gradient;
-    ctx.fillText("来自问我—让经验帮你赚钱",20,385);
+    var wenwotitle = '来自「问我」公众号';
+    ctx.fillText(wenwotitle,cwidth-10-ctx.measureText(wenwotitle).width,cheight - 20);
 
     img.onload = function() {
 
       //图片居中算法
       var imgHeight = img.naturalHeight;
       var imgWidth = img.naturalWidth;
-      console.log(imgWidth + "----"+imgHeight);
-      var canvasHeight = 200;
-      var canvasWidth = 300;
+      var canvasImgHeight = cheight * 0.618;
+      var canvasImgWidth = cwidth;
 
       var sx = 0,
-          sy = (imgHeight - imgWidth * (canvasHeight / canvasWidth))/2,
-          swidth = imgWidth,
-          sheight = imgWidth * (canvasHeight / canvasWidth),
-          x = 0,
-          y = 0,
-          width = canvasWidth,
-          height = canvasHeight;
+          sy = (imgHeight - imgWidth * (canvasImgHeight / (canvasImgWidth - 40)))/2,
+          swidth = imgWidth - 20,
+          sheight = imgWidth * (canvasImgHeight / canvasImgWidth), 
+          x = 20,
+          y = 20,
+          width = canvasImgWidth - 40,
+          height = canvasImgHeight;
 
-      ctx.drawImage(img,0,sy,swidth,sheight,x,y,300,200);
+      if(imgHeight / imgWidth < 1){
+
+        cx = (imgWidth - imgHeight * ((canvasImgWidth - 40) / canvasImgHeight))/2;
+        swidth = imgHeight * ((canvasImgWidth - 40) / canvasImgHeight);
+        sheight = imgHeight;
+
+        ctx.drawImage(img,cx,0,swidth,sheight,x,y,canvasImgWidth - 40,canvasImgHeight);
+      }else{
+        ctx.drawImage(img,0,sy,swidth,sheight,x,y,canvasImgWidth - 40,canvasImgHeight);
+      }
+      
       // window.location.href = c.toDataURL("image/png");
       // window.location.href = c.toDataURL("image/png").replace("image/png", "image/octet-stream");
+      $(".down-img").attr("src",c.toDataURL("image/png"));
+
+      localStorage["downImg"] = c.toDataURL("image/png");
+      // $(".downImg").show();
+      $.router.load("#down");
+
       var timestamp = new Date().getTime();
-      downloadFile("wenwo"+timestamp+'.png', c.toDataURL("image/png"));
+      // downloadFile("wenwo"+timestamp+'.png', c.toDataURL("image/png"));
 
       //将人数加1
       var downNum = parseInt($(".card-down-num").text());
@@ -645,8 +681,7 @@
 
         }
       })
-    };
-    
+    };  
   })
 
   //浏览人数添加
@@ -764,6 +799,10 @@
           });
       }
   })
+
+  $(".downImg").on("click",function(){
+    $.router.back();
+  });
 
 </script>
 <script type='text/javascript' src='/js/newfood.js' charset='utf-8'></script>
