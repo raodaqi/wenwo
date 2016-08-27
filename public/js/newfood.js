@@ -30,6 +30,27 @@
      $(".down-img").attr("src",localStorage.downImg);
   }
 
+
+  //生成美食信息
+  function formatAsk(ask){
+    var askLi = '<div class="wenwo-li" data-id="57ae95a0a633bd0057f3765e"><div class="wenwo-ask-img" style="background: url(http://o83np3eq2.bkt.clouddn.com/wenwo/1471057716839/tOPIhUv03jc-n2TdKnGab3cliq-PBh2ObpUe-xGUWf_URzGn7a4BZ5pxtX6me81_.png) center center / cover no-repeat;"><div class="wenwo-gradient"></div><div class="wenwo-look"><label class="iconfont icon-eyepageview"></label><label>112</label></div><div class="wenwo-add"><label class="iconfont icon-adress"></label><label>1.6km</label></div></div><div class="up-content"><img src="http://wx.qlogo.cn/mmopen/zngt7mjBQUdFiaKIVGQbhF0AHzzldiapRrfp4Un3ibbvyNUG8rpHzKeRPSFtqHqDZrPJgowmnDqbkYrgvDl3zXAK1YGAOdt23s8/" alt="" class="user-pic"><div class="ask-content"><div class="ask-reason">你要相信一个爱吃的胖子你要相信一个爱吃的胖子你要相信一个爱吃的胖子你要相信一个爱吃的胖子你要相信一个爱吃的胖子</div></div></div><div class="down-content"><div class="iconfont icon-taginfor tag-icon"></div><div class="down-tag-content"><div class="down-tag">火锅</div></div><div class="down-like"><span class="icon iconfont icon-likeEat"></span><label class="like-num">9</label></div></div></div>';
+    var askLi ='<div class="wenwo-li" data-id="57ae95a0a633bd0057f3765e"><div class="up-content"><img src="http://wx.qlogo.cn/mmopen/zngt7mjBQUdFiaKIVGQbhF0AHzzldiapRrfp4Un3ibbvyNUG8rpHzKeRPSFtqHqDZrPJgowmnDqbkYrgvDl3zXAK1YGAOdt23s8/" alt="" class="user-pic"><div class="ask-content"><div class="ask-reason">你要相信一个爱吃的胖子你要相信一个爱吃的胖子你要相信一个爱吃的胖子你要相信一个爱吃的胖子你要相信一个爱吃的胖子</div></div></div><div class="down-content"> <div class="iconfont icon-taginfor tag-icon"></div><div class="down-tag-content"><div class="down-tag">火锅</div></div><div class="down-like no-img"><span class="iconfont icon-chidouren"></span><label class="like-num">9</label></div></div><div class="other-content"><div class="wenwo-look"><label class="iconfont icon-eyepageview"></label><label>112</label></div><div class="wenwo-add"><label class="iconfont icon-adress"></label><label>1.6km</label></div></div></div>';
+    var lat1 = ask.GeoX;
+    var lng1 = ask.GeoY;
+    var long = getFlatternDistance(lat1, lng1, LAT, LNG);
+    var askTag =  formatTag(ask.askTagStr);
+    if(ask.askImage && ask.askImage.length){
+      var askImage = JSON.parse(ask.askImage);
+      console.log(askImage);
+      if(askImage[0].image){
+        var ask = '<div class="wenwo-li" data-id="'+ask.objectId+'"><div class="wenwo-ask-img" style="background: url('+askImage[0].image+') center center / cover no-repeat;"><div class="wenwo-gradient"></div><div class="wenwo-look"><label class="iconfont icon-eyepageview"></label><label> '+ask.lookNum+'</label></div><div class="wenwo-add"><label class="iconfont icon-adress"></label><label> '+formatRange(long)+'</label></div></div><div class="up-content"><img src="'+ask.createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-reason">'+ask.askReason+'</div></div></div><div class="down-content"><div class="iconfont icon-taginfor tag-icon"></div><div class="down-tag-content"><div class="down-tag">'+askTag+'</div></div><div class="down-like ' + (ask                                                                                                                                                                                                                                                                                                                                                                                                         .liked ? "liked" : '') + '"><span class="iconfont icon-chidouren"></span><label class="like-num">'+ask.likeNum+'</label></div></div></div>';
+        return ask;
+      }
+    }
+    var ask ='<div class="wenwo-li" data-id="'+ask.objectId+'"><div class="up-content"><img src="'+ask.createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-reason">'+ask.askReason+'</div></div></div><div class="down-content"> <div class="iconfont icon-taginfor tag-icon"></div><div class="down-tag-content"><div class="down-tag">'+askTag+'</div></div><div class="down-like no-img ' + (ask.liked ? "liked" : '') + '"><span class="iconfont icon-chidouren"></span><label class="like-num">'+ask.likeNum+'</label></div></div><div class="other-content"><div class="wenwo-look"><label class="iconfont icon-eyepageview"></label><label > '+ask.lookNum+'</label></div><div class="wenwo-add"><label class="iconfont icon-adress"></label><label> '+formatRange(long)+'</label></div></div></div>';
+    return ask;
+  }
+
   $.showPreloader("正在加载");
   initLocation("food",{
       success: function(lng, lat) {
@@ -310,6 +331,7 @@
           }
       }
 
+      // return;
       $.ajax({
           type: "GET",
           data: data,
@@ -528,12 +550,13 @@
                   var data = result.data;
                   if (data) {
                       for (var i = 0; i < data.length; i++) {
-                          var lat1 = data[i].GeoX;
-                          var lng1 = data[i].GeoY;
-                          var long = getFlatternDistance(lat1, lng1, LAT, LNG);
+                          // var lat1 = data[i].GeoX;
+                          // var lng1 = data[i].GeoY;
+                          // var long = getFlatternDistance(lat1, lng1, LAT, LNG);
 
-                          console.log(data[i].score);
-                          html += '<div class="wenwo-li" data-id=' + data[i].objectId + '><div class="up-content"><img src="' + data[i].createByUrl + '" alt="" class="user-pic"><div class="ask-content"><div class="ask-add">'+formatRange(long)+'</div><div class="ask-tag">' + formatTag(data[i].askTagStr) + '</div><div class="ask-reason">' + data[i].askReason + '</div></div></div><div class="down-content"><div class="down-like ' + (data[i].liked ? "liked" : '') + '"><span class="icon iconfont icon-likeEat"></span><label class="like-num">' + (data[i].likeNum < 0 ? 0 : data[i].likeNum) + '</label></div>' + (data[i].score > 9 ? '<div class="down-buy" data-id=' + data[i].objectId + '>' + formatPrice(data[i].askPrice) + '</div>' : '<div class="down-buy free" data-id=' + data[i].objectId + '>限时免费</div>') + '<div class="down-time">' + formatDate("y.m.d", data[i].createdAt) + '</div></div></div>';
+                          // console.log(data[i].score);
+                          // html += '<div class="wenwo-li" data-id=' + data[i].objectId + '><div class="up-content"><img src="' + data[i].createByUrl + '" alt="" class="user-pic"><div class="ask-content"><div class="ask-add">'+formatRange(long)+'</div><div class="ask-tag">' + formatTag(data[i].askTagStr) + '</div><div class="ask-reason">' + data[i].askReason + '</div></div></div><div class="down-content"><div class="down-like ' + (data[i].liked ? "liked" : '') + '"><span class="icon iconfont icon-likeEat"></span><label class="like-num">' + (data[i].likeNum < 0 ? 0 : data[i].likeNum) + '</label></div>' + (data[i].score > 9 ? '<div class="down-buy" data-id=' + data[i].objectId + '>' + formatPrice(data[i].askPrice) + '</div>' : '<div class="down-buy free" data-id=' + data[i].objectId + '>限时免费</div>') + '<div class="down-time">' + formatDate("y.m.d", data[i].createdAt) + '</div></div></div>';
+                        html += formatAsk(data[i]);
                       }
                       // 添加新条目
                       $('#find .wenwo-ul').append(html);
@@ -651,7 +674,8 @@
                       var lat1 = data[i].GeoX;
                       var lng1 = data[i].GeoY;
                       var long = getFlatternDistance(lat1, lng1, LAT, LNG);
-                      html += '<div class="wenwo-li" data-id=' + data[i].objectId + '><div class="up-content"><img src="' + data[i].createByUrl + '" alt="" class="user-pic"><div class="ask-content"><div class="ask-add">'+formatRange(long)+'</div><div class="ask-tag">' + formatTag(data[i].askTagStr) + '</div><div class="ask-reason">' + data[i].askReason + '</div></div></div><div class="down-content"><div class="down-like ' + (data[i].liked ? "liked" : '') + '"><span class="icon iconfont icon-likeEat"></span><label class="like-num">' + (data[i].likeNum < 0 ? 0 : data[i].likeNum) + '</label></div>' + (data[i].score > 9 ? '<div class="down-buy" data-id=' + data[i].objectId + '>' + formatPrice(data[i].askPrice) + '</div>' : '<div class="down-buy free" data-id=' + data[i].objectId + '>限时免费</div>') + '<div class="down-time">' + formatDate("y.m.d", data[i].createdAt) + '</div></div></div>';
+                      // html += '<div class="wenwo-li" data-id=' + data[i].objectId + '><div class="up-content"><img src="' + data[i].createByUrl + '" alt="" class="user-pic"><div class="ask-content"><div class="ask-add">'+formatRange(long)+'</div><div class="ask-tag">' + formatTag(data[i].askTagStr) + '</div><div class="ask-reason">' + data[i].askReason + '</div></div></div><div class="down-content"><div class="down-like ' + (data[i].liked ? "liked" : '') + '"><span class="icon iconfont icon-likeEat"></span><label class="like-num">' + (data[i].likeNum < 0 ? 0 : data[i].likeNum) + '</label></div>' + (data[i].score > 9 ? '<div class="down-buy" data-id=' + data[i].objectId + '>' + formatPrice(data[i].askPrice) + '</div>' : '<div class="down-buy free" data-id=' + data[i].objectId + '>限时免费</div>') + '<div class="down-time">' + formatDate("y.m.d", data[i].createdAt) + '</div></div></div>';
+                      html += formatAsk(data[i]);
                   }
                   // 添加新条目
                   // $(".distance-fixed").hide();
@@ -725,7 +749,8 @@
                       //         }
                       //     }
 
-                      html += '<div class="wenwo-li" data-id=' + data[i].objectId + '><div class="up-content"><img src="' + data[i].createByUrl + '" alt="" class="user-pic"><div class="ask-content"><div class="ask-add">'+formatDis(formatJSON(data[i].askPosition),long)+'</div><div class="ask-tag">' + formatTag(data[i].askTagStr) + '</div><div class="ask-reason">' + data[i].askReason + '</div></div></div><div class="down-content"><div class="down-like ' + (data[i].liked ? "liked" : '') + '"><span class="icon iconfont icon-likeEat"></span><label class="like-num">' + (data[i].likeNum < 0 ? 0 : data[i].likeNum) + '</label></div>' + (data[i].score > 9 ? '<div class="down-buy" data-id=' + data[i].objectId + '>' + formatPrice(data[i].askPrice) + '</div>' : '<div class="down-buy free" data-id=' + data[i].objectId + '>限时免费</div>') + '<div class="down-time">' + formatDate("y.m.d", data[i].createdAt) + '</div></div></div>';
+                      // html += '<div class="wenwo-li" data-id=' + data[i].objectId + '><div class="up-content"><img src="' + data[i].createByUrl + '" alt="" class="user-pic"><div class="ask-content"><div class="ask-add">'+formatDis(formatJSON(data[i].askPosition),long)+'</div><div class="ask-tag">' + formatTag(data[i].askTagStr) + '</div><div class="ask-reason">' + data[i].askReason + '</div></div></div><div class="down-content"><div class="down-like ' + (data[i].liked ? "liked" : '') + '"><span class="icon iconfont icon-likeEat"></span><label class="like-num">' + (data[i].likeNum < 0 ? 0 : data[i].likeNum) + '</label></div>' + (data[i].score > 9 ? '<div class="down-buy" data-id=' + data[i].objectId + '>' + formatPrice(data[i].askPrice) + '</div>' : '<div class="down-buy free" data-id=' + data[i].objectId + '>限时免费</div>') + '<div class="down-time">' + formatDate("y.m.d", data[i].createdAt) + '</div></div></div>';
+                       html += formatAsk(data[i]);
                   }
                   // 添加新条目
                   $.pullToRefreshDone('.pull-to-refresh-content');
@@ -776,6 +801,10 @@
 
   //初始化标签列表
   function initTagListPage(page, number,tag) {
+      if(!tag){
+        tag = localStorage.askTag;
+      }
+      $("#tag .title").text(tag);
 
       //初始化最新列表，获取前20条信息
       getTagAskMe(page, number, '', UserName,tag, {
@@ -790,7 +819,8 @@
                       var lng1 = data[i].GeoY;
                       var long = getFlatternDistance(lat1, lng1, LAT, LNG);
 
-                      html += '<div class="wenwo-li" data-id=' + data[i].objectId + '><div class="up-content"><img src="' + data[i].createByUrl + '" alt="" class="user-pic"><div class="ask-content"><div class="ask-add">'+formatDis(formatJSON(data[i].askPosition),long)+'</div><div class="ask-tag">' + formatTag(data[i].askTagStr) + '</div><div class="ask-reason">' + data[i].askReason + '</div></div></div><div class="down-content"><div class="down-like ' + (data[i].liked ? "liked" : '') + '"><span class="icon iconfont icon-likeEat"></span><label class="like-num">' + (data[i].likeNum < 0 ? 0 : data[i].likeNum) + '</label></div>' + (data[i].score > 9 ? '<div class="down-buy" data-id=' + data[i].objectId + '>' + formatPrice(data[i].askPrice) + '</div>' : '<div class="down-buy free" data-id=' + data[i].objectId + '>限时免费</div>') + '<div class="down-time">' + formatDate("y.m.d", data[i].createdAt) + '</div></div></div>';
+                      // html += '<div class="wenwo-li" data-id=' + data[i].objectId + '><div class="up-content"><img src="' + data[i].createByUrl + '" alt="" class="user-pic"><div class="ask-content"><div class="ask-add">'+formatDis(formatJSON(data[i].askPosition),long)+'</div><div class="ask-tag">' + formatTag(data[i].askTagStr) + '</div><div class="ask-reason">' + data[i].askReason + '</div></div></div><div class="down-content"><div class="down-like ' + (data[i].liked ? "liked" : '') + '"><span class="icon iconfont icon-likeEat"></span><label class="like-num">' + (data[i].likeNum < 0 ? 0 : data[i].likeNum) + '</label></div>' + (data[i].score > 9 ? '<div class="down-buy" data-id=' + data[i].objectId + '>' + formatPrice(data[i].askPrice) + '</div>' : '<div class="down-buy free" data-id=' + data[i].objectId + '>限时免费</div>') + '<div class="down-time">' + formatDate("y.m.d", data[i].createdAt) + '</div></div></div>';
+                    html += formatAsk(data[i]);
                   }
                   // 添加新条目
                   $.pullToRefreshDone('.pull-to-refresh-content');
@@ -852,7 +882,8 @@
                   }
                   if (data) {
                       for (var i = 0; i < data.length; i++) {
-                          html += '<div class="wenwo-li" data-id=' + data[i].objectId + '><div class="up-content"><img src="' + data[i].createByUrl + '" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">' + formatTag(data[i].askTagStr) + '</div><div class="ask-reason">' + data[i].askReason + '</div></div></div><div class="down-content"><div class="down-like liked"><span class="icon iconfont icon-likeEat"></span><label class="like-num">' + (data[i].likeNum < 0 ? 0 : data[i].likeNum) + '</label></div>' + (data[i].score > 9 ? '<div class="down-buy" data-id=' + data[i].objectId + '>' + formatPrice(data[i].askPrice) + '</div>' : '<div class="down-buy free" data-id=' + data[i].objectId + '>限时免费</div>') + '<div class="down-time">' + formatDate("y.m.d", data[i].createdAt) + '</div></div></div>';
+                          // html += '<div class="wenwo-li" data-id=' + data[i].objectId + '><div class="up-content"><img src="' + data[i].createByUrl + '" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">' + formatTag(data[i].askTagStr) + '</div><div class="ask-reason">' + data[i].askReason + '</div></div></div><div class="down-content"><div class="down-like liked"><span class="icon iconfont icon-likeEat"></span><label class="like-num">' + (data[i].likeNum < 0 ? 0 : data[i].likeNum) + '</label></div>' + (data[i].score > 9 ? '<div class="down-buy" data-id=' + data[i].objectId + '>' + formatPrice(data[i].askPrice) + '</div>' : '<div class="down-buy free" data-id=' + data[i].objectId + '>限时免费</div>') + '<div class="down-time">' + formatDate("y.m.d", data[i].createdAt) + '</div></div></div>';
+                           html += formatAsk(data[i]);
                       }
                   }
                   // 添加新条目
@@ -1116,9 +1147,20 @@
     window.location.href = "/detail?askid=" + askId + "#food";
   })
 
-  $(".wenwo-ul").on("click", ".ask-tag", function() {
-    console.log("test");
+  $(".wenwo-ul").on("click", ".wenwo-ask-img", function() {
+    $.showPreloader("正在跳转");
+    var askId = $(this).parent().attr("data-id");
+    window.location.href = "/detail?askid=" + askId + "#food";
+  })
+
+  $(".wenwo-ul").on("click", ".ask-tag,.down-tag", function() {
     var tag = $(this).text();
+
+    //获取当前页面
+    var page = $(".page-current").id;
+    if(page == "tag"){
+      return ;
+    }
 
     if(tag != $(this).text()){
       $("#tag .wenwo-ul").empty();
@@ -1126,8 +1168,10 @@
       $("#tag .ask-end").hide();
     }
 
+    localStorage["askTag"] = tag;
+
     initTagListPage(0,20,tag);
-    $("#tag .title").text(tag);
+
     $.router.load("#tag");
   })
 
@@ -1246,7 +1290,8 @@
                   }
                   if (data) {
                       for (var i = 0; i < data.length; i++) {
-                          html += '<div class="wenwo-li" data-id=' + data[i].objectId + '><div class="up-content"><img src="' + data[i].createByUrl + '" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">' + formatTag(data[i].askTagStr) + '</div><div class="ask-reason">' + data[i].askReason + '</div></div></div><div class="down-content"><div class="down-like ' + (data[i].liked ? "liked" : '') + '"><span class="icon iconfont icon-likeEat"></span><label class="like-num">' + (data[i].likeNum < 0 ? 0 : data[i].likeNum)  + '</label></div>' + '<div class="down-buy" data-id=' + data[i].objectId + '>朕已查阅</div>' + '<div class="down-time">' + formatDate("y.m.d", data[i].createdAt) + '</div></div></div>';
+                          // html += '<div class="wenwo-li" data-id=' + data[i].objectId + '><div class="up-content"><img src="' + data[i].createByUrl + '" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">' + formatTag(data[i].askTagStr) + '</div><div class="ask-reason">' + data[i].askReason + '</div></div></div><div class="down-content"><div class="down-like ' + (data[i].liked ? "liked" : '') + '"><span class="icon iconfont icon-likeEat"></span><label class="like-num">' + (data[i].likeNum < 0 ? 0 : data[i].likeNum)  + '</label></div>' + '<div class="down-buy" data-id=' + data[i].objectId + '>朕已查阅</div>' + '<div class="down-time">' + formatDate("y.m.d", data[i].createdAt) + '</div></div></div>';
+                        html += formatAsk(data[i]);
                       }
                   }
                   // 添加新条目
@@ -1289,7 +1334,8 @@
                   }
                   if (data) {
                       for (var i = 0; i < data.length; i++) {
-                          html += '<div class="wenwo-li" data-id=' + data[i].objectId + '><div class="up-content"><img src="' + data[i].createByUrl + '" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">' + formatTag(data[i].askTagStr) + '</div><div class="ask-reason">' + data[i].askReason + '</div></div></div><div class="down-content"><div class="down-like-num">有<label class="like-num">'+ data[i].likeNum +'</label>人想吃</div><div class="down-buy-num">有<label class="buy-num">'+buyNum[i].buyNum+'</label>人购买</div><div class="down-time">' + formatDate("y.m.d", data[i].createdAt) + '</div></div></div>';
+                          // html += '<div class="wenwo-li" data-id=' + data[i].objectId + '><div class="up-content"><img src="' + data[i].createByUrl + '" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">' + formatTag(data[i].askTagStr) + '</div><div class="ask-reason">' + data[i].askReason + '</div></div></div><div class="down-content"><div class="down-like-num">有<label class="like-num">'+ data[i].likeNum +'</label>人想吃</div><div class="down-buy-num">有<label class="buy-num">'+buyNum[i].buyNum+'</label>人购买</div><div class="down-time">' + formatDate("y.m.d", data[i].createdAt) + '</div></div></div>';
+                        html += formatAsk(data[i]);
                       }
                   }
                   console.log(html);

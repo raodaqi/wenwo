@@ -23,13 +23,13 @@ var Debase = AV.Object.extend('Debase');
 
 router.get('/allask', function(req, res, next) {
     //page      size
-    var userName = req.param('username');
-    var page = req.param('page') != null ? req.param('page') : 0;
-    var size = req.param('size') != null ? req.param('size') : 1000;
-    var staus = req.param('staus') != null ? req.param('staus') : '1';
-    var type = req.param('type') != null ? req.param('type') : null;
-    var geo = req.param('position_geo') != null ? req.param('position_geo') : null;
-    var range = req.param('range') != null ? req.param('range') : null;
+    var userName = req.query.username;
+    var page = req.query.page != null ? req.query.page : 0;
+    var size = req.query.size != null ? req.query.size : 1000;
+    var staus = req.query.staus != null ? req.query.staus : '1';
+    var type = req.query.type != null ? req.query.type : null;
+    var geo = req.query.position_geo != null ? req.query.position_geo : null;
+    var range = req.query.range != null ? req.query.range : null;
 
     //console.log(staus);
     var query = new AV.Query('AskMe');
@@ -140,12 +140,12 @@ router.get('/allask', function(req, res, next) {
 
 router.get('/gettagask', function(req, res, next) {
     //page      size
-    var userName = req.param('username');
-    var page = req.param('page') != null ? req.param('page') : 0;
-    var size = req.param('size') != null ? req.param('size') : 1000;
-    var staus = req.param('staus') != null ? req.param('staus') : '1';
-    var type = req.param('type') != null ? req.param('type') : null;
-    var tag = req.param('tag') != null ? req.param('tag') : null;
+    var userName = req.query.username;
+    var page = req.query.page != null ? req.query.page : 0;
+    var size = req.query.size != null ? req.query.size : 1000;
+    var staus = req.query.staus != null ? req.query.staus : '1';
+    var type = req.query.type != null ? req.query.type : null;
+    var tag = req.query.tag != null ? req.query.tag : null;
 
     var query = new AV.Query('AskMe');
     if(staus != '4') {
@@ -1171,29 +1171,44 @@ router.get('/myask', function(req, res, next) {
 
     query.find().then(function(ask) {
         // console.log(ask);
+        var query = new AV.Query('FoodLike');
+        query.equalTo("by", userName);
+        query.find().then(function (likeList) {
 
-        var show = {};
-        var i = 0;
-        getBuyNum(ask,show,i,{
-            success:function(buyNum){
-                console.log(result);
-                var result = {
-                    code : 200,
-                    data : ask,
-                    buyNum : buyNum,
-                    message : 'Operation succeeded'
+            var show = {};
+            var i = 0;
+
+            for (var j = 0; j < ask.length; j++) {
+                for (var k = 0; k < likeList.length; k++) {
+                    if(likeList[k].get('ask').id == ask[j].id){
+                        ask[j].set('liked', 1);
+                    }
                 }
-                res.send(result);
-            },
-            error:function(error){
-                console.log(error);
-                var result = {
-                    code : 200,
-                    data : ask,
-                    message : 'Operation succeeded'
-                }
-                res.send(result);
             }
+
+            getBuyNum(ask,show,i,{
+                success:function(buyNum){
+                    console.log(result);
+                    var result = {
+                        code : 200,
+                        data : ask,
+                        buyNum : buyNum,
+                        message : 'Operation succeeded'
+                    }
+                    res.send(result);
+                },
+                error:function(error){
+                    console.log(error);
+                    var result = {
+                        code : 200,
+                        data : ask,
+                        message : 'Operation succeeded'
+                    }
+                    res.send(result);
+                }
+            })
+        },function(){
+            
         })
 
         // for(var i = 0; i < results.length;i++){

@@ -26,8 +26,6 @@
         <div class="swiper-wrapper">
           <!-- <div class="swiper-slide" data-href="/share/id/57a84fba1532bc0060d62179"><img src="/img/scroll/page2.jpg" alt=""></div>
           <div class="swiper-slide" data-href="/share/id/57a84f52165abd00616471d9"><img src="/img/scroll/page1.jpg" alt=""></div> -->
-
-          
         </div>
         <div class="swiper-pagination"></div>
         <!-- <div class="swiper-button-next"></div>
@@ -38,25 +36,93 @@
 
         <div class="nav-list" data-href="#tagfind">
           <div class="nav-icon">
-            <label class="iconfont icon-c-classification"></label>
+            <label class="iconfont icon-kinds"></label>
           </div>
           <div class="nav-title">分类查找</div>
         </div>
         <div class="nav-list nav-list-day" data-href="#card">
           <div class="nav-icon">
-            <label>-</label>
+            <label class="iconfont icon-cards"></label>
           </div>
           <div class="nav-title">精选美食卡片</div>
         </div>
         <div class="nav-list" data-href="#strategy">
           <div class="nav-icon">
-            <label class="iconfont icon-gonglve"></label>
+            <label class="iconfont icon-topics"></label>
           </div>
           <div class="nav-title">美食攻略</div>
         </div>
       </div>
 
       <div class="wenwo-ul">
+        <div class="wenwo-ul-nav">
+          <div class="nav-left">
+            <div class="nav-left-add">成都信息工程大学</div>
+            <label class="iconfont icon-jiantouxia"></label>
+          </div>
+          <div class="nav-right">
+            <label> 500m </label>
+            <label class="iconfont icon-jiantouxia"></label>
+          </div>
+        </div>
+        <div class="wenwo-li" data-id="57ae95a0a633bd0057f3765e">
+          <div class="wenwo-ask-img" style="background: url(http://o83np3eq2.bkt.clouddn.com/wenwo/1471057716839/tOPIhUv03jc-n2TdKnGab3cliq-PBh2ObpUe-xGUWf_URzGn7a4BZ5pxtX6me81_.png) center center / cover no-repeat;">
+            <div class="wenwo-gradient"></div>
+            <div class="wenwo-look">
+              <label class="iconfont icon-eyepageview"></label>
+              <label>112</label>
+            </div>
+            <div class="wenwo-add">
+              <label class="iconfont icon-adress"></label>
+              <label>1.6km</label>
+            </div>
+          </div>
+          <div class="up-content">
+            <img src="http://wx.qlogo.cn/mmopen/zngt7mjBQUdFiaKIVGQbhF0AHzzldiapRrfp4Un3ibbvyNUG8rpHzKeRPSFtqHqDZrPJgowmnDqbkYrgvDl3zXAK1YGAOdt23s8/" alt="" class="user-pic">        
+            <div class="ask-content">
+              <div class="ask-reason">你要相信一个爱吃的胖子你要相信一个爱吃的胖子你要相信一个爱吃的胖子你要相信一个爱吃的胖子你要相信一个爱吃的胖子</div>
+            </div>
+          </div>
+          <div class="down-content"> 
+            <div class="iconfont icon-taginfor tag-icon"></div>
+            <div class="down-tag-content">
+              <div class="down-tag">火锅</div>
+            </div>
+            <div class="down-like">
+              <span class="iconfont icon-chidouren"></span>
+              <label class="like-num">9</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="wenwo-li" data-id="57ae95a0a633bd0057f3765e">
+          <div class="up-content">
+            <img src="http://wx.qlogo.cn/mmopen/zngt7mjBQUdFiaKIVGQbhF0AHzzldiapRrfp4Un3ibbvyNUG8rpHzKeRPSFtqHqDZrPJgowmnDqbkYrgvDl3zXAK1YGAOdt23s8/" alt="" class="user-pic">        
+            <div class="ask-content">
+              <div class="ask-reason">你要相信一个爱吃的胖子你要相信一个爱吃的胖子你要相信一个爱吃的胖子你要相信一个爱吃的胖子你要相信一个爱吃的胖子</div>
+            </div>
+          </div>
+          <div class="down-content"> 
+            <div class="iconfont icon-taginfor tag-icon"></div>
+            <div class="down-tag-content">
+              <div class="down-tag">火锅</div>
+            </div>
+            <div class="down-like no-img">
+              <span class="iconfont icon-chidouren"></span>
+              <label class="like-num">9</label>
+            </div>
+          </div>
+          <div class="other-content">
+            <div class="wenwo-look">
+              <label class="iconfont icon-eyepageview"></label>
+              <label>112</label>
+            </div>
+            <div class="wenwo-add">
+              <label class="iconfont icon-adress"></label>
+              <label>1.6km</label>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="infinite-scroll-preloader" >
         <div class="preloader"></div>
@@ -289,7 +355,7 @@
       <img src="/img/food/send.svg" alt="" class="send-button">
     </a>
     <a class="tab-item like" data-type="like" href="#">
-      <span class="icon icon-likeEat"></span>
+      <span class="icon iconfont icon-chidouren"></span>
       <span class="tab-label">想吃</span>
     </a>
   </nav>
@@ -509,8 +575,8 @@
       $("#buy .buy-content").scrollTop(buyTop);
     }
   }
-  var date = new Date();
-  $(".nav-list-day .nav-icon label").text(formatDate("d",date));
+  // var date = new Date();
+  // $(".nav-list-day .nav-icon label").text(formatDate("d",date));
 
 
   // var c = document.getElementById("myCanvas");

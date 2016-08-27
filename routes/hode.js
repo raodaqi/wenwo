@@ -98,20 +98,42 @@ router.post('/haved', function(req, res, next) {
         query.descending('createdAt');
         query.find().then(function (fooLikes) {
 
-            var askDetail = new Array();
+            var query = new AV.Query('FoodLike');
 
-            for (var i = 0; i < fooLikes.length; i++) {
-                askDetail[i] = fooLikes[i].get('ask');
-            }
+            query.equalTo("by", userName);
 
-            var result = {
-                code : 200,
-                data :fooLikes,
-                askDetail : askDetail,
-                message : '操作成功'
-            };
-            res.send(result);
-            return;
+            query.find().then(function (likeList) {
+
+                var askDetail = new Array();
+
+                for (var i = 0; i < fooLikes.length; i++) {
+
+                    askDetail[i] = fooLikes[i].get('ask');
+
+                    for (var k = 0; k < likeList.length; k++) {
+                        if(likeList[k].get('ask').id == askDetail[i].id){
+                            askDetail[i].set('liked', 1);
+                        }
+                    }
+                }
+
+                var result = {
+                    code : 200,
+                    data :fooLikes,
+                    askDetail : askDetail,
+                    message : '操作成功'
+                };
+                res.send(result);
+                return;
+            },function(error){
+                var result = {
+                    code : 400,
+                    message : '操作失败'
+                };
+                res.send(result);
+            })
+
+            
         });
 
     });
@@ -631,6 +653,7 @@ router.post('/foodlikelist', function(req, res, next) {
 
                 for (var i = 0; i < fooLikes.length; i++) {
                     askDetail[i] = fooLikes[i].get('ask');
+                    askDetail[i].set('liked', 1);
                 }
 
                 var result = {
