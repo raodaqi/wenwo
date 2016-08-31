@@ -1,7 +1,8 @@
 <% include header.ejs %>
-<link href='http://api.youziku.com/webfont/CSS/578f43dcf629e300d8f428f5' rel='stylesheet' type='text/css' />
+<!-- <link href='http://api.youziku.com/webfont/CSS/578f43dcf629e300d8f428f5' rel='stylesheet' type='text/css' /> -->
 <link rel="stylesheet" href="/css/sm-extend.min.css">
 <link rel="stylesheet" href="/css/newfood-min.css">
+<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=cb84c659c88a7cc83b935a009b3a9cfd&plugin=AMap.Geocoder"></script>
 </head>
 <body>
  <img src="/img/loading.png" alt="" class="hide-img">
@@ -9,8 +10,9 @@
     <header class="bar bar-nav">
       <div class="header-me iconfont icon-gerenzhongxin"></div>
       <h1 class="title">问我-美食</h1>
+      <div class="header-search wenwo-click iconfont icon-sousuo" data-href="#search"></div>
     </header>
-    <div class="distance distance-fixed">距离1KM</div>
+    <!-- <div class="distance distance-fixed">距离1KM</div> -->
     <!-- 这里是所有的信息列表 -->
     <div class="find-content content pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="55" data-distance="100">
       <!-- 默认的下拉刷新层 -->    
@@ -50,83 +52,35 @@
           <div class="nav-icon">
             <label class="iconfont icon-topics"></label>
           </div>
-          <div class="nav-title">美食攻略</div>
+          <div class="nav-title">美食专题</div>
         </div>
       </div>
-
-      <div class="wenwo-ul">
-        <div class="wenwo-ul-nav">
+      
+      <div class="wenwo-ul-nav">
           <div class="nav-left">
-            <div class="nav-left-add">成都信息工程大学</div>
+            <div class="nav-left-add">定位...</div>
             <label class="iconfont icon-jiantouxia"></label>
           </div>
           <div class="nav-right">
-            <label> 500m </label>
+            <label class="nav-right-range"> 2km </label>
             <label class="iconfont icon-jiantouxia"></label>
           </div>
-        </div>
-        <div class="wenwo-li" data-id="57ae95a0a633bd0057f3765e">
-          <div class="wenwo-ask-img" style="background: url(http://o83np3eq2.bkt.clouddn.com/wenwo/1471057716839/tOPIhUv03jc-n2TdKnGab3cliq-PBh2ObpUe-xGUWf_URzGn7a4BZ5pxtX6me81_.png) center center / cover no-repeat;">
-            <div class="wenwo-gradient"></div>
-            <div class="wenwo-look">
-              <label class="iconfont icon-eyepageview"></label>
-              <label>112</label>
-            </div>
-            <div class="wenwo-add">
-              <label class="iconfont icon-adress"></label>
-              <label>1.6km</label>
-            </div>
-          </div>
-          <div class="up-content">
-            <img src="http://wx.qlogo.cn/mmopen/zngt7mjBQUdFiaKIVGQbhF0AHzzldiapRrfp4Un3ibbvyNUG8rpHzKeRPSFtqHqDZrPJgowmnDqbkYrgvDl3zXAK1YGAOdt23s8/" alt="" class="user-pic">        
-            <div class="ask-content">
-              <div class="ask-reason">你要相信一个爱吃的胖子你要相信一个爱吃的胖子你要相信一个爱吃的胖子你要相信一个爱吃的胖子你要相信一个爱吃的胖子</div>
-            </div>
-          </div>
-          <div class="down-content"> 
-            <div class="iconfont icon-taginfor tag-icon"></div>
-            <div class="down-tag-content">
-              <div class="down-tag">火锅</div>
-            </div>
-            <div class="down-like">
-              <span class="iconfont icon-chidouren"></span>
-              <label class="like-num">9</label>
-            </div>
-          </div>
-        </div>
-
-        <div class="wenwo-li" data-id="57ae95a0a633bd0057f3765e">
-          <div class="up-content">
-            <img src="http://wx.qlogo.cn/mmopen/zngt7mjBQUdFiaKIVGQbhF0AHzzldiapRrfp4Un3ibbvyNUG8rpHzKeRPSFtqHqDZrPJgowmnDqbkYrgvDl3zXAK1YGAOdt23s8/" alt="" class="user-pic">        
-            <div class="ask-content">
-              <div class="ask-reason">你要相信一个爱吃的胖子你要相信一个爱吃的胖子你要相信一个爱吃的胖子你要相信一个爱吃的胖子你要相信一个爱吃的胖子</div>
-            </div>
-          </div>
-          <div class="down-content"> 
-            <div class="iconfont icon-taginfor tag-icon"></div>
-            <div class="down-tag-content">
-              <div class="down-tag">火锅</div>
-            </div>
-            <div class="down-like no-img">
-              <span class="iconfont icon-chidouren"></span>
-              <label class="like-num">9</label>
-            </div>
-          </div>
-          <div class="other-content">
-            <div class="wenwo-look">
-              <label class="iconfont icon-eyepageview"></label>
-              <label>112</label>
-            </div>
-            <div class="wenwo-add">
-              <label class="iconfont icon-adress"></label>
-              <label>1.6km</label>
-            </div>
-          </div>
-        </div>
+      </div>
+      <div class="range-content">
+        <div class="range-content-li" data-range="500">500m</div>
+        <div class="range-content-li" style="display:none" data-range="2000">2km</div>
+        <div class="range-content-li" data-range="3000000">所有信息</div>
+      </div>
+      <div class="wenwo-ul">   
       </div>
       <div class="infinite-scroll-preloader" >
         <div class="preloader"></div>
         <div class="ask-end" style="display:none">启禀陛下，您已经到底了。</div>
+      </div>
+
+      <div class="no-ask-result">
+        <div class="no-ask-tip">启禀陛下，没有更多信息了呢！</div>
+        <div class="change-location">换个位置 去瞅瞅</div>
       </div>
     </div>
   </div>
@@ -429,7 +383,7 @@
       <a class="button button-link button-nav pull-left back" href="#">
         <span class="icon icon-left"></span>
       </a>
-      <h1 class="title">美食攻略</h1>
+      <h1 class="title">美食专题</h1>
     </header>
     <!-- 这里是所有的信息列表 -->
     <div class="strategy-content content pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="55" data-distance="100">
@@ -456,15 +410,7 @@
       </a>
       <h1 class="title">精选美食卡片</h1>
     </header>
-    <!-- 这里是所有的信息列表 -->
-    <div class="card-content content pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="55" data-distance="100">
-      <!-- 默认的下拉刷新层 -->    
-      <div class="pull-to-refresh-layer">
-        <div class="preloader-tip">刷新成功</div>
-        <div class="preloader"></div>
-        <div class="pull-to-refresh-arrow"></div>
-      </div>
-      
+    <div class="card-content content">
       <!-- Slider -->
         <div class="swiper-container" data-space-between='10' data-autoplay-disable-on-interaction='false'>
           <div class="swiper-wrapper">
@@ -487,14 +433,7 @@
         </div>
 
       <div class="wenwo-ul card-ul">
-
         <img src="/img/logo-canvas.png" alt="" class="myImage" style="display:none">
-
-         
-      </div>
-      <div class="infinite-scroll-preloader" >
-        <div class="preloader"></div>
-        <div class="ask-end" style="display:none">启禀陛下，您已经到底了。</div>
       </div>
     </div>
   </div>
@@ -507,19 +446,9 @@
       </a>
       <h1 class="title">分类查找</h1>
     </header>
-    <!-- 这里是所有的信息列表 -->
-    <div class="tagfind-content content pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="55" data-distance="100">
-      <!-- 默认的下拉刷新层 -->    
-      <div class="pull-to-refresh-layer">
-        <div class="preloader-tip">刷新成功</div>
-        <div class="preloader"></div>
-        <div class="pull-to-refresh-arrow"></div>
-      </div>
+
+    <div class="tag-content">
       <div class="wenwo-ul">
-      </div>
-      <div class="infinite-scroll-preloader" >
-        <div class="preloader"></div>
-        <div class="ask-end" style="display:none"></div>
       </div>
     </div>
   </div>
@@ -530,6 +459,96 @@
   <div class="wenwo-content page" id='down'>
     <div class="content downImg">
       <img class="down-img" src="">
+    </div>
+  </div>
+
+  <!-- 这里是搜索界面 -->
+  <div class="wenwo-content page" id='search'>
+    <header class="bar bar-nav">
+      <a class="button button-link button-nav pull-left back" href="#">
+        <span class="icon icon-left"></span>
+      </a>
+      <div class="search-content-box">
+        <input type="text" class="keyword" >
+        <span class="iconfont icon-x"></span>
+      </div>
+      <div class="search-button">搜索</div>
+    </header>
+    <!-- 这里是搜索界面 -->
+    <div class="search-content content infinite-scroll infinite-scroll-bottom" data-ptr-distance="55" data-distance="100">
+
+      <div class="wenwo-ul-content" style="display:none">
+        <div class="wenwo-ul"> 
+        </div>   
+        <div class="infinite-scroll-preloader" >
+          <div class="preloader"></div>
+          <div class="ask-end" style="display:none">启禀陛下，您已经到底了。</div>
+        </div>
+      </div>
+      <div class="keyword-content">
+        <!-- <div class="keyworld-content-li">
+          火锅
+        </div> -->
+      </div>
+      <div class="search-box">
+        <div class="hot-tag">
+          <div class="hot-title">
+            <span class="iconfont icon-fire"></span>
+            <div class="hot-title-desc">热门美食</div>
+          </div>
+          <div class="hot-tag-content">
+            <div class="hot-load">
+              <div class="preloader"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 这里是搜索界面 -->
+  <div class="wenwo-content page" id='slocation'>
+    <header class="bar bar-nav">
+      <a class="button button-link button-nav pull-left back" href="#">
+        <span class="icon icon-left"></span>
+      </a>
+      <div class="search-content-box">
+        <input type="text" class="location" placeholder="输入地点，获取美食" id="location-address">
+      </div>
+      <div class="cancel-button">取消</div>
+    </header>
+    <!-- 这里是搜索界面 -->
+    <div class="slocation-content">
+      <div class="wenwo-ul-content">
+        <div class="wenwo-ul">
+        </div>
+      </div>
+      <div class="location-box">
+        <div class="my-location location-box-li">
+          <div class="hot-title">
+            <span class="iconfont icon-location"></span>
+            <div class="hot-title-desc">我的位置</div>
+            <div class="location-line"></div>
+          </div>
+          <div class="my-location-content">
+            <label class="location-city">正在定位...</label>
+            <label class="location-detail"></label>
+          </div>
+        </div>
+
+        <div class="hot-location location-box-li">
+          <div class="hot-title">
+            <span class="iconfont icon-fire"></span>
+            <div class="hot-title-desc">热门</div>
+            <div class="location-line"></div>
+          </div>
+          <div class="hot-location-content">
+            <div class="hot-load">
+              <div class="preloader"></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 

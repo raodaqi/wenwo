@@ -70,7 +70,7 @@ function getAddress(lnglatXY,callback){
         geocoder.getAddress(lnglatXY, function(status, result) {
             if (status === 'complete' && result.info === 'OK') {
               var address = result.regeocode; //返回地址描述
-              console.log(address);
+              // console.log(address);
               callback.success(address);
               // console.log(address);
 
@@ -268,6 +268,16 @@ $.hidePreloader = function(){
       return price + "元瞅瞅";
     }
   }
+
+  //监听可点击元素
+  $("body").on("click",".wenwo-click",function(){
+    var href = $(this).attr("data-href");
+    if(href.split("#")[1]){
+      $.router.load(href);
+    }else{
+      window.location.href ="/"+href;
+    }
+  })
 
   //经纬度之间的距离
   /**

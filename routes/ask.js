@@ -19,6 +19,7 @@ var Ask =  AV.Object.extend('AskMe');
 var Tag =  AV.Object.extend('Tag');
 var Like = AV.Object.extend('Like');
 var Debase = AV.Object.extend('Debase');
+var SearchLog = AV.Object.extend('SearchLog');
 
 
 router.get('/allask', function(req, res, next) {
@@ -136,6 +137,194 @@ router.get('/allask', function(req, res, next) {
     });
 
 });
+
+//美食搜索
+/*
+ *这里是搜索标签关键字
+ */
+router.get('/skeyword', function(req, res, next) {
+    var keyword = req.query.keyword;
+    console.log(keyword);
+
+    var query = new AV.SearchQuery('Tag');
+    query.queryString(keyword);
+    query.limit(10);
+    query.find().then(function (tag) {
+        // results 返回的就是有图片的 Todo 集合
+        var result = {
+            code : 200,
+            data : tag,
+            message : "success"
+        }
+        res.send(result);
+    }, function (error) {
+        var result = {
+            code : 400,
+            message : "error"
+        }
+        res.send(result);
+    });
+})
+
+//没事搜索
+/*
+ *这里是搜索标签和推荐理由
+ */
+router.get('/search', function(req, res, next) {
+    var keyword = req.query.keyword;
+    var userName = req.query.username;
+    var page = req.query.page != null ? req.query.page : 0;
+    var size = req.query.size != null ? req.query.size : 1000;
+    var staus = req.query.staus != null ? req.query.staus : '1';
+
+    if(!userName){
+        var result = {
+            code : 600,
+            message : "缺少参数"
+        }
+        res.send(result);
+        return;
+    }
+
+    var query = new AV.Query('FoodLike');
+
+    query.equalTo("by", userName);
+
+    query.find().then(function (likeList) {
+
+        var query = new AV.SearchQuery('AskMe');
+
+        if (size != null) {
+            // query.limit(parseInt(size));
+        }
+        
+        // console.log(page*size);
+        // query.sid(null);
+        // query.skip(parseInt(page*size));
+
+        //这里是进行多次设置查询值
+        query.queryString(keyword+" AND staus:1");
+
+        query.find().then(function (asklist) {
+            // results 返回的就是有图片的 Todo 集合
+            // console.log(asklist);
+            var askDetail = new Array();
+            var j = 0;
+            // for (var i = 0; i < asklist.length; i++) {
+            //     if(asklist[i].get("staus") == 1){
+            //         askDetail[j] = asklist[i]; 
+            //         for (var k = 0; k < likeList.length; k++) {
+            //             if(likeList[k].get('ask').id == askDetail[j].id){
+            //                 askDetail[j].set('liked', 1);
+            //             }
+            //         }
+            //         j++;
+            //     }   
+            // }
+            var length = parseInt(page*size) + parseInt(size);
+
+            for (var i = page*size; i < length; i++) {
+                if(!asklist[i]){
+                    break;
+                }
+
+                if(asklist[i].get("staus") == 1){
+                    askDetail[j] = asklist[i]; 
+                    for (var k = 0; k < likeList.length; k++) {
+                        if(likeList[k].get('ask').id == askDetail[j].id){
+                            askDetail[j].set('liked', 1);
+                        }
+                    }
+                    j++;
+                }   
+            }
+
+            var result = {
+                code : 200,
+                data : askDetail,
+                message : "success"
+            }
+            res.send(result);
+        }, function (error) {
+            var result = {
+                code : 400,
+                message : "error"
+            }
+            res.send(result);
+        });
+    }, function (error) {
+        var result = {
+            code : 400,
+            message : "error"
+        }
+        res.send(result);
+    });
+})
+
+/*
+ *这里是搜索标签和推荐理由
+ */
+function ifexitSearchLog(data,callback){
+    var query = new AV.Query('SearchLog');
+    for(var key in data){
+        query.equalTo(key, data[key]);
+    }
+    query.find().then(function (cardList) {
+        callback.success(cardList);
+    },function (error) {
+        callback.error(error);
+    });
+}
+
+router.get('/addsearchlog', function(req, res, next) {
+    var keyword = req.query.keyword;
+    var createBy = req.query.username;
+    var data = {
+        createBy  : createBy,
+        keyword   : keyword
+    }
+    ifexitSearchLog(data,{
+        success:function(searchlog){
+            if(!searchlog.length){
+                var searchlog = new SearchLog();
+                searchlog.set('createBy', createBy);
+                searchlog.set('keyword', keyword);
+                searchlog.set('times', 1);
+                searchlog.save().then(function (searchlog) {
+                    // results 返回的就是有图片的 Todo 集合
+                    var result = {
+                        code : 200,
+                        message : "success"
+                    }
+                    res.send(result);
+                }, function (error) {
+                    var result = {
+                        code : 400,
+                        message : "error"
+                    }
+                    res.send(result);
+                });
+            }else{
+                var searchlog = AV.Object.createWithoutData('SearchLog', searchlog[0].id);
+                searchlog.increment('times', 1);
+                searchlog.save().then(function (searchlog) {
+                    var result = {
+                        code : 200,
+                        message : "success"
+                    }
+                    res.send(result);
+                }, function (error) {
+                    var result = {
+                        code : 400,
+                        message : "error"
+                    }
+                    res.send(result);
+                });
+            }
+        }
+    })
+    
+})
 
 
 router.get('/gettagask', function(req, res, next) {
@@ -593,7 +782,7 @@ router.get('/getask', function(req, res, next) {
 router.post('/addLook', function(req, res, next) {
     var user = AV.User.current();
     var askId = req.body.ask_id;
-    if(user){
+    if(true){
         var query = new AV.Query('AskMe');
         query.get(askId).then(function (ask) {
             ask.increment('lookNum', 1);
@@ -620,6 +809,10 @@ router.post('/addLook', function(req, res, next) {
         }
         res.send(result);
     }  
+});
+
+router.get('/hotlocation', function(req, res, next) {
+    
 });
 
 router.get('/askadmin', function(req, res, next) {
@@ -2130,7 +2323,7 @@ router.get('/getalltag', function (req, res, next) {
 
         var result = {
             code : 200,
-            data : list,
+            // data : list,
             type : type,
             message : 'Operation succeeded'
         }

@@ -17,6 +17,7 @@ var wechat = require('./routes/wechatBot');
 var user = require('./routes/user');
 var carousel = require('./routes/carousel');
 var card = require('./routes/card');
+var location = require('./routes/location');
 var ask = require('./routes/ask');
 var askme = require('./routes/askme');
 var wallet = require('./routes/wallet');
@@ -618,6 +619,7 @@ app.use('/card', card);
 app.use('/askme', askme);
 app.use('/wallet', wallet);
 app.use('/hode', hode);
+app.use('/location', location);
 app.use('/manage', manage);
 app.use('/authorization',authorization);
 

@@ -6,6 +6,7 @@
       title2 = 1,
       title3 = 1,
       title4 = 1;
+  var range = 2000;
   //测试
   LAT = 30.580596;
   LNG = 103.982984;
@@ -25,6 +26,34 @@
     }
   }
 
+  $(".my-location-content").attr("data-lng",LNG);
+  $(".my-location-content").attr("data-lat",LAT);
+
+  var lnglatXY = [LNG,LAT];
+    getAddress(lnglatXY,{
+      success:function(address){
+        console.log(address);
+        var detail = address.formattedAddress;
+        var address = {
+            province: address.addressComponent.province,
+            city: address.addressComponent.city,
+            district: address.addressComponent.district,
+            township: address.addressComponent.township
+        }
+
+        var replace = "" + address.province + address.city + address.district + address.township + "";
+        detail = detail.replace(replace, "");
+        address.detail = detail;
+        $(".nav-left-add").text(detail);
+
+        $(".location-city").text(address.city);
+        $(".location-detail").text(address.district + address.township + detail);
+      },
+      error:function(error){
+        console.log(error);
+      }
+    })
+
   //初始化下载图片
   if(localStorage.downImg){
      $(".down-img").attr("src",localStorage.downImg);
@@ -41,13 +70,12 @@
     var askTag =  formatTag(ask.askTagStr);
     if(ask.askImage && ask.askImage.length){
       var askImage = JSON.parse(ask.askImage);
-      console.log(askImage);
       if(askImage[0].image){
-        var ask = '<div class="wenwo-li" data-id="'+ask.objectId+'"><div class="wenwo-ask-img" style="background: url('+askImage[0].image+') center center / cover no-repeat;"><div class="wenwo-gradient"></div><div class="wenwo-look"><label class="iconfont icon-eyepageview"></label><label> '+ask.lookNum+'</label></div><div class="wenwo-add"><label class="iconfont icon-adress"></label><label> '+formatRange(long)+'</label></div></div><div class="up-content"><img src="'+ask.createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-reason">'+ask.askReason+'</div></div></div><div class="down-content"><div class="iconfont icon-taginfor tag-icon"></div><div class="down-tag-content"><div class="down-tag">'+askTag+'</div></div><div class="down-like ' + (ask                                                                                                                                                                                                                                                                                                                                                                                                         .liked ? "liked" : '') + '"><span class="iconfont icon-chidouren"></span><label class="like-num">'+ask.likeNum+'</label></div></div></div>';
+        var ask = '<div class="wenwo-li" data-id="'+ask.objectId+'"><div class="wenwo-ask-img" style="background: url('+askImage[0].image+') center center / cover no-repeat;"><div class="wenwo-gradient"></div><div class="wenwo-look"><label class="iconfont icon-eyepageview"></label><label> '+(ask.lookNum ? ask.lookNum : 0)+'</label></div><div class="wenwo-add"><label class="iconfont icon-adress"></label><label> '+formatRange(long)+'</label></div></div><div class="up-content"><img src="'+ask.createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-reason">'+ask.askReason+'</div></div></div><div class="down-content"><div class="iconfont icon-taginfor tag-icon"></div><div class="down-tag-content"><div class="down-tag">'+askTag+'</div></div><div class="down-like ' + (ask                                                                                                                                                                                                                                                                                                                                                                                                         .liked ? "liked" : '') + '"><span class="iconfont icon-chidouren"></span><label class="like-num">'+ask.likeNum+'</label></div></div></div>';
         return ask;
       }
     }
-    var ask ='<div class="wenwo-li" data-id="'+ask.objectId+'"><div class="up-content"><img src="'+ask.createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-reason">'+ask.askReason+'</div></div></div><div class="down-content"> <div class="iconfont icon-taginfor tag-icon"></div><div class="down-tag-content"><div class="down-tag">'+askTag+'</div></div><div class="down-like no-img ' + (ask.liked ? "liked" : '') + '"><span class="iconfont icon-chidouren"></span><label class="like-num">'+ask.likeNum+'</label></div></div><div class="other-content"><div class="wenwo-look"><label class="iconfont icon-eyepageview"></label><label > '+ask.lookNum+'</label></div><div class="wenwo-add"><label class="iconfont icon-adress"></label><label> '+formatRange(long)+'</label></div></div></div>';
+    var ask ='<div class="wenwo-li" data-id="'+ask.objectId+'"><div class="up-content"><img src="'+ask.createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-reason">'+ask.askReason+'</div></div></div><div class="down-content"> <div class="iconfont icon-taginfor tag-icon"></div><div class="down-tag-content"><div class="down-tag">'+askTag+'</div></div><div class="down-like no-img ' + (ask.liked ? "liked" : '') + '"><span class="iconfont icon-chidouren"></span><label class="like-num">'+ask.likeNum+'</label></div></div><div class="other-content"><div class="wenwo-look"><label class="iconfont icon-eyepageview"></label><label > '+(ask.lookNum ? ask.lookNum : 0)+'</label></div><div class="wenwo-add"><label class="iconfont icon-adress"></label><label> '+formatRange(long)+'</label></div></div></div>';
     return ask;
   }
 
@@ -133,7 +161,6 @@
 
   getCarouselInfo({},{
     success:function(result){
-        console.log(result);
         var data = result.data;
         var li = '';
         for(var i = 0 ; i < data.length; i++){
@@ -157,10 +184,10 @@
       title2 = 1;
       title3 = 1;
       title4 = 1;
-      console.log(id);
+      // console.log(id);
       switch (id) {
           case "find":
-              initFindListPage();
+              initFindListPage(range);
               break;
           case "like":
               $(".want-content").hide();
@@ -179,6 +206,24 @@
               var tag = $("#tag .title").text();
               initTagListPage(0,20,tag);
               break;
+          case "search":
+              var keyword = $("#tag .keyword").val();
+              var data = {
+                  page: 0,
+                  size: 20,
+                  username: UserName,
+                  keyword : keyword
+                }
+              initListPage(data,"search",{
+                empty:function(){
+                  getSearchLoad = 0;
+                },
+                load:function(){
+                  getSearchLoad = 1;
+
+                }
+              });
+              break;
           case "strategy":
             initStrategyListPage();
             break;
@@ -192,6 +237,27 @@
               break;
       }
   });
+
+  function loadLocationList(){
+    if(!$(".hot-location-content-li").length){
+      var data = {};
+      var url = "/location/gethotlist";
+      var type = "GET";
+      sendQuest(url,type,data,{
+        success:function(locationList){
+          var locationli = '';
+          var data = locationList.data;
+          for(var i = 0; i < data.length; i++){
+            locationli += '<div class="hot-location-content-li" data-lat="'+data[i].GeoX+'" data-lng="'+data[i].GeoY+'">'+data[i].address+'</div>';
+          }
+          $(".hot-location-content").empty().append(locationli);
+        },
+        error:function(error){
+
+        }
+      })
+    }
+  }
 
   //下拉刷新初始化
   $.initPullToRefresh(".content");
@@ -207,7 +273,7 @@
           dataType: "json",
           url: "/authorization/isfocus",
           success: function(result) {
-              console.log(result);
+              // console.log(result);
               if (result.code == 200) {
                   if (!result.isfocus) {
                       //用户未关注公众号
@@ -242,7 +308,7 @@
       } else {
           url = "find";
       }
-      console.log(url);
+      // console.log(url);
       // $.router.load(url);
       $(".tab-item").removeClass("active");
       $("." + url).addClass("active");
@@ -277,6 +343,9 @@
           case "tagfind":
               initTagPage();
               break;
+          case "slocation":
+            loadLocationList();
+            break;
           case "tag":
             addItems(40, 0,"tag");
             break;
@@ -310,17 +379,17 @@
   }
 
   //获取美食信息
-  function getAskMe(page, size, staus, username,type, callback) {
+  function getAskMe(page, size, staus, username,range, callback) {
       var staus = staus ? staus : 1;
       var username = username ? username : '';
-      if (LAT && type != "new") {
+      if (LAT && range) {
           var data = {
               page: page,
               size: size,
               staus: staus,
               position_geo: LAT + "," + LNG,
               username: username,
-              range : 2000
+              range : range
           }
       } else {
           var data = {
@@ -330,26 +399,40 @@
               username: username
           }
       }
-
-      // return;
       $.ajax({
           type: "GET",
           data: data,
           dataType: "json",
           url: "/ask/allask",
           success: function(result) {
-              // console.log(result);
-              // var data = result.data;
-              // for(var i = 0; i < data.length; i++){
-              //   var lat1 = parseFloat(data[i].GeoX);
-              //   var lng1 = parseFloat(data[i].GeoY);
-              //   var long1  = getFlatternDistance(lat1,lng1,LAT,LNG);
-              //   console.log(long1);
-              // }
               callback.success(result);
           },
           error: function(error) {
-              // console.log(error);
+              callback.error(error);
+          },
+      })
+  }
+
+  //获取搜索美食信息列表
+  function getSearch(data, callback) {
+      // var staus = staus ? staus : 1;
+      // var username = username ? username : '';
+      // var data = {
+      //   page: page,
+      //   size: size,
+      //   staus: staus,
+      //   username: username,
+      //   keyword : keyword
+      // }
+      $.ajax({
+          type: "GET",
+          data: data,
+          dataType: "json",
+          url: "/ask/search",
+          success: function(result) {
+              callback.success(result);
+          },
+          error: function(error) {
               callback.error(error);
           },
       })
@@ -373,18 +456,9 @@
           dataType: "json",
           url: "/ask/gettagask",
           success: function(result) {
-              // console.log(result);
-              // var data = result.data;
-              // for(var i = 0; i < data.length; i++){
-              //   var lat1 = parseFloat(data[i].GeoX);
-              //   var lng1 = parseFloat(data[i].GeoY);
-              //   var long1  = getFlatternDistance(lat1,lng1,LAT,LNG);
-              //   console.log(long1);
-              // }
               callback.success(result);
           },
           error: function(error) {
-              // console.log(error);
               callback.error(error);
           },
       })
@@ -518,18 +592,45 @@
   //getAskLoad getNewLoad  0代表空闲 1代表占用
   var getAskLoad = 0,
       getTagLoad = 0,
+      getSearchLoad = 0,
       getNewLoad = 0;
 
-  function addItems(number, lastIndex,type) {
+  function addItems(number, lastIndex,type,keyword) {
 
       //屏蔽其他请求
       // console.log(lastIndex);
-      var page = parseInt(lastIndex / number);
+      var page = Math.ceil(lastIndex / number);
+
+      console.log(getSearchLoad);
+
+      page = page ? page : 0;
       if(!getNewLoad){
         if(type == "new"){
           getNewLoad = 1;
           initNewListPage(page, number);
         }
+      }
+
+      if(!getSearchLoad){
+        if(type == "search" && keyword){
+          getSearchLoad = 1;
+          var data = {
+            page: page,
+            size: number,
+            username: UserName,
+            keyword : keyword
+          }
+          initListPage(data,type,{
+            empty:function(){
+              getSearchLoad = 0;
+            },
+            load:function(){
+              getSearchLoad = 1;
+              // $("#"+type+" .infinite-scroll-preloader .preloader").hide();
+              // $("#"+type+" .ask-end").show();
+            }
+          });
+        } 
       }
 
       if(!getTagLoad){
@@ -543,11 +644,25 @@
       if (!getAskLoad) {
         if(type == "find"){
           getAskLoad = 1;
-          getAskMe(page, number, '', UserName,'', {
+          $(".infinite-scroll-preloader").show();
+          $(".no-ask-result").hide();
+
+          getAskMe(page, number, '', UserName,range, {
               success: function(result) {
                   // 生成新条目的HTML
                   var html = '';
                   var data = result.data;
+
+                  //没有信息的情况
+                  if(page == 0 && data.length == 0){
+                    // $(".ask-end").text("启禀陛下，没有更多信息了呢!");
+                    $(".infinite-scroll-preloader").hide();
+                    $(".no-ask-result").show();
+                  }else{
+                    $(".infinite-scroll-preloader").show();
+                    $(".no-ask-result").hide();
+                  }
+
                   if (data) {
                       for (var i = 0; i < data.length; i++) {
                           // var lat1 = data[i].GeoX;
@@ -615,6 +730,15 @@
 
       // 更新最后加载的序号
       lastIndex = $('#'+type+' .wenwo-li').length;
+      console.log(lastIndex);
+
+      if(lastIndex < itemsPerLoad){
+        $.detachInfiniteScroll($('#'+type+' .infinite-scroll'));
+        // 删除加载提示符
+        $("#"+type+" .infinite-scroll-preloader .preloader").hide();
+        $("#"+type+" .ask-end").show();
+      }
+
       // 添加新条目
       addItems(itemsPerLoad, lastIndex,type);
       //容器发生改变,如果是js滚动，需要刷新滚动
@@ -650,6 +774,22 @@
     }
   })
 
+  //初始化滚动页面
+  $("#search .infinite-scroll-bottom").scroll(function() {
+    var height = $(this).height();
+    var ulHeight = $("#search .wenwo-ul").height();
+    var scroll = $(this).scrollTop();
+    if(scroll + height > ulHeight - 50){
+      lastIndex = $('#search .wenwo-li').length;
+      // 添加新条目
+      //容器发生改变,如果是js滚动，需要刷新滚动
+      var keyword = $(".keyword").val();
+      console.log(keyword);
+      addItems(itemsPerLoad, lastIndex,"search",keyword);
+      $.refreshScroller();
+    }
+  })
+
   // }
   // initData();
   // getAskMe(2,10);
@@ -660,9 +800,9 @@
   // $("#card .swiper-container").swiper();
 
   //初始化主页列表
-  function initFindListPage() {
+  function initFindListPage(range) {
       //初始化主页列表，获取前20条信息
-      getAskMe(0, 20, '', UserName,'', {
+      getAskMe(0, 20, '', UserName,range, {
           success: function(result) {
               // 生成新条目的HTML
               var html = '';
@@ -708,9 +848,9 @@
   }
 
   //初始化最新信息列表
-  function initNewListPage(page, number) {
+  function initNewListPage(page, number,range) {
       //初始化最新列表，获取前20条信息
-      getAskMe(page, number, '', UserName,'new', {
+      getAskMe(page, number, '', UserName,range, {
           success: function(result) {
               // 生成新条目的HTML
               var html = '';
@@ -721,36 +861,7 @@
                       var lat1 = data[i].GeoX;
                       var lng1 = data[i].GeoY;
                       var long = getFlatternDistance(lat1, lng1, LAT, LNG);
-                      //  if (long < 500) {
-
-                      //         if (title1) {
-                      //             html += '<div class="title1 distance">距离 < 500M</div>';
-                      //             title1 = 0;
-                      //         }
-
-                      //     } else if (long >= 500 && long <= 2000) {
-
-                      //         if (title2) {
-                      //             html += '<div class="title2 distance">距离500M - 2KM</div>';
-                      //             title2 = 0;
-                      //         }
-
-                      //     }else if (long >= 500 && long <= 2000) {
-
-                      //         if (title3) {
-                      //             html += '<div class="title3 distance">距离2KM - 10KM</div>';
-                      //             title3 = 0;
-                      //         }
-
-                      //     } else {
-                      //         if (title4) {
-                      //             html += '<div class="title4 distance">距离 > 10KM</div>';
-                      //             title4 = 0;
-                      //         }
-                      //     }
-
-                      // html += '<div class="wenwo-li" data-id=' + data[i].objectId + '><div class="up-content"><img src="' + data[i].createByUrl + '" alt="" class="user-pic"><div class="ask-content"><div class="ask-add">'+formatDis(formatJSON(data[i].askPosition),long)+'</div><div class="ask-tag">' + formatTag(data[i].askTagStr) + '</div><div class="ask-reason">' + data[i].askReason + '</div></div></div><div class="down-content"><div class="down-like ' + (data[i].liked ? "liked" : '') + '"><span class="icon iconfont icon-likeEat"></span><label class="like-num">' + (data[i].likeNum < 0 ? 0 : data[i].likeNum) + '</label></div>' + (data[i].score > 9 ? '<div class="down-buy" data-id=' + data[i].objectId + '>' + formatPrice(data[i].askPrice) + '</div>' : '<div class="down-buy free" data-id=' + data[i].objectId + '>限时免费</div>') + '<div class="down-time">' + formatDate("y.m.d", data[i].createdAt) + '</div></div></div>';
-                       html += formatAsk(data[i]);
+                      html += formatAsk(data[i]);
                   }
                   // 添加新条目
                   $.pullToRefreshDone('.pull-to-refresh-content');
@@ -763,7 +874,7 @@
                   initTop();
 
                   //初始化滚动加载逻辑
-                  $.attachInfiniteScroll($('#find .infinite-scroll'));
+                  // $.attachInfiniteScroll($('#new .infinite-scroll'));
                   // 删除加载提示符
                   // $('.infinite-scroll-preloader').remove();
                   $("#new .ask-end").hide();
@@ -771,7 +882,7 @@
                   getNewLoad = 0;
                   if (number > data.length) {
                     // 加载完毕，则注销无限加载事件，以防不必要的加载
-                    $.detachInfiniteScroll($('#new .infinite-scroll'));
+                    // $.detachInfiniteScroll($('#new .infinite-scroll'));
                     // 删除加载提示符
                     // $('.infinite-scroll-preloader').remove();
                     $("#new .infinite-scroll-preloader .preloader").hide();
@@ -781,7 +892,7 @@
                     return;
                 }
               }else{
-                $.detachInfiniteScroll($('#new .infinite-scroll'));
+                // $.detachInfiniteScroll($('#new .infinite-scroll'));
                 // 删除加载提示符
                 // $('.infinite-scroll-preloader').remove();
                 $("#new .infinite-scroll-preloader .preloader").hide();
@@ -797,7 +908,180 @@
       })
   }
 
+  //添加搜索记录
+  function addSearchLog(keyword){
+    var data = {
+        createBy  : UserName,
+        keyword   : keyword
+    }
+    var url = '/ask/addsearchlog';
+    var type = "GET";
+    sendQuest(url,type,data,{
+      success:function(result){
+      },
+      error:function(error){
+      }
+    })
+  }
 
+  //初始化搜索信息列表
+  function initListPage(searchData,type,callback) {
+      //初始化最新列表，获取前20条信息
+      addSearchLog(searchData.keyword);
+      getSearch(searchData, {
+          success: function(result) {
+              // 生成新条目的HTML
+              var html = '';
+              var data = result.data;
+
+               // $(".infinite-scroll-preloader").hide();
+               //  var noResult = '<div class="no-address"><img src="/img/food/want-empty.svg" class="no-address-img" alt=""><label class="no-result">没有搜索结果</label><label>换个关键词试试</label></div>';
+               //  $("#search .wenwo-ul").empty().append(noResult);
+                
+
+              if(type == "search"){
+
+                //没有信息的情况
+                if(searchData.page == 0 && data.length == 0){
+                  // $(".ask-end").text("启禀陛下，没有更多信息了呢!");
+                  $(".infinite-scroll-preloader").hide();
+                  // $(".no-ask-result").show();
+                  var noResult = '<div class="no-address"><img src="/img/food/want-empty.svg" class="no-address-img" alt=""><label class="no-result">没有搜索结果</label><label>换个关键词试试</label></div>';
+                  $("#search .wenwo-ul").empty().append(noResult);
+                }else{
+                  $(".infinite-scroll-preloader").show();
+                  $("#search .wenwo-ul").empty();
+                }
+
+                if(data.length > 0){
+                  $("#search .search-box").hide();
+                  $(".keyword-content").empty().hide();
+                  $("#search .wenwo-ul-content").show();
+                  // $("#search .wenwo-ul").show();
+                }else{
+                  $("#search .search-box").hide();
+                  $(".keyword-content").empty().hide();
+                  $("#search .wenwo-ul-content").show();
+                  // $("#search .wenwo-ul").show();
+                  return;
+                }
+              }
+              
+
+              if (data) {
+                  for (var i = 0; i < data.length; i++) {
+
+                      var lat1 = data[i].GeoX;
+                      var lng1 = data[i].GeoY;
+                      var long = getFlatternDistance(lat1, lng1, LAT, LNG);                    // html += '<div class="wenwo-li" data-id=' + data[i].objectId + '><div class="up-content"><img src="' + data[i].createByUrl + '" alt="" class="user-pic"><div class="ask-content"><div class="ask-add">'+formatDis(formatJSON(data[i].askPosition),long)+'</div><div class="ask-tag">' + formatTag(data[i].askTagStr) + '</div><div class="ask-reason">' + data[i].askReason + '</div></div></div><div class="down-content"><div class="down-like ' + (data[i].liked ? "liked" : '') + '"><span class="icon iconfont icon-likeEat"></span><label class="like-num">' + (data[i].likeNum < 0 ? 0 : data[i].likeNum) + '</label></div>' + (data[i].score > 9 ? '<div class="down-buy" data-id=' + data[i].objectId + '>' + formatPrice(data[i].askPrice) + '</div>' : '<div class="down-buy free" data-id=' + data[i].objectId + '>限时免费</div>') + '<div class="down-time">' + formatDate("y.m.d", data[i].createdAt) + '</div></div></div>';
+                      html += formatAsk(data[i]);
+                  }
+                  // 添加新条目
+                  $.pullToRefreshDone('.pull-to-refresh-content');
+                  if(searchData.page == 0){
+                    $('#'+type+' .wenwo-ul').empty();
+                  }
+                  
+                  $('#'+type+' .wenwo-ul').append(html);
+
+                  initTop();
+
+                  //初始化滚动加载逻辑
+                  // $.attachInfiniteScroll($('#'+type+' .infinite-scroll'));
+                  // 删除加载提示符
+                  // $('.infinite-scroll-preloader').remove();
+                  $("#"+type+" .ask-end").hide();
+                  $("#"+type+" .infinite-scroll-preloader .preloader").css("display", "inline-block");
+                  // typeLoad = 0;
+                  if (searchData.size > data.length) {
+                    // 加载完毕，则注销无限加载事件，以防不必要的加载
+                    // $.detachInfiniteScroll($('#'+type+' .infinite-scroll'));
+                    // 删除加载提示符
+                    console.log("sb");
+                    $("#"+type+" .infinite-scroll-preloader .preloader").hide();
+                    $("#"+type+" .ask-end").show();
+                    // typeLoad = 1;
+                    callback.load();
+                    return;
+                }
+                callback.empty();
+              }else{
+                // $.detachInfiniteScroll($('#'+type+' .infinite-scroll'));
+                // 删除加载提示符
+                $("#"+type+" .infinite-scroll-preloader .preloader").hide();
+                $("#"+type+" .ask-end").show();
+                // typeLoad = 1;
+                callback.load();
+                return;
+              }
+          },
+          error: function(error) {
+              $.pullToRefreshDone('.pull-to-refresh-content');
+          }
+      })
+  }
+
+  // function initListPage(searchData,type,typeLoad) {
+  //     //初始化最新列表，获取前20条信息
+  //     getSearch(searchData, {
+  //         success: function(result) {
+  //             // 生成新条目的HTML
+  //             var html = '';
+  //             var data = result.data;
+
+  //             if(data.length > 0){
+  //               $("#search .search-box").hide();
+  //               $(".keyword-content").hide().empty();
+  //             }
+
+  //             if (data) {
+  //                 for (var i = 0; i < data.length; i++) {
+
+  //                     var lat1 = data[i].GeoX;
+  //                     var lng1 = data[i].GeoY;
+  //                     var long = getFlatternDistance(lat1, lng1, LAT, LNG);                    // html += '<div class="wenwo-li" data-id=' + data[i].objectId + '><div class="up-content"><img src="' + data[i].createByUrl + '" alt="" class="user-pic"><div class="ask-content"><div class="ask-add">'+formatDis(formatJSON(data[i].askPosition),long)+'</div><div class="ask-tag">' + formatTag(data[i].askTagStr) + '</div><div class="ask-reason">' + data[i].askReason + '</div></div></div><div class="down-content"><div class="down-like ' + (data[i].liked ? "liked" : '') + '"><span class="icon iconfont icon-likeEat"></span><label class="like-num">' + (data[i].likeNum < 0 ? 0 : data[i].likeNum) + '</label></div>' + (data[i].score > 9 ? '<div class="down-buy" data-id=' + data[i].objectId + '>' + formatPrice(data[i].askPrice) + '</div>' : '<div class="down-buy free" data-id=' + data[i].objectId + '>限时免费</div>') + '<div class="down-time">' + formatDate("y.m.d", data[i].createdAt) + '</div></div></div>';
+  //                     html += formatAsk(data[i]);
+  //                 }
+  //                 // 添加新条目
+  //                 $.pullToRefreshDone('.pull-to-refresh-content');
+  //                 if(searchData.page == 0){
+  //                   $('#search .wenwo-ul').empty();
+  //                 }
+                  
+  //                 $('#search .wenwo-ul').append(html);
+
+  //                 initTop();
+
+  //                 //初始化滚动加载逻辑
+  //                 // $.attachInfiniteScroll($('#search .infinite-scroll'));
+  //                 // 删除加载提示符
+  //                 // $('.infinite-scroll-preloader').remove();
+  //                 $("#search .ask-end").hide();
+  //                 $("#search .infinite-scroll-preloader .preloader").css("display", "inline-block");
+  //                 getSearchLoad = 0;
+  //                 if (number > data.length) {
+  //                   // 加载完毕，则注销无限加载事件，以防不必要的加载
+  //                   // $.detachInfiniteScroll($('#search .infinite-scroll'));
+  //                   // 删除加载提示符
+  //                   $("#search .infinite-scroll-preloader .preloader").hide();
+  //                   $("#search .ask-end").show();
+  //                   getSearchLoad = 1;
+  //                   return;
+  //               }
+  //             }else{
+  //               $.detachInfiniteScroll($('#search .infinite-scroll'));
+  //               // 删除加载提示符
+  //               $("#search .infinite-scroll-preloader .preloader").hide();
+  //               $("#search .ask-end").show();
+  //               getSearchLoad = 1;
+  //               return;
+  //             }
+  //         },
+  //         error: function(error) {
+  //             $.pullToRefreshDone('.pull-to-refresh-content');
+  //         }
+  //     })
+  // }
 
   //初始化标签列表
   function initTagListPage(page, number,tag) {
@@ -915,7 +1199,7 @@
                 for(var i = 0; i < data.length; i++){
                   li += '<div class="strategy-li" data-href="'+data[i].carouselClickURL+'" style="background: url('+data[i].carouselImage+') center center / cover no-repeat;"><div class="strategy-name">'+data[i].carouselName+'</div></div>';
                 }
-                console.log(li);
+                // console.log(li);
                 $.pullToRefreshDone('.pull-to-refresh-content');
                 $(".strategy-ul").empty().append(li);
                 $("#strategy .infinite-scroll-preloader .preloader").hide();
@@ -930,14 +1214,13 @@
 
   //初始化分类查找页面
   function initTagPage() {
-    //获取想吃列表
     getTag({},{
           success: function(result) {
               if (result.code == 200) {
-                console.log(result);
+                // console.log(result);
                 // var data = result.data;
                 var type = result.type;
-                console.log(type);
+                // console.log(type);
                 var ul = '';
                 var j = 0;
                 var lastKey = '';
@@ -952,7 +1235,7 @@
                     }
 
                     topNum += length * 30 + 10;
-                    console.log(top);
+                    // console.log(top);
                   }
                   lastKey = key;
                   j++;
@@ -981,6 +1264,12 @@
 
                   ul += li + '</div>';
                 }
+
+                var tagLi = '';
+                for(var i = 0 ; i < type["热门"].length; i++){
+                  tagLi += '<div class="hot-tag-li">'+type["热门"][i].tagName+'</div>';
+                }
+                $(".hot-tag-content").empty().append(tagLi);
                 
                 $.pullToRefreshDone('.pull-to-refresh-content');
                 $("#tagfind .wenwo-ul").empty().append(ul);
@@ -1100,7 +1389,7 @@
           $(this).addClass("liked");
           like(UserName, askId, this, {
               success: function(result, $_this) {
-                  console.log(result);
+                  // console.log(result);
                   if (result.code == 200) {}else if(result.code == 400){
 
                   } else {
@@ -1110,7 +1399,7 @@
                   }
               },
               error: function(error, $_this) {
-                  console.log(error);
+                  // console.log(error);
                   num--;
                   $($_this).children(".like-num").text(num);
                   $($_this).removeClass("liked");
@@ -1228,10 +1517,10 @@
           dataType: "json",
           url: "/user/getInfo",
           success: function(result) {
-              console.log(result);
+              // console.log(result);
               if (result.code = 200) {
                   var userHead = result.data.userHead;
-                  console.log(userHead);
+                  // console.log(userHead);
                   if(userHead == " " || userHead == "/" || !userHead){
                     userHead = "/img/logo.jpg";
                   }
@@ -1278,7 +1567,7 @@
           url: "/hode/haved",
           success: function(result) {
               if (result.code == 200) {
-                  console.log(result);
+                  // console.log(result);
                   var html = '';
                   // $("#buy .infinite-scroll-preloader").hide();
                   // $("#buy .want-content").show();
@@ -1323,7 +1612,7 @@
           url: "/ask/myask",
           success: function(result) {
               if (result.code == 200) {
-                  console.log(result);
+                  // console.log(result);
                   var html = '';
                   var data = result.data;
                   var buyNum = result.buyNum;
@@ -1338,7 +1627,7 @@
                         html += formatAsk(data[i]);
                       }
                   }
-                  console.log(html);
+                  // console.log(html);
                   // 添加新条目
                   // 清空列表
                   $.pullToRefreshDone('#share .pull-to-refresh-content');
@@ -1389,7 +1678,7 @@
   $(".swiper-container").on("click","#find .swiper-slide",function(){
     $.showPreloader("");
     var href =  $(this).attr("data-href");
-    console.log(href);
+    // console.log(href);
     window.location.href = href+"#food";
   })
 
@@ -1397,7 +1686,7 @@
   var clickedTimer;
   //彩蛋
   $(".wenwo-logo-content").on("click",function(){
-    console.log(clicked);
+    // console.log(clicked);
     clicked++;
     if(clicked == 5){
       $(".item-content-new").css("display","flex");
@@ -1410,7 +1699,7 @@
   })
 
   //点击分类跳转
-  $("#tagfind").on("click",".tagfind-li",function(){
+  $("#tagfind,#search").on("click",".tagfind-li,.hot-tag-li",function(){
     var tag = $(this).text();
     if(tag){
       initTagListPage(0,20,tag);
@@ -1422,7 +1711,7 @@
   //初始化卡片界面
   getCardList({size:10,username:UserName},{
     success:function(result){
-        console.log(result);
+        // console.log(result);
         var data = result.data;
         var li = '<div class="swiper-hidden">为您精选最美美食</div>';
         for(var i = 0 ; i < data.length; i++){
@@ -1469,5 +1758,248 @@
     if(askid){
       window.location.href = "/detail?askid="+askid+"#food";
     }
+  })
+
+  //距离选择逻辑
+  $(".nav-right-range").on("click",function(){
+    if(!$(this).hasClass("range-active")){
+      $(".range-content").css("height","2.8rem");
+      $(this).addClass("range-active");
+      $(".range-content-li").css("visibility", "visible");
+    }else{
+      $(".range-content").css("height","0rem");
+      $(this).removeClass("range-active");
+      $(".range-content-li").css("visibility", "hidden");
+    }    
+  })
+
+  $(".range-content-li").on("click",function(){
+    range = $(this).attr("data-range");
+    $(".nav-right-range").text($(this).text());
+    $(".range-content").css("height","0rem");
+    $(".nav-right-range").removeClass("range-active");
+    $(".range-content-li").show();
+    $(".range-content-li").css("visibility", "hidden");
+    $(this).hide();
+    initFindListPage(range);
+  })
+
+  //信息搜索逻辑
+  var searchTimer;
+  $("#search .keyword").on("input change",function(){
+    var keyword = $(this).val().replace(/(^\s*)|(\s*$)/g, "");
+    console.log(keyword);
+    if(keyword.length > 0){
+      // $(".infinite-scroll-preloader").show();
+      $("#search .ask-end").hide();
+      $("#search .infinite-scroll-preloader .preloader").show();
+
+      $("#search .wenwo-ul-content").hide();
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(function(){
+        if(keyword.length > 0){
+          var url = "/ask/skeyword";
+          var type = "GET";
+          var data = {
+            keyword : keyword
+          };
+          sendQuest(url,type,data,{
+            success:function(taglist){
+              console.log(taglist);
+              var tagLi = '';
+              var data = taglist.data;
+              for(var i = 0 ; i < data.length; i++){
+                tagLi += '<div class="keyword-content-li">'+data[i].tagName+'</div>';
+              }
+              
+              if(data.length > 0){
+                $("#search .wenwo-ul-content").hide();
+                $(".search-box").hide();
+                $(".keyword-content").show().empty().append(tagLi);
+              }else{
+                $(".search-box").show();
+                $(".keyword-content").hide().empty();
+              }
+            },
+            error:function(error){
+              console.log(error);
+            }
+          })
+        }
+      }, 300);
+    }else{
+      $("#search .wenwo-ul-content").hide();
+      $("#search .wenwo-ul").show();
+      $("#search .search-box").show();
+      $("#search  .keyword-content").empty();
+      clearTimeout(searchTimer);
+    }
+  })
+
+  $(".search-button").on("click",function(){
+    var keyword = $(".keyword").val().replace(/(^\s*)|(\s*$)/g, "");
+    if(keyword){
+      clearTimeout(searchTimer);
+      $("#search .search-box").hide();
+      $("#search .ask-end").hide();
+      $("#search .infinite-scroll-preloader .preloader").show();
+
+      getSearchLoad = 0;
+      $("#search  .keyword-content").empty().hide();
+      $("#search  .wenwo-ul").empty();
+      $("#search  .wenwo-ul-content").show();
+      addItems(20,0,"search",keyword);
+    }
+  })
+
+  $("#search  .keyword-content").on("click",".keyword-content-li",function(){
+    var keyword = $(this).text();
+    console.log(keyword);
+    if(keyword){
+      clearTimeout(searchTimer);
+      $("#search .search-box").hide();
+      $("#search .ask-end").hide();
+      $("#search .infinite-scroll-preloader .preloader").show();
+
+      getSearchLoad = 0;
+      $("#search  .keyword-content").empty().hide();
+      $("#search  .wenwo-ul").empty();
+      $("#search  .wenwo-ul-content").show();
+      addItems(20,0,"search",keyword);
+    }
+  })
+
+  $("#search .icon-x").on("click",function(){
+    clearTimeout(searchTimer);
+    $("#search .keyword").val("");
+    $("#search .wenwo-ul-content").hide();
+    $("#search .wenwo-ul").empty();
+    $("#search .keyword-content").empty().hide();
+    $("#search  .search-box").show();
+  })
+
+  //点击地址更换信息位置
+  $("#find .nav-left,.change-location").on("click",function(){
+    $("#slocation .wenwo-ul").hide();
+    $(".location-box").show();
+    $.router.load("#slocation");
+
+    loadLocationList();
+  })
+
+  $("#slocation .location").on("input change",function(){
+    var text = $("#slocation .location").val().replace(/(^\s*)|(\s*$)/g, "");
+    if(text.length){
+      AMap.service(['AMap.Autocomplete',"AMap.PlaceSearch"], function() {
+        var autoOptions = {
+            city: "", //城市，默认全国
+       };
+       autocomplete= new AMap.Autocomplete(autoOptions);
+      //关键字查询
+      autocomplete.search(text, function(statu, result) {
+          console.log(result);
+          console.log(statu);
+          var tips = result.tips;
+          if(statu == "complete" && tips.length){
+            var sug = '';
+            for(var i = 0 ; i < tips.length; i++){
+              sug +='<div class="auto-item" data-name="'+tips[i].name+'" id="amap-sug'+i+'">'+tips[i].name+'<span class="auto-item-span">'+tips[i].district+'</span></div>';
+            }
+            $("#slocation .wenwo-ul").empty().append(sug);
+            $("#slocation .wenwo-ul").show();
+            $(".location-box").hide();
+          } else {
+            $(".location-box").hide();
+            var noResult = '<div class="no-address"><img src="/img/food/want-empty.svg" class="no-address-img" alt=""><label class="no-result">没有搜索结果</label><label>换个关键词试试</label></div>';
+            $("#slocation .wenwo-ul").empty().append(noResult);
+            $("#slocation .wenwo-ul").show();
+          }
+          var text = $("#slocation .location").val();
+          if(!text.length){
+            $("#slocation .wenwo-ul").hide();
+            $(".location-box").show();
+          }
+        });
+      });
+    }else{
+      $("#slocation .wenwo-ul").empty().hide();;
+      $(".location-box").show();
+    }
+  })
+
+  //点击搜素按钮
+  // $("#slocation .search-button").on("click", function() {
+  $("#slocation").on("click", ".auto-item", function() {
+    var text = $(this).attr("data-name");
+    console.log(text);
+    if(!text){
+      return;
+    }
+    AMap.service(["AMap.PlaceSearch"], function() {
+      var placeSearch = new AMap.PlaceSearch({ //构造地点查询类
+        map: map
+      });
+    //关键字查询
+    placeSearch.search(text, function(statu, result) {
+        console.log(result);
+        if (result.info == "OK") {
+          var lng = result.poiList.pois[0].location.lng;
+          var lat = result.poiList.pois[0].location.lat;
+          var lnglatXY = [lng, lat];
+
+          if(lng && lat){
+            LNG = lng;
+            LAT = lat;
+            $("#find .wenwo-ul").empty();
+            $("#slocation .location").val("");
+
+            $("#find .infinite-scroll-preloader .preloader").show();
+            $("#find .ask-end").hide();
+            getAskLoad = 0;
+            addItems(itemsPerLoad, 0,"find");
+            $.router.load("#find",false,"left");
+            $(".nav-left-add").text(text);   
+          }
+        }
+      });
+    });
+  });
+
+  $("#slocation .cancel-button").on("click", function() {
+    $(".location").val("");
+    $("#slocation .wenwo-ul").empty().hide();;
+    $(".location-box").show();
+  });
+
+  //点击热门地址
+  $(".hot-location-content").on("click",".hot-location-content-li",function(){
+    var address = $(this).text();
+    $(".nav-left-add").text(address);
+    LAT = $(this).attr("data-lat");
+    LNG = $(this).attr("data-lng");
+
+    $("#find .wenwo-ul").empty();
+    $("#slocation .location").val("");
+    $("#find .ask-end").hide();
+    $("#find .infinite-scroll-preloader .preloader").show();
+    getAskLoad = 0;
+    addItems(itemsPerLoad, 0,"find");
+    $.router.load("#find",false,"left");
+    $(".nav-left-add").text(address);
+  })
+
+  
+  $(".my-location-content").on("click",function(){
+    LNG = $(".my-location-content").attr("data-lng");
+    LAT = $(".my-location-content").attr("data-lat");
+
+    $("#find .wenwo-ul").empty();
+    $("#slocation .location").val("");
+    $("#find .ask-end").hide();
+    $("#find .infinite-scroll-preloader .preloader").show();
+    getAskLoad = 0;
+    addItems(itemsPerLoad, 0,"find");
+    $.router.load("#find",false,"left");
+    $(".nav-left-add").text($(".location-detail").text());
   })
 

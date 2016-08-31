@@ -670,6 +670,10 @@ router.post('/foodlikelist', function(req, res, next) {
     });
 });
 
+router.get('/hotlocation', function(req, res, next) {
+    var query = new AV.Query('Location');
+    
+});
 
 module.exports = router;
 
