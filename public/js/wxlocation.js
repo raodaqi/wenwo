@@ -124,7 +124,7 @@ function initLocation(type,callback) {
                         //     map.setZoomAndCenter(14,[longitude,latitude]);
                         // }
                         if(map){
-                            map.setZoomAndCenter(14, [longitude, latitude]);
+                            map.setZoomAndCenter(17, [longitude, latitude]);
                             $("#container").attr("data-longitude", longitude);
                             $("#container").attr("data-latitude", latitude);
                         }
