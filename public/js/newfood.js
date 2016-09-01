@@ -667,10 +667,9 @@
         if(type == "tag"){
           getTagLoad = 1;
           var tag = $("#tag .title").text();
-          var range = $("#tag").attr("data-range");
-          console.log(range);
-          range = parseInt(range);
-          initTagListPage(page, number,tag,range);  
+          var tagRange = $("#tag").attr("data-range");
+          tagRange = parseInt(tagRange);
+          initTagListPage(page, number,tag,tagRange);  
         }
       }
 
@@ -2142,9 +2141,9 @@
   $("#tag .change-sort").on("click",function(){
     clearTimeout(tagTimer);
 
-    var range = $(this).attr("data-range");
+    var tagRange = $(this).attr("data-range");
     $("#tag").attr("data-range",range);
-    if(range > 0){
+    if(tagRange > 0){
       $("#tag .change-sort label").text("评分");
       $(this).attr("data-range", -1);
     }else{
