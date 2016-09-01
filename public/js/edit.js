@@ -102,7 +102,7 @@
               //详情地点显示
               map = new AMap.Map('container', {
                   resizeEnable: true,
-                  zoom: 17,
+                  zoom: 16,
                   center: [lng, lat],
                   buttonOffset: new AMap.Pixel(60, 20), //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
                   zoomToAccuracy: true, //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
@@ -487,7 +487,7 @@
               //详情地点显示
               map = new AMap.Map('container', {
                   resizeEnable: true,
-                  zoom: 17,
+                  zoom: 16,
                   center: [localStorage.lng, localStorage.lat],
                   buttonOffset: new AMap.Pixel(60, 20), //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
                   zoomToAccuracy: true, //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
@@ -653,7 +653,7 @@
               //解析地址
               map = new AMap.Map('container', {
                   resizeEnable: true,
-                  zoom: 17,
+                  zoom: 16,
                   center: [lng, lat],
                   buttonOffset: new AMap.Pixel(60, 20), //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
                   zoomToAccuracy: true, //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
@@ -864,7 +864,7 @@
       function initMap(lnglatXY) {
           map = new AMap.Map('container', {
               resizeEnable: true,
-              zoom: 17,
+              zoom: 16,
               center: lnglatXY,
               buttonOffset: new AMap.Pixel(60, 20), //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
               zoomToAccuracy: true, //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
