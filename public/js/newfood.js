@@ -106,7 +106,7 @@
       }
   });
 
-  initAllData(30.580596,103.982984);
+  // initAllData(30.580596,103.982984);
 
   //初始化下载图片
   if(localStorage.downImg){
