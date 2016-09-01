@@ -669,6 +669,7 @@
           var tag = $("#tag .title").text();
           var tagRange = $("#tag").attr("data-range");
           tagRange = parseInt(tagRange);
+          console.log(tagRange);
           initTagListPage(page, number,tag,tagRange);  
         }
       }
@@ -1116,19 +1117,19 @@
   // }
 
   //初始化标签列表
-  function initTagListPage(page, number,tag,range) {
+  function initTagListPage(page, number,tag,tagRange) {
       if(!tag){
         tag = localStorage.askTag;
       }
       $("#tag .title").text(tag);
 
-      if(range > 0){
+      if(tagRange > 0){
         var data = {
           page: page,
           size: number,
           username: UserName,
           position_geo: LAT + "," + LNG,
-          range : range,
+          range : tagRange,
           tag : tag
         }
       }else{
@@ -2142,7 +2143,7 @@
     clearTimeout(tagTimer);
 
     var tagRange = $(this).attr("data-range");
-    $("#tag").attr("data-range",range);
+    $("#tag").attr("data-range",tagRange);
     if(tagRange > 0){
       $("#tag .change-sort label").text("评分");
       $(this).attr("data-range", -1);
