@@ -880,6 +880,7 @@ html {
     right:0;
     margin-top:-15px;
     text-align: center;
+    z-index: 2;
 }
 .down-content{
     height: 1.7rem;
@@ -1321,4 +1322,50 @@ html {
     color: #ee7e2e;
     line-height: 2.2rem;
     right:.5rem;
+}
+
+.click-hidden-button{
+    position: absolute;
+    width: 100%;
+    height: 1.7rem;
+}
+
+.down-tag-content{
+    position: absolute;
+    left: 1.2rem;
+}
+.tag-content{
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+#tagfind .tag-content:after{
+    content: '';
+    height: 2rem;
+    width: 100%;
+    background-color: red;
+}
+
+.tag-content .wenwo-ul{
+    position: absolute;
+    width: 100%;
+    background-color: #fafafa;
+}
+
+#tagfind .border-bottom:last-child{
+    padding-bottom: .5rem;
+    position: absolute;
+    bottom: -.5rem;
+    width: 100%;
+    border: 0;
+}
+.tagfind-tag-tip{
+    width: 100%;
+    font-size: .67rem;
+    color: #72848b;
+    text-align: center;
 }

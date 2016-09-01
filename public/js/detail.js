@@ -106,7 +106,12 @@
 
                   //显示已售数量
                   if(result.show.havedNum){
-                    $(".sale-num").text(result.show.havedNum);
+                    if(result.data.buyNum != "0"){
+                      $(".sale-num").text(result.data.buyNum);
+                    }else{
+                      $(".sale-num").text(result.show.havedNum);
+                    }
+                    
                   }
                   
 
