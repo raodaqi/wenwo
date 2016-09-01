@@ -8,51 +8,72 @@
       title4 = 1;
   var range = 2000;
   //测试
-  LAT = 30.580596;
-  LNG = 103.982984;
+  // LAT = 30.580596;
+  // LNG = 103.982984;
 
   // window.onpopstate = function(event) {
   //   alert($(".page-current").id);
   //   // $(".amap-sug-result").hide(); 
   // };
-
-  //预先加载20条
-  if (LAT) {
-    var findTop = localStorage.findTop;
-    if(findTop > 2077){
-      addItems(40, 0,"find");
-    }else{
-      addItems(itemsPerLoad, 0,"find");
+  function initAllData(){
+    //预先加载20条
+    if (LAT) {
+      var findTop = localStorage.findTop;
+      if(findTop > 2077){
+        addItems(40, 0,"find");
+      }else{
+        addItems(itemsPerLoad, 0,"find");
+      }
     }
+
+    $(".my-location-content").attr("data-lng",LNG);
+    $(".my-location-content").attr("data-lat",LAT);
+
+    var lnglatXY = [LNG,LAT];
+      getAddress(lnglatXY,{
+        success:function(address){
+          console.log(address);
+          var detail = address.formattedAddress;
+          var address = {
+              province: address.addressComponent.province,
+              city: address.addressComponent.city,
+              district: address.addressComponent.district,
+              township: address.addressComponent.township
+          }
+
+          var replace = "" + address.province + address.city + address.district + address.township + "";
+          detail = detail.replace(replace, "");
+          address.detail = detail;
+          $(".nav-left-add").text(detail);
+
+          $(".location-city").text(address.city);
+          $(".location-detail").text(address.district + address.township + detail);
+        },
+        error:function(error){
+          console.log(error);
+        }
+      })
   }
 
-  $(".my-location-content").attr("data-lng",LNG);
-  $(".my-location-content").attr("data-lat",LAT);
-
-  var lnglatXY = [LNG,LAT];
-    getAddress(lnglatXY,{
-      success:function(address){
-        console.log(address);
-        var detail = address.formattedAddress;
-        var address = {
-            province: address.addressComponent.province,
-            city: address.addressComponent.city,
-            district: address.addressComponent.district,
-            township: address.addressComponent.township
-        }
-
-        var replace = "" + address.province + address.city + address.district + address.township + "";
-        detail = detail.replace(replace, "");
-        address.detail = detail;
-        $(".nav-left-add").text(detail);
-
-        $(".location-city").text(address.city);
-        $(".location-detail").text(address.district + address.township + detail);
+  $.showPreloader("正在加载");
+  initLocation("food",{
+      success: function(lng, lat) {
+          // LAT = lat;
+          // LNG = lng;
+          // var findTop = localStorage.findTop;
+          // if(findTop > 2077){
+          //   addItems(40, 0,"find");
+          // }else{
+          //   addItems(itemsPerLoad, 0,"find");
+          // }
+          initAllData();
       },
-      error:function(error){
-        console.log(error);
+      error: function(error) {
+          console.log("error");
       }
-    })
+  });
+
+  // initAllData();
 
   //初始化下载图片
   if(localStorage.downImg){
@@ -79,22 +100,6 @@
     return ask;
   }
 
-  $.showPreloader("正在加载");
-  initLocation("food",{
-      success: function(lng, lat) {
-          LAT = lat;
-          LNG = lng;
-          var findTop = localStorage.findTop;
-          if(findTop > 2077){
-            addItems(40, 0,"find");
-          }else{
-            addItems(itemsPerLoad, 0,"find");
-          }
-      },
-      error: function(error) {
-          console.log("error");
-      }
-  });
   //初始化轮播图功能
   function sendQuest(url,type,data,callback){
     $.ajax({
