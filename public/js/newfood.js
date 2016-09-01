@@ -36,7 +36,9 @@
           var replace = "" + address.province + address.city + address.district + address.township + "";
           detail = detail.replace(replace, "");
           address.detail = detail;
-          $(".nav-left-add").text(detail);
+          if(!(history.length > 1 && getCookie("lng") && getCookie("lat"))){
+            $(".nav-left-add").text(detail);
+          }
 
           //当前地址
           $(".location-city").text(address.city);
@@ -106,7 +108,7 @@
       }
   });
 
-  // initAllData(30.580596,103.982984);
+  initAllData(30.580596,103.982984);
 
   //初始化下载图片
   if(localStorage.downImg){
@@ -1263,6 +1265,9 @@
                 var j = 0;
                 var lastKey = '';
                 var topNum = 44;
+                var colorNum = 1;
+                var color = '';
+
                 for(var key in type){
                   if(j != 0){
                     var length = 0;
@@ -1271,8 +1276,7 @@
                     }else{
                       length = 2 + Math.ceil((type[lastKey].length - 6) / 4);
                     }
-
-                    topNum += length * 30 + 10;
+                    topNum += length * 39 + 15;
                     // console.log(top);
                   }
                   lastKey = key;
@@ -1280,24 +1284,87 @@
                   ul += '<div class="tagfind-ul" style="top:'+topNum+'px"><div class="type">'+key+'</div>';
                   var data = type[key];
                   var li = '';
-                  for(var i = 0; i < data.length; i++){
-                    if(i < 3){
-                      li += '<div class="tagfind-li no-left-border no-bottom-border">'+data[i].tagName+'</div>';
-                    }else if(i < 6){
-                      li += '<div class="tagfind-li no-left-border">'+data[i].tagName+'</div>';
-                    }else if( i < data.length - 1){
-                      li += '<div class="tagfind-li no-right-border no-top-border">'+data[i].tagName+'</div>';
+
+                  function changeColor(){
+                    if(colorNum){
+                      colorNum = 0;
+                      color = '';
                     }else{
-                      li += '<div class="tagfind-li no-top-border">'+data[i].tagName+'</div>';
+                      colorNum = 1;
+                      color = 'li-other-color';
                     }
                   }
-                  for(var i = 0; i < 6 - data.length; i++){
-                    if(6 - data.length - i > 3){
-                      li += '<div class="tagfind-li no-left-border no-bottom-border"></div>';
+
+                  for(var i = 0; i < data.length; i++){
+
+                    if(i < 6){
+                      if(i == 0){
+                        changeColor();
+                      }
+                      if(i == 3){
+                        changeColor();
+                      }
                     }else{
-                      li += '<div class="tagfind-li no-left-border"></div>';
+                      if((i - 5)%4 == 1){
+                       changeColor();
+                      }
                     }
-                    
+
+                    if(i == 2){
+                      li += '<div class="tagfind-li '+color+' no-right-border li-border-top-right-radius">'+data[i].tagName+'</div>';
+                      li+='<div class="border-bottom"></div>';
+                      continue;
+                    }
+                    if(i == 5){
+                      if(i == data.length - 1){
+                        li += '<div class="tagfind-li '+color+' no-right-border li-border-bottom-right-radius">'+data[i].tagName+'</div>';
+                      }else{
+                        li += '<div class="tagfind-li '+color+' no-right-border">'+data[i].tagName+'</div>';
+                      }
+                      li+='<div class="border-bottom"></div>';
+                      continue;
+                    }
+
+                    if(i > 5){
+                      if((i - 5)%4 == 1){
+                        li += '<div class="tagfind-li '+color+' li-border-bottom-left-radius">'+data[i].tagName+'</div>';
+                        continue;
+                      }
+
+                      if((i - 5)%4 == 0){
+                        if(i == data.length - 1){
+                          li += '<div class="tagfind-li '+color+'  no-right-border li-border-bottom-right-radius">'+data[i].tagName+'</div>';
+                        }else{
+                          li += '<div class="tagfind-li '+color+' no-right-border">'+data[i].tagName+'</div>';
+                          li+='<div class="border-bottom-all"></div>';
+                        }
+                        continue;
+                      }
+                    }
+                    li += '<div class="tagfind-li '+color+'">'+data[i].tagName+'</div>';
+                  }
+
+                  for(var i = 0; i < 6 - data.length; i++){
+                    if(data.length + i == 3){
+                      changeColor();
+                    }
+                    if(data.length + i == 2){
+                      li += '<div class="tagfind-li '+color+' no-right-border"></div>';
+                      li += '<div class="border-bottom"></div>';
+                    }else{
+                      li += '<div class="tagfind-li '+color+'"></div>';
+                    }
+                  }
+
+                  if(data.length > 6 && (data.length-6)%4){
+                    for(var i = 4 - (data.length-6)%4; i > 0 ; i--){
+                      if(i == 1){
+                        li += '<div class="tagfind-li '+color+' no-right-border li-border-bottom-right-radius"></div>';
+                        li += '<div class="border-bottom"></div>';
+                      }else{
+                        li += '<div class="tagfind-li '+color+'"></div>';
+                      }
+                    }
                   }
 
                   ul += li + '</div>';

@@ -1,3 +1,8 @@
+  var marker;
+  var icon = new AMap.Icon({
+    image: "/img/edit/marker.png",
+  });   
+
       $(".tab-item").on("click", function() {
           var type = $(this).attr("data-type");
           console.log(type);
@@ -90,8 +95,34 @@
           $("#router5 .model-tip").show();
       })
       initLocation("edit",{
-          success: function() {
-            
+          success: function(lng,lat) {
+            if(localStorage.lng && localStorage.lat){
+
+            }else{
+              //详情地点显示
+              map = new AMap.Map('container', {
+                  resizeEnable: true,
+                  zoom: 15,
+                  center: [lng, lat],
+                  buttonOffset: new AMap.Pixel(60, 20), //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+                  zoomToAccuracy: true, //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+                  buttonPosition: 'LB'
+              });
+
+              marker = new AMap.Marker({
+                  map: map,
+                  icon: icon,
+                  position: [lng, lat],
+                  draggable: true,
+                  cursor: 'move',
+                  raiseOnDrag: true,
+                  clickable: true
+              });
+
+              marker.setMap(map);
+              initMarker(marker);
+            }
+              
           },
           error: function() {
               $.toast("定位失败");
@@ -290,12 +321,6 @@
               getTag(LStype);
           }
       })
-
-
-      var marker;
-      var icon = new AMap.Icon({
-          image: "/img/edit/marker.png",
-      });
 
       //初始化marker
       marker = new AMap.Marker({

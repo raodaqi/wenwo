@@ -638,9 +638,9 @@ html {
 .tagfind-ul .type{
     float: left;
     width: 25%;
-    height: 60px;
+    height: 4rem;
     box-sizing: border-box;
-    line-height: 60px;
+    line-height: 4rem;
     text-align: center;
     border:1px solid #eee;
     background: white;
@@ -651,11 +651,11 @@ html {
     width: 25%;
     overflow-y: hidden;
     box-sizing: border-box;
-    height: 30px;
+    height: 1.95rem;
     padding:0 .3rem;
     text-align: center;
-    line-height: 30px;
-    border:1px solid #eee;  
+    line-height: 2rem;
+    border-right:1px solid #eee;  
     overflow-x: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -1266,7 +1266,7 @@ html {
 }
 .dialog-text{
     width: 80%;
-    margin:0 auto;
+    margin:3rem auto;
     color: white;
     text-align: center;
 }
@@ -1279,4 +1279,38 @@ html {
     width: 100%;
     top:50%;
     transform: translateY(-50%);
+}
+
+/*分类查找*/
+#tagfind .tag-content{
+    background-color: #fafafa;
+}
+
+#tagfind .type{
+    background-color: #f7c4a1;
+    border:0;
+}
+
+#tagfind .tagfind-ul{
+    border:1px solid #f7c4a1;
+}
+.border-bottom,.border-bottom-all{
+    float:left;
+    border-bottom: 1px solid #eee;
+    width: 75%;
+}
+.border-bottom-all{
+    width: 100%;
+}
+.li-border-top-right-radius{
+    border-top-right-radius: .3rem;
+}
+.li-border-bottom-left-radius{
+    border-bottom-left-radius: .3rem;
+}
+.li-border-bottom-right-radius{
+    border-bottom-right-radius: .3rem;
+}
+.li-other-color{
+    background-color: #FCF9F7 !important;
 }

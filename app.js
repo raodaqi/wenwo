@@ -254,7 +254,7 @@ app.get('/food', function(req, res) {
     var username = "573b0e3df38c8400673bb48d";
   }
   if(username && test){
-    res.render('newfood', { username: username, lng:lng, lat:lat});
+    res.render('food', { username: username, lng:lng, lat:lat});
     return ;
   }
 
@@ -266,10 +266,10 @@ app.get('/food', function(req, res) {
     // console.log(user);
     // var authData = user.get('authData');
     // authData = JSON.parse(authData);
-    res.render('newfood', {user:user, username: username, lng:lng, lat:lat});
+    res.render('food', {user:user, username: username, lng:lng, lat:lat});
     return ;
   }
-  res.render('newfood', { username: username, lng:"0", lat:"0"});
+  res.render('food', { username: username, lng:"0", lat:"0"});
 });
 
 app.get('/newfood', function(req, res) {
