@@ -460,6 +460,15 @@
     <div class="content downImg">
       <img class="down-img" src="">
     </div>
+    <div class="down-img-dialog">
+      <div class="down-img-dialog-content">
+        <img src="/img/common/dialog-box-02.png" class="dialog-img" alt="">
+        <div class="dialog-text">
+          <p>对于吃这回事，我一向很认真的，</p>
+          <p>希望你也是。</p>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- 这里是搜索界面 -->
@@ -745,6 +754,8 @@
       // window.location.href = c.toDataURL("image/png");
       // window.location.href = c.toDataURL("image/png").replace("image/png", "image/octet-stream");
       $(".down-img").attr("src",c.toDataURL("image/png"));
+
+      $(".down-img-dialog").show();
 
       localStorage["downImg"] = c.toDataURL("image/png");
       // $(".downImg").show();

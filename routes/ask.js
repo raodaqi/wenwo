@@ -355,7 +355,7 @@ router.get('/gettagask', function(req, res, next) {
     query.descending("score");
 
     query.find().then(function(results) {
-        console.log(results.length);
+        // console.log(results.length);
 
         var query = new AV.Query('FoodLike');
 
@@ -668,13 +668,13 @@ router.post('/askdetail', function(req, res, next) {
                 var query = new AV.Query('Haved');
 
                 var askPoint = AV.Object.createWithoutData('AskMe', askId);
-                console.log(askId);
+                // console.log(askId);
                 // query.equalTo("by", userName);
                 query.equalTo("ask", askPoint);
                 query.equalTo('type', '2');
                 query.include('ask');
                 query.find().then(function (havedList) {
-                    console.log(havedList);
+                    // console.log(havedList);
 
                     var query = new AV.Query('FoodLike');
 
@@ -809,10 +809,6 @@ router.post('/addLook', function(req, res, next) {
         }
         res.send(result);
     }  
-});
-
-router.get('/hotlocation', function(req, res, next) {
-    
 });
 
 router.get('/askadmin', function(req, res, next) {
@@ -1381,7 +1377,7 @@ router.get('/myask', function(req, res, next) {
 
             getBuyNum(ask,show,i,{
                 success:function(buyNum){
-                    console.log(result);
+                    // console.log(result);
                     var result = {
                         code : 200,
                         data : ask,
@@ -1514,7 +1510,7 @@ router.post('/del', function(req, res, next) {
     var userName = req.param('username');
     var query = new AV.Query('AskMe');
     query.get(askId).then(function (ask) {
-        console.log(ask.get('createBy'));
+        // console.log(ask.get('createBy'));
         if (ask.get('staus') == "6") {
             var result = {
                 code: 700,
@@ -1536,7 +1532,7 @@ router.post('/del', function(req, res, next) {
             ask.set('staus', "6");
             ask.set('askDefault', reason);
             ask.save().then(function (results) {
-                console.log(results);
+                // console.log(results);
                 var result = {
                     code: 200,
                     data: results,
@@ -1545,7 +1541,7 @@ router.post('/del', function(req, res, next) {
                 res.send(result);
                 return;
             }, function (err) {
-                console.log(err);
+                // console.log(err);
                 var result = {
                     code: 400,
                     data: '',

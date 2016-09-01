@@ -15,17 +15,9 @@
   //   alert($(".page-current").id);
   //   // $(".amap-sug-result").hide(); 
   // };
-  function initAllData(){
-    //预先加载20条
-    if (LAT) {
-      var findTop = localStorage.findTop;
-      if(findTop > 2077){
-        addItems(40, 0,"find");
-      }else{
-        addItems(itemsPerLoad, 0,"find");
-      }
-    }
-
+  function initAllData(lat,lng){
+    LAT = lat;
+    LNG = lng;
     $(".my-location-content").attr("data-lng",LNG);
     $(".my-location-content").attr("data-lat",LAT);
 
@@ -46,6 +38,7 @@
           address.detail = detail;
           $(".nav-left-add").text(detail);
 
+          //当前地址
           $(".location-city").text(address.city);
           $(".location-detail").text(address.district + address.township + detail);
         },
@@ -53,6 +46,46 @@
           console.log(error);
         }
       })
+
+    if(history.length > 1 && getCookie("lng") && getCookie("lat")){
+      LAT = getCookie("lat");
+      LNG = getCookie("lng");
+      var lnglatXY = [LNG,LAT];
+      getAddress(lnglatXY,{
+        success:function(address){
+          console.log(address);
+          var detail = address.formattedAddress;
+          var address = {
+              province: address.addressComponent.province,
+              city: address.addressComponent.city,
+              district: address.addressComponent.district,
+              township: address.addressComponent.township
+          }
+
+          var replace = "" + address.province + address.city + address.district + address.township + "";
+          detail = detail.replace(replace, "");
+          address.detail = detail;
+
+          $(".nav-left-add").text(detail);
+        },
+        error:function(error){
+          console.log(error);
+        }
+      })
+    }
+
+    // console.log(history.length);
+    // alert(history.length);
+
+    //预先加载20条
+    if (LAT) {
+      var findTop = localStorage.findTop;
+      if(findTop > 2077){
+        addItems(40, 0,"find");
+      }else{
+        addItems(itemsPerLoad, 0,"find");
+      }
+    }
   }
 
   $.showPreloader("正在加载");
@@ -66,14 +99,14 @@
           // }else{
           //   addItems(itemsPerLoad, 0,"find");
           // }
-          initAllData();
+          initAllData(lat,lng);
       },
       error: function(error) {
           console.log("error");
       }
   });
 
-  // initAllData();
+  initAllData(30.580596,103.982984);
 
   //初始化下载图片
   if(localStorage.downImg){
@@ -1320,6 +1353,10 @@
           }, 500);
       } else if (type == "edit") {
           // $.router.load("/edit");
+          //设置cookie
+          setCookie("lat",LAT);
+          setCookie("lng",LNG);
+
           $.showPreloader("正在跳转");
           window.location.href = "/edit";
       }
@@ -1435,6 +1472,10 @@
   // })
 
   $(".wenwo-ul").on("click", ".ask-reason", function() {
+    //设置cookie
+    setCookie("lat",LAT);
+    setCookie("lng",LNG);
+
     $.showPreloader("正在跳转");
     var askId = $(this).parent().parent().parent().attr("data-id");
     // $.router.load("/detail?askid="+askId);
@@ -1442,6 +1483,10 @@
   })
 
   $(".wenwo-ul").on("click", ".wenwo-ask-img", function() {
+    //设置cookie
+    setCookie("lat",LAT);
+    setCookie("lng",LNG);
+
     $.showPreloader("正在跳转");
     var askId = $(this).parent().attr("data-id");
     window.location.href = "/detail?askid=" + askId + "#food";
@@ -1908,7 +1953,7 @@
           if(statu == "complete" && tips.length){
             var sug = '';
             for(var i = 0 ; i < tips.length; i++){
-              sug +='<div class="auto-item" data-name="'+tips[i].name+'" id="amap-sug'+i+'">'+tips[i].name+'<span class="auto-item-span">'+tips[i].district+'</span></div>';
+              sug +='<div class="auto-item" data-adcode="'+tips[i].adcode+'" data-name="'+tips[i].name+'" id="amap-sug'+i+'">'+tips[i].name+'<span class="auto-item-span">'+tips[i].district+'</span></div>';
             }
             $("#slocation .wenwo-ul").empty().append(sug);
             $("#slocation .wenwo-ul").show();
@@ -1936,12 +1981,14 @@
   // $("#slocation .search-button").on("click", function() {
   $("#slocation").on("click", ".auto-item", function() {
     var text = $(this).attr("data-name");
+    var adcode = $(this).attr("data-adcode");
     console.log(text);
     if(!text){
       return;
     }
     AMap.service(["AMap.PlaceSearch"], function() {
       var placeSearch = new AMap.PlaceSearch({ //构造地点查询类
+        city:adcode,
         map: map
       });
     //关键字查询
@@ -1951,6 +1998,8 @@
           var lng = result.poiList.pois[0].location.lng;
           var lat = result.poiList.pois[0].location.lat;
           var lnglatXY = [lng, lat];
+
+          console.log(lnglatXY);
 
           if(lng && lat){
             LNG = lng;
@@ -2008,3 +2057,6 @@
     $(".nav-left-add").text($(".location-detail").text());
   })
 
+  $(".down-img-dialog").on("click",function(){
+    $(this).hide();
+  })
