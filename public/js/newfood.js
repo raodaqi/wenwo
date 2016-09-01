@@ -108,7 +108,7 @@
       }
   });
 
-  initAllData(30.580596,103.982984);
+  // initAllData(30.580596,103.982984);
 
   //初始化下载图片
   if(localStorage.downImg){
@@ -387,7 +387,7 @@
             loadLocationList();
             break;
           case "tag":
-            addItems(40, 0,"tag");
+            addItems(20, 0,"tag");
             break;
       }
   }
@@ -479,17 +479,7 @@
   }
 
   //获取美食信息
-  function getTagAskMe(page, size, staus, username,tag, callback) {
-      var staus = staus ? staus : 1;
-      var username = username ? username : '';
-      var data = {
-        page: page,
-        size: size,
-        staus: staus,
-        username: username,
-        tag : tag
-      }
-
+  function getTagAskMe(data, callback) {
       $.ajax({
           type: "GET",
           data: data,
@@ -677,7 +667,10 @@
         if(type == "tag"){
           getTagLoad = 1;
           var tag = $("#tag .title").text();
-          initTagListPage(page, number,tag);
+          var range = $("#tag").attr("data-range");
+          console.log(range);
+          range = parseInt(range);
+          initTagListPage(page, number,tag,range);  
         }
       }
 
@@ -1124,14 +1117,31 @@
   // }
 
   //初始化标签列表
-  function initTagListPage(page, number,tag) {
+  function initTagListPage(page, number,tag,range) {
       if(!tag){
         tag = localStorage.askTag;
       }
       $("#tag .title").text(tag);
 
+      if(range > 0){
+        var data = {
+          page: page,
+          size: number,
+          username: UserName,
+          position_geo: LAT + "," + LNG,
+          range : range,
+          tag : tag
+        }
+      }else{
+        var data = {
+          page: page,
+          size: number,
+          username: UserName,
+          tag : tag
+        }
+      }
       //初始化最新列表，获取前20条信息
-      getTagAskMe(page, number, '', UserName,tag, {
+      getTagAskMe(data, {
           success: function(result) {
               // 生成新条目的HTML
               var html = '';
@@ -2126,4 +2136,27 @@
 
   $(".down-img-dialog").on("click",function(){
     $(this).hide();
+  })
+
+  var tagTimer;
+  $("#tag .change-sort").on("click",function(){
+    clearTimeout(tagTimer);
+
+    var range = $(this).attr("data-range");
+    $("#tag").attr("data-range",range);
+    if(range > 0){
+      $("#tag .change-sort label").text("评分");
+      $(this).attr("data-range", -1);
+    }else{
+      $("#tag .change-sort label").text("时间");
+      $(this).attr("data-range", 3000000);
+    }
+    $("#tag .wenwo-ul").empty();
+    $("#tag .ask-end").hide();
+
+    tagTimer = setTimeout(function(){
+      $("#tag .infinite-scroll-preloader .preloader").css("display", "inline-block");
+      getTagLoad = 0;
+      addItems(itemsPerLoad, 0,"tag");
+    }, 500);
   })

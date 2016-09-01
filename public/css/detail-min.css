@@ -219,8 +219,8 @@ body {
 	top: 2rem;
 	right: .2rem;
 	border-radius: .3rem;
-	padding:.2rem .5rem;
-	font-size: .67rem;
+	padding:.3rem .5rem;
+	font-size: .76rem;
 	background: white;
 	z-index: 10700;
 }
@@ -228,7 +228,7 @@ body {
 	color: #ee7e2e !important;
 }
 .more-content .more-list:first-child{
-	margin-bottom: .2rem;
+	margin-bottom: .5rem;
 }
 
 .modal-tip,

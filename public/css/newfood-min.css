@@ -1314,3 +1314,11 @@ html {
 .li-other-color{
     background-color: #FCF9F7 !important;
 }
+.change-sort{
+    position: absolute;
+    z-index: 20;
+    display: block;
+    color: #ee7e2e;
+    line-height: 2.2rem;
+    right:.5rem;
+}

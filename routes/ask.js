@@ -333,8 +333,10 @@ router.get('/gettagask', function(req, res, next) {
     var page = req.query.page != null ? req.query.page : 0;
     var size = req.query.size != null ? req.query.size : 1000;
     var staus = req.query.staus != null ? req.query.staus : '1';
-    var type = req.query.type != null ? req.query.type : null;
+    var type = req.query.staus != null ? req.query.staus : '1';
     var tag = req.query.tag != null ? req.query.tag : null;
+    var geo = req.query.position_geo != null ? req.query.position_geo : null;
+    var range = req.query.range != null ? req.query.range : 3000000;
 
     var query = new AV.Query('AskMe');
     if(staus != '4') {
@@ -352,7 +354,18 @@ router.get('/gettagask', function(req, res, next) {
     }
     
     query.skip(page*size);
-    query.descending("score");
+
+    if (geo == null || geo == '') {
+
+        query.descending("score");
+
+    } else {
+
+        var position = geo.split(",");
+        var point = new AV.GeoPoint(parseFloat(position[0]),parseFloat(position[1]));
+        query.withinKilometers('positionGeo', point, range/1000);
+    }
+    
 
     query.find().then(function(results) {
         // console.log(results.length);
