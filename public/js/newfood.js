@@ -58,8 +58,8 @@
   $.showPreloader("正在加载");
   initLocation("food",{
       success: function(lng, lat) {
-          // LAT = lat;
-          // LNG = lng;
+          LAT = lat;
+          LNG = lng;
           // var findTop = localStorage.findTop;
           // if(findTop > 2077){
           //   addItems(40, 0,"find");
