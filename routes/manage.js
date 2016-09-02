@@ -258,30 +258,30 @@ function getManageData(callback){
 
     var query = new AV.Query('UserInfo');
     query.count().then(function (count) {
-        console.log(count);
+        // console.log(count);
         //保存用户数量
         userNum = count;
 
         var query = new AV.Query('AskMe');
         query.count().then(function (count) {
-            console.log(count);
+            // console.log(count);
             //ask的数量
             askNum = count;
             var query = new AV.Query('Haved');
             query.count().then(function (count) {
-                console.log(count);
+                // console.log(count);
                 //ask的数量
                 havedNum = count;
                 var query = new AV.Query('Haved');
                 query.exists('income');
                 query.count().then(function (count) {
-                    console.log(count);
+                    // console.log(count);
                     //ask的数量
                     buyNum = count;
                     var query = new AV.Query('AskMe');
                     query.equalTo('staus', "6");
                     query.count().then(function (count) {
-                        console.log(count);
+                        // console.log(count);
                         //ask的数量
                         deleteNum = count;
                         var data = {
@@ -310,12 +310,12 @@ function saveToday(callback){
         success:function(data){
             var date = new Date();
             date = formatDate("y-m-d",date);
-            console.log(date);
+            // console.log(date);
             var query = new AV.Query('ManageData');
             query.equalTo('today', date);
             query.first().then(function (result) {
                 // data 就是符合条件的第一个 AV.Object
-                console.log(result);
+                // console.log(result);
                 if(!result){
                     var ManageData = AV.Object.extend('ManageData');
                     var manageData = new ManageData();
@@ -328,7 +328,7 @@ function saveToday(callback){
                         manageData.set('today',date);
                         manageData.save().then(function (manageData) {
                             // console.log('objectId is ' + todo.id);
-                            console.log(manageData);
+                            // console.log(manageData);
                         }, function (error) {
                             console.log(error);
                         });
@@ -388,7 +388,7 @@ router.get('/getdata', function(req, res, next) {
             askNum = count;
             var query = new AV.Query('Haved');
             query.count().then(function (count) {
-                console.log(count);
+                // console.log(count);
                 //ask的数量
                 havedNum = count;
                 var query = new AV.Query('Haved');

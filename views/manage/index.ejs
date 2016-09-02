@@ -109,7 +109,7 @@
         background: #f8bd38 !important;
         color: white;
     }
-    .btn_pass, .btn_not, .btn_send,.btn_down,.btn_edit,.btn_add,.btn_save,.btn_delete{
+    .btn_pass, .btn_not, .btn_send,.btn_down,.btn_edit,.btn_add,.btn_save,.btn_delete,.location-btn_save{
         margin: 0;
         margin-top: 20px;
         font-size: 16px;
@@ -125,7 +125,7 @@
         background: #6ed56c;
         margin-right: .5rem; 
     }
-    .btn_save{
+    .btn_save,.location-btn_save{
         background-color: #008be7;
     }
     .btn_delete{
@@ -416,6 +416,148 @@
         background-color: #f74b46;
         cursor: pointer;
     }
+    /*地址搜索UI */
+    .location-box-li{
+        /*background-color: white;*/
+    }
+
+    .location-box-li .hot-title{
+        padding:.8rem 0 0 .8rem;
+    }
+    .my-location-content{
+        padding: .6rem 0 .5rem .8rem;
+        border-bottom: 1px solid #eee;
+        margin-bottom: .5rem;
+    }
+    .location-city{
+        font-size: .76rem;
+        color: #333;
+        /*font-weight: bold;*/
+    }
+    .location-detail{
+        font-size: .6rem;
+        color: #ccc;
+    }
+
+    .hot-location-content-li{
+        font-size: .76rem;
+        color: #333;
+        /*font-weight: bold;*/
+        padding:.6rem .8rem;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid #ccc;
+        margin-top: 1rem;
+    }
+    .location-line{
+        position: absolute;
+        box-sizing: border-box;
+        width: 100%;
+        margin-left: 5rem;
+        border-bottom: 1px solid  #eee;
+        margin-top: -.6rem;
+    }
+    .hot-location .location-line{
+        margin-left: 3.3rem;
+    }
+    .send-hot-num input{
+        width: 2rem;
+    }
+    .send-hot-location input{
+        width: 20rem;
+    }
+    .hot-location-list{
+        position: absolute;
+        width: 20rem;
+        background-color: white;
+        margin-left:59px;
+        margin-top: -30px;
+    }
+    .auto-item {
+        padding: .6rem .8rem;
+        border-bottom: 1px solid #eee;
+    }
+    .no-address .no-address-img {
+        width: 4rem;
+        height: 4rem;
+        display: block;
+        margin: 2rem auto 1rem;
+    }
+    .no-address{
+        text-align: center;
+        font-size: .5rem;
+        color: #999;
+        height: 100%;
+        padding-bottom: 2.5rem;
+    }
+
+    .card-li{
+        display: inline-block;
+        width: 300px;
+        height: 424px;
+        margin: 20px auto;
+        -webkit-box-shadow: 2px 2px 2px #ccc;  
+        -moz-box-shadow: 2px 2px 2px #ccc;  
+        box-shadow: 2px 2px 2px #ccc;  
+        border-radius: 6px;
+        background-color: white;
+        margin-right: 20px;
+    }
+
+    .card-img{
+        height: 61.8%;
+        border-radius: 6px;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+    .card-detail,.card-by{
+        width: 100%;
+        font-size: 14.8px;
+        padding: 0 16px;
+        margin-top: 10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+    .card-detail{
+        height: 41px;
+    }
+    .card-by{
+        text-align: right;
+        margin-top: 20px;
+        padding-right: 20px;
+    }
+
+    .card-content{
+        background-color: #f4f4f4;
+        height: 100%;
+    }
+
+    .card-delete{
+        font-size: 16px;
+        color: white;
+        border-radius: 5px;
+        padding: 0;
+        width: 100px;
+        height: 30px;
+        background-color: #f74b46;
+        border: none;
+        margin: 30px auto;
+        text-align: center;
+        line-height: 30px;
+        cursor: pointer;
+    }
+    .card-content-edit{
+        overflow-x: scroll;
+        overflow-y: hidden;
+        width: 800px;
+    }
+    .card-ul{
+        list-style: none;
+        white-space: nowrap;
+    }
 </style>
 <body>
     <div class="wrap">
@@ -459,8 +601,8 @@
                 <ul>
                     <li class="send-bar side-bar-backcheck" id="send">轮播图管理</li>
                     <li class="check-bar" id="check">图文发布管理</li>
-                    <li class="manage-bar" id="manage">管理消息</li>
-                    <li class="tag-bar" id="tag">标签管理</li>
+                    <li class="manage-bar" id="manage">热门地点管理</li>
+                    <li class="card-bar" id="askCard">卡片管理</li>
                     <li class="total-bar" id="total">提现管理</li>
                     <li class="account-bar" id="account">帐号管理</li>
                 </ul>
@@ -534,24 +676,42 @@
                     </ul>
                 </div>
                 <div class="content-title manage" style="display: none">
-                    <ul>
-
-                    </ul>
-                </div>
-                <div class="content-title tag" style="display: none">
-                    <ul>
-                        <li>
-                            <div class="tag-li-list">二级标签名</div>
-                            <div class="tag-li-list">所属一级标签</div>
-                            <div class="tag-li-list list-img">无</div>
-                            <div class="tag-li-list list-img">青铜</div>
-                            <div class="tag-li-list list-img">白银</div>
-                            <div class="tag-li-list list-img">黄金</div>
-                        </li>
-                        <div class="tag-list-content">
-                            
+                    <div class="">
+                        <div class="hot-location location-box-li">
+                            <div class="hot-location-content">
+                            </div>
+                            <button class='btn_add'>添加</button>
                         </div>
-                    </ul>
+                    </div>
+                </div>
+                <div class="content-title askCard" style="display: none">
+                    <div class="card-content-edit">
+                        <div class="card-ul">
+                            <div class="card-li">
+                                <div data-url="http://o83np3eq2.bkt.clouddn.com/wenwo/1471911587140/sfexvjMA3DAF0m_OmjTEs7HoGY2HqvCAUu-_EN-XoRdssUtU3hWLzpX8_hk-h3t_.png" style="background: url(http://o83np3eq2.bkt.clouddn.com/wenwo/1471911587140/sfexvjMA3DAF0m_OmjTEs7HoGY2HqvCAUu-_EN-XoRdssUtU3hWLzpX8_hk-h3t_.png) center center / cover no-repeat;" class="card-img" alt=""></div>
+                                <div class="card-detail">
+                                    来到东南一带就是以吃为主的我，这家店位于厦门繁华步行街旁台湾小吃街后的老字号海鲜大排档，24年的老店，地位是不可动摇的，而且价格居然各种平价，味道还很美，特别是大螃蟹和爆炒花蛤~~
+                                </div>
+                                <div class="card-by">— —Big Poppi🎀</div>
+
+                                <div class="card-delete">
+                                    删除
+                                </div>
+                            </div>
+
+                            <div class="card-li">
+                                <div data-url="http://o83np3eq2.bkt.clouddn.com/wenwo/1471911587140/sfexvjMA3DAF0m_OmjTEs7HoGY2HqvCAUu-_EN-XoRdssUtU3hWLzpX8_hk-h3t_.png" style="background: url(http://o83np3eq2.bkt.clouddn.com/wenwo/1471911587140/sfexvjMA3DAF0m_OmjTEs7HoGY2HqvCAUu-_EN-XoRdssUtU3hWLzpX8_hk-h3t_.png) center center / cover no-repeat;" class="card-img" alt=""></div>
+                                <div class="card-detail">
+                                    来到东南一带就是以吃为主的我，
+                                </div>
+                                <div class="card-by">— —Big Poppi🎀</div>
+
+                                <div class="card-delete">
+                                    删除
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="content-title account" style="display: none">
                     <div>
@@ -736,6 +896,50 @@
             })
         }
 
+        function delLocation(id,callback){
+            var url = "/location/dellocation",
+                type = "POST",
+                data = {
+                    location_id : id
+                };
+            sendCarouseQuest(url,type,data,{
+                success:function(result){
+                    callback.success(result);
+                },
+                error:function(error){
+                    callback.error(error);
+                }
+            })
+        }
+
+        function addLocation(data,callback){
+            var url = "/location/addlocation",
+                type = "POST",
+                data = data;
+            sendCarouseQuest(url,type,data,{
+                success:function(result){
+                    callback.success(result);
+                },
+                error:function(error){
+                    callback.error(error);
+                }
+            })
+        }
+
+        function editLocation(data,callback){
+            var url = "/location/editlocation",
+                type = "POST",
+                data = data;
+            sendCarouseQuest(url,type,data,{
+                success:function(result){
+                    callback.success(result);
+                },
+                error:function(error){
+                    callback.error(error);
+                }
+            })
+        }
+
         getCarouselInfo({
             success:function(result){
                 console.log(result);
@@ -751,10 +955,16 @@
             }
         })
 
-        $(".btn_add").on("click",function(){
+        $(".send .btn_add").on("click",function(){
             var length = $(".send-content-li").length;
             li = '<div class="send-content-li" data-num="1" data-type="add"><div class="send-img"><label> 轮播图:</label><img class="tag-img" data-type="0" src="/img/add.jpg" alt=""></div><div class="send-name">名字：<input class="name" type="text" value=""></div><div class="send-url">链接：<input type="text" value=""></div><button class="btn_save">保存</button><button class="btn_delete">删除</button><label class="carouse-show">是否显示</label><label class="label-switch"><input type="checkbox" checked="true"><div class="checkbox"></div></label></div>';
             $(".send-content-ul").append(li);
+        })
+
+        $(".manage .btn_add").on("click",function(){
+            var length = $(".send-content-li").length;
+            li = '<div class="hot-location-content-li" data-type="add" id="location'+(length+1)+'"><div class="send-hot-location">地点：<input type="text" value=""></div><div class="send-hot-position">坐标：<label class="position-x">0</label>,<label class="position-y">0</label></div><div class="hot-location-list"></div><div class="send-hot-num">热度：<input type="number" value="0"></div><button class="location-btn_save">保存</button><button class="btn_delete">删除</button></div>';
+            $(".hot-location-content").append(li);
         })
 
         $(".send-content-ul").on("click",".btn_delete",function(){
@@ -782,6 +992,77 @@
                             $.toast("服务器出错");
                         }
                       })
+                    },
+                    function () {
+
+                    }
+                );
+            }
+        })
+
+        $(".hot-location-content").on("click",".btn_delete",function(){
+            var id = $(this).parent().attr("data-id");
+            var $parent = $(this).parent();
+            console.log(id);
+            if(!id){
+                $parent.remove();
+            }else{
+                //发起删除请求
+                $.confirm('你确定要删除这条数据吗?', '温馨提示',
+                    function () {
+                      $.showPreloader("正在删除数据");
+                      delLocation(id,{
+                        success: function(result){
+                            $.hidePreloader();
+                            if(result.code == 200){
+                                $.toast("删除成功");
+                                $parent.remove();
+                            }else{
+                                $.toast("删除失败");
+                            }
+                        },
+                        error:function(error){
+                            $.toast("服务器出错");
+                        }
+                      })
+                    },
+                    function () {
+
+                    }
+                );
+            }
+        })
+
+        $(".card-content-edit").on("click",".card-delete",function(){
+            var id = $(this).attr("data-id");
+            var $parent = $(this).parent();
+            console.log(id);
+            if(!id){
+                $parent.remove();
+            }else{
+                //发起删除请求
+                $.confirm('你确定要删除这条数据吗?', '温馨提示',
+                    function () {
+                        $.showPreloader("正在删除数据");
+                        var url = "/card/delcard",
+                            type = "POST",
+                            data = {
+                                card_id : id
+                            };
+                        sendCarouseQuest(url,type,data,{
+                            success: function(result){
+                                $.hidePreloader();
+                                if(result.code == 200){
+                                    $.toast("删除成功");
+                                    $parent.remove();
+                                }else{
+                                    $.toast("删除失败");
+                                }
+                            },
+                            error:function(error){
+                                $.toast("服务器出错");
+                            }
+                        })
                     },
                     function () {
 
@@ -953,6 +1234,77 @@
                 //编辑
                 data.id = id
                 editCarouselInfo(data,{
+                    success:function(result){
+                        $.hidePreloader();
+                        if(result.code == 200){
+                            $.toast("更改成功");
+                        }else{
+                            $.toast("更改失败");
+                        }
+                    },
+                    error:function(error){
+                        $.toast("服务器出错");
+                    }
+                })
+            }
+
+        })
+
+        $(".hot-location-content").on("click",".location-btn_save",function(){
+            //判断是否上传了图片
+            var geox = $(this).parent().find(".send-hot-position .position-x").text();
+            var geoy = $(this).parent().find(".send-hot-position .position-y").text();
+            var hot = $(this).parent().find(".send-hot-num input").val();
+            var address = $(this).parent().find(".send-hot-location input").val();
+            var ifAdd = $(this).parent().attr("data-type");
+            var id = $(this).parent().attr("data-id");
+
+            if(ifAdd == "add"){
+                if(!geox || !geoy){
+                    $.toast("坐标不能为空");
+                    return ;
+                }
+                if(!address){
+                    $.toast("地址不能为空");
+                    return ;
+                }
+                if(!hot){
+                    hot = 0;
+                }
+
+                $.showPreloader("正在添加");
+            }else{
+                $.showPreloader("正在更改");
+            }
+            //新添加
+            var data = {
+                geox     : geox,
+                geoy     : geoy,
+                hot      : hot,
+                address  : address
+            }
+            if(ifAdd == "add"){
+                addLocation(data,{
+                    success:function(result){
+                        $.hidePreloader();
+                        if(result.code == 200){
+                            $.toast("添加成功");
+                            console.log(result);
+                            $(".hot-location-content").empty();
+                            loadLocationList();
+                        }else{
+                            $.toast("添加失败");
+                        }
+                    },
+                    error:function(error){
+                        $.hidePreloader();
+                        $.toast("服务器出错");
+                    }
+                })
+            }else{
+                //编辑
+                data.id = id;
+                editLocation(data,{
                     success:function(result){
                         $.hidePreloader();
                         if(result.code == 200){
@@ -1226,6 +1578,154 @@
                 }
             });
         });
-    </script>
+
+$(".hot-location-content").on("input change",".send-hot-location input",function(){
+    var id = $(this).parent().parent()[0].id;
+    var text = $(this).val().replace(/(^\s*)|(\s*$)/g, "");
+
+    if(text.length){
+      AMap.service(['AMap.Autocomplete',"AMap.PlaceSearch"], function() {
+        var autoOptions = {
+            city: "", //城市，默认全国
+       };
+       autocomplete= new AMap.Autocomplete(autoOptions);
+      //关键字查询
+      autocomplete.search(text, function(statu, result) {
+          var tips = result.tips;
+          if(statu == "complete" && tips.length){
+            var sug = '';
+            for(var i = 0 ; i < tips.length; i++){
+              sug +='<div class="auto-item" data-adcode="'+tips[i].adcode+'" data-name="'+tips[i].name+'" id="amap-sug'+i+'">'+tips[i].name+'<span class="auto-item-span">'+tips[i].district+'</span></div>';
+            }
+            $("#"+id+" .hot-location-list").empty().append(sug);
+
+          } else {
+            var noResult = '<div class="no-address"><img src="/img/food/want-empty.svg" class="no-address-img" alt=""><label class="no-result">没有搜索结果</label><label>换个关键词试试</label></div>';
+            $("#"+id+" .hot-location-list").empty().append(noResult);
+          }
+
+          var text = $("#"+id+" .send-hot-location input").val();
+          if(!text.length){
+            $("#"+id+" .hot-location-list").empty()
+          }
+
+        });
+      });
+    }else{
+      $("#"+id+" .hot-location-list").empty();
+    }
+  })
+
+    var map = '';
+  //点击列
+  $(".hot-location-content").on("click", ".auto-item", function() {
+    var text = $(this).attr("data-name");
+    var adcode = $(this).attr("data-adcode");
+    var id = $(this).parent().parent()[0].id;
+    console.log(text);
+    if(!text){
+      return;
+    }
+    AMap.service(["AMap.PlaceSearch"], function() {
+      var placeSearch = new AMap.PlaceSearch({ //构造地点查询类
+        city:adcode,
+        map: map
+      });
+    //关键字查询
+    placeSearch.search(text, function(statu, result) {
+        console.log(result);
+        if (result.info == "OK") {
+          var lng = result.poiList.pois[0].location.lng;
+          var lat = result.poiList.pois[0].location.lat;
+          var lnglatXY = [lng, lat];
+
+
+          console.log(lnglatXY);
+
+          if(lng && lat){
+            $(".hot-location-list").empty();
+            $("#"+id+" .position-x").text(lat);
+            $("#"+id+" .position-y").text(lng);
+            $("#"+id+" .send-hot-location input").val(text);   
+          }
+        }
+      });
+    });
+  });
+
+  function sendQuest(url,type,data,callback){
+    $.ajax({
+      type: type,
+      url: url,
+      data: data,
+      dataType: "json",
+      success:function(result){
+        if(result.code == 200){
+          callback.success(result);
+        }else{
+          callback.error(result);
+        }
+      },
+      error:function(error){
+        $.toast("服务器出错");
+        callback.error(error);
+      }
+    })
+  }
+
+  function loadLocationList(){
+      var data = {};
+      var url = "/location/gethotlist";
+      var type = "GET";
+      sendQuest(url,type,data,{
+        success:function(locationList){
+          var locationli = '';
+          var data = locationList.data;
+          for(var i = 0; i < data.length; i++){
+            locationli += '<div class="hot-location-content-li" data-lat="'+data[i].GeoX+'" data-lng="'+data[i].GeoY+'" data-id="'+data[i].objectId+'" id="location'+i+'"><div class="send-hot-location">地点：<label>'+data[i].address+'</label></div><div class="send-hot-position">坐标：<label class="position-x">'+data[i].GeoX+'</label>,<label class="position-y">'+data[i].GeoY+'</label></div><div class="send-hot-num">热度：<input type="number" value="'+data[i].hot+'"></div><button class="location-btn_save">保存</button><button class="btn_delete">删除</button></div>';
+          }
+          $(".hot-location-content").empty().append(locationli);
+        },
+        error:function(error){
+
+        }
+      })
+  }
+  loadLocationList();
+
+  //获取卡片信息
+  function getCardList(data,callback){
+    var url = "/card/getcardlist",
+        type = "GET",
+        data = data;
+    sendQuest(url,type,data,{
+        success:function(result){
+            callback.success(result);
+        },
+        error:function(error){
+            callback.error(error);
+        }
+    })
+  }
+
+  //初始化卡片界面
+  getCardList({},{
+    success:function(result){
+        // console.log(result);
+        var data = result.data;
+        var li = '';
+        for(var i = 0 ; i < data.length; i++){
+          // li += '<div class="swiper-slide" data-id="'+data[i].objectId+'" data-askid="'+data[i].askId+'" data-like-num="'+data[i].likeNum+'" data-down-num="'+data[i].downNum+'" data-liked="'+data[i].liked+'"><div class="card-li"><div data-url="'+data[i].cardImg+'" style="background: url('+data[i].cardImg+') center center / cover no-repeat;" class="card-img" alt=""></div><div class="card-detail">'+data[i].detail+'</div><div class="card-by">— —'+data[i].byName+'</div></div></div>';
+
+          li+='<div class="card-li" data-id="'+data[i].objectId+'"><div data-url="'+data[i].cardImg+'" style="background: url('+data[i].cardImg+') center center / cover no-repeat;" class="card-img" alt=""></div><div class="card-detail">'+data[i].detail+'</div><div class="card-by">— —'+data[i].byName+'</div><div class="card-delete" data-id="'+data[i].objectId+'">删除</div></div>';
+        }
+        $(".card-content-edit .card-ul").empty().append(li);
+        
+    },
+    error:function(error){
+        console.log(error);
+    }
+  })
+</script>
 </body>
 </html>

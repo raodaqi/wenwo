@@ -208,9 +208,10 @@ function ifexitCard(data,callback){
     });
 }
 
-router.get('/addcardbyask', function(req, res, next) {
+router.post('/addcardbyask', function(req, res, next) {
 
-    var askId = req.query.askid;
+    var askId = req.body.askid;
+    var status = req.body.status;
     if(!askId){
         res.send({code:600,  message:'缺少参数'});
         return;
@@ -231,7 +232,8 @@ router.get('/addcardbyask', function(req, res, next) {
         var data = {
             byName  : byName,
             cardImg : cardImg,
-            detail  : detail
+            detail  : detail,
+            status  : status
         }
         ifexitCard(data,{
             success:function(cardList){
@@ -305,7 +307,7 @@ router.post('/editcarouselinfo', function(req, res, next) {
 router.post('/delcard', function(req, res, next) {
 
     var cardID = req.body.card_id;
-    if(cardID){
+    if(!cardID){
         res.send({code:600,  message:'缺少参数'});
         return;
     }

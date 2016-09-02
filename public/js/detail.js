@@ -200,8 +200,14 @@
                               }
                               if (contentShow.detailLi) {
                                   console.log(contentShow.detailLi);
-                                  var detailLi = contentShow.detailLi;
-                                  detailLi = JSON.parse(detailLi);
+
+                                  if(contentShow.detailLi[0].name){
+                                    var detailLi = contentShow.detailLi;
+                                  }else{
+                                    var detailLi = contentShow.detailLi;
+                                    detailLi = JSON.parse(detailLi);
+                                  }
+                                  
                                   $(".edit-detail-li-content").empty();
                                   for (var i = 0; i < detailLi.length; i++) {
                                       //初始化显示界面

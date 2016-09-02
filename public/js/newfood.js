@@ -101,7 +101,8 @@
           // }else{
           //   addItems(itemsPerLoad, 0,"find");
           // }
-          initAllData(lat,lng);
+          // initAllData(lat,lng);
+          newfoodInit(lat,lng);
       },
       error: function(error) {
           console.log("error");
@@ -109,6 +110,84 @@
   });
 
   // initAllData(30.580596,103.982984);
+  // newfoodInit(30.580596,103.982984);
+
+function newfoodInit(lat,lng){  
+
+    LAT = lat;
+    LNG = lng;
+    $(".my-location-content").attr("data-lng",LNG);
+    $(".my-location-content").attr("data-lat",LAT);
+
+    var lnglatXY = [LNG,LAT];
+      getAddress(lnglatXY,{
+        success:function(address){
+          console.log(address);
+          var detail = address.formattedAddress;
+          var address = {
+              province: address.addressComponent.province,
+              city: address.addressComponent.city,
+              district: address.addressComponent.district,
+              township: address.addressComponent.township
+          }
+
+          var replace = "" + address.province + address.city + address.district + address.township + "";
+          detail = detail.replace(replace, "");
+          address.detail = detail;
+          if(!(history.length > 1 && getCookie("lng") && getCookie("lat"))){
+            $(".nav-left-add").text(detail);
+          }
+
+          //当前地址
+          $(".location-city").text(address.city);
+          $(".location-detail").text(address.district + address.township + detail);
+        },
+        error:function(error){
+          console.log(error);
+        }
+      })
+
+    if(history.length > 1 && getCookie("lng") && getCookie("lat")){
+      LAT = getCookie("lat");
+      LNG = getCookie("lng");
+      var lnglatXY = [LNG,LAT];
+      getAddress(lnglatXY,{
+        success:function(address){
+          console.log(address);
+          var detail = address.formattedAddress;
+          var address = {
+              province: address.addressComponent.province,
+              city: address.addressComponent.city,
+              district: address.addressComponent.district,
+              township: address.addressComponent.township
+          }
+
+          var replace = "" + address.province + address.city + address.district + address.township + "";
+          detail = detail.replace(replace, "");
+          address.detail = detail;
+
+          $(".nav-left-add").text(detail);
+        },
+        error:function(error){
+          console.log(error);
+        }
+      })
+    }
+
+    // console.log(history.length);
+    // alert(history.length);
+
+    //预先加载20条
+    if (LAT) {
+      var findTop = localStorage.findTop;
+      if(findTop > 2077){
+        addItems(40, 0,"find");
+      }else{
+        addItems(itemsPerLoad, 0,"find");
+      }
+    }
+
+
 
   //初始化下载图片
   if(localStorage.downImg){
@@ -960,7 +1039,7 @@
   //初始化搜索信息列表
   function initListPage(searchData,type,callback) {
       //初始化最新列表，获取前20条信息
-      addSearchLog(searchData.keyword);
+      // addSearchLog(searchData.keyword);
       getSearch(searchData, {
           success: function(result) {
               // 生成新条目的HTML
@@ -1201,10 +1280,10 @@
       })
   }
   
-
   //初始化想吃列表
   function initLikeListPage() {
       //获取想吃列表
+
       getLikeList(UserName, {
           success: function(result) {
               if (result.code == 200) {
@@ -1898,7 +1977,7 @@
   //距离选择逻辑
   $(".nav-right-range").on("click",function(){
     if(!$(this).hasClass("range-active")){
-      $(".range-content").css("height","2.8rem");
+      $(".range-content").css("height","4.2rem");
       $(this).addClass("range-active");
       $(".range-content-li").css("visibility", "visible");
     }else{
@@ -1916,6 +1995,10 @@
     $(".range-content-li").show();
     $(".range-content-li").css("visibility", "hidden");
     $(this).hide();
+    // $("#find .wenwo-ul").empty();
+    // $("#find .ask-end").hide();
+    // $("#find .infinite-scroll-preloader .preloader").show();
+    // getAskLoad = 0;
     initFindListPage(range);
   })
 
@@ -2168,3 +2251,8 @@
       addItems(itemsPerLoad, 0,"tag");
     }, 500);
   })
+
+
+
+
+}

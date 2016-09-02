@@ -185,6 +185,10 @@ router.get('/search', function(req, res, next) {
         res.send(result);
         return;
     }
+    if(!page || page == "0"){
+       addsearchlog(keyword,userName); 
+    }
+    
 
     var query = new AV.Query('FoodLike');
 
@@ -276,6 +280,34 @@ function ifexitSearchLog(data,callback){
     });
 }
 
+function addsearchlog(keyword,username){
+    var keyword = keyword;
+    var createBy = username;
+    var data = {
+        createBy  : createBy,
+        keyword   : keyword
+    }
+    ifexitSearchLog(data,{
+        success:function(searchlog){
+            if(!searchlog.length){
+                var searchlog = new SearchLog();
+                searchlog.set('createBy', createBy);
+                searchlog.set('keyword', keyword);
+                searchlog.set('times', 1);
+                searchlog.save().then(function (searchlog) {
+                }, function (error) {
+                });
+            }else{
+                var searchlog = AV.Object.createWithoutData('SearchLog', searchlog[0].id);
+                searchlog.increment('times', 1);
+                searchlog.save().then(function (searchlog) {
+                }, function (error) {
+                });
+            }
+        }
+    })
+}
+
 router.get('/addsearchlog', function(req, res, next) {
     var keyword = req.query.keyword;
     var createBy = req.query.username;
@@ -322,8 +354,7 @@ router.get('/addsearchlog', function(req, res, next) {
                 });
             }
         }
-    })
-    
+    }) 
 })
 
 
