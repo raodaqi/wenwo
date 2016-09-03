@@ -7,9 +7,8 @@
       title3 = 1,
       title4 = 1;
   var range = 2000;
-  //测试
-  // LAT = 30.580596;
-  // LNG = 103.982984;
+  var loading = false;
+  var itemsPerLoad = 20;
 
   // window.onpopstate = function(event) {
   //   alert($(".page-current").id);
@@ -180,10 +179,12 @@ function newfoodInit(lat,lng){
     //预先加载20条
     if (LAT) {
       var findTop = localStorage.findTop;
+      console.log(findTop);
       if(findTop > 2077){
         addItems(40, 0,"find");
       }else{
         addItems(itemsPerLoad, 0,"find");
+        console.log(itemsPerLoad);
       }
     }
 
@@ -687,17 +688,6 @@ function newfoodInit(lat,lng){
       })
   }
 
-//封装滚动加载模块
-
-  // function initData(){
-  // 加载flag
-  var loading = false;
-  // 最多可加载的条目
-  // var maxItems = 100;
-
-  // 每次加载添加多少条目
-  var itemsPerLoad = 20;
-
   //getAskLoad getNewLoad  0代表空闲 1代表占用
   var getAskLoad = 0,
       getTagLoad = 0,
@@ -710,7 +700,7 @@ function newfoodInit(lat,lng){
       // console.log(lastIndex);
       var page = Math.ceil(lastIndex / number);
 
-      console.log(getSearchLoad);
+      console.log("加载");
 
       page = page ? page : 0;
       if(!getNewLoad){
@@ -844,12 +834,12 @@ function newfoodInit(lat,lng){
       lastIndex = $('#'+type+' .wenwo-li').length;
       console.log(lastIndex);
 
-      if(lastIndex < itemsPerLoad){
-        $.detachInfiniteScroll($('#'+type+' .infinite-scroll'));
-        // 删除加载提示符
-        $("#"+type+" .infinite-scroll-preloader .preloader").hide();
-        $("#"+type+" .ask-end").show();
-      }
+      // if(lastIndex < itemsPerLoad){
+      //   $.detachInfiniteScroll($('#'+type+' .infinite-scroll'));
+      //   // 删除加载提示符
+      //   $("#"+type+" .infinite-scroll-preloader .preloader").hide();
+      //   $("#"+type+" .ask-end").show();
+      // }
 
       // 添加新条目
       addItems(itemsPerLoad, lastIndex,type);
@@ -948,6 +938,13 @@ function newfoodInit(lat,lng){
                   // $(".preloader").hide();
                   // $(".preloader-tip").text("刷新成功");
                   // $(".preloader-tip").show();
+                  if(data.length < 20){
+                    $.detachInfiniteScroll($('#find .infinite-scroll'));
+                    // 删除加载提示符
+                    $("#find .infinite-scroll-preloader .preloader").hide();
+                    $("#find .ask-end").show();
+                    getAskLoad = 1;
+                  }
               }
           },
           error: function(error) {
@@ -1981,7 +1978,7 @@ function newfoodInit(lat,lng){
   })
 
   //距离选择逻辑
-  $(".nav-right-range").on("click",function(){
+  $("#find .nav-right").on("click",function(){
     if(!$(this).hasClass("range-active")){
       $(".range-content").css("height","4.2rem");
       $(this).addClass("range-active");
@@ -2208,6 +2205,9 @@ function newfoodInit(lat,lng){
 
     $("#find .wenwo-ul").empty();
     $("#slocation .location").val("");
+
+    console.log("123");
+
     $("#find .ask-end").hide();
     $("#find .infinite-scroll-preloader .preloader").show();
     getAskLoad = 0;
