@@ -45,6 +45,7 @@ router.get('/allask', function(req, res, next) {
     if (type != null) {
         query.contains("askType", type);
     }
+    
     if (size != null) {
         query.limit(size);
     }
@@ -1031,6 +1032,65 @@ router.post('/askedit', function(req, res, next) {
             }
             res.send(result);
             //console.log('Failed to create new object, with error message: ' + err.message);
+        });
+    });
+
+});
+
+router.post('/askremove', function(req, res, next) {
+    var askId = req.body.askid;
+    var reason = req.body.reason;
+    var user = AV.User.current();
+
+    if(!user){
+        var result = {
+            code : 800,
+            error:"No permissions"
+        }
+        res.send(result);
+        return;
+    }
+
+    if(user.id != '5752bb7ad342d3006b3162b2'){
+        var result = {
+            code : 800,
+            message:"No permissions"
+        }
+        res.send(result);
+        return;
+    }
+
+    if(!reason){
+        var result = {
+            code : 600,
+            message:"缺少下架理由"
+        }
+        res.send(result);
+        return;
+    }
+
+    var query = new AV.Query('AskMe');
+    query.get(askId).then(function (ask) {
+        ask.set('staus', '6');
+
+        if (reason != null) {
+            ask.set('askDefault', reason);
+        }
+
+        ask.save().then(function (ask) {
+            var result = {
+                code : 200,
+                data : ask,
+                message : 'Operation succeeded'
+            }
+            res.send(result);
+            return;
+        }, function(err) {
+            var result = {
+                code : 800,
+                message : err.message
+            }
+            res.send(result);
         });
     });
 

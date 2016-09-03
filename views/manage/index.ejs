@@ -128,9 +128,22 @@
     .btn_save,.location-btn_save{
         background-color: #008be7;
     }
-    .btn_delete{
+    .btn_delete,.ask_btn_delete{
         background-color: #f74b46;
         margin-left: .5rem; 
+    }
+    .ask_btn_delete{
+        position: absolute;
+        top:0;
+        right:0;
+        display: block;
+        margin: 0;
+        font-size: 16px;
+        color: white;
+        padding: 0;
+        width: 100px;
+        height: 40px;
+        border: none;
     }
     textarea {
         display: block;
@@ -567,6 +580,45 @@
     .card-detail{
         white-space: normal;
     }
+    .wenwo-li {
+        float: left;
+        padding: 0;
+        height: auto;
+        width: 360px;
+        min-height: 240px;
+        margin-top: 0;
+        margin-bottom: .5rem;
+    }
+    .wenwo-ask-img {
+        position: relative;
+        width: 100%;
+        height: 240px;
+    }
+    .ask-reason{
+        position: absolute;
+        height: 30px;
+        color: white;
+        font-size: 15px;
+        padding:10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        box-sizing: content-box;
+        bottom:10px;
+    }
+    .wenwo-gradient {
+        position: absolute;
+        height: 240px;
+        width: 100%;
+        border: 0;
+        background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 55%, rgba(0, 0, 0, 0.2) 88%, rgba(0, 0, 0, 0.35) 97%);
+    }
+
+    .wenwo-li{
+        margin-right:10px;
+    }
 </style>
 <body>
     <div class="wrap">
@@ -612,7 +664,7 @@
                     <li class="check-bar" id="check">图文发布管理</li>
                     <li class="manage-bar" id="manage">热门地点管理</li>
                     <li class="card-bar" id="askCard">卡片管理</li>
-                    <li class="total-bar" id="total">提现管理</li>
+                    <li class="askme-bar" id="askme">信息管理</li>
                     <li class="account-bar" id="account">帐号管理</li>
                 </ul>
             </div>
@@ -679,10 +731,9 @@
                     </div>
                 </div>
 
-                <div class="content-title total" style="display: none">
-                    <ul>
-
-                    </ul>
+                <div class="content-title askme" style="display: none">
+                    <div class="wenwo-ul">
+                    </div>
                 </div>
                 <div class="content-title manage" style="display: none">
                     <div class="">
@@ -1732,7 +1783,7 @@ function getAskCard(page,size,cardData){
     var staus = staus ? staus : 1;
     var data = {
         page: page,
-        size: size,
+        size: 1000,
         staus: staus
     }
     var url = '/ask/allask';
@@ -1744,8 +1795,23 @@ function getAskCard(page,size,cardData){
             if(askList.code == 200){
                 var li = '';
 
+                var askli = '';
+
+                console.log(data.length);
+
                 if (data) {
                     for (var i = 0; i < data.length; i++) {
+
+                        var img = data[i].createByUrl;
+                        if(data[i].askImage){
+                            var askImage = JSON.parse(data[i].askImage);
+                            if(askImage[0].image){
+                                img = askImage[0].image;
+                            }
+                        }
+
+                        askli += '<div class="wenwo-li" data-id="'+data[i].objectId+'"><div class="wenwo-ask-img" style="background: url('+img+') center center / cover no-repeat;"><div class="wenwo-gradient"></div><div class="ask-reason">'+data[i].askReason+'</div><button class="ask_btn_delete" data-id="'+data[i].objectId+'">下架</button></div></div>';
+
 
                         var haved = 0;
 
@@ -1764,6 +1830,7 @@ function getAskCard(page,size,cardData){
                         
                     }
                     $(".card-content-add .card-ul").empty().append(li);
+                    $(".askme .wenwo-ul").empty().append(askli);
                 }
             }
         },
@@ -1836,6 +1903,64 @@ $(".card-content-add").on("click",".card-add",function(){
             $.toast("操作失败");
         }
     }) 
+})
+
+$(".askme").on("click",".ask_btn_delete",function(){
+    var askid = $(this).attr("data-id");
+    var askli = $(this).parent().parent();
+
+    $.prompt('请填写下架理由', '温馨提示',
+        function (value) {
+            var data = {
+                askid  : askid,
+                reason : value
+            };
+
+            var url = "/ask/askremove";
+            var type = "post";
+
+            if(!askid){
+                $.toast("操作失败");
+                return;
+            }
+
+            $.showPreloader("正在添加");
+
+            sendQuest(url,type,data,{
+                success:function(locationList){
+                    $.hidePreloader();
+                    askli.remove();
+                    $.toast("下架成功");
+                },
+                error:function(error){
+                    $.hidePreloader();
+                    $.toast(error.message);
+                }
+            })
+        },
+        function (value) {
+        }
+    );
+
+    // if(!askid){
+    //     $.toast("操作失败");
+    //     return;
+    // }
+
+    // $.showPreloader("正在添加");
+
+    // sendQuest(url,type,data,{
+    //     success:function(locationList){
+    //         $.hidePreloader();
+    //         // $(".card-content-edit").empty();
+    //         initCardList();
+    //         $_addCard.parent().remove();
+    //     },
+    //     error:function(error){
+    //         $.hidePreloader();
+    //         $.toast("操作失败");
+    //     }
+    // }) 
 })
 </script>
 </body>

@@ -1438,7 +1438,10 @@ function newfoodInit(lat,lng){
                       changeColor();
                     }
                     if(data.length + i == 2){
-                      li += '<div class="tagfind-li '+color+' no-right-border"></div>';
+                      li += '<div class="tagfind-li '+color+' no-right-border li-border-top-right-radius"></div>';
+                      li += '<div class="border-bottom"></div>';
+                    }else if(data.length + i == 5){
+                      li += '<div class="tagfind-li '+color+' no-right-border li-border-bottom-right-radius"></div>';
                       li += '<div class="border-bottom"></div>';
                     }else{
                       li += '<div class="tagfind-li '+color+'"></div>';
@@ -1527,10 +1530,13 @@ function newfoodInit(lat,lng){
   // })
   $(".empty-button,.nav-list").on("click", function() {
       var href = $(this).attr("data-href");
+      var id = $(".page-current")[0].id;
       if (href.split("#")[1]) {
+        if(id != href.split("#")[1]){
           $(".tab-item").removeClass("active");
           $(".find").addClass("active");
           $.router.load(href);
+        }  
       } else {
           $.showPreloader("正在跳转");
           $.router.load(href);

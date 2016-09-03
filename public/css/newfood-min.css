@@ -1290,6 +1290,7 @@ html {
 #tagfind .type{
     background-color: #f7c4a1;
     border:0;
+    border-top-left-radius: .3rem;
 }
 
 #tagfind .tagfind-ul{
