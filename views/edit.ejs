@@ -308,9 +308,14 @@
         </div>
         <div class="add-search">
           <input type="text" class="search-input" id="address" name="address" placeholder="请标注美食所在的精确位置">
+          
+          <div class="wenwo-ul">
+            
+          </div>
+
           <div class="ww_typeHelper-input-left iconfont icon-bianji"></div>
           <!-- <span class="icon iconfont icon-tixing"></span> -->
-          <div class="search">搜索</div>
+          <div class="search">取消</div>
         </div>
 
         <div class="add-detail">
@@ -436,7 +441,6 @@
     </div>
   </body>
   <% include footer.ejs %>
-  <script type="text/javascript" src="/js/map.js"></script>
   <script type='text/javascript' src='/js/extend.js' charset='utf-8'></script>
   <script> 
 
@@ -453,7 +457,8 @@
 
     $(".page").swipeLeft(function(){
       var id = this.id;
-
+      $("#router5 .wenwo-ul").empty();
+      
       if(id == "success"){
         return;
       }
@@ -475,6 +480,7 @@
     $(".page").swipeRight(function(){
       // window.history.go(-1);
       var id = this.id;
+      $("#router5 .wenwo-ul").empty();
 
       if(id == "success"){
         return;

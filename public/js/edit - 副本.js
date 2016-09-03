@@ -9,7 +9,6 @@
 
   initLocation("edit",{
           success: function(lng,lat) {
-            initEdit(lat,lng);
 
             // initEdit();
 
@@ -53,14 +52,15 @@
 
 // if(window.location.port == 3000){
 //   //测试逻辑
-//   initEdit(30.580596,103.982984);
+//   initEdit();
 // }
-
+initEdit(30.580596,103.982984);
 function initEdit(LAT,LNG){
   LAT = LAT;
   LNG = LNG;
-  if(!localStorage.lng || !localStorage.lat){
-
+  if(localStorage.lng && localStorage.lat){
+      
+  }else{
     //详情地点显示
     map = new AMap.Map('container', {
         resizeEnable: true,
@@ -144,9 +144,6 @@ function initEdit(LAT,LNG){
       })
 
       $(".edit-li,.next-view,.pre-view").on("click", function() {
-
-          $("#router5 .wenwo-ul").empty();
-
           var href = $(this).attr("data-href");
           if (href.split("#")[1]) {
               $.router.load(href);
@@ -156,8 +153,6 @@ function initEdit(LAT,LNG){
       })
 
       $(".circle").on("touchstart", function() {
-        $("#router5 .wenwo-ul").empty();
-
           var href = $(this).attr("data-href");
           if (href.split("#")[1]) {
               $.router.load(href);
@@ -217,7 +212,7 @@ function initEdit(LAT,LNG){
               });
           })
       }
-
+      
       window.onload = function() {
           map.plugin(["AMap.ToolBar"], function() {
               map.addControl(new AMap.ToolBar());
@@ -280,6 +275,31 @@ function initEdit(LAT,LNG){
               $("#router3").scrollTop(80);
           })
       }
+      // if(isAndroid){
+      //   $(window).resize(function () {
+      //     if($(document.body).height() < height){
+      //       //输入框弹起
+      //       $(".footer-bar").hide();
+      //       $(".header-bar").hide();
+      //       $(".page-content").css("margin-top","1rem");
+      //     }else{
+      //       //输入框放下
+      //       $(".footer-bar").show();
+      //       $(".header-bar").show();
+      //       $(".page-content").css("margin-top","5rem");
+      //     }
+      //   })
+      // }else{
+      //   $(window).resize(function () {
+      //     if($(document.body).height() < height){
+      //       //输入框弹起
+      //       $(".footer-bar").hide();
+      //     }else{
+      //       //输入框放下
+      //       $(".footer-bar").show();
+      //     }
+      //   })
+      // }
 
       //监听textarea获取焦点逻辑
 
@@ -337,17 +357,17 @@ function initEdit(LAT,LNG){
           }
       })
 
-      // //初始化marker
-      // marker = new AMap.Marker({
-      //     icon: icon, //24px*24px
-      //     map: map,
-      //     draggable: true,
-      //     cursor: 'move',
-      //     raiseOnDrag: true,
-      //     clickable: true
-      // });
-      // marker.setMap(map);
-      // initMarker(marker);
+      //初始化marker
+      marker = new AMap.Marker({
+          icon: icon, //24px*24px
+          map: map,
+          draggable: true,
+          cursor: 'move',
+          raiseOnDrag: true,
+          clickable: true
+      });
+      marker.setMap(map);
+      initMarker(marker);
       //获取地址
       function getAddress(lnglatXY, callback) {
           var geocoder = new AMap.Geocoder({
@@ -367,6 +387,8 @@ function initEdit(LAT,LNG){
               }
           });
       }
+
+      //
 
       //初始化localStorage数据
       function initLocationData() {
@@ -1372,66 +1394,24 @@ function initEdit(LAT,LNG){
           localStorage["address"] = $(this).val();
       })
 
-      //地点搜索
-       $("#address").on("input change",function(){
-        var text = $("#address").val().replace(/(^\s*)|(\s*$)/g, "");
-
-        console.log(text);
-        if(text.length){
-          AMap.service(['AMap.Autocomplete',"AMap.PlaceSearch"], function() {
-            var autoOptions = {
-                city: "", //城市，默认全国
-           };
-           autocomplete= new AMap.Autocomplete(autoOptions);
-          //关键字查询
-          autocomplete.search(text, function(statu, result) {
-              console.log(result);
-              console.log(statu);
-              var tips = result.tips;
-              if(statu == "complete" && tips.length){
-                var sug = '';
-                for(var i = 0 ; i < tips.length; i++){
-                  sug +='<div class="auto-item" data-adcode="'+tips[i].adcode+'" data-name="'+tips[i].name+'" id="amap-sug'+i+'">'+tips[i].name+'<span class="auto-item-span">'+tips[i].district+'</span></div>';
-                }
-                $("#router5 .wenwo-ul").empty().append(sug);
-                $("#router5 .wenwo-ul").show();
-              } else {
-                var noResult = '<div class="no-address"><img src="/img/food/want-empty.svg" class="no-address-img" alt=""><label class="no-result">没有搜索结果</label><label>换个关键词试试</label></div>';
-                $("#router5 .wenwo-ul").empty().append(noResult);
-                $("#router5 .wenwo-ul").show();
-              }
-              var text = $("#address").val();
-              if(!text.length){
-                $("#router5 .wenwo-ul").hide();
-              }
-            });
-          });
-        }else{
-          $("#router5 .wenwo-ul").empty().hide();;
-        }
-      })
-
-      $("#router5").on("click", ".auto-item", function() {
-        var text = $(this).attr("data-name");
-        var adcode = $(this).attr("data-adcode");
-        console.log(text);
-        if(!text){
-          return;
-        }
-        AMap.service(["AMap.PlaceSearch"], function() {
-          var placeSearch = new AMap.PlaceSearch({ //构造地点查询类
-            city:adcode,
-            map: map
-          });
-        //关键字查询
-        placeSearch.search(text, function(statu, result) {
-            console.log(result);
-            if (result.info == "OK") {
-              var lng = result.poiList.pois[0].location.lng;
-              var lat = result.poiList.pois[0].location.lat;
-              var lnglatXY = [lng, lat];
-              $("#router5 .wenwo-ul").empty();
-
+      var timeIv;
+      //地点标注搜索
+      AMap.plugin(['AMap.Autocomplete', 'AMap.PlaceSearch'], function() {
+          var autoOptions = {
+              input: "address" //使用联想输入的input的id
+          };
+          autocomplete = new AMap.Autocomplete(autoOptions);
+          var placeSearch = new AMap.PlaceSearch({
+              map: map
+          })
+          AMap.event.addListener(autocomplete, "select", function(e) {
+              placeSearch.setCity(e.poi.adcode);
+              placeSearch.search(e.poi.name, function(status, result) {
+                  console.log(result);
+                  if (result.info == "OK") {
+                      var lng = result.poiList.pois[0].location.lng;
+                      var lat = result.poiList.pois[0].location.lat;
+                      var lnglatXY = [lng, lat];
                       map.setZoomAndCenter(19, lnglatXY);
                       getAddress(lnglatXY, {
                           success: function(address) {
@@ -1470,137 +1450,70 @@ function initEdit(LAT,LNG){
                       initMarker(marker);
                   }
                   return;
+              });
           });
-        });
       });
-
-      var timeIv;
-      //地点标注搜索
-      // AMap.plugin(['AMap.Autocomplete', 'AMap.PlaceSearch'], function() {
-      //     var autoOptions = {
-      //         input: "address" //使用联想输入的input的id
-      //     };
-      //     autocomplete = new AMap.Autocomplete(autoOptions);
-      //     var placeSearch = new AMap.PlaceSearch({
-      //         map: map
-      //     })
-      //     AMap.event.addListener(autocomplete, "select", function(e) {
-      //         placeSearch.setCity(e.poi.adcode);
-      //         placeSearch.search(e.poi.name, function(status, result) {
-      //             console.log(result);
-      //             if (result.info == "OK") {
-      //                 var lng = result.poiList.pois[0].location.lng;
-      //                 var lat = result.poiList.pois[0].location.lat;
-      //                 var lnglatXY = [lng, lat];
-      //                 map.setZoomAndCenter(19, lnglatXY);
-      //                 getAddress(lnglatXY, {
-      //                     success: function(address) {
-      //                         var detail = address.formattedAddress;
-      //                         var address = {
-      //                             province: address.addressComponent.province,
-      //                             city: address.addressComponent.city,
-      //                             district: address.addressComponent.district,
-      //                             township: address.addressComponent.township
-      //                         }
-      //                         var replace = "" + address.province + address.city + address.district + address.township + "";
-      //                         detail = detail.replace(replace, "");
-      //                         address.detail = detail;
-      //                         var address = JSON.stringify(address);
-      //                         $(".address .edit-content").attr("data-address", address);
-      //                         $(".address .edit-content").text(detail);
-      //                         $("#address").val(detail);
-      //                     }
-      //                 });
-      //                 //选择后存储坐标
-      //                 localStorage["lng"] = lng;
-      //                 localStorage["lat"] = lat;
-      //                 $("#container").attr("data-lng", lng);
-      //                 $("#container").attr("data-lat", lat);
-      //                 map.clearMap();
-      //                 marker = new AMap.Marker({
-      //                     icon: icon, //24px*24px
-      //                     map: map,
-      //                     position: lnglatXY,
-      //                     draggable: true,
-      //                     cursor: 'move',
-      //                     raiseOnDrag: true,
-      //                     clickable: true
-      //                 });
-      //                 marker.setMap(map);
-      //                 initMarker(marker);
-      //             }
-      //             return;
-      //         });
-      //     });
-      // });
 
       //点击搜素按钮
       $(".search").on("click", function() {
-        $("#address").val("");
-        $("#router5 .wenwo-ul").empty();
+          var text = $("#address").val();
+          AMap.service(["AMap.PlaceSearch"], function() {
+              var placeSearch = new AMap.PlaceSearch({ //构造地点查询类
+                  map: map
+              });
+              //关键字查询
+              placeSearch.search(text, function(statu, result) {
+                  console.log(result);
+                  if (result.info == "OK") {
+                      var lng = result.poiList.pois[0].location.lng;
+                      var lat = result.poiList.pois[0].location.lat;
+                      var lnglatXY = [lng, lat];
+                      map.setZoomAndCenter(19, lnglatXY);
+                      getAddress(lnglatXY, {
+                          success: function(address) {
+                              var detail = address.formattedAddress;
+                              var address = {
+                                  province: address.addressComponent.province,
+                                  city: address.addressComponent.city,
+                                  district: address.addressComponent.district,
+                                  township: address.addressComponent.township
+                              }
+
+                              var replace = "" + address.province + address.city + address.district + address.township + "";
+                              detail = detail.replace(replace, "");
+                              address.detail = detail;
+                              var address = JSON.stringify(address);
+                              $(".address .edit-content").attr("data-address", address);
+                              $(".address .edit-content").text(detail);
+                              $("#address").val(detail);
+                          }
+                      });
+                      //选择后存储坐标
+                      localStorage["lng"] = lng;
+                      localStorage["lat"] = lat;
+                      $("#container").attr("data-lng", lng);
+                      $("#container").attr("data-lat", lat);
+                      map.clearMap();
+                      marker = new AMap.Marker({
+                          icon: icon, //24px*24px
+                          map: map,
+                          position: lnglatXY,
+                          draggable: true,
+                          cursor: 'move',
+                          raiseOnDrag: true,
+                          clickable: true
+                      });
+                      marker.setMap(map);
+                      initMarker(marker);
+                  } else {
+                      $.toast("未查找到结果，请尝试修改查询条件");
+                  }
+              });
+              // placeSearch.on("complete",function(){
+
+              // })
+          });
       })
-      // $(".search").on("click", function() {
-      //     var text = $("#address").val();
-      //     $("#router5 .wenwo-ul").empty();
-      //     AMap.service(["AMap.PlaceSearch"], function() {
-      //         var placeSearch = new AMap.PlaceSearch({ //构造地点查询类
-      //             map: map
-      //         });
-      //         //关键字查询
-      //         placeSearch.search(text, function(statu, result) {
-      //             console.log(result);
-      //             if (result.info == "OK") {
-      //                 $("#router5 .wenwo-ul").empty();
-
-      //                 var lng = result.poiList.pois[0].location.lng;
-      //                 var lat = result.poiList.pois[0].location.lat;
-      //                 var lnglatXY = [lng, lat];
-      //                 map.setZoomAndCenter(19, lnglatXY);
-      //                 getAddress(lnglatXY, {
-      //                     success: function(address) {
-      //                         var detail = address.formattedAddress;
-      //                         var address = {
-      //                             province: address.addressComponent.province,
-      //                             city: address.addressComponent.city,
-      //                             district: address.addressComponent.district,
-      //                             township: address.addressComponent.township
-      //                         }
-
-      //                         var replace = "" + address.province + address.city + address.district + address.township + "";
-      //                         detail = detail.replace(replace, "");
-      //                         address.detail = detail;
-      //                         var address = JSON.stringify(address);
-      //                         $(".address .edit-content").attr("data-address", address);
-      //                         $(".address .edit-content").text(detail);
-      //                         $("#address").val(detail);
-      //                     }
-      //                 });
-      //                 //选择后存储坐标
-      //                 localStorage["lng"] = lng;
-      //                 localStorage["lat"] = lat;
-      //                 $("#container").attr("data-lng", lng);
-      //                 $("#container").attr("data-lat", lat);
-      //                 map.clearMap();
-      //                 marker = new AMap.Marker({
-      //                     icon: icon, //24px*24px
-      //                     map: map,
-      //                     position: lnglatXY,
-      //                     draggable: true,
-      //                     cursor: 'move',
-      //                     raiseOnDrag: true,
-      //                     clickable: true
-      //                 });
-      //                 marker.setMap(map);
-      //                 initMarker(marker);
-      //             } else {
-      //                 $.toast("未查找到结果，请尝试修改查询条件");
-      //             }
-      //         });
-      //         // placeSearch.on("complete",function(){
-
-      //         // })
-      //     });
-      // })
 
       // $.toast("未查找到结果，请尝试修改查询条件");
       //点击标注
