@@ -7,7 +7,7 @@
   initLocation("edit",{
           success: function(lng,lat) {
 
-            initEdit();
+            // initEdit();
 
             if(localStorage.lng && localStorage.lat){
 
@@ -51,6 +51,7 @@
 //   //测试逻辑
 //   initEdit();
 // }
+initEdit();
 function initEdit(){  
 
       $(".tab-item").on("click", function() {
