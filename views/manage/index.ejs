@@ -535,7 +535,7 @@
         height: 100%;
     }
 
-    .card-delete{
+    .card-delete,.card-pass,.card-add{
         font-size: 16px;
         color: white;
         border-radius: 5px;
@@ -549,7 +549,13 @@
         line-height: 30px;
         cursor: pointer;
     }
-    .card-content-edit{
+    .card-pass{
+        background-color: #008be7;
+    }
+    .card-add{
+        background-color: #4cd964;
+    }
+    .card-content-edit,.card-content-add{
         overflow-x: scroll;
         overflow-y: hidden;
         width: 800px;
@@ -557,6 +563,9 @@
     .card-ul{
         list-style: none;
         white-space: nowrap;
+    }
+    .card-detail{
+        white-space: normal;
     }
 </style>
 <body>
@@ -687,29 +696,12 @@
                 <div class="content-title askCard" style="display: none">
                     <div class="card-content-edit">
                         <div class="card-ul">
-                            <div class="card-li">
-                                <div data-url="http://o83np3eq2.bkt.clouddn.com/wenwo/1471911587140/sfexvjMA3DAF0m_OmjTEs7HoGY2HqvCAUu-_EN-XoRdssUtU3hWLzpX8_hk-h3t_.png" style="background: url(http://o83np3eq2.bkt.clouddn.com/wenwo/1471911587140/sfexvjMA3DAF0m_OmjTEs7HoGY2HqvCAUu-_EN-XoRdssUtU3hWLzpX8_hk-h3t_.png) center center / cover no-repeat;" class="card-img" alt=""></div>
-                                <div class="card-detail">
-                                    来到东南一带就是以吃为主的我，这家店位于厦门繁华步行街旁台湾小吃街后的老字号海鲜大排档，24年的老店，地位是不可动摇的，而且价格居然各种平价，味道还很美，特别是大螃蟹和爆炒花蛤~~
-                                </div>
-                                <div class="card-by">— —Big Poppi🎀</div>
-
-                                <div class="card-delete">
-                                    删除
-                                </div>
-                            </div>
-
-                            <div class="card-li">
-                                <div data-url="http://o83np3eq2.bkt.clouddn.com/wenwo/1471911587140/sfexvjMA3DAF0m_OmjTEs7HoGY2HqvCAUu-_EN-XoRdssUtU3hWLzpX8_hk-h3t_.png" style="background: url(http://o83np3eq2.bkt.clouddn.com/wenwo/1471911587140/sfexvjMA3DAF0m_OmjTEs7HoGY2HqvCAUu-_EN-XoRdssUtU3hWLzpX8_hk-h3t_.png) center center / cover no-repeat;" class="card-img" alt=""></div>
-                                <div class="card-detail">
-                                    来到东南一带就是以吃为主的我，
-                                </div>
-                                <div class="card-by">— —Big Poppi🎀</div>
-
-                                <div class="card-delete">
-                                    删除
-                                </div>
-                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="card-content-add">
+                        <div class="card-ul">
+                            
                         </div>
                     </div>
                 </div>
@@ -1708,24 +1700,143 @@ $(".hot-location-content").on("input change",".send-hot-location input",function
     })
   }
 
+function initCardList(){
   //初始化卡片界面
-  getCardList({},{
+  getCardList({type:"all"},{
     success:function(result){
         // console.log(result);
         var data = result.data;
         var li = '';
         for(var i = 0 ; i < data.length; i++){
-          // li += '<div class="swiper-slide" data-id="'+data[i].objectId+'" data-askid="'+data[i].askId+'" data-like-num="'+data[i].likeNum+'" data-down-num="'+data[i].downNum+'" data-liked="'+data[i].liked+'"><div class="card-li"><div data-url="'+data[i].cardImg+'" style="background: url('+data[i].cardImg+') center center / cover no-repeat;" class="card-img" alt=""></div><div class="card-detail">'+data[i].detail+'</div><div class="card-by">— —'+data[i].byName+'</div></div></div>';
-
-          li+='<div class="card-li" data-id="'+data[i].objectId+'"><div data-url="'+data[i].cardImg+'" style="background: url('+data[i].cardImg+') center center / cover no-repeat;" class="card-img" alt=""></div><div class="card-detail">'+data[i].detail+'</div><div class="card-by">— —'+data[i].byName+'</div><div class="card-delete" data-id="'+data[i].objectId+'">删除</div></div>';
+            if(data[i].status == 1){
+                li+='<div class="card-li" data-id="'+data[i].objectId+'"><div data-url="'+data[i].cardImg+'" style="background: url('+data[i].cardImg+') center center / cover no-repeat;" class="card-img" alt=""></div><div class="card-detail">'+data[i].detail+'</div><div class="card-by">— —'+data[i].byName+'</div><div class="card-delete" data-id="'+data[i].objectId+'">删除</div></div>';
+            }else{
+                li+='<div class="card-li" data-id="'+data[i].objectId+'"><div data-url="'+data[i].cardImg+'" style="background: url('+data[i].cardImg+') center center / cover no-repeat;" class="card-img" alt=""></div><div class="card-detail">'+data[i].detail+'</div><div class="card-by">— —'+data[i].byName+'</div><div class="card-pass" data-id="'+data[i].objectId+'">通过</div></div>';
+            }
+          
         }
+
+        getAskCard('','',data);
         $(".card-content-edit .card-ul").empty().append(li);
-        
     },
     error:function(error){
         console.log(error);
     }
   })
+}
+
+initCardList();
+
+function getAskCard(page,size,cardData){
+
+    var staus = staus ? staus : 1;
+    var data = {
+        page: page,
+        size: size,
+        staus: staus
+    }
+    var url = '/ask/allask';
+    var type = "GET";
+
+    sendQuest(url,type,data,{
+        success:function(askList){
+            var data = askList.data;
+            if(askList.code == 200){
+                var li = '';
+
+                if (data) {
+                    for (var i = 0; i < data.length; i++) {
+
+                        var haved = 0;
+
+                        for(var j = 0; j < cardData.length; j++){
+                            if(cardData[j].askId == data[i].objectId){
+                                haved = 1;
+                            }
+                        }
+
+                        if(data[i].askImage && !haved){
+                            var askImage = JSON.parse(data[i].askImage);
+                            if(askImage[0].image){
+                                li+='<div class="card-li"><div data-url="'+askImage[0].image+'" style="background: url('+askImage[0].image+') center center / cover no-repeat;" class="card-img" alt=""></div><div class="card-detail">'+data[i].askReason+'</div><div class="card-by">— —'+data[i].createByName+'</div><div class="card-add" data-askid="'+data[i].objectId+'">添加</div></div>';
+                            }
+                        }
+                        
+                    }
+                    $(".card-content-add .card-ul").empty().append(li);
+                }
+            }
+        },
+        error:function(error){
+            $.hidePreloader();
+            $.toast("操作失败");
+        }
+    }) 
+}
+
+var $_card;
+$(".card-content-edit").on("click",".card-pass",function(){
+    var id = $(this).attr("data-id");
+    var data = {
+        cardid : id,
+        status : 1
+    };
+    var url = "/card/editcard";
+    var type = "post";
+
+    if(!id){
+        $.toast("操作失败");
+        return;
+    }
+
+    $.showPreloader("正在提交");
+    $_card = $(this);
+    sendQuest(url,type,data,{
+        success:function(locationList){
+            $.hidePreloader();
+            $_card.text("删除");
+            $_card.addClass("card-delete");
+            $_card.removeClass("card-pass");
+        },
+        error:function(error){
+            $.hidePreloader();
+            $.toast("操作失败");
+        }
+    }) 
+})
+
+var $_addCard;
+$(".card-content-add").on("click",".card-add",function(){
+    var askid = $(this).attr("data-askid");
+    var $_addCard = $(this);
+
+    var data = {
+        askid  : askid,
+        status : 1
+    };
+    var url = "/card/addcardbyask";
+    var type = "post";
+
+    if(!askid){
+        $.toast("操作失败");
+        return;
+    }
+
+    $.showPreloader("正在添加");
+
+    sendQuest(url,type,data,{
+        success:function(locationList){
+            $.hidePreloader();
+            // $(".card-content-edit").empty();
+            initCardList();
+            $_addCard.parent().remove();
+        },
+        error:function(error){
+            $.hidePreloader();
+            $.toast("操作失败");
+        }
+    }) 
+})
 </script>
 </body>
 </html>

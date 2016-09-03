@@ -45,12 +45,17 @@ function ifLiked(askid,username){
 router.get('/getcardlist', function(req, res, next) {
     var size = req.query.size;
     var username = req.query.username;
+    var type = req.query.type;
 
     var query = new AV.Query('Card');
-    query.ascending('createdAt');
+    query.descending('updatedAt');
 
     if(size){
         query.limit('size');
+    }
+
+    if(type != "all"){
+        query.equalTo("status",1);
     }
 
     query.include('ask');
@@ -81,7 +86,8 @@ router.get('/getcardlist', function(req, res, next) {
                 detail:cardList[i].get("detail"),
                 downNum:cardList[i].get("downNum"),
                 likeNum:likeNum,
-                liked : 0
+                liked : 0,
+                status:cardList[i].get("status")
             }
         }
 
@@ -211,7 +217,9 @@ function ifexitCard(data,callback){
 router.post('/addcardbyask', function(req, res, next) {
 
     var askId = req.body.askid;
-    var status = req.body.status;
+    var status = req.body.status ? req.body.status : 6;
+
+    status = parseInt(status);
     if(!askId){
         res.send({code:600,  message:'缺少参数'});
         return;
@@ -244,6 +252,7 @@ router.post('/addcardbyask', function(req, res, next) {
                     card.set('detail', detail);
                     card.set('askId', askId);
                     card.set('likeNum', likeNum);
+                    card.set('status', status);
                     var ask = AV.Object.createWithoutData('AskMe', askId);
                     card.set('ask', ask);
 
@@ -268,14 +277,17 @@ router.post('/addcardbyask', function(req, res, next) {
 });
 
 
-router.post('/editcarouselinfo', function(req, res, next) {
+router.post('/editcard', function(req, res, next) {
 
     var cardId = req.body.cardid;
     var byName = req.body.name;
     var cardImg = req.body.image;
     var detail  = req.body.detail;
+    var status = req.body.status;
 
-    if(!askId){
+    status = parseInt(status);
+
+    if(!cardId){
         res.send({code:600,  message:'缺少参数'});
         return;
     }
@@ -293,6 +305,10 @@ router.post('/editcarouselinfo', function(req, res, next) {
 
         if(detail){
            Card.set('detail', detail); 
+        }
+
+        if(status){
+           Card.set('status', status); 
         }
         
         Card.save().then(function (card) {

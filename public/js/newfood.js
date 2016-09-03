@@ -110,7 +110,7 @@
   });
 
   // initAllData(30.580596,103.982984);
-  // newfoodInit(30.580596,103.982984);
+  newfoodInit(30.580596,103.982984);
 
 function newfoodInit(lat,lng){  
 
@@ -1953,7 +1953,7 @@ function newfoodInit(lat,lng){
         // var likeNum = $("#card .swiper-slide-active").attr("data-like-num");
         // var downNum = $("#card .swiper-slide-active").attr("data-down-num");
         // var liked = $("#card .swiper-slide-active").attr("data-liked");
-        $(".card-li-footer").attr("data-cardId",data[0].cardId);
+        $(".card-li-footer").attr("data-cardId",data[0].askId);
         $(".card-down-num").text(data[0].downNum);
         $(".card-like-num").text(data[0].likeNum);
         if(data[0].liked == "1"){
