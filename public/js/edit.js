@@ -1,7 +1,55 @@
   var marker;
   var icon = new AMap.Icon({
     image: "/img/edit/marker.png",
-  });   
+  }); 
+
+  initLocation("edit",{
+          success: function(lng,lat) {
+            if(localStorage.lng && localStorage.lat){
+
+            }else{
+              //详情地点显示
+              map = new AMap.Map('container', {
+                  resizeEnable: true,
+                  zoom: 16,
+                  center: [lng, lat],
+                  buttonOffset: new AMap.Pixel(60, 20), //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+                  zoomToAccuracy: true, //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+                  buttonPosition: 'LB'
+              });
+
+              marker = new AMap.Marker({
+                  map: map,
+                  icon: icon,
+                  position: [lng, lat],
+                  draggable: true,
+                  cursor: 'move',
+                  raiseOnDrag: true,
+                  clickable: true
+              });
+
+              map.plugin(["AMap.ToolBar"], function() {
+                  map.addControl(new AMap.ToolBar());
+              });
+
+              marker.setMap(map);
+              initMarker(marker);
+            }
+
+            initEdit();
+              
+          },
+          error: function() {
+              $.toast("定位失败");
+          }
+      });
+
+
+// if(window.location.port == 3000){
+//   //测试逻辑
+//   initEdit();
+// }
+function initEdit(){  
 
       $(".tab-item").on("click", function() {
           var type = $(this).attr("data-type");
@@ -94,45 +142,6 @@
           $("#router5 .modal").addClass("modal-in");
           $("#router5 .model-tip").show();
       })
-      initLocation("edit",{
-          success: function(lng,lat) {
-            if(localStorage.lng && localStorage.lat){
-
-            }else{
-              //详情地点显示
-              map = new AMap.Map('container', {
-                  resizeEnable: true,
-                  zoom: 16,
-                  center: [lng, lat],
-                  buttonOffset: new AMap.Pixel(60, 20), //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
-                  zoomToAccuracy: true, //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
-                  buttonPosition: 'LB'
-              });
-
-              marker = new AMap.Marker({
-                  map: map,
-                  icon: icon,
-                  position: [lng, lat],
-                  draggable: true,
-                  cursor: 'move',
-                  raiseOnDrag: true,
-                  clickable: true
-              });
-
-              map.plugin(["AMap.ToolBar"], function() {
-                  map.addControl(new AMap.ToolBar());
-              });
-
-              marker.setMap(map);
-              initMarker(marker);
-
-            }
-              
-          },
-          error: function() {
-              $.toast("定位失败");
-          }
-      });
 
       function initMarker(marker) {
           marker.on("dragend", function() {
@@ -372,15 +381,24 @@
           }
 
           //初始化标签
-          console.log(localStorage.tag);
           if (localStorage.tag) {
-              tag = JSON.parse(localStorage.tag);
-              $(".ww-typeHelper-input").val(tag[0]);
-              if (!tag[0]) {
+              var tag = JSON.parse(localStorage.tag);
+              var text = '';
+              var span = '';
+              var len = 0;
+              for(var i in tag){
+                len++;
+                text += tag[i] + ';';
+                span += '<span class="type-item">' + tag[i] + '</span>';
+              }
+
+              $(".ww-typeHelper-input").val(text);
+
+              if (!len) {
                   $(".tag .edit-content").empty().text("请填写标签");
               } else {
                   $(".tag .edit-li-img").attr("src", "/img/edit/tag-02.png");
-                  var span = '<span class="type-item">' + tag[0] + '</span>';
+                  // var span = '<span class="type-item">' + tag[0] + '</span>';
                   $(".tag .edit-content").empty().append(span);
               }
 
@@ -549,13 +567,21 @@
 
           //标签
           var tag = JSON.parse(askTagStr);
-          if (!tag[0]) {
+          if (!tag.length) {
             $(".tag .edit-content").empty().text("请填写标签");
           } else {
-            $(".ww-typeHelper-input").val(tag[0].tag_name);
             $(".tag .edit-li-img").attr("src", "/img/edit/tag-02.png");
-            var span = '<span class="type-item">' + tag[0].tag_name + '</span>';
+            var text = '',
+                span = '';
+
+            for(var i in tag){
+              text += tag[i].tag_name + ';';
+              span += '<span class="type-item">' + tag[i].tag_name + '</span>';
+            }
+            $(".ww-typeHelper-input").val(text);
+            $(".tag .edit-li-img").attr("src", "/img/edit/tag-02.png");
             $(".tag .edit-content").empty().append(span);
+
           }
 
           //推荐理由
@@ -767,17 +793,61 @@
       function setlocalStorageTag() {
           //获取填写的tag
           var text = $(".ww-typeHelper-input").val();
+          var inputText = text;
+          var k = 0;
           var tag = {};
-          tag[0] = text;
+
+          for(var i = 0; i < inputText.split(";").length; i++){
+            if(inputText.split(";")[i]){
+              for(var j = 0; j < inputText.split(";")[i].split("；").length; j++){
+                if(inputText.split(";")[i].split("；")[j]){
+                  tag[k] = inputText.split(";")[i].split("；")[j];
+                  k++;
+                } 
+              }
+            }
+          }
+
           tag = JSON.stringify(tag);
           localStorage["tag"] = tag;
       }
       //在输入框内添加标签
       $(".ww-typeHelper-input").on("input change", function() {
-          console.log($(this).val());
           var text = $(this).val();
+
+          var inputText =  $(this).val();
+          var length = 0;
+          for(var i = 0; i < inputText.split(";").length; i++){
+            console.log(inputText.split(";")[i]);
+            if(inputText.split(";")[i]){
+              for(var j = 0; j < inputText.split(";")[i].split("；").length; j++){
+                if(inputText.split(";")[i].split("；")[j]){
+                  length++;
+                } 
+              }
+            }
+          }
+
+          if(length > 3){
+            $.toast("最多加添加三个标签");
+            return;
+          }
           setlocalStorageTag();
-          var span = '<span class="type-item">' + text + '</span>';
+
+          var span = '';
+          for(var i = 0; i < inputText.split(";").length; i++){
+            console.log(inputText.split(";")[i]);
+            if(inputText.split(";")[i]){
+              // span += '<span class="type-item">' + inputText.split(";")[i] + '</span>';
+              for(var j = 0; j < inputText.split(";")[i].split("；").length; j++){
+                if(inputText.split(";")[i].split("；")[j]){
+                  span += '<span class="type-item">' + inputText.split(";")[i].split("；")[j] + '</span>';
+                } 
+              }
+            }
+          }
+
+          // var span = '<span class="type-item">' + text + '</span>';
           $(".tag .edit-content").empty().append(span);
 
           $(".tag .edit-li-img").attr("src", "/img/edit/tag-02.png");
@@ -790,15 +860,45 @@
 
       //点击二级标签删除主页二级标签
       $(".tag-ul").on("click", ".type-item", function() {
-          console.log($(".tag-content .ww-typeHelper .type-item").length);
-          var text = $(this).text();
-          $(".ww-typeHelper-input").val(text);
+        var inputText =  $(".ww-typeHelper-input").val();
 
-          $(".tag .edit-li-img").attr("src", "/img/edit/tag-02.png");
-          //获取填写的tag
-          setlocalStorageTag();
-          var span = '<span class="type-item">' + text + '</span>';
-          $(".tag .edit-content").empty().append(span);
+        var length = 0;
+        for(var i = 0; i < inputText.split(";").length; i++){
+          if(inputText.split(";")[i]){
+            for(var j = 0; j < inputText.split(";")[i].split("；").length; j++){
+              if(inputText.split(";")[i].split("；")[j]){
+                length++;
+              } 
+            }
+          }
+        }
+
+        if(length >= 3){
+          $.toast("最多加添加三个标签");
+          return;
+        }
+
+        var text = $(this).text();
+        $(".ww-typeHelper-input").val(inputText+text+";");
+
+        inputText =  $(".ww-typeHelper-input").val();
+  
+        $(".tag .edit-li-img").attr("src", "/img/edit/tag-02.png");
+        //获取填写的tag
+        setlocalStorageTag();
+        // var span = '<span class="type-item">' + text + '</span>';
+        var span = '';
+        for(var i = 0; i < inputText.split(";").length; i++){
+          if(inputText.split(";")[i]){
+            for(var j = 0; j < inputText.split(";")[i].split("；").length; j++){
+              if(inputText.split(";")[i].split("；")[j]){
+                span += '<span class="type-item">' + inputText.split(";")[i].split("；")[j] + '</span>';
+              } 
+            }
+          }
+        }
+
+        $(".tag .edit-content").empty().append(span);
       })
 
       //设置内容填充函数
@@ -1018,10 +1118,21 @@
               $.toast("你还没有填写美食的类别");
               return;
           } else {
-              tag[0] = {
-                  tag_name: $_tag
+            var k = 0;
+            var inputText = $_tag;
+            for(var i = 0; i < inputText.split(";").length; i++){
+              if(inputText.split(";")[i]){
+                for(var j = 0; j < inputText.split(";")[i].split("；").length; j++){
+                  if(inputText.split(";")[i].split("；")[j]){
+                    tag[k] = {
+                        tag_name: inputText.split(";")[i].split("；")[j]
+                    }
+                    k++;
+                  } 
+                }
               }
-              tag = JSON.stringify(tag);
+            }
+            tag = JSON.stringify(tag);
           }
 
           //获取推荐理由
@@ -1434,3 +1545,4 @@
           marker.setMap(map);
           initMarker(marker);
       });
+}

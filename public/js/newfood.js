@@ -10,11 +10,11 @@
   var loading = false;
   var itemsPerLoad = 20;
 
-  window.onpopstate = function(event) {
-    alert($(".page-current").id);
-    // $(".amap-sug-result").hide(); 
-  };
-  
+  // window.onpopstate = function(event) {
+  //   alert($(".page-current").id);
+  //   // $(".amap-sug-result").hide(); 
+  // };
+
   function initAllData(lat,lng){
     LAT = lat;
     LNG = lng;
@@ -109,10 +109,10 @@
       }
   });
 
-  if(window.location.port == 3000){
-    //测试逻辑
-    newfoodInit(30.580596,103.982984);
-  }
+  // if(window.location.port == 3000){
+  //   //测试逻辑
+  //   newfoodInit(30.580596,103.982984);
+  // }
   
 
 function newfoodInit(lat,lng){  
@@ -207,15 +207,29 @@ function newfoodInit(lat,lng){
     var lat1 = ask.GeoX;
     var lng1 = ask.GeoY;
     var long = getFlatternDistance(lat1, lng1, LAT, LNG);
-    var askTag =  formatTag(ask.askTagStr);
+    // var askTag =  formatTag(ask.askTagStr);
+    var askTag = ask.askTagStr;
+    if(askTag){
+      askTag = JSON.parse(askTag);
+      var downTag = '';
+      var len = 0;
+      for(var i in askTag){
+        len++;
+        if(len > 3){
+          break;
+        }
+        downTag += '<div class="down-tag">'+askTag[i].tag_name+'</div>';
+      }
+    }
+    console.log(askTag);
     if(ask.askImage && ask.askImage.length){
       var askImage = JSON.parse(ask.askImage);
       if(askImage[0].image){
-        var ask = '<div class="wenwo-li" data-id="'+ask.objectId+'"><div class="wenwo-ask-img" style="background: url('+askImage[0].image+') center center / cover no-repeat;"><div class="wenwo-gradient"></div><div class="wenwo-look"><label class="iconfont icon-eyepageview"></label><label> '+(ask.lookNum ? ask.lookNum : 0)+'</label></div><div class="wenwo-add"><label class="iconfont icon-adress"></label><label> '+formatRange(long)+'</label></div></div><div class="up-content"><img src="'+ask.createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-reason">'+ask.askReason+'</div></div></div><div class="down-content"><div data-id="'+ask.objectId+'" class="click-hidden-button"></div><div class="iconfont icon-taginfor tag-icon"></div><div class="down-tag-content"><div class="down-tag">'+askTag+'</div></div><div class="down-like ' + (ask                                                                                                                                                                                                                                                                                                                                                                                                         .liked ? "liked" : '') + '"><span class="iconfont icon-chidouren"></span><label class="like-num">'+ask.likeNum+'</label></div></div></div>';
+        var ask = '<div class="wenwo-li" data-id="'+ask.objectId+'"><div class="wenwo-ask-img" style="background: url('+askImage[0].image+') center center / cover no-repeat;"><div class="wenwo-gradient"></div><div class="wenwo-look"><label class="iconfont icon-eyepageview"></label><label> '+(ask.lookNum ? ask.lookNum : 0)+'</label></div><div class="wenwo-add"><label class="iconfont icon-adress"></label><label> '+formatRange(long)+'</label></div></div><div class="up-content"><img src="'+ask.createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-reason">'+ask.askReason+'</div></div></div><div class="down-content"><div data-id="'+ask.objectId+'" class="click-hidden-button"></div><div class="iconfont icon-taginfor tag-icon"></div><div class="down-tag-content">'+downTag+'</div><div class="down-like ' + (ask                                                                                                                                                                                                                                                                                                                                                                                                         .liked ? "liked" : '') + '"><span class="iconfont icon-chidouren"></span><label class="like-num">'+ask.likeNum+'</label></div></div></div>';
         return ask;
       }
     }
-    var ask ='<div class="wenwo-li" data-id="'+ask.objectId+'"><div class="up-content"><img src="'+ask.createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-reason">'+ask.askReason+'</div></div></div><div class="down-content"> <div data-id="'+ask.objectId+'" class="click-hidden-button"></div> <div class="iconfont icon-taginfor tag-icon"></div><div class="down-tag-content"><div class="down-tag">'+askTag+'</div></div><div class="down-like no-img ' + (ask.liked ? "liked" : '') + '"><span class="iconfont icon-chidouren"></span><label class="like-num">'+ask.likeNum+'</label></div></div><div class="other-content"><div class="wenwo-look"><label class="iconfont icon-eyepageview"></label><label > '+(ask.lookNum ? ask.lookNum : 0)+'</label></div><div class="wenwo-add"><label class="iconfont icon-adress"></label><label> '+formatRange(long)+'</label></div></div></div>';
+    var ask ='<div class="wenwo-li" data-id="'+ask.objectId+'"><div class="up-content"><img src="'+ask.createByUrl+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-reason">'+ask.askReason+'</div></div></div><div class="down-content"> <div data-id="'+ask.objectId+'" class="click-hidden-button"></div> <div class="iconfont icon-taginfor tag-icon"></div><div class="down-tag-content">'+downTag+'</div><div class="down-like no-img ' + (ask.liked ? "liked" : '') + '"><span class="iconfont icon-chidouren"></span><label class="like-num">'+ask.likeNum+'</label></div></div><div class="other-content"><div class="wenwo-look"><label class="iconfont icon-eyepageview"></label><label > '+(ask.lookNum ? ask.lookNum : 0)+'</label></div><div class="wenwo-add"><label class="iconfont icon-adress"></label><label> '+formatRange(long)+'</label></div></div></div>';
     return ask;
   }
 
