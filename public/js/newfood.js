@@ -109,7 +109,7 @@
   });
 
   // initAllData(30.580596,103.982984);
-  newfoodInit(30.580596,103.982984);
+  // newfoodInit(30.580596,103.982984);
 
 function newfoodInit(lat,lng){  
 
@@ -2257,8 +2257,5 @@ function newfoodInit(lat,lng){
       addItems(itemsPerLoad, 0,"tag");
     }, 500);
   })
-
-
-
 
 }
