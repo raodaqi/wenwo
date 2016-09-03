@@ -763,3 +763,19 @@ textarea {
 .search{
     background-color: #ee7e2e;
 }
+
+.my-location{
+    position: absolute;
+    bottom:5rem;
+    left:20px;
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: .2rem;
+    line-height: 1.8rem;
+    text-align: center;
+    background-color: white;
+    box-shadow: 0 0 5px rgba(0,0,0,.2);
+}
+.my-location label{
+    font-size: 1rem;
+}

@@ -5,10 +5,13 @@
 
   var icon = new AMap.Icon({
     image: "/img/edit/marker.png",
-  }); 
+  });
+
+  $.showPreloader("正在加载"); 
 
   initLocation("edit",{
           success: function(lng,lat) {
+            $.hidePreloader();
             initEdit(lat,lng);
 
             // initEdit();
@@ -59,6 +62,9 @@
 function initEdit(LAT,LNG){
   LAT = LAT;
   LNG = LNG;
+  $(".my-location").attr("lat",LAT);
+  $(".my-location").attr("lng",LNG);
+
   if(!localStorage.lng || !localStorage.lat){
 
     //详情地点显示
@@ -86,7 +92,13 @@ function initEdit(LAT,LNG){
 
     marker.setMap(map);
     initMarker(marker);
-  }  
+  } 
+
+  $(".my-location").on("click",function(){
+    var lat = $(".my-location").attr("lat");
+    var lng = $(".my-location").attr("lng");
+    map.setZoomAndCenter(16, [lng, lat]);
+  }) 
 
       $(".tab-item").on("click", function() {
           var type = $(this).attr("data-type");
@@ -232,6 +244,7 @@ function initEdit(LAT,LNG){
           $(".footer-bar").hide();
           if (this.id == "address" || this.id == "add-detail") {
               $(".amap-zoomcontrol").hide();
+              $(".my-location").hide();
               return;
           }
           $(".header-bar").hide();
@@ -239,6 +252,7 @@ function initEdit(LAT,LNG){
       });
       $("input,textarea").blur(function() {
           $(".amap-zoomcontrol").show();
+          $(".my-location").show();
           $(".footer-bar").show();
           $(".header-bar").show();
           $(".page-content").css("margin-top", "5rem");
@@ -250,6 +264,7 @@ function initEdit(LAT,LNG){
               //输入框弹起
               $(".footer-bar").hide();
               $(".amap-zoomcontrol").hide();
+              $(".my-location").hide();
               if (id != "address" && id != "add-detail") {
                   $(".header-bar").hide();
                   $(".page-content").css("margin-top", "1rem");
@@ -259,6 +274,7 @@ function initEdit(LAT,LNG){
               $(".footer-bar").show();
               $(".header-bar").show();
               $(".amap-zoomcontrol").show();
+              $(".my-location").show();
               $(".page-content").css("margin-top", "5rem");
           }
       })
@@ -469,8 +485,6 @@ function initEdit(LAT,LNG){
           }
 
           //初始化坐标信息
-          console.log(localStorage.lng);
-          console.log(localStorage.lat);
           var lnglatXY = [localStorage.lng, localStorage.lat];
 
           if (localStorage.lng && localStorage.lat) {
@@ -519,6 +533,10 @@ function initEdit(LAT,LNG){
                   cursor: 'move',
                   raiseOnDrag: true,
                   clickable: true
+              });
+
+              map.plugin(["AMap.ToolBar"], function() {
+                  map.addControl(new AMap.ToolBar());
               });
 
               marker.setMap(map);
