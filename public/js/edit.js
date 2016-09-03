@@ -1,10 +1,14 @@
-  var marker;
+  var marker,
+      map;
   var icon = new AMap.Icon({
     image: "/img/edit/marker.png",
   }); 
 
   initLocation("edit",{
           success: function(lng,lat) {
+
+            initEdit();
+
             if(localStorage.lng && localStorage.lat){
 
             }else{
@@ -35,8 +39,6 @@
               marker.setMap(map);
               initMarker(marker);
             }
-
-            initEdit();
               
           },
           error: function() {
