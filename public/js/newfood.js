@@ -10,10 +10,11 @@
   var loading = false;
   var itemsPerLoad = 20;
 
-  // window.onpopstate = function(event) {
-  //   alert($(".page-current").id);
-  //   // $(".amap-sug-result").hide(); 
-  // };
+  window.onpopstate = function(event) {
+    alert($(".page-current").id);
+    // $(".amap-sug-result").hide(); 
+  };
+  
   function initAllData(lat,lng){
     LAT = lat;
     LNG = lng;
@@ -108,8 +109,11 @@
       }
   });
 
-  // initAllData(30.580596,103.982984);
-  // newfoodInit(30.580596,103.982984);
+  if(window.location.port == 3000){
+    //测试逻辑
+    newfoodInit(30.580596,103.982984);
+  }
+  
 
 function newfoodInit(lat,lng){  
 
