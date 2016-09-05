@@ -8,87 +8,25 @@
       title4 = 1;
   var range = 1000;
   var loading = false;
-  var itemsPerLoad = 20;
+  var itemsPerLoad = 10;
 
   // window.onpopstate = function(event) {
   //   alert($(".page-current").id);
   //   // $(".amap-sug-result").hide(); 
   // };
+  (function(){
+      if(history.length < 2){
+        localStorage["findTop"] = 0;
+        localStorage["likeTop"] = 0;
+        localStorage["tagTop"] = 0;
+        localStorage["shareTop"] = 0;
+        localStorage["buyTop"] = 0;
 
-  function initAllData(lat,lng){
-    LAT = lat;
-    LNG = lng;
-    $(".my-location-content").attr("data-lng",LNG);
-    $(".my-location-content").attr("data-lat",LAT);
-
-    var lnglatXY = [LNG,LAT];
-      getAddress(lnglatXY,{
-        success:function(address){
-          // console.log(address);
-          var detail = address.formattedAddress;
-          var address = {
-              province: address.addressComponent.province,
-              city: address.addressComponent.city,
-              district: address.addressComponent.district,
-              township: address.addressComponent.township
-          }
-
-          var replace = "" + address.province + address.city + address.district + address.township + "";
-          detail = detail.replace(replace, "");
-          address.detail = detail;
-          if(!(history.length > 1 && getCookie("lng") && getCookie("lat"))){
-            $(".nav-left-add").text(detail);
-          }
-
-          //当前地址
-          $(".location-city").text(address.city);
-          $(".location-detail").text(address.district + address.township + detail);
-        },
-        error:function(error){
-          console.log(error);
-        }
-      })
-
-    if(history.length > 1 && getCookie("lng") && getCookie("lat")){
-      LAT = getCookie("lat");
-      LNG = getCookie("lng");
-      var lnglatXY = [LNG,LAT];
-      getAddress(lnglatXY,{
-        success:function(address){
-          // console.log(address);
-          var detail = address.formattedAddress;
-          var address = {
-              province: address.addressComponent.province,
-              city: address.addressComponent.city,
-              district: address.addressComponent.district,
-              township: address.addressComponent.township
-          }
-
-          var replace = "" + address.province + address.city + address.district + address.township + "";
-          detail = detail.replace(replace, "");
-          address.detail = detail;
-
-          $(".nav-left-add").text(detail);
-        },
-        error:function(error){
-          console.log(error);
-        }
-      })
-    }
-
-    // console.log(history.length);
-    // alert(history.length);
-
-    //预先加载20条
-    if (LAT) {
-      var findTop = localStorage.findTop;
-      if(findTop > 2077){
-        addItems(40, 0,"find");
-      }else{
-        addItems(itemsPerLoad, 0,"find");
+        localStorage["findAskNum"] = itemsPerLoad;
+        localStorage["likeAskNum"] = itemsPerLoad;
+        localStorage["tagAskNum"] = itemsPerLoad;  
       }
-    }
-  }
+    })();
 
   $.showPreloader("正在加载");
   initLocation("food",{
@@ -99,13 +37,15 @@
       },
       error: function(error) {
           console.log("error");
+          $.toast("定位失败");
+          newfoodInit(30.581808,103.988561);
       }
   });
 
-  // if(window.location.port == 3000){
-  //   //测试逻辑
-  //   newfoodInit(30.580596,103.982984);
-  // }
+  if(window.location.port == 3000){
+    //测试逻辑
+    newfoodInit(30.580596,103.982984);
+  }
   
 
 function newfoodInit(lat,lng){  
@@ -176,12 +116,11 @@ function newfoodInit(lat,lng){
     //预先加载20条
     if (LAT) {
       var findTop = localStorage.findTop;
-      // console.log(findTop);
-      if(findTop > 2077){
-        addItems(40, 0,"find");
+      if(localStorage.findAskNum && localStorage.findAskNum != "0"){
+        addItems(localStorage.findAskNum, 0,"find");
       }else{
+        console.log(localStorage.findAskNum);
         addItems(itemsPerLoad, 0,"find");
-        console.log(itemsPerLoad);
       }
     }
 
@@ -322,7 +261,7 @@ function newfoodInit(lat,lng){
               break;
           case "like":
               $(".want-content").hide();
-              initLikeListPage();
+              addItems(itemsPerLoad, 0,"like");
               break;
           case "share":
               initSharePage(UserName);
@@ -331,17 +270,17 @@ function newfoodInit(lat,lng){
               initBuyPage(UserName);
               break;
           case "new":
-              initNewListPage(0,20);
+              initNewListPage(0,itemsPerLoad);
               break;
           case "tag":
               var tag = $("#tag .title").text();
-              initTagListPage(0,20,tag);
+              initTagListPage(0,itemsPerLoad,tag);
               break;
           case "search":
               var keyword = $("#tag .keyword").val();
               var data = {
                   page: 0,
-                  size: 20,
+                  size: itemsPerLoad,
                   username: UserName,
                   keyword : keyword
                 }
@@ -451,21 +390,31 @@ function newfoodInit(lat,lng){
               initBuyPage(UserName);
               break;
           case "find":
-              // initSharePage(UserName);
-              // initBuyPage(UserName);
               initStrategyListPage();
+              break;
+          case "like":
+              if(localStorage.likeAskNum && localStorage.likeAskNum != "0"){
+                addItems(localStorage.likeAskNum, 0,"like");
+              }else{
+                addItems(itemsPerLoad, 0,"like");
+              }
               break;
           case "me":
               initSharePage(UserName);
               initBuyPage(UserName);
-              initNewListPage(0,20);
+              initNewListPage(0,itemsPerLoad);
               break;
           case "new":
               var findTop = localStorage.findTop;
-              if(findTop > 2077){
-                addItems(40, 0,"new");
+              // if(findTop > 1044){
+              //   addItems(itemsPerLoad*2, 0,"new");
+              // }else{
+              //   addItems(itemsPerLoad, 0,"new");
+              // }
+              if(localStorage.findAskNum && localStorage.findAskNum != "0"){
+                addItems(localStorage.findAskNum, 0,"new");
               }else{
-                addItems(20, 0,"new");
+                addItems(itemsPerLoad, 0,"new");
               }
               break;
           case "strategy":
@@ -478,7 +427,12 @@ function newfoodInit(lat,lng){
             loadLocationList();
             break;
           case "tag":
-            addItems(20, 0,"tag");
+            // addItems(itemsPerLoad, 0,"tag");
+            if(localStorage.tagAskNum && localStorage.tagAskNum != "0"){
+              addItems(localStorage.tagAskNum, 0,"tag");
+            }else{
+              addItems(itemsPerLoad, 0,"tag");
+            }
             break;
       }
   }
@@ -492,13 +446,13 @@ function newfoodInit(lat,lng){
               initBuyPage(UserName);
               break;
           case "#like":
-              initLikeListPage();
+              initLikeListPage(0, itemsPerLoad,-1);
               break;
           case "#me":
               initMePage(UserName);
               break;
           case "#new":
-              initNewListPage(0,20);
+              initNewListPage(0,itemsPerLoad);
               break;
           case "tagfind":
               initTagPage();
@@ -588,16 +542,18 @@ function newfoodInit(lat,lng){
   var timer = '';
   //双击头部返回头部
   $(".bar").on("doubleTap", function() {
+    var type = $(this).parent()[0].id;
+    console.log(type);
       var scroolTime = 1;
-      var scroolSppeed = $("#find .wenwo-ul").height() / 100;
+      var scroolSppeed = $("#"+type+" .wenwo-ul").height() / 100;
       timer = setInterval(function() {
-          var height = $("#find .find-content").scrollTop();
+          var height = $("#"+type+" ."+type+"-content").scrollTop();
           if (height <= 0) {
-              $("#find .find-content").scrollTop(0);
+              $("#"+type+" ."+type+"-content").scrollTop(0);
               clearInterval(timer);
           } else {
               height = height - scroolSppeed;
-              $("#find .find-content").scrollTop(height);
+              $("#"+type+" ."+type+"-content").scrollTop(height);
           }
       }, scroolTime);
   })
@@ -627,13 +583,39 @@ function newfoodInit(lat,lng){
 
   //初始化滚动页面
   $(".pull-to-refresh-content").scroll(function() {
+    //主页逻辑
     var findTop = $("#find .find-content").scrollTop();
+    var findAskNum = $("#find .wenwo-li").length ? $("#find .wenwo-li").length : itemsPerLoad;
+    if(findTop < 1200){
+      findAskNum = itemsPerLoad; 
+    }
+
+    //想吃逻辑
     var likeTop = $("#like .like-content").scrollTop();
+    var likeAskNum = $("#like .wenwo-li").length ? $("#like .wenwo-li").length : itemsPerLoad;
+    if(likeTop < 1200){
+      likeAskNum = itemsPerLoad; 
+    }
+
+    //标签逻辑
+    var tagTop = $("#tag .tag-content").scrollTop();
+    var tagAskNum = $("#tag .wenwo-li").length ? $("#tag .wenwo-li").length : itemsPerLoad;
+    if(tagTop < 1200){
+      tagAskNum = itemsPerLoad; 
+    }
+
     var shareTop = $("#share .share-content").scrollTop();
     var buyTop = $("#buy .buy-content").scrollTop();
 
     localStorage["findTop"] = findTop;
+    localStorage["findAskNum"] = findAskNum;
+
     localStorage["likeTop"] = likeTop;
+    localStorage["likeAskNum"] = likeAskNum;
+
+    localStorage["tagTop"] = tagTop;
+    localStorage["tagAskNum"] = tagAskNum;
+
     localStorage["shareTop"] = shareTop;
     localStorage["buyTop"] = buyTop;
   })
@@ -678,11 +660,7 @@ function newfoodInit(lat,lng){
 
   //获取用户想吃列表
   //获取美食信息
-  function getLikeList(username, callback) {
-      var username = username ? username : '';
-      var data = {
-          username: username
-      }
+  function getLikeList(data, callback) {
       $.ajax({
           type: "POST",
           data: data,
@@ -703,6 +681,7 @@ function newfoodInit(lat,lng){
   var getAskLoad = 0,
       getTagLoad = 0,
       getSearchLoad = 0,
+      getLikeLoad = 0,
       getNewLoad = 0;
 
   function addItems(number, lastIndex,type,keyword) {
@@ -751,6 +730,15 @@ function newfoodInit(lat,lng){
           tagRange = parseInt(tagRange);
           console.log(tagRange);
           initTagListPage(page, number,tag,tagRange);  
+        }
+      }
+
+      if(!getLikeLoad){
+        if(type == "like"){
+          getLikeLoad = 1;
+          var likeRange = $("#like").attr("data-range");
+          likeRange = parseInt(likeRange);
+          initLikeListPage(page, number,likeRange);  
         }
       }
 
@@ -903,6 +891,22 @@ function newfoodInit(lat,lng){
     }
   })
 
+  //初始化滚动页面
+  $("#like .infinite-scroll-bottom").scroll(function() {
+    var height = $(this).height();
+    var ulHeight = $("#like .wenwo-ul").height();
+    var scroll = $(this).scrollTop();
+    if(scroll + height > ulHeight - 50){
+      lastIndex = $('#like .wenwo-li').length;
+      // 添加新条目
+      //容器发生改变,如果是js滚动，需要刷新滚动
+      var keyword = $(".keyword").val();
+      console.log(keyword);
+      addItems(itemsPerLoad, lastIndex,"like");
+      $.refreshScroller();
+    }
+  })
+
   // }
   // initData();
   // getAskMe(2,10);
@@ -915,7 +919,7 @@ function newfoodInit(lat,lng){
   //初始化主页列表
   function initFindListPage(range) {
       //初始化主页列表，获取前20条信息
-      getAskMe(0, 20, '', UserName,range, {
+      getAskMe(0, itemsPerLoad, '', UserName,range, {
           success: function(result) {
               // 生成新条目的HTML
               var html = '';
@@ -949,7 +953,7 @@ function newfoodInit(lat,lng){
                   // $(".preloader").hide();
                   // $(".preloader-tip").text("刷新成功");
                   // $(".preloader-tip").show();
-                  if(data.length < 20){
+                  if(data.length < itemsPerLoad){
                     $.detachInfiniteScroll($('#find .infinite-scroll'));
                     // 删除加载提示符
                     $("#find .infinite-scroll-preloader .preloader").hide();
@@ -1287,35 +1291,78 @@ function newfoodInit(lat,lng){
           }
       })
   }
-  
-  //初始化想吃列表
-  function initLikeListPage() {
-      //获取想吃列表
 
-      getLikeList(UserName, {
+  //初始化想吃列表
+  function initLikeListPage(page, number,likeRange) {
+
+      if(likeRange > 0){
+        var data = {
+          page: page,
+          size: number,
+          username: UserName,
+          position_geo: LAT + "," + LNG,
+          range : likeRange
+        }
+      }else{
+        var data = {
+          page: page,
+          size: number,
+          username: UserName
+        }
+      }
+      //初始化最新列表，获取前20条信息
+      getLikeList(data, {
           success: function(result) {
-              if (result.code == 200) {
-                  var html = '';
-                  var data = result.askDetail;
-                  if (!data.length) {
-                      $("#like .infinite-scroll-preloader").hide();
-                      $("#like .want-content").show();
-                  }
-                  if (data) {
-                      for (var i = 0; i < data.length; i++) {
-                          // html += '<div class="wenwo-li" data-id=' + data[i].objectId + '><div class="up-content"><img src="' + data[i].createByUrl + '" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">' + formatTag(data[i].askTagStr) + '</div><div class="ask-reason">' + data[i].askReason + '</div></div></div><div class="down-content"><div class="down-like liked"><span class="icon iconfont icon-likeEat"></span><label class="like-num">' + (data[i].likeNum < 0 ? 0 : data[i].likeNum) + '</label></div>' + (data[i].score > 9 ? '<div class="down-buy" data-id=' + data[i].objectId + '>' + formatPrice(data[i].askPrice) + '</div>' : '<div class="down-buy free" data-id=' + data[i].objectId + '>限时免费</div>') + '<div class="down-time">' + formatDate("y.m.d", data[i].createdAt) + '</div></div></div>';
-                           html += formatAsk(data[i]);
-                      }
+              // 生成新条目的HTML
+              var html = '';
+              var data = result.askDetail;
+              if (data) {
+                  for (var i = 0; i < data.length; i++) {
+
+                      var lat1 = data[i].GeoX;
+                      var lng1 = data[i].GeoY;
+                      var long = getFlatternDistance(lat1, lng1, LAT, LNG);
+
+                      // html += '<div class="wenwo-li" data-id=' + data[i].objectId + '><div class="up-content"><img src="' + data[i].createByUrl + '" alt="" class="user-pic"><div class="ask-content"><div class="ask-add">'+formatDis(formatJSON(data[i].askPosition),long)+'</div><div class="ask-tag">' + formatTag(data[i].askTagStr) + '</div><div class="ask-reason">' + data[i].askReason + '</div></div></div><div class="down-content"><div class="down-like ' + (data[i].liked ? "liked" : '') + '"><span class="icon iconfont icon-likeEat"></span><label class="like-num">' + (data[i].likeNum < 0 ? 0 : data[i].likeNum) + '</label></div>' + (data[i].score > 9 ? '<div class="down-buy" data-id=' + data[i].objectId + '>' + formatPrice(data[i].askPrice) + '</div>' : '<div class="down-buy free" data-id=' + data[i].objectId + '>限时免费</div>') + '<div class="down-time">' + formatDate("y.m.d", data[i].createdAt) + '</div></div></div>';
+                    html += formatAsk(data[i]);
                   }
                   // 添加新条目
-                  //清空原来的数据
                   $.pullToRefreshDone('.pull-to-refresh-content');
-                  $('#like .wenwo-ul').empty();
+                  if(page == 0){
+                    $('#like .wenwo-ul').empty();
+                  }
+                  
                   $('#like .wenwo-ul').append(html);
-                  $("#like .infinite-scroll-preloader .preloader").hide();
-                  $("#like .ask-end").show();
 
                   initTop();
+
+                  //初始化滚动加载逻辑
+                  // $.attachInfiniteScroll($('#tag .infinite-scroll'));
+                  // 删除加载提示符
+                  // $('.infinite-scroll-preloader').remove();
+                  $("#like .ask-end").hide();
+                  $("#like .infinite-scroll-preloader .preloader").css("display", "inline-block");
+                  getLikeLoad = 0;
+                  if (number > data.length) {
+                    // 加载完毕，则注销无限加载事件，以防不必要的加载
+                    // $.detachInfiniteScroll($('#new .infinite-scroll'));
+                    // 删除加载提示符
+                    // $('.infinite-scroll-preloader').remove();
+                    $("#like .infinite-scroll-preloader .preloader").hide();
+                    $("#like .ask-end").show();
+                    // $('.infinite-scroll-preloader').append("")
+                    getLikeLoad = 1;
+                    return;
+                }
+              }else{
+                // $.detachInfiniteScroll($('#new .infinite-scroll'));
+                // 删除加载提示符
+                // $('.infinite-scroll-preloader').remove();
+                $("#like .infinite-scroll-preloader .preloader").hide();
+                $("#like .ask-end").show();
+                // $('.infinite-scroll-preloader').append("")
+                getLikeLoad = 1;
+                return;
               }
           },
           error: function(error) {
@@ -1323,7 +1370,43 @@ function newfoodInit(lat,lng){
           }
       })
   }
-  initLikeListPage();
+  
+  // //初始化想吃列表
+  // function initLikeListPage() {
+  //     //获取想吃列表
+
+  //     getLikeList(UserName, {
+  //         success: function(result) {
+  //             if (result.code == 200) {
+  //                 var html = '';
+  //                 var data = result.askDetail;
+  //                 if (!data.length) {
+  //                     $("#like .infinite-scroll-preloader").hide();
+  //                     $("#like .want-content").show();
+  //                 }
+  //                 if (data) {
+  //                     for (var i = 0; i < data.length; i++) {
+  //                         // html += '<div class="wenwo-li" data-id=' + data[i].objectId + '><div class="up-content"><img src="' + data[i].createByUrl + '" alt="" class="user-pic"><div class="ask-content"><div class="ask-tag">' + formatTag(data[i].askTagStr) + '</div><div class="ask-reason">' + data[i].askReason + '</div></div></div><div class="down-content"><div class="down-like liked"><span class="icon iconfont icon-likeEat"></span><label class="like-num">' + (data[i].likeNum < 0 ? 0 : data[i].likeNum) + '</label></div>' + (data[i].score > 9 ? '<div class="down-buy" data-id=' + data[i].objectId + '>' + formatPrice(data[i].askPrice) + '</div>' : '<div class="down-buy free" data-id=' + data[i].objectId + '>限时免费</div>') + '<div class="down-time">' + formatDate("y.m.d", data[i].createdAt) + '</div></div></div>';
+  //                          html += formatAsk(data[i]);
+  //                     }
+  //                 }
+  //                 // 添加新条目
+  //                 //清空原来的数据
+  //                 $.pullToRefreshDone('.pull-to-refresh-content');
+  //                 $('#like .wenwo-ul').empty();
+  //                 $('#like .wenwo-ul').append(html);
+  //                 $("#like .infinite-scroll-preloader .preloader").hide();
+  //                 $("#like .ask-end").show();
+
+  //                 initTop();
+  //             }
+  //         },
+  //         error: function(error) {
+  //             $.pullToRefreshDone('.pull-to-refresh-content');
+  //         }
+  //     })
+  // }
+  // initLikeListPage();
 
   //初始化美食攻略列表
   function initStrategyListPage() {
@@ -1504,6 +1587,13 @@ function newfoodInit(lat,lng){
       }
       if (type == "like") {
           $(".pull-to-refresh-arrow").hide();
+          if(!$("#like .wenwo-li").length){
+            if(localStorage.likeAskNum && localStorage.likeAskNum != "0"){
+              addItems(localStorage.likeAskNum, 0,"like");
+            }else{
+              addItems(itemsPerLoad, 0,"like");
+            }
+          }
           $.router.load("#like");
 
           setTimeout(function() {
@@ -1687,7 +1777,7 @@ function newfoodInit(lat,lng){
 
     localStorage["askTag"] = tag;
 
-    initTagListPage(0,20,tag);
+    initTagListPage(0,itemsPerLoad,tag);
 
     $.router.load("#tag");
   })
@@ -1930,7 +2020,7 @@ function newfoodInit(lat,lng){
   $("#tagfind,#search").on("click",".tagfind-li,.hot-tag-li",function(){
     var tag = $(this).text();
     if(tag){
-      initTagListPage(0,20,tag);
+      initTagListPage(0,itemsPerLoad,tag);
       $("#tag .title").text(tag);
       $.router.load("#tag");
     }
@@ -2080,7 +2170,7 @@ function newfoodInit(lat,lng){
       $("#search  .keyword-content").empty().hide();
       $("#search  .wenwo-ul").empty();
       $("#search  .wenwo-ul-content").show();
-      addItems(20,0,"search",keyword);
+      addItems(itemsPerLoad,0,"search",keyword);
     }
   })
 
@@ -2097,7 +2187,7 @@ function newfoodInit(lat,lng){
       $("#search  .keyword-content").empty().hide();
       $("#search  .wenwo-ul").empty();
       $("#search  .wenwo-ul-content").show();
-      addItems(20,0,"search",keyword);
+      addItems(itemsPerLoad,0,"search",keyword);
     }
   })
 

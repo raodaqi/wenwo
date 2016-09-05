@@ -55,7 +55,7 @@
           <div class="nav-title">美食专题</div>
         </div>
       </div>
-      
+       
       <div class="wenwo-ul-nav">
           <div class="nav-left">
             <div class="nav-left-add">定位...</div>
@@ -87,7 +87,7 @@
   </div>
 
   <!-- 这里是所有的信息列表 -->
-  <div class="wenwo-content page" id="like">
+  <div class="wenwo-content page" id="like" data-range="-1">
     <header class="bar bar-nav">
       <h1 class="title">想吃</h1>
     </header>
@@ -596,6 +596,8 @@
     var likeTop = localStorage.likeTop;
     var shareTop = localStorage.shareTop;
     var buyTop = localStorage.buyTop;
+    var tagTop = localStorage.tagTop;
+    
     if(findTop){
       $("#find .find-content").scrollTop(findTop);
     }
@@ -608,7 +610,11 @@
     if(buyTop){
       $("#buy .buy-content").scrollTop(buyTop);
     }
+    if(tagTop){
+      $("#tag .tag-content").scrollTop(tagTop);
+    }
   }
+
   // var date = new Date();
   // $(".nav-list-day .nav-icon label").text(formatDate("d",date));
 

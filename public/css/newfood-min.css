@@ -1000,7 +1000,7 @@ html {
     text-overflow: ellipsis;
     white-space: nowrap;
     margin-right: .15rem;
-    line-height: .8rem;
+    line-height: .7rem;
 }
 .nav-right{
     border-right: .15rem solid #f88827;
