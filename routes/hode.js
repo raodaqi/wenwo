@@ -523,6 +523,7 @@ router.post('/foodlike', function(req, res, next) {
 
                     var foodLike = new FoodLike();
                     foodLike.set('ask', ask);
+                    foodLike.set('positionGeo', ask.get("positionGeo"));
                     foodLike.set('by', userName);
                     foodLike.set('byName', user.get('uName'));
                     foodLike.set('byUrl', user.get('userHead'));
@@ -633,6 +634,20 @@ router.post('/cancelfoodlike', function(req, res, next) {
     });
 });
 
+// router.get('/addfoodlikegeo', function(req, res, next) {
+//     var query = new AV.Query('FoodLike');
+//     query.include('ask');
+//     query.include('ask.positionGeo');
+//     query.find().then(function (fooLikes) {
+//         // for(var i = 0; i < fooLikes.length; i++){
+//         //     var like = AV.Object.createWithoutData('FoodLike', fooLikes[i].id);
+//         //     like.set("positionGeo",fooLikes[i].get('ask').get('positionGeo'));
+//         //     like.save();
+//         // }
+//         res.send(fooLikes[0].get('positionGeo'));
+//     });
+// });
+
 router.post('/foodlikelist', function(req, res, next) {
     var userName = req.body.username;
     var page = req.body.page != null ? req.body.page : 0;
@@ -649,7 +664,7 @@ router.post('/foodlikelist', function(req, res, next) {
 
 
             query.include('ask');
-            query.descending('createdAt');
+            
             
 
             if (size != null) {
@@ -660,7 +675,7 @@ router.post('/foodlikelist', function(req, res, next) {
 
             if (geo == null || geo == '') {
 
-                query.descending("score");
+                query.descending('createdAt');
 
             } else {
 
@@ -681,7 +696,7 @@ router.post('/foodlikelist', function(req, res, next) {
                 var result = {
                     code : 200,
                     data :fooLikes,
-                   askDetail : askDetail,
+                    askDetail : askDetail,
                     message : '操作成功'
                 };
                 res.send(result);

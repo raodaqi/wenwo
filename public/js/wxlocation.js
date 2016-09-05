@@ -2,7 +2,7 @@ function initLocation(type,callback) {
     var title = WX_SHARE_TITLE ? WX_SHARE_TITLE:'「问我」 发现更多美食';
     var link = WX_SHARE_LINK ? WX_SHARE_LINK :'http://www.wenwobei.com';//链接按代换
     var imgUrl　=　(WX_SHARE_IMGURL && WX_SHARE_IMGURL != "/") ? WX_SHARE_IMGURL: 'http://www.wenwobei.com/img/logo.jpg';//链接按代换
-    var desc =　WX_SHARE_DESC ? WX_SHARE_DESC:'任何人都可以分享自己的经验赚钱，不信，你试试！';
+    var desc =　WX_SHARE_DESC ? WX_SHARE_DESC:'走到哪，吃到哪。让美食无处可逃!';
     
     var data = {
         url: location.href.split('#')[0]
@@ -144,6 +144,7 @@ function initLocation(type,callback) {
         error: function(error) {
             console.log(error);
             $(".ui-loading-block").hide();
+            callback.error(error);
         }
     });
 }
@@ -152,7 +153,7 @@ function onlyInitShare(){
     var title = WX_SHARE_TITLE ? WX_SHARE_TITLE:'「问我」 发现更多美食';
     var link = WX_SHARE_LINK ? WX_SHARE_LINK :'http://www.wenwobei.com';//链接按代换
     var imgUrl　=　(WX_SHARE_IMGURL && WX_SHARE_IMGURL != "/") ? WX_SHARE_IMGURL: 'http://www.wenwobei.com/img/logo.jpg';//链接按代换
-    var desc =　WX_SHARE_DESC ? WX_SHARE_DESC:'任何人都可以分享自己的经验赚钱，不信，你试试！';
+    var desc =　WX_SHARE_DESC ? WX_SHARE_DESC:'走到哪，吃到哪。让美食无处可逃!';
     
     var data = {
         url: location.href.split('#')[0]
@@ -203,7 +204,7 @@ function initShare(){
     var title = WX_SHARE_TITLE ? WX_SHARE_TITLE:'「问我」 发现更多美食';
     var link = WX_SHARE_LINK ? WX_SHARE_LINK :'http://www.wenwobei.com';//链接按代换
     var imgUrl　=　(WX_SHARE_IMGURL && WX_SHARE_IMGURL != "/") ? WX_SHARE_IMGURL: 'http://www.wenwobei.com/img/logo.jpg';//链接按代换
-    var desc =　WX_SHARE_DESC ? WX_SHARE_DESC:'任何人都可以分享自己的经验赚钱，不信，你试试！';
+    var desc =　WX_SHARE_DESC ? WX_SHARE_DESC:'走到哪，吃到哪。让美食无处可逃!';
 
     wx.ready(function() {
         var shareData = {

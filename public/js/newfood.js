@@ -10,6 +10,15 @@
   var loading = false;
   var itemsPerLoad = 10;
 
+  //初始化想吃和标签range
+
+  if(localStorage.tagRange){
+    $("#tag").attr("data-range",localStorage.tagRange);
+  }
+  if(localStorage.likeRange){
+    $("#like").attr("data-range",localStorage.likeRange);
+  }
+
   // window.onpopstate = function(event) {
   //   alert($(".page-current").id);
   //   // $(".amap-sug-result").hide(); 
@@ -274,7 +283,9 @@ function newfoodInit(lat,lng){
               break;
           case "tag":
               var tag = $("#tag .title").text();
-              initTagListPage(0,itemsPerLoad,tag);
+              var tagRange = $("#tag").attr("data-range");
+              tagRange = parseInt(tagRange);
+              initTagListPage(0,itemsPerLoad,tag,tagRange);
               break;
           case "search":
               var keyword = $("#tag .keyword").val();
@@ -1777,7 +1788,9 @@ function newfoodInit(lat,lng){
 
     localStorage["askTag"] = tag;
 
-    initTagListPage(0,itemsPerLoad,tag);
+    var tagRange = $("#tag").attr("data-range");
+    tagRange = parseInt(tagRange);
+    initTagListPage(0,itemsPerLoad,tag,tagRange);
 
     $.router.load("#tag");
   })
@@ -2023,7 +2036,11 @@ function newfoodInit(lat,lng){
   $("#tagfind,#search").on("click",".tagfind-li,.hot-tag-li",function(){
     var tag = $(this).text();
     if(tag){
-      initTagListPage(0,itemsPerLoad,tag);
+      var tagRange = $("#tag").attr("data-range");
+      tagRange = parseInt(tagRange);
+      localStorage["askTag"] = tag;
+
+      initTagListPage(0,itemsPerLoad,tag,tagRange);
       $("#tag .title").text(tag);
       $.router.load("#tag");
     }
@@ -2345,6 +2362,7 @@ function newfoodInit(lat,lng){
 
     var tagRange = $(this).attr("data-range");
     $("#tag").attr("data-range",tagRange);
+    localStorage["tagRange"] = tagRange;
 
     if(tagRange > 0){
       $("#tag .change-sort label").text("距离");
@@ -2360,6 +2378,33 @@ function newfoodInit(lat,lng){
       $("#tag .infinite-scroll-preloader .preloader").css("display", "inline-block");
       getTagLoad = 0;
       addItems(itemsPerLoad, 0,"tag");
+    }, 500);
+  })
+
+  var likeTimer;
+  $("#like .change-sort").on("click",function(){
+    clearTimeout(tagTimer);
+
+    var tagRange = $(this).attr("data-range");
+    $("#like").attr("data-range",tagRange);
+    localStorage["likeRange"] = tagRange;
+
+    if(tagRange > 0){
+      $("#like .change-sort label").text("距离");
+      $(this).attr("data-range", -1);
+
+    }else{
+      $("#like .change-sort label").text("时间");
+      $(this).attr("data-range", 3000000);
+    }
+
+    $("#like .wenwo-ul").empty();
+    $("#like .ask-end").hide();
+
+    likeTimer = setTimeout(function(){
+      $("#like .infinite-scroll-preloader .preloader").css("display", "inline-block");
+      getLikeLoad = 0;
+      addItems(itemsPerLoad, 0,"like");
     }, 500);
   })
 

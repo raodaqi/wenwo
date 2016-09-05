@@ -181,8 +181,8 @@
                               }
                           }
                           $(".detail-address").text(address);
-                          $(".detail-address").attr("data-GeoX", data.GeoX);
-                          $(".detail-address").attr("data-GeoY", data.GeoY);
+                          $(".detail-address,.detail-rtname").attr("data-GeoX", data.GeoX);
+                          $(".detail-address,.detail-rtname").attr("data-GeoY", data.GeoY);
                       }
                   }
 
@@ -355,7 +355,7 @@
   })
 
   //点击地址跳转地图
-  $(".detail-address").on("click", function() {
+  $(".detail-address,.detail-rtname").on("click", function() {
       var lat = $(this).attr("data-geox");
       var lng = $(this).attr("data-geoy");
       if (lat && lng) {
@@ -591,8 +591,8 @@
                                       }
                                   }
                                   $(".detail-address").text(address);
-                                  $(".detail-address").attr("data-GeoX", data.GeoX);
-                                  $(".detail-address").attr("data-GeoY", data.GeoY);
+                                  $(".detail-address,.detail-rtname").attr("data-GeoX", data.GeoX);
+                                  $(".detail-address,.detail-rtname").attr("data-GeoY", data.GeoY);
                               }
                           },
                           error: function(error) {
@@ -662,8 +662,8 @@
                                   address += askPosition[key];
                               }
                               $(".detail-address").text(address);
-                              $(".detail-address").attr("data-GeoX", data.GeoX);
-                              $(".detail-address").attr("data-GeoY", data.GeoY);
+                              $(".detail-address,.detail-rtname").attr("data-GeoX", data.GeoX);
+                              $(".detail-address,.detail-rtname").attr("data-GeoY", data.GeoY);
                           }
                       },
                       error: function(error) {
