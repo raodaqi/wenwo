@@ -95,13 +95,6 @@
       success: function(lng, lat) {
           LAT = lat;
           LNG = lng;
-          // var findTop = localStorage.findTop;
-          // if(findTop > 2077){
-          //   addItems(40, 0,"find");
-          // }else{
-          //   addItems(itemsPerLoad, 0,"find");
-          // }
-          // initAllData(lat,lng);
           newfoodInit(lat,lng);
       },
       error: function(error) {
