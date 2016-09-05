@@ -1234,6 +1234,9 @@ html {
 .no-ask-result{
     display: none;
     text-align: center;
+    position: relative;
+    padding-top: .1rem;
+    background-color: #f8fafa;
 }
 .no-ask-tip{
     font-size: .7rem;
