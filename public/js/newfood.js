@@ -6,7 +6,7 @@
       title2 = 1,
       title3 = 1,
       title4 = 1;
-  var range = 2000;
+  var range = 1000;
   var loading = false;
   var itemsPerLoad = 20;
 
@@ -24,7 +24,7 @@
     var lnglatXY = [LNG,LAT];
       getAddress(lnglatXY,{
         success:function(address){
-          console.log(address);
+          // console.log(address);
           var detail = address.formattedAddress;
           var address = {
               province: address.addressComponent.province,
@@ -55,7 +55,7 @@
       var lnglatXY = [LNG,LAT];
       getAddress(lnglatXY,{
         success:function(address){
-          console.log(address);
+          // console.log(address);
           var detail = address.formattedAddress;
           var address = {
               province: address.addressComponent.province,
@@ -109,10 +109,10 @@
       }
   });
 
-  // if(window.location.port == 3000){
-  //   //测试逻辑
-  //   newfoodInit(30.580596,103.982984);
-  // }
+  if(window.location.port == 3000){
+    //测试逻辑
+    newfoodInit(30.580596,103.982984);
+  }
   
 
 function newfoodInit(lat,lng){  
@@ -125,7 +125,7 @@ function newfoodInit(lat,lng){
     var lnglatXY = [LNG,LAT];
       getAddress(lnglatXY,{
         success:function(address){
-          console.log(address);
+          // console.log(address);
           var detail = address.formattedAddress;
           var address = {
               province: address.addressComponent.province,
@@ -156,7 +156,7 @@ function newfoodInit(lat,lng){
       var lnglatXY = [LNG,LAT];
       getAddress(lnglatXY,{
         success:function(address){
-          console.log(address);
+          // console.log(address);
           var detail = address.formattedAddress;
           var address = {
               province: address.addressComponent.province,
@@ -183,7 +183,7 @@ function newfoodInit(lat,lng){
     //预先加载20条
     if (LAT) {
       var findTop = localStorage.findTop;
-      console.log(findTop);
+      // console.log(findTop);
       if(findTop > 2077){
         addItems(40, 0,"find");
       }else{
@@ -221,7 +221,7 @@ function newfoodInit(lat,lng){
         downTag += '<div class="down-tag">'+askTag[i].tag_name+'</div>';
       }
     }
-    console.log(askTag);
+    // console.log(askTag);
     if(ask.askImage && ask.askImage.length){
       var askImage = JSON.parse(ask.askImage);
       if(askImage[0].image){
@@ -2259,11 +2259,12 @@ function newfoodInit(lat,lng){
 
     var tagRange = $(this).attr("data-range");
     $("#tag").attr("data-range",tagRange);
+
     if(tagRange > 0){
-      $("#tag .change-sort label").text("评分");
+      $("#tag .change-sort label").text("距离");
       $(this).attr("data-range", -1);
     }else{
-      $("#tag .change-sort label").text("时间");
+      $("#tag .change-sort label").text("评分");
       $(this).attr("data-range", 3000000);
     }
     $("#tag .wenwo-ul").empty();

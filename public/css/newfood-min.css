@@ -969,19 +969,22 @@ html {
     width: 100%;
     box-sizing: border-box;
     padding: .1rem .5rem;
-    height: 1.4rem;
+    height: 1.5rem;
     font-size: .67rem;
     background-color: white;
+    margin-bottom: .2rem;
+    font-size: .6rem;
 }
 .wenwo-ul-nav .iconfont{
     font-size: .5rem;
+    color: #666666;
 }
 .nav-left{
     border-left: .15rem solid #f88827;
     float: left;
     padding-left: .2rem;
-    height: .7rem;
-    line-height: .7rem;
+    height: .65rem;
+    line-height: .65rem;
     margin-top:.3rem;  
 }
 .nav-left .iconfont{
@@ -992,18 +995,19 @@ html {
 .nav-left-add{
     float: left;
     max-width: 7rem;
-    height: .9rem;
+    height: .8rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     margin-right: .15rem;
+    line-height: .8rem;
 }
 .nav-right{
     border-right: .15rem solid #f88827;
     float: right;
     padding-right: .2rem;
-    height: .7rem;
-    line-height: .7rem;
+    height: .65rem;
+    line-height: .65rem;
     margin-top:.3rem;
 }
 .nav-list-content{
@@ -1352,7 +1356,7 @@ html {
 }
 
 .tag-content .wenwo-ul{
-    position: absolute;
+    /*position: absolute;*/
     width: 100%;
     background-color: #fafafa;
 }

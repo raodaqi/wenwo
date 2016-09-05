@@ -54,10 +54,10 @@
       });
 
 
-// if(window.location.port == 3000){
-//   //测试逻辑
-//   initEdit(30.580596,103.982984);
-// }
+if(window.location.port == 3000){
+  //测试逻辑
+  initEdit(30.580596,103.982984);
+}
 
 function initEdit(LAT,LNG){
   LAT = LAT;
