@@ -38,22 +38,25 @@
   }
 
   window.onpopstate = function(event) {
-    // alert("123");
-    // $(".amap-sug-result").hide(); 
-    window.location.href = "/newfood";
+    var url = window.location.hash;
+    if (url.split("#")[1] != "food") {
+      window.location.href = "/newfood";
+    } 
+    
   };
 
   function init() {
       var url = window.location.hash;
       if (url.split("#")[1]) {
           URL = "food";
-      }else{
+      }
+
+      if(history.length < 2 && url.split("#")[1] != "food"){
         var json={time:new Date().getTime()};
         // @状态对象：记录历史记录点的额外对象，可以为空
         // @页面标题：目前所有浏览器都不支持
         // @可选的url：浏览器不会检查url是否存在，只改变url，url必须同域，不能跨域
         window.history.pushState(json,"","/newfood");
-
       }
   }
 
