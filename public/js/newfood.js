@@ -1804,6 +1804,9 @@ function newfoodInit(lat,lng){
     updatePage("#share");
     updatePage("#new");
   })
+  $("#tag .back").on("click", function() {
+    updatePage("#like");
+  })
       // $(".edit").on("click",function(){
       //   $.router.load("/todos/send/test?username=573c1eb271cfe4006c18274f");
       // })
