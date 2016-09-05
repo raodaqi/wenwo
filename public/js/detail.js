@@ -101,7 +101,7 @@
                   initShare();
 
                   //判断是否是限时免费
-                  if (data.score < 10) {
+                  if (data.score < 20) {
                       $(".buy").text("限时免费");
                       $(".buy").addClass("free");
                   }

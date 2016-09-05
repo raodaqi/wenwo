@@ -635,7 +635,10 @@ router.post('/cancelfoodlike', function(req, res, next) {
 
 router.post('/foodlikelist', function(req, res, next) {
     var userName = req.body.username;
-
+    var page = req.body.page != null ? req.body.page : 0;
+    var size = req.body.size != null ? req.body.size : 1000;
+    var geo = req.body.position_geo != null ? req.body.position_geo : null;
+    var range = req.body.range != null ? req.body.range : 3000000;
 
     var query = new AV.Query('UserInfo');
     query.get(userName).then(function (user) {
@@ -647,6 +650,25 @@ router.post('/foodlikelist', function(req, res, next) {
 
             query.include('ask');
             query.descending('createdAt');
+            
+
+            if (size != null) {
+                query.limit(size);
+            }
+
+            query.skip(page*size);
+
+            if (geo == null || geo == '') {
+
+                query.descending("score");
+
+            } else {
+
+                var position = geo.split(",");
+                var point = new AV.GeoPoint(parseFloat(position[0]),parseFloat(position[1]));
+                query.withinKilometers('positionGeo', point, range/1000);
+            }
+
             query.find().then(function (fooLikes) {
 
                 var askDetail = new Array();
