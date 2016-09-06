@@ -1608,10 +1608,10 @@ router.get('/up', function(req, res, next) {
 
 router.post('/del', function(req, res, next) {
 
-    var reason = req.param('reason');
-    var askId = req.param('ask_id');
-    //var staus = req.param('staus');
-    var userName = req.param('username');
+    var reason = req.body.reason;
+    var askId = req.body.ask_id;
+    var userName = req.body.username;
+
     var query = new AV.Query('AskMe');
     query.get(askId).then(function (ask) {
         // console.log(ask.get('createBy'));

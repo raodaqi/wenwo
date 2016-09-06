@@ -79,6 +79,7 @@ body {
 #buy .buy-content,
 #tag .tag-content,
 #strategy .strategy-content,
+#mytopic .mytopic-content,
 #card .card-content,
 #tagfind .tagfind-content,
 #search .search-content{
@@ -177,6 +178,7 @@ body {
 #new,
 #tag,
 #strategy,
+#mytopic,
 #card,
 #down,
 #search,
@@ -601,11 +603,14 @@ html {
 }
 
 .strategy-ul{
-    padding:.5rem;
+    padding:.3rem;
+}
+.mytopic-ul{
+    padding:.3rem;
 }
 .strategy-li{
     width: 100%;
-    height: 7rem;
+    height: 8rem;
     border-radius: .3rem;
     margin-bottom:.5rem;
     box-shadow: 2px 2px 2px #ccc;
@@ -623,7 +628,7 @@ html {
     border-bottom-left-radius: .3rem;
     padding:.1rem .5rem;
     background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 68%, rgba(0, 0, 0, 0.3) 85%, rgba(0, 0, 0, 0.35) 100%); 
-    padding-top: 5.8rem;
+    padding-top: 6.8rem;
 }
 
 .tagfind-ul{
@@ -1376,4 +1381,144 @@ html {
     font-size: .67rem;
     color: #72848b;
     text-align: center;
+}
+
+#strategy,#mytopic{
+    background-color: #ececec;
+}
+.strategy-like-content{
+    position: absolute;
+    width: 1.75rem;
+    height: 2.1rem;
+    background: rgba(0,0,0,0.5);
+    right: .8rem;
+    text-align: center;
+    border-bottom-right-radius: .2rem;
+    border-bottom-left-radius: .2rem;
+    z-index: 2;
+}
+
+.strategy-like{
+    color: #cf6a59;
+    margin-top: .1rem;
+    font-size: .87rem;
+    font-weight: 600;
+}
+.strategy-like-num{
+    font-size: .5rem;
+    color: white;
+    margin-top: -.2rem;
+}
+
+.strategy-liked .strategy-like:before{
+    content: "\e62c";
+}
+
+@keyframes strategy
+{
+    0% {
+        font-size: .87rem;
+    }
+    50% {
+        font-size: .8rem;
+    }
+    100%{
+        font-size: .87rem;
+    }
+}
+
+@-moz-keyframes strategy
+{
+    0% {
+        font-size: .87rem;
+    }
+    50% {
+        font-size: .8rem;
+    }
+    100%{
+        font-size: .87rem;
+    }
+}
+
+@-webkit-keyframes strategy
+{
+    0% {
+        font-size: .87rem;
+    }
+    50% {
+        font-size: .8rem;
+    }
+    100%{
+        font-size: .87rem;
+    }
+}
+
+@-o-keyframes strategy
+{
+    0% {
+        font-size: .87rem;
+    }
+    50% {
+        font-size: .8rem;
+    }
+    100%{
+        font-size: .87rem;
+    }
+}
+
+@keyframes strategy2
+{
+    0% {
+        font-size: .87rem;
+    }
+    50% {
+        font-size: .8rem;
+    }
+    100%{
+        font-size: .87rem;
+    }
+}
+
+@-moz-keyframes strategy2
+{
+    0% {
+        font-size: .87rem;
+    }
+    50% {
+        font-size: .8rem;
+    }
+    100%{
+        font-size: .87rem;
+    }
+}
+
+@-webkit-keyframes strategy2
+{
+    0% {
+        font-size: .87rem;
+    }
+    50% {
+        font-size: .8rem;
+    }
+    100%{
+        font-size: .87rem;
+    }
+}
+
+@-o-keyframes strategy2
+{
+    0% {
+        font-size: .87rem;
+    }
+    50% {
+        font-size: .8rem;
+    }
+    100%{
+        font-size: .87rem;
+    }
+}
+
+#mytopic .strategy-li{
+    -webkit-transition: all ease 400ms;
+    transition: all ease 400ms;
 }

@@ -249,6 +249,13 @@
                 <div class="item-after item-share">0</div>
               </div>
             </li>
+            <li class="item-content item-link" data-href="#mytopic">
+              <div class="before-media"><i class="iconfont icon-topics"></i></div>
+              <div class="item-media"><i class="icon icon-f7"></i></div>
+              <div class="item-inner">
+                <div class="item-title">朕喜欢的专题</div>
+              </div>
+            </li>
             <li class="item-content item-link item-content-new" data-href="#new" style="display:none">
               <div class="before-media"><i class="iconfont icon-new"></i></div>
               <div class="item-media"><i class="icon icon-f7"></i></div>
@@ -404,6 +411,31 @@
         <div class="pull-to-refresh-arrow"></div>
       </div>
       <div class="wenwo-ul strategy-ul">
+      </div>
+      <div class="infinite-scroll-preloader" >
+        <div class="preloader"></div>
+        <div class="ask-end" style="display:none">启禀陛下，您已经到底了。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 这里是所有的美食攻略列表 -->
+  <div class="wenwo-content page" id='mytopic'>
+    <header class="bar bar-nav">
+      <a class="button button-link button-nav pull-left back" href="#">
+        <span class="icon icon-left"></span>
+      </a>
+      <h1 class="title">朕喜欢的专题</h1>
+    </header>
+    <!-- 这里是所有的信息列表 -->
+    <div class="mytopic-content content pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="55" data-distance="100">
+      <!-- 默认的下拉刷新层 -->    
+      <div class="pull-to-refresh-layer">
+        <div class="preloader-tip">刷新成功</div>
+        <div class="preloader"></div>
+        <div class="pull-to-refresh-arrow"></div>
+      </div>
+      <div class="wenwo-ul mytopic-ul">
       </div>
       <div class="infinite-scroll-preloader" >
         <div class="preloader"></div>

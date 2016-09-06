@@ -216,6 +216,19 @@ function newfoodInit(lat,lng){
         }
     })
   }
+  function getTopicLikeList(data,callback){
+    var url = "/carousel/gettopiclikelist",
+        type = "GET",
+        data = data;
+    sendQuest(url,type,data,{
+        success:function(result){
+            callback.success(result);
+        },
+        error:function(error){
+            callback.error(error);
+        }
+    })
+  }
   //获取分类信息
   function getTag(data,callback){
     var url = "/ask/getalltag",
@@ -289,6 +302,9 @@ function newfoodInit(lat,lng){
               break;
           case "new":
               initNewListPage(0,itemsPerLoad);
+              break;
+          case "mytopic":
+              initMytopicListPage();
               break;
           case "tag":
               var tag = $("#tag .title").text();
@@ -410,7 +426,7 @@ function newfoodInit(lat,lng){
               initBuyPage(UserName);
               break;
           case "find":
-              initStrategyListPage();
+              // initStrategyListPage();
               break;
           case "like":
               if(localStorage.likeAskNum && localStorage.likeAskNum != "0"){
@@ -439,6 +455,9 @@ function newfoodInit(lat,lng){
               break;
           case "strategy":
             initStrategyListPage();
+            break;
+          case "mytopic":
+            initMytopicListPage();
             break;
           case "tagfind":
               initTagPage();
@@ -1431,19 +1450,42 @@ function newfoodInit(lat,lng){
   //初始化美食攻略列表
   function initStrategyListPage() {
     //获取想吃列表
-    getCarouselInfo({type:"all"},{
+    getCarouselInfo({type:"all",username:UserName},{
           success: function(result) {
               if (result.code == 200) {
                 var li = '';
                 var data = result.data;
                 for(var i = 0; i < data.length; i++){
-                  li += '<div class="strategy-li" data-href="'+data[i].carouselClickURL+'" style="background: url('+data[i].carouselImage+') center center / cover no-repeat;"><div class="strategy-name">'+data[i].carouselName+'</div></div>';
+                  li += '<div class="strategy-li" data-href="'+data[i].carouselClickURL+'" style="background: url('+data[i].carouselImage+') center center / cover no-repeat;"><div class="strategy-like-content" data-id="'+data[i].objectId+'"><div class="strategy-like-btn '+(data[i].liked ? 'strategy-liked' : '')+'" data-liked='+data[i].liked+'><div class="strategy-like iconfont icon-guanzhu"></div><div class="strategy-like-num">'+data[i].likeNum+'</div></div></div><div class="strategy-name">'+data[i].carouselName+'</div></div>';
                 }
                 // console.log(li);
                 $.pullToRefreshDone('.pull-to-refresh-content');
-                $(".strategy-ul").empty().append(li);
+                $("#strategy .strategy-ul").empty().append(li);
                 $("#strategy .infinite-scroll-preloader .preloader").hide();
                 $("#strategy .ask-end").empty().show();
+              }
+          },
+          error: function(error) {
+              $.pullToRefreshDone('.pull-to-refresh-content');
+          }
+      })
+  }
+
+  //初始化美食攻略列表
+  function initMytopicListPage() {
+    //获取想吃列表
+    getTopicLikeList({username:UserName},{
+          success: function(result) {
+              if (result.code == 200) {
+                var li = '';
+                var data = result.data;
+                for(var i = 0; i < data.length; i++){
+                  li += '<div class="strategy-li" data-href="'+data[i].carouselClickURL+'" style="background: url('+data[i].carouselImage+') center center / cover no-repeat;"><div class="strategy-like-content" data-id="'+data[i].objectId+'"><div class="strategy-like-btn '+(data[i].liked ? 'strategy-liked' : '')+'" data-liked='+data[i].liked+'><div class="strategy-like iconfont icon-guanzhu"></div><div class="strategy-like-num">'+data[i].likeNum+'</div></div></div><div class="strategy-name">'+data[i].carouselName+'</div></div>';
+                }
+                $.pullToRefreshDone('.pull-to-refresh-content');
+                $("#mytopic .mytopic-ul").empty().append(li);
+                $("#mytopic .infinite-scroll-preloader .preloader").hide();
+                $("#mytopic .ask-end").empty().show();
               }
           },
           error: function(error) {
@@ -1624,7 +1666,7 @@ function newfoodInit(lat,lng){
           $(".pull-to-refresh-arrow").hide();
           updatePage("#me");
           updatePage("#like");
-          updatePage("#strategy");
+          // updatePage("#strategy");
           updatePage("#tagfind");
           $.router.load("#find",false,"left");
 
@@ -1659,22 +1701,32 @@ function newfoodInit(lat,lng){
           $.showPreloader("正在跳转");
           $.router.load(href);
       }
-      if(href.split("#")[1] == "strategy" && !$(".strategy-li").length){
+      if(href.split("#")[1] == "strategy" && !$("#strategy .strategy-li").length){
         initStrategyListPage();
       }
 
-      if(href.split("#")[1] == "tagfind" && !$(".tagfind-ul").length){
+      if(href.split("#")[1] == "tagfind" && !$("#tagfind .tagfind-ul").length){
         initTagPage();
       }
   });
   $(".my-ask .item-link").on("click", function() {
     var href = $(this).attr("data-href");
+    if(href == "#mytopic"){
+      if(!$(".mytopic-ul .strategy-li").length){
+        initMytopicListPage();
+      }
+    }
     $.router.load(href);
   })
 
-  $(".strategy-ul").on("click",".strategy-li",function() {
+  // $(".strategy-ul").on("click",".strategy-li",function() {
+  //   $.showPreloader("正在跳转");
+  //   var href = $(this).attr("data-href");
+  //   window.location.href = href + "#food";
+  // })
+  $(".strategy-ul").on("click",".strategy-name",function() {
     $.showPreloader("正在跳转");
-    var href = $(this).attr("data-href");
+    var href = $(this).parent().attr("data-href");
     window.location.href = href + "#food";
   })
 
@@ -2415,6 +2467,117 @@ function newfoodInit(lat,lng){
       getLikeLoad = 0;
       addItems(itemsPerLoad, 0,"like");
     }, 500);
+  })
+
+  var strategyTimer;
+  // var $_strategyLikeBtn;
+  $("#strategy").on("click",".strategy-like-btn",function(){
+    clearTimeout(strategyTimer);
+    var carouselid = $(this).parent().attr("data-id");
+    var liked = $(this).attr("data-liked");
+    liked = parseInt(liked);
+
+    var $_strategyLikeBtn = $(this);
+    
+    var likeNum = $(this).children(".strategy-like-num").text();
+    console.log(likeNum);
+
+    if($(this).hasClass("strategy-liked")){
+      $(this).removeClass("strategy-liked");
+      $(this).children(".strategy-like-num").text(parseInt(likeNum) - 1);
+
+      $(this).children(".strategy-like").css({
+        "animation": "strategy .5s ease-in-out both",
+        "-webkit-animation": "strategy .5s ease-in-out both",
+        "-o-animation": "strategy .5s ease-in-out both"
+      });
+    }else{
+      $(this).addClass("strategy-liked");
+      $(this).children(".strategy-like-num").text(parseInt(likeNum) + 1);
+
+      $(this).children(".strategy-like").css({
+        "animation": "strategy2 .5s ease-in-out both",
+        "-webkit-animation": "strategy2 .5s ease-in-out both",
+        "-o-animation": "strategy2 .5s ease-in-out both"
+      });
+    }
+
+    strategyTimer = setTimeout(function(){
+
+      if(!$_strategyLikeBtn.hasClass("strategy-liked") && liked){
+        //取消想吃
+        console.log("取消想吃");
+        var data = {
+          username        : UserName,
+          carousel_id     : carouselid
+        }
+        $.ajax({
+          type : "POST",
+          data: data,
+          dataType: "json",
+          url : "/carousel/canceltopiclike",
+          success: function(result){
+            if(result.code == 200){
+              $_strategyLikeBtn.attr("data-liked",0);
+              clearTimeout(strategyTimer);
+            }else{
+              $.toast("重复操作");
+            } 
+          },
+          error:function(error){
+            $.toast("服务器出错");
+          },
+        })
+      }
+      console.log($(this));
+      if($_strategyLikeBtn.hasClass("strategy-liked") && !liked){
+        //想吃
+        console.log("想吃");
+        var data = {
+          username        : UserName,
+          carousel_id     : carouselid
+        }
+        $.ajax({
+          type : "POST",
+          data: data,
+          dataType: "json",
+          url : "/carousel/topiclike",
+          success: function(result){
+            if(result.code == 200){
+              $_strategyLikeBtn.attr("data-liked",1);
+              clearTimeout(strategyTimer);
+            }else{
+              $.toast("重复操作");
+            } 
+          },
+          error:function(error){
+            $.toast("服务器出错");
+          },
+        })
+      }
+
+    }, 300);
+  })
+
+  $("#mytopic").on("click",".strategy-like-btn",function(){
+    var carouselid = $(this).parent().attr("data-id");
+    $(this).parent().parent().css("height","0rem");
+    $(this).parent().parent().css("opacity","0");
+    var data = {
+      username        : UserName,
+      carousel_id     : carouselid
+    }
+    $.ajax({
+      type : "POST",
+      data: data,
+      dataType: "json",
+      url : "/carousel/canceltopiclike",
+      success: function(result){
+      },
+      error:function(error){
+        $.toast("服务器出错");
+      },
+    })
   })
 
 }
