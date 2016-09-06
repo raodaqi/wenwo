@@ -1473,6 +1473,7 @@ function newfoodInit(lat,lng){
 
   //初始化美食攻略列表
   function initMytopicListPage() {
+     $("#mytopic .want-content").hide();
     //获取想吃列表
     getTopicLikeList({username:UserName},{
           success: function(result) {
@@ -1486,6 +1487,11 @@ function newfoodInit(lat,lng){
                 $("#mytopic .mytopic-ul").empty().append(li);
                 $("#mytopic .infinite-scroll-preloader .preloader").hide();
                 $("#mytopic .ask-end").empty().show();
+                if(!data.length){
+                  $("#mytopic .want-content").show();
+                }else{
+                   $("#mytopic .want-content").hide();
+                }
               }
           },
           error: function(error) {
@@ -2563,6 +2569,9 @@ function newfoodInit(lat,lng){
     var carouselid = $(this).parent().attr("data-id");
     $(this).parent().parent().css("height","0rem");
     $(this).parent().parent().css("opacity","0");
+    if($(".mytopic .strategy-li").length == 1){
+      $("#mytopic .want-content").show();
+    }
     var data = {
       username        : UserName,
       carousel_id     : carouselid

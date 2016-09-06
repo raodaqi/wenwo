@@ -70,7 +70,7 @@ router.get('/allask', function(req, res, next) {
     }
 
     query.find().then(function(results) {
-        console.log(results.length);
+        // console.log(results.length);
 
         var query = new AV.Query('FoodLike');
 

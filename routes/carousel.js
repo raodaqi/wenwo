@@ -22,7 +22,6 @@ router.get('/getcarouselinfo', function(req, res, next) {
         var query = new AV.Query('TopicLike');
         query.equalTo("by", userName);
         query.find().then(function (topicLikes) {
-            console.log(topicLikes);
             for(var i = 0; i < carouselList.length; i++){
                 var flag = 0;
                 for ( var k = 0; k < topicLikes.length; k++) {
