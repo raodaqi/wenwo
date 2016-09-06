@@ -10,7 +10,7 @@ var TopicLike = AV.Object.extend('TopicLike');
 
 router.get('/getcarouselinfo', function(req, res, next) {
     var reqType = req.query.type;
-    var userName = req.body.username;
+    var userName = req.query.username;
 
     var query = new AV.Query('Carousel');
     query.ascending('liked');
@@ -18,14 +18,13 @@ router.get('/getcarouselinfo', function(req, res, next) {
     if(reqType != "all"){
         query.equalTo('show', 1);
     }
-    
     query.find().then(function (carouselList) {
         var query = new AV.Query('TopicLike');
         query.equalTo("by", userName);
         query.find().then(function (topicLikes) {
+            console.log(topicLikes);
             for(var i = 0; i < carouselList.length; i++){
                 var flag = 0;
-
                 for ( var k = 0; k < topicLikes.length; k++) {
                     if (topicLikes[k].get('carousel').id == carouselList[i].id) {
                         flag ++;
@@ -47,7 +46,7 @@ router.get('/getcarouselinfo', function(req, res, next) {
 });
 
 router.get('/gettopiclikelist', function(req, res, next) {
-    var userName = req.body.username;
+    var userName = req.query.username;
 
     var query = new AV.Query('TopicLike');
     query.ascending('liked');
