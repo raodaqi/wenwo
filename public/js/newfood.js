@@ -2569,7 +2569,8 @@ function newfoodInit(lat,lng){
     var carouselid = $(this).parent().attr("data-id");
     $(this).parent().parent().css("height","0rem");
     $(this).parent().parent().css("opacity","0");
-    if($(".mytopic .strategy-li").length == 1){
+    console.log($(".mytopic .strategy-li").length);
+    if($("#mytopic .strategy-li").length == 1){
       $("#mytopic .want-content").show();
     }
     var data = {
