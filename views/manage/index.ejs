@@ -109,7 +109,7 @@
         background: #f8bd38 !important;
         color: white;
     }
-    .btn_pass, .btn_not, .btn_send,.btn_down,.btn_edit,.btn_add,.btn_save,.btn_delete,.location-btn_save{
+    .btn_pass, .btn_not, .btn_send,.btn_down,.btn_edit,.btn_add,.btn_save,.btn_delete,.location-btn_save,.vipcard-add{
         margin: 0;
         margin-top: 20px;
         font-size: 16px;
@@ -128,11 +128,11 @@
     .btn_save,.location-btn_save{
         background-color: #008be7;
     }
-    .btn_delete,.ask_btn_delete{
+    .btn_delete,.ask_btn_delete,.ask_btn_add_vipcard{
         background-color: #f74b46;
         margin-left: .5rem; 
     }
-    .ask_btn_delete{
+    .ask_btn_delete,.ask_btn_add_vipcard,.ask_btn_look_vipcard,.ask_btn_changetag{
         position: absolute;
         top:0;
         right:0;
@@ -144,6 +144,18 @@
         width: 100px;
         height: 40px;
         border: none;
+    }
+    .ask_btn_changetag{
+        right: 0;
+        margin-top: 50px;
+    }
+    .ask_btn_add_vipcard{
+        left:0;
+        background-color: #4cd964;
+    }
+    .ask_btn_look_vipcard,.ask_btn_changetag{
+        left:0;
+        background-color: #008be7;
     }
     textarea {
         display: block;
@@ -323,7 +335,7 @@
     .send-num{
         margin:20px 0 10px 0;
     }
-    .send-content-li{
+    .send-content-li,.vipcard-send-content-li{
         padding-bottom: 1.5rem;
         border-bottom: 1px solid #ccc;
         margin-top: 1rem;
@@ -619,6 +631,84 @@
     .wenwo-li{
         margin-right:10px;
     }
+    .vipcard .vipcard-content{
+        width: 400px;
+        height: 200px;
+        /*display: inline-block;*/
+        float: left;
+        margin-left: 10px;
+        padding:10px;
+        font-size: 14px;
+    }
+    .vipcard .send-name{
+        height: 200px;
+    }
+    .vipcard .send-name label{
+        float: left;
+        height: 200px;
+    }
+    .preloader{
+        display: block;
+        width: 1.5rem;
+        height: 1.5rem;
+        margin:10px auto;
+    }
+    .no-data{
+        text-align: center;
+        color: #aaa;
+        font-size: 17px;
+        margin-top: 30px;
+    }
+    .vipcard-list-content{
+        display: none;
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        background: white;
+        border-radius: 10px;
+        top:50%;
+        left: 50%;
+        transform: translate(-50%,50%);
+    }
+    .vipcard-list-content-ul{
+        height: 400px;
+        width: 500px;
+        overflow-y: auto;
+        padding-bottom: 10px;
+    }
+    .vipcard-list-content-ul .vipcard-send-content-li{
+        border: 0;
+        width: 50%;
+        float: left;
+        text-align: center;
+        padding-bottom: 0;
+        box-sizing: border-box;
+    }
+    .vipcard-add{
+        margin:10px auto;
+        text-align: center;
+        background: #4cd964;
+        width: 150px;
+        line-height: 40px;
+        margin-top: 40px;
+        cursor: pointer;
+    }
+    .vipcard-list-cancel{
+        font-size: 20px;
+        position: absolute;
+        right: -15px;
+        top:-15px;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border:1px solid #000;
+        text-align: center;
+        line-height: 30px;
+        cursor: pointer;
+    }
+    .vipcard-checked{
+        border: 1px solid #f8bd38 !important;
+    }
 </style>
 <body>
     <div class="wrap">
@@ -665,13 +755,14 @@
                     <li class="manage-bar" id="manage">热门地点管理</li>
                     <li class="card-bar" id="askCard">卡片管理</li>
                     <li class="askme-bar" id="askme">信息管理</li>
-                    <li class="account-bar" id="account">帐号管理</li>
+                    <li class="vipcard-bar" id="vipcard">vip卡管理</li>
                 </ul>
             </div>
             <div class="list manage-content">
                 <div class="content-title send" style="display: block">
                 <div class="carousel-content-tip">图片，是否显示按钮点击后不会自动保存，需要点击保存才会保存，图片最好先压缩下才上传。<a target="_black" href="https://tinypng.com" class="red">图片压缩网站</a></div>
                     <div class="send-content-ul">
+                        <div class="preloader"></div>
                     </div>
                     <button class='btn_add'>添加</button>
                 </div>
@@ -679,66 +770,17 @@
                 <div class="content-title check" style="display: none">
                     <iframe src="/share/edit" class="share-edit" frameborder="0"></iframe>
                 </div>
-                <div class="content-title check-detail" style="display: none">
-                    <div>
-                        <div class="left">ID:</div>
-                        <div class="detail-id"></div>
-                    </div>
-                    <div>
-                        <div class="left">上传者:</div>
-                        <div class="detail-createBy"></div>
-                    </div>
-                    <div>
-                        <div class="left">上传时间:</div>
-                        <div class="detail-time"></div>
-                    </div>
-                    <div>
-                        <div class="left">状态:</div>
-                        <div class="detail-status"></div>
-                    </div>
-                    <div>
-                        <div class="left">主题:</div>
-                        <div class="detail-subject"></div>
-                    </div>
-                    <div>
-                        <div class="left">标签:</div>
-                        <div class="detail-label"></div>
-                    </div>
-                    <div>
-                        <div class="left">推荐理由:</div>
-                        <div class="detail-reason"></div>
-                    </div>
-                    <div>
-                        <div class="left">详情(红色为隐藏部分):</div>
-                        <div class="detail-information"></div>
-                    </div>
-                    <div>
-                        <div>地图标注:</div>
-                        <div class="add-detail"></div>
-                        <div class="container-show" id="show2"></div>
-                    </div>
-                    <div>
-                        <div class="left">价格:</div>
-                        <div class="detail-price"></div>
-                    </div>
-                    <div class="check-button">
-                        <button class='btn_pass'>通过</button>
-                        <button class='btn_not'>不通过</button>
-                    </div>
-                    <div class="down" style="display:none">
-                        <button class='btn_down'>下架</button>
-                        <button class='btn_edit'>编辑</button>
-                    </div>
-                </div>
 
                 <div class="content-title askme" style="display: none">
                     <div class="wenwo-ul">
+                        <div class="preloader"></div>
                     </div>
                 </div>
                 <div class="content-title manage" style="display: none">
                     <div class="">
                         <div class="hot-location location-box-li">
                             <div class="hot-location-content">
+                                <div class="preloader"></div>
                             </div>
                             <button class='btn_add'>添加</button>
                         </div>
@@ -747,18 +789,18 @@
                 <div class="content-title askCard" style="display: none">
                     <div class="card-content-edit">
                         <div class="card-ul">
-                            
+                            <div class="preloader"></div>
                         </div>
                     </div>
                     <div class="card-content-add">
                         <div class="card-ul">
-                            
+                            <div class="preloader"></div>
                         </div>
                     </div>
                 </div>
                 <div class="content-title account" style="display: none">
                     <div>
-    
+        
                     </div>
                 </div>
 
@@ -767,14 +809,24 @@
                         删除勇哥购买数据
                     </div>
                 </div>
+
+                <div class="content-title vipcard" style="display:none">
+                    <div class="vipcard-send-content-ul">
+                        <div class="preloader"></div>
+                    </div>
+                    <button class='btn_add'>添加</button>
+                </div>
             </div>
-
         </div>
 
-        <div id="dropbox" class="dropbox" style="display:none">
+        <div class="vipcard-list-content">
+            <div class="iconfont icon-x vipcard-list-cancel"></div>
+            <div class="vipcard-list-content-ul">
+            </div>
+            <div class="vipcard-add">添加</div>
         </div>
-
         <input id="multiple" class="hidden" type="file" id="upload" multiple>
+        <input id="dropbox" class="hidden" style="display:none">
     </div>
     <script type='text/javascript' src='/js/zepto.min.js' charset='utf-8'></script>
      <!-- <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=cb84c659c88a7cc83b935a009b3a9cfd&plugin=AMap.Geocoder"></script> -->
@@ -1010,6 +1062,13 @@
             $(".hot-location-content").append(li);
         })
 
+        $(".vipcard .btn_add").on("click",function(){
+            $(".vipcard .no-data").remove();
+            var length = $(".send-content-li").length;
+            li = '<div class="vipcard-send-content-li" data-num="1" data-type="add"><div class="send-img"><label>logo:</label><img class="tag-img" data-type="0" src="/img/add.jpg" alt=""></div><div class="send-name">  <label>优惠:</label><textarea class="vipcard-content"></textarea></div><div class="show-vipcontent"></div><button class="btn_save">保存</button><button class="btn_delete">删除</button></div>';
+            $(".vipcard-send-content-ul").append(li);
+        })
+
         $(".send-content-ul").on("click",".btn_delete",function(){
             var id = $(this).parent().attr("data-id");
             var $parent = $(this).parent();
@@ -1222,9 +1281,9 @@
               }
           });
 
-        $(".send-content-ul").on("click",".tag-img",function(){
+        $(".send-content-ul,.vipcard-send-content-ul").on("click",".tag-img",function(){
             $TAG = $(this);
-            $("#multiple,#dropbox").click();
+            $("#dropbox").click();
             // uploader.start();
         })
 
@@ -1277,6 +1336,71 @@
                 //编辑
                 data.id = id
                 editCarouselInfo(data,{
+                    success:function(result){
+                        $.hidePreloader();
+                        if(result.code == 200){
+                            $.toast("更改成功");
+                        }else{
+                            $.toast("更改失败");
+                        }
+                    },
+                    error:function(error){
+                        $.toast("服务器出错");
+                    }
+                })
+            }
+
+        })
+
+        $(".vipcard-send-content-ul").on("click",".btn_save",function(){
+            //判断是否上传了图片
+            var img = $(this).parent().find(".tag-img").attr("src");
+            var vipcontent = $(this).parent().find(".vipcard-content").val();
+            var ifAdd = $(this).parent().attr("data-type");
+            // vipcontent = vipcontent.replace(/\r/ig, "").replace(/\n/ig, "<br/>"); 
+            var id = $(this).parent().attr("data-id");
+
+            if(img == "/img/add.jpg"){
+                $.toast("图片不能为空");
+                return ;
+            }
+            if(!vipcontent){
+                $.toast("vip卡内容不能为空");
+                return ;
+            }
+            if(ifAdd == "add"){
+                $.showPreloader("正在添加");
+            }else{
+                $.showPreloader("正在更改");
+            }
+            //新添加
+            var data = {
+                content  : vipcontent,
+                image    : img
+            }
+            var type = "POST";
+            if(ifAdd == "add"){
+                var url = "/vipcard/addinfo"
+                 sendQuest(url,type,data,{
+                    success:function(result){
+                        $.hidePreloader();
+                        if(result.code == 200){
+                            $.toast("添加成功");
+                            console.log(result);
+                        }else{
+                            $.toast("添加失败");
+                        }
+                    },
+                    error:function(error){
+                        $.hidePreloader();
+                        $.toast("服务器出错");
+                    }
+                })
+            }else{
+                //编辑
+                data.id = id;
+                var url = "/vipcard/editinfo"
+                sendQuest(url,type,data,{
                     success:function(result){
                         $.hidePreloader();
                         if(result.code == 200){
@@ -1810,9 +1934,11 @@ function getAskCard(page,size,cardData){
                             }
                         }
 
-                        askli += '<div class="wenwo-li" data-id="'+data[i].objectId+'"><div class="wenwo-ask-img" style="background: url('+img+') center center / cover no-repeat;"><div class="wenwo-gradient"></div><div class="ask-reason">'+data[i].askReason+'</div><button class="ask_btn_delete" data-id="'+data[i].objectId+'">下架</button></div></div>';
-
-
+                        if(data[i].vipCard && data[i].vipCardContent && data[i].vipCardImage){
+                            askli += '<div class="wenwo-li" data-id="'+data[i].objectId+'"><div class="wenwo-ask-img" style="background: url('+img+') center center / cover no-repeat;"><div class="wenwo-gradient"></div><div class="ask-reason">'+data[i].askReason+'</div><button class="ask_btn_delete" data-id="'+data[i].objectId+'">下架</button><button class="ask_btn_changetag" data-id="'+data[i].objectId+'" data-askTagStr='+data[i].askTagStr+'>更改标签</button><button class="ask_btn_look_vipcard" data-id="'+data[i].objectId+'" data-vipCardImage="'+data[i].vipCardImage+'" data-vipCardContent="'+data[i].vipCardContent+'">查看会员卡</button></div></div>';
+                        }else{
+                           askli += '<div class="wenwo-li" data-id="'+data[i].objectId+'"><div class="wenwo-ask-img" style="background: url('+img+') center center / cover no-repeat;"><div class="wenwo-gradient"></div><div class="ask-reason">'+data[i].askReason+'</div><button class="ask_btn_delete" data-id="'+data[i].objectId+'">下架</button><button class="ask_btn_changetag" data-id="'+data[i].objectId+'" data-askTagStr='+data[i].askTagStr+'>更改标签</button><button class="ask_btn_add_vipcard" data-id="'+data[i].objectId+'">添加会员卡</button></div></div>'; 
+                        }
                         var haved = 0;
 
                         for(var j = 0; j < cardData.length; j++){
@@ -1924,7 +2050,7 @@ $(".askme").on("click",".ask_btn_delete",function(){
                 return;
             }
 
-            $.showPreloader("正在添加");
+            $.showPreloader("正在下架");
 
             sendQuest(url,type,data,{
                 success:function(locationList){
@@ -1962,6 +2088,214 @@ $(".askme").on("click",".ask_btn_delete",function(){
     //     }
     // }) 
 })
+
+function getVipCard(){
+    var data = {},
+        url = "/vipcard/getinfo",
+        type = "GET";
+    sendQuest(url,type,data,{
+        success:function(result){
+            console.log(result);
+            var data = result.data;
+            var li = '';
+            var checkli = '';
+            for(var i = 0 ; i < data.length; i++){
+                li += '<div class="vipcard-send-content-li" data-id="'+data[i].objectId+'" id="'+data[i].objectId+'"><div class="send-img"><label>logo:</label><img class="tag-img" data-type="0" src="'+data[i].image+'" alt=""></div><div class="send-name">  <label>优惠:</label><textarea class="vipcard-content">'+data[i].content+'</textarea></div><div class="show-vipcontent"></div><button class="btn_save">保存</button><button class="btn_delete">删除</button></div>'
+
+                checkli = '<div class="vipcard-send-content-li" data-id="'+data[i].objectId+'" id="'+data[i].objectId+'"><div class="send-img"><img class="tag-img" data-type="0" src="'+data[i].image+'" alt=""></div>'
+            }
+            $(".vipcard-send-content-ul").empty().append(li);
+            $(".vipcard-list-content-ul").empty().append(checkli);
+            if(!data.length){
+                li = '<div class="no-data">没有数据</div>'
+                $(".vipcard-send-content-ul").empty().append(li);
+                $(".vipcard-list-content-ul").empty().append(li);
+            }
+        },
+        error:function(error){
+            console.log(error);
+        }
+    })
+}
+
+$(".vipcard-send-content-ul").on("click",".btn_delete",function(){
+    var id = $(this).parent().attr("data-id");
+    var $parent = $(this).parent();
+    if(!id){
+        $parent.remove();
+        if(!$(".vipcard-send-content-li").length){
+            li = '<div class="no-data">没有数据</div>'
+            $(".vipcard-send-content-ul,.vipcard-list-content-ul").empty().append(li);
+        }
+    }else{
+        //发起删除请求
+
+        $.confirm('你确定要删除这张vip卡吗?', '温馨提示',
+            function () {
+                $.showPreloader("正在删除数据");
+                var data = {
+                    id : id
+                },
+                url = "/vipcard/delinfo",
+                type = "POST";
+                sendQuest(url,type,data,{
+                success: function(result){
+                    $.hidePreloader();
+                    if(result.code == 200){
+                        $.toast("删除成功");
+                        $parent.remove();
+                        if(!$(".vipcard-send-content-li").length){
+                            li = '<div class="no-data">没有数据</div>'
+                            $(".vipcard-send-content-ul,.vipcard-list-content-ul").empty().append(li);
+                        }
+                    }else{
+                        $.toast("删除失败");
+                    }
+                },
+                error:function(error){
+                    $.toast("服务器出错");
+                }
+                })
+            },
+            function () {
+
+            }
+        );
+    }
+})
+
+$("#vipcard").on("click",function(){
+    if(!$(".vipcard .vipcard-send-content-li").length){
+        getVipCard();
+    }
+})
+
+$(".askme").on("click",".ask_btn_add_vipcard",function(){
+    if(!$(".vipcard-list-content .vipcard-send-content-li").length){
+        getVipCard();
+    }
+    $(".vipcard-list-content").attr("data-vipcardid","");
+    $(".vipcard-list-content").attr("data-askid","");
+    var id = $(this).attr("data-id");
+
+    $(".vipcard-list-content").attr("data-askid",id);
+    $(".vipcard-list-content").show();
+})
+
+$(".vipcard-list-cancel").on("click",function(){
+    $(".vipcard-list-content").hide();
+})
+
+$(".vipcard-list-content-ul").on("click",".vipcard-send-content-li",function(){
+    var id = $(this).attr("data-id");
+    $(".vipcard-list-content-ul .vipcard-send-content-li").removeClass("vipcard-checked");
+    $(this).addClass("vipcard-checked");
+    $(".vipcard-list-content").attr("data-vipcardid",id);
+})
+
+$(".vipcard-add").on("click",function(){
+    var vipcardid = $(".vipcard-list-content").attr("data-vipcardid");
+    var askid = $(".vipcard-list-content").attr("data-askid");
+    console.log(askid);
+    console.log(vipcardid);
+    if(askid && vipcardid){
+        var data = {
+            vipcardid : vipcardid,
+            askid     : askid
+        },
+        url = "/ask/addvipcard",
+        type = "POST";
+        $.showPreloader("正在添加会员卡");
+        sendQuest(url,type,data,{
+            success:function(result){
+                if(result.code == 200){
+                    $.toast("添加成功");
+                    $.hidePreloader();
+                    $(".vipcard-list-content").hide();
+                }else{
+                    $.toast("添加失败");
+                    $.hidePreloader();
+                }
+            },
+            error:function(error){
+                console.log(error);
+                $.toast("服务器出错");
+                $.hidePreloader();
+            }
+        })
+    }else{
+        $.toast("没有选择会员卡");
+    }
+})
+
+$(".askme").on("click",".ask_btn_changetag",function(){
+    var asktagstr  = $(this).attr("data-asktagstr");
+    var askid = $(this).attr("data-id");
+    var $_asktagstr = $(this);
+
+    var text = '';
+    var tag = JSON.parse(asktagstr);
+    for(var i in tag){
+        text += tag[i].tag_name + ';';
+    }
+    $.prompt('请填写更改标签，用；隔开', '温馨提示',
+        function (value) {
+            var inputText =  value;
+            var length = 0;
+            var tag = {};
+
+            for(var i = 0; i < inputText.split(";").length; i++){
+                console.log(inputText.split(";")[i]);
+                if(inputText.split(";")[i]){
+                  for(var j = 0; j < inputText.split(";")[i].split("；").length; j++){
+                    if(inputText.split(";")[i].split("；")[j]){
+                        tag[length] = {
+                            tag_name: inputText.split(";")[i].split("；")[j]
+                        }
+                        length++;
+                    } 
+                  }
+                }
+            }
+            if(length > 3){
+                $.toast("最多加添加三个标签");
+                return;
+            }
+            tag = JSON.stringify(tag);
+            $_asktagstr.attr("data-asktagstr",tag);
+
+            var data = {
+                askid  : askid,
+                tag    : tag
+            };
+
+            var url = "/ask/askadminedit";
+            var type = "post";
+
+            if(!askid){
+                $.toast("操作失败");
+                return;
+            }
+
+            $.showPreloader("正在编辑标签");
+
+            sendQuest(url,type,data,{
+                success:function(locationList){
+                    $.hidePreloader();
+                    $.toast("编辑成功");
+                },
+                error:function(error){
+                    $.hidePreloader();
+                    $.toast(error.message);
+                }
+            })
+        },
+        function (value) {
+        }
+    );
+    $(".modal-text-input").val(text);
+})
+
 </script>
 </body>
 </html>

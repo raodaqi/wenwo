@@ -212,7 +212,8 @@
                           console.log(contentShow);
                           if (contentShow.detail || contentShow.detailLi) {
                               if (contentShow.detail) {
-                                  $(".edit-detail").text(contentShow.detail);
+                                var detail = contentShow.detail.replace(/\r/ig, "").replace(/\n/ig, "<br/>");
+                                $(".edit-detail").html(detail);
                               }
                               if (contentShow.detailLi) {
                                   console.log(contentShow.detailLi);

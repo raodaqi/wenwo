@@ -68,7 +68,9 @@ router.get('/allask', function(req, res, next) {
         query.withinKilometers('positionGeo', point, range/1000);
         query.descending("score");
     }
-
+    query.include("vipCard");
+    query.include("vipCard.image");
+    query.include("vipCard.content");
     query.find().then(function(results) {
         // console.log(results.length);
 
@@ -78,9 +80,20 @@ router.get('/allask', function(req, res, next) {
 
         query.find().then(function (likeList) {
 
-
             for (var i = 0; i < results.length; i++) {
                 // results[i].attributes.askContentHide = '****';
+                var vipCard = results[i].get("vipCard");
+                
+                if(vipCard){
+                    var vipCardImage = vipCard.get("image");
+                    var vipCardContent = vipCard.get("content");
+                }else{
+                    var vipCardImage = '';
+                    var vipCardContent = '';
+                }
+                results[i].attributes.vipCardImage = vipCardImage;
+                results[i].attributes.vipCardContent = vipCardContent;
+
                 if(results[i].attributes.askIsFree == "0" || results[i].attributes.askPrice !="0.00"){
                     // var length1 = results[i].get('askContentHide').length;
                     // var length2 = results[i].get('askContentHide').length;
@@ -88,7 +101,6 @@ router.get('/allask', function(req, res, next) {
                     // for (var j = 0; j < length; j++) {
                     //     results[i].attributes.askContentHide += '*';
                     // }
-
                     results[i].set('shopName', "请购买以后查看");
                     // results[i].set('askPosition', "请购买以后查看");
                 }
@@ -113,13 +125,8 @@ router.get('/allask', function(req, res, next) {
 
                 }
                 if (flag == 0) {
-
                     results[i].set('liked', 0);
-
-
                 }
-
-
             }
 
             var result = {
@@ -308,6 +315,32 @@ function addsearchlog(keyword,username){
         }
     })
 }
+
+// 添加会员卡
+router.post('/addvipcard', function(req, res, next) {
+    var askid = req.body.askid;
+    var vipcardid = req.body.vipcardid;
+    if(!vipcardid || !askid){
+        var result = {
+            code : 600,
+            message : "缺少参数"
+        }
+        res.send(result);
+        return;
+    }
+    var query = new AV.Query('AskMe');
+
+    query.get(askid).then(function (askme) {
+        var vipCard = AV.Object.createWithoutData('VipCard', vipcardid);
+        askme.set('vipCard', vipCard);
+        askme.save().then(function (data) {
+            res.send({code:200,  data:data, message:'操作成功'});
+        },function(error){
+            res.send({code:400,  message:'操作失败'});
+            console.log(error);
+        });
+    });
+})
 
 router.get('/addsearchlog', function(req, res, next) {
     var keyword = req.query.keyword;
@@ -1076,6 +1109,51 @@ router.post('/askremove', function(req, res, next) {
         if (reason != null) {
             ask.set('askDefault', reason);
         }
+
+        ask.save().then(function (ask) {
+            var result = {
+                code : 200,
+                data : ask,
+                message : 'Operation succeeded'
+            }
+            res.send(result);
+            return;
+        }, function(err) {
+            var result = {
+                code : 800,
+                message : err.message
+            }
+            res.send(result);
+        });
+    });
+
+});
+
+router.post('/askadminedit', function(req, res, next) {
+    var askId = req.body.askid;
+    var tag = req.body.tag;
+    var user = AV.User.current();
+    if(!user){
+        var result = {
+            code : 800,
+            error:"No permissions"
+        }
+        res.send(result);
+        return;
+    }
+
+    if(user.id != '5752bb7ad342d3006b3162b2'){
+        var result = {
+            code : 800,
+            message:"No permissions"
+        }
+        res.send(result);
+        return;
+    }
+
+    var query = new AV.Query('AskMe');
+    query.get(askId).then(function (ask) {
+        ask.set('askTagStr', tag);
 
         ask.save().then(function (ask) {
             var result = {

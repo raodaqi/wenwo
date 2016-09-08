@@ -19,6 +19,7 @@ var carousel = require('./routes/carousel');
 var card = require('./routes/card');
 var location = require('./routes/location');
 var ask = require('./routes/ask');
+var vipcard = require('./routes/vipcard');
 var askme = require('./routes/askme');
 var wallet = require('./routes/wallet');
 var hode = require('./routes/hode');
@@ -182,6 +183,11 @@ app.get('/', function(req, res) {
 app.get('/share/edit', function(req, res) {
   res.render('shareEdit');
 });
+
+app.get('/down', function(req, res) {
+  res.render('down');
+});
+
 app.get('/share/id/:id', function(req, res) {
   var id = req.params.id;
   var type = req.query.type;
@@ -617,6 +623,7 @@ app.use('/ask', ask);
 app.use('/carousel', carousel);
 app.use('/card', card);
 app.use('/askme', askme);
+app.use('/vipcard', vipcard);
 app.use('/wallet', wallet);
 app.use('/hode', hode);
 app.use('/location', location);
