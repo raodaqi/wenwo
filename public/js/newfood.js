@@ -141,7 +141,7 @@ function newfoodInit(lat,lng){
   }
 
   function randomSS(){
-    var sslen = 47;
+    var sslen = 45;
     var headUrlNum = Math.ceil(Math.random()*sslen);
     return "/img/ss/ss"+headUrlNum+".jpg";
   }
