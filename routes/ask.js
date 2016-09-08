@@ -2434,6 +2434,15 @@ router.get('/gettag', function (req, res, next) {
     });
 });
 
+function ifTagExit(data,tag){
+    for(var i in data){
+        if(data[i].attributes.tagName == tag){
+            return 0;
+        }    
+    }
+    return 1;
+}
+
 router.get('/getalltag', function (req, res, next) {
     var size = req.param('size') != null ? req.param('size') : null;
 
@@ -2452,36 +2461,51 @@ router.get('/getalltag', function (req, res, next) {
             cc       = [],
             other    = [],
             cai      = [];
+
+        var k = 0;
         for(var i = 0 ; i < list.length; i ++){
             var code = 0;
 
             if(list[i].attributes.tagName.indexOf("火锅") >= 0){
-                hotPot.push(list[i]);
+                if(ifTagExit(hotPot,list[i].attributes.tagName)){
+                    hotPot.push(list[i]);
+                }    
                 code = 1;
             }
 
             if(list[i].attributes.tagName.indexOf("菜") >= 0){
-                cai.push(list[i]);
+                if(ifTagExit(cai,list[i].attributes.tagName)){
+                    cai.push(list[i]);
+                }
                 code = 1;
             }
 
             if(list[i].attributes.tagName.indexOf("串串") >= 0){
-                cc.push(list[i]);
+                if(ifTagExit(cc,list[i].attributes.tagName)){
+                    cc.push(list[i]);
+                }
                 code = 1;
             }
 
             if(list[i].attributes.tagName.indexOf("烧烤") >= 0){
-                barbecue.push(list[i]);
+                if(ifTagExit(barbecue,list[i].attributes.tagName)){
+                    barbecue.push(list[i]);
+                }
                 code = 1;
             }
 
             if(list[i].attributes.tagName.indexOf("面") >= 0 && list[i].attributes.tagName.indexOf("面包") < 0){
-                Noodle.push(list[i]);
+                if(ifTagExit(Noodle,list[i].attributes.tagName)){
+                    Noodle.push(list[i]);
+                }
                 code = 1;
             }
 
-            if(i < 10){
-                hot.push(list[i]);
+            if(k < 10){
+                if(ifTagExit(hot,list[i].attributes.tagName)){
+                    hot.push(list[i]);
+                    k++;
+                }
                 code = 1;
             }
 

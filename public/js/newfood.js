@@ -141,7 +141,7 @@ function newfoodInit(lat,lng){
   }
 
   function randomSS(){
-    var sslen = 26;
+    var sslen = 47;
     var headUrlNum = Math.ceil(Math.random()*sslen);
     return "/img/ss/ss"+headUrlNum+".jpg";
   }
@@ -170,7 +170,7 @@ function newfoodInit(lat,lng){
     }
     //学姐活动内容
     var headImage = ask.createByUrl;
-    // var headImage = randomSS();
+    var headImage = randomSS();
 
     if(ask.askImage && ask.askImage.length){
       var askImage = JSON.parse(ask.askImage);
@@ -2071,8 +2071,9 @@ function newfoodInit(lat,lng){
 
   //个人中心提醒
   $(".icon-tixing").on("click", function() {
-      $("#me .modal-overlay-visible").show();
-      $("#me .model-tip").show();
+    $("#me .md-modal").addClass("md-show");
+    // $("#me .modal-overlay-visible").show();
+    // $("#me .model-tip").show();
   })
 
   //滚动图链接点击效果

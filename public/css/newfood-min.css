@@ -1522,3 +1522,62 @@ html {
     -webkit-transition: all ease 400ms;
     transition: all ease 400ms;
 }
+
+/*更改个人中心界面*/
+#me .bar{
+    position: fixed;
+}
+#me{
+    overflow-y: auto;
+}
+#me .me-content{
+    position:relative;
+    top:0;
+    padding-top: 2.2rem;
+    min-height: 100%;
+    padding-bottom: 0;
+    box-sizing: border-box;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+}
+.wenwo-logo-content{
+    position: relative;
+    bottom:0;
+    margin:.2rem 0;
+}
+
+.ss-content{
+    position: absolute;
+    width: 80%;
+    max-width: 1100px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    background: rgba(255,255,255,0.8);
+    padding:.75rem;
+    border-radius: .3rem;
+    background-color: #fff;
+    max-height: 600px;
+    overflow-y: auto;
+}
+.ss-img{
+    display: block;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.ss-text-content{
+    font-size: .67rem;
+    color: #333;
+    margin-top: .5rem;
+}
+.ss-content-by{
+    box-sizing: border-box;
+    width: 100%;
+    text-align: right;
+    margin-top: .3rem;
+    font-size: .67rem;
+    color: #666;
+}

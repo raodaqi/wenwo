@@ -13,10 +13,11 @@ router.get('/getcarouselinfo', function(req, res, next) {
     var userName = req.query.username;
 
     var query = new AV.Query('Carousel');
-    query.ascending('liked');
 
     if(reqType != "all"){
         query.equalTo('show', 1);
+    }else{
+        query.descending('likeNum');
     }
     query.find().then(function (carouselList) {
         var query = new AV.Query('TopicLike');
