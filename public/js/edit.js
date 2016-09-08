@@ -1199,11 +1199,14 @@ function initEdit(LAT,LNG){
           var askPosition = $(".address .edit-content").attr("data-address");
           if (askPosition) {
               var adetail = $("#add-detail").val();
-              if (adetail) {
-                  askPosition = JSON.parse(askPosition);
-                  askPosition.adetail = adetail;
-                  askPosition = JSON.stringify(askPosition);
-              }
+              // if (adetail) {
+              //     askPosition = JSON.parse(askPosition);
+              //     askPosition.adetail = adetail;
+              //     askPosition = JSON.stringify(askPosition);
+              // }
+              askPosition = JSON.parse(askPosition);
+              askPosition.adetail = (adetail ? adetail : '');
+              askPosition = JSON.stringify(askPosition);
               console.log(askPosition);
           }
 
@@ -1241,6 +1244,7 @@ function initEdit(LAT,LNG){
               lat = lng;
               lng = change;
           }
+
           var data = {
               username: UserName,
               type: 1,
@@ -1255,6 +1259,7 @@ function initEdit(LAT,LNG){
               price: price
           }
           console.log(data);
+
           //发送请求 url：/ask/sendask
 
           

@@ -2242,7 +2242,7 @@ $(".askme").on("click",".ask_btn_changetag",function(){
         function (value) {
             var inputText =  value;
             var length = 0;
-            var tag = {};
+            var tag = [];
 
             for(var i = 0; i < inputText.split(";").length; i++){
                 console.log(inputText.split(";")[i]);
@@ -2262,6 +2262,7 @@ $(".askme").on("click",".ask_btn_changetag",function(){
                 return;
             }
             tag = JSON.stringify(tag);
+            console.log(tag);
             $_asktagstr.attr("data-asktagstr",tag);
 
             var data = {
