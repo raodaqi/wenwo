@@ -430,6 +430,16 @@ body {
     font-size: .72rem;
     margin-top: -.35rem;
 }
+.wenwo-gradient{
+    position: absolute;
+    height: 14rem;
+    width: 100%;
+    border:0;
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 55%, rgba(0, 0, 0, 0.2) 70%, rgba(0, 0, 0, 0.35) 100%); 
+}
+.wenwo-color{
+    font-weight: bold;
+}
 
 /*.detail-address{
     text-decoration: underline;

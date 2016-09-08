@@ -84,7 +84,8 @@
               if (result.code == 200) {
                   var data = result.data;
                   $("#detail .title").text(formatTag(data.askTagStr));
-                  $(".username").text(data.createByName);
+                  // $(".username").text(data.createByName);
+                  $(".username").html(data.createByName+'<span class="wenwo-color">学姐</span>');
                   likeNum = data.likeNum < 0 ? 0 : data.likeNum;
                   $(".like-num").text(likeNum);
 
