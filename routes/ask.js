@@ -1036,6 +1036,12 @@ router.post('/askedit', function(req, res, next) {
         }
         if (tag != null) {
             ask.set('askTagStr', tag);
+            tag = JSON.parse(tag);
+            console.log(tag);
+
+            for(var i = 0 ; i < tag.length; i++){
+                addTag(tag[i]["tag_name"]);
+            }
         }
 
         if (images != null) {
@@ -1757,6 +1763,33 @@ router.post('/approval', function(req, res, next) {
     });
 });
 
+function addTag(tagName) {
+    var query = new AV.Query('Tag');
+    query.equalTo('tagName', tagName);
+    query.find().then(function (tagList) {
+        if(!tagList.length){
+            var tag = new Tag();
+            tag.set('tagName', tagName);
+            tag.set('times', 1);
+            tag.save().then(function (searchlog) {
+
+            }, function (error) {
+
+            });
+        }else{
+            var tag = AV.Object.createWithoutData('Tag', tagList[0].id);
+            tag.increment('times', 1);
+            tag.save().then(function (searchlog) {
+            
+            }, function (error) {
+
+            });
+        }
+    },function (error) {
+        console.log(error);
+    });
+}
+
 router.post('/sendask', function(req, res, next) {
     var sessionToken = req.param('session_token');
 
@@ -1892,63 +1925,29 @@ router.post('/sendask', function(req, res, next) {
         var relation = ask.relation('askTag');
 
         tag = JSON.parse(tag);
+        console.log(tag);
 
-        setTag(tag, type, {
-            success:function () {
-                // console.log('add');
-                var query = new AV.Query('Tag');
-                query.equalTo('tagOrderby', type);
-                query.find().then(function(results) {
-                    // console.log(results);
-                    var relation = ask.relation('askTag');
-                    for (var i = 0; i < results.length; i++) {
-                        // console.log(results[i].get('tagName'));
+        for(var i = 0 ; i < tag.length; i++){
+            addTag(tag[i]["tag_name"]);
+        }
 
-                        if (tag.length == 1) {
-                            var temp = (results[i].get('tagName') == tag[0].tag_name);
-
-                        }
-                        else if (tag.length == 2) {
-                            var temp = (results[i].get('tagName') == tag[0].tag_name) || (results[i].get('tagName') == tag[1].tag_name);
-
-                        }
-                        else if (tag.length == 3) {
-                            var temp = (results[i].get('tagName') == tag[0].tag_name) || (results[i].get('tagName') == tag[1].tag_name) || (results[i].get('tagName') == tag[2].tag_name);
-
-                        }
-                        // console.log(temp);
-                        if (temp) {
-                            // console.log(results[i]);
-                            relation.add(results[i]);
-                        }
-
-                    }
-                    ask.save().then(function(ask) {
-                        var result = {
-                            code : 200,
-                            data : ask,
-                            message : 'Operation succeeded'
-                        }
-                        res.send(result);
-                        return;
-                    }, function(error) {
-                        // 失败
-                        // console.log('Error: ' + error.code + ' ' + error.message);
-                    });
-
-                });
-            },
-            error:function () {
-
+        ask.save().then(function(ask) {
+            var result = {
+                code : 200,
+                data : ask,
+                message : 'Operation succeeded'
             }
+            res.send(result);
+            return;
+        }, function(error) {
+            var result = {
+                code : 400,
+                message : '操作失败'
+            }
+            res.send(result);
+            return;
         });
-
     });
-
-
-
-
-
 });
 
 router.get('/tagshow', function (req, res, next) {
