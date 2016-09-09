@@ -727,6 +727,39 @@ router.post('/askdetail', function(req, res, next) {
 
     var userName = req.body.username;
     var askId = req.body.ask_id;
+    if(!userName){
+        var query = new AV.Query('AskMe');
+        query.get(askId).then(function (ask) {
+            var query = new AV.Query('Haved');
+            var askPoint = AV.Object.createWithoutData('AskMe', askId);
+            query.equalTo("ask", askPoint);
+            query.equalTo('type', '2');
+            query.include('ask');
+            query.find().then(function (havedList) {
+                var havedFlag = 0;
+                var foodLikeFlag = 0;
+                var isOwnFlag = 0;
+                var havedNum = 0;
+                if(havedList.length){
+                    havedNum = havedList.length;
+                }
+                if (isOwnFlag == 0 && havedFlag == 0) {
+                    ask.set('shopName', "请购买以后查看");
+                    ask.set('askPosition', "请购买以后查看");
+                }
+                detailShow = {
+                    isOwnFlag:isOwnFlag,
+                    foodLikeFlag:foodLikeFlag,
+                    havedFlag:havedFlag,
+                    havedNum :havedNum
+                };
+
+                res.send({code:200,data:ask,show:detailShow,message:'操作成功'});
+                return;
+            });
+        });
+        return;
+    }
 
     var query = new AV.Query('UserInfo');
     query.include('wallet');
