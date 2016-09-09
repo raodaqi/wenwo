@@ -81,7 +81,8 @@ a {
 }
 
 .modal-content .modal-inner {
-    border-radius: .35rem
+    border-radius: .35rem;
+    min-height: 7.5rem;
 }
 
 .ui-loading-bright {

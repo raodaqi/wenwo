@@ -159,17 +159,17 @@ function deShow(text){
     }
 
 $.showLoad = function(title){
-  var text = title ? title : "加载中";
+  var text = title ? title : "";
   var load = '<div class="preloader-modal"><div class="modal-content"><div class="modal-inner"><i class="ui-loading-bright"></i><div class="modal-title">'+text+'</div></div></div></div>';
   $("body").append(load);
 }
 $.showIndicator = function(title){
-  var text = title ? title : "加载中";
+  var text = title ? title : "";
   var load = '<div class="preloader-modal"><div class="modal-content"><div class="modal-inner"><i class="ui-loading-bright"></i><div class="modal-title">'+text+'</div></div></div></div>';
   $("body").append(load);
 }
 $.showPreloader = function(title){
-  var text = title ? title : "加载中";
+  var text = title ? title : "";
   var load = '<div class="preloader-modal"><div class="modal-content"><div class="modal-inner"><i class="ui-loading-bright"></i><div class="modal-title">'+text+'</div></div></div></div>';
   $("body").append(load);
 }

@@ -768,13 +768,13 @@ html {
 
 .card-li-footer .right{
     float: right;
-    margin-right: 1rem;
-    width: 1rem;
+    margin-right: .5rem;
+    width: 2rem;
     text-align: center;
 }
 
 .card-like{
-    margin-right: 1.7rem !important;
+    margin-right: 1.2rem !important;
 }
 
 .card-liked .iconfont{
@@ -1580,4 +1580,15 @@ html {
     margin-top: .3rem;
     font-size: .67rem;
     color: #666;
+}
+
+#card .ui-loading-bright{
+    width: 111px;
+    height: 111px;
+    display: block;
+    margin: 10px auto;
+    background-image: url(/img/loading.png);
+    -webkit-background-size: auto 100%;
+    -webkit-animation: am-rotate2 .6s steps(4) infinite;
+    margin-top: 40%;
 }

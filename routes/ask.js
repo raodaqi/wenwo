@@ -530,8 +530,8 @@ router.get('/sbask', function(req, res, next) {
 });
 
 router.get('/askhide', function(req, res, next) {
-    var askId = req.param('ask_id');
-    var userName = req.param('username');
+    var askId = req.query.ask_id;
+    var userName = req.query.username;
     if (!userName) {
         var result = {
             code : 300,
@@ -890,7 +890,7 @@ router.post('/addLook', function(req, res, next) {
 });
 
 router.get('/askadmin', function(req, res, next) {
-    var askId = req.param('ask_id');
+    var askId = req.query.ask_id;
     var query = new AV.Query('AskMe');
     query.limit(1000);
     query.addAscending('updatedAt');
@@ -907,9 +907,9 @@ router.get('/askadmin', function(req, res, next) {
 });
 
 router.post('/admincancle', function (req, res, next) {
-    var askId = req.param('ask_id');
+    var askId = req.body.ask_id;
     //var staus = req.param('staus');
-    var userName = req.param('username');
+    var userName = req.body.username;
     var cancleReason = req.body.cancle_reason;
     var query = new AV.Query('AskMe');
     query.get(askId).then(function (ask) {
@@ -948,21 +948,21 @@ router.post('/admincancle', function (req, res, next) {
 });
 
 router.post('/askedit', function(req, res, next) {
-    var askId = req.param('ask_id');
+    var askId = req.body.ask_id;
     var username = req.query.username;
-    var type = req.param('type') != null ? req.param('type') : null ;
-    var price = req.param('price') != null ? req.param('price') : null;
-    var geoX = req.param('geo_x') != null ? req.param('geo_x') : null;
-    var geoY = req.param('geo_y') != null ? req.param('geo_y') : null;
-    var position = req.param('position') != null ? req.param('position') : null;
-    var reason = req.param('reason') != null ? req.param('reason') : null;
-    var contentShow = req.param('content_show') != null ? req.param('content_show') : null;
-    var contentHide = req.param('content_hide') != null ? req.param('content_hide') : null;
-    var tag = req.param('tag') != null ? req.param('tag') : null;
-    var remark = req.param('remark') != null ? req.param('remark') : null;
+    var type = req.body.type != null ? req.body.type : null ;
+    var price = req.body.price != null ? req.body.price : null;
+    var geoX = req.body.geo_x != null ? req.body.geo_x : null;
+    var geoY = req.body.geo_y != null ? req.body.geo_y : null;
+    var position = req.body.position != null ? req.body.position : null;
+    var reason = req.body.reason != null ? req.body.reason : null;
+    var contentShow = req.body.content_show != null ? req.body.content_show : null;
+    var contentHide = req.body.content_hide != null ? req.body.content_hide : null;
+    var tag = req.body.tag != null ? req.body.tag : null;
+    var remark = req.body.remark != null ? req.body.remark : null;
 
-    var images = req.param('images') != null ? req.param('images') : null;
-    var shopName = req.param('shop_name') != null ? req.param('shop_name') : null;
+    var images = req.body.images != null ? req.body.images : null;
+    var shopName = req.body.shop_name != null ? req.body.shop_name : null;
 
 
     var query = new AV.Query('AskMe');
@@ -1265,9 +1265,9 @@ router.post('/adminedit', function(req, res, next) {
 });
 
 router.get('/like', function(req, res, next) {
-    var askId = req.param('ask_id');
-    var userName = req.param('username');
-    var type = req.param('type');   //type == 1  赞    ==2踩
+    var askId = req.query.ask_id;
+    var userName = req.query.username;
+    var type = req.query.type;   //type == 1  赞    ==2踩
 
     var userQuery = new AV.Query('UserInfo');
     userQuery.get(userName).then(function (user) {
@@ -1449,8 +1449,8 @@ router.get('/isliked', function (req, res, next) {
 });
 
 router.get('/getlike', function(req, res, next) {
-    var askId = req.param('ask_id');
-    var userName = req.param('username');
+    var askId = req.query.ask_id;
+    var userName = req.query.username;
 
     var query = new AV.Query('AskMe');
     query.get(askId).then(function (ask) {

@@ -471,6 +471,7 @@
       <!-- Slider -->
         <div class="swiper-container" data-space-between='10' data-autoplay-disable-on-interaction='false'>
           <div class="swiper-wrapper">
+            <i class="ui-loading-bright"></i>
           </div>
         </div>
 
@@ -641,6 +642,8 @@
 <!-- <script type='text/javascript' src='/js/sm.js' charset='utf-8'></script> -->
 <script>
 
+  $.showPreloader("正在加载");
+
   // 学姐活动逻辑
   var ssContentConfig = [
     {
@@ -744,9 +747,13 @@
   //   ctx.drawImage(img, 0, 0,cwidth,cheight/2);
   // };
 
-  $(".icon-xiazai").on("click",function(){
+  $(".card-down").on("click",function(){
+    if(!$(".card-li-footer").attr("data-cardid")){
+      return;
+    }
 
-
+    $.showPreloader();
+    
     var id = $("#card .swiper-slide-active").attr("data-id");
     var cardImg = $("#card .swiper-slide-active .card-img").attr("data-url");
     var detail = $("#card .swiper-slide-active .card-detail").text();
@@ -764,8 +771,6 @@
     var img = new Image();
     img.crossOrigin = "Anonymous";
     img.src = cardImg;
-
-    
 
     ctx.textAlign="left";
     ctx.font="lighter 26px Apple LiSung Light";
@@ -842,7 +847,7 @@
     // 用渐变填色
     ctx.fillStyle=gradient;
     var wenwotitle = '来自「问我」公众号';
-    ctx.fillText(wenwotitle,cwidth-10-ctx.measureText(wenwotitle).width,cheight - 20);
+    ctx.fillText(wenwotitle,20,cheight - 20);
 
     img.onload = function() {
 
@@ -861,13 +866,17 @@
           width = canvasImgWidth - 40,
           height = canvasImgHeight;
 
-      if(imgHeight / imgWidth < 1){
+          // alert(sx+" / "+sy+" / "+swidth+" / "+sheight+" / "+x+" / "+y+" / "+width+" / "+height);
 
-        cx = (imgWidth - imgHeight * ((canvasImgWidth - 40) / canvasImgHeight))/2;
-        swidth = imgHeight * ((canvasImgWidth - 40) / canvasImgHeight);
+      if((imgHeight / imgWidth) < (sheight/swidth)){
+
+        cx = (imgWidth - imgHeight * (width / height))/2;
+        swidth = imgHeight * (width / height);
         sheight = imgHeight;
 
-        ctx.drawImage(img,cx,0,swidth,sheight,x,y,canvasImgWidth - 40,canvasImgHeight);
+        // alert(cx+" / "+swidth+" / "+sheight);
+
+        ctx.drawImage(img,cx,0,swidth,sheight,x,y,width,height);
       }else{
         ctx.drawImage(img,0,sy,swidth,sheight,x,y,canvasImgWidth - 40,canvasImgHeight);
       }
@@ -881,6 +890,7 @@
       localStorage["downImg"] = c.toDataURL("image/png");
       // $(".downImg").show();
       $.router.load("#down");
+      $.hidePreloader();
 
       var timestamp = new Date().getTime();
       // downloadFile("wenwo"+timestamp+'.png', c.toDataURL("image/png"));

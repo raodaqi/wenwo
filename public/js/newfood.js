@@ -37,7 +37,6 @@
       }
     })();
 
-  $.showPreloader("正在加载");
   initLocation("food",{
       success: function(lng, lat) {
           LAT = lat;
@@ -2115,7 +2114,7 @@ function newfoodInit(lat,lng){
   })
 
   //初始化卡片界面
-  getCardList({size:10,username:UserName},{
+  getCardList({username:UserName},{
     success:function(result){
         // console.log(result);
         var data = result.data;
