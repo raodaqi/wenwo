@@ -94,13 +94,15 @@
 
     //判断是不是安卓手机
       var u = navigator.userAgent;
-      var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
-      if (!isAndroid) {
+      // var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+      var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+
+      if (isIOS) {
           $(".wenwo-down").addClass("ios");
           $(".wenwo-down").text("IOS COMING SOON");
       }
       $(".wenwo-down").on("click",function(){
-        if (isAndroid) {
+        if (!isIOS) {
           window.location.href="http://a.app.qq.com/o/simple.jsp?pkgname=com.myworld.wenwo";
         }
       })
