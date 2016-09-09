@@ -980,7 +980,10 @@
 
   //卡片点击想吃逻辑
   $(".card-like").on("click", function() {
-
+    if(!$(".card-li-footer").attr("data-cardid")){
+      return;
+    }
+ 
       clearTimeout(likeTimer);
       //获取点击后的id
       var askId = $("#card .swiper-slide-active").attr("data-askid");
