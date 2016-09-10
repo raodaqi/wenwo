@@ -29,6 +29,27 @@ router.get('/token', function(req, res) {
     }
 });
 
+
+router.get('/getmanagedata', function(req, res) {
+ 
+  var query = new AV.Query('ManageData');
+  query.ascending('createdAt');
+  query.find().then(function (results) {
+    var result = {
+        code : 200,
+        data : results,
+        message : "success"
+    }
+    res.send(result);
+  }, function (error) {
+    var result = {
+        code : 400,
+        message : "error"
+    }
+    res.send(result);
+  });
+});
+
 router.get('/version', function(req, res) {
     var query = new AV.Query('ApkVersion');
     query.descending('versionCode');

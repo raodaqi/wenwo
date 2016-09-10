@@ -45,7 +45,7 @@
       font-size: 1.05rem;
       color: #f88827;
     }
-    .wenwo-down{
+    .wenwo-down,.wenwo-wechat{
       position: absolute;
       z-index: 5000;
       width: 10rem;
@@ -72,6 +72,11 @@
       background-color: #ccc;
       font-size: .9rem;
     }
+    .wenwo-wechat{
+      display: none;
+      bottom:5rem;
+      background: #3eb94e;
+    }
   </style>
   <body>
     <div id="particles-js"></div>
@@ -80,6 +85,7 @@
       <div class="wenwo-text css5b35420c82bf4">问我-发现身边美食</div>
     </div>
     <div class="android css5b35420c82bf4">安卓内测版</div>
+    <a class="wenwo-wechat css5b35420c82bf4" href="http://www.wenwobei.com">微信版</a>
     <a class="wenwo-down css5b35420c82bf4">问我下载</a>
   <script src="/js/particles.min.js"></script>
   <script src="/js/app-page.js"></script>
@@ -94,6 +100,7 @@
 
     //判断是不是安卓手机
       var u = navigator.userAgent;
+      var ua = window.navigator.userAgent.toLowerCase(); 
       // var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
       var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
 
@@ -102,6 +109,11 @@
           $(".wenwo-down").addClass("ios");
           $(".wenwo-down").text("IOS COMING SOON");
       }
+      //判断是在微信端
+      if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+        $(".wenwo-wechat").show();
+      }
+
       $(".wenwo-down").on("click",function(){
         if (!isIOS) {
           window.location.href="http://a.app.qq.com/o/simple.jsp?pkgname=com.myworld.wenwo";

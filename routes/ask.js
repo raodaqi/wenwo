@@ -764,15 +764,10 @@ router.post('/askdetail', function(req, res, next) {
     var query = new AV.Query('UserInfo');
     query.include('wallet');
     query.get(userName).then(function (user) {
-
         if (!user || user == '') {
-
             res.send({code:500,message:'用户未信息错误'});
             return;
-
         } else  {
-
-
             var query = new AV.Query('AskMe');
             query.get(askId).then(function (ask) {
 
@@ -786,9 +781,7 @@ router.post('/askdetail', function(req, res, next) {
                 query.include('ask');
                 query.find().then(function (havedList) {
                     // console.log(havedList);
-
                     var query = new AV.Query('FoodLike');
-
                     query.equalTo("by", userName);
 
 
@@ -824,8 +817,6 @@ router.post('/askdetail', function(req, res, next) {
                                 havedFlag++;
 
                             }
-
-
                         }
 
                         for (var i = 0; i < foodLikeList.length; i++) {
@@ -854,17 +845,9 @@ router.post('/askdetail', function(req, res, next) {
 
                         res.send({code:200,data:ask,show:detailShow,message:'操作成功'});
                         return;
-
-
                     });
-
-
                 });
-
             });
-
-
-
         }
 
     })

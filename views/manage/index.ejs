@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/css/sm.min.css">
     <link rel="stylesheet" href="/css/common.css">
     <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=cb84c659c88a7cc83b935a009b3a9cfd&plugin=AMap.Geocoder"></script>
+    <script src="/js/echarts.js"></script>
     <!-- 新 Bootstrap 核心 CSS 文件 -->
     <!-- <link rel="stylesheet" href="/css/bootstrap.min.css"> -->
 </head>
@@ -750,7 +751,8 @@
         <div>
             <div class="list side-bar">
                 <ul>
-                    <li class="send-bar side-bar-backcheck" id="send">轮播图管理</li>
+                    <li class="data-bar side-bar-backcheck" id="data">数据统计</li>
+                    <li class="send-bar" id="send">轮播图管理</li>
                     <li class="check-bar" id="check">图文发布管理</li>
                     <li class="manage-bar" id="manage">热门地点管理</li>
                     <li class="card-bar" id="askCard">卡片管理</li>
@@ -759,7 +761,10 @@
                 </ul>
             </div>
             <div class="list manage-content">
-                <div class="content-title send" style="display: block">
+                <div class="content-title data" style="display: block">
+                     <div id="main" style="width: 850px;height:600px;"></div>
+                </div>
+                <div class="content-title send" style="display: none">
                 <div class="carousel-content-tip">图片，是否显示按钮点击后不会自动保存，需要点击保存才会保存，图片最好先压缩下才上传。<a target="_black" href="https://tinypng.com" class="red">图片压缩网站</a></div>
                     <div class="send-content-ul">
                         <div class="preloader"></div>
@@ -2297,6 +2302,147 @@ $(".askme").on("click",".ask_btn_changetag",function(){
     $(".modal-text-input").val(text);
 })
 
+// 初始化数据
+// 基于准备好的dom，初始化echarts实例
+var myChart = echarts.init(document.getElementById('main'));
+myChart.showLoading();
+
+function initManageData(){
+    var data = {
+    },
+    url = "/manage/getmanagedata",
+    type = "GET";
+    sendQuest(url,type,data,{
+        success:function(result){
+            if(result.code == 200){
+                var option = initDataOption(result.data);
+                 // 使用刚指定的配置项和数据显示图表。
+                myChart.hideLoading();
+                myChart.setOption(option);
+            }else{
+            }
+        },
+        error:function(error){
+            console.log(error);
+            $.toast("服务器出错");
+            $.hidePreloader();
+        }
+    })
+}
+initManageData();
+function initDataOption(data){
+    var today = new Array(),
+        havedNum = new Array(),
+        userNum =  new Array(),
+        askNum =  new Array(),
+        deleteNum = new Array(),
+        buyNum =  new Array();
+    for(var i = 0; i < data.length;i++){
+
+        havedNum.push(data[i].havedNum);
+        userNum.push(data[i].userNum);
+        askNum.push(data[i].askNum);
+        deleteNum.push(data[i].deleteNum);
+        buyNum.push(data[i].buyNum);
+        today.push(data[i].today);
+    }
+    option = {
+        title: {
+            text: '后台数据'
+        },
+        tooltip : {
+            trigger: 'axis'
+        },
+        legend: {
+            data:['用户数量','信息数量','购买数量','付费数量','删除数量']
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis : [
+            {
+                type : 'category',
+                boundaryGap : false,
+                data : today
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value'
+            }
+        ],
+        series : [
+            {
+                name:'删除数量',
+                type:'line',
+                stack: '总量',
+                areaStyle: {normal: {}},
+                data:deleteNum
+            },
+            {
+                name:'付费数量',
+                type:'line',
+                stack: '总量',
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'top'
+                    }
+                },
+                areaStyle: {normal: {}},
+                data:buyNum
+            },
+            {
+                name:'信息数量',
+                type:'line',
+                stack: '总量',
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'top'
+                    }
+                },
+                areaStyle: {normal: {}},
+                data:askNum
+            },    
+            {
+                name:'购买数量',
+                type:'line',
+                stack: '总量',
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'top'
+                    }
+                },
+                areaStyle: {normal: {}},
+                data:havedNum
+            },        
+            {
+                name:'用户数量',
+                type:'line',
+                stack: '总量',
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'top'
+                    }
+                },
+                areaStyle: {normal: {}},
+                data:userNum
+            }
+        ]
+    };
+    return option;
+}
 </script>
 </body>
 </html>
