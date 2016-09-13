@@ -169,13 +169,23 @@ function initEdit(LAT,LNG){
 
       $(".circle").on("touchstart", function() {
         $("#router5 .wenwo-ul").empty();
+        var href = $(this).attr("data-href");
+        var hrefNum = href.replace(/[^0-9]/ig,"");
 
-          var href = $(this).attr("data-href");
-          if (href.split("#")[1]) {
-              $.router.load(href);
-          } else {
-              $.router.load("#" + href);
+        //判断当前的链接
+        var nowHref = window.location.hash.split("#")[1];
+        var nowHrefNum = nowHref.replace(/[^0-9]/ig,"");
+
+
+        if (href.split("#")[1]) {
+          if(nowHrefNum > hrefNum){
+            $.router.load(href,false,"left");
+          }else{
+            $.router.load(href);
           }
+        } else {
+          $.router.load("#" + href);
+        }
       })
 
       //地址标注说明取消

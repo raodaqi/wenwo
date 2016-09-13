@@ -493,10 +493,20 @@
       if(!num){
         num = 0;
       }
-      if(num == 5){
+      num--;
+      if(num < 0){
         return;
       }
-      window.history.go(-1);
+      if(num == 4){
+        return;
+      }
+      if(num == 0){
+        $.router.load("#router",false,"left");
+      }else{
+        $.router.load("#router"+num,false,"left");
+      }
+      
+      // window.history.go(-1);
     })
   </script>
 
