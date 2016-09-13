@@ -52,7 +52,10 @@
 
   if(window.location.port == 3000){
     //测试逻辑
-    newfoodInit(30.580596,103.982984);
+    // newfoodInit(30.580596,103.982984);
+    setTimeout(function(){
+      newfoodInit(30.580596,103.982984);
+    }, 300);
   }
   
 
@@ -459,7 +462,7 @@ function newfoodInit(lat,lng){
             initMytopicListPage();
             break;
           case "card":
-            initCardList("refresh");
+            initCardList();
             break;
           case "tagfind":
               initTagPage();
