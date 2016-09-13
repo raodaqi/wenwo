@@ -107,6 +107,28 @@
                       $(".buy").addClass("free");
                   }
 
+                  //判断是否有会员卡
+                  if(data.vipCardImage && data.vipCardContent){
+                    // $(".card-tip").show();
+                    $(".card-content .tag-img").attr("src",data.vipCardImage);
+                    var content = data.vipCardContent.replace(/\r/ig, "").replace(/\n/ig, "<br/>");
+                    var contentArray = content.split("<br/>");
+                    $(".content-box").html(content);
+                    var contentLength = 0;
+                    for(var i = 0; i < contentArray.length; i++){
+                      if(contentArray[i]){
+                        contentLength++;
+                      }
+                    }
+                    var top = 35 - 5*contentLength;
+                    var width = $(window).width();
+                    var cardWidth = width > 500 ? 500 : width * 0.95;
+                    var cardHeight = cardWidth / 1.52;
+                    $(".content-box").css({
+                      'top': top+"%",
+                    })
+                  }
+
                   var price = parseFloat(data.askPrice);
                   if(price == 0 || price == "0.0"){
                     $(".buy").text("免费瞅瞅");

@@ -458,6 +458,9 @@ function newfoodInit(lat,lng){
           case "mytopic":
             initMytopicListPage();
             break;
+          case "card":
+            initCardList("refresh");
+            break;
           case "tagfind":
               initTagPage();
               break;
@@ -581,7 +584,7 @@ function newfoodInit(lat,lng){
   //双击头部返回头部
   $(".bar").on("doubleTap", function() {
     var type = $(this).parent()[0].id;
-    console.log(type);
+    // console.log(type);
       var scroolTime = 1;
       var scroolSppeed = $("#"+type+" .wenwo-ul").height() / 100;
       timer = setInterval(function() {
@@ -728,7 +731,7 @@ function newfoodInit(lat,lng){
       // console.log(lastIndex);
       var page = Math.ceil(lastIndex / number);
 
-      console.log("加载");
+      // console.log("加载");
 
       page = page ? page : 0;
       if(!getNewLoad){
@@ -766,7 +769,7 @@ function newfoodInit(lat,lng){
           var tag = $("#tag .title").text();
           var tagRange = $("#tag").attr("data-range");
           tagRange = parseInt(tagRange);
-          console.log(tagRange);
+          // console.log(tagRange);
           initTagListPage(page, number,tag,tagRange);  
         }
       }
@@ -869,7 +872,7 @@ function newfoodInit(lat,lng){
 
       // 更新最后加载的序号
       lastIndex = $('#'+type+' .wenwo-li').length;
-      console.log(lastIndex);
+      // console.log(lastIndex);
 
       // if(lastIndex < itemsPerLoad){
       //   $.detachInfiniteScroll($('#'+type+' .infinite-scroll'));
@@ -923,7 +926,7 @@ function newfoodInit(lat,lng){
       // 添加新条目
       //容器发生改变,如果是js滚动，需要刷新滚动
       var keyword = $(".keyword").val();
-      console.log(keyword);
+      // console.log(keyword);
       addItems(itemsPerLoad, lastIndex,"search",keyword);
       $.refreshScroller();
     }
@@ -939,7 +942,7 @@ function newfoodInit(lat,lng){
       // 添加新条目
       //容器发生改变,如果是js滚动，需要刷新滚动
       var keyword = $(".keyword").val();
-      console.log(keyword);
+      // console.log(keyword);
       addItems(itemsPerLoad, lastIndex,"like");
       $.refreshScroller();
     }
@@ -1159,7 +1162,6 @@ function newfoodInit(lat,lng){
                     // 加载完毕，则注销无限加载事件，以防不必要的加载
                     // $.detachInfiniteScroll($('#'+type+' .infinite-scroll'));
                     // 删除加载提示符
-                    console.log("sb");
                     $("#"+type+" .infinite-scroll-preloader .preloader").hide();
                     $("#"+type+" .ask-end").show();
                     // typeLoad = 1;
@@ -1710,6 +1712,10 @@ function newfoodInit(lat,lng){
         initStrategyListPage();
       }
 
+      if(href.split("#")[1] == "card" && !$("#card .card-li").length){
+        initCardList();
+      }
+
       if(href.split("#")[1] == "tagfind" && !$("#tagfind .tagfind-ul").length){
         initTagPage();
       }
@@ -2113,6 +2119,7 @@ function newfoodInit(lat,lng){
     }
   })
 
+function initCardList(type){
   //初始化卡片界面
   getCardList({username:UserName},{
     success:function(result){
@@ -2132,12 +2139,14 @@ function newfoodInit(lat,lng){
         $("#card .infinite-scroll-preloader .preloader").hide();
         // $("#card .ask-end").show();
         // $.reinitSwiper("#card");
-        var url = window.location.hash;
-        if (url.split("#")[1] == "card") {
+
+        if (type == "refresh") {
           $("#card .swiper-container").swiper();
         } else {
           $.reinitSwiper("#card");
         }
+
+        // $("#card .swiper-container").swiper();
 
         //初始化卡片数据
         // var cardId = $("#card .swiper-slide-active").attr("data-id");
@@ -2157,6 +2166,7 @@ function newfoodInit(lat,lng){
         console.log(error);
     }
   })
+}
 
   $(".card-look-food").on("click",function(){
     var askid = $("#card .swiper-slide-active").attr("data-askid");

@@ -729,7 +729,23 @@ router.post('/askdetail', function(req, res, next) {
     var askId = req.body.ask_id;
     if(!userName){
         var query = new AV.Query('AskMe');
+        query.include("vipCard");
+        query.include("vipCard.image");
+        query.include("vipCard.content");
+
         query.get(askId).then(function (ask) {
+            var vipCard = ask.get("vipCard");
+                
+            if(vipCard){
+                var vipCardImage = vipCard.get("image");
+                var vipCardContent = vipCard.get("content");
+            }else{
+                var vipCardImage = '';
+                var vipCardContent = '';
+            }
+            ask.attributes.vipCardImage = vipCardImage;
+            ask.attributes.vipCardContent = vipCardContent;
+
             var query = new AV.Query('Haved');
             var askPoint = AV.Object.createWithoutData('AskMe', askId);
             query.equalTo("ask", askPoint);
@@ -769,8 +785,22 @@ router.post('/askdetail', function(req, res, next) {
             return;
         } else  {
             var query = new AV.Query('AskMe');
+            query.include("vipCard");
+            query.include("vipCard.image");
+            query.include("vipCard.content");
             query.get(askId).then(function (ask) {
-
+                var vipCard = ask.get("vipCard");
+                
+                if(vipCard){
+                    var vipCardImage = vipCard.get("image");
+                    var vipCardContent = vipCard.get("content");
+                }else{
+                    var vipCardImage = '';
+                    var vipCardContent = '';
+                }
+                ask.attributes.vipCardImage = vipCardImage;
+                ask.attributes.vipCardContent = vipCardContent;
+                
                 var query = new AV.Query('Haved');
 
                 var askPoint = AV.Object.createWithoutData('AskMe', askId);

@@ -292,7 +292,7 @@
         font-size: 18px;
 
     }
-    .tag-img,.tag-tag,.tag-type,.add-img{
+    .tag-tag,.tag-type,.add-img{
         width: 80px;
         height: 80px;
         cursor: pointer;
@@ -321,12 +321,14 @@
         background: rgba(0,0,0,.8);
     }
     .send-img{
-        height: 80px;
-        line-height: 80px;
+        height: 180px;
+        line-height: 180px;
         margin-bottom: 10px;
     }
-    .send-img img{
-        margin-left: 10px;
+    .vipCard .send-img{
+        height: 180px;
+        line-height: 180px;
+        margin-bottom: 10px;
     }
     .send-img label{
         display: block;
@@ -662,14 +664,14 @@
     }
     .vipcard-list-content{
         display: none;
-        position: absolute;
+        position: fixed;
         width: 500px;
         height: 500px;
         background: white;
         border-radius: 10px;
         top:50%;
         left: 50%;
-        transform: translate(-50%,50%);
+        transform: translate(-50%,-50%);
     }
     .vipcard-list-content-ul{
         height: 400px;
@@ -709,6 +711,107 @@
     }
     .vipcard-checked{
         border: 1px solid #f8bd38 !important;
+    }
+    .vipcard .send-img,.vipcard .send-name{
+        height: 300px !important;
+        /*line-height: 300px;*/
+    }
+    .card-bg,.card-bg2{
+        margin-left: 50px;
+        width: 456px;
+        height: 300px;
+        background: url(/img/card/card-bg1.png);
+        background-size: cover;
+        text-align: center;
+        line-height: 340px;
+    }
+    .card-bg{
+        position: absolute;
+    }
+    .card-bg2{
+        margin-left: 380px;
+        background: url(/img/card/card-bg2.png);
+    }
+    .tag-img{
+        height: 80px;
+        cursor: pointer;
+        margin-top: 40px;
+    }
+    .send .tag-img{
+        height: 180px;
+        cursor: pointer;
+        margin-top: 40px;
+    }
+    .wenwo-logo1{
+        height: 30px;
+        position: absolute;
+        left:10px;
+        margin-top: 255px;
+        z-index: 2;
+    }
+    .wenwo-logo2{
+        height: 30px;
+        position: absolute;
+        z-index: 2;
+        margin-top: 115px;
+        margin-left: 114px !important;
+    }
+    .card-bg .card-dialog{
+        width: 150px;
+        height: 42px;
+        position: absolute;
+        margin-top: -91px;
+        background: rgba(255,255,255,.7);
+    }
+    .card-bg2 .card-dialog{
+        width: 131px;
+        height: 42px;
+        position: absolute;
+        margin-top: 109px;
+        margin-left: 325px;
+        /*margin-top: -91px;*/
+        background: rgba(255,255,255,.7);
+    }
+    .vipcard-content{
+        width: 280px !important;
+        /*line-height: 0;*/
+        /*background: none !important;
+        border:0 !important;
+        resize: none;*/
+    }
+    .card-bg2{
+        line-height: 0;
+    }
+    .content-box{
+        position: relative;
+        display: table-cell;
+        height: 140px;
+        left:125px;
+        top:50px;
+        vertical-align: middle;
+        text-align: left;
+        line-height: 25px;
+        font-size: 16.4px;
+        font-weight: bold;
+    }
+    .content-li{
+        height: 20px;
+        font-size: 14px;
+        display: table-cell;
+        vertical-align: middle;
+    }
+    .card-tip{
+        position: absolute;
+        font-size: 10.4px;
+        margin-top: 138px;
+        margin-left: 20px;
+        color: rgba(255, 255, 255, 0.44);
+    }
+    .wenwo-tip{
+        display: block;
+        position: absolute;
+        width: 50px;
+        margin:50px;
     }
 </style>
 <body>
@@ -833,6 +936,16 @@
         <input id="multiple" class="hidden" type="file" id="upload" multiple>
         <input id="dropbox" class="hidden" style="display:none">
     </div>
+
+    <!-- <canvas id="downImg" width="912" height="600"></canvas> -->
+    <!-- <canvas id="downImg2" width="912" height="600"></canvas> -->
+
+    <img src="/img/card/card-tip.png" style="display:none" id="hide-card-tip" alt="">
+    <img src="/img/card/card-bg1.png" style="display:none" id="hide-card-bg1" alt="">
+    <img src="/img/card/card-bg2.png" style="display:none" id="hide-card-bg2" alt="">
+    <img src="/img/card/wenwo-bg1.png" style="display:none" id="hide-wenwo-bg1" alt="">
+    <img src="/img/card/wenwo-bg2.png" style="display:none" id="hide-wenwo-bg2" alt="">
+
     <script type='text/javascript' src='/js/zepto.min.js' charset='utf-8'></script>
      <!-- <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=cb84c659c88a7cc83b935a009b3a9cfd&plugin=AMap.Geocoder"></script> -->
 
@@ -1070,7 +1183,10 @@
         $(".vipcard .btn_add").on("click",function(){
             $(".vipcard .no-data").remove();
             var length = $(".send-content-li").length;
-            li = '<div class="vipcard-send-content-li" data-num="1" data-type="add"><div class="send-img"><label>logo:</label><img class="tag-img" data-type="0" src="/img/add.jpg" alt=""></div><div class="send-name">  <label>优惠:</label><textarea class="vipcard-content"></textarea></div><div class="show-vipcontent"></div><button class="btn_save">保存</button><button class="btn_delete">删除</button></div>';
+            // li = '<div class="vipcard-send-content-li" data-num="1" data-type="add"><div class="send-img"><label>logo:</label><img class="tag-img" data-type="0" src="/img/add.jpg" alt=""></div><div class="send-name">  <label>优惠:</label><textarea class="vipcard-content"></textarea></div><div class="show-vipcontent"></div><button class="btn_save">保存</button><button class="btn_delete">删除</button></div>';
+
+            li = '<div class="vipcard-send-content-li" data-num="1" data-type="add"><div class="send-img"><label>logo:</label><div class="card-bg"><img class="tag-img" data-type="0" src="/img/add.jpg" alt=""><img src="/img/card/wenwo-bg1.png" class="wenwo-logo1" alt=""><div class="card-dialog"></div></div></div><div class="send-name"><label>优惠:</label><textarea class="vipcard-content"></textarea><div class="card-bg2"><img src="/img/card/card-tip.png" class="wenwo-tip" alt=""><div class="content-box"></div><img src="/img/card/wenwo-bg2.png" class="wenwo-logo2" alt=""><div class="card-dialog"></div><div class="card-tip">★最终解释权归「问我」所有</div></div></div><div class="show-vipcontent"></div><button class="btn_save">保存</button><button class="btn_delete">删除</button></div>';
+
             $(".vipcard-send-content-ul").append(li);
         })
 
@@ -2105,7 +2221,10 @@ function getVipCard(){
             var li = '';
             var checkli = '';
             for(var i = 0 ; i < data.length; i++){
-                li += '<div class="vipcard-send-content-li" data-id="'+data[i].objectId+'" id="'+data[i].objectId+'"><div class="send-img"><label>logo:</label><img class="tag-img" data-type="0" src="'+data[i].image+'" alt=""></div><div class="send-name">  <label>优惠:</label><textarea class="vipcard-content">'+data[i].content+'</textarea></div><div class="show-vipcontent"></div><button class="btn_save">保存</button><button class="btn_delete">删除</button></div>'
+                // li += '<div class="vipcard-send-content-li" data-id="'+data[i].objectId+'" id="'+data[i].objectId+'"><div class="send-img"><label>logo:</label><img class="tag-img" data-type="0" src="'+data[i].image+'" alt=""></div><div class="send-name">  <label>优惠:</label><textarea class="vipcard-content">'+data[i].content+'</textarea></div><div class="show-vipcontent"></div><button class="btn_save">保存</button><button class="btn_delete">删除</button></div>';
+
+                var content = data[i].content.replace(/\r/ig, "").replace(/\n/ig, "<br/>");
+                li += '<div class="vipcard-send-content-li" data-id="'+data[i].objectId+'" id="'+data[i].objectId+'"><div class="send-img"><label>logo:</label><div class="card-bg"><img class="tag-img" data-type="0" src="'+data[i].image+'" alt=""><img src="/img/card/wenwo-bg1.png" class="wenwo-logo1" alt=""><div class="card-dialog"></div></div></div><div class="send-name"><label>优惠:</label><textarea class="vipcard-content">'+data[i].content+'</textarea><div class="card-bg2"><img src="/img/card/card-tip.png" class="wenwo-tip" alt=""><div class="content-box">'+content+'</div><img src="/img/card/wenwo-bg2.png" class="wenwo-logo2" alt=""><div class="card-dialog"></div><div class="card-tip">★最终解释权归「问我」所有</div></div></div><div class="show-vipcontent"></div><button class="btn_save">保存</button><button class="btn_delete">删除</button></div>';
 
                 checkli = '<div class="vipcard-send-content-li" data-id="'+data[i].objectId+'" id="'+data[i].objectId+'"><div class="send-img"><img class="tag-img" data-type="0" src="'+data[i].image+'" alt=""></div>'
             }
@@ -2179,6 +2298,7 @@ $(".askme").on("click",".ask_btn_add_vipcard",function(){
     if(!$(".vipcard-list-content .vipcard-send-content-li").length){
         getVipCard();
     }
+    $(".vipcard-list-content-ul .vipcard-send-content-li").removeClass("vipcard-checked");
     $(".vipcard-list-content").attr("data-vipcardid","");
     $(".vipcard-list-content").attr("data-askid","");
     var id = $(this).attr("data-id");
@@ -2302,6 +2422,12 @@ $(".askme").on("click",".ask_btn_changetag",function(){
     $(".modal-text-input").val(text);
 })
 
+$(".vipcard").on("input change",".vipcard-content",function(){
+    var vipcontent = $(this).val();
+    console.log(vipcontent);
+    $(this).parent().find(".content-box").html(vipcontent.replace(/\r/ig, "").replace(/\n/ig, "<br/>"))
+})
+
 // 初始化数据
 // 基于准备好的dom，初始化echarts实例
 var myChart = echarts.init(document.getElementById('main'));
@@ -2330,6 +2456,78 @@ function initManageData(){
     })
 }
 initManageData();
+
+    // //会员卡正面
+    // var c = document.getElementById("downImg");
+    // var ctx = c.getContext("2d");
+    // var cwidth = c.width;
+    // var cheight = c.height;
+    // console.log(cwidth);
+    // ctx.imageSmoothingEnabled = false;
+    // var bg = document.getElementById("hide-card-bg1");
+    // var logo = new Image();
+    // logo.src = "http://o83np3eq2.bkt.clouddn.com/wenwo/1473697648940/frsx.png";
+    // var wenwologo = document.getElementById("hide-wenwo-bg1");
+    // var wenwologoWidth = wenwologo.naturalWidth;
+    // var wenwologoHeight = wenwologo.naturalHeight;
+    // var wenwologoScal = wenwologoWidth / wenwologoHeight;
+    // var wenwologoShowHeight = 40;
+
+    // var logoWidth = logo.naturalWidth;
+    // var logoHeight = logo.naturalHeight;
+    // var logoScal = logoWidth / logoHeight;
+    // var logoShowHeight = 150;
+
+    // logo.onload = function() {
+    //     ctx.drawImage(bg,0,0,cwidth,cheight);
+    //     ctx.drawImage(wenwologo,20,cheight-wenwologoShowHeight-20,wenwologoScal * wenwologoShowHeight,wenwologoShowHeight);
+    //     ctx.drawImage(logo,(cwidth - logoScal*logoShowHeight)/2,(cheight - logoShowHeight)/2,logoScal*logoShowHeight,logoShowHeight);
+    // }
+
+$(".title-bar").on("click",function(){
+    //会员卡反面
+    var c = document.getElementById("downImg2");
+    var ctx = c.getContext("2d");
+    var cwidth = c.width;
+    var cheight = c.height;
+    ctx.imageSmoothingEnabled = false;
+    var bg2 = document.getElementById("hide-card-bg2");
+    
+    var wenwologo2 = document.getElementById("hide-wenwo-bg2");
+    var wenwologoWidth = wenwologo2.naturalWidth;
+    var wenwologoHeight = wenwologo2.naturalHeight;
+    var wenwologoScal2 = wenwologoWidth / wenwologoHeight;
+    var wenwologoShowHeight2 = 40;
+
+    var cardTip = document.getElementById("hide-card-tip");
+    var cardTipWidth = cardTip.naturalWidth;
+    var cardTipHeight = cardTip.naturalHeight;
+    var cardTipScal = cardTipWidth / cardTipHeight;
+    var cardTipShowWidth = 100;
+
+    ctx.drawImage(bg2,0,0,cwidth,cheight);
+
+    ctx.drawImage(cardTip,100,100,cardTipShowWidth,cardTipShowWidth/cardTipScal);
+
+    ctx.fillStyle="white";
+    ctx.fillRect(cwidth-20-wenwologoShowHeight2*wenwologoScal2,cheight-wenwologoShowHeight2-20,wenwologoScal2 * wenwologoShowHeight2,wenwologoShowHeight2);
+    // 调节透明度
+    // ctx.globalAlpha=0.7;
+    // ctx.drawImage(wenwologo2,cwidth-20-wenwologoShowHeight2*wenwologoScal2,cheight-wenwologoShowHeight2-20,wenwologoScal2 * wenwologoShowHeight2,wenwologoShowHeight2);
+
+    // logo.onload = function() {
+    //     ctx.drawImage(bg2,0,0,cwidth,cheight);
+    //     ctx.drawImage(wenwologo2,20,cheight-wenwologoShowHeight2-20,wenwologoScal2 * wenwologoShowHeight2,wenwologoShowHeight2);
+    //     ctx.drawImage(cardTip,20,100,wenwologoScal2 * wenwologoShowHeight2,wenwologoShowHeight2);
+
+    //     // ctx.drawImage(logo,(cwidth - logoScal*logoShowHeight)/2,(cheight - logoShowHeight)/2,logoScal*logoShowHeight,logoShowHeight);
+    // }
+})
+    
+$("#downImg").on("click",function(){
+    window.location.href = c.toDataURL("image/png").replace("image/png", "image/octet-stream");
+})
+    
 function initDataOption(data){
     var today = new Array(),
         havedNum = new Array(),

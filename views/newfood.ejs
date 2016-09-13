@@ -641,9 +641,8 @@
 <script type='text/javascript' src='/js/sm-extend.min.js' charset='utf-8'></script>
 <!-- <script type='text/javascript' src='/js/sm.js' charset='utf-8'></script> -->
 <script>
-
-  $.showPreloader("正在加载");
-
+$.showPreloader("正在加载");
+$(function() {
   // 学姐活动逻辑
   var ssContentConfig = [
     {
@@ -684,6 +683,7 @@
   $(".md-modal,.md-overlay").on("click",function(){
     $(".md-show").removeClass("md-show");
   })
+});
 
   //初始化幻灯片
   // $(function() {
@@ -694,7 +694,6 @@
   //     autoplayDisableOnInteraction:false
   //   });
   // });
-
 
   //用户名
   var UserName = "<%= username %>";
@@ -727,33 +726,14 @@
     }
   }
 
-  // var date = new Date();
-  // $(".nav-list-day .nav-icon label").text(formatDate("d",date));
 
-
-  // var c = document.getElementById("myCanvas");
-  // var ctx = c.getContext("2d");
-  // // var img = $(".myImage")[0];
-  // var img = new Image();
-  // // img.setAttribute('crossOrigin', 'anonymous');
-  // img.crossOrigin = "Anonymous";
-  // img.src = 'http://o83np3eq2.bkt.clouddn.com/wenwo/1471255801394/苍蝇馆子.jpg';
-  
-  // var cwidth = c.width;
-  // var cheight = c.height;
-  // ctx.fillText("Hello World!",10,50);
-  // // ctx.drawImage(img, 0, 0,cwidth,cheight/2);
-  // img.onload = function() {
-  //   ctx.drawImage(img, 0, 0,cwidth,cheight/2);
-  // };
+$(window).on("load",function(){ 
 
   $(".card-down").on("click",function(){
     if(!$(".card-li-footer").attr("data-cardid")){
       return;
     }
 
-    $.showPreloader();
-    
     var id = $("#card .swiper-slide-active").attr("data-id");
     var cardImg = $("#card .swiper-slide-active .card-img").attr("data-url");
     var detail = $("#card .swiper-slide-active .card-detail").text();
@@ -1047,6 +1027,7 @@
   $(".downImg").on("click",function(){
     $.router.back();
   });
+});
 
 </script>
 <script type='text/javascript' src='/js/newfood.js' charset='utf-8'></script>

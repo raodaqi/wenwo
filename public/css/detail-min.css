@@ -441,6 +441,116 @@ body {
     font-weight: bold;
 }
 
-/*.detail-address{
-    text-decoration: underline;
-}*/
+.card-tip{
+    display: none;
+    position: absolute;
+    right:.7rem;
+    padding:.2rem;
+    color: white;
+    top:2.2rem;
+    width: 2rem;
+    /*height: 2rem;*/
+    border-radius: 2rem;
+    border-top-right-radius: 0;
+    border-top-left-radius:0; 
+    background-color: rgba(255, 255, 255, 0.75);
+    text-align: center;
+    z-index: 2;
+}
+.vip-card-img{
+    width: 100%;
+    /*margin-top: 1rem;*/
+}
+.card-content,.card-content-next{
+    position: absolute;
+    width: 25rem;
+    height: 9rem;
+    left:2.5%;
+    top:50%;
+    box-sizing: content-box;
+    webkit-transition: all ease 1000ms;
+    transition: all ease 1000ms;
+    z-index: 2;
+}
+.card-content-next{
+    transform: rotateY(180deg);
+    z-index: 1;
+}
+.card-bg-img,.card-bg-img2{
+    position: absolute;
+    text-align: center;
+}
+.wenwo-logo1{
+    height: 0;
+    position: absolute;
+    /*width: 30%;*/
+    /*height: 20%;*/
+    bottom:.5rem;
+    left:.5rem;
+}
+.wenwo-logo2{
+    height: 0;
+    position: absolute;
+    bottom:.5rem;
+    right:.5rem;
+}
+.card-dialog2 {
+    height: 0;
+    position: absolute;
+    bottom: .25rem;
+    right: 0;
+    background: rgba(255,255,255,.7);
+}
+.tag-img{
+    position: absolute;
+    /*width: 80%;*/
+    height: 28%;
+    left:50%;
+    top:50%;
+    transform: translate(-50%,-50%);
+}
+
+.card-dialog {
+    height: 0;
+    position: absolute;
+    bottom: .25rem;
+    left: 0;
+    background: rgba(255,255,255,.7);
+}
+.card-bg-tip{
+    position: absolute;
+    height: 44%;
+    top:16%;
+}
+.content-box {
+    position: absolute;
+    display: table-cell;
+    height: 50%;
+    width: 50%;
+    top: 20%;
+    font-weight: bold;
+    vertical-align: middle;
+    text-align: left;
+    line-height: 25px;
+    font-size: .7rem;
+    box-sizing: content-box;
+}
+
+.card-text-tip{
+    position: absolute;
+    bottom:.5rem;
+    left:.5rem;
+    font-size: .4rem;
+    color: rgba(255, 255, 255, 0.44);
+}
+
+.changeCard1{
+    transform: rotateY(180deg);
+    z-index: 1;
+    opacity: 0;
+}
+.changeCard2{
+    transform: rotateY(0deg);
+    z-index: 2;
+    opacity: 1;
+}

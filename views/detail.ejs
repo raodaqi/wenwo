@@ -41,6 +41,10 @@
         </div>
       </div>
 
+      <div class="card-tip">
+        <img src="/img/card/vip.png" class="vip-card-img" alt="">
+      </div>
+
       <!-- 这里是所有的信息列表 -->
       <div class="content">
         <div class="detail-pic-bg">
@@ -177,6 +181,30 @@
         </div>
         </div>
       </div>
+    <div>
+      <div class="md-modal md-effect-1" id="modal-1">
+        <div class="md-content">
+
+          <div class="card-content-next">
+            <img class="card-bg-img2" data-type="0" src="/img/card/card-bg2.png" alt="">   
+            <img class="card-bg-tip" data-type="0" src="/img/card/card-tip.png" alt="">
+            <div class="content-box"></div>
+            <div class="card-dialog2"></div>
+            <div class="card-text-tip">★最终解释权归「问我」所有</div>          
+            <img src="/img/card/wenwo-bg2.png" class="wenwo-logo2" alt="">        
+          </div>
+
+          <div class="card-content">
+            <img class="card-bg-img" data-type="0" src="/img/card/card-bg1.png" alt="">          
+            <img class="tag-img" data-type="0" src="" alt="">
+            <div class="card-dialog"></div>          
+            <img src="/img/card/wenwo-bg1.png" class="wenwo-logo1" alt="">        
+          </div>
+
+        </div>
+      </div>
+
+  <div class="md-overlay"></div>
   <% }else{ %>
     <div class="error-content content pull-to-refresh-content" data-ptr-distance="55">
       <div class="pull-to-refresh-layer">
@@ -193,6 +221,71 @@
   var AskId = "<%=askid%>";
   var UserName = "<%=username%>";
   var URL = "";
+  // $("#modal-1").addClass("md-show");
+
+  $(function(){
+    //初始化会员卡UI
+    function initVIPCard(){
+      var width = $(window).width();
+      var cardWidth = width > 500 ? 500 : width * 0.95;
+      var cardHeight = cardWidth / 1.52;
+      $(".card-content,.card-bg-img,.card-bg-img2,.card-content-next").css({
+        'width': cardWidth,
+        'height': cardHeight
+      })
+       $(".card-content,.card-content-next").css({
+        'margin-top':-cardHeight/2
+      })
+      $(".wenwo-logo1,.wenwo-logo2").css({
+        'height': cardHeight * 0.1
+      })
+      $(".card-dialog,.card-dialog2").css({
+        'height': cardHeight * 0.1 + 10,
+        'width' : cardHeight * 0.41 + 20
+      })
+      $(".content-box").css({
+        'height': cardHeight * 0.5,
+        'width' : cardWidth * 0.5,
+        'left'  : cardHeight * 0.40
+      })
+      $(".card-bg-tip").css({
+        'left': cardHeight * 0.16
+      })
+    }
+    initVIPCard();
+
+    $("#modal-1").on("click",function(){
+      if(!$(".card-content-next").hasClass("changeCard2")){
+        $(".card-content-next,.card-content").removeClass("changeCard2");
+        $(".card-content-next,.card-content").removeClass("changeCard1");
+        $(".card-content").addClass("changeCard1");
+        $(".card-content-next").addClass("changeCard2");
+      }else{
+        $(".card-content-next,.card-content").removeClass("changeCard2");
+        $(".card-content-next,.card-content").removeClass("changeCard1");
+        $(".card-content-next").addClass("changeCard1");
+        $(".card-content").addClass("changeCard2");
+      }
+      // $(".card-content-next,.card-content").removeClass("changeCard2");
+      // $(".card-content-next,.card-content").removeClass("changeCard1");
+      // $(".card-content").addClass("changeCard1");
+      // $(".card-content-next").addClass("changeCard2");
+    })
+    // $("#modal-1").on("click",".card-content-next",function(){
+    //   $(".card-content-next,.card-content").removeClass("changeCard2");
+    //   $(".card-content-next,.card-content").removeClass("changeCard1");
+    //   $(".card-content-next").addClass("changeCard1");
+    //   $(".card-content").addClass("changeCard2");
+    // })
+  })
+  $(".card-tip").on("click",function(){
+    $("#modal-1").addClass("md-show");
+  })
+
+  $(".md-overlay").on("click",function(){
+    $("#modal-1").removeClass("md-show");
+  })
+
 </script>
 <script type='text/javascript' src='/js/detail.js' charset='utf-8'></script>
 </html>
