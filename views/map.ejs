@@ -81,7 +81,7 @@
   </div>
 </body>
 <% include footer.ejs %>
-<script type="text/javascript" src="/js/wxlocation.js"></script>
+<script type="text/javascript" src="/js/wxlocation?v=2.js"></script>
   <script>
   $(".backDetail").on("click",function(){
     window.history.back(-1);
@@ -143,6 +143,7 @@
 
   initLocation("map",{
     success:function(myLng,myLat){
+      alert(myLng+"/"+myLat);
       if(myLng && myLat){
         initMap(myLat,myLng);
       }else{
@@ -154,6 +155,7 @@
       initMap(30.580596,103.982984);
     }
   });
+
   if(window.location.port == 3000){
     //测试逻辑
     // newfoodInit(30.580596,103.982984);
