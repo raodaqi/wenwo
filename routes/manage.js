@@ -42,7 +42,6 @@ router.get('/token', function(req, res) {
 //查找
 var getLookUser = function(db, callback) {
     var userklook = db.collection('UserLook').find();
-    console.log(userklook);
     userklook.count(function(err, count) {
       assert.equal(err, null);
       if (err) {
@@ -452,7 +451,7 @@ function getManageData(callback){
     });
 }
 
-function saveToday(callback){
+function saveToday(lookUserNum){
     getManageData({
         success:function(data){
             var date = new Date();
@@ -468,6 +467,10 @@ function saveToday(callback){
                     var manageData = new ManageData();
                       // 设置名称
                         manageData.set('userNum',data.userNum);
+                        if(lookUserNum){
+                            lookUserNum = parseInt(lookUserNum);
+                            manageData.set('lookUserNum',lookUserNum); 
+                        }
                         manageData.set('askNum',data.askNum);
                         manageData.set('havedNum',data.havedNum);
                         manageData.set('buyNum',data.buyNum);
@@ -962,9 +965,16 @@ rule.hour = 0;rule.minute = 0;rule.second = 10;
 
 //处理要做的事情
  var j = schedule.scheduleJob(rule, function(){
-    saveToday();
-    //清除今天查看人数
-    removeLookUser();
+
+    MongoClient.connect(url, function(err, db) {
+      assert.equal(null, err);
+      getLookUser(db, function(result) {
+        saveToday(result.data);
+        //清除今天查看人数Look
+        removeLookUser();
+        db.close();
+      });
+    });
  });
 
 module.exports = router;
