@@ -844,9 +844,9 @@
                 <div class="yestoday">昨<label class="color">--</label></div>
                 <div class="today">今<label class="color">--</label></div>
             </div>
-            <div class="deleteNum data-li">
+            <div class="lookUserNum data-li">
                 <div class="li-num">--</div>
-                <div class="li-title">删除数量</div>
+                <div class="li-title">活跃用户</div>
                 <div class="yestoday">昨<label class="color">--</label></div>
                 <div class="today">今<label class="color">--</label></div>
             </div>
@@ -865,7 +865,8 @@
             </div>
             <div class="list manage-content">
                 <div class="content-title data" style="display: block">
-                     <div id="main" style="width: 850px;height:600px;"></div>
+                    <div id="lookUser" style="width: 850px;height:600px;"></div>
+                    <div id="main" style="width: 850px;height:600px;"></div>
                 </div>
                 <div class="content-title send" style="display: none">
                 <div class="carousel-content-tip">图片，是否显示按钮点击后不会自动保存，需要点击保存才会保存，图片最好先压缩下才上传。<a target="_black" href="https://tinypng.com" class="red">图片压缩网站</a></div>
@@ -993,21 +994,24 @@
                     $(".userNum .li-num").text(data.userNum);
                     $(".buyNum .li-num").text(data.buyNum);
                     $(".havedNum .li-num").text(data.havedNum);
-                    $(".deleteNum .li-num").text(data.deleteNum);
                     $(".askNum .li-num").text(data.askNum);
+                    //每天访问人数
+                    $(".lookUserNum .li-num").text(data.lookUserNum);
 
                     //计算昨日新增。今日新增
                     $(".userNum .yestoday .color").text(dayData[0].userNum - dayData[1].userNum);
                     $(".buyNum .yestoday .color").text(dayData[0].buyNum - dayData[1].buyNum);
                     $(".havedNum .yestoday .color").text(dayData[0].havedNum - dayData[1].havedNum);
-                    $(".deleteNum .yestoday .color").text(dayData[0].deleteNum - dayData[1].deleteNum);
                     $(".askNum .yestoday .color").text(dayData[0].askNum - dayData[1].askNum);
+
+                    $(".lookUserNum .yestoday .color").text(dayData[0].lookUserNum ? dayData[0].lookUserNum : 0);
 
                     $(".userNum .today .color").text(data.userNum - dayData[0].userNum);
                     $(".buyNum .today .color").text(data.buyNum - dayData[0].buyNum);
                     $(".havedNum .today .color").text(data.havedNum - dayData[0].havedNum);
-                    $(".deleteNum .today .color").text(data.deleteNum - dayData[0].deleteNum);
                     $(".askNum .today .color").text(data.askNum - dayData[0].askNum);
+
+                    $(".lookUserNum .today").hide();
                 }
             },
             error:function(error){
@@ -2433,6 +2437,9 @@ $(".vipcard").on("input change",".vipcard-content",function(){
 var myChart = echarts.init(document.getElementById('main'));
 myChart.showLoading();
 
+var myLook = echarts.init(document.getElementById('lookUser'));
+myLook.showLoading();
+
 function initManageData(){
     var data = {
     },
@@ -2444,7 +2451,9 @@ function initManageData(){
                 var option = initDataOption(result.data);
                  // 使用刚指定的配置项和数据显示图表。
                 myChart.hideLoading();
-                myChart.setOption(option);
+                myChart.setOption(option[0]);
+                myLook.hideLoading();
+                myLook.setOption(option[1]);
             }else{
             }
         },
@@ -2534,6 +2543,7 @@ function initDataOption(data){
         userNum =  new Array(),
         askNum =  new Array(),
         deleteNum = new Array(),
+        lookUserNum = new Array(),
         buyNum =  new Array();
     for(var i = 0; i < data.length;i++){
 
@@ -2543,8 +2553,9 @@ function initDataOption(data){
         deleteNum.push(data[i].deleteNum);
         buyNum.push(data[i].buyNum);
         today.push(data[i].today);
+        lookUserNum.push(data[i].lookUserNum ? data[i].lookUserNum : 0);
     }
-    option = {
+    var option = {
         title: {
             text: '后台数据'
         },
@@ -2639,7 +2650,57 @@ function initDataOption(data){
             }
         ]
     };
-    return option;
+    var option2 = {
+        title: {
+            text: '活跃用户数据'
+        },
+        tooltip : {
+            trigger: 'axis'
+        },
+        legend: {
+            data:['活跃用户数量']
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis : [
+            {
+                type : 'category',
+                boundaryGap : false,
+                data : today
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value'
+            }
+        ],
+        color:['#749f83',  '#ca8622'],
+        series : [
+            {
+                name:'活跃用户数量',
+                type:'line',
+                stack: '总量',
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'top'
+                    }
+                },
+                areaStyle: {normal: {}},
+                data:lookUserNum
+            }  
+        ]
+    };
+    return [option,option2];
 }
 </script>
 </body>

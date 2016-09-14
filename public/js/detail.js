@@ -109,7 +109,7 @@
 
                   //判断是否有会员卡
                   if(data.vipCardImage && data.vipCardContent){
-                    // $(".card-tip").show();
+                    $(".card-tip").show();
                     $(".card-content .tag-img").attr("src",data.vipCardImage);
                     var content = data.vipCardContent.replace(/\r/ig, "").replace(/\n/ig, "<br/>");
                     var contentArray = content.split("<br/>");

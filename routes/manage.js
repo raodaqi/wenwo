@@ -525,6 +525,7 @@ router.get('/getdata', function(req, res, next) {
         askNum,
         havedNum,
         buyNum,
+        lookUserNum,
         deleteNum;
 
     var query = new AV.Query('UserInfo');
@@ -551,26 +552,34 @@ router.get('/getdata', function(req, res, next) {
                     query.count().then(function (count) {
                         //ask的数量
                         deleteNum = count;
-                        var data = {
-                            userNum   : userNum,
-                            askNum    : askNum,
-                            havedNum  : havedNum,
-                            buyNum    : buyNum,
-                            deleteNum : deleteNum
-                        }
-                        // saveToday(data);
-                        var query = new AV.Query('ManageData');
-                        query.descending('createdAt');
-                        query.limit(2);// 最多返回 2 条结果
-                        query.find().then(function (results) {
-                            var result = {
-                                code : 200,
-                                data : data,
-                                dayData :  results,
-                                message : "success"
+                        MongoClient.connect(url, function(err, db) {
+                          assert.equal(null, err);
+                          getLookUser(db, function(result) {
+                            lookUserNum = parseInt(result.data);
+                            var data = {
+                                userNum     : userNum,
+                                askNum      : askNum,
+                                havedNum    : havedNum,
+                                buyNum      : buyNum,
+                                deleteNum   : deleteNum,
+                                lookUserNum : lookUserNum
                             }
-                            res.send(result);
-                        })
+                            // saveToday(data);
+                            var query = new AV.Query('ManageData');
+                            query.descending('createdAt');
+                            query.limit(2);// 最多返回 2 条结果
+                            query.find().then(function (results) {
+                                var result = {
+                                    code : 200,
+                                    data : data,
+                                    dayData :  results,
+                                    message : "success"
+                                }
+                                res.send(result);
+                            })
+                            db.close();
+                          });
+                        });
                     });
                 });
             });
