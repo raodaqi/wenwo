@@ -141,21 +141,19 @@
   var lat = "<%= lat %>";
   var lng = "<%= lng %>";
 
-  initLocation({
+  initLocation("",{
     success:function(myLng,myLat){
       if(myLng && myLat){
-        alert(myLng);
         initMap(myLat,myLng);
       }else{
         $.toast("定位失败");
         initMap(30.580596,103.982984);
-      }
-      
+      } 
     },
     error:function(error){
       initMap(30.580596,103.982984);
     }
-  })
+  });
   if(window.location.port == 3000){
     //测试逻辑
     // newfoodInit(30.580596,103.982984);
