@@ -6,8 +6,18 @@ var router = require('express').Router();
 var AV = require('leanengine');
 var Admin = AV.Object.extend('AdminAccount');
 var schedule = require("node-schedule");
-
 var qiniu = require("qiniu");
+
+//添加本地数据库
+var MongoClient = require('mongodb').MongoClient;
+var assert = require('assert');
+//连接数据库
+var url = 'mongodb://localhost:27017/wenwo';
+// MongoClient.connect(url, function(err, db) {
+//   assert.equal(null, err);
+//   db.close();
+// });
+
 
 //需要填写你的 Access Key 和 Secret Key
 qiniu.conf.ACCESS_KEY = 'DU0ZyfvC06whs4kFM65I4uGlnDkCeyLMV6ct4NPF';
@@ -29,6 +39,120 @@ router.get('/token', function(req, res) {
     }
 });
 
+//查找
+var getLookUser = function(db, callback) {
+    var userklook = db.collection('UserLook').find();
+    console.log(userklook);
+    userklook.count(function(err, count) {
+      assert.equal(err, null);
+      if (err) {
+        var result = {
+            code     : 400,
+            message  : err 
+        }
+        callback(result);
+        
+      } else {
+        var result = {
+            code     : 400,
+            data     : count,
+            message  : "success" 
+         }
+         callback(result);
+      }
+   });
+}
+
+//添加
+var addLookUser = function(db,data, callback) {
+    var username = data.username;
+    var userklook = db.collection('UserLook').find({ "username": username });
+    userklook.count(function(err, count) {
+      assert.equal(err, null);
+      if(err){
+        var result = {
+            code    : 400,
+            message : "query error"
+        }
+        callback(result);
+        return;
+      }
+
+      if (count) {
+        var result = {
+            code    : 600,
+            message : "username exit"
+        }
+        callback(result);
+      } else {
+        //数据为空
+        //添加数据
+        db.collection('UserLook').insertOne(data, function(err, result) {
+            assert.equal(err, null);
+            if(err){
+                var result = {
+                    code    : 400,
+                    message : "insert error"
+                }
+            }else{
+                var result = {
+                    code    : 200,
+                    message : "success"
+                }
+            }
+            callback(result);
+        });
+    }
+   });
+}
+
+//清空数据
+var removeLookUser = function() {
+    MongoClient.connect(url, function(err, db) {
+    assert.equal(null, err);
+        db.collection('UserLook').deleteMany( {}, function(err, results) {
+            if (err) {
+                var result = {
+                    code     : 400,
+                    message  : err 
+                }
+                console.log(result);
+                
+            } else {
+                var result = {
+                    code     : 200,
+                    message  : "success" 
+                }
+                 console.log(result);
+            }
+              db.close();
+        });
+    });
+};
+
+router.get('/addlookuser', function(req, res) {
+    var username = req.query.username;
+    var data = {
+        username : username
+    }
+    MongoClient.connect(url, function(err, db) {
+      assert.equal(null, err);
+      addLookUser(db,data,function(result) {
+        res.send(result);
+        db.close();
+      });
+    });
+});
+
+router.get('/getlookuser', function(req, res) {
+    MongoClient.connect(url, function(err, db) {
+      assert.equal(null, err);
+      getLookUser(db, function(result) {
+        res.send(result);
+        db.close();
+      });
+    });
+});
 
 router.get('/getmanagedata', function(req, res) {
  
@@ -839,6 +963,8 @@ rule.hour = 0;rule.minute = 0;rule.second = 10;
 //处理要做的事情
  var j = schedule.scheduleJob(rule, function(){
     saveToday();
+    //清除今天查看人数
+    removeLookUser();
  });
 
 module.exports = router;
