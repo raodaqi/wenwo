@@ -141,10 +141,8 @@
   var lat = "<%= lat %>";
   var lng = "<%= lng %>";
 
-  alert("start");
-  initLocation("map",{
-    success:function(myLng,myLat){
-      alert(myLng+"/"+myLat);
+  initLocation("food",{
+    success:function(myLng, myLat){
       if(myLng && myLat){
         initMap(myLat,myLng);
       }else{
