@@ -133,7 +133,8 @@
     map.setZoomAndCenter(16, [lng, lat]);
   }) 
 
-  var marker;
+  var marker,
+      map;
   var icon = new AMap.Icon({
     image: "/img/edit/marker.png",
   });
@@ -143,6 +144,7 @@
   initLocation({
     success:function(myLng,myLat){
       if(myLng && myLat){
+        alert(myLng);
         initMap(myLat,myLng);
       }else{
         $.toast("定位失败");
