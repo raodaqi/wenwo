@@ -141,7 +141,7 @@
   var lat = "<%= lat %>";
   var lng = "<%= lng %>";
 
-  initLocation("",{
+  initLocation("map",{
     success:function(myLng,myLat){
       if(myLng && myLat){
         initMap(myLat,myLng);
