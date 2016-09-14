@@ -775,6 +775,7 @@ textarea {
     text-align: center;
     background-color: white;
     box-shadow: 0 0 5px rgba(0,0,0,.2);
+    color: #666;
 }
 .my-location label{
     font-size: 1rem;
