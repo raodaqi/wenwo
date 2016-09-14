@@ -6,5 +6,30 @@
 <script>
 	$(function() {
 	    FastClick.attach(document.body);
+
+	    //添加用户量
+	     if(history.length < 2 && UserName){ 	
+	      	var type = "GET",
+	      		url = "/manage/addlookuser",
+	      		data = {
+	      			username : UserName
+	      		};
+	        $.ajax({
+		      type: type,
+		      url: url,
+		      data: data,
+		      dataType: "json",
+		      success:function(result){
+		        if(result.code == 200){
+		          console.log(result.message);
+		        }else{
+		        	console.log(result.message);
+		        }
+		      },
+		      error:function(error){
+		        $.toast("服务器出错");
+		      }
+		    })  
+	    }
 	});
 </script>

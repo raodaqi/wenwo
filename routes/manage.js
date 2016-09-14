@@ -965,7 +965,6 @@ rule.hour = 0;rule.minute = 0;rule.second = 10;
 
 //处理要做的事情
  var j = schedule.scheduleJob(rule, function(){
-
     MongoClient.connect(url, function(err, db) {
       assert.equal(null, err);
       getLookUser(db, function(result) {
