@@ -139,22 +139,16 @@
   });
   var lat = "<%= lat %>";
   var lng = "<%= lng %>";
-  if(lat && lng){
-    //详情地点显示
-    map = new AMap.Map('container', {
-      resizeEnable: true,
-      zoom:13,
-      center: [lng,lat]
-    });
-
-    map.plugin(["AMap.ToolBar"], function() {
-      map.addControl(new AMap.ToolBar());
-    });
-  }
 
   initLocation({
     success:function(myLng,myLat){
-      initMap(myLng,myLat);
+      if(myLng && myLat){
+        initMap(myLat,myLng);
+      }else{
+        $.toast("定位失败");
+        initMap(30.580596,103.982984);
+      }
+      
     },
     error:function(error){
       initMap(30.580596,103.982984);
@@ -171,49 +165,20 @@ function initMap(myLat,myLng){
   $(".my-location").attr("lat",myLat);
   $(".my-location").attr("lng",myLng);
   $(".my-location").show();
+  if(lat && lng){
+    //详情地点显示
+    map = new AMap.Map('container', {
+      resizeEnable: true,
+      zoom:13,
+      center: [lng,lat]
+    });
 
-  if(navigator.geolocation) { // 判断设备是否支持定位
-  　　navigator.geolocation.getCurrentPosition(function(position) { 　　
-        //步行导航
-        var myLng = position.coords.longitude;
-        var myLat = position.coords.latitude;
-        initRoad(myLng,myLat,lng,lat);
-  　　}, function(error) {
-          if(myLng && myLat){
-            //步行导航
-            initRoad(myLng,myLat,lng,lat);
-          }else{
-            marker = new AMap.Marker({
-              map : map,
-              icon : icon,
-              position: [lng,lat],
-              draggable: false,
-              cursor: 'move',
-              raiseOnDrag: false,
-              clickable:false
-            });
-            marker.setMap(map);
-          }
-  　　}, {
-  　　　　maximumAge: 0
-  　　});
-　　}else {
-　　　if(myLng && myLat){
-        //步行导航
-        initRoad(myLng,myLat,lng,lat);
-      }else{
-        marker = new AMap.Marker({
-          map : map,
-          icon : icon,
-          position: [lng,lat],
-          draggable: false,
-          cursor: 'move',
-          raiseOnDrag: false,
-          clickable:false
-        });
-        marker.setMap(map);
-      }
-　　}
+    map.plugin(["AMap.ToolBar"], function() {
+      map.addControl(new AMap.ToolBar());
+    });
+  }
+  //步行导航
+  initRoad(myLng,myLat,lng,lat);
 }
   </script>
 </html>
