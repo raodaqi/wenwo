@@ -383,7 +383,8 @@
       var lat = $(this).attr("data-geox");
       var lng = $(this).attr("data-geoy");
       if (lat && lng) {
-          window.location.href = "/map?lat=" + lat + "&lng=" + lng;
+        $.showPreloader("正在跳转");
+        window.location.href = "/map?lat=" + lat + "&lng=" + lng;
       }
   })
 

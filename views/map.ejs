@@ -81,7 +81,6 @@
   </div>
 </body>
 <% include footer.ejs %>
-<script type="text/javascript" src="/js/wxlocation?v=2.js"></script>
   <script>
   $(".backDetail").on("click",function(){
     window.history.back(-1);
@@ -135,6 +134,7 @@
 
   var marker = '',
       map = '';
+  //在ios上对于map为空需要赋初值
   var icon = new AMap.Icon({
     image: "/img/edit/marker.png",
   });
