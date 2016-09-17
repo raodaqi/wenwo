@@ -388,8 +388,20 @@
         <div class="preloader"></div>
         <div class="pull-to-refresh-arrow"></div>
       </div>
-      <div class="wenwo-ul">
+      <div class="wenwo-ul"></div>
+
+      <div class="want-content">
+        <img src="/img/food/want-empty.svg" class="empty-img" alt="">
+        <div class="empty-title">没有这类标签的美食</div>
+        <!-- <div class="empty-button" data-href="edit">去</div> -->
+        <div class="wenwo-logo-content">
+          <img src="/img/wenwo.svg" class="wenwo-logo" alt="">
+          <div class="wenwo-title">
+            发现身边美食
+          </div>
+        </div>
       </div>
+
       <div class="infinite-scroll-preloader" >
         <div class="preloader"></div>
         <div class="ask-end" style="display:none">启禀陛下，您已经到底了。</div>
@@ -505,8 +517,20 @@
       <h1 class="title">分类查找</h1>
     </header>
 
-    <div class="tag-content">
+    <!-- <div class="tag-content"> -->
+    <div class="tag-content content pull-to-refresh-content infinite-scroll infinite-scroll-bottom" data-ptr-distance="55" data-distance="100">
+      <!-- 默认的下拉刷新层 -->    
+      <div class="pull-to-refresh-layer">
+        <div class="preloader-tip">刷新成功</div>
+        <div class="preloader"></div>
+        <div class="pull-to-refresh-arrow"></div>
+      </div>
+
       <div class="wenwo-ul">
+      </div>
+      <div class="infinite-scroll-preloader" >
+        <div class="preloader"></div>
+        <div class="ask-end" style="display:none">数据加载失败，下拉重新加载。</div>
       </div>
     </div>
   </div>
@@ -536,7 +560,7 @@
         <span class="icon icon-left"></span>
       </a>
       <div class="search-content-box">
-        <input type="text" class="keyword" >
+        <input type="text" class="keyword" placeholder="输入关键词搜索">
         <span class="iconfont icon-x"></span>
       </div>
       <div class="search-button">搜索</div>

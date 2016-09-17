@@ -417,6 +417,8 @@ body {
     width: 100%;
     text-align: center;
     top: 15px;
+    font-size: .67rem;
+    color: #72848b;
     display: none
 }
 
@@ -495,7 +497,7 @@ body {
 }
 
 .pull-to-refresh-arrow {
-    display: none
+    /*display: none*/
 }
 
 .distance {
@@ -1377,6 +1379,7 @@ html {
     border: 0;
 }
 .tagfind-tag-tip{
+    position: absolute;
     width: 100%;
     font-size: .67rem;
     color: #72848b;
@@ -1542,7 +1545,7 @@ html {
     left: 0;
     overflow: auto;
 }
-.wenwo-logo-content{
+#me .wenwo-logo-content{
     position: relative;
     bottom:0;
     margin:.2rem 0;

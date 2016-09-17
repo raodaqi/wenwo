@@ -20,26 +20,30 @@ router.get('/getcarouselinfo', function(req, res, next) {
         query.descending('likeNum');
     }
     query.find().then(function (carouselList) {
-        var query = new AV.Query('TopicLike');
-        query.equalTo("by", userName);
-        query.find().then(function (topicLikes) {
-            for(var i = 0; i < carouselList.length; i++){
-                var flag = 0;
-                for ( var k = 0; k < topicLikes.length; k++) {
-                    if (topicLikes[k].get('carousel').id == carouselList[i].id) {
-                        flag ++;
-                        carouselList[i].set('liked', 1);
-                        break;
+        if(userName){
+            var query = new AV.Query('TopicLike');
+            query.equalTo("by", userName);
+            query.find().then(function (topicLikes) {
+                for(var i = 0; i < carouselList.length; i++){
+                    var flag = 0;
+                    for ( var k = 0; k < topicLikes.length; k++) {
+                        if (topicLikes[k].get('carousel').id == carouselList[i].id) {
+                            flag ++;
+                            carouselList[i].set('liked', 1);
+                            break;
+                        }
+                    }
+                    if (flag == 0) {
+                        carouselList[i].set('liked', 0);
                     }
                 }
-                if (flag == 0) {
-                    carouselList[i].set('liked', 0);
-                }
-            }
+                res.send({code:200, data:carouselList, message:'操作成功'});
+            },function(){
+                res.send({code:400, message:'请求失败'});
+            })
+        }else{
             res.send({code:200, data:carouselList, message:'操作成功'});
-        },function(){
-            res.send({code:400, message:'请求失败'});
-        })
+        }
     },function (carouselList) {
         res.send({code:400, message:'请求失败'});
     });

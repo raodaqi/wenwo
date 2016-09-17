@@ -661,12 +661,7 @@ router.post('/foodlikelist', function(req, res, next) {
             var query = new AV.Query('FoodLike');
 
             query.equalTo("by", userName);
-
-
             query.include('ask');
-            
-            
-
             if (size != null) {
                 query.limit(size);
             }

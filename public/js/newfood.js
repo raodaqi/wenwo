@@ -261,22 +261,24 @@ function newfoodInit(lat,lng){
     })
   }
 
-
-  getCarouselInfo({},{
-    success:function(result){
-        var data = result.data;
-        var li = '';
-        for(var i = 0 ; i < data.length; i++){
-            li += '<div class="swiper-slide" data-href="'+data[i].carouselClickURL+'"><img src="'+data[i].carouselImage+'" alt=""></div>';
-        }
-        $("#find .swiper-wrapper").empty().append(li);
-        //调用系统的init方法
-        sw.init();
-    },
-    error:function(error){
-        console.log(error);
-    }
-  })
+  function initCarousel(){
+    getCarouselInfo({},{
+      success:function(result){
+          var data = result.data;
+          var li = '';
+          for(var i = 0 ; i < data.length; i++){
+              li += '<div class="swiper-slide" data-href="'+data[i].carouselClickURL+'"><img src="'+data[i].carouselImage+'" alt=""></div>';
+          }
+          $("#find .swiper-wrapper").empty().append(li);
+          //调用系统的init方法
+          sw.init();
+      },
+      error:function(error){
+          console.log(error);
+      }
+    })
+  }
+  initCarousel();
 
   // 添加'refresh'监听器
   $(document).on('refresh', '.pull-to-refresh-content', function(e) {
@@ -465,8 +467,11 @@ function newfoodInit(lat,lng){
             initCardList();
             break;
           case "tagfind":
-              initTagPage();
-              break;
+            initTagPage();
+            break;
+          case "search":
+            initTagPage();
+            break;
           case "slocation":
             loadLocationList();
             break;
@@ -1280,7 +1285,8 @@ function newfoodInit(lat,lng){
               // 生成新条目的HTML
               var html = '';
               var data = result.data;
-              if (data) {
+              if (data.length) {
+                console.log(data);
                   for (var i = 0; i < data.length; i++) {
 
                       var lat1 = data[i].GeoX;
@@ -1304,6 +1310,8 @@ function newfoodInit(lat,lng){
                   // $.attachInfiniteScroll($('#tag .infinite-scroll'));
                   // 删除加载提示符
                   // $('.infinite-scroll-preloader').remove();
+                  $(".change-sort").show();
+                  $("#tag .want-content").hide();
                   $("#tag .ask-end").hide();
                   $("#tag .infinite-scroll-preloader .preloader").css("display", "inline-block");
                   getTagLoad = 0;
@@ -1322,9 +1330,13 @@ function newfoodInit(lat,lng){
                 // $.detachInfiniteScroll($('#new .infinite-scroll'));
                 // 删除加载提示符
                 // $('.infinite-scroll-preloader').remove();
-                $("#tag .infinite-scroll-preloader .preloader").hide();
-                $("#tag .ask-end").show();
+                // $("#tag .infinite-scroll-preloader .preloader").hide();
+                // $("#tag .ask-end").show();
                 // $('.infinite-scroll-preloader').append("")
+                $(".change-sort").hide();
+                $("#tag .infinite-scroll-preloader .preloader").hide();
+                $("#tag .ask-end").hide();
+                $("#tag .want-content").show();
                 getTagLoad = 1;
                 return;
               }
@@ -1513,7 +1525,8 @@ function newfoodInit(lat,lng){
                 // var data = result.data;
                 var type = result.type;
                 // console.log(type);
-                var ul = '<div class="tagfind-tag-tip" style="top:10px">点击标签，筛选美食</div>';
+                // var ul = '<div class="tagfind-tag-tip" style="top:0px">点击标签，筛选美食</div>';
+                var ul = '';
                 var j = 0;
                 var lastKey = '';
                 var topNum = 44;
@@ -1633,7 +1646,7 @@ function newfoodInit(lat,lng){
                   tagLi += '<div class="hot-tag-li">'+type["热门"][i].tagName+'</div>';
                 }
                 $(".hot-tag-content").empty().append(tagLi);
-                
+
                 $.pullToRefreshDone('.pull-to-refresh-content');
                 $("#tagfind .wenwo-ul").empty().append(ul);
                 $("#tagfind .infinite-scroll-preloader .preloader").hide();
@@ -1645,8 +1658,6 @@ function newfoodInit(lat,lng){
           }
       })
   }
-
-  initTagPage();
 
   $(".tab-item").on("click", function() {
       // console.log($());
@@ -1698,6 +1709,15 @@ function newfoodInit(lat,lng){
   //   $.showPreloader("正在跳转");
   //   window.location.href="/edit";
   // })
+
+  //监听搜索按钮
+  $("#find").on("click",".header-search",function(){
+    var href = $(this).attr("data-href");
+    if(href.split("#")[1] == "search"){
+      initTagPage();
+    }
+  })
+
   $(".empty-button,.nav-list").on("click", function() {
       var href = $(this).attr("data-href");
       var id = $(".page-current")[0].id;
@@ -2463,8 +2483,10 @@ function initCardList(type){
 
   var likeTimer;
   $("#like .change-sort").on("click",function(){
+    // if(!$("#like .wenwo-li").length){
+    //   return;
+    // }
     clearTimeout(tagTimer);
-
     var tagRange = $(this).attr("data-range");
     $("#like").attr("data-range",tagRange);
     localStorage["likeRange"] = tagRange;
