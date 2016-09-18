@@ -2543,6 +2543,7 @@ function initDataOption(data){
         askNum =  new Array(),
         deleteNum = new Array(),
         lookUserNum = new Array(),
+        lookToday = new Array(),
         buyNum =  new Array();
 
     //除去之前没有存的浏览人数
@@ -2558,9 +2559,11 @@ function initDataOption(data){
 
         if(!deleteLookUserNum){
             lookUserNum.push(data[i].lookUserNum ? data[i].lookUserNum : 0);
+            lookToday.push(data[i].today);
         }else if(data[i].lookUserNum){
             deleteLookUserNum = 0;
             lookUserNum.push(data[i].lookUserNum ? data[i].lookUserNum : 0);
+            lookToday.push(data[i].today);
         } 
     }
     var option = {
@@ -2683,7 +2686,7 @@ function initDataOption(data){
             {
                 type : 'category',
                 boundaryGap : false,
-                data : today
+                data : lookToday
             }
         ],
         yAxis : [
