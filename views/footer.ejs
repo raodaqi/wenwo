@@ -7,8 +7,12 @@
 	$(function() {
 	    FastClick.attach(document.body);
 
+	    var date = new Date();
+	    var todayStr = formatDate("y-m-d",date);
+
 	    //添加用户量
-	     if(history.length < 2 && UserName){ 	
+	    if((localStorage.lookDate != todayStr) && UserName && history.length < 3){
+	    	localStorage["lookDate"] = todayStr; 	
 	      	var type = "GET",
 	      		url = "/manage/addlookuser",
 	      		data = {

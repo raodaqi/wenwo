@@ -1,8 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>WenWo</title>
-     <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
     <meta name='description', content='wenwo,问我,当地人,旅游,攻略,信息,分享'>
     <meta name='author', content='raodqi'>
     <link rel="icon" type="image/x-icon" href="/img/logo.png" media="screen">
@@ -2545,15 +2544,24 @@ function initDataOption(data){
         deleteNum = new Array(),
         lookUserNum = new Array(),
         buyNum =  new Array();
-    for(var i = 0; i < data.length;i++){
 
+    //除去之前没有存的浏览人数
+    var deleteLookUserNum = 1;
+
+    for(var i = 0; i < data.length;i++){
         havedNum.push(data[i].havedNum);
         userNum.push(data[i].userNum);
         askNum.push(data[i].askNum);
         deleteNum.push(data[i].deleteNum);
         buyNum.push(data[i].buyNum);
         today.push(data[i].today);
-        lookUserNum.push(data[i].lookUserNum ? data[i].lookUserNum : 0);
+
+        if(!deleteLookUserNum){
+            lookUserNum.push(data[i].lookUserNum ? data[i].lookUserNum : 0);
+        }else if(data[i].lookUserNum){
+            deleteLookUserNum = 0;
+            lookUserNum.push(data[i].lookUserNum ? data[i].lookUserNum : 0);
+        } 
     }
     var option = {
         title: {
