@@ -131,6 +131,7 @@ var removeLookUser = function() {
 };
 
 router.get('/addlookuser', function(req, res) {
+    console.log(req.connection.remoteAddress);
     var username = req.query.username;
     var data = {
         username : username
@@ -145,7 +146,6 @@ router.get('/addlookuser', function(req, res) {
 });
 
 router.get('/getlookuser', function(req, res) {
-    console.log(req.connection.remoteAddress);
     MongoClient.connect(url, function(err, db) {
       assert.equal(null, err);
       getLookUser(db, function(result) {
