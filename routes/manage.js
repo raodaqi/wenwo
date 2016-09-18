@@ -64,6 +64,7 @@ var getLookUser = function(db, callback) {
 
 //添加
 var addLookUser = function(db,data, callback) {
+
     var username = data.username;
     var userklook = db.collection('UserLook').find({ "username": username });
     userklook.count(function(err, count) {
@@ -144,6 +145,7 @@ router.get('/addlookuser', function(req, res) {
 });
 
 router.get('/getlookuser', function(req, res) {
+    console.log(req.connection.remoteAddress);
     MongoClient.connect(url, function(err, db) {
       assert.equal(null, err);
       getLookUser(db, function(result) {

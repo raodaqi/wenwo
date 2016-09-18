@@ -410,6 +410,16 @@ function newfoodInit(lat,lng){
   }
   getIfAttention(UserName);
 
+  //点击返回时主页bug修复
+  $(".back").on("click",function(){
+    //获取当前显示页面id
+    setTimeout(function(){
+      var url = $(".page-current")[0].id;
+      $(".tab-item").removeClass("active");
+      $("." + url).addClass("active");
+    }, 10);
+  })
+
   //初始化主页链接
   function init() {
       var url = window.location.hash;
@@ -481,6 +491,10 @@ function newfoodInit(lat,lng){
               addItems(localStorage.tagAskNum, 0,"tag");
             }else{
               addItems(itemsPerLoad, 0,"tag");
+            }
+            //判断tagfind界面是否为空
+            if(!$("#tagfind .wenwo-li").length){
+              initTagPage();
             }
             break;
       }
@@ -1261,6 +1275,12 @@ function newfoodInit(lat,lng){
         tag = localStorage.askTag;
       }
       $("#tag .title").text(tag);
+
+      if(!page || page == "0"){
+        $("#tag .wenwo-ul").empty();
+        $("#tag .infinite-scroll-preloader .preloader").show();
+        $("#tag .ask-end").hide();
+      }
 
       if(tagRange > 0){
         var data = {
