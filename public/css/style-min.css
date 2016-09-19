@@ -249,3 +249,6 @@ a {
 .wenwo-color{
 	color: #f88827 !important;
 }
+.pull-to-refresh-arrow{
+    display: none;
+}

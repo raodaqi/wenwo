@@ -420,6 +420,14 @@ function newfoodInit(lat,lng){
     }, 10);
   })
 
+  //点击分类查找无数据bug
+  $("#tagfind .ask-end").on("click",function(){
+    //获取当前显示页面id
+    $("#tagfind .ask-end").hide();
+    $("#tagfind .infinite-scroll-preloader .preloader").show();
+    initTagPage();
+  })
+
   //初始化主页链接
   function init() {
       var url = window.location.hash;
@@ -1545,15 +1553,24 @@ function newfoodInit(lat,lng){
                 // var data = result.data;
                 var type = result.type;
                 // console.log(type);
-                // var ul = '<div class="tagfind-tag-tip" style="top:0px">点击标签，筛选美食</div>';
+                // var ul = '<div class="tagfind-tag-tip" style="top:2.2rem">点击标签，筛选美食</div>';
                 var ul = '';
                 var j = 0;
                 var lastKey = '';
-                var topNum = 44;
+                var topNum = 0;
                 var colorNum = 1;
                 var color = '';
+                var height = 0; 
+                var typeCount = 0;
 
                 for(var key in type){
+
+                  if(type[key].length <= 6){
+                    height += 2*39 + 15;
+                  }else{
+                    height += (2 + Math.ceil((type[key].length - 6) / 4)) * 39 + 15;
+                  }
+
                   if(j != 0){
                     var length = 0;
                     if(type[lastKey].length <= 6){
@@ -1562,10 +1579,14 @@ function newfoodInit(lat,lng){
                       length = 2 + Math.ceil((type[lastKey].length - 6) / 4);
                     }
                     topNum += length * 39 + 15;
-                    // console.log(top);
                   }
                   lastKey = key;
+
+                  //获取最后的坐标
+                  // var lastPosition = topNum
+
                   j++;
+
                   ul += '<div class="tagfind-ul" style="top:'+topNum+'px"><div class="type">'+key+'</div>';
                   var data = type[key];
                   var li = '';
@@ -1619,6 +1640,7 @@ function newfoodInit(lat,lng){
                       if((i - 5)%4 == 0){
                         if(i == data.length - 1){
                           li += '<div class="tagfind-li '+color+'  no-right-border li-border-bottom-right-radius">'+data[i].tagName+'</div>';
+                          li += '<div class="border-bottom"></div>';
                         }else{
                           li += '<div class="tagfind-li '+color+' no-right-border">'+data[i].tagName+'</div>';
                           li+='<div class="border-bottom-all"></div>';
@@ -1660,6 +1682,11 @@ function newfoodInit(lat,lng){
                   // }
                   ul += li + '</div>';
                 }
+
+                ul += '<div class="type-empty" style="top:'+height+'px"></div>'
+                // $("#tagfind .wenwo-ul").css({
+                //   "height" : height-50
+                // })
 
                 var tagLi = '';
                 for(var i = 0 ; i < type["热门"].length; i++){
@@ -1741,6 +1768,27 @@ function newfoodInit(lat,lng){
   $(".empty-button,.nav-list").on("click", function() {
       var href = $(this).attr("data-href");
       var id = $(".page-current")[0].id;
+
+      if(href.split("#")[1] == "strategy" && !$("#strategy .strategy-li").length){
+        $(".pull-to-refresh-arrow").hide();
+        setTimeout(function() {
+          $(".pull-to-refresh-arrow").show();
+        }, 500);
+        initStrategyListPage();
+      }
+
+      if(href.split("#")[1] == "card" && !$("#card .card-li").length){
+        initCardList();
+      }
+
+      if(href.split("#")[1] == "tagfind" && !$("#tagfind .tagfind-ul").length){
+        // $(".tagfind-tag-tip").hide();
+        // setTimeout(function() {
+        //   $(".tagfind-tag-tip").show();
+        // }, 1000);
+        initTagPage();
+      }
+
       if (href.split("#")[1]) {
         if(id != href.split("#")[1]){
           $(".tab-item").removeClass("active");
@@ -1750,17 +1798,6 @@ function newfoodInit(lat,lng){
       } else {
           $.showPreloader("正在跳转");
           $.router.load(href);
-      }
-      if(href.split("#")[1] == "strategy" && !$("#strategy .strategy-li").length){
-        initStrategyListPage();
-      }
-
-      if(href.split("#")[1] == "card" && !$("#card .card-li").length){
-        initCardList();
-      }
-
-      if(href.split("#")[1] == "tagfind" && !$("#tagfind .tagfind-ul").length){
-        initTagPage();
       }
   });
   $(".my-ask .item-link").on("click", function() {

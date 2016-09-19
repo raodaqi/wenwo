@@ -1299,6 +1299,8 @@ html {
 /*分类查找*/
 #tagfind .tag-content{
     background-color: #fafafa;
+    height: 100%;
+    top:2.2rem;
 }
 
 #tagfind .type{
@@ -1355,14 +1357,8 @@ html {
     right: 0;
     bottom: 0;
     left: 0;
-    overflow: auto;
+    overflow: hidden;
     -webkit-overflow-scrolling: touch;
-}
-#tagfind .tag-content:after{
-    content: '';
-    height: 2rem;
-    width: 100%;
-    background-color: red;
 }
 
 .tag-content .wenwo-ul{
@@ -1378,6 +1374,7 @@ html {
     width: 100%;
     border: 0;
 }
+
 .tagfind-tag-tip{
     position: absolute;
     width: 100%;
@@ -1527,7 +1524,7 @@ html {
 }
 
 /*更改个人中心界面*/
-#me .bar{
+#me .bar,#tagfind .bar{
     position: fixed;
 }
 #me{
@@ -1594,4 +1591,33 @@ html {
     -webkit-background-size: auto 100%;
     -webkit-animation: am-rotate2 .6s steps(4) infinite;
     margin-top: 40%;
+}
+
+/*优化分类查找界面*/
+#tagfind .infinite-scroll-preloader{
+    margin-top: .5rem;
+}
+#tagfind .ask-end{
+    padding-top: 1rem;
+}
+
+.wenwo-ul{
+    position: absolute;
+    z-index: 0;
+    height: 100%;
+}
+
+#tagfind .bar-nav{
+    z-index: 30003 !important;
+}
+
+.tagfind-tag-tip{
+    position: fixed;
+    width: 100%;
+    height: 1rem;
+    top:2.7rem;
+}
+
+#tagfind .wenwo-ul{
+    background: #fafafa;
 }
