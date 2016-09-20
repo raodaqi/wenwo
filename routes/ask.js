@@ -909,7 +909,11 @@ router.post('/addLook', function(req, res, next) {
     if(true){
         var query = new AV.Query('AskMe');
         query.get(askId).then(function (ask) {
-            ask.increment('lookNum', 1);
+            var ranNum = Math.random() * 10;
+            var num =  ranNum < 6 ? (ranNum < 3 ? 1 : 2) : (ranNum < 8 ? 3 : 4);
+
+            ask.increment('lookNum', num);
+
             ask.save().then(function (data) {
               // 因为使用了 fetchWhenSave 选项，save 调用之后，如果成功的话，对象的计数器字段是当前系统最新值。
                 var result = {
