@@ -66,7 +66,7 @@ router.post('/isfocus', function(req, res, next) {
 
         var user = users[0];
 
-        console.log(user.get('authData').weixin.openid);
+        // console.log(user.get('authData').weixin.openid);
 
         var openId = user.get('authData').weixin.openid;
         // var token = user.get('authData').weixin.access_token;
@@ -76,14 +76,14 @@ router.post('/isfocus', function(req, res, next) {
             url: 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='+config.appid+'&secret='+config.appsecret,
             success: function(httpResponse) {
                 // console.log(httpResponse);
-                console.log(httpResponse.data.access_token);
+                // console.log(httpResponse.data.access_token);
                 var token = httpResponse.data.access_token;
 
 
                 AV.Cloud.httpRequest({
                     url: 'https://api.weixin.qq.com/cgi-bin/user/info?access_token='+token+'&openid='+openId+'&lang=zh_CN ',
                     success: function(httpResponse) {
-                        console.log(httpResponse.data.subscribe);
+                        // console.log(httpResponse.data.subscribe);
 
                         res.send({code:200,isfocus:httpResponse.data.subscribe,message:'操作成功'});
 
@@ -210,7 +210,7 @@ router.get('/test', function(req, res, next) {
             body: 'If you vote for Pedro, your wildest dreams will come true'
         },
         success: function(httpResponse) {
-            console.log(httpResponse.text);
+            // console.log(httpResponse.text);
         },
         error: function(httpResponse) {
             console.error('Request failed with response code ' + httpResponse.status);
@@ -266,7 +266,7 @@ router.get('/pay', function(req, res, next) {
     //问我 - 美食
 
     //var totalFee = req.query.totalFee;
-    console.log("ceshi:"+req.query.username);
+    // console.log("ceshi:"+req.query.username);
     var askId = req.query.ask_id;
     var userName = req.query.username;
 
@@ -298,9 +298,9 @@ router.get('/pay', function(req, res, next) {
             query.get(askId).then( function (ask) {
 
                 var score = ask.get('score');
-                console.log(score);
+                // console.log(score);
 
-                console.log(ask.get('askPrice'));
+                // console.log(ask.get('askPrice'));
                 if (score < 20 || parseFloat(ask.get('askPrice')) == 0) {
 
                     var query = new AV.Query('UserInfo');
@@ -734,7 +734,7 @@ router.get('/', function(req, res, next) {
     
     getAccessToken(appid, secret, code, res,{
         success:function (result) {
-            console.log("result" + result.data);
+            // console.log("result" + result.data);
             var codeData = result.data;
             codeData = JSON.parse(codeData);
             var accessToken = codeData.access_token;
@@ -743,7 +743,7 @@ router.get('/', function(req, res, next) {
 
             getUserInfo(accessToken,openid, res,{
                 success:function (res) {
-                    console.log(res.data);
+                    // console.log(res.data);
                     var rdata = res.data;
                     rdata = JSON.parse(rdata);
                     var username = rdata.nickname;
@@ -779,7 +779,7 @@ router.get('/', function(req, res, next) {
                                 }
                             }).then(function(user) {
                                 //返回绑定后的用户
-                                console.log('登录成功');
+                                // console.log('登录成功');
                                 //console.log(user.get('user'));
 
 

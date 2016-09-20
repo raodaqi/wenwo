@@ -1087,7 +1087,7 @@ router.post('/askedit', function(req, res, next) {
         if (tag != null) {
             ask.set('askTagStr', tag);
             tag = JSON.parse(tag);
-            console.log(tag);
+            // console.log(tag);
 
             for(var i = 0 ; i < tag.length; i++){
                 addTag(tag[i]["tag_name"]);
@@ -1975,7 +1975,7 @@ router.post('/sendask', function(req, res, next) {
         var relation = ask.relation('askTag');
 
         tag = JSON.parse(tag);
-        console.log(tag);
+        // console.log(tag);
 
         for(var i = 0 ; i < tag.length; i++){
             addTag(tag[i]["tag_name"]);
