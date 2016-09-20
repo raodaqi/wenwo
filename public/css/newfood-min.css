@@ -1300,7 +1300,9 @@ html {
 #tagfind .tag-content{
     background-color: #fafafa;
     height: 100%;
-    top:2.2rem;
+}
+#tagfind,#tagfind .wenwo-ul{
+    background-color: #fafafa !important;
 }
 
 #tagfind .type{
@@ -1362,9 +1364,11 @@ html {
 }
 
 .tag-content .wenwo-ul{
-    /*position: absolute;*/
+    position: absolute;
     width: 100%;
-    background-color: #fafafa;
+    /*top:2.2rem;*/
+    box-sizing: content-box;
+    /*background-color: #fafafa;*/
 }
 
 #tagfind .border-bottom:last-child{
@@ -1601,11 +1605,11 @@ html {
     padding-top: 1rem;
 }
 
-.wenwo-ul{
+/*#tagfind .wenwo-ul{
     position: absolute;
     z-index: 0;
     height: 100%;
-}
+}*/
 
 #tagfind .bar-nav{
     z-index: 30003 !important;
@@ -1618,6 +1622,17 @@ html {
     top:2.7rem;
 }
 
-#tagfind .wenwo-ul{
-    background: #fafafa;
+#tagfind .infinite-scroll-preloader{
+    margin-top:2.7rem;
+}
+
+.strategy-content{
+    position: absolute;
+    top: 2.2rem;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    transform: translate3d(0,0,0);
 }

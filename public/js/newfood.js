@@ -1557,10 +1557,10 @@ function newfoodInit(lat,lng){
                 var ul = '';
                 var j = 0;
                 var lastKey = '';
-                var topNum = 0;
+                var topNum = 44;
                 var colorNum = 1;
                 var color = '';
-                var height = 0; 
+                var height = 44; 
                 var typeCount = 0;
 
                 for(var key in type){
@@ -1587,7 +1587,7 @@ function newfoodInit(lat,lng){
 
                   j++;
 
-                  ul += '<div class="tagfind-ul" style="top:'+topNum+'px"><div class="type">'+key+'</div>';
+                  ul += '<div class="tagfind-ul" style="top:'+topNum+'px;height='+height+'"><div class="type">'+key+'</div>';
                   var data = type[key];
                   var li = '';
 
@@ -1683,9 +1683,9 @@ function newfoodInit(lat,lng){
                   ul += li + '</div>';
                 }
 
-                ul += '<div class="type-empty" style="top:'+height+'px"></div>'
+                // ul += '<div class="type-empty" style="top:'+height+'px"></div>'
                 // $("#tagfind .wenwo-ul").css({
-                //   "height" : height-50
+                //   "height" : height + 44 + 15
                 // })
 
                 var tagLi = '';
@@ -1770,10 +1770,6 @@ function newfoodInit(lat,lng){
       var id = $(".page-current")[0].id;
 
       if(href.split("#")[1] == "strategy" && !$("#strategy .strategy-li").length){
-        $(".pull-to-refresh-arrow").hide();
-        setTimeout(function() {
-          $(".pull-to-refresh-arrow").show();
-        }, 500);
         initStrategyListPage();
       }
 
