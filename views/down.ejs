@@ -32,6 +32,19 @@
       left:50%;
       transform: translate(-50%,-50%);
       text-align: center;
+      -webkit-transition: all ease 500ms;
+      transition: all ease 500ms;
+    }
+    .wenwo-content-right{
+      position: absolute;
+      z-index: 4000;
+      top:50%;
+      left:50%;
+      transform: translate(500%,-50%);
+      text-align: center;
+      -webkit-transition: all ease 500ms;
+      transition: all ease 500ms;
+      width: 12rem;
     }
     .logo{
       width: 7rem;
@@ -59,6 +72,8 @@
       bottom:2rem;
       left:50%;
       transform: translateX(-50%);
+      -webkit-transition: all ease 500ms;
+      transition: all ease 500ms;
     }
     .android{
       position: absolute;
@@ -77,12 +92,42 @@
       bottom:5rem;
       background: #3eb94e;
     }
+    .wenwo-input{
+      margin-top: 1rem;
+      width: 100%;
+      border-radius: .3rem;
+      border: 1px solid rgba(248, 136, 39, 0.9);
+      height: 2rem;
+      padding-left: .5rem;
+      font-size: .8rem;
+      outline:0;
+      color: rgba(248, 136, 39, 0.9);
+    }
+    input:-ms-input-placeholder,
+    textarea:-ms-input-placeholder {
+        color: rgba(248, 136, 39, 0.7)
+    }
+
+    input::-webkit-input-placeholder,
+    textarea::-webkit-input-placeholder {
+        color: rgba(248, 136, 39, 0.7)
+    }
+    .wenwo-label{
+      display: block;
+      color: #f88827;
+      font-size: .8rem;
+      margin-bottom: .2rem;
+    }
   </style>
   <body>
     <div id="particles-js"></div>
     <div class="wenwo-content">
       <img src="/img/logo.jpg" class="logo" alt="">
       <div class="wenwo-text css5b35420c82bf4">问我-发现身边美食</div>
+    </div>
+    <div class="wenwo-content-right">
+      <label class="wenwo-label">和我们一起创造「问我-美食」</label>
+      <input type="text" class="wenwo-input" placeholder="留下您的QQ / 微信号">
     </div>
     <div class="android css5b35420c82bf4">安卓内测版</div>
     <a class="wenwo-wechat css5b35420c82bf4" href="http://www.wenwobei.com">微信版</a>
@@ -115,9 +160,40 @@
       }
 
       $(".wenwo-down").on("click",function(){
-        if (!isIOS) {
-          window.location.href="http://a.app.qq.com/o/simple.jsp?pkgname=com.myworld.wenwo";
+        if($(this).text() == "提交"){
+          if (!isIOS) {
+            var contact = $(".wenwo-input").val();
+            var type = "GET";
+            var url = "/manage/addContact";
+            var data = {
+              contact : contact
+            }
+            if(contact){
+              $.ajax({
+                type: type,
+                url: url,
+                data: data,
+                dataType: "json",
+                success:function(result){
+                },
+                error:function(error){
+                }
+              })
+            }
+            window.location.href="http://a.app.qq.com/o/simple.jsp?pkgname=com.myworld.wenwo";
+          }
+        }else{
+          if (!isIOS) {
+            $(".wenwo-content").css({
+              "transform" : "translate(-500%,-50%)"
+            })
+            $(".wenwo-content-right").css({
+              "transform" : "translate(-50%,-50%)"
+            })
+            $(".wenwo-down").text("提交");
+          }
         }
+        
       })
   </script>
 </body>

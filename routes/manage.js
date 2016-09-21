@@ -53,7 +53,7 @@ var getLookUser = function(db, callback) {
         
       } else {
         var result = {
-            code     : 400,
+            code     : 200,
             data     : count,
             message  : "success" 
          }
@@ -129,6 +129,96 @@ var removeLookUser = function() {
         });
     });
 };
+
+//查找
+var getContact = function(db, callback) {
+    var Contact = db.collection('Contact').find();
+    Contact.toArray(function(err, contactList) {
+      assert.equal(err, null);
+      if (err) {
+        var result = {
+            code     : 400,
+            message  : err 
+        }
+        callback(result); 
+      } else {
+        var result = {
+            code     : 200,
+            data     : contactList,
+            message  : "success" 
+         }
+         callback(result);
+      }
+   });
+}
+
+//添加下载联系方式
+var addContact = function(db,data, callback) {
+
+    var contact = data.contact;
+    var Contact = db.collection('Contact').find({ "contact": contact });
+    Contact.count(function(err, count) {
+      assert.equal(err, null);
+      if(err){
+        var result = {
+            code    : 400,
+            message : "query error"
+        }
+        callback(result);
+        return;
+      }
+
+      if (count) {
+        var result = {
+            code    : 600,
+            message : "username exit"
+        }
+        callback(result);
+      } else {
+        //数据为空
+        //添加数据
+        db.collection('Contact').insertOne(data, function(err, result) {
+            assert.equal(err, null);
+            if(err){
+                var result = {
+                    code    : 400,
+                    message : "insert error"
+                }
+            }else{
+                var result = {
+                    code    : 200,
+                    message : "success"
+                }
+            }
+            callback(result);
+        });
+    }
+   });
+}
+
+router.get('/addContact', function(req, res) {
+    var contact = req.query.contact;
+    var data = {
+        contact : contact
+    }
+    MongoClient.connect(url, function(err, db) {
+      assert.equal(null, err);
+      addContact(db,data,function(result) {
+        res.send(result);
+        db.close();
+      });
+    });
+});
+
+router.get('/getContact', function(req, res) {
+    MongoClient.connect(url, function(err, db) {
+      assert.equal(null, err);
+      getContact(db, function(result) {
+        res.send(result);
+        db.close();
+      });
+    });
+});
 
 router.get('/addlookuser', function(req, res) {
     console.log(req.connection.remoteAddress);
