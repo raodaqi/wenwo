@@ -1364,10 +1364,10 @@ html {
 }
 
 .tag-content .wenwo-ul{
-    position: absolute;
+    /*position: absolute;
     width: 100%;
-    /*top:2.2rem;*/
-    box-sizing: content-box;
+    top:2.2rem;
+    box-sizing: content-box;*/
     /*background-color: #fafafa;*/
 }
 
