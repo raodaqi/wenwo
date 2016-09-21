@@ -2125,7 +2125,7 @@ router.post('/autosendask', function(req, res, next) {
         ask.set('askContentShow', contentShow);
         ask.set('askContentHide', contentHide);
         ask.set('askPrice', price);
-        ask.set('staus', '1');
+        ask.set('staus', '2');
         ask.set('askImage', images);
         ask.set('shopName', shopName);
 
@@ -2143,10 +2143,13 @@ router.post('/autosendask', function(req, res, next) {
             ask.set('createByName', createByName);
             ask.set('createByUrl', createByUrl);
         }else{
-            ask.set('createByName', user.get('uName'));
-            ask.set('createByUrl', user.get('userHead'));
+            var result = {
+                code : 600,
+                message : 'No permissions'
+            }
+            res.send(result);
+            return;
         }
-        
 
         var point = new AV.GeoPoint(parseFloat(geoX), parseFloat(geoY));
         ask.set('positionGeo', point);
