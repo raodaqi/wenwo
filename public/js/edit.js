@@ -49,14 +49,17 @@
               
           },
           error: function() {
-              $.toast("定位失败");
+              // $.toast("定位失败");
+              $.toast("未获取到当前位置");
+              newfoodInit(30.58128,103.990092);
           }
       });
 
 
 if(window.location.port == 3000){
   //测试逻辑
-  initEdit(30.580596,103.982984);
+  // initEdit(30.580596,103.982984);
+  newfoodInit(30.58128,103.990092);
 }
 
 function initEdit(LAT,LNG){

@@ -44,9 +44,8 @@
           newfoodInit(lat,lng);
       },
       error: function(error) {
-          console.log("error");
-          $.toast("定位失败");
-          newfoodInit(30.581808,103.988561);
+          $.toast("未获取到当前位置");
+          newfoodInit(30.58128,103.990092);
       }
   });
 
@@ -54,7 +53,8 @@
     //测试逻辑
     // newfoodInit(30.580596,103.982984);
     setTimeout(function(){
-      newfoodInit(30.580596,103.982984);
+      // newfoodInit(30.580596,103.982984);
+      newfoodInit(30.58128,103.990092);
     }, 300);
   }
   

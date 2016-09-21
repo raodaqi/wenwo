@@ -132,7 +132,7 @@ function initLocation(type,callback) {
                             callback.success(longitude,latitude);
                         }
                     },
-                    error: function(error) {
+                    cancel: function(error) {
                         if(callback){
                             callback.error(error);
                         }
