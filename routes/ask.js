@@ -20,6 +20,7 @@ var Tag =  AV.Object.extend('Tag');
 var Like = AV.Object.extend('Like');
 var Debase = AV.Object.extend('Debase');
 var SearchLog = AV.Object.extend('SearchLog');
+var config = require('../config');
 
 
 router.get('/allask', function(req, res, next) {
@@ -1960,10 +1961,27 @@ router.post('/sendask', function(req, res, next) {
         ask.set('askContentHide', contentHide);
         ask.set('askPrice', price);
         ask.set('staus', '1');
-        ask.set('createByName', user.get('uName'));
-        ask.set('createByUrl', user.get('userHead'));
         ask.set('askImage', images);
         ask.set('shopName', shopName);
+
+        var isCreateAccount = 0;
+        for(var i = 0 ; i < config.createAccount.length; i++){
+            if(config.createAccount[i] == userName){
+                isCreateAccount = 1;
+                break;
+            }
+        }
+
+        if(isCreateAccount){
+            var createByName = config.name[Math.floor(Math.random()*config.name.length)];
+            var createByUrl = config.imgHead+Math.floor(Math.random()*config.imgNum)+".jpg";
+            ask.set('createByName', createByName);
+            ask.set('createByUrl', createByUrl);
+        }else{
+            ask.set('createByName', user.get('uName'));
+            ask.set('createByUrl', user.get('userHead'));
+        }
+        
 
         var point = new AV.GeoPoint(parseFloat(geoX), parseFloat(geoY));
         ask.set('positionGeo', point);

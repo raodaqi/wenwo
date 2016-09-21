@@ -674,6 +674,8 @@
                           $(".dislike-content").show();
                           $.hidePreloader();
                           var data = result.data;
+                          $(".buy").text("朕已查阅");
+                          $(".buy").attr("data-buy", "1");
                           if (data.shopName) {
                               $(".detail-rtname").text(data.shopName);
                           } else {
