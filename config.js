@@ -26,7 +26,6 @@ module.exports = {
     // "appsecret" : "44ab2dc42222c6f619a12dd8c5dc63d9"
 
 
-
     //Android
     "androidAppid" : "wxb4b71b749fb0ea09",
     "androidMchid"  : "1373092602"
