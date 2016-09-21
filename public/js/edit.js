@@ -1327,6 +1327,10 @@ function initEdit(LAT,LNG){
                           }
                           // WX_SHARE_TITLE = "我分享了「" + detail + "」附近的美食,瞅瞅波？";
                           WX_SHARE_TITLE = data.askReason;
+
+                          askTagStr = JSON.parse(tag);
+                          tag = askTagStr[0].tag_name;
+
                           WX_SHARE_DESC = "我 : 分享了「" + tag + "」美食,瞅瞅波？";
                           initShare();
                           $(".share-success,.success-text").text("编辑成功");
@@ -1378,6 +1382,9 @@ function initEdit(LAT,LNG){
                           }
                           // WX_SHARE_TITLE = "我分享了「" + detail + "」附近的美食,瞅瞅波？";
                           WX_SHARE_TITLE = data.askReason;
+
+                          askTagStr = JSON.parse(tag);
+                          tag = askTagStr[0].tag_name;
                           WX_SHARE_DESC = "我 : 分享了「" + tag + "」美食,瞅瞅波？";
                           initShare();
 

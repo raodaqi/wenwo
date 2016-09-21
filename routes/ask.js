@@ -2018,6 +2018,166 @@ router.post('/sendask', function(req, res, next) {
     });
 });
 
+
+router.post('/autosendask', function(req, res, next) {
+    var sessionToken = req.param('session_token');
+    var images = req.param('images');
+    var shopName = req.param('shop_name');
+
+    var userName = req.param('username');
+    if (!userName) {
+        var result = {
+            code : 300,
+            message : 'miss parameter : username'
+        }
+        res.send(result);
+        return;
+    }
+    var type = req.param('type');
+    if (!type) {
+        var result = {
+            code : 300,
+            message : 'miss parameter : type'
+        }
+        res.send(result);
+        return;
+    }
+    var geoX = req.param('geo_x');
+    if (!geoX) {
+        var result = {
+            code : 300,
+            message : 'miss parameter : geo_x'
+        }
+        res.send(result);
+        return;
+    }
+    var geoY = req.param('geo_y');
+    if (!geoY) {
+        var result = {
+            code : 300,
+            message : 'miss parameter : geo_y'
+        }
+        res.send(result);
+        return;
+    }
+    var position = req.param('position');
+    if (!position) {
+        var result = {
+            code : 300,
+            message : 'miss parameter : position'
+        }
+        res.send(result);
+        return;
+    }
+    var reason = req.param('reason');
+    if (!reason) {
+        var result = {
+            code : 300,
+            message : 'miss parameter : reason'
+        }
+        res.send(result);
+        return;
+    }
+    var contentShow = req.param('content_show');
+    if (!contentShow) {
+        var result = {
+            code : 300,
+            message : 'miss parameter : content_show'
+        }
+        res.send(result);
+        return;
+    }
+    var contentHide = req.param('content_hide');
+    var price = req.param('price') != null ? req.param('price') : 0;
+    price = price.replace(/\s+/g,"");
+
+    var tag = req.param('tag');
+    if (!tag) {
+        var result = {
+            code : 300,
+            message : 'miss parameter : tag'
+        }
+        res.send(result);
+        return;
+    }
+    var remark = req.param('remark');
+
+    var query = new AV.Query('UserInfo');
+    query.equalTo('userName', userName);
+    query.find().then(function (user) {
+        //console.l
+        user = user[0];
+        var ask = new Ask();
+        ask.set('createBy', userName);
+        ask.set('askType', type);
+        if (price == '0' || price == '0.00') {
+            ask.set('askIsFree', '1');
+        }
+        else {
+            ask.set('askIsFree', '0');
+        }
+        ask.set('askImage', images);
+        ask.set('shopName', shopName);
+        ask.set('GeoX', geoX);
+        ask.set('GeoY', geoY);
+        ask.set('askPosition', position);
+        ask.set('askReason', reason);
+        ask.set('askContentShow', contentShow);
+        ask.set('askContentHide', contentHide);
+        ask.set('askPrice', price);
+        ask.set('staus', '1');
+        ask.set('askImage', images);
+        ask.set('shopName', shopName);
+
+        var isCreateAccount = 0;
+        for(var i = 0 ; i < config.createAccount.length; i++){
+            if(config.createAccount[i] == userName){
+                isCreateAccount = 1;
+                break;
+            }
+        }
+
+        if(isCreateAccount){
+            var createByName = config.name[Math.floor(Math.random()*config.name.length)];
+            var createByUrl = config.imgHead+Math.floor(Math.random()*config.imgNum)+".jpg";
+            ask.set('createByName', createByName);
+            ask.set('createByUrl', createByUrl);
+        }else{
+            ask.set('createByName', user.get('uName'));
+            ask.set('createByUrl', user.get('userHead'));
+        }
+        
+
+        var point = new AV.GeoPoint(parseFloat(geoX), parseFloat(geoY));
+        ask.set('positionGeo', point);
+        ask.set('askDefault',remark);
+        ask.set('askTagStr', tag);
+        var relation = ask.relation('askTag');
+        tag = JSON.parse(tag);
+
+        for(var i = 0 ; i < tag.length; i++){
+            addTag(tag[i]["tag_name"]);
+        }
+
+        ask.save().then(function(ask) {
+            var result = {
+                code : 200,
+                data : ask,
+                message : 'Operation succeeded'
+            }
+            res.send(result);
+            return;
+        }, function(error) {
+            var result = {
+                code : 400,
+                message : '操作失败'
+            }
+            res.send(result);
+            return;
+        });
+    });
+});
+
 router.get('/tagshow', function (req, res, next) {
     var type = req.query.type;
     var tag = req.query.tag;

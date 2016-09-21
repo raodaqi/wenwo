@@ -1587,14 +1587,14 @@ html {
 }
 
 #card .ui-loading-bright{
-    width: 111px;
-    height: 111px;
+    width: 3.8rem;
+    height: 3.8rem;
     display: block;
-    margin: 10px auto;
+    margin: .5rem auto;
     background-image: url(/img/loading.png);
     -webkit-background-size: auto 100%;
-    -webkit-animation: am-rotate2 .6s steps(4) infinite;
-    margin-top: 40%;
+    -webkit-animation: am-rotate2 .6s steps(6) infinite;
+    margin-top: 50%;
 }
 
 /*优化分类查找界面*/
