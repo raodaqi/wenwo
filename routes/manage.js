@@ -132,7 +132,7 @@ var removeLookUser = function() {
 
 //查找
 var getContact = function(db, callback) {
-    var Contact = db.collection('Contact').find();
+    var Contact = db.collection('Contact').find({}, {sort: {'createAt': -1}});
     Contact.toArray(function(err, contactList) {
       assert.equal(err, null);
       if (err) {
@@ -198,8 +198,10 @@ var addContact = function(db,data, callback) {
 
 router.get('/addContact', function(req, res) {
     var contact = req.query.contact;
+    var createAt = new Date().getTime();
     var data = {
-        contact : contact
+        contact : contact,
+        createAt : createAt
     }
     MongoClient.connect(url, function(err, db) {
       assert.equal(null, err);
