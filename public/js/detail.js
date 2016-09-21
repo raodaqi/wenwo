@@ -629,13 +629,13 @@
                       // initWXPay(result.payargs);
                       buyed = 0;
                   } else {
-                      $.toast("购买失败");
+                      $.toast(result.message);
                       buyed = 0;
                   }
               },
               error: function(error) {
                   $.hidePreloader();
-                  $.total("网络有问题");
+                  $.total("~O(∩_∩)O~ 网络好像有点问题");
                   console.log(error);
               }
           })

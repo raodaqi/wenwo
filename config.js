@@ -11,6 +11,9 @@ module.exports = {
     "appsecret" : "9157e84975386b6dee6a499cc639973e",
     "test" : 0,
 
+    //无线购买账号
+    "havedAccount":["573dc3d0ad5b9500576a5207"],
+
 
     //测试版
     // "appid" : "wxb0f5d00833204d63",

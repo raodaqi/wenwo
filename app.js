@@ -588,14 +588,30 @@ app.use('/notify', wxpay.useWXCallback(function(msg, req, res, next){
               // console.log(incomeUser);
               incomeUser.get('wallet').save().then(function () {
                 incomeUser.save().then(function () {
-                  have.save().then(function () {
-                    order.save().then(function () {
-                      ask.save().then(function () {
-                        res.success();
-                      });
+                  var isHavedAccount = 0;
+                  for(var i = 0 ; i < config.havedAccount.length; i++){
+                    if(config.havedAccount[i] == userName){
+                      isHavedAccount = 1;
+                      break;
+                    }
+                  }
+                  if(isHavedAccount){
+                      order.save().then(function () {
+                        ask.save().then(function () {
+                          res.success();
+                        });
 
+                      });
+                  }else{
+                    have.save().then(function () {
+                      order.save().then(function () {
+                        ask.save().then(function () {
+                          res.success();
+                        });
+                      });
                     });
-                  });
+                  }
+                  
                 });
               });
 
