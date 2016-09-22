@@ -45,7 +45,7 @@
       },
       error: function(error) {
           $.toast("未获取到当前位置");
-          newfoodInit(30.58128,103.990092);
+          newfoodInit(30.58128,103.990092,"cancel");
       }
   });
 
@@ -54,12 +54,12 @@
     // newfoodInit(30.580596,103.982984);
     setTimeout(function(){
       // newfoodInit(30.580596,103.982984);
-      newfoodInit(30.58128,103.990092);
+      newfoodInit(30.58128,103.990092,"cancel");
     }, 300);
   }
   
 
-function newfoodInit(lat,lng){  
+function newfoodInit(lat,lng,locationPerssion){  
 
     LAT = lat;
     LNG = lng;
@@ -82,12 +82,26 @@ function newfoodInit(lat,lng){
           detail = detail.replace(replace, "");
           address.detail = detail;
           if(!(history.length > 1 && getCookie("lng") && getCookie("lat"))){
-            $(".nav-left-add").text(detail);
+            // $(".nav-left-add").text(detail);
+            if(locationPerssion == "cancel"){
+              $(".nav-left-add").text("未获取到当前位置");
+            }else{
+              $(".nav-left-add").text(detail);
+            }
           }
 
           //当前地址
-          $(".location-city").text(address.city);
-          $(".location-detail").text(address.district + address.township + detail);
+          if(locationPerssion == "cancel"){
+            $(".location-city").text("未获取到当前位置");
+            $(".location-detail").text("点击获取当前位置");
+          }else{
+            $(".location-city").text(address.city);
+            $(".location-detail").text(address.district + address.township + detail);
+          }
+
+          // $(".location-city").text(address.city);
+          // $(".location-detail").text(address.district + address.township + detail);
+          
         },
         error:function(error){
           console.log(error);
@@ -2375,11 +2389,15 @@ function initCardList(type){
 
   //点击地址更换信息位置
   $("#find .nav-left,.change-location").on("click",function(){
-    $("#slocation .wenwo-ul").hide();
-    $(".location-box").show();
-    $.router.load("#slocation");
-
-    loadLocationList();
+    if($(this).children(".nav-left-add").text() == "未获取到当前位置"){
+      $.showPreloader("正在重新定位");
+      window.location.reload();
+    }else{
+      $("#slocation .wenwo-ul").hide();
+      $(".location-box").show();
+      $.router.load("#slocation");
+      loadLocationList();
+    }
   })
 
   $("#slocation .location").on("input change",function(){
