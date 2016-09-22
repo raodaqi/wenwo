@@ -48,10 +48,10 @@ router.get('/getcardlist', function(req, res, next) {
     var type = req.query.type;
 
     var query = new AV.Query('Card');
-    query.descending('updatedAt');
+    query.descending('createAt');
 
     if(size){
-        query.limit('size');
+        query.limit(size);
     }
 
     if(type != "all"){

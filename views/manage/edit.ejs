@@ -1,8 +1,18 @@
 <% include ../header.ejs %>
 <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=cb84c659c88a7cc83b935a009b3a9cfd&plugin=AMap.Geocoder"></script>
-<link rel="stylesheet" href="/css/edit-min.css">
+<link rel="stylesheet" href="/css/manage-edit-min.css">
 </head>
   <body>
+    <div class="md-modal md-effect-1" id="modal-1">
+      <div class="md-content">
+        <div class="ss-content">
+          <img src="" alt="" class="edit-show-img">
+        </div>
+      </div>
+    </div>
+
+  <div class="md-overlay"></div>
+
     <div class="page page-current" id='router'>
       <header class="bar bar-nav">
         <a class="button button-link button-nav pull-left">
@@ -21,8 +31,9 @@
                 图片
               </div>
               <div class="edit-content" id="photo">
-                <img src="/img/edit/photo-empty.png" data-percent="-1" data-href=""  class="photo-content" alt="">
-                <span class="photo-edit-icon iconfont icon-bianji"></span>
+                <div class="photo-content-box">
+                  <img src="/img/edit/photo-empty.png" data-percent="-1" data-href=""  class="photo-content-add" alt="" id="photo-content-add">
+                </div>
               </div>
             </div>
             <div class="edit-content" id="photo" style="display:none"></div>
@@ -442,9 +453,12 @@
         <div class="share-btn">戳我分享>></div>
       </div>
     </div>
+
   </body>
-  <% include footer.ejs %>
+  <% include ../footer.ejs %>
   <script type='text/javascript' src='/js/extend.js' charset='utf-8'></script>
+  <script type="text/javascript" src="/js/plupload.full.min.js"></script>
+  <script type="text/javascript" src="/js/qiniu.min.js"></script>
   <script> 
 
     var UserName = "<%= username %>";
@@ -509,6 +523,119 @@
       // window.history.go(-1);
     })
   </script>
+
+  <script>
+        uploader = Qiniu.uploader({
+            runtimes: 'html5,flash,html4',    //上传模式,依次退化
+            browse_button: 'photo-content-add',       //上传选择的点选按钮，**必需**
+            uptoken_url: '/manage/token',
+            domain: 'http://qiniu-plupload.qiniudn.com/',
+                //bucket 域名，下载资源时用到，**必需**
+            max_file_size: '2048mb',           //最大文件体积限制
+            filters: {
+              max_file_size : '10mb',
+              mime_types : [ //只允许上传图片和zip文件
+                { title : "Image files", extensions : "JPEG,jpg,gif,png" }
+              ]
+            },
+            multi_selection: false,
+            flash_swf_url: 'js/plupload/Moxie.swf',  //引入flash,相对路径
+            max_retries: 3,                   //上传失败最大重试次数
+            chunk_size: '4mb',                //分块上传时，每片的体积
+            auto_start: false,                 //选择文件后自动上传，若关闭需要自己绑定事件触发上传
+            init: {
+                'FilesAdded': function(up, files) {
+
+                  $.showPreloader("正在上传");
+                    plupload.each(files, function(file) {
+                       var myDate=new Date();
+                       time = myDate.getTime();
+                       fileName = files[0].name;
+                       var name = files[0].name;
+
+                       fileName = "wenwo/"+time+"/"+fileName;
+
+                       if(up.files.length > 1){
+                        for(var i = 0; i < up.files.length - 1;i++){
+                          up.removeFile(up.files[i].id);
+                        }
+                       }
+                       previewImage(files[0],function(imgsrc){
+                            uploader.start();
+                              // $(".app-logo-loading").hide();
+                        })
+                    });
+                },
+                'BeforeUpload': function(up, file) {
+                       // 每个文件上传前,处理相关的事情
+                       console.log(file);
+                       console.log(up);
+                },
+                'UploadProgress': function(up, file) {
+                       // 每个文件上传时,处理相关的事情
+                       // $(".squre").text(file.percent+"%");
+                       $(".modal-title").text("已上传"+file.percent+"%");
+                       // console.log(up);
+                },
+                'FileUploaded': function(up, file, info) {
+                      var res = JSON.parse(info);
+                      console.log(info);
+                      var key = res.key;
+                      var sourceLink = "http://o83np3eq2.bkt.clouddn.com/" + key; //
+                      // $(".photo-content").attr("data-href",sourceLink);
+                      $(".photo-content").removeClass("photo-check");
+                      li = '<img src="'+sourceLink+'" data-percent="100" data-href="'+sourceLink+'" class="photo-content photo-check" alt="">';
+                      $.hidePreloader();
+                      $(".photo-content-box").prepend(li);
+                },
+                'Error': function(up, err, errTip) {
+                       //上传出错时,处理相关的事情
+                       console.log(errTip);
+                       // $.toast("上传失败");
+                },
+                'UploadComplete': function() {
+                       //队列文件处理完毕后,处理相关的事情
+                },
+                'Key': function(up, file) {
+                    // 若想在前端对每个文件的key进行个性化处理，可以配置该函数
+                    // 该配置必须要在 unique_names: false , save_key: false 时才生效
+                    var key = "";
+                    key = fileName;
+                    // do something with key here
+                    return key
+                }
+              }
+          });
+
+      //plupload中为我们提供了mOxie对象
+      //有关mOxie的介绍和说明请看：https://github.com/moxiecode/moxie/wiki/API
+      //如果你不想了解那么多的话，那就照抄本示例的代码来得到预览的图片吧
+      function previewImage(file,callback){//file为plupload事件监听函数参数中的file对象,callback为预览图片准备完成的回调函数
+        console.log("jjjj");
+        if(!file || !/image\//.test(file.type)) return; //确保文件是图片
+        if(file.type=='image/gif'){//gif使用FileReader进行预览,因为mOxie.Image只支持jpg和png
+          var fr = new mOxie.FileReader();
+          fr.onload = function(){
+            callback(fr.result);
+            fr.destroy();
+            fr = null;
+          }
+          fr.readAsDataURL(file.getSource());
+        }else{
+          var preloader = new mOxie.Image();
+          preloader.onload = function() {
+            // preloader.downsize( 300, 300 );//先压缩一下要预览的图片,宽300，高300
+            // preloader.downsize( 93, 93 );//先压缩一下要预览的图片,宽300，高300
+            var imgsrc = preloader.type=='image/jpeg' ? preloader.getAsDataURL('image/jpeg',80) : preloader.getAsDataURL(); //得到图片src,实质为一个base64编码的数据
+            callback && callback(imgsrc); //callback传入的参数为预览图片的url
+            preloader.destroy();
+            preloader = null;
+          };
+          preloader.load( file.getSource() );
+        }
+      }
+</script>
+
 
   <script type="text/javascript" src="/js/manage-edit.js"></script>
 </html>

@@ -9,65 +9,25 @@
 
   $.showPreloader("正在加载"); 
 
-  initLocation("edit",{
-          success: function(lng,lat) {
-            $.hidePreloader();
-            initEdit(lat,lng);
-
-            // initEdit();
-
-            // if(localStorage.lng && localStorage.lat){
-
-            // }else{
-            //   //详情地点显示
-            //   map = new AMap.Map('container', {
-            //       resizeEnable: true,
-            //       zoom: 16,
-            //       center: [lng, lat],
-            //       buttonOffset: new AMap.Pixel(60, 20), //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
-            //       zoomToAccuracy: true, //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
-            //       buttonPosition: 'LB'
-            //   });
-
-            //   marker = new AMap.Marker({
-            //       map: map,
-            //       icon: icon,
-            //       position: [lng, lat],
-            //       draggable: true,
-            //       cursor: 'move',
-            //       raiseOnDrag: true,
-            //       clickable: true
-            //   });
-
-            //   map.plugin(["AMap.ToolBar"], function() {
-            //       map.addControl(new AMap.ToolBar());
-            //   });
-
-            //   marker.setMap(map);
-            //   initMarker(marker);
-            // }
-              
-          },
-          error: function() {
-              // $.toast("定位失败");
-              $.hidePreloader();
-              $.toast("未获取到当前位置");
-              initEdit(30.58128,103.990092);
-          }
-      });
-
-
-if(window.location.port == 3000){
-  //测试逻辑
-  // initEdit(30.580596,103.982984);
-  initEdit(30.58128,103.990092);
-}
+initEdit(30.58128,103.990092);
 
 function initEdit(LAT,LNG){
   LAT = LAT;
   LNG = LNG;
   $(".my-location").attr("lat",LAT);
   $(".my-location").attr("lng",LNG);
+
+  $(".photo-content-box").on("click",".photo-content",function(){
+    $(".photo-content").removeClass("photo-check");
+    var img = $(this).attr("src");
+    $(this).addClass("photo-check");
+    $(".edit-show-img").attr("src",img);
+    $("#modal-1").addClass("md-show");
+  })
+
+  $(".md-modal,.md-overlay").on("click",function(){
+    $(".md-show").removeClass("md-show");
+  })
 
   if(!localStorage.lng || !localStorage.lat){
 
@@ -588,12 +548,17 @@ function initEdit(LAT,LNG){
           //初始化上传图片
           if(askImage){
             askImage = JSON.parse(askImage);
-            if(askImage[0].image){
-              $(".photo-content").attr("data-href",askImage[0].image);
-              $(".photo-content").attr("data-percent","100");
-              $(".photo-content").attr("src",askImage[0].image);
-              $(".photo .edit-li-img").attr("src", "/img/edit/photo-02.png");
+            // if(askImage[0].image){
+            //   $(".photo-content").attr("data-href",askImage[0].image);
+            //   $(".photo-content").attr("data-percent","100");
+            //   $(".photo-content").attr("src",askImage[0].image);
+            //   $(".photo .edit-li-img").attr("src", "/img/edit/photo-02.png");
+            // }
+            var li = '';
+            for(var i = 0; i < askImage.length; i++){
+              li += '<img src="'+askImage[i].image+'" data-percent="100" data-href="'+askImage[i].image+'" class="photo-content" alt="">';
             }
+            $(".photo-content-box").prepend(li);
           }
 
           //标签
@@ -1288,22 +1253,29 @@ function initEdit(LAT,LNG){
         }else{
           $.showPreloader("正在分享");
         }
-        timer = setInterval(function(){
           var percent = $(".photo-content").attr("data-percent");
           if(percent == "-1" || percent == "100" || percent == -1 || percent == 100){
             clearInterval(timer);
             var askImage = [];
-            if($(".photo-content").attr("data-href")){
-              var image = {
-                image : $(".photo-content").attr("data-href")
-              };
-              askImage[0] = image;
-              data.images = JSON.stringify(askImage);
+            // if($(".photo-content").attr("data-href")){
+            //   var image = {
+            //     image : $(".photo-content").attr("data-href")
+            //   };
+            //   askImage[0] = image;
+            //   data.images = JSON.stringify(askImage);
+            // }
+            var showImage = $(".photo-check").attr("src");
+            if(showImage || showImage != null){
+              askImage.push(showImage);
             }
-            timerNumber++;
-            if(timerNumber >= 1){
-              clearInterval(timer);
+            
+            for(var i = 0; i < $(".photo-content").length; i++){
+              if($(".photo-content")[i].src != showImage){
+                askImage.push($(".photo-content")[i].src);
+              }
             }
+            data.images = JSON.stringify(askImage);
+
           if (sendType == "edit") {
               data["ask_id"] = sendAskId;
               $.ajax({
@@ -1412,7 +1384,6 @@ function initEdit(LAT,LNG){
               });
             }
           }
-        }, 10);
       })
 
       //输入框填写的地址内容

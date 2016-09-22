@@ -2211,7 +2211,7 @@ function newfoodInit(lat,lng,locationPerssion){
 
 function initCardList(type){
   //初始化卡片界面
-  getCardList({username:UserName},{
+  getCardList({size:10,username:UserName},{
     success:function(result){
         // console.log(result);
         var data = result.data;
