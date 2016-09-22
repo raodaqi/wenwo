@@ -957,6 +957,9 @@
                         <div class="preloader"></div>
                     </div>
                 </div>
+                <div class="content-title edit" style="display: none">
+                    <div class="preloader"></div>
+                </div>
 
                 <div class="content-title autoaskme" style="display:none">
                     <div class="autoaskme-ul">
@@ -2562,6 +2565,15 @@ $("#autoaskme").on("click",function(){
             $.hidePreloader();
         }
     })
+})
+
+$(".autoaskme-ul").on("click",".autoaskme-li",function(){
+    var askid = $(this).attr("data-askid");
+    var createby = $(this).attr("data-createby");
+    var iframe = '<iframe src="/manage/edit?type=edit&askid='+askid+'&username='+createby+'" class="share-edit" frameborder="0"></iframe>';
+    $(".edit").empty().append(iframe);
+    $(".content-title").hide();
+    $(".edit").show();
 })
 
     // //会员卡正面

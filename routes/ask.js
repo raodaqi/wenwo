@@ -855,13 +855,14 @@ router.post('/askdetail', function(req, res, next) {
                         }
 
                         for (var i = 0; i < foodLikeList.length; i++) {
+                            if(foodLikeList[i].get('ask')){
+                                if (foodLikeList[i].get('ask').id == askId) {
 
-                            if (foodLikeList[i].get('ask').id == askId) {
+                                    foodLikeFlag++;
 
-                                foodLikeFlag++;
-
+                                }
                             }
-
+                            
                         }
 
                         // if (isOwnFlag == 0 && havedFlag == 0) {

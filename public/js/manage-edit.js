@@ -171,7 +171,7 @@ function initEdit(LAT,LNG){
           }
       })
 
-      $(".circle").on("touchstart", function() {
+      $(".circle").on("click", function() {
         $("#router5 .wenwo-ul").empty();
         var href = $(this).attr("data-href");
         var hrefNum = href.replace(/[^0-9]/ig,"");

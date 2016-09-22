@@ -39,6 +39,26 @@ router.get('/token', function(req, res) {
     }
 });
 
+router.get('/edit', function(req, res) {
+  var type = req.query.type;
+  var askid = req.query.askid;
+  var username =  req.query.username;
+
+  if(username){
+    res.render('manage/edit', {username:username,type:type,askid:askid});
+    return ;
+  }
+
+  var user = AV.User.current();
+  if (!user) {
+    authorize(req, res);
+  }else{
+    var username = user.get('user');
+    // console.log(username);
+    res.render('manage/edit', {username:username,type:type,askid:askid});
+  }
+});
+
 //查找
 var getLookUser = function(db, callback) {
     var userklook = db.collection('UserLook').find();

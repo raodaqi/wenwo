@@ -1,0 +1,514 @@
+<% include ../header.ejs %>
+<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=cb84c659c88a7cc83b935a009b3a9cfd&plugin=AMap.Geocoder"></script>
+<link rel="stylesheet" href="/css/edit-min.css">
+</head>
+  <body>
+    <div class="page page-current" id='router'>
+      <header class="bar bar-nav">
+        <a class="button button-link button-nav pull-left">
+          <span class="icon icon-left"></span>
+        </a>
+        <h1 class='title'>分享</h1>
+        <a class="button button-link button-nav pull-right send-button-a"></a>
+      </header>
+      <div class="content">
+        <div class="theme-content-block">        
+          <div class="edit-ul">
+            <!-- 标签 -->
+            <div class="edit-li-photo photo">
+              <img src="/img/edit/photo-01.png" class="edit-li-img">
+              <div class="li-title">
+                图片
+              </div>
+              <div class="edit-content" id="photo">
+                <img src="/img/edit/photo-empty.png" data-percent="-1" data-href=""  class="photo-content" alt="">
+                <span class="photo-edit-icon iconfont icon-bianji"></span>
+              </div>
+            </div>
+            <div class="edit-content" id="photo" style="display:none"></div>
+
+            <div class="edit-li tag" data-href="#router1">
+              <img src="/img/edit/tag-01.png" class="edit-li-img">
+              <div class="li-title">
+                美食类别
+              </div>
+              <div class="edit-content">
+                请填写美食类别
+              </div>
+            </div>
+            <!-- 推荐理由 -->
+            <div class="edit-li reason" data-href="#router2">
+              <img src="/img/edit/reason-01.png" class="edit-li-img">
+              <div class="li-title">
+                推荐理由
+              </div>
+              <div class="edit-content">
+                请填写推荐理由
+              </div>
+            </div>
+            <!-- 信息详情 -->
+            <div class="edit-li detail" data-href="#router3">
+              <img src="/img/edit/detail-01.png" class="edit-li-img">
+
+              <div class="li-title">
+                美食详情
+              </div>
+              <div class="edit-content">
+                <div class="edit-detail">请填写美食详情</div>
+                <div class="edit-detail-li-content">
+                </div>
+              </div>
+            </div>
+            
+            <!-- 店名 -->
+            <div class="edit-li name" data-href="#router4">
+              <img src="/img/edit/name-01.png" class="edit-li-img">
+
+              <div class="li-title">
+              店名<label class="red small-font"> (用户购买后才显示)</label>
+              </div>
+              <div class="edit-content">
+                请填写店名
+              </div>
+            </div>
+            <!-- 地址 -->
+            <div class="edit-li address" data-href="#router5">
+              <img src="/img/edit/address-01.png" class="edit-li-img">
+
+              <div class="li-title">
+                地址<label class="red small-font"> (用户购买后才显示)</label>
+              </div>
+              <div class="edit-content">
+                请填写美食地址并在地图上标注
+              </div>
+            </div>
+            <!-- 价格 -->
+            <div class="edit-li price" data-href="#router6">
+              <img src="/img/edit/price-01.png" class="edit-li-img">
+
+              <div class="li-title">
+                信息价格
+              </div>
+              <div class="edit-content">
+                请填写查看这条信息的价格
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 标签填写 -->
+    <div class="page" id='router1'>
+
+      <header class="header-bar">
+        <div class="header-content">
+          <div class="line"></div>
+          <div class="circle circle-index" data-href="#router"></div>
+          <div class="circle circle-tag" data-href="#router1">
+            <img src="/img/edit/tag-02.png" class="circle-img">
+            <label class="circle-title">美食类别</label>
+          </div>
+          <div class="circle circle-reason" data-href="#router2"></div>
+          <div class="circle circle-detail" data-href="#router3"></div>
+          <div class="circle circle-name" data-href="#router4"></div>
+          <div class="circle circle-address" data-href="#router5"></div>
+          <div class="circle circle-price" data-href="#router6"></div>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <div class="tag-content">
+          <div class="ww-typeHelper">
+            <div class="ww-typeHelper-left">
+              <input type="text" data-role="ww_typeHelper-input" class="ww-typeHelper-input" placeholder="选择或者填入美食的类别">
+            </div>        
+          </div>
+          <div role="tabpanel" class="techTags panel-default techTags-panel" data-tech="">
+            <div class="tag-ul">
+              <span class="type-item">海鲜</span>
+              <span class="type-item">川菜</span>
+              <span class="type-item">西餐</span>
+              <span class="type-item">小吃快餐</span>
+              <span class="type-item">甜点饮品</span>
+              <span class="type-item">火锅</span>
+              <span class="type-item">烧烤烤肉</span>
+              <span class="type-item">自助餐</span>
+              <span class="type-item">香锅烤鱼</span>
+              <span class="type-item">串串香</span>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+
+      <footer class="footer-bar">
+        <div class="pre-view" data-href="#router">
+          <img src="/img/edit/preview.svg" class="preview-img" alt="">
+          <label>预览</label>
+        </div>
+        <div class="next-view" data-href="#router2">
+          <label>下一步<label>
+          <img src="/img/edit/next.png" class="next-img" alt="">
+        </div>
+      </footer>
+    </div>
+    <!-- 推荐理由填写 -->
+    <div class="page" id='router2'>
+      <header class="header-bar">
+        <div class="header-content">
+          <div class="line"></div>
+          <div class="circle circle-index" data-href="#router"></div>
+          <div class="circle circle-tag" data-href="#router1"></div>
+          <div class="circle circle-reason" data-href="#router2">
+            <img src="/img/edit/reason-02.png" class="circle-img">
+            <label class="circle-title">推荐理由</label>
+          </div>
+          <div class="circle circle-detail" data-href="#router3"></div>
+          <div class="circle circle-name" data-href="#router4"></div>
+          <div class="circle circle-address" data-href="#router5"></div>
+          <div class="circle circle-price" data-href="#router6"></div>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <div class="reason-content li-content">
+        <div class="reason-title content-title">给一个让大家相信你的<label class="red">理由</label>吧：</div>
+          <div class="recommend-reason">
+            <textarea name="reason" id="reason" placeholder=""></textarea>
+          </div>
+          <div class="eg-content"> 
+            <div class="eg-li">eg:好吃到灵魂颤抖的火锅。</div>
+            <div class="eg-li">eg:好吃的忘不掉味道。</div>
+            <div class="eg-li">eg:你要相信一个吃了好多年的老司机。</div>
+            <div class="eg-li">eg:排队排到天荒地老，差点就海枯石烂了！</div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="footer-bar">
+        <div class="pre-view" data-href="#router">
+          <img src="/img/edit/preview.svg" class="preview-img" alt="">
+          <label>预览</label>
+        </div>
+        <div class="next-view" data-href="#router3">
+          <label>下一步<label>
+          <img src="/img/edit/next.png" class="next-img" alt="">
+        </div>
+      </footer>
+    </div>
+    <!-- 信息详情填写 -->
+    <div class="page" id='router3'>
+      <header class="header-bar">
+        <div class="header-content">
+          <div class="line"></div>
+          <div class="circle circle-index" data-href="#router"></div>
+          <div class="circle circle-tag" data-href="#router1"></div>
+          <div class="circle circle-reason" data-href="#router2"></div>
+          <div class="circle circle-detail" data-href="#router3">
+            <img src="/img/edit/detail-02.png" class="circle-img">
+            <label class="circle-title">美食详情</label>
+          </div>
+          <div class="circle circle-name" data-href="#router4"></div>
+          <div class="circle circle-address" data-href="#router5"></div>
+          <div class="circle circle-price" data-href="#router6"></div>
+        </div>
+      </header>
+      <div class="page-content">
+        <div class="detail-content li-content">
+          <div class="detail-title content-title">请告诉我们一些<label class="red">详细信息</label>：</div>
+          <div class="recommend-detail">
+            <textarea name="detail" id="detail" placeholder="详细的介绍可能提高大家的付费意愿，比如美食的人均消费、环境、口味等，但千万别暴露了店名和地址，你懂得！"></textarea>
+          </div>
+
+          <div class="detail-li-all-content">
+            <div class="detail-li-content">
+              <div class="detail-li">
+                <div class="detail-li-title">
+                  <input type="text" name="detailName0" class="detail-li-name" placeholder="人均消费" value="人均消费">
+                </div>
+                <div class="detail-li-input">
+                  <input type="text" name="detailVal0" class="detail-li-val" placeholder="可以在此进行补充描述哦">
+                </div>
+                <div class="icon iconfont icon-jian"></div>
+              </div>
+            </div>
+            <div class="detail-li-title detail-add">
+              <div class="iconfont icon-add"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <footer class="footer-bar">
+        <div class="pre-view" data-href="#router">
+          <img src="/img/edit/preview.svg" class="preview-img" alt="">
+          <label>预览</label>
+        </div>
+        <div class="next-view" data-href="#router4">
+          <label>下一步<label>
+          <img src="/img/edit/next.png" class="next-img" alt="">
+        </div>
+      </footer>
+    </div>
+    <!-- 店名填写 -->
+    <div class="page" id='router4'>
+      <header class="header-bar">
+        <div class="header-content">
+          <div class="line"></div>
+          <div class="circle circle-index" data-href="#router"></div>
+          <div class="circle circle-tag" data-href="#router1"></div>
+          <div class="circle circle-reason" data-href="#router2"></div>
+          <div class="circle circle-detail" data-href="#router3"></div>
+          <div class="circle circle-name" data-href="#router4">
+            <img src="/img/edit/name-02.png" class="circle-img">
+            <label class="circle-title">店名</label>
+          </div>
+          <div class="circle circle-address" data-href="#router5"></div>
+          <div class="circle circle-price" data-href="#router6"></div>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <div class="name-content li-content">
+          <div class="name-title content-title">请输入这家<label class="red">店</label>的名字：</div>
+          <div class="recommend-name">
+            <input type="text" name="name" id="name" placeholder="这很重要，别写错啦">
+          </div>
+        </div>
+      </div>
+
+      <footer class="footer-bar">
+        <div class="pre-view" data-href="#router">
+          <img src="/img/edit/preview.svg" class="preview-img" alt="">
+          <label>预览</label>
+        </div>
+        <div class="next-view" data-href="#router5">
+          <label>下一步<label>
+          <img src="/img/edit/next.png" class="next-img" alt="">
+        </div>
+      </footer>
+    </div>
+    <!-- 图片添加 -->
+    <div class="page" id='router5'>
+      <header class="header-bar add-header">
+        <div class="header-content">
+          <div class="line"></div>
+          <div class="circle circle-index" data-href="#router"></div>
+          <div class="circle circle-tag" data-href="#router1"></div>
+          <div class="circle circle-reason" data-href="#router2"></div>
+          <div class="circle circle-detail" data-href="#router3"></div>
+          <div class="circle circle-name" data-href="#router4"></div>
+          <div class="circle circle-address" data-href="#router5">
+            <img src="/img/edit/address-02.png" class="circle-img">
+            <label class="circle-title">地址</label>
+          </div>
+          <div class="circle circle-price" data-href="#router6"></div>
+        </div>
+        <div class="add-search">
+          <input type="text" class="search-input" id="address" name="address" placeholder="请标注美食所在的精确位置">
+          
+          <div class="wenwo-ul">
+            
+          </div>
+
+          <div class="ww_typeHelper-input-left iconfont icon-bianji"></div>
+          <!-- <span class="icon iconfont icon-tixing"></span> -->
+          <div class="search">取消</div>
+        </div>
+
+        <div class="add-detail">
+          <div class="add-detail-text"><label class="red">地址附注：</label></div>
+          <input type="text" class="add-detail-input" id="add-detail" name="adetail" placeholder="可详细描述美食的具体位置">
+          <span class="icon iconfont icon-tixing"></span>
+        </div>
+      </header>
+
+      <div class="add-content">
+        <div id="container"></div>
+        <div class="my-location">
+          <label class="iconfont icon-daohang"></label>
+        </div>
+      </div>
+
+      <div class="modal-overlay modal-overlay-visible" style="display:none;"></div>
+
+      <div class="modal modal-in model-tip" style="display: none; margin-top: -72px;">
+        <div class="tip-content">
+          <div class="tip-content-title">标注的正确姿势</div>
+          <div class="tip-content-li">
+            <div>1)&nbsp;&nbsp;&nbsp;通过输入框确定需要标注地点的大概位置，</div>
+          </div>
+          <div class="tip-content-li">
+            <div>2)&nbsp;&nbsp;&nbsp;将地图层级放大到最大级别（街道级别），再进行标注，</div>
+          </div>
+          <div class="tip-content-li">
+            <div>3)&nbsp;&nbsp;&nbsp;拖动地图中的红点到你认为正确的位置，可以根据周边的地标性建筑或者道路进行标注</div>
+          </div>
+          <div class="tip-content-li">
+            <div>4)&nbsp;&nbsp;&nbsp;标注成功后，点击确认。如果位置不正确，可以重新标注</div>
+          </div>
+          <div class="tip-content-get">朕知道了</div>
+        </div>
+      </div>
+
+      <footer class="footer-bar">
+        <div class="pre-view" data-href="#router">
+          <img src="/img/edit/preview.svg" class="preview-img" alt="">
+          <label>预览</label>
+        </div>
+        <div class="next-view" data-href="#router6">
+          <label>下一步<label>
+          <img src="/img/edit/next.png" class="next-img" alt="">
+        </div>
+      </footer>
+    </div>
+    <!-- 地点标注 -->
+     <div class="page" id='router6'>
+      <header class="header-bar">
+        <div class="header-content">
+          <div class="line"></div>
+          <div class="circle circle-index" data-href="#router"></div>
+          <div class="circle circle-tag" data-href="#router1"></div>
+          <div class="circle circle-reason" data-href="#router2"></div>
+          <div class="circle circle-detail" data-href="#router3"></div>
+          <div class="circle circle-name" data-href="#router4"></div>
+          <div class="circle circle-address" data-href="#router5"></div>
+          <div class="circle circle-price circle-hide" data-href="#router6">
+            <img src="/img/edit/price-02.png" class="circle-img">
+            <label class="circle-title">价格</label>
+          </div>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <div class="price-content li-content">
+          <div class="price-title content-title">请填写这条信息的<label class="red">查看价格</label>吧：</div>
+          <div class="recommend-price">
+            <input type="number" name="price" id="price" placeholder="价格设置范围是0.0-5.0元">
+          </div>
+          <div class="tip">
+            <!-- <img src="/img/edit/tip.png" class="tip-img" alt=""> -->
+            <label class="tip-text">合理的设置查看价格，是获得最大收益的保障；</label>
+            <label class="tip-text">每条信息分享成功后，开始都是免费查看；</label>
+            <label class="tip-text">必须累积到10个<label class="red">想吃</label>或者<label class="red">查看</label>后，才能开始付费查看。</label>
+          </div>
+        </div>
+      </div>
+
+      <footer class="footer-bar">
+        <div class="pre-view" data-href="#router">
+          <img src="/img/edit/preview.svg" class="preview-img" alt="">
+          <label>预览</label>
+        </div>
+        <div class="next-view" data-href="#router">
+          <label>完成<label>
+          <img src="/img/edit/next.png" class="next-img" alt="">
+        </div>
+      </footer>
+    </div>
+
+    <!-- 地点标注 -->
+    <div class="page" id='success'>
+      <div class="modal-overlay modal-overlay-visible" style="display:none;"></div>
+      <div class="modal modal-in model-share" style="display: none; margin-top: -72px;">
+        <img class="invite-img" src="/img/invite.png">
+      </div>
+     <!--  <header class="bar bar-nav">
+        <h1 class='title share-success'>分享成功</h1>
+        <a class="button button-link button-nav pull-right">
+          完成
+        </a>
+      </header> -->
+      <div class="content">
+        <div class="success-content">
+          <img src="/img/edit/sharing-success.png" class="success-img" alt="">
+        </div>
+        <div class="btn-content">
+          <div class="success-btn again">
+            <label class="iconfont icon-bianji"></label>
+            <label>再来一发</label>
+          </div>
+          <div class="success-btn find">
+            <label>微服私访</label>
+            <label>>></label>
+          </div>
+        </div>
+        <div class="share-text-content">
+          <div class="iconfont icon-tixing"></div>
+          启奏陛下，所有付费信息都需要累积到10个<label class="red">想吃</label>或者<label class="red">查看</label>后，才能开始计费呢，赶快邀请陛下的爱卿们前来点赞吧！
+        </div>
+        <div class="share-btn">戳我分享>></div>
+      </div>
+    </div>
+  </body>
+  <% include footer.ejs %>
+  <script type='text/javascript' src='/js/extend.js' charset='utf-8'></script>
+  <script> 
+
+    var UserName = "<%= username %>";
+    var sendType = "<%= type %>";
+    var sendAskId = "<%= askid %>";
+    var timer;
+    var timerNumber = 0;
+    var uploader;
+
+    if(sendType == "edit"){
+      $(".share-success,.success-text").text("编辑成功");
+    }
+
+    $(".page").swipeLeft(function(){
+      var id = this.id;
+      $("#router5 .wenwo-ul").empty();
+
+      if(id == "success"){
+        return;
+      }
+
+      var num = id.replace(/[^0-9]/ig,"");
+      if(!num){
+        num = 0;
+      }
+      num++;
+      if(num == 6){
+        return;
+      }
+      if(num == 7){
+        $.router.load("#router");
+      }else{
+        $.router.load("#router"+num);
+      }
+    })
+    $(".page").swipeRight(function(){
+      // window.history.go(-1);
+      var id = this.id;
+      $("#router5 .wenwo-ul").empty();
+
+      if(id == "success"){
+        return;
+      }
+
+      var num = id.replace(/[^0-9]/ig,"");
+      if(!num){
+        num = 0;
+      }
+      num--;
+      if(num < 0){
+        return;
+      }
+      if(num == 4){
+        return;
+      }
+      if(num == 0){
+        $.router.load("#router",false,"left");
+      }else{
+        $.router.load("#router"+num,false,"left");
+      }
+      
+      // window.history.go(-1);
+    })
+  </script>
+
+  <script type="text/javascript" src="/js/manage-edit.js"></script>
+</html>
