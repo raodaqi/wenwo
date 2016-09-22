@@ -762,9 +762,18 @@ router.post('/askdetail', function(req, res, next) {
                 if(havedList.length){
                     havedNum = havedList.length;
                 }
+                var isHavedAccount = 0;
+                for(var i = 0 ; i < config.havedAccount.length; i++){
+                    if(config.havedAccount[i] == userName){
+                      isHavedAccount = 1;
+                      break;
+                    }
+                }
                 if (isOwnFlag == 0 && havedFlag == 0) {
-                    ask.set('shopName', "请购买以后查看");
-                    ask.set('askPosition', "请购买以后查看");
+                    if(!isHavedAccount){
+                        ask.set('shopName', "请购买以后查看");
+                        ask.set('askPosition', "请购买以后查看");
+                    } 
                 }
                 detailShow = {
                     isOwnFlag:isOwnFlag,

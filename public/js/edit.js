@@ -50,6 +50,7 @@
           },
           error: function() {
               // $.toast("定位失败");
+              $.hidePreloader();
               $.toast("未获取到当前位置");
               initEdit(30.58128,103.990092);
           }
