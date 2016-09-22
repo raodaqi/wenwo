@@ -812,16 +812,24 @@
         width: 50px;
         margin:50px;
     }
-    .contact-li{
+    .contact-li,.autoaskme-li{
         background: white;
         width: 100%;
         height:50px;
         line-height: 50px;
         margin-bottom: 5px;
+        cursor: pointer;
+    }
+    .autoaskme-li:hover{
+        background-color: #999;
+        color: white;
     }
     .contact-text{
         float: left;
         margin-left: 20px;
+    }
+    .autoaskme-text{
+        text-align: center;
     }
     .contact-time{
         float: right;
@@ -878,6 +886,7 @@
                     <li class="askme-bar" id="askme">信息管理</li>
                     <li class="vipcard-bar" id="vipcard">vip卡管理</li>
                     <li class="contact-bar" id="contact">联系方式管理</li>
+                    <li class="autoaskme-bar" id="autoaskme">自动信息管理</li>
                 </ul>
             </div>
             <div class="list manage-content">
@@ -945,6 +954,12 @@
 
                 <div class="content-title contact" style="display:none">
                     <div class="contact-ul">
+                        <div class="preloader"></div>
+                    </div>
+                </div>
+
+                <div class="content-title autoaskme" style="display:none">
+                    <div class="autoaskme-ul">
                         <div class="preloader"></div>
                     </div>
                 </div>
@@ -2508,6 +2523,35 @@ $("#contact").on("click",function(){
                     }
                 }
                 $(".contact-ul").empty().append(li);
+            }else{
+                $.toast("服务器出错");
+            }
+        },
+        error:function(error){
+            console.log(error);
+            $.toast("服务器出错");
+            $.hidePreloader();
+        }
+    })
+})
+
+$("#autoaskme").on("click",function(){
+    $(".autoaskme-ul").empty().append('<div class="preloader"></div>');
+    var data = {
+        staus: '2',
+        size : 20
+    }
+    url = "/ask/allask",
+    type = "GET";
+    sendQuest(url,type,data,{
+        success:function(result){
+            if(result.code == 200){
+                var data = result.data;
+                li = '';
+                for(var i = 0; i < data.length;i++){
+                    li += '<div class="autoaskme-li" data-askid="'+data[i].objectId+'" data-createBy="'+data[i].createBy+'"><div class="autoaskme-text">'+data[i].shopName+'</div></div>';
+                }
+                $(".autoaskme-ul").empty().append(li);
             }else{
                 $.toast("服务器出错");
             }

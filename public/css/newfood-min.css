@@ -1636,3 +1636,21 @@ html {
     -webkit-overflow-scrolling: touch;
     transform: translate3d(0,0,0);
 }
+
+.card-tip{
+    display: none;
+    position: absolute;
+    left:0;
+    color: white;
+    top:1.2rem;
+    width: 2.5rem;
+    border-radius: 2rem;
+    border-top-left-radius: 0;
+    border-bottom-left-radius:0; 
+    background-color: rgba(255, 255, 255, 1);
+    text-align: center;
+    z-index: 2;
+}
+.vip-card-img{
+    height:.6rem;
+}

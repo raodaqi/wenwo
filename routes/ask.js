@@ -102,7 +102,9 @@ router.get('/allask', function(req, res, next) {
                     // for (var j = 0; j < length; j++) {
                     //     results[i].attributes.askContentHide += '*';
                     // }
-                    results[i].set('shopName', "请购买以后查看");
+                    if(staus != '2') {
+                        results[i].set('shopName', "请购买以后查看");
+                    }
                     // results[i].set('askPosition', "请购买以后查看");
                 }
 
