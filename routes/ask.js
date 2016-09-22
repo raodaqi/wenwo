@@ -2020,11 +2020,11 @@ router.post('/sendask', function(req, res, next) {
 
 
 router.post('/autosendask', function(req, res, next) {
-    var sessionToken = req.param('session_token');
-    var images = req.param('images');
-    var shopName = req.param('shop_name');
+    var sessionToken = req.body.session_token;
+    var images = req.body.images;
+    var shopName = req.body.shop_name;
 
-    var userName = req.param('username');
+    var userName = req.body.username;
     if (!userName) {
         var result = {
             code : 300,
@@ -2101,6 +2101,7 @@ router.post('/autosendask', function(req, res, next) {
         return;
     }
     var remark = req.param('remark');
+    var externalLink = req.body.external_link ? req.body.external_link : '';
 
     var query = new AV.Query('UserInfo');
     query.equalTo('userName', userName);
@@ -2128,6 +2129,7 @@ router.post('/autosendask', function(req, res, next) {
         ask.set('staus', '2');
         ask.set('askImage', images);
         ask.set('shopName', shopName);
+        ask.set('externalLink', externalLink);
 
         var isCreateAccount = 0;
         for(var i = 0 ; i < config.createAccount.length; i++){

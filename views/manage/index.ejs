@@ -943,8 +943,9 @@
                     <button class='btn_add'>添加</button>
                 </div>
 
-                <div class="contact-title contact" style="display:none">
+                <div class="content-title contact" style="display:none">
                     <div class="contact-ul">
+                        <div class="preloader"></div>
                     </div>
                 </div>
             </div>
@@ -2489,6 +2490,9 @@ function initManageData(){
 initManageData();
 
 $("#contact").on("click",function(){
+    if($(".contact-li").length){
+        return;
+    }
     var data = {
     },
     url = "/manage/getContact",
@@ -2503,7 +2507,7 @@ $("#contact").on("click",function(){
                         li += '<div class="contact-li"><div class="contact-text">'+data[i].contact+'</div><div class="contact-time">'+(data[i].createAt ? formatDate("y-m-d h:i:s",data[i].createAt) : '')+'</div></div>';
                     }
                 }
-                $(".contact-ul").append(li);
+                $(".contact-ul").empty().append(li);
             }else{
                 $.toast("服务器出错");
             }
