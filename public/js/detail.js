@@ -183,7 +183,7 @@
                     $(".pull-right").hide();
                   }
 
-                  if (result.show.havedFlag || result.show.isOwnFlag) {
+                  if (result.show.havedFlag || result.show.isOwnFlag || result.data.isHavedAccount == 1) {
                       //显示店名，地址
                       if (data.shopName) {
                           $(".detail-rtname").text(data.shopName);

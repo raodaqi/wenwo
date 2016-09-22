@@ -730,6 +730,7 @@ router.post('/askdetail', function(req, res, next) {
 
     var userName = req.body.username;
     var askId = req.body.ask_id;
+
     if(!userName){
         var query = new AV.Query('AskMe');
         query.include("vipCard");
@@ -762,18 +763,10 @@ router.post('/askdetail', function(req, res, next) {
                 if(havedList.length){
                     havedNum = havedList.length;
                 }
-                var isHavedAccount = 0;
-                for(var i = 0 ; i < config.havedAccount.length; i++){
-                    if(config.havedAccount[i] == userName){
-                      isHavedAccount = 1;
-                      break;
-                    }
-                }
+
                 if (isOwnFlag == 0 && havedFlag == 0) {
-                    if(!isHavedAccount){
-                        ask.set('shopName', "请购买以后查看");
-                        ask.set('askPosition', "请购买以后查看");
-                    } 
+                    ask.set('shopName', "请购买以后查看");
+                    ask.set('askPosition', "请购买以后查看");
                 }
                 detailShow = {
                     isOwnFlag:isOwnFlag,
@@ -871,11 +864,24 @@ router.post('/askdetail', function(req, res, next) {
 
                         }
 
-                        if (isOwnFlag == 0 && havedFlag == 0) {
+                        // if (isOwnFlag == 0 && havedFlag == 0) {
 
+                        //     ask.set('shopName', "请购买以后查看");
+                        //     ask.set('askPosition', "请购买以后查看");
+
+                        // }
+                        var isHavedAccount = 0;
+                        for(var i = 0 ; i < config.havedAccount.length; i++){
+                            if(config.havedAccount[i] == userName){
+                                isHavedAccount = 1;
+                                ask.attributes.isHavedAccount = 1;
+                                break;
+                            }
+                        }
+
+                        if (isOwnFlag == 0 && havedFlag == 0 && isHavedAccount == 0) {
                             ask.set('shopName', "请购买以后查看");
                             ask.set('askPosition', "请购买以后查看");
-
                         }
 
                         detailShow = {
