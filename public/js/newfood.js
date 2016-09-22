@@ -54,7 +54,7 @@
     // newfoodInit(30.580596,103.982984);
     setTimeout(function(){
       // newfoodInit(30.580596,103.982984);
-      newfoodInit(30.58128,103.990092,"cancel");
+      newfoodInit(30.58128,103.990092);
     }, 300);
   }
   
