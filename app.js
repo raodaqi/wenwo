@@ -188,6 +188,10 @@ app.get('/down', function(req, res) {
   res.render('down');
 });
 
+app.get('/company', function(req, res) {
+  res.render('company');
+});
+
 app.get('/share/id/:id', function(req, res) {
   var id = req.params.id;
   var type = req.query.type;

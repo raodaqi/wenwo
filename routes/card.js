@@ -48,7 +48,7 @@ router.get('/getcardlist', function(req, res, next) {
     var type = req.query.type;
 
     var query = new AV.Query('Card');
-    query.descending('createAt');
+    query.descending('createdAt');
 
     if(size){
         query.limit(size);

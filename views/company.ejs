@@ -1,0 +1,377 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+  <meta charset='utf-8'>
+    <!-- <meta name='viewport', content='width=device-width, initial-scale=1.0'> -->
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name='description', content='走到哪，吃到哪。让美食无处可逃!'>
+    <meta name='author', content='raodqi'>
+    <link rel="icon" type="image/x-icon" href="/img/logo.jpg" media="screen">
+    <title>迈沃德科技|用仅有的知识创造价值</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/particles.css">
+    <link href='//api.youziku.com/webfont/CSS/57d2798ff629d80f2cf67ec6' rel='stylesheet' type='text/css' />
+    <link href="css/main.min.css" rel="stylesheet">
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+  </head>
+  <style>
+    body{
+      overflow: hidden;
+      height: 100%;
+      overflow-x:hidden !important; 
+    }
+    .logo {
+      margin: 0 auto;
+      margin-top: -20%;
+    }
+    .logo img{
+      width: 60%;
+    }
+    .wenwo-content{
+      position: absolute;
+      z-index: 4000;
+      width: 100%;
+      top:50%;
+      left:50%;
+      transform: translate(-50%,-50%);
+      text-align: center;
+      -webkit-transition: all ease 500ms;
+      transition: all ease 500ms;
+    }
+    .wenwo-content-right{
+      position: absolute;
+      z-index: 4000;
+      top:50%;
+      left:50%;
+      transform: translate(500%,-50%);
+      text-align: center;
+      -webkit-transition: all ease 500ms;
+      transition: all ease 500ms;
+      width: 12rem;
+    }
+    .logo{
+      width: 7rem;
+      height: 7rem;
+    }
+    .wenwo-text{
+      display: block;
+      width: 100%;
+      margin-top: 1.5rem;
+      text-align: center;
+      font-size: 1.5rem;
+      color: #f88827;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-family: 'Open Sans',sans-serif;
+    }
+    .wenwo-down,.wenwo-wechat{
+      position: absolute;
+      z-index: 5000;
+      width: 10rem;
+      height: 2.5rem;
+      border-radius: .4rem;
+      text-align: center;
+      line-height: 2.5rem;
+      background-color: #f88827;
+      color: white;
+      font-size: 1rem;
+      bottom:2rem;
+      left:50%;
+      transform: translateX(-50%);
+      -webkit-transition: all ease 500ms;
+      transition: all ease 500ms;
+    }
+    .android{
+      position: absolute;
+      z-index: 5000;
+      color: #f88827;
+      font-size: 1rem;
+      top:1rem;
+      left:1rem;
+    }
+    .ios{
+      background-color: #ccc;
+      font-size: .9rem;
+    }
+    .wenwo-wechat{
+      display: none;
+      bottom:5rem;
+      background: #3eb94e;
+    }
+    .wenwo-input{
+      margin-top: 1rem;
+      width: 100%;
+      border-radius: .3rem;
+      border: 1px solid rgba(248, 136, 39, 0.9);
+      height: 2rem;
+      padding-left: .5rem;
+      font-size: .8rem;
+      outline:0;
+      color: rgba(248, 136, 39, 0.9);
+    }
+    input:-ms-input-placeholder,
+    textarea:-ms-input-placeholder {
+        color: rgba(248, 136, 39, 0.7)
+    }
+
+    input::-webkit-input-placeholder,
+    textarea::-webkit-input-placeholder {
+        color: rgba(248, 136, 39, 0.7)
+    }
+    .wenwo-label{
+      display: block;
+      color: #f88827;
+      font-size: .8rem;
+      margin-bottom: .2rem;
+    }
+    .down-content{
+      position: absolute;
+      width: 100%;
+      left:0;
+      right: 0;
+      top:0;
+      height: 100%;
+      overflow-x: hidden;
+    }
+  </style>
+  <body>
+  <div class="content" ng-app="company" ng-controller="companyCtrl">
+    <div id="particles-js"></div>
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header page-scroll">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse"> <i class="fa fa-bars"></i>
+          </button>
+          <a href="#page-top">
+            <img src="{{companyImg}}" class="logo-bar white">  
+          </a>
+        </div>
+        <!-- Nav bar -->  
+        <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+          <ul class="nav navbar-nav">
+            <li class="page-scroll active">
+              <a href="">{{index}}</a>
+            </li>
+            <li class="page-scroll">
+              <a href="#products">{{products}}</a>
+            </li>
+            <li class="page-scroll">
+              <a href="#contact">{{contact}}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="wenwo-content">
+      <div class="wenwo-text">{{companyDescribe}}</div>
+    </div>
+  </div>
+
+  <!-- <div class="down-content">
+    <div id="particles-js"></div>
+    <div class="wenwo-content">
+      <img src="/img/logo.jpg" class="logo" alt="">
+      <div class="wenwo-text css5b35420c82bf4">问我-发现身边美食</div>
+    </div>
+    <div class="wenwo-content-right">
+      <label class="wenwo-label">和我们一起创造「问我-美食」</label>
+      <input type="text" class="wenwo-input" placeholder="留下您的QQ / 微信号">
+    </div>
+    <div class="android css5b35420c82bf4">安卓内测版</div>
+    <a class="wenwo-wechat css5b35420c82bf4" href="http://www.wenwobei.com">微信版</a>
+    <a class="wenwo-down css5b35420c82bf4">问我下载</a>
+  </div> -->
+  <script src="/js/particles.min.js"></script>
+  <script src="/js/zepto.min.js"></script>
+  <script src="/js/wxlocation.js"></script>
+
+  <script>
+    //angularJs
+    var app = angular.module('company',[]);
+    app.controller('companyCtrl',function($scope){
+      $scope.companyImg = "/img/myworld.png";
+      $scope.index = "主页";
+      $scope.products = "产品";
+      $scope.contact = "联系我们";
+      $scope.companyDescribe = "用仅有的知识创造价值";
+    })
+  </script>
+
+  <script>
+    particlesJS('particles-js',
+  
+    {
+      "particles": {
+        "number": {
+          "value": 20,
+          "density": {
+            "enable": true,
+            "value_area": 1000
+          }
+        },
+        "color": {
+          "value": "#f88827"
+        },
+        "shape": {
+          "type": "circle",
+          "stroke": {
+            "width": 0,
+            "color": "#000000"
+          },
+          "polygon": {
+            "nb_sides": 5
+          },
+          "image": {
+            "src": "img/github.svg",
+            "width": 100,
+            "height": 100
+          }
+        },
+        "opacity": {
+          "value": 0.5,
+          "random": false,
+          "anim": {
+            "enable": false,
+            "speed": 1,
+            "opacity_min": 0.1,
+            "sync": false
+          }
+        },
+        "size": {
+          "value": 15,
+          "random": true,
+          "anim": {
+            "enable": false,
+            "speed": 180,
+            "size_min": 0.1,
+            "sync": false
+          }
+        },
+        "line_linked": {
+          "enable": true,
+          "distance": 650,
+          "color": "#f88827",
+          "opacity": 0.2,
+          "width": 1
+        },
+        "move": {
+          "enable": true,
+          "speed": 2,
+          "direction": "none",
+          "random": !0,
+          "straight": !1,
+          "out_mode": "out",
+          "attract": {
+            "enable": !1,
+            "rotateX": 600,
+            "rotateY": 1200
+          }
+        }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": {
+            "enable": !1,
+            "mode": "repulse"
+          },
+          "onclick": {
+            "enable": !1,
+            "mode": "repulse"
+          },
+          "resize": !0
+        },
+        "modes": {
+          "grab": {
+            "distance": 400,
+            "line_linked": {
+              "opacity": 1
+            }
+          },
+          "bubble": {
+            "distance": 400,
+            "size": 40,
+            "duration": 2,
+            "opacity": 8,
+            "speed": 3
+          },
+          "repulse": {
+            "distance": 200,
+            "duration":.4
+          },
+          "push": {
+            "particles_nb": 4
+          },
+          "remove": {
+            "particles_nb": 2
+          }
+        }
+      },
+      "retina_detect": true
+    }
+  );
+  </script>
+  <script>
+    var WX_SHARE_TITLE = '「问我-美食安卓内测版」邀您一起“吃吃吃” ';
+    var WX_SHARE_LINK = 'http://www.wenwobei.com/down';
+    var WX_SHARE_DESC = '发现身边美食';
+    var WX_SHARE_IMGURL = '';
+    onlyInitShare();
+
+    //判断是不是安卓手机
+      var u = navigator.userAgent;
+      var ua = window.navigator.userAgent.toLowerCase(); 
+      // var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+      var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+
+
+      if (isIOS) {
+          $(".wenwo-down").addClass("ios");
+          $(".wenwo-down").text("IOS COMING SOON");
+      }
+      //判断是在微信端
+      if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+        $(".wenwo-wechat").show();
+      }
+
+      $(".wenwo-down").on("click",function(){
+        if($(this).text() == "提交"){
+          if (!isIOS) {
+            var contact = $(".wenwo-input").val();
+            var type = "GET";
+            var url = "/manage/addContact";
+            var data = {
+              contact : contact
+            }
+            if(contact){
+              $.ajax({
+                type: type,
+                url: url,
+                data: data,
+                dataType: "json",
+                success:function(result){
+                },
+                error:function(error){
+                }
+              })
+            }
+            window.location.href="http://a.app.qq.com/o/simple.jsp?pkgname=com.myworld.wenwo";
+          }
+        }else{
+          if (!isIOS) {
+            $(".wenwo-content").css({
+              "transform" : "translate(-500%,-50%)"
+            })
+            $(".wenwo-content-right").css({
+              "transform" : "translate(-50%,-50%)"
+            })
+            $(".wenwo-wechat").hide();
+            $(".wenwo-down").text("提交");
+          }
+        }
+        
+      })
+  </script>
+</body>
+</html>

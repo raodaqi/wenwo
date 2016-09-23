@@ -86,6 +86,14 @@ var getLookUser = function(db, callback) {
 var addLookUser = function(db,data, callback) {
 
     var username = data.username;
+    if(!username || username.length < 6 || username == null){
+        var result = {
+            code    : 400,
+            message : "username illegal"
+        }
+        callback(result);
+        return;
+    }
     var userklook = db.collection('UserLook').find({ "username": username });
     userklook.count(function(err, count) {
       assert.equal(err, null);
