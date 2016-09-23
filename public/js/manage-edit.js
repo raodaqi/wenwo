@@ -1266,12 +1266,18 @@ function initEdit(LAT,LNG){
             // }
             var showImage = $(".photo-check").attr("src");
             if(showImage || showImage != null){
-              askImage.push(showImage);
+              var imgObj = {
+                "image" :  showImage
+              }
+              askImage.push(imgObj);
             }
             
             for(var i = 0; i < $(".photo-content").length; i++){
               if($(".photo-content")[i].src != showImage){
-                askImage.push($(".photo-content")[i].src);
+                var imgObj = {
+                  "image" :  $(".photo-content")[i].src
+                }
+                askImage.push(imgObj);
               }
             }
             data.images = JSON.stringify(askImage);

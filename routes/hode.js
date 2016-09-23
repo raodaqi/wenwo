@@ -111,9 +111,11 @@ router.post('/haved', function(req, res, next) {
                     askDetail[i] = fooLikes[i].get('ask');
 
                     for (var k = 0; k < likeList.length; k++) {
-                        if(likeList[k].get('ask').id == askDetail[i].id){
-                            askDetail[i].set('liked', 1);
-                        }
+                        if(likeList[k].get('ask') && askDetail[i]){
+                            if(likeList[k].get('ask').id == askDetail[i].id){
+                                askDetail[i].set('liked', 1);
+                            }
+                        }   
                     }
                 }
 
