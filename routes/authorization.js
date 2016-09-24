@@ -283,13 +283,11 @@ router.get('/pay', function(req, res, next) {
 
         for (var i = 0; i < havedList.length; i++) {
 
-            if (havedList[i].get('ask').id == askId) {
-
-                havedListFlag++;
-
+            if(havedList[i].get('ask')){
+                if (havedList[i].get('ask').id == askId) {
+                    havedListFlag++;
+                }
             }
-
-
         }
 
         if (havedListFlag == 0) {

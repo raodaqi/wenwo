@@ -63,3 +63,21 @@ html {
 .logo-bar{
 	margin-top: .5rem;
 }
+
+footer{
+	position: absolute;
+	color: rgba(255, 197, 146, 0.8);
+	text-align: center;
+	width: 100%;
+	line-height:42px;
+	bottom:0;
+	font-size: .6rem;
+}
+footer a{
+	outline: 0;
+	color: rgba(255, 197, 146, 0.8);
+}
+footer a:hover{
+	color: #f88827;
+	text-decoration: none;
+}
