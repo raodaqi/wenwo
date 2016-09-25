@@ -72,6 +72,7 @@ footer{
 	line-height:42px;
 	bottom:0;
 	font-size: .6rem;
+	z-index: 5000;
 }
 footer a{
 	outline: 0;

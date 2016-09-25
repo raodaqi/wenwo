@@ -195,11 +195,11 @@
                           var address = '';
                           for (var key in askPosition) {
                               console.log(askPosition[key]);
-                              if(key == "adetail"){
+                              if(key == "adetail" && askPosition[key]){
                                 address += "（";
                               }
                               address += askPosition[key];
-                              if(key == "adetail"){
+                              if(key == "adetail" && askPosition[key]){
                                 address += "）";
                               }
                           }

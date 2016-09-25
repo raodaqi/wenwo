@@ -213,45 +213,45 @@ function initEdit(LAT,LNG){
 
       //得到焦点时隐藏导航按钮
       var id = '';
-      $("input,textarea").focus(function() {
-          id = this.id;
-          $(".footer-bar").hide();
-          if (this.id == "address" || this.id == "add-detail") {
-              $(".amap-zoomcontrol").hide();
-              $(".my-location").hide();
-              return;
-          }
-          $(".header-bar").hide();
-          $(".page-content").css("margin-top", "1rem");
-      });
-      $("input,textarea").blur(function() {
-          $(".amap-zoomcontrol").show();
-          $(".my-location").show();
-          $(".footer-bar").show();
-          $(".header-bar").show();
-          $(".page-content").css("margin-top", "5rem");
-      });
+      // $("input,textarea").focus(function() {
+      //     id = this.id;
+      //     $(".footer-bar").hide();
+      //     if (this.id == "address" || this.id == "add-detail") {
+      //         $(".amap-zoomcontrol").hide();
+      //         $(".my-location").hide();
+      //         return;
+      //     }
+      //     $(".header-bar").hide();
+      //     $(".page-content").css("margin-top", "1rem");
+      // });
+      // $("input,textarea").blur(function() {
+      //     $(".amap-zoomcontrol").show();
+      //     $(".my-location").show();
+      //     $(".footer-bar").show();
+      //     $(".header-bar").show();
+      //     $(".page-content").css("margin-top", "5rem");
+      // });
       //获取窗体高度
-      var height = $(document.body).height();
-      $(window).resize(function() {
-          if ($(document.body).height() < height) {
-              //输入框弹起
-              $(".footer-bar").hide();
-              $(".amap-zoomcontrol").hide();
-              $(".my-location").hide();
-              if (id != "address" && id != "add-detail") {
-                  $(".header-bar").hide();
-                  $(".page-content").css("margin-top", "1rem");
-              }
-          } else {
-              //输入框放下
-              $(".footer-bar").show();
-              $(".header-bar").show();
-              $(".amap-zoomcontrol").show();
-              $(".my-location").show();
-              $(".page-content").css("margin-top", "5rem");
-          }
-      })
+      // var height = $(document.body).height();
+      // $(window).resize(function() {
+      //     if ($(document.body).height() < height) {
+      //         //输入框弹起
+      //         $(".footer-bar").hide();
+      //         $(".amap-zoomcontrol").hide();
+      //         $(".my-location").hide();
+      //         if (id != "address" && id != "add-detail") {
+      //             $(".header-bar").hide();
+      //             $(".page-content").css("margin-top", "1rem");
+      //         }
+      //     } else {
+      //         //输入框放下
+      //         $(".footer-bar").show();
+      //         $(".header-bar").show();
+      //         $(".amap-zoomcontrol").show();
+      //         $(".my-location").show();
+      //         $(".page-content").css("margin-top", "5rem");
+      //     }
+      // })
 
       //修复搜索列表bug
       $("#router5").on("click", function() {
@@ -261,15 +261,15 @@ function initEdit(LAT,LNG){
       })
 
       //判断是不是安卓手机
-      var u = navigator.userAgent;
-      var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
-      if (isAndroid) {
-          $(".detail-li-name").focus(function() {
-              var top = $("#router3").scrollTop();
-              // alert(top);
-              $("#router3").scrollTop(80);
-          })
-      }
+      // var u = navigator.userAgent;
+      // var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+      // if (isAndroid) {
+      //     $(".detail-li-name").focus(function() {
+      //         var top = $("#router3").scrollTop();
+      //         // alert(top);
+      //         $("#router3").scrollTop(80);
+      //     })
+      // }
 
       //监听textarea获取焦点逻辑
 
@@ -631,6 +631,20 @@ function initEdit(LAT,LNG){
             $("#add-detail").val(adetail);
           }
 
+          if(askPosition){
+            $(".address .edit-content").attr("data-address", askPosition);
+            var askPosition = JSON.parse(askPosition);
+            var detail = '';
+            for(var key in askPosition){
+              detail +=  askPosition[key];
+            }
+            $(".address .edit-content").text(detail);
+            $("#address").val(detail);
+            //加入full
+            $(".address .edit-li-img").attr("src", "/img/edit/address-02.png");
+            $(".address .edit-content").addClass("full");
+          }
+
           //解析店名
           if (name) {
             //加入full
@@ -649,28 +663,28 @@ function initEdit(LAT,LNG){
           if (lng && lat) {
 
               // address.formattedAddress
-              getAddress(lnglatXY, {
-                  success: function(address) {
-                      var detail = address.formattedAddress;
-                      var address = {
-                          province: address.addressComponent.province,
-                          city: address.addressComponent.city,
-                          district: address.addressComponent.district,
-                          township: address.addressComponent.township
-                      }
-                      var replace = "" + address.province + address.city + address.district + address.township + "";
-                      detail = detail.replace(replace, "");
-                      address.detail = detail;
-                      address = JSON.stringify(address);
-                      $(".address .edit-content").attr("data-address", address);
-                      $(".address .edit-content").text(detail);
-                      $("#address").val(detail);
-                      //加入full
-                      $(".address .edit-li-img").attr("src", "/img/edit/address-02.png");
+              // getAddress(lnglatXY, {
+              //     success: function(address) {
+              //         var detail = address.formattedAddress;
+              //         var address = {
+              //             province: address.addressComponent.province,
+              //             city: address.addressComponent.city,
+              //             district: address.addressComponent.district,
+              //             township: address.addressComponent.township
+              //         }
+              //         var replace = "" + address.province + address.city + address.district + address.township + "";
+              //         detail = detail.replace(replace, "");
+              //         address.detail = detail;
+              //         address = JSON.stringify(address);
+              //         $(".address .edit-content").attr("data-address", address);
+              //         $(".address .edit-content").text(detail);
+              //         $("#address").val(detail);
+              //         //加入full
+              //         $(".address .edit-li-img").attr("src", "/img/edit/address-02.png");
 
-                      $(".address .edit-content").addClass("full");
-                  }
-              });
+              //         $(".address .edit-content").addClass("full");
+              //     }
+              // });
 
               $("#container").attr("data-lng", lng);
               $("#container").attr("data-lat", lat);
