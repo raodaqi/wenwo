@@ -10,11 +10,11 @@
     <title>迈沃德科技|用仅有的能力创造价值</title>
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/css/particles.css">
-    <link href='//api.youziku.com/webfont/CSS/57d2798ff629d80f2cf67ec6' rel='stylesheet' type='text/css' />
+    <link href='//cdn.webfont.youziku.com/webfonts/nomal/11252/19505/57e79ca9f629d812e893b975.css' rel='stylesheet' type='text/css' />
     <link href="css/main.min.css" rel="stylesheet">
     <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
     <script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
-    <script src="http://apps.bdimg.com/libs/angular-route/1.3.13/angular-route.js"></script>
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1474797684_2646039.css">
   </head>
   <style>
     body{
@@ -191,10 +191,98 @@
       transform: translate(0,0);
     }
     .cherry{
-      transform: translate(0,100%);
+      transform: translate(0,100%);  
     }
     .pcs{
       transform: translate(0,200%);
+    }
+    .cherry .logo,.pcs .logo{
+      height: 12rem;
+    }
+    .cherry .products-text{
+      color: #d84150;
+    }
+    .pcs .products-text{
+      color: #31a6fc;
+    }
+    .parallax-h-indicator {
+      width: 10px;
+      height: auto;
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      z-index: 10;
+      -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+    .parallax-h-indicator ul li.current {
+      background-color: rgba(250, 131, 41, 0.8);
+    }
+    .parallax-h-indicator ul li {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background-color: rgba(0,0,0,0.3);
+      border-radius: 5px;
+      margin-left: 5px;
+    }
+    .contact-text-box .iconfont{
+      font-size: 4rem;
+    }
+    .contact .contact-text-box{
+      font-size: 3rem;
+      line-height: 4rem;
+    }
+    .contact-text-box label{
+      display: block;
+      float: left;
+    }
+    .contact .contact-text-box{
+      width: 20.7rem;
+      margin:0 auto;
+      height: 4rem;
+      margin-bottom: 5rem;
+    }
+    .contact-content{
+      position: absolute;
+      display: block;
+      width: 100%;
+      text-align: center;
+      color: #f88827;
+      top: 50%;
+      left:50%;
+      transform: translate(-50%,-50%);
+    }
+    .contact-item-box .item{
+      display: inline-block;
+      height: 3rem;
+      text-align: left;
+    }
+    .item p {
+      font-size: 16px;
+      color: rgba(252, 188, 133, 0.94)
+    }
+    .item p b {
+      font-size: 30px;
+      color: rgb(248, 136, 39);
+      font-weight: 400;
+    }
+    .divider {
+      display: inline-block;
+      vertical-align: middle;
+      height: 3rem;
+      margin: 0 3rem;
+      background-color: rgba(255, 197, 146, 0.8);
+      width: 1px !important;
+    } 
+    .contact a:hover,
+    .contact a:visited,
+    .contact a:link,
+    .contact a:active{
+      color: rgb(248, 136, 39);
+      text-decoration: none;
     }
   </style>
   
@@ -229,21 +317,21 @@
         "id":"wenwo",
         "text":"问我-发现身边美食",
         "logoUrl" : "/img/logo.jpg",
-        "downUrl" : "/img/logo.jpg"
+        "downUrl" : "http://android.myapp.com/myapp/detail.htm?apkName=com.myworld.wenwo"
       },
       {
         "name" : "cherry",
         "id":"cherry",
-        "text":"问我-发现身边美食",
-        "logoUrl" : "/img/cherry.png",
-        "downUrl" : "/img/logo.jpg"
+        "text":"CHERRY-话说你的故事",
+        "logoUrl" : "/img/cherry_logo.png",
+        "downUrl" : "http://android.myapp.com/myapp/detail.htm?apkName=link.sharein.cherry"
       },
       {
         "name" : "享用插件",
         "id":"pcs",
-        "text":"问我-发现身边美食",
-        "logoUrl" : "/img/pcs.png",
-        "downUrl" : "/img/logo.jpg"
+        "text":"享用插件-只用最轻的应用",
+        "logoUrl" : "/img/pcs_logo.png",
+        "downUrl" : "http://www.wandoujia.com/apps/com.cuit.pcs"
       }];
 
       var loadPage = "index";
@@ -260,21 +348,24 @@
       var pageLoad = false;
 
       var pageScoll = function(e){
-        if(pageLoad){
+        if(pageLoad || loadPage != "products"){
           return;
         }
         pageLoad = true;
         setTimeout(function(){
           pageLoad = false;
         }, 500);
+        $(".parallax-li").removeClass("current");
         if(e.deltaY > 0){
           if(pageLoadId == "wenwo-id"){
             pageLoadId = "cherry-id";
+            // $(".cherry-li").addClass("current");
             $(".products-content").css({
               "transform" : "translate(-50%,-150%)"
             });
           }else{
             pageLoadId = "pcs-id";
+            // $(".pcs-li").addClass("current");
             $(".products-content").css({
               "transform" : "translate(-50%,-250%)"
             });
@@ -282,16 +373,20 @@
         }else{
           if(pageLoadId == "pcs-id"){
             pageLoadId = "cherry-id";
+            // $(".cherry-li").addClass("current");
             $(".products-content").css({
               "transform" : "translate(-50%,-150%)"
             });
           }else{
             pageLoadId = "wenwo-id";
+            // $(".wenwo-li").addClass("current");
             $(".products-content").css({
               "transform" : "translate(-50%,-50%)"
             });
           }
         }
+        console.log(pageLoadId);
+        $("."+pageLoadId).addClass("current");
       }
 
       /*IE注册事件*/   
@@ -345,23 +440,58 @@
     </nav>
 
     <div class="wenwo-content index" ng-class="{'slide-right':isActiveItem('index')}"  ng-view="" >
-      <div class="wenwo-text">{{companyDescribe}}</div>
+      <div class="wenwo-text css605e312722bf4">{{companyDescribe}}</div>
     </div>
 
     <div class="wenwo-content products" ng-class="{'slide-right':isActiveItem('products')}"  ng-view="" >
+
+      <div class="parallax-h-indicator">
+        <ul>
+          <li class="parallax-li wenwo-id current"></li>
+          <li class="parallax-li cherry-id"></li>
+          <li class="parallax-li pcs-id"></li>
+        </ul>
+      </div>
+
       <div class="products-content" ng-style="productsContent">
         <div ng-repeat='products in productsList' class="products-li {{products.id}}" id="{{products.id}}">
           <div class="products-li-content">
-            <img ng-src="{{products.logoUrl}}"  class="logo" alt="">
-            <div class="products-text css5b35420c82bf4">{{products.text}}</div>
+            <a href="{{products.downUrl}}" ng-mouseover="saveText = products.text;products.text='点击下载app'" ng-mouseout="products.text = saveText"><img ng-src="{{products.logoUrl}}"  class="logo" alt=""></a>
+            <div class="products-text css605e312722bf4">{{products.text}}</div>
           </div>
         </div> 
       </div>
     </div>
     <div class="wenwo-content contact" ng-class="{'slide-right':isActiveItem('contact')}"   ng-view="" >
-      <div class="wenwo-text">contact</div>
-    </div>
+      <div class="contact-content">
+        <div class="contact-text-box">
+          <label class="iconfont icon-kuohao201"></label>
+          <label class="contact-text">勿忘初心</label>
+          <label class="iconfont icon-kuohao"></label>
+        </div>
 
+        <div class="contact-item-box">
+          <div class="item">
+            <p>邮箱</p>
+            <p> <a href="mailto:892137682@qq.com"><b>892137682@qq.com</b></a>
+            </p>
+          </div>
+          <div class="item divider"></div>
+          <div class="item">
+            <p>手机</p>
+            <p><a href="tel:13348876754"><b>13348876754</b></a>
+            </p>
+          </div>
+          <div class="item divider"></div>
+          <div class="item">
+            <p>微信公众号</p>
+            <p> <b>问我(wenwolo)</b>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      </div>
     <footer class="wenwo-footer">
       <span><a href="{{companyUrl}}">{{companyUrlText}}</a></span>
       <span class="dot">·</span>
@@ -370,21 +500,6 @@
       <span><a href="{{companyRegUrl}}">{{companyReg}}</a></span>
     </footer>
   </div>
-
-  <!-- <div class="down-content">
-    <div id="particles-js"></div>
-    <div class="wenwo-content">
-      <img src="/img/logo.jpg" class="logo" alt="">
-      <div class="wenwo-text css5b35420c82bf4">问我-发现身边美食</div>
-    </div>
-    <div class="wenwo-content-right">
-      <label class="wenwo-label">和我们一起创造「问我-美食」</label>
-      <input type="text" class="wenwo-input" placeholder="留下您的QQ / 微信号">
-    </div>
-    <div class="android css5b35420c82bf4">安卓内测版</div>
-    <a class="wenwo-wechat css5b35420c82bf4" href="http://www.wenwobei.com">微信版</a>
-    <a class="wenwo-down css5b35420c82bf4">问我下载</a>
-  </div> -->
   <script src="/js/particles.min.js"></script>
   <script src="/js/zepto.min.js"></script>
   <script src="/js/wxlocation.js"></script>
