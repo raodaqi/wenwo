@@ -163,21 +163,7 @@ console.log(user);
 var test = config.test;
 
 app.get('/', function(req, res) {
-  var username =  req.query.username;
-  var lng = req.query.geox;
-  var lat = req.query.geoy;
-  var user = AV.User.current();
-  if (!user) {
-    authorize(req, res);
-  }else{
-    var username = user.get('user');
-    // var authData = user.get('authData');
-    // console.log(authData);
-    // authData = JSON.parse(authData);
-    res.render('newfood', {username: username, lng:lng, lat:lat});
-    return ;
-  }
-  res.render('newfood', { username: username, lng:"0", lat:"0"});
+  res.render('company');
 });
 
 app.get('/share/edit', function(req, res) {

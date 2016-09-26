@@ -110,9 +110,9 @@ function initEdit(LAT,LNG){
           $(".tab-item").removeClass("active");
           $(this).addClass("active");
           if (type == "like") {
-              $.router.load("/food?username=573b0e3df38c8400673bb48d#like");
+              $.router.load("/newfood?username=573b0e3df38c8400673bb48d#like");
           } else if (type == "find") {
-              $.router.load("/food?username=573b0e3df38c8400673bb48d");
+              $.router.load("/newfood?username=573b0e3df38c8400673bb48d");
           }
       })
 
@@ -123,13 +123,15 @@ function initEdit(LAT,LNG){
       })
       $("#success .find").on("click", function() {
           $.showPreloader("正在出宫");
-          $.router.load("/");
+          // $.router.load("/newfood");
+          window.location.href="/newfood";
       })
 
       //点击完成
       $("#success .pull-right").on("click", function() {
           $.showPreloader("正在跳转");
-          $.router.load("/");
+          // $.router.load("/newfood");
+          window.location.href="/newfood";
       })
 
       //分享
@@ -155,7 +157,7 @@ function initEdit(LAT,LNG){
           } else {
               $.showPreloader("正在跳转");
               // $.router.load("/food");
-              window.location.href = "/food";
+              window.location.href = "/newfood";
           }
       })
 
