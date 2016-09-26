@@ -511,6 +511,7 @@
   
   <script>
     //判断是在微信端
+    var ua = window.navigator.userAgent.toLowerCase(); 
     if(ua.match(/MicroMessenger/i) == 'micromessenger'){
       window.location.href="/newfood";
     }
