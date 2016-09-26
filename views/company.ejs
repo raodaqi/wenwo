@@ -510,7 +510,10 @@
   <script src="/js/wxlocation.js"></script>
   
   <script>
-     
+    //判断是在微信端
+    if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+      window.location.href="/newfood";
+    }
   </script>
 
   <script>
