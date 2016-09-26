@@ -1,0 +1,139 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name='description', content='wenwo,问我,当地人,旅游,攻略,信息,分享'>
+    <meta name='author', content='raodqi'>
+    <link rel="icon" type="image/x-icon" href="/img/logo.jpg" media="screen">
+    <title>信息审核</title>
+    <link rel="stylesheet" href="/css/style-min.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1462821367_1895313.css">
+    <link rel="stylesheet" href="/css/sm.min.css">
+  </head>
+  <style>
+    .list-block{
+      margin:1rem 0;
+    }
+    .list-block.inset{
+      margin-left: .25rem;
+      margin-right: .25rem;
+      border-radius: .15rem;
+    }
+    .preloader {
+      display: block;
+      width: 1.5rem;
+      height: 1.5rem;
+      margin: 10px auto;
+    }
+    .list-block ul{
+      background-color: #eee;
+      border-radius: 0.35rem;
+    }
+    .list-block li{
+      background-color: white;
+    }
+    .refresh{
+      position: absolute;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      background-color: #ee7e2e;
+      z-index: 100;
+      color: white;
+      bottom:2rem;
+      right:2rem;
+      line-height: 2rem;
+      font-size: .6rem;
+      text-align: center;
+      box-shadow: 2px 1px 5px 2px rgba(254, 154, 83, 0.48);
+    }
+  </style>
+<body>
+<div class="content">
+  <div class="list-block media-list inset">
+    <ul class="autoaskme-ul">
+      <div class="preloader"></div>
+    </ul>
+  </div>
+  <div class="refresh">刷新</div>
+</div>
+<% include ../footer.ejs %>
+<script type='text/javascript' src='/js/zepto.min.js' charset='utf-8'></script>
+<script>
+  function sendQuest(url,type,data,callback){
+    $.ajax({
+      type: type,
+      url: url,
+      data: data,
+      dataType: "json",
+      success:function(result){
+        if(result.code == 200){
+          callback.success(result);
+        }else{
+          callback.error(result);
+        }
+      },
+      error:function(error){
+        $.toast("服务器出错");
+        callback.error(error);
+      }
+    })
+  }
+  var page = window.location.hash.split("#")[1] ? window.location.hash.split("#")[1] : 0;
+
+function getAsk(){
+  var data = {
+    staus: '2',
+    page : page,
+    size : 20
+  }
+  url = "/ask/allask",
+  type = "GET";
+  sendQuest(url,type,data,{
+    success:function(result){
+      if(result.code == 200){
+        var data = result.data;
+        li = '';
+        for(var i = 0; i < data.length;i++){
+          li += '<li class="autoaskme-li" data-askid="'+data[i].objectId+'" data-createBy="'+data[i].createBy+'"><a class="item-link item-content"><div class="item-inner"><div class="item-subtitle">'+data[i].shopName+'</div></div></a></li>';
+        }
+        clearInterval(refreshTimer);
+        $(".refresh").css({
+          "transform" : "rotate(0deg)"
+        })
+        $(".autoaskme-ul").empty().append(li);
+      }else{
+        $.toast("服务器出错");
+      }
+    },
+    error:function(error){
+      console.log(error);
+      $.toast("服务器出错");
+      $.hidePreloader();
+    }
+  })
+}
+getAsk();
+
+var refreshTimer;
+$(".refresh").on("click",function(){
+  var rotate = 0;
+  $(".autoaskme-ul").empty().append('<div class="preloader"></div>');
+  getAsk();
+  refreshTimer = setInterval(function(){
+    rotate = rotate + 10;
+    $(".refresh").css({
+      "transform" : "rotate("+rotate+"deg)"
+    })
+  }, 10);
+})
+
+$(".autoaskme-ul").on("click",".autoaskme-li",function(){
+  $.showPreloader("正在加载");
+  var askid = $(this).attr("data-askid");
+  var createby = $(this).attr("data-createby");
+  window.location.href="/manage/edit?type=edit&askid="+askid+'&username='+createby
+})
+</script>
+</body>
+</html>

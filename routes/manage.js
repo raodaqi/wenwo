@@ -59,6 +59,12 @@ router.get('/edit', function(req, res) {
   }
 });
 
+router.get('/asklist', function(req, res) {
+
+    res.render('manage/asklist');
+
+});
+
 //查找
 var getLookUser = function(db, callback) {
     var userklook = db.collection('UserLook').find();
