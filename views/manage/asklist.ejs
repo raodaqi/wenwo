@@ -47,6 +47,13 @@
       text-align: center;
       box-shadow: 2px 1px 5px 2px rgba(254, 154, 83, 0.48);
     }
+    .content .item-inner:hover,
+    .content .item-inner:visited,
+    .content .item-inner:link,
+    .content .item-inner:active{
+      background-color: white;
+      text-decoration: none;
+    }
   </style>
 <body>
 <div class="content">
@@ -55,8 +62,8 @@
       <div class="preloader"></div>
     </ul>
   </div>
-  <div class="refresh">刷新</div>
 </div>
+<div class="refresh">刷新</div>
 <% include ../footer.ejs %>
 <script type='text/javascript' src='/js/zepto.min.js' charset='utf-8'></script>
 <script>
