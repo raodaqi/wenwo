@@ -302,6 +302,11 @@
       $scope.companyRegUrl = "http://www.miibeian.gov.cn";
       $scope.companyReg = "蜀ICP备15035285号";
 
+      $scope.contact = "勿忘初心";
+      $scope.contactEmail = "892137682@qq.com";
+      $scope.contactMobile = "3348876754";
+      $scope.contactWechat = "问我(wenwolo)";
+
       $scope.list = [{
         "name" : "主页",
         "url" : "index",
@@ -468,26 +473,26 @@
       <div class="contact-content">
         <div class="contact-text-box">
           <label class="iconfont icon-kuohao201"></label>
-          <label class="contact-text">勿忘初心</label>
+          <label class="contact-text">{{contact}}</label>
           <label class="iconfont icon-kuohao"></label>
         </div>
 
         <div class="contact-item-box">
           <div class="item">
             <p>邮箱</p>
-            <p> <a href="mailto:892137682@qq.com"><b>892137682@qq.com</b></a>
+            <p> <a href="mailto:{{contactEmail}}"><b>{{contactEmail}}</b></a>
             </p>
           </div>
           <div class="item divider"></div>
           <div class="item">
             <p>手机</p>
-            <p><a href="tel:13348876754"><b>13348876754</b></a>
+            <p><a href="tel:{{contactMobile}}"><b>{{contactMobile}}</b></a>
             </p>
           </div>
           <div class="item divider"></div>
           <div class="item">
             <p>微信公众号</p>
-            <p> <b>问我(wenwolo)</b>
+            <p> <b>{{contactWechat}}</b>
             </p>
           </div>
         </div>
