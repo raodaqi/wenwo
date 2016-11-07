@@ -288,6 +288,84 @@
       color: rgb(248, 136, 39);
       text-decoration: none;
     }
+    /*响应式优化*/
+    @media (max-width: 760px) {
+      body,html{
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        overflow-y:hidden !important; 
+      }
+      .wenwo-content{
+        width: 100%;
+        height: 100%;
+      }
+      .container{
+        margin-top: 0;
+      }
+      .navbar-header{
+        display: none;
+      }
+      .collapse{
+        display: block;
+        text-align: center;
+      }
+      .nav>li{
+        width: 33.33%;
+        text-align: center;
+        float: left;
+        font-size: 15px;
+      }
+      .wenwo-text{
+        font-size: 1.5rem;
+      }
+      .wenwo-footer span{
+        display: none;
+      }
+      .wenwo-footer span:first-child{
+        display: block;
+      }
+      .logo,.cherry .logo, .pcs .logo{
+        height:6rem;
+      }
+      .products-text{
+        font-size: 1.2rem;
+      }
+      .contact .contact-text-box{
+        padding-left: 2rem;
+        width:17.5rem;
+        text-align: center;
+        margin:0 auto;
+        margin-bottom: 2rem;
+      }
+      .contact .contact-text-box{
+        font-size: 2rem;
+      }
+      .item p b{
+        font-size: .8rem;
+      }
+      .contact-item-box .item:first-child{
+        display: none;
+      }
+      .contact-item-box .item{
+        display: block;
+        float: left;
+        width: 50%;
+        text-align: center;
+      }
+      .divider{
+        display: none !important;
+      }
+      .icon-kuohao201{
+        margin-right: -1.2rem;
+      }
+      .icon-kuohao{
+        margin-left: .3rem;
+      }
+      .parallax-h-indicator{
+        display: none;
+      }
+    }
   </style>
   
   <script>
@@ -396,6 +474,56 @@
         $("."+pageLoadId).addClass("current");
       }
 
+      $(".products-content").swipeUp(function(){
+        // console.log("up");
+        if(pageLoad || loadPage != "products"){
+          return;
+        }
+        pageLoad = true;
+        setTimeout(function(){
+          pageLoad = false;
+        }, 500);
+        $(".parallax-li").removeClass("current");
+        if(pageLoadId == "wenwo-id"){
+            pageLoadId = "cherry-id";
+            // $(".cherry-li").addClass("current");
+            $(".products-content").css({
+              "transform" : "translate(-50%,-150%)"
+            });
+          }else{
+            pageLoadId = "pcs-id";
+            // $(".pcs-li").addClass("current");
+            $(".products-content").css({
+              "transform" : "translate(-50%,-250%)"
+            });
+          }
+        $("."+pageLoadId).addClass("current");
+      })
+      $(".products-content").swipeDown(function(){
+        if(pageLoad || loadPage != "products"){
+          return;
+        }
+        pageLoad = true;
+        setTimeout(function(){
+          pageLoad = false;
+        }, 500);
+        $(".parallax-li").removeClass("current");
+        if(pageLoadId == "pcs-id"){
+            pageLoadId = "cherry-id";
+            // $(".cherry-li").addClass("current");
+            $(".products-content").css({
+              "transform" : "translate(-50%,-150%)"
+            });
+          }else{
+            pageLoadId = "wenwo-id";
+            // $(".wenwo-li").addClass("current");
+            $(".products-content").css({
+              "transform" : "translate(-50%,-50%)"
+            });
+          }
+          $("."+pageLoadId).addClass("current");
+      })
+
       /*IE注册事件*/   
       if(document.attachEvent){   
          document.attachEvent('onmousewheel',pageScoll);   
@@ -406,7 +534,6 @@
       }//W3C
 
       window.onmousewheel=document.onmousewheel=pageScoll;
-
     });
   </script>
 
@@ -429,8 +556,8 @@
     <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header page-scroll">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse"> <i class="fa fa-bars"></i>
-          </button>
+         <!--  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse"> <i class="fa fa-bars iconfont icon-more"></i>
+          </button> -->
           <a href="#page-top">
             <img ng-src="{{logo}}" class="logo-bar white">  
           </a>
@@ -509,13 +636,14 @@
   </div>
   <script src="/js/particles.min.js"></script>
   <script src="/js/zepto.min.js"></script>
+  <script src="/js/extend.js"></script>
   <script src="/js/app-company.min.js"></script>
   
   <script>
     //判断是在微信端
     var ua = window.navigator.userAgent.toLowerCase(); 
     if(ua.match(/MicroMessenger/i) == 'micromessenger'){
-      window.location.href="/newfood";
+      // window.location.href="/newfood";
     }
   </script>
 
