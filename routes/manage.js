@@ -65,7 +65,7 @@ router.get('/asklist', function(req, res) {
 
 });
 
-//查找
+//查找活跃人数
 var getLookUser = function(db, callback) {
     var userklook = db.collection('UserLook').find();
     userklook.count(function(err, count) {
@@ -88,7 +88,7 @@ var getLookUser = function(db, callback) {
    });
 }
 
-//添加
+//添加活跃人数
 var addLookUser = function(db,data, callback) {
 
     var username = data.username;
@@ -319,7 +319,6 @@ router.get('/version', function(req, res) {
         }
         res.send(result);
     });
-
 });
 
 router.get('/', function(req, res, next) {

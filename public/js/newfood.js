@@ -49,8 +49,8 @@
       }
   });
 
+  //测试逻辑
   if(window.location.port == 3000){
-    //测试逻辑
     // newfoodInit(30.580596,103.982984);
     setTimeout(function(){
       // newfoodInit(30.580596,103.982984);
@@ -365,6 +365,7 @@ function newfoodInit(lat,lng,locationPerssion){
       }
   });
 
+  //加载热门地点逻辑
   function loadLocationList(){
     if(!$(".hot-location-content-li").length){
       var data = {};
@@ -525,6 +526,7 @@ function newfoodInit(lat,lng,locationPerssion){
       }
   }
 
+  //更新页面逻辑
   function updatePage(type) {
       switch (type) {
           case "#share":
@@ -775,11 +777,7 @@ function newfoodInit(lat,lng,locationPerssion){
   function addItems(number, lastIndex,type,keyword) {
 
       //屏蔽其他请求
-      // console.log(lastIndex);
       var page = Math.ceil(lastIndex / number);
-
-      // console.log("加载");
-
       page = page ? page : 0;
       if(!getNewLoad){
         if(type == "new"){
@@ -854,13 +852,7 @@ function newfoodInit(lat,lng,locationPerssion){
 
                   if (data) {
                       for (var i = 0; i < data.length; i++) {
-                          // var lat1 = data[i].GeoX;
-                          // var lng1 = data[i].GeoY;
-                          // var long = getFlatternDistance(lat1, lng1, LAT, LNG);
-
-                          // console.log(data[i].score);
-                          // html += '<div class="wenwo-li" data-id=' + data[i].objectId + '><div class="up-content"><img src="' + data[i].createByUrl + '" alt="" class="user-pic"><div class="ask-content"><div class="ask-add">'+formatRange(long)+'</div><div class="ask-tag">' + formatTag(data[i].askTagStr) + '</div><div class="ask-reason">' + data[i].askReason + '</div></div></div><div class="down-content"><div class="down-like ' + (data[i].liked ? "liked" : '') + '"><span class="icon iconfont icon-likeEat"></span><label class="like-num">' + (data[i].likeNum < 0 ? 0 : data[i].likeNum) + '</label></div>' + (data[i].score > 9 ? '<div class="down-buy" data-id=' + data[i].objectId + '>' + formatPrice(data[i].askPrice) + '</div>' : '<div class="down-buy free" data-id=' + data[i].objectId + '>限时免费</div>') + '<div class="down-time">' + formatDate("y.m.d", data[i].createdAt) + '</div></div></div>';
-                        html += formatAsk(data[i]);
+                         html += formatAsk(data[i]);
                       }
                       // 添加新条目
                       $('#find .wenwo-ul').append(html);

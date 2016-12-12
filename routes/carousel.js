@@ -8,6 +8,7 @@ var AV = require('leanengine');
 var Carousel = AV.Object.extend('Carousel');
 var TopicLike = AV.Object.extend('TopicLike');
 
+//获取轮播图列表
 router.get('/getcarouselinfo', function(req, res, next) {
     var reqType = req.query.type;
     var userName = req.query.username;
@@ -48,7 +49,7 @@ router.get('/getcarouselinfo', function(req, res, next) {
         res.send({code:400, message:'请求失败'});
     });
 });
-
+//获取喜欢列表
 router.get('/gettopiclikelist', function(req, res, next) {
     var userName = req.query.username;
 
@@ -67,7 +68,7 @@ router.get('/gettopiclikelist', function(req, res, next) {
         res.send({code:400, message:'获取信息失败'});
     })
 });
-
+//添加轮播图
 router.post('/addcarouselinfo', function(req, res, next) {
 
     var carouselName = req.body.name;
@@ -114,7 +115,7 @@ router.post('/addcarouselinfo', function(req, res, next) {
 
 
 });
-
+//编辑轮播图信息
 router.post('/editcarouselinfo', function(req, res, next) {
 
     var carouselName = req.body.name;
@@ -140,7 +141,7 @@ router.post('/editcarouselinfo', function(req, res, next) {
         });
     });
 });
-
+//删除轮播图
 router.post('/delcarouselinfo', function(req, res, next) {
 
     var carouselID = req.body.carousel_id;

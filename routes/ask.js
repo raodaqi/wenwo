@@ -345,6 +345,7 @@ router.post('/addvipcard', function(req, res, next) {
     });
 })
 
+//添加搜索记录
 router.get('/addsearchlog', function(req, res, next) {
     var keyword = req.query.keyword;
     var createBy = req.query.username;
