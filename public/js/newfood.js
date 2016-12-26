@@ -156,11 +156,11 @@ function newfoodInit(lat,lng,locationPerssion){
      $(".down-img").attr("src",localStorage.downImg);
   }
 
-  function randomSS(){
-    var sslen = 45;
-    var headUrlNum = Math.ceil(Math.random()*sslen);
-    return "/img/ss/ss"+headUrlNum+".jpg";
-  }
+  // function randomSS(){
+  //   var sslen = 45;
+  //   var headUrlNum = Math.ceil(Math.random()*sslen);
+  //   return "/img/ss/ss"+headUrlNum+".jpg";
+  // }
 
 
   //生成美食信息
@@ -189,15 +189,15 @@ function newfoodInit(lat,lng,locationPerssion){
     }
     //学姐活动内容
     var headImage = ask.createByUrl;
-    var headImage = randomSS();
+    // var headImage = randomSS();
 
-    // if(ask.askImage && ask.askImage.length){
-    //   var askImage = JSON.parse(ask.askImage);
-    //   if(askImage[0].image){
-    //     var ask = '<div class="wenwo-li" data-id="'+ask.objectId+'"><div class="wenwo-ask-img" style="background: url('+askImage[0].image+') center center / cover no-repeat;"><div class="wenwo-gradient"></div>'+(ask.vipCardContent && ask.vipCardImage ? '<div class="card-tip"><img src="/img/card/vip.png" class="vip-card-img" alt=""></div>' : '')+'<div class="wenwo-look"><label class="iconfont icon-eyepageview"></label><label> '+(ask.lookNum ? ask.lookNum : 0)+'</label></div><div class="wenwo-add"><label class="iconfont icon-adress"></label><label> '+formatRange(long)+'</label></div></div><div class="up-content"><img src="'+headImage+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-reason">'+ask.askReason+'</div></div></div><div class="down-content"><div data-id="'+ask.objectId+'" class="click-hidden-button"></div><div class="iconfont icon-taginfor tag-icon"></div><div class="down-tag-content">'+downTag+'</div><div class="down-like ' + (ask                                                                                                                                                                                                                                                                                                                                                                                                         .liked ? "liked" : '') + '"><span class="iconfont icon-chidouren"></span><label class="like-num">'+ask.likeNum+'</label></div></div></div>';
-    //     return ask;
-    //   }
-    // }
+    if(ask.askImage && ask.askImage.length){
+      var askImage = JSON.parse(ask.askImage);
+      if(askImage[0].image){
+        var ask = '<div class="wenwo-li" data-id="'+ask.objectId+'"><div class="wenwo-ask-img" style="background: url('+askImage[0].image+') center center / cover no-repeat;"><div class="wenwo-gradient"></div>'+(ask.vipCardContent && ask.vipCardImage ? '<div class="card-tip"><img src="/img/card/vip.png" class="vip-card-img" alt=""></div>' : '')+'<div class="wenwo-look"><label class="iconfont icon-eyepageview"></label><label> '+(ask.lookNum ? ask.lookNum : 0)+'</label></div><div class="wenwo-add"><label class="iconfont icon-adress"></label><label> '+formatRange(long)+'</label></div></div><div class="up-content"><img src="'+headImage+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-reason">'+ask.askReason+'</div></div></div><div class="down-content"><div data-id="'+ask.objectId+'" class="click-hidden-button"></div><div class="iconfont icon-taginfor tag-icon"></div><div class="down-tag-content">'+downTag+'</div><div class="down-like ' + (ask                                                                                                                                                                                                                                                                                                                                                                                                         .liked ? "liked" : '') + '"><span class="iconfont icon-chidouren"></span><label class="like-num">'+ask.likeNum+'</label></div></div></div>';
+        return ask;
+      }
+    }
     var ask ='<div class="wenwo-li" data-id="'+ask.objectId+'"><div class="up-content"><img src="'+headImage+'" alt="" class="user-pic"><div class="ask-content"><div class="ask-reason">'+ask.askReason+'</div></div></div><div class="down-content"> <div data-id="'+ask.objectId+'" class="click-hidden-button"></div> <div class="iconfont icon-taginfor tag-icon"></div><div class="down-tag-content">'+downTag+'</div><div class="down-like no-img ' + (ask.liked ? "liked" : '') + '"><span class="iconfont icon-chidouren"></span><label class="like-num">'+ask.likeNum+'</label></div></div><div class="other-content"><div class="wenwo-look"><label class="iconfont icon-eyepageview"></label><label > '+(ask.lookNum ? ask.lookNum : 0)+'</label></div><div class="wenwo-add"><label class="iconfont icon-adress"></label><label> '+formatRange(long)+'</label></div></div></div>';
     return ask;
   }

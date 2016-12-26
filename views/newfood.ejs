@@ -665,48 +665,48 @@
 <!-- <script type='text/javascript' src='/js/sm.js' charset='utf-8'></script> -->
 <script>
 $.showPreloader("正在加载");
-$(function() {
-  // 学姐活动逻辑
-  var ssContentConfig = [
-    {
-      by:"小问",
-      content:['吃货就是别人吃两口就饱了，你是吃饱了还能吃两口。','如果你不是一个真正的吃货，那么你永远也不会了解到，“但是，我吃饱了”和“我吃饱了，但是”这两句话的天壤之别。','如果你不是一个真正的吃货，那么你永远也不会了解到，...但是，我吃饱了”和我吃饱了，但是..”这两句话的天壤之别。','只有大于拳头的才叫肉。所有的肉炒菜都叫素菜，纯素的菜都不叫菜，那叫草。真不明白草有什么好吃的。','一顿不吃肉，感觉啥都没吃。一天不吃肉，感觉天都塌了。我做错了什么？我是杀人还是强奸宋仲基了？要这样惩罚我！！！！',"成都不是一个城市，它是一个食物。"]
-    },
-    {
-      by:"小梅",
-      content:['今天吃喝不努力 明天努力找吃喝。','吃的更多，吃的更饱，吃的更好!','别的什么的就得了，给我烧一份海底捞和两个服务员。','作为一个吃货，最可怕的不是饥饿，而是你明明不饿，但总觉得非得吃点什么才踏实。','只有填满肚子，人才不会空虚。','真正的吃货敢于直面粗壮的大腿，敢于挑战隆起的小腹。','早饭我唯一不吃的两样东西是午饭和晚饭。','识食物者为俊杰。',"吃吃为吃吃，不吃为吃吃，是吃也"]
-    },
-    {
-      by:"Monarch",
-      content:["世界上没有什么是一顿美食解决不了的，如果有，那就两顿。","据说吃货都不会挂科……因为吃货太重，高数挂不住","早餐吃什么，中午吃什么，下午茶吃什么，晚餐吃什么，宵夜吃什么，零食吃什么。","胃里和心里，总要有一个是满的，而我选择了胃。","爱吃肉的人，人品都不会太差。"]
-    },
-    {
-      by:"小美",
-      content:["吃个酸辣粉麻辣烫就要旋转、跳跃、闭着眼，活像赚了100万一样。实不相瞒，我每天能赚几个亿","这辈子，我唯一拿得起、放不下的，就是筷子。","吃，不会带来幸福。<br/>吃，本身就是幸福。","给我一双筷子，我能吃下全世界……","只有因为吃肉长胖，才会无怨无悔。因为吃菜长了膘，简直比日了渣男还冤枉。","小时候看电视，土匪啃大鸡腿，立马确定了人生梦想，长大了就要当土匪。"]
-    },
-    {
-      by:"我不是",
-      content:['这个隐藏功能都被你发现了，你想干啥？','学姐是学长滴，学妹也是学长滴！','其实我是一个学长','学姐很忙，不约，不约']
-    },
+// $(function() {
+//   // 学姐活动逻辑
+//   var ssContentConfig = [
+//     {
+//       by:"小问",
+//       content:['吃货就是别人吃两口就饱了，你是吃饱了还能吃两口。','如果你不是一个真正的吃货，那么你永远也不会了解到，“但是，我吃饱了”和“我吃饱了，但是”这两句话的天壤之别。','如果你不是一个真正的吃货，那么你永远也不会了解到，...但是，我吃饱了”和我吃饱了，但是..”这两句话的天壤之别。','只有大于拳头的才叫肉。所有的肉炒菜都叫素菜，纯素的菜都不叫菜，那叫草。真不明白草有什么好吃的。','一顿不吃肉，感觉啥都没吃。一天不吃肉，感觉天都塌了。我做错了什么？我是杀人还是强奸宋仲基了？要这样惩罚我！！！！',"成都不是一个城市，它是一个食物。"]
+//     },
+//     {
+//       by:"小梅",
+//       content:['今天吃喝不努力 明天努力找吃喝。','吃的更多，吃的更饱，吃的更好!','别的什么的就得了，给我烧一份海底捞和两个服务员。','作为一个吃货，最可怕的不是饥饿，而是你明明不饿，但总觉得非得吃点什么才踏实。','只有填满肚子，人才不会空虚。','真正的吃货敢于直面粗壮的大腿，敢于挑战隆起的小腹。','早饭我唯一不吃的两样东西是午饭和晚饭。','识食物者为俊杰。',"吃吃为吃吃，不吃为吃吃，是吃也"]
+//     },
+//     {
+//       by:"Monarch",
+//       content:["世界上没有什么是一顿美食解决不了的，如果有，那就两顿。","据说吃货都不会挂科……因为吃货太重，高数挂不住","早餐吃什么，中午吃什么，下午茶吃什么，晚餐吃什么，宵夜吃什么，零食吃什么。","胃里和心里，总要有一个是满的，而我选择了胃。","爱吃肉的人，人品都不会太差。"]
+//     },
+//     {
+//       by:"小美",
+//       content:["吃个酸辣粉麻辣烫就要旋转、跳跃、闭着眼，活像赚了100万一样。实不相瞒，我每天能赚几个亿","这辈子，我唯一拿得起、放不下的，就是筷子。","吃，不会带来幸福。<br/>吃，本身就是幸福。","给我一双筷子，我能吃下全世界……","只有因为吃肉长胖，才会无怨无悔。因为吃菜长了膘，简直比日了渣男还冤枉。","小时候看电视，土匪啃大鸡腿，立马确定了人生梦想，长大了就要当土匪。"]
+//     },
+//     {
+//       by:"我不是",
+//       content:['这个隐藏功能都被你发现了，你想干啥？','学姐是学长滴，学妹也是学长滴！','其实我是一个学长','学姐很忙，不约，不约']
+//     },
 
-  ];
+//   ];
 
-  $(".wenwo-ul").on("click",".user-pic",function(){
-    var img = $(this).attr("src");
-    $(".ss-img").attr("src",img);
-    var nameNum = Math.floor(Math.random() * ssContentConfig.length);
-    var contentNum = Math.floor(Math.random() * ssContentConfig[nameNum].content.length);
-    var ssTextContent = ssContentConfig[nameNum].content[contentNum];
-    var ssContentBy = ssContentConfig[nameNum].by;
-    $(".ss-text-content").html(ssTextContent);
-    $(".ss-content-by-name").text(ssContentBy);
-    $("#modal-1").addClass("md-show");
-  })
+//   $(".wenwo-ul").on("click",".user-pic",function(){
+//     var img = $(this).attr("src");
+//     $(".ss-img").attr("src",img);
+//     var nameNum = Math.floor(Math.random() * ssContentConfig.length);
+//     var contentNum = Math.floor(Math.random() * ssContentConfig[nameNum].content.length);
+//     var ssTextContent = ssContentConfig[nameNum].content[contentNum];
+//     var ssContentBy = ssContentConfig[nameNum].by;
+//     $(".ss-text-content").html(ssTextContent);
+//     $(".ss-content-by-name").text(ssContentBy);
+//     $("#modal-1").addClass("md-show");
+//   })
 
-  $(".md-modal,.md-overlay").on("click",function(){
-    $(".md-show").removeClass("md-show");
-  })
-});
+//   $(".md-modal,.md-overlay").on("click",function(){
+//     $(".md-show").removeClass("md-show");
+//   })
+// });
 
   //初始化幻灯片
   // $(function() {
