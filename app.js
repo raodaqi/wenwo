@@ -23,6 +23,7 @@ var vipcard = require('./routes/vipcard');
 var askme = require('./routes/askme');
 var wallet = require('./routes/wallet');
 var hode = require('./routes/hode');
+var advertise = require('./routes/advertise');//招聘小软件后台接口
 var authorization = require('./routes/authorization');
 var config = require('./config');
 var Haved = AV.Object.extend('Haved');
@@ -660,6 +661,7 @@ app.use('/hode', hode);
 app.use('/location', location);
 app.use('/manage', manage);
 app.use('/authorization',authorization);
+app.use('/advertise',advertise);//招聘小软件后台接口
 
 
 // 如果任何路由都没匹配到，则认为 404
