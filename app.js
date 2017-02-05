@@ -192,6 +192,10 @@ app.get('/', function(req, res) {
   res.render('company');
 });
 
+app.get('/resume', function(req, res) {
+  res.render('resume');
+});
+
 app.get('/share/edit', function(req, res) {
   res.render('shareEdit');
 });

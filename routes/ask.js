@@ -78,6 +78,7 @@ router.get('/allask', function(req, res, next) {
         var query = new AV.Query('FoodLike');
 
         query.equalTo("by", userName);
+        query.contains('title','李总');
 
         query.find().then(function (likeList) {
 

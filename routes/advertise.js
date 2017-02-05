@@ -4,38 +4,108 @@ var http = require('http');
 
 var Information = AV.Object.extend('Information');
 
-router.get('/userInfos', function (req, resp, next) {
+router.post('/add', function (req, resp, next) {
 	var information = new Information();
-	var userName = req.query.userName;
-    var phoneNum = req.query.phoneNum;
-    var qqNum =  req.query.qqNum;
-    var education =  req.query.education;
-    var bithNum =  req.query.bithNum;
-    var politicalSta =  req.query.politicalSta;//政治面貌
-    var educationExp =  req.query.educationExp;//教育经历
-    var company =  req.query.company;
-    var work =  req.query.work;
-    var workTime =  req.query.workTime;
-    var workExp =  req.query.workExp;//工作经验
-    var projectExp =  req.query.projectExp;//教育经验
-    var evaluation =  req.query.evaluation;//自我评价
-    information.set('userName',userName);
-    information.set('phoneNum',phoneNum);
-    information.set('qqNum',qqNum);
-    information.set('education',education);
-    information.set('bithNum',bithNum);
-    information.set('politicalSta',politicalSta);
-    information.set('educationExp',educationExp);
-    information.set('company',company);
-    information.set('work',work);
-    information.set('workTime',workTime);
-    information.set('workExp',workExp);
-    information.set('projectExp',projectExp);
-    information.set('evaluation',evaluation);
-    information.save().then(function(users) {
+    var openid = req.body.openid;
+    var name = req.body.name;
+    var phoneNum = req.body.phoneNum;
+    var qqNum =  req.body.qqNum;
+    var education =  req.body.education;
+    var birth =  req.body.birth;
+    var poliOL =  req.body.poliOL;//政治面貌
+    var eduInfo =  req.body.eduInfo;//教育经历
+    var nowCompany =  req.body.nowCompany;
+    var nowJob =  req.body.nowJob;
+    var nowTime =  req.body.nowTime;
+    var jobInfo =  req.body.jobInfo;//过往工作经验
+
+    //先查询一次
+    var query = new AV.Query('Information');
+    query.equalTo("openid", openid);
+    query.first().then(function (resume) { 
+        console.log(resume); 
+        if(resume){
+            //存在
+            var id = resume.id;
+            var query = new AV.Query('Information');
+            query.get(id).then(function (information) {
+                information.set('openid',openid);
+                information.set('name',name);
+                information.set('phoneNum',phoneNum);
+                information.set('qqNum',qqNum);
+                information.set('education',education);
+                information.set('birth',birth);
+                information.set('poliOL',poliOL);
+                information.set('eduInfo',eduInfo);
+                information.set('nowCompany',nowCompany);
+                information.set('nowJob',nowJob);
+                information.set('nowTime',nowTime);
+                information.set('jobInfo',jobInfo);
+
+                information.save().then(function(resume) {
+                    var result = {
+                        code : 200,
+                        data : resume,
+                        message : 'operation succeeded'
+                    }
+                    resp.send(result);
+                }, function(error) {
+                    var result = {
+                        code : 100,
+                        message : 'error'
+                    }
+                    resp.send(result);
+                });
+            })
+        }else{
+            //不存在
+            information.set('openid',openid);
+            information.set('name',name);
+            information.set('phoneNum',phoneNum);
+            information.set('qqNum',qqNum);
+            information.set('education',education);
+            information.set('birth',birth);
+            information.set('poliOL',poliOL);
+            information.set('eduInfo',eduInfo);
+            information.set('nowCompany',nowCompany);
+            information.set('nowJob',nowJob);
+            information.set('nowTime',nowTime);
+            information.set('jobInfo',jobInfo);
+
+            information.save().then(function(resume) {
+                var result = {
+                    code : 200,
+                    data : resume,
+                    message : 'operation succeeded'
+                }
+                resp.send(result);
+            }, function(error) {
+                var result = {
+                    code : 100,
+                    message : 'error'
+                }
+                resp.send(result);
+            });
+        }
+    }, function(error) {
+        var result = {
+            code : 100,
+            message : 'error'
+        }
+        resp.send(result);
+    })
+});
+
+
+router.get('/get', function(req, resp, next) {
+    var openid = req.query.openid;
+    var query = new AV.Query('Information');
+    query.equalTo("openid", openid);
+
+    query.first().then(function (resume) {
         var result = {
             code : 200,
-            user : users,
+            data : resume,
             message : 'operation succeeded'
         }
         resp.send(result);
@@ -45,33 +115,87 @@ router.get('/userInfos', function (req, resp, next) {
             message : 'error'
         }
         resp.send(result);
-    });
+    })
 });
 
+router.get('/list', function(req, resp, next) {
 
-router.get('/find', function(req, resp, next) {
-	var information = new Information();
-    var userName = req.query.userName;
-    console.log(userName);
-    // var cql = 'select * from Information where objectId = "588ddce78fd9c5d6780ffab0"';
-    var cql = 'select * from Information where userName = "'+userName+'"';
-    console.log(cql);
-  	AV.Query.doCloudQuery(cql).then(function (data) {
-  		console.log(data);
-      	var results = data.results;
-      var result = {
+    var offset = +req.query.offset || 0,
+        limit = +req.query.limit || 20,
+        search = req.query.search,
+        name = req.query.sort,
+        order = req.query.order || 'asc',
+        i,
+        max = offset + limit,
+        rows = [],
+        result = {
+            total: +req.query.total || 800,
+            rows: []
+        };
+
+    var query = new AV.Query('Information');
+    query.limit(limit);
+    query.skip(offset);
+    if(search){
+        console.log(search);
+        query.contains('phoneNum',search);
+    }
+    
+
+    if(order == "asc"){
+        query.ascending(name);
+    }else{
+        query.descending(name);
+    }
+
+    query.find().then(function (resume) {
+        // console.log(resume);
+        // resume.attributes.jobInfo = 
+        for(var i = 0; i < resume.length;i++){
+            // console.log(resume[i].id);
+            resume[i].set("listId", i);
+
+            if(resume[i].attributes.jobInfo){
+                var jobInfo = JSON.parse(resume[i].attributes.jobInfo);
+                for(var j = 0 ; j < 5; j++){
+                    // console.log(jobInfo);
+                    if(!jobInfo[j]){
+                        break;
+                    }
+                    resume[i].set("job"+j, jobInfo[j].job);
+                    resume[i].set("time"+j, jobInfo[j].time);
+                    resume[i].set("exp"+j, jobInfo[j].exp); 
+                    resume[i].set("eva"+j, jobInfo[j].eva);
+                }
+            }
+
+            if(resume[i].attributes.eduInfo){
+                var eduInfo = JSON.parse(resume[i].attributes.eduInfo);
+                for(var j = 0 ; j < 3; j++){
+                    if(!eduInfo[j]){
+                        break;
+                    }
+                    resume[i].set("edu"+j, eduInfo[j].edu);
+                    resume[i].set("end"+j, eduInfo[j].end);
+                    resume[i].set("major"+j, eduInfo[j].major); 
+                    resume[i].set("schoolName"+j, eduInfo[j].schoolName);
+                }
+            }
+            
+        }
+        var result = {
             code : 200,
-            data : results,
-            message : "success"
+            rows : resume,
+            message : 'operation succeeded'
         }
         resp.send(result);
-  	}, function (error) {
-  		 var result = {
-            code : 400,
-            message : "error"
+    }, function(error) {
+        var result = {
+            code : 100,
+            message : 'error'
         }
         resp.send(result);
-  	});
+    })
 });
 
 router.get('/update', function(req, resp, next) {
