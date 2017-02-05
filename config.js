@@ -9,7 +9,7 @@ module.exports = {
     //正式版
     "appid" : "wx99f15635dd7d9e3c",
     "appsecret" : "9157e84975386b6dee6a499cc639973e",
-    "test" : 0,
+    "test" : 1,
 
     //无线购买账号
     "havedAccount":["573dc3d0ad5b9500576a5207"],
