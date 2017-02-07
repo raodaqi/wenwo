@@ -38,11 +38,10 @@ var ueditor = require("ueditor");
 
 // var fs = require('fs');
 // var https = require('https');
-// var privateKey  = fs.readFileSync('/ssl/wenwobei.com.key', 'utf8'),
-// var certificate = fs.readFileSync('/ssl/2_www.wenwobei.com.crt', 'utf8');
-// var ca = [fs.readFileSync('./ssl/root.crt')];
-// var credentials = {key: privateKey, cert: certificate,ca: ca};
-// var httpsServer = https.createServer(credentials, app);
+// var options = {
+//   pfx: fs.readFileSync('server.pfx')
+// };
+// var httpsServer = https.createServer(options, app);
 // var SSLPORT = 18081;
 // httpsServer.listen(SSLPORT, function() {
 //     console.log('HTTPS Server is running on: https://localhost:%s', SSLPORT);
