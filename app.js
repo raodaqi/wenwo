@@ -47,30 +47,30 @@ var ueditor = require("ueditor");
 //     console.log('HTTPS Server is running on: https://localhost:%s', SSLPORT);
 // });
 
-var UmengNode = require("umengpush-node");
-var android = new UmengNode();
-android.initialize({
-      platform: 'android',
-      appKey: "config.umeng.android.appKey",
-      appMasterSecret: "config.umeng.android.appSecret",
-      production_mode: "config.umeng.production_mode"
-});
-var info = {
-      timestamp: Date.now(),
-      device_tokens: "deviceToken",
-      payload: {
-    //默认选择通知类型为Notification,需必填以下信息
-        body: {
-          "ticker": '通知栏的显示的文字',
-          "title": '通知的标题',
-          "text": '通知的内容'
-        }
-      }
-    };
-//调用响应方法
-android.unicast(info, function (err, result) {
-  // console.log(result.text);        
-});
+// var UmengNode = require("umengpush-node");
+// var android = new UmengNode();
+// android.initialize({
+//       platform: 'android',
+//       appKey: "config.umeng.android.appKey",
+//       appMasterSecret: "config.umeng.android.appSecret",
+//       production_mode: "config.umeng.production_mode"
+// });
+// var info = {
+//       timestamp: Date.now(),
+//       device_tokens: "deviceToken",
+//       payload: {
+//     //默认选择通知类型为Notification,需必填以下信息
+//         body: {
+//           "ticker": '通知栏的显示的文字',
+//           "title": '通知的标题',
+//           "text": '通知的内容'
+//         }
+//       }
+//     };
+// //调用响应方法
+// android.unicast(info, function (err, result) {
+//   // console.log(result.text);        
+// });
 
 
 var wxpay = WXPay({
