@@ -645,6 +645,18 @@
     if(ua.match(/MicroMessenger/i) == 'micromessenger'){
       // window.location.href="/newfood";
     }
+
+    function fun(x,y){      
+      console.log(y);     
+      return {          
+        fun:function(z){
+          return fun(z,x);
+        }
+      }
+    }
+    // fun(1).fun(1);
+
+    fun(0).fun(1).fun(2).fun(3)
   </script>
 
   <script>

@@ -4,13 +4,11 @@ var WX_SHARE_TITLE,
     WX_SHARE_LINK,　
     WX_SHARE_IMGURL,　
     WX_SHARE_DESC;
-function formatDate(format, timestamp, full) {
+function formatDate(format, timestamp) {
     format = format.toLowerCase();
     if (!format) format = "y-m-d h:i:s";
 
     function zeroFull(str) {
-        // console.log(full);
-        // return full ? (str >= 10 ? str : ('0' + str)) : str;
         return (str >= 10 ? str : ('0' + str));
     }
     var time = new Date(timestamp),

@@ -4,7 +4,8 @@
   "description": "A sample Node.js app using Express 4",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "mongodb":"Start mongod -f ./mongod.conf"
   },
   "keywords": [
     "node",

@@ -55,6 +55,8 @@ router.get('/wx', function(req, res, next) {
     authorize(res, urlApi);
 });
 
+
+//判断是否关注
 router.post('/isfocus', function(req, res, next) {
 
     var userName = req.body.username;
@@ -219,6 +221,7 @@ router.get('/test', function(req, res, next) {
 
 });
 
+//微信支付
 router.get('/pay', function(req, res, next) {
 
     //问我

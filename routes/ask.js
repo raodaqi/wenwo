@@ -54,7 +54,7 @@ router.get('/allask', function(req, res, next) {
     query.skip(page*size);
     if (geo == null || geo == '') {
 
-        query.descending('createdAt');
+        // query.descending('createdAt');
 
     } else {
 
@@ -66,9 +66,12 @@ router.get('/allask', function(req, res, next) {
     }
 
     if(range){
-        query.withinKilometers('positionGeo', point, range/1000);
-        query.descending("score");
+        // query.withinKilometers('positionGeo', point, range/1000);
+        // query.descending("score");
     }
+
+    // query.descending('askPrice');
+
     query.include("vipCard");
     query.include("vipCard.image");
     query.include("vipCard.content");
@@ -138,7 +141,6 @@ router.get('/allask', function(req, res, next) {
                 data : results,
                 message : 'Operation succeeded'
             }
-
             res.send(result);
             return;
 
@@ -214,12 +216,13 @@ router.get('/search', function(req, res, next) {
             // query.limit(parseInt(size));
         }
         
-        // console.log(page*size);
+        console.log("keyword:"+keyword);
         // query.sid(null);
         // query.skip(parseInt(page*size));
 
         //这里是进行多次设置查询值
-        query.queryString(keyword+" AND staus:1");
+        // query.queryString(keyword+" AND staus:1");
+        query.queryString(keyword);
 
         query.find().then(function (asklist) {
             // results 返回的就是有图片的 Todo 集合
@@ -286,9 +289,14 @@ function ifexitSearchLog(data,callback){
         query.equalTo(key, data[key]);
     }
     query.find().then(function (cardList) {
-        callback.success(cardList);
+        if(callback){
+            callback.success(cardList);
+        }
+        
     },function (error) {
-        callback.error(error);
+        if(callback){
+            callback.error(error);
+        }
     });
 }
 
@@ -316,6 +324,9 @@ function addsearchlog(keyword,username){
                 }, function (error) {
                 });
             }
+        },
+        error:function(){
+            
         }
     })
 }
@@ -1885,6 +1896,7 @@ router.post('/sendask', function(req, res, next) {
         res.send(result);
         return;
     }
+    
     // var isfree = req.param('isfree');
     // if (!isfree) {
     //     var result = {

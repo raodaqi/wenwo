@@ -69,7 +69,7 @@ var info = {
     };
 //调用响应方法
 android.unicast(info, function (err, result) {
-  console.log(result.text);        
+  // console.log(result.text);        
 });
 
 
