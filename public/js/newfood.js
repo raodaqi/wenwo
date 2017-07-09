@@ -50,7 +50,7 @@
   });
 
   //测试逻辑
-  if(window.location.port == 3000){
+  if(true ||  window.location.port == 3000){
     // newfoodInit(30.580596,103.982984);
     setTimeout(function(){
       // newfoodInit(30.580596,103.982984);
